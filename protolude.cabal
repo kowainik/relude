@@ -1,0 +1,51 @@
+name:                protolude
+version:             0.1.0
+synopsis:            A sensible start of defaults
+homepage:            https://github.com/sdiehl/protolude
+license:             MIT
+license-file:        LICENSE
+author:              Stephen Diehl
+maintainer:          stephen.m.diehl@gmail.com
+copyright:           2016 Stephen Diehl
+category:            Prelude
+build-type:          Simple
+cabal-version:       >=1.10
+tested-with:         
+  GHC == 7.6.3,
+  GHC == 7.8.0
+  GHC == 7.10.3
+Bug-Reports:         https://github.com/sdiehl/protolude/issues
+
+library
+  exposed-modules:     
+    Protolude
+
+  other-modules:
+    Applicative
+    Bool
+    Debug
+    List
+    Monad
+
+  default-extensions:
+    NoImplicitPrelude
+
+  ghc-options:
+    -Wall
+    -Werror
+
+  build-depends:       
+    base             >= 4.6 && <4.10,
+    safe             >= 0.3 && <0.4,
+    async            >= 2.1 && <2.2,
+    deepseq          >= 1.3 && <= 1.5,
+    containers       >= 0.5 && <0.6,
+    semiring-simple  >= 1.0 && <1.1,
+    mtl              >= 2.1 && <2.3,
+    transformers     >= 0.4 && < 0.6,
+    text             >= 1.2 && <1.3,
+    string-conv      >= 0.1 && <0.2,
+    bytestring       >= 0.10 && <0.11
+
+  hs-source-dirs:      src
+  default-language:    Haskell2010
