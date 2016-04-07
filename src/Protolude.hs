@@ -24,9 +24,9 @@ import qualified Applicative as X
 
 -- Maybe'ized version of partial functions
 import Safe as X (
-  headMay,
-  initMay,
-  tailMay
+    headMay
+  , initMay
+  , tailMay
   )
 
 -- Applicatives
@@ -92,45 +92,45 @@ import Data.IntSet as X (IntSet)
 
 -- Monad transformers
 import Control.Monad.State as X (
-    MonadState,
-    State,
-    StateT,
-    put,
-    get,
-    gets,
-    modify,
-    withState,
+    MonadState
+  , State
+  , StateT
+  , put
+  , get
+  , gets
+  , modify
+  , withState
 
-    runStateT,
-    execStateT,
-    evalStateT,
+  , runStateT
+  , execStateT
+  , evalStateT
   )
 
 import Control.Monad.Reader as X (
-    MonadReader,
-    Reader,
-    ReaderT,
-    ask,
-    asks,
-    local,
-    runReader,
-    runReaderT,
+    MonadReader
+  , Reader
+  , ReaderT
+  , ask
+  , asks
+  , local
+  , runReader
+  , runReaderT
   )
 
 import Control.Monad.Except as X (
-    MonadError,
-    Except,
-    ExceptT,
-    throwError,
-    catchError,
-    runExcept,
-    runExceptT,
+    MonadError
+  , Except
+  , ExceptT
+  , throwError
+  , catchError
+  , runExcept
+  , runExceptT
   )
 
 import Control.Monad.Trans as X (
-    MonadIO,
-    lift,
-    liftIO,
+    MonadIO
+  , lift
+  , liftIO
   )
 
 -- Base types
