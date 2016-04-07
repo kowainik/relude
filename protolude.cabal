@@ -26,6 +26,7 @@ library
     Debug
     List
     Monad
+    Unsafe
 
   default-extensions:
     NoImplicitPrelude

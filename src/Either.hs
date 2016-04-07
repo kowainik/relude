@@ -1,4 +1,4 @@
-module P.Either (
+module Either (
   maybeToLeft
 , maybeToRight
 , leftToMaybe

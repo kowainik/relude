@@ -84,7 +84,13 @@ import Data.List as X (
   , reverse
   , replicate
   )
+import Data.Map as X (Map)
+import Data.Set as X (Set)
+import Data.Sequence as X (Seq)
+import Data.IntMap as X (IntMap)
+import Data.IntSet as X (IntSet)
 
+-- Monad transformers
 import Control.Monad.State as X (
     MonadState,
     State,
@@ -127,13 +133,6 @@ import Control.Monad.Trans as X (
     liftIO,
   )
 
--- Common data structure types
-import Data.Map as X (Map)
-import Data.Set as X (Set)
-import Data.Sequence as X (Seq)
-import Data.IntMap as X (IntMap)
-import Data.IntSet as X (IntSet)
-
 -- Base types
 import Data.Int as X
 import Data.Bits as X
@@ -166,6 +165,7 @@ import GHC.Exts as X (
   , the
   )
 
+-- Genericss
 import GHC.Generics (
     Generic(..)
   , Rep
