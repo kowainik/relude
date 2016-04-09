@@ -35,8 +35,8 @@ traceShowM :: (P.Show a, P.Monad m) => a -> m ()
 traceShowM a = T.traceM (P.show a)
 
 {-# WARNING traceM "'traceM' remains in code" #-}
-traceM :: P.Monad m => P.String -> m ()
-traceM = T.traceM
+traceM :: (P.Monad m) => P.String -> m ()
+traceM s = T.trace s (P.return ())
 
 {-# WARNING traceIO "'traceIO' remains in code" #-}
 traceIO :: P.String -> P.IO ()

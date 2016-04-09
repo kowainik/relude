@@ -178,12 +178,9 @@ import GHC.Generics (
   , S1
   , (:+:)
   , (:*:)
-  , NoSelector
   , Rec0
-  , Par0
   , Constructor(..)
   , Selector(..)
-  , Arity(..)
   , Fixity(..)
   )
 
