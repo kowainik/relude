@@ -33,6 +33,7 @@ library
     Debug
     List
     Monad
+    Show
     Unsafe
 
   default-extensions:

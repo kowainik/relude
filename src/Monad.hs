@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 
 module Monad (
@@ -38,7 +39,12 @@ module Monad (
   ) where
 
 import Prelude (concat, seq)
+
+#if (__GLASGOW_HASKELL__ >= 710)
+import Control.Monad hiding ((<$!>))
+#else
 import Control.Monad
+#endif
 
 concatMapM :: (Monad m) => (a -> m [b]) -> [a] -> m [b]
 concatMapM f xs = liftM concat (mapM f xs)
@@ -54,3 +60,10 @@ liftM2' f a b = do
   let z = f x y
   z `seq` return z
 {-# INLINE liftM2' #-}
+
+(<$!>) :: Monad m => (a -> b) -> m a -> m b
+f <$!> m = do
+  x <- m
+  let z = f x
+  z `seq` return z
+{-# INLINE (<$!>) #-}
