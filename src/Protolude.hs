@@ -1,3 +1,4 @@
+{-# LANGUAGE NoImplicitPrelude #-}
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
 module Protolude (
@@ -51,10 +52,6 @@ import Data.Traversable as X
 import Data.Foldable as X hiding (
     foldr1
   , foldl1
-  , maximum
-  , maximumBy
-  , minimum
-  , minimumBy
   )
 import Data.Semiring as X
 import Data.Functor.Identity as X
@@ -78,6 +75,7 @@ import Data.List as X (
   , filter
   , reverse
   , replicate
+  , take
   )
 import Data.Map as X (Map)
 import Data.Set as X (Set)
@@ -139,9 +137,9 @@ import Data.Either as X
 import Data.Complex as X
 
 import Data.Function as X (
-    id
-  , const
+    const
   , (.)
+  , ($)
   , flip
   , fix
   , on
@@ -159,6 +157,10 @@ import GHC.Exts as X (
   , Ptr
   , FunPtr
   , the
+  )
+import GHC.Base as X (
+    (++)
+  , ($!)
   )
 
 -- Genericss
@@ -256,7 +258,7 @@ uncons []     = Nothing
 uncons (x:xs) = Just (x, xs)
 
 applyN :: Int -> (a -> a) -> a -> a
-applyN n f = X.foldr (.) id (X.replicate n f)
+applyN n f = X.foldr (.) identity (X.replicate n f)
 
 print :: (X.MonadIO m, P.Show a) => a -> m ()
 print = liftIO . P.print
