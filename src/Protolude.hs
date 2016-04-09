@@ -20,6 +20,7 @@ import qualified Show as X
 import qualified Bool as X
 import qualified Debug as X
 import qualified Monad as X
+import qualified Functor as X
 import qualified Applicative as X
 
 -- Maybe'ized version of partial functions
