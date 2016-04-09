@@ -156,6 +156,7 @@ import Data.Function as X (
 -- Base GHC types
 import GHC.IO as X (IO)
 import GHC.Num as X
+import GHC.Enum as X
 import GHC.Real as X
 import GHC.Float as X
 import GHC.Show as X
