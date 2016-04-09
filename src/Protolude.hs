@@ -58,12 +58,6 @@ import Data.Foldable as X hiding (
   )
 import Data.Semiring as X
 import Data.Functor.Identity as X
-import Data.Functor as X (
-    Functor(..)
-  , ($>)
-  , (<$>)
-  , void
-  )
 
 -- Deepseq
 import Control.DeepSeq as X (
