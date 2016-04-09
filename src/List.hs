@@ -1,3 +1,6 @@
+{-# LANGUAGE Safe #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module List (
   head,
   ordNub,

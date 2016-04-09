@@ -43,6 +43,7 @@ library
     Show
     Unsafe
     Functor
+    Bifunctor
 
   default-extensions:
     NoImplicitPrelude

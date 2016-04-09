@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
@@ -23,6 +24,7 @@ import qualified Bool as X
 import qualified Debug as X
 import qualified Monad as X
 import qualified Functor as X
+import qualified Either as X
 import qualified Applicative as X
 
 -- Maybe'ized version of partial functions
@@ -57,6 +59,12 @@ import Data.Foldable as X hiding (
 import Data.Semiring as X
 import Data.Functor.Identity as X
 
+#if (__GLASGOW_HASKELL__ >= 710)
+import Data.Bifunctor as X (Bifunctor(..))
+#else
+import Bifunctor as X (Bifunctor(..))
+#endif
+
 -- Deepseq
 import Control.DeepSeq as X (
     NFData(..)
@@ -67,6 +75,7 @@ import Control.DeepSeq as X (
 
 -- Data structures
 import Data.Tuple as X
+import Data.Semiring as X
 import Data.List as X (
     splitAt
   , break

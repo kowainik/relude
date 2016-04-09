@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE Safe #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 
 module Monad (
@@ -38,7 +39,8 @@ module Monad (
   , (<$!>)
   ) where
 
-import Prelude (concat, seq)
+import Data.List (concat)
+import Prelude (seq)
 
 #if (__GLASGOW_HASKELL__ >= 710)
 import Control.Monad hiding ((<$!>))

@@ -1,3 +1,6 @@
+{-# LANGUAGE Safe #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+
 module Applicative (
   orAlt,
   orEmpty,
