@@ -32,7 +32,7 @@ traceShow a = T.trace (P.show a) a
 
 {-# WARNING traceShowM "'traceShowM' remains in code" #-}
 traceShowM :: (P.Show a, P.Monad m) => a -> m ()
-traceShowM a = T.traceM (P.show a)
+traceShowM a = traceM (P.show a)
 
 {-# WARNING traceM "'traceM' remains in code" #-}
 traceM :: (P.Monad m) => P.String -> m ()
@@ -44,4 +44,4 @@ traceIO = T.traceIO
 
 {-# WARNING notImplemented "'notImplemented' remains in code" #-}
 notImplemented :: a
-notImplemented = P.error "Not implemented"
+otImplemented = P.error "Not implemented"
