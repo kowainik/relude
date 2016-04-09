@@ -6,6 +6,7 @@ module Protolude (
   identity,
   bool,
   (&),
+  ($!),
   uncons,
   applyN,
   print,
@@ -160,7 +161,6 @@ import GHC.Exts as X (
   )
 import GHC.Base as X (
     (++)
-  , ($!)
   )
 
 -- Genericss
@@ -246,6 +246,11 @@ infixl 1 &
 
 (&) :: a -> (a -> b) -> b
 x & f = f x
+
+infixr 0 $!
+
+($!) :: (a -> b) -> a -> b
+($!) = (P.$!)
 
 bool :: a -> a -> Bool -> a
 bool f t b = if b then t else f
