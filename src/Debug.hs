@@ -44,4 +44,4 @@ traceIO = T.traceIO
 
 {-# WARNING notImplemented "'notImplemented' remains in code" #-}
 notImplemented :: a
-otImplemented = P.error "Not implemented"
+notImplemented = P.error "Not implemented"
