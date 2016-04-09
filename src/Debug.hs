@@ -1,15 +1,15 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 
 module Debug (
-    undefined
-  , error
-  , trace
-  , traceM
-  , traceIO
-  , traceShow
-  , traceShowM
-  , notImplemented
-  ) where
+  undefined,
+  error,
+  trace,
+  traceM,
+  traceIO,
+  traceShow,
+  traceShowM,
+  notImplemented,
+) where
 
 import qualified Prelude as P
 import qualified Debug.Trace as T
