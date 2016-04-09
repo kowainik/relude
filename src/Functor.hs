@@ -21,6 +21,8 @@ import Data.Functor (
   , (<$>)
   )
 
+import Data.Function (flip)
+
 infixl 4 $>
 
 ($>) :: Functor f => f a -> b -> f b
