@@ -30,8 +30,21 @@ import qualified Applicative as X
 -- Maybe'ized version of partial functions
 import Safe as X (
     headMay
+  , headDef
   , initMay
+  , initDef
+  , initSafe
   , tailMay
+  , tailDef
+  , tailSafe
+  , lastDef
+  , lastMay
+  , lookupJust
+  , findJust
+  , foldr1May
+  , foldl1May
+  , atMay
+  , atDef
   )
 
 -- Applicatives
@@ -233,9 +246,9 @@ import Control.Monad.ST as ST
 
 -- Concurrency and Parallelism
 import Control.Exception as X
+import Control.Monad.STM as X
 import Control.Concurrent as X
 import Control.Concurrent.Async as X
-
 
 import Foreign.Storable as Exports (Storable)
 

@@ -2,12 +2,12 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 
 module Bool (
-    whenM
-  , unlessM
-  , ifM
-  , guardM
-  , bool
-  ) where
+  whenM
+, unlessM
+, ifM
+, guardM
+, bool
+) where
 
 import Data.Bool (Bool)
 import Data.Function (flip)
