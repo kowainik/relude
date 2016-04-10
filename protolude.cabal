@@ -42,6 +42,7 @@ library
     Monad
     Show
     Unsafe
+    Either
     Functor
     Bifunctor
 
