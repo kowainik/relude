@@ -183,6 +183,8 @@ import GHC.Exts as X (
   )
 import GHC.Base as X (
     (++)
+  , seq
+  , asTypeOf
   )
 
 -- Genericss
