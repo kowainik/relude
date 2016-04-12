@@ -208,7 +208,7 @@ import GHC.Generics (
 
 -- ByteString
 import qualified Data.ByteString.Lazy
-import qualified Data.ByteString as X (ByteString)
+import Data.ByteString as X (ByteString)
 
 -- Text
 import Data.Text as X (Text)
