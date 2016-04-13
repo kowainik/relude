@@ -2,8 +2,22 @@ Protolude
 =========
 
 [![Build Status](https://travis-ci.org/sdiehl/protolude.svg?branch=master)](https://travis-ci.org/sdiehl/protolude)
+[![Hackage](https://img.shields.io/hackage/v/protolude.svg)](https://hackage.haskell.org/package/protolude)
 
 A sensible starting Prelude for building custom Preludes.
+
+Design points:
+
+* Banishes String.
+* Banishes partial functions.
+* compiler warning on bottoms.
+* Foldable / Traversable by default.
+* Polymorphic string IO functions.
+* Automatic string conversions.
+* Type synonyms for major data structures.
+* Basic monad transformers in scope by default.
+* Unsafe functions are prefixed with "unsafe" in separate module.
+* Compiler agnostic, GHC internal modules are abstracted out into Base.
 
 Supports:
 
