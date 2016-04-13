@@ -1,28 +1,33 @@
+{-# LANGUAGE Unsafe #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 
-module Unsafe where
+module Unsafe (
+  unsafeHead,
+  unsafeTail,
+  unsafeInit,
+  unsafeLast,
+  fromJust,
+  unsafeIndex,
+) where
 
-import qualified Prelude
-import qualified Data.Maybe
-import qualified Data.List
+import Base (Int)
+import qualified Data.List as List
+import qualified Data.Maybe as Maybe
 
 unsafeHead :: [a] -> a
-unsafeHead = Prelude.head
+unsafeHead = List.head
 
 unsafeTail :: [a] -> [a]
-unsafeTail = Prelude.tail
+unsafeTail = List.tail
 
 unsafeInit :: [a] -> [a]
-unsafeInit = Prelude.init
+unsafeInit = List.init
 
 unsafeLast :: [a] -> a
-unsafeLast = Prelude.last
+unsafeLast = List.last
 
-fromJust :: Prelude.Maybe a -> a
-fromJust = Data.Maybe.fromJust
+fromJust :: Maybe.Maybe a -> a
+fromJust = Maybe.fromJust
 
-unsafeIndex :: [a] -> Prelude.Int -> a
-unsafeIndex = (Data.List.!!)
-
-(!!) :: [a] -> Prelude.Int -> a
-(!!) = (Data.List.!!)
+unsafeIndex :: [a] -> Int -> a
+unsafeIndex = (List.!!)

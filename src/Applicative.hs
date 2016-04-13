@@ -7,9 +7,10 @@ module Applicative (
   eitherA,
 ) where
 
-import Data.Monoid
+import Data.Bool (Bool)
+import Data.Either (Either(..))
+import Data.Monoid (Monoid(..))
 import Control.Applicative
-import Prelude (Bool, Either(..))
 
 orAlt :: (Alternative f, Monoid a) => f a -> f a
 orAlt f = f <|> pure mempty

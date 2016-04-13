@@ -1,13 +1,13 @@
 {-# LANGUAGE CPP #-}
+{-# LANGUAGE Trustworthy #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
 module Protolude (
   module X,
+  module Base,
   identity,
-  bool,
   (&),
-  ($!),
   uncons,
   applyN,
   print,
@@ -16,16 +16,23 @@ module Protolude (
   LByteString,
 ) where
 
-import qualified Prelude as P
+{-import qualified Prelude as P-}
 
-import qualified List as X
-import qualified Show as X
-import qualified Bool as X
-import qualified Debug as X
-import qualified Monad as X
-import qualified Functor as X
-import qualified Either as X
-import qualified Applicative as X
+import List as X
+import Show as X
+import Bool as X
+import Debug as X
+import Monad as X
+import Functor as X
+import Either as X
+import Applicative as X
+
+import Base as Base hiding (
+    putStr
+  , putStrLn
+  , print
+  )
+import qualified Base as PBase
 
 -- Maybe'ized version of partial functions
 import Safe as X (
@@ -88,7 +95,6 @@ import Control.DeepSeq as X (
 
 -- Data structures
 import Data.Tuple as X
-import Data.Semiring as X
 import Data.List as X (
     splitAt
   , break
@@ -99,6 +105,8 @@ import Data.List as X (
   , reverse
   , replicate
   , take
+  , zipWith
+  , zip
   )
 import Data.Map as X (Map)
 import Data.Set as X (Set)
@@ -116,6 +124,10 @@ import Control.Monad.State as X (
   , gets
   , modify
   , withState
+
+  , runState
+  , execState
+  , evalState
 
   , runStateT
   , execStateT
@@ -168,24 +180,6 @@ import Data.Function as X (
   , on
   )
 
--- Base GHC types
-import GHC.IO as X (IO)
-import GHC.Num as X
-import GHC.Enum as X
-import GHC.Real as X
-import GHC.Float as X
-import GHC.Show as X
-import GHC.Exts as X (
-    Constraint
-  , Ptr
-  , FunPtr
-  , the
-  )
-import GHC.Base as X (
-    (++)
-  , seq
-  , asTypeOf
-  )
 
 -- Genericss
 import GHC.Generics (
@@ -225,6 +219,7 @@ import Data.String.Conv as X (
   , toS
   , toSL
   , Leniency(..)
+  , StringConv
   )
 
 -- Printf
@@ -270,14 +265,6 @@ infixl 1 &
 (&) :: a -> (a -> b) -> b
 x & f = f x
 
-infixr 0 $!
-
-($!) :: (a -> b) -> a -> b
-($!) = (P.$!)
-
-bool :: a -> a -> Bool -> a
-bool f t b = if b then t else f
-
 identity :: a -> a
 identity x = x
 
@@ -288,5 +275,5 @@ uncons (x:xs) = Just (x, xs)
 applyN :: Int -> (a -> a) -> a -> a
 applyN n f = X.foldr (.) identity (X.replicate n f)
 
-print :: (X.MonadIO m, P.Show a) => a -> m ()
-print = liftIO . P.print
+print :: (X.MonadIO m, PBase.Show a) => a -> m ()
+print = liftIO . PBase.print
