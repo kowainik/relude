@@ -105,6 +105,23 @@ import Data.List as X (
   , reverse
   , replicate
   , take
+  , sortBy
+  , sort
+  , intersperse
+  , transpose
+  , subsequences
+  , permutations
+  , scanl
+  , scanr
+  , iterate
+  , repeat
+  , cycle
+  , unfoldr
+  , takeWhile
+  , dropWhile
+  , group
+  , inits
+  , tails
   , zipWith
   , zip
   )
