@@ -128,9 +128,18 @@ import Data.Set as X (Set)
 import Data.Sequence as X (Seq)
 import Data.IntMap as X (IntMap)
 import Data.IntSet as X (IntSet)
+
+#if ( __GLASGOW_HASKELL__ >= 710 )
 import Data.Proxy as X (
     Proxy(..)
   )
+
+import Data.Void as X (
+    Void
+  , absurd
+  , vacuous
+  )
+#endif
 
 -- Monad transformers
 import Control.Monad.State as X (

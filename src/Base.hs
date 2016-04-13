@@ -45,7 +45,9 @@ import GHC.Types as X (
   , Word
   , Ordering
   , IO
+#if ( __GLASGOW_HASKELL__ >= 710 )
   , Coercible
+#endif
   )
 
 infixr 0 $!
