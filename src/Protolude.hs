@@ -188,11 +188,6 @@ import Data.Char as X (chr)
 import Data.Maybe as X hiding (fromJust)
 import Data.Either as X
 import Data.Complex as X
-import Data.Void as X (
-    Void
-  , absurd
-  , vacuous
-  )
 
 import Data.Function as X (
     const
