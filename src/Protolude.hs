@@ -214,7 +214,6 @@ import Data.ByteString as X (ByteString)
 import Data.Text as X (Text)
 import qualified Data.Text.Lazy
 import qualified Data.Text.IO
-import Text.Printf as X (printf)
 
 import Data.Text.Lazy (
     toStrict
@@ -229,7 +228,7 @@ import Data.String.Conv as X (
   )
 
 -- Printf
-import Text.Printf as Exports (
+import Text.Printf as X (
     PrintfArg
   , printf
   , hPrintf
@@ -244,7 +243,7 @@ import System.IO as X (
   )
 
 -- ST
-import Control.Monad.ST as ST
+import Control.Monad.ST as X
 
 -- Concurrency and Parallelism
 import Control.Exception as X
@@ -252,7 +251,7 @@ import Control.Monad.STM as X
 import Control.Concurrent as X
 import Control.Concurrent.Async as X
 
-import Foreign.Storable as Exports (Storable)
+import Foreign.Storable as X (Storable)
 
 -- Read instances hiding unsafe builtins (read)
 import Text.Read as X (
