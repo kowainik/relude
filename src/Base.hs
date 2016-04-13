@@ -16,17 +16,21 @@ import GHC.Num as X
 import GHC.Enum as X
 import GHC.Real as X
 import GHC.Float as X
-import GHC.Show as X
+import GHC.Show as X (
+    Show(..)
+  )
 import GHC.Exts as X (
     Constraint
   , Ptr
   , FunPtr
-  , the
   )
 import GHC.Base as X (
     (++)
   , seq
   , asTypeOf
+  , ord
+  , maxInt
+  , minInt
   )
 import System.IO as X (
     print
@@ -34,11 +38,17 @@ import System.IO as X (
   , putStrLn
   )
 
-#if ( __GLASGOW_HASKELL__ >= 800 )
-import GHC.Types as X hiding (Any)
-#else
-import GHC.Types as X
+import GHC.Types as X (
+    Bool
+  , Char
+  , Int
+  , Word
+  , Ordering
+  , IO
+#if ( __GLASGOW_HASKELL__ >= 710 )
+  , Coercible
 #endif
+  )
 
 infixr 0 $!
 
@@ -46,6 +56,7 @@ infixr 0 $!
 f $! x  = let !vx = x in f vx
 
 #endif
+
 
 -- Simple Haskell Compiler
 #if defined(__SHC_HASKELL__)
