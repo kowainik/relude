@@ -16,8 +16,6 @@ module Protolude (
   LByteString,
 ) where
 
-{-import qualified Prelude as P-}
-
 import List as X
 import Show as X
 import Bool as X
@@ -130,6 +128,9 @@ import Data.Set as X (Set)
 import Data.Sequence as X (Seq)
 import Data.IntMap as X (IntMap)
 import Data.IntSet as X (IntSet)
+import Data.Proxy as X (
+    Proxy(..)
+  )
 
 -- Monad transformers
 import Control.Monad.State as X (
@@ -183,10 +184,15 @@ import Data.Int as X
 import Data.Bits as X
 import Data.Word as X
 import Data.Bool as X hiding (bool)
-import Data.Char as X (Char)
+import Data.Char as X (chr)
 import Data.Maybe as X hiding (fromJust)
 import Data.Either as X
 import Data.Complex as X
+import Data.Void as X (
+    Void
+  , absurd
+  , vacuous
+  )
 
 import Data.Function as X (
     const
@@ -196,7 +202,6 @@ import Data.Function as X (
   , fix
   , on
   )
-
 
 -- Genericss
 import GHC.Generics (
@@ -239,6 +244,8 @@ import Data.String.Conv as X (
   , StringConv
   )
 
+import Data.String as X (IsString)
+
 -- Printf
 import Text.Printf as X (
     PrintfArg
@@ -248,6 +255,7 @@ import Text.Printf as X (
 
 -- IO
 import System.Exit as X
+--import System.Info as X
 import System.Environment as X (getArgs)
 import System.IO as X (
     Handle
