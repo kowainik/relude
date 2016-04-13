@@ -5,6 +5,7 @@ module List (
   head,
   ordNub,
   sortOn,
+  list,
 ) where
 
 import Data.List (sortBy)
@@ -30,3 +31,8 @@ ordNub l = go Set.empty l
       if x `Set.member` s
       then go s xs
       else x : go (Set.insert x s) xs
+
+list :: [b] -> (a -> b) -> [a] -> [b]
+list def f xs = case xs of
+  [] -> def
+  _  -> fmap f xs
