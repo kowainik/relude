@@ -13,6 +13,7 @@ import Data.Maybe (Maybe(..))
 import Data.Ord (Ord, comparing)
 import Data.Foldable (Foldable, foldr)
 import Data.Function ((.))
+import Data.Functor (fmap)
 import Control.Monad (return)
 import qualified Data.Set as Set
 
