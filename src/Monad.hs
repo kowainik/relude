@@ -3,7 +3,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 
 module Monad (
-    Monad(..)
+    Monad((>>=), return)
   , MonadPlus(..)
 
   , (=<<)
