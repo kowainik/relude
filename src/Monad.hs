@@ -48,8 +48,8 @@ import Control.Monad hiding ((<$!>))
 import Control.Monad
 #endif
 
-concatMapM :: (Monad m) => (a -> m [b]) -> [a] -> m [b]
-concatMapM f xs = liftM concat (mapM f xs)
+concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
+concatMapM f xs = fmap concat (mapM f xs)
 
 liftM' :: Monad m => (a -> b) -> m a -> m b
 liftM' = (<$!>)

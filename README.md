@@ -12,9 +12,11 @@ Design points:
 * Banishes partial functions.
 * Compiler warning on bottoms.
 * Polymorphic string IO functions.
+* Polymorphic show.
 * Automatic string conversions.
-* Type synonyms for major data structures.
-* Basic monad transformers in scope by default.
+* Type for common data structures in scope.
+* Type for all common string types in scope.
+* StateT/ReaderT/ExceptT transformers in scope by default.
 * Foldable / Traversable functions in scope by default.
 * Unsafe functions are prefixed with "unsafe" in separate module.
 * Compiler agnostic, GHC internal modules are abstracted out into Base.

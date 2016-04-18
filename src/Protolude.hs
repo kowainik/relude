@@ -1,6 +1,7 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE Trustworthy #-}
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE ExplicitNamespaces   #-}
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
 module Protolude (
@@ -129,6 +130,7 @@ import Data.List as X (
   , zipWith
   , zip
   )
+
 import Data.Map as X (Map)
 import Data.Set as X (Set)
 import Data.Sequence as X (Seq)
@@ -138,6 +140,24 @@ import Data.IntSet as X (IntSet)
 #if ( __GLASGOW_HASKELL__ >= 710 )
 import Data.Proxy as X (
     Proxy(..)
+  )
+
+import Data.Typeable as X (
+    TypeRep,
+  )
+
+import Data.Type.Coercion as X (
+    Coercion(..)
+  , coerceWith
+  )
+
+import Data.Type.Equality as X (
+    (:~:)(..)
+  , type (==)
+  , sym
+  , trans
+  , castWith
+  , gcastWith
   )
 
 import Data.Void as X (
@@ -198,11 +218,11 @@ import Control.Monad.Trans as X (
 import Data.Int as X
 import Data.Bits as X
 import Data.Word as X
-import Data.Bool as X hiding (bool)
-import Data.Char as X (chr)
-import Data.Maybe as X hiding (fromJust)
 import Data.Either as X
 import Data.Complex as X
+import Data.Char as X (chr)
+import Data.Bool as X hiding (bool)
+import Data.Maybe as X hiding (fromJust)
 
 import Data.Function as X (
     const
