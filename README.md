@@ -21,6 +21,9 @@ Design points:
 * Unsafe functions are prefixed with "unsafe" in separate module.
 * Compiler agnostic, GHC internal modules are abstracted out into Base.
 * Compatibility with GHC 8.0.
+* Includes Semiring for GHC >= 7.6.
+* Includes Bifunctor for GHC >= 7.6.
+* Includes Semigroup for GHC >= 7.6.
 
 Supports:
 

@@ -56,9 +56,11 @@ import GHC.OverloadedLabels as X (
     IsLabel(..)
   )
 
+{-
 import GHC.Records as X (
     HasField(..)
   )
+-}
 
 import Data.Kind as X (
     type (*)
