@@ -1,6 +1,7 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE Unsafe #-}
 {-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE ExplicitNamespaces #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 
 module Base (
@@ -49,6 +50,17 @@ import GHC.Types as X (
   , Coercible
 #endif
   )
+
+#if ( __GLASGOW_HASKELL__ >= 800 )
+import GHC.OverloadedLabels as X (
+    IsLabel(..)
+  )
+
+import Data.Kind as X (
+    type (*)
+  , type Type
+  )
+#endif
 
 infixr 0 $!
 

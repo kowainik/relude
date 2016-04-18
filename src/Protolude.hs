@@ -1,7 +1,7 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE Trustworthy #-}
 {-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE ExplicitNamespaces   #-}
+{-# LANGUAGE ExplicitNamespaces #-}
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
 module Protolude (
@@ -84,6 +84,10 @@ import Data.Foldable as X hiding (
 import Data.Semiring as X
 import Data.Functor.Identity as X
 
+#if ( __GLASGOW_HASKELL__ >= 800 )
+import Data.Semigroup as X ( Semigroup(..) )
+#endif
+
 #if (__GLASGOW_HASKELL__ >= 710)
 import Data.Bifunctor as X (Bifunctor(..))
 #else
@@ -143,7 +147,11 @@ import Data.Proxy as X (
   )
 
 import Data.Typeable as X (
-    TypeRep,
+    TypeRep
+  , Typeable
+  , typeRep
+  , cast
+  , eqT
   )
 
 import Data.Type.Coercion as X (
@@ -250,6 +258,9 @@ import GHC.Generics (
   , Constructor(..)
   , Selector(..)
   , Fixity(..)
+#if ( __GLASGOW_HASKELL__ >= 800 )
+  , Meta(..)
+#endif
   )
 
 -- ByteString
