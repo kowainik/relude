@@ -75,7 +75,6 @@ import Control.Applicative as X (
 -- Base typeclasses
 import Data.Eq as X
 import Data.Ord as X
-import Data.Monoid as X
 import Data.Traversable as X
 import Data.Foldable as X hiding (
     foldr1
@@ -85,7 +84,10 @@ import Data.Semiring as X
 import Data.Functor.Identity as X
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
+import Data.Monoid as X hiding ((<>))
 import Data.Semigroup as X ( Semigroup(..) )
+#else
+import Data.Monoid as X
 #endif
 
 #if (__GLASGOW_HASKELL__ >= 710)
@@ -349,3 +351,6 @@ print = liftIO . PBase.print
 
 show :: (Show a, StringConv String b) => a -> b
 show x = toS (PBase.show x)
+{-# SPECIALIZE show :: Show  a => a -> String  #-}
+{-# SPECIALIZE show :: Show  a => a -> Text  #-}
+{-# SPECIALIZE show :: Show  a => a -> LText  #-}

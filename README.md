@@ -20,6 +20,7 @@ Design points:
 * Foldable / Traversable functions in scope by default.
 * Unsafe functions are prefixed with "unsafe" in separate module.
 * Compiler agnostic, GHC internal modules are abstracted out into Base.
+* Compatibility with GHC 8.0.
 
 Supports:
 
