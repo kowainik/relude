@@ -55,6 +55,7 @@ library
 
   ghc-options:
     -Wall
+    -fwarn-implicit-prelude
 
   build-depends:       
     base             >= 4.6  && <4.10,

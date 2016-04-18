@@ -244,7 +244,7 @@ import Data.Function as X (
   )
 
 -- Genericss
-import GHC.Generics (
+import GHC.Generics as X (
     Generic(..)
   , Rep
   , K1(..)
@@ -300,10 +300,7 @@ import Text.Printf as X (
 import System.Exit as X
 --import System.Info as X
 import System.Environment as X (getArgs)
-import System.IO as X (
-    Handle
-  , hClose
-  )
+import System.IO as X (Handle)
 
 -- ST
 import Control.Monad.ST as X
