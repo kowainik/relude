@@ -7,10 +7,12 @@ module Protolude (
   module X,
   module Base,
   identity,
+  map,
   (&),
   uncons,
   applyN,
   print,
+  show,
 
   LText,
   LByteString,
@@ -29,8 +31,12 @@ import Base as Base hiding (
     putStr
   , putStrLn
   , print
+  , show
   )
 import qualified Base as PBase
+
+-- Used for 'show'
+import Data.String (String)
 
 -- Maybe'ized version of partial functions
 import Safe as X (
@@ -297,6 +303,9 @@ x & f = f x
 identity :: a -> a
 identity x = x
 
+map :: Functor f => (a -> b) -> f a -> f b
+map = fmap
+
 uncons :: [a] -> Maybe (a, [a])
 uncons []     = Nothing
 uncons (x:xs) = Just (x, xs)
@@ -306,3 +315,6 @@ applyN n f = X.foldr (.) identity (X.replicate n f)
 
 print :: (X.MonadIO m, PBase.Show a) => a -> m ()
 print = liftIO . PBase.print
+
+show :: (Show a, StringConv String b) => a -> b
+show x = toS (PBase.show x)

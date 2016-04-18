@@ -50,6 +50,7 @@ library
   default-extensions:
     NoImplicitPrelude
     OverloadedStrings
+    FlexibleContexts
     MultiParamTypeClasses
 
   ghc-options:
