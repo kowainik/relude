@@ -80,7 +80,7 @@ import Data.Foldable as X hiding (
     foldr1
   , foldl1
   )
-import Data.Semiring as X
+import Semiring as X
 import Data.Functor.Identity as X
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
