@@ -51,8 +51,6 @@ import Safe as X (
   , tailSafe
   , lastDef
   , lastMay
-  , lookupJust
-  , findJust
   , foldr1May
   , foldl1May
   , atMay
