@@ -17,6 +17,10 @@ import GHC.Num as X
 import GHC.Enum as X
 import GHC.Real as X
 import GHC.Float as X
+import GHC.Err as X (
+    undefined
+  , error
+  )
 import GHC.Show as X (
     Show(..)
   )

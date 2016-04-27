@@ -33,6 +33,8 @@ import Base as Base hiding (
   , putStrLn
   , print
   , show
+  , error
+  , undefined
   )
 import qualified Base as PBase
 

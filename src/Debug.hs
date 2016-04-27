@@ -12,7 +12,10 @@ module Debug (
   notImplemented,
 ) where
 
-import qualified Prelude as P
+import Data.String (String)
+import Control.Monad (Monad, return)
+
+import qualified Base as P
 import qualified Debug.Trace as T
 
 {-# WARNING undefined "'undefined' remains in code" #-}
@@ -20,27 +23,27 @@ undefined :: a
 undefined = P.undefined
 
 {-# WARNING error "'error' remains in code" #-}
-error :: P.String -> a
+error :: String -> a
 error = P.error
 
 {-# WARNING trace "'trace' remains in code" #-}
-trace :: P.String -> a -> a
+trace :: String -> a -> a
 trace = T.trace
 
 {-# WARNING traceShow "'traceShow' remains in code" #-}
-traceShow :: P.Show a => a -> a
-traceShow a = T.trace (P.show a) a
+traceShow :: P.Show a => a -> b -> b
+traceShow a b = T.trace (P.show a) b
 
 {-# WARNING traceShowM "'traceShowM' remains in code" #-}
-traceShowM :: (P.Show a, P.Monad m) => a -> m ()
+traceShowM :: (P.Show a, Monad m) => a -> m ()
 traceShowM a = traceM (P.show a)
 
 {-# WARNING traceM "'traceM' remains in code" #-}
-traceM :: (P.Monad m) => P.String -> m ()
-traceM s = T.trace s (P.return ())
+traceM :: (Monad m) => String -> m ()
+traceM s = T.trace s (return ())
 
 {-# WARNING traceIO "'traceIO' remains in code" #-}
-traceIO :: P.String -> P.IO ()
+traceIO :: String -> P.IO ()
 traceIO = T.traceIO
 
 {-# WARNING notImplemented "'notImplemented' remains in code" #-}
