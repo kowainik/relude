@@ -27,6 +27,7 @@ import Monad as X
 import Functor as X
 import Either as X
 import Applicative as X
+import Conv as X
 
 import Base as Base hiding (
     putStr
@@ -277,14 +278,6 @@ import qualified Data.Text.IO
 import Data.Text.Lazy (
     toStrict
   , fromStrict
-  )
-
-import Data.String.Conv as X (
-    strConv
-  , toS
-  , toSL
-  , Leniency(..)
-  , StringConv
   )
 
 import Data.String as X (IsString)

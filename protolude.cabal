@@ -43,6 +43,7 @@ library
     List
     Monad
     Show
+    Conv
     Either
     Functor
     Semiring
