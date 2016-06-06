@@ -6,7 +6,7 @@ module Unsafe (
   unsafeTail,
   unsafeInit,
   unsafeLast,
-  fromJust,
+  unsafeFromJust,
   unsafeIndex,
 ) where
 
@@ -26,8 +26,8 @@ unsafeInit = List.init
 unsafeLast :: [a] -> a
 unsafeLast = List.last
 
-fromJust :: Maybe.Maybe a -> a
-fromJust = Maybe.fromJust
+unsafeFromJust :: Maybe.Maybe a -> a
+unsafeFromJust = Maybe.fromJust
 
 unsafeIndex :: [a] -> Int -> a
 unsafeIndex = (List.!!)

@@ -37,7 +37,7 @@ Supports:
  * GHC 7.10.1
  * GHC 7.10.2
  * GHC 7.10.3
- * GHC HEAD
+ * GHC 8.0.1
 
 Usage
 -----
