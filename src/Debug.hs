@@ -18,10 +18,6 @@ import Control.Monad (Monad, return)
 import qualified Base as P
 import qualified Debug.Trace as T
 
-{-# WARNING undefined "'undefined' remains in code" #-}
-undefined :: a
-undefined = P.undefined
-
 {-# WARNING error "'error' remains in code" #-}
 error :: String -> a
 error = P.error
@@ -46,6 +42,8 @@ traceM s = T.trace s (return ())
 traceIO :: String -> P.IO ()
 traceIO = T.traceIO
 
-{-# WARNING notImplemented "'notImplemented' remains in code" #-}
 notImplemented :: a
 notImplemented = P.error "Not implemented"
+
+undefined :: a
+undefined = P.undefined
