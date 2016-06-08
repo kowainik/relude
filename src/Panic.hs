@@ -4,12 +4,13 @@ module Panic (
 ) where
 
 import Base (Show)
-import Data.Text(Text)
+import Data.Text (Text)
+import Data.Typeable (Typeable)
 import Control.Exception as X
 
 -- | Uncatchable exceptions thrown and never caught.
 data FatalError = FatalError { msg :: Text }
-  deriving (Show)
+  deriving (Show, Typeable)
 
 instance Exception FatalError
 
