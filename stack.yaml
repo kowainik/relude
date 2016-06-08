@@ -2,6 +2,5 @@ resolver: lts-5.10
 packages:
 - '.'
 extra-deps:
-- string-conv-0.1
 flags: {}
 extra-package-dbs: []
