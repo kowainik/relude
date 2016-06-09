@@ -31,16 +31,16 @@ import Conv as X
 import Panic as X
 
 import Base as Base hiding (
-    putStr
-  , putStrLn
-  , print
-  , show
-  , error
-  , undefined
+    putStr     -- Overriden by Show.putStr
+  , putStrLn   -- Overriden by Show.putStrLn
+  , print      -- Overriden by Protolude.print
+  , show       -- Overriden by Protolude.show
+  , error      -- Overriden by Debug.error
+  , undefined  -- Overriden by Debug.undefined
   )
 import qualified Base as PBase
 
--- Used for 'show'
+-- Used for 'show', not exported.
 import Data.String (String)
 
 -- Maybe'ized version of partial functions
@@ -275,6 +275,12 @@ import Data.ByteString as X (ByteString)
 import Data.Text as X (Text)
 import qualified Data.Text.Lazy
 import qualified Data.Text.IO
+
+import Data.Text.IO as X (
+    getLine
+  , getContents
+  , interact
+  )
 
 import Data.Text.Lazy (
     toStrict

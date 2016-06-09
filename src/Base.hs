@@ -9,7 +9,7 @@ module Base (
   ($!),
 ) where
 
--- Glorious Glashgow Haskell Compiler
+-- Glorious Glasgow Haskell Compiler
 #if defined(__GLASGOW_HASKELL__) && ( __GLASGOW_HASKELL__ >= 600 )
 
 -- Base GHC types
