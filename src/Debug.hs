@@ -12,19 +12,19 @@ module Debug (
   notImplemented,
 ) where
 
-import Data.String (String)
+import Data.Text (Text, unpack)
 import Control.Monad (Monad, return)
 
 import qualified Base as P
 import qualified Debug.Trace as T
 
 {-# WARNING error "'error' remains in code" #-}
-error :: String -> a
-error = P.error
+error :: Text -> a
+error s = P.error (unpack s)
 
 {-# WARNING trace "'trace' remains in code" #-}
-trace :: String -> a -> a
-trace = T.trace
+trace :: Text -> a -> a
+trace s = T.trace (unpack s)
 
 {-# WARNING traceShow "'traceShow' remains in code" #-}
 traceShow :: P.Show a => a -> b -> b
@@ -32,15 +32,15 @@ traceShow a b = T.trace (P.show a) b
 
 {-# WARNING traceShowM "'traceShowM' remains in code" #-}
 traceShowM :: (P.Show a, Monad m) => a -> m ()
-traceShowM a = traceM (P.show a)
+traceShowM a = T.trace (P.show a) (return ())
 
 {-# WARNING traceM "'traceM' remains in code" #-}
-traceM :: (Monad m) => String -> m ()
-traceM s = T.trace s (return ())
+traceM :: (Monad m) => Text -> m ()
+traceM s = T.trace (unpack s) (return ())
 
 {-# WARNING traceIO "'traceIO' remains in code" #-}
-traceIO :: String -> P.IO ()
-traceIO = T.traceIO
+traceIO :: Text -> P.IO ()
+traceIO s = T.traceIO (unpack s)
 
 notImplemented :: a
 notImplemented = P.error "Not implemented"
