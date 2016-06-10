@@ -291,13 +291,6 @@ import Data.Text.Lazy (
   , fromStrict
   )
 
--- Printf
-import Text.Printf as X (
-    PrintfArg
-  , printf
-  , hPrintf
-  )
-
 -- IO
 import System.Exit as X
 --import System.Info as X
