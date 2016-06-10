@@ -42,6 +42,7 @@ import qualified Base as PBase
 
 -- Used for 'show', not exported.
 import Data.String (String)
+import Data.String as X (IsString)
 
 -- Maybe'ized version of partial functions
 import Safe as X (
@@ -280,14 +281,15 @@ import Data.Text.IO as X (
     getLine
   , getContents
   , interact
+  , readFile
+  , writeFile
+  , appendFile
   )
 
 import Data.Text.Lazy (
     toStrict
   , fromStrict
   )
-
-import Data.String as X (IsString)
 
 -- Printf
 import Text.Printf as X (
@@ -300,7 +302,16 @@ import Text.Printf as X (
 import System.Exit as X
 --import System.Info as X
 import System.Environment as X (getArgs)
-import System.IO as X (Handle)
+import System.IO as X (
+    Handle
+  , FilePath
+  , IOMode(..)
+  , stdin
+  , stdout
+  , stderr
+  , withFile
+  , openFile
+  )
 
 -- ST
 import Control.Monad.ST as X
