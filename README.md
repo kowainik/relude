@@ -14,8 +14,8 @@ Design points:
 * Polymorphic string IO functions.
 * Polymorphic show.
 * Automatic string conversions.
-* Type for common data structures in scope.
-* Type for all common string types in scope.
+* Types for common data structures in scope.
+* Types for all common string types in scope.
 * StateT/ReaderT/ExceptT transformers in scope by default.
 * Foldable / Traversable functions in scope by default.
 * Unsafe functions are prefixed with "unsafe" in separate module.
