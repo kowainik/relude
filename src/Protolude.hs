@@ -1,5 +1,6 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE Trustworthy #-}
+{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE ExplicitNamespaces #-}
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
