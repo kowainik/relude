@@ -55,23 +55,23 @@ Dependencies
 Protolude tries to be light on dependencies and only pulls in *essential*
 libraries that are universally common across most real-world projects. 
 
-Dependencies  Bound
------------   --------
-array         0.5.1.0
-async         2.1.0
-base          4.8.2.0
-binary        0.7.5.0
-bytestring    0.10.6.0
-containers    0.5.6.2
-deepseq       1.4.1.1
-ghc-prim      0.4.0.0
-integer-gmp   1.0.0.0
-mtl           2.2.1
-protolude     0.1.6
-safe          0.3.9
-stm           2.4.4.1
-text          1.2.2.1
-transformers  0.4.2.0
+| Dependencies  |  Bound    |
+| -----------   |  -------- |
+| array         |  0.5.1.0  |
+| async         |  2.1.0    |
+| base          |  4.8.2.0  |
+| binary        |  0.7.5.0  |
+| bytestring    |  0.10.6.0 |
+| containers    |  0.5.6.2  |
+| deepseq       |  1.4.1.1  |
+| ghc-prim      |  0.4.0.0  |
+| integer-gmp   |  1.0.0.0  |
+| mtl           |  2.2.1    |
+| protolude     |  0.1.6    |
+| safe          |  0.3.9    |
+| stm           |  2.4.4.1  |
+| text          |  1.2.2.1  |
+| transformers  |  0.4.2.0  |
 
 License
 -------
