@@ -54,8 +54,8 @@ Dependencies
 
 Protolude tries to be light on dependencies and only pulls in *essential*
 libraries that are universally common across most real-world projects. Lower and
-upper bounds are fully specified and compatible with both vanilla Cabal tracks
-Stack LTS resolver.
+upper bounds are fully specified and compatible with both vanilla Cabal and
+tracks Stack LTS resolver.
 
 | Dependencies  | Lower    | Upper    |
 | -----------   | -------- | -------- |
