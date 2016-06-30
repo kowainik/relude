@@ -311,7 +311,10 @@ import System.IO as X (
 import Control.Monad.ST as X
 
 -- Concurrency and Parallelism
-import Control.Exception as X
+import Control.Exception as X hiding (
+    throw
+  , assert
+  )
 import Control.Monad.STM as X
 import Control.Concurrent as X
 import Control.Concurrent.Async as X

@@ -61,14 +61,14 @@ import GHC.OverloadedLabels as X (
   )
 
 import GHC.ExecutionStack as X (
-    Location(..),
+    Location(..)
   , SrcLoc(..)
   , getStackTrace
   , showStackTrace
   )
 
 import GHC.Stack as X (
-  , CallStack
+    CallStack
   , HasCallStack
   , callStack
   , SrcLoc
