@@ -12,9 +12,9 @@ module Unsafe (
 ) where
 
 import Base (Int)
-import Control.Exception as Exc
 import qualified Data.List as List
 import qualified Data.Maybe as Maybe
+import qualified Control.Exception as Exc
 
 unsafeHead :: [a] -> a
 unsafeHead = List.head
