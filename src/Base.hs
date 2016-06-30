@@ -60,6 +60,25 @@ import GHC.OverloadedLabels as X (
     IsLabel(..)
   )
 
+import GHC.ExecutionStack as X (
+    Location(..),
+  , SrcLoc(..)
+  , getStackTrace
+  , showStackTrace
+  )
+
+import GHC.Stack as X (
+  , CallStack
+  , HasCallStack
+  , callStack
+  , SrcLoc
+  , prettySrcLoc
+  , currentCallStack
+  , getCallStack
+  , showCallStack
+  , prettyCallStack
+  )
+
 {-
 import GHC.Records as X (
     HasField(..)
