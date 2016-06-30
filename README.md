@@ -43,10 +43,20 @@ Supports:
 Usage
 -----
 
+In your project simply disable the default Prelude and import Protolude.
+
 ```haskell
 {-# LANGUAGE NoImplicitPrelude #-}
 
 import Protolude
+```
+
+To try out standalone prelude at the interactive shell, from the Protolude
+project directory run.
+
+```haskell
+$ stack exec ghci
+> import Protolude
 ```
 
 Dependencies
@@ -77,7 +87,7 @@ tracks Stack LTS resolver.
 FAQs
 ----
 
-1. My ``putStrLn`` and ``putStr`` instances are no longer inferred in the presense
+* My ``putStrLn`` and ``putStr`` instances are no longer inferred in the presense
 of the ``-XOverloadedStrings`` extension?
 
 Because the print functions are polymorphic the type of the print functions may
@@ -89,7 +99,7 @@ putText :: MonadIO m => T.Text -> m ()
 putLText :: MonadIO m => TL.Text -> m ()
 ```
 
-2. How do I write manual Show instances if ``show`` isn't provided?
+* How do I write manual Show instances if ``show`` isn't provided?
 
 Generally speaking writing manual instances of Show is a [Haskell antipattern](
 http://www.stephendiehl.com/posts/strings.html) because it produces
