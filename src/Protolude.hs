@@ -230,7 +230,10 @@ import Control.Monad.Trans as X (
 
 -- Base types
 import Data.Int as X
-import Data.Bits as X
+import Data.Bits as X hiding (
+    unsafeShiftL
+  , unsafeShiftR
+  )
 import Data.Word as X
 import Data.Either as X
 import Data.Complex as X

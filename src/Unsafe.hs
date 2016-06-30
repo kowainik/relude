@@ -8,9 +8,11 @@ module Unsafe (
   unsafeLast,
   unsafeFromJust,
   unsafeIndex,
+  unsafeThrow,
 ) where
 
 import Base (Int)
+import Control.Exception as Exc
 import qualified Data.List as List
 import qualified Data.Maybe as Maybe
 
@@ -31,3 +33,6 @@ unsafeFromJust = Maybe.fromJust
 
 unsafeIndex :: [a] -> Int -> a
 unsafeIndex = (List.!!)
+
+unsafeThrow :: Exc.Exception e => e -> a
+unsafeThrow = Exc.throw
