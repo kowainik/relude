@@ -74,6 +74,35 @@ Stack LTS resolver.
 | text          | 1.2      | 1.3      |
 | transformers  | 0.4      | 0.6      |
 
+FAQs
+----
+
+1. My ``putStrLn`` and ``putStr`` instances are no longer inferred in the presense
+of the ``-XOverloadedStrings`` extension?
+
+Because the print functions are polymorphic the type of the print functions may
+require annotations if the type is not fully specified by inference. To force a
+specific type at the call site use either 
+
+```haskell
+putText :: MonadIO m => T.Text -> m ()
+putLText :: MonadIO m => TL.Text -> m ()
+```
+
+2. How do I write manual Show instances if ``show`` isn't provided?
+
+Generally speaking writing manual instances of Show is a [Haskell antipattern](
+http://www.stephendiehl.com/posts/strings.html) because it produces
+law-violating instances of Show. You probably want to use a pretty printer
+library for custom printing.
+
+If backwards compatibility is needed then the base library can be imported
+manually.
+
+```haskell
+import GHC.Show (Show(..))
+```
+
 License
 -------
 
