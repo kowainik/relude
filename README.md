@@ -67,7 +67,6 @@ libraries that are universally common across most real-world projects.
 | ghc-prim      |  0.4.0.0  |
 | integer-gmp   |  1.0.0.0  |
 | mtl           |  2.2.1    |
-| protolude     |  0.1.6    |
 | safe          |  0.3.9    |
 | stm           |  2.4.4.1  |
 | text          |  1.2.2.1  |

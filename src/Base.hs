@@ -78,13 +78,3 @@ infixr 0 $!
 f $! x  = let !vx = x in f vx
 
 #endif
-
-
--- Simple Haskell Compiler
-#if defined(__SHC_HASKELL__)
-
-import SHC.Prim as X
-import SHC.Types as X
-import SHC.Classes as X
-
-#endif
