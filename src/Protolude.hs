@@ -356,3 +356,5 @@ show x = toS (PBase.show x)
 {-# SPECIALIZE show :: Show  a => a -> String  #-}
 {-# SPECIALIZE show :: Show  a => a -> Text  #-}
 {-# SPECIALIZE show :: Show  a => a -> LText  #-}
+{-# SPECIALIZE show :: Show  a => a -> ByteString  #-}
+{-# SPECIALIZE show :: Show  a => a -> LByteString  #-}
