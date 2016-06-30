@@ -75,7 +75,6 @@ import GHC.Stack as X (
   , prettySrcLoc
   , currentCallStack
   , getCallStack
-  , showCallStack
   , prettyCallStack
   )
 
