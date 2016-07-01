@@ -1,6 +1,6 @@
-{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE Trustworthy #-}
 {-# LANGUAGE FlexibleInstances #-}
-
+{-# LANGUAGE TypeSynonymInstances #-}
 
 module Conv (
   StringConv (..)
