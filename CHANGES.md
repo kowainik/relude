@@ -11,6 +11,7 @@
 * Hides all Show class functions. Only the Class itself is exported. Forbids
 * custom instances that are not GHC derived.
 * Export`` encodeUtf8`` and ``decodeUtf8`` functions by default.
+* Adds ``unsnoc`` function.
 
 0.1.5
 =====

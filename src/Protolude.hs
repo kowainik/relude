@@ -12,6 +12,7 @@ module Protolude (
   map,
   (&),
   uncons,
+  unsnoc,
   applyN,
   print,
   show,
@@ -361,6 +362,13 @@ map = fmap
 uncons :: [a] -> Maybe (a, [a])
 uncons []     = Nothing
 uncons (x:xs) = Just (x, xs)
+
+unsnoc :: [x] -> Maybe ([x],x)
+unsnoc = foldr go Nothing
+  where
+    go x mxs = Just (case mxs of
+       Nothing -> ([], x)
+       Just (xs, e) -> (x:xs, e))
 
 applyN :: Int -> (a -> a) -> a -> a
 applyN n f = X.foldr (.) identity (X.replicate n f)
