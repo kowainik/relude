@@ -32,12 +32,17 @@ import Conv as X
 import Panic as X
 
 import Base as Base hiding (
-    putStr     -- Overriden by Show.putStr
-  , putStrLn   -- Overriden by Show.putStrLn
-  , print      -- Overriden by Protolude.print
-  , show       -- Overriden by Protolude.show
-  , error      -- Overriden by Debug.error
-  , undefined  -- Overriden by Debug.undefined
+    putStr           -- Overriden by Show.putStr
+  , putStrLn         -- Overriden by Show.putStrLn
+  , print            -- Overriden by Protolude.print
+  , error            -- Overriden by Debug.error
+  , undefined        -- Overriden by Debug.undefined
+  , show             -- Overriden by Protolude.show
+  , showFloat        -- Custom Show instances deprecated.
+  , showList         -- Custom Show instances deprecated.
+  , showSigned       -- Custom Show instances deprecated.
+  , showSignedFloat  -- Custom Show instances deprecated.
+  , showsPrec        -- Custom Show instances deprecated.
   )
 import qualified Base as PBase
 
@@ -279,7 +284,6 @@ import Data.ByteString as X (ByteString)
 -- Text
 import Data.Text as X (Text)
 import qualified Data.Text.Lazy
-import qualified Data.Text.IO
 
 import Data.Text.IO as X (
     getLine
@@ -290,14 +294,20 @@ import Data.Text.IO as X (
   , appendFile
   )
 
-import Data.Text.Lazy (
+import Data.Text.Lazy as X (
     toStrict
   , fromStrict
   )
 
+import Data.Text.Encoding as X (
+    encodeUtf8
+  , decodeUtf8
+  , decodeUtf8'
+  , decodeUtf8With
+  )
+
 -- IO
 import System.Exit as X
---import System.Info as X
 import System.Environment as X (getArgs)
 import System.IO as X (
     Handle
@@ -317,6 +327,7 @@ import Control.Monad.ST as X
 import Control.Exception as X hiding (
     throw
   , assert
+  , displayException
   )
 import Control.Monad.STM as X
 import Control.Concurrent as X
@@ -359,8 +370,8 @@ print = liftIO . PBase.print
 
 show :: (Show a, StringConv String b) => a -> b
 show x = toS (PBase.show x)
-{-# SPECIALIZE show :: Show  a => a -> String  #-}
 {-# SPECIALIZE show :: Show  a => a -> Text  #-}
 {-# SPECIALIZE show :: Show  a => a -> LText  #-}
 {-# SPECIALIZE show :: Show  a => a -> ByteString  #-}
 {-# SPECIALIZE show :: Show  a => a -> LByteString  #-}
+{-# SPECIALIZE show :: Show  a => a -> String  #-}

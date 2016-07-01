@@ -16,6 +16,7 @@ Design points:
 * Automatic string conversions.
 * Types for common data structures in scope.
 * Types for all common string types in scope.
+* Banishes impure exception throwing outside of IO.
 * StateT/ReaderT/ExceptT transformers in scope by default.
 * Foldable / Traversable functions in scope by default.
 * Unsafe functions are prefixed with "unsafe" in separate module.
