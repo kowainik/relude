@@ -88,8 +88,8 @@ tracks Stack LTS resolver.
 FAQs
 ----
 
-* My ``putStrLn`` and ``putStr`` instances are no longer inferred in the presense
-of the ``-XOverloadedStrings`` extension?
+* **My ``putStrLn`` and ``putStr`` instances are no longer inferred in the presense
+of the ``-XOverloadedStrings`` extension?**
 
 Because the print functions are polymorphic the type of the print functions may
 require annotations if the type is not fully specified by inference. To force a
@@ -100,7 +100,7 @@ putText :: MonadIO m => T.Text -> m ()
 putLText :: MonadIO m => TL.Text -> m ()
 ```
 
-* How do I write manual Show instances if ``show`` isn't provided?
+* **How do I write manual Show instances if ``show`` isn't provided?**
 
 Generally speaking writing manual instances of Show is a [Haskell antipattern](
 http://www.stephendiehl.com/posts/strings.html) because it produces
@@ -114,8 +114,8 @@ manually.
 import GHC.Show (Show(..))
 ```
 
-* Partial functions like ``undefined`` and ``error`` raise compiler warnings on
-  usage.
+* **Partial functions like ``undefined`` and ``error`` raise compiler warnings on
+  usage.**
 
 This is by design. For fatal uncatchable errors use the provided ``panic``
 function if you intend the program to immediately abort.
