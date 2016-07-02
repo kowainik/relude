@@ -121,7 +121,7 @@ This is by design. For fatal uncatchable errors use the provided ``panic``
 function if you intend the program to immediately abort.
 
 ```haskell
-panic "This is fatal my failure"
+panic "Thus I die. Thus, thus, thus. Now I am dead"
 ```
 
 If inside of IO simply use ``throwIO`` for exception handling, or if in pure
