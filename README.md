@@ -114,6 +114,19 @@ manually.
 import GHC.Show (Show(..))
 ```
 
+* Partial functions like ``undefined`` and ``error`` raise compiler warnings on
+  usage.
+
+This is by design. For fatal uncatchable errors use the provided ``panic``
+function if you intend the program to immediately abort.
+
+```haskell
+panic "This is fatal my failure"
+```
+
+If inside of IO simply use ``throwIO`` for exception handling, or if in pure
+business logic use well-typed checked exceptions of the ``ExceptT`` and variety.
+
 License
 -------
 

@@ -34,6 +34,8 @@ library
   exposed-modules:     
     Protolude
     Unsafe
+
+  other-modules:
     Base
     Applicative
     Bool
@@ -47,8 +49,6 @@ library
     Semiring
     Bifunctor
     Panic
-
-  other-modules:
 
   default-extensions:
     NoImplicitPrelude
