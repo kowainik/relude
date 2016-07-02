@@ -15,7 +15,7 @@ Design points:
 * Polymorphic show.
 * Automatic string conversions.
 * Types for common data structures in scope.
-* Types for all common string types in scope.
+* Types for all common string types (Text/ByteString) in scope.
 * Banishes impure exception throwing outside of IO.
 * StateT/ReaderT/ExceptT transformers in scope by default.
 * Foldable / Traversable functions in scope by default.
@@ -125,7 +125,7 @@ panic "Thus I die. Thus, thus, thus. Now I am dead"
 ```
 
 If inside of IO simply use ``throwIO`` for exception handling, or if in pure
-business logic use well-typed checked exceptions of the ``ExceptT`` and variety.
+business logic use well-typed checked exceptions of the ``ExceptT`` variety.
 
 License
 -------
