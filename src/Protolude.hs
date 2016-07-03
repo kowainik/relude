@@ -15,6 +15,8 @@ module Protolude (
   unsnoc,
   applyN,
   print,
+  throwIO,
+  throwTo,
   show,
 
   LText,
@@ -326,12 +328,19 @@ import Control.Monad.ST as X
 
 -- Concurrency and Parallelism
 import Control.Exception as X hiding (
-    throw
+    throw    -- Impure throw is forbidden.
+  , throwIO
+  , throwTo
   , assert
   , displayException
   )
+
+import qualified Control.Exception
+
 import Control.Monad.STM as X
-import Control.Concurrent as X
+import Control.Concurrent as X hiding (
+    throwTo
+  )
 import Control.Concurrent.Async as X
 
 import Foreign.Storable as X (Storable)
@@ -375,6 +384,12 @@ applyN n f = X.foldr (.) identity (X.replicate n f)
 
 print :: (X.MonadIO m, PBase.Show a) => a -> m ()
 print = liftIO . PBase.print
+
+throwIO :: (X.MonadIO m, Exception e) => e -> m a
+throwIO = liftIO . Control.Exception.throwIO
+
+throwTo :: (X.MonadIO m, Exception e) => ThreadId -> e -> m ()
+throwTo tid e = liftIO (Control.Exception.throwTo tid e)
 
 show :: (Show a, StringConv String b) => a -> b
 show x = toS (PBase.show x)
