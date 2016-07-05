@@ -198,6 +198,7 @@ import Control.Monad.State as X (
   , get
   , gets
   , modify
+  , state
   , withState
 
   , runState
@@ -216,6 +217,7 @@ import Control.Monad.Reader as X (
   , ask
   , asks
   , local
+  , reader
   , runReader
   , runReaderT
   )
