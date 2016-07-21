@@ -9,6 +9,7 @@ module Monad (
   , (=<<)
   , (>=>)
   , (<=<)
+  , (>>)
   , forever
 
   , join
