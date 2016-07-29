@@ -98,3 +98,7 @@ filter :: (a -> Bool) -> [a] -> [a]
 ```haskell
 replicate :: Int -> a -> [a]
 ```
+
+```haskell
+map :: Functor f => (a -> b) -> f a -> f b
+```
