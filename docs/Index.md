@@ -29,3 +29,4 @@ Welcome to project documentation.
 - [Tuples](Tuples.md)
 - [Generics](Generics.md)
 - [Type Level Programming](TypeLevel.md)
+- [Unsafe](Unsafe.md)
