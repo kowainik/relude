@@ -1,3 +1,11 @@
+0.1.7
+=====
+
+* Exports monadic ``(>>)`` operator by default.
+* Adds ``traceId`` and ``traceShowId`` functions.
+* Exports``reader`` and ``state``  functions by default.
+* Export lifted ``throwIO`` and ``throwTo`` functions.
+
 0.1.6
 =====
 

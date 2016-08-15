@@ -60,6 +60,13 @@ $ stack exec ghci
 > import Protolude
 ```
 
+Exported Functions
+------------------
+
+The list of exports is given in the [Symbols.md](./Symbols.md) file. Haddock
+unfortunately breaks in the presence of module reexports and is unable to render
+documentation.
+
 Dependencies
 ------------
 

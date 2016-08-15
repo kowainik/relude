@@ -1,5 +1,5 @@
 name:                protolude
-version:             0.1.6
+version:             0.1.7
 synopsis:            A sensible set of defaults for writing custom Preludes.
 description:         A sensible set of defaults for writing custom Preludes.
 homepage:            https://github.com/sdiehl/protolude
@@ -34,8 +34,6 @@ library
   exposed-modules:     
     Protolude
     Unsafe
-
-  other-modules:
     Base
     Applicative
     Bool
@@ -49,6 +47,8 @@ library
     Semiring
     Bifunctor
     Panic
+
+  other-modules:
 
   default-extensions:
     NoImplicitPrelude
