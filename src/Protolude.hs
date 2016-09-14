@@ -17,6 +17,7 @@ module Protolude (
   print,
   throwIO,
   throwTo,
+  foreach,
   show,
 
   LText,
@@ -392,6 +393,9 @@ throwIO = liftIO . Control.Exception.throwIO
 
 throwTo :: (X.MonadIO m, Exception e) => ThreadId -> e -> m ()
 throwTo tid e = liftIO (Control.Exception.throwTo tid e)
+
+foreach :: Functor f => f a -> (a -> b) -> f b
+foreach = flip fmap
 
 show :: (Show a, StringConv String b) => a -> b
 show x = toS (PBase.show x)
