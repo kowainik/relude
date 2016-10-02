@@ -1,13 +1,13 @@
-{-# LANGUAGE Safe #-}
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE Safe              #-}
 
-module Bifunctor (
-  Bifunctor(..)
-) where
+module Bifunctor
+       ( Bifunctor (..)
+       ) where
 
-import Data.Function (id, (.))
-import Data.Either (Either(..))
-import Control.Applicative ( Const(..) )
+import           Control.Applicative (Const (..))
+import           Data.Either         (Either (..))
+import           Data.Function       (id, (.))
 
 class Bifunctor p where
   {-# MINIMAL bimap | first, second #-}
@@ -40,7 +40,7 @@ instance Bifunctor ((,,,,,,) x1 x2 x3 x4 x5) where
   bimap f g ~(x1, x2, x3, x4, x5, a, b) = (x1, x2, x3, x4, x5, f a, g b)
 
 instance Bifunctor Either where
-  bimap f _ (Left a) = Left (f a)
+  bimap f _ (Left a)  = Left (f a)
   bimap _ g (Right b) = Right (g b)
 
 instance Bifunctor Const where

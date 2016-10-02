@@ -1,28 +1,28 @@
-{-# LANGUAGE Trustworthy #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE TypeSynonymInstances #-}
 {-# LANGUAGE ExtendedDefaultRules #-}
+{-# LANGUAGE FlexibleContexts     #-}
+{-# LANGUAGE FlexibleInstances    #-}
+{-# LANGUAGE NoImplicitPrelude    #-}
+{-# LANGUAGE Trustworthy          #-}
+{-# LANGUAGE TypeSynonymInstances #-}
 
-module Show (
-  Print(..),
-  putText,
-  putLText,
-) where
+module Show
+       ( Print (..)
+       , putText
+       , putLText
+       ) where
 
 import qualified Base
-import Data.Function ((.))
+import           Data.Function              ((.))
 
-import Control.Monad.IO.Class (MonadIO, liftIO)
-import qualified Data.ByteString.Char8 as BS
+import           Control.Monad.IO.Class     (MonadIO, liftIO)
+import qualified Data.ByteString.Char8      as BS
 import qualified Data.ByteString.Lazy.Char8 as BL
 
-import qualified Data.Text as T
-import qualified Data.Text.IO as T
+import qualified Data.Text                  as T
+import qualified Data.Text.IO               as T
 
-import qualified Data.Text.Lazy as TL
-import qualified Data.Text.Lazy.IO as TL
+import qualified Data.Text.Lazy             as TL
+import qualified Data.Text.Lazy.IO          as TL
 
 
 class Print a where

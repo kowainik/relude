@@ -1,26 +1,26 @@
-{-# LANGUAGE Trustworthy #-}
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE Trustworthy       #-}
 
-module Debug (
-  undefined,
-  error,
-  trace,
-  traceM,
-  traceId,
-  traceIO,
-  traceShow,
-  traceShowId,
-  traceShowM,
-  notImplemented,
-) where
+module Debug
+       ( undefined
+       , error
+       , trace
+       , traceM
+       , traceId
+       , traceIO
+       , traceShow
+       , traceShowId
+       , traceShowM
+       , notImplemented,
+       ) where
 
-import Data.Text (Text, unpack)
-import Control.Monad (Monad, return)
+import           Control.Monad    (Monad, return)
+import           Data.Text        (Text, unpack)
 
-import qualified Base as P
-import Show (Print, putStrLn)
+import qualified Base             as P
+import           Show             (Print, putStrLn)
 
-import System.IO.Unsafe (unsafePerformIO)
+import           System.IO.Unsafe (unsafePerformIO)
 
 {-# WARNING trace "'trace' remains in code" #-}
 trace :: Print b => b -> a -> a

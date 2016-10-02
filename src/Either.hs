@@ -1,18 +1,18 @@
-{-# LANGUAGE Safe #-}
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE Safe              #-}
 
-module Either (
-  maybeToLeft
-, maybeToRight
-, leftToMaybe
-, rightToMaybe
-, maybeToEither
-) where
+module Either
+       ( maybeToLeft
+       , maybeToRight
+       , leftToMaybe
+       , rightToMaybe
+       , maybeToEither
+       ) where
 
-import Data.Function (const)
-import Data.Monoid (Monoid, mempty)
-import Data.Maybe (Maybe(..), maybe)
-import Data.Either (Either(..), either)
+import           Data.Either   (Either (..), either)
+import           Data.Function (const)
+import           Data.Maybe    (Maybe (..), maybe)
+import           Data.Monoid   (Monoid, mempty)
 
 leftToMaybe :: Either l r -> Maybe l
 leftToMaybe = either Just (const Nothing)

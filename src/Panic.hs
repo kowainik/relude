@@ -1,15 +1,15 @@
-{-# LANGUAGE Trustworthy #-}
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE Trustworthy        #-}
 
-module Panic (
-  FatalError(..),
-  panic,
-) where
+module Panic
+       ( FatalError (..)
+       , panic
+       ) where
 
-import Base (Show)
-import Data.Text (Text)
-import Data.Typeable (Typeable)
-import Control.Exception as X
+import           Base              (Show)
+import           Control.Exception as X
+import           Data.Text         (Text)
+import           Data.Typeable     (Typeable)
 
 -- | Uncatchable exceptions thrown and never caught.
 data FatalError = FatalError { msg :: Text }

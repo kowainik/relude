@@ -1,28 +1,20 @@
-{-# LANGUAGE CPP #-}
-{-# LANGUAGE Safe #-}
+{-# LANGUAGE CPP               #-}
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE Safe              #-}
 
-module Functor (
-  Functor(..),
-  ($>),
-  (<$>),
-  void,
-) where
+module Functor
+       ( Functor (..)
+       , ($>)
+       , (<$>)
+       , void
+       ) where
 
 #if (__GLASGOW_HASKELL__ >= 710)
-import Data.Functor (
-    Functor(..)
-  , ($>)
-  , (<$>)
-  , void
-  )
+import           Data.Functor  (Functor (..), void, ($>), (<$>))
 #else
-import Data.Functor (
-    Functor(..)
-  , (<$>)
-  )
+import           Data.Functor  (Functor (..), (<$>))
 
-import Data.Function (flip)
+import           Data.Function (flip)
 
 infixl 4 $>
 

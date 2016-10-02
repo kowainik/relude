@@ -1,21 +1,21 @@
-{-# LANGUAGE Safe #-}
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE Safe              #-}
 
-module List (
-  head,
-  ordNub,
-  sortOn,
-  list,
-) where
+module List
+       ( head
+       , ordNub
+       , sortOn
+       , list
+       ) where
 
-import Data.List (sortBy)
-import Data.Maybe (Maybe(..))
-import Data.Ord (Ord, comparing)
-import Data.Foldable (Foldable, foldr)
-import Data.Function ((.))
-import Data.Functor (fmap)
-import Control.Monad (return)
-import qualified Data.Set as Set
+import           Control.Monad (return)
+import           Data.Foldable (Foldable, foldr)
+import           Data.Function ((.))
+import           Data.Functor  (fmap)
+import           Data.List     (sortBy)
+import           Data.Maybe    (Maybe (..))
+import           Data.Ord      (Ord, comparing)
+import qualified Data.Set      as Set
 
 head :: (Foldable f) => f a -> Maybe a
 head = foldr (\x _ -> return x) Nothing

@@ -1,52 +1,52 @@
-{-# LANGUAGE CPP #-}
-{-# LANGUAGE Trustworthy #-}
+{-# LANGUAGE CPP               #-}
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE Trustworthy       #-}
 
-module Monad (
-    Monad((>>=), return)
-  , MonadPlus(..)
+module Monad
+       ( Monad ((>>=), return)
+       , MonadPlus (..)
 
-  , (=<<)
-  , (>=>)
-  , (<=<)
-  , (>>)
-  , forever
+       , (=<<)
+       , (>=>)
+       , (<=<)
+       , (>>)
+       , forever
 
-  , join
-  , mfilter
-  , filterM
-  , mapAndUnzipM
-  , zipWithM
-  , zipWithM_
-  , foldM
-  , foldM_
-  , replicateM
-  , replicateM_
-  , concatMapM
+       , join
+       , mfilter
+       , filterM
+       , mapAndUnzipM
+       , zipWithM
+       , zipWithM_
+       , foldM
+       , foldM_
+       , replicateM
+       , replicateM_
+       , concatMapM
 
-  , guard
-  , when
-  , unless
+       , guard
+       , when
+       , unless
 
-  , liftM
-  , liftM2
-  , liftM3
-  , liftM4
-  , liftM5
-  , liftM'
-  , liftM2'
-  , ap
+       , liftM
+       , liftM2
+       , liftM3
+       , liftM4
+       , liftM5
+       , liftM'
+       , liftM2'
+       , ap
 
-  , (<$!>)
-  ) where
+       , (<$!>)
+       ) where
 
-import Base (seq)
-import Data.List (concat)
+import           Base          (seq)
+import           Data.List     (concat)
 
 #if (__GLASGOW_HASKELL__ >= 710)
-import Control.Monad hiding ((<$!>))
+import           Control.Monad hiding ((<$!>))
 #else
-import Control.Monad
+import           Control.Monad
 #endif
 
 concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
@@ -56,7 +56,7 @@ liftM' :: Monad m => (a -> b) -> m a -> m b
 liftM' = (<$!>)
 {-# INLINE liftM' #-}
 
-liftM2' :: (Monad m) => (a -> b -> c) -> m a -> m b -> m c
+liftM2' :: Monad m => (a -> b -> c) -> m a -> m b -> m c
 liftM2' f a b = do
   x <- a
   y <- b

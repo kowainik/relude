@@ -1,360 +1,189 @@
-{-# LANGUAGE CPP #-}
-{-# LANGUAGE Trustworthy #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE ExplicitNamespaces #-}
+{-# LANGUAGE CPP                   #-}
+{-# LANGUAGE ExplicitNamespaces    #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE Trustworthy           #-}
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
-module Universum (
-  module X,
-  module Base,
-  identity,
-  map,
-  (&),
-  uncons,
-  unsnoc,
-  applyN,
-  print,
-  throwIO,
-  throwTo,
-  foreach,
-  show,
+module Universum
+       ( -- * Reexports from base and from modules in this repo
+         module X
+       , module Base
 
-  LText,
-  LByteString,
-) where
+         -- * Useful standard unclassifed functions
+       , identity
+       , map
+       , (&)
+       , uncons
+       , unsnoc
+       , applyN
+       , print
+       , throwIO
+       , throwTo
+       , foreach
+       , show
 
-import List as X
-import Show as X
-import Bool as X
-import Debug as X
-import Monad as X
-import Functor as X
-import Either as X
-import Applicative as X
-import Conv as X
-import Panic as X
+         -- * Convenient type aliases
+       , LText
+       , LByteString
+       ) where
 
-import Base as Base hiding (
-    putStr           -- Overriden by Show.putStr
-  , putStrLn         -- Overriden by Show.putStrLn
-  , print            -- Overriden by Protolude.print
-  , error            -- Overriden by Debug.error
-  , undefined        -- Overriden by Debug.undefined
-  , show             -- Overriden by Protolude.show
-  , showFloat        -- Custom Show instances deprecated.
-  , showList         -- Custom Show instances deprecated.
-  , showSigned       -- Custom Show instances deprecated.
-  , showSignedFloat  -- Custom Show instances deprecated.
-  , showsPrec        -- Custom Show instances deprecated.
-  )
-import qualified Base as PBase
+import           Applicative              as X
+import           Bool                     as X
+import           Conv                     as X
+import           Debug                    as X
+import           Either                   as X
+import           Functor                  as X
+import           List                     as X
+import           Monad                    as X
+import           Panic                    as X
+import           Show                     as X
+
+import           Base                     as Base hiding (error, print, putStr, putStrLn,
+                                                   show, showFloat, showList, showSigned,
+                                                   showSignedFloat, showsPrec, undefined)
+import qualified Base                     as PBase
 
 -- Used for 'show', not exported.
-import Data.String (String)
-import Data.String as X (IsString)
+import           Data.String              (String)
+import           Data.String              as X (IsString)
 
 -- Maybe'ized version of partial functions
-import Safe as X (
-    headMay
-  , headDef
-  , initMay
-  , initDef
-  , initSafe
-  , tailMay
-  , tailDef
-  , tailSafe
-  , lastDef
-  , lastMay
-  , foldr1May
-  , foldl1May
-  , atMay
-  , atDef
-  )
+import           Safe                     as X (atDef, atMay, foldl1May, foldr1May,
+                                                headDef, headMay, initDef, initMay,
+                                                initSafe, lastDef, lastMay, tailDef,
+                                                tailMay, tailSafe)
 
 -- Applicatives
-import Control.Applicative as X (
-    Applicative(..)
-  , Alternative(..)
-  , Const(..)
-  , ZipList(..)
-  , (<**>)
-  , liftA
-  , liftA2
-  , liftA3
-  , optional
-  )
+import           Control.Applicative      as X (Alternative (..), Applicative (..),
+                                                Const (..), ZipList (..), liftA, liftA2,
+                                                liftA3, optional, (<**>))
 
 -- Base typeclasses
-import Data.Eq as X
-import Data.Ord as X
-import Data.Traversable as X
-import Data.Foldable as X hiding (
-    foldr1
-  , foldl1
-  )
-import Semiring as X
-import Data.Functor.Identity as X
+import           Data.Eq                  as X
+import           Data.Foldable            as X hiding (foldl1, foldr1)
+import           Data.Functor.Identity    as X
+import           Data.Ord                 as X
+import           Data.Traversable         as X
+import           Semiring                 as X
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
-import Data.Monoid as X hiding ((<>))
-import Data.Semigroup as X ( Semigroup(..) )
+import           Data.Monoid              as X hiding ((<>))
+import           Data.Semigroup           as X (Semigroup (..))
 #else
-import Data.Monoid as X
+import           Data.Monoid              as X
 #endif
 
 #if (__GLASGOW_HASKELL__ >= 710)
-import Data.Bifunctor as X (Bifunctor(..))
+import           Data.Bifunctor           as X (Bifunctor (..))
 #else
-import Bifunctor as X (Bifunctor(..))
+import           Bifunctor                as X (Bifunctor (..))
 #endif
 
 -- Deepseq
-import Control.DeepSeq as X (
-    NFData(..)
-  , ($!!)
-  , deepseq
-  , force
-  )
+import           Control.DeepSeq          as X (NFData (..), deepseq, force, ($!!))
 
 -- Data structures
-import Data.Tuple as X
-import Data.List as X (
-    splitAt
-  , break
-  , intercalate
-  , isPrefixOf
-  , drop
-  , filter
-  , reverse
-  , replicate
-  , take
-  , sortBy
-  , sort
-  , intersperse
-  , transpose
-  , subsequences
-  , permutations
-  , scanl
-  , scanr
-  , iterate
-  , repeat
-  , cycle
-  , unfoldr
-  , takeWhile
-  , dropWhile
-  , group
-  , inits
-  , tails
-  , zipWith
-  , zip
-  )
+import           Data.List                as X (break, cycle, drop, dropWhile, filter,
+                                                group, inits, intercalate, intersperse,
+                                                isPrefixOf, iterate, permutations, repeat,
+                                                replicate, reverse, scanl, scanr, sort,
+                                                sortBy, splitAt, subsequences, tails,
+                                                take, takeWhile, transpose, unfoldr, zip,
+                                                zipWith)
+import           Data.Tuple               as X
 
-import Data.Map as X (Map)
-import Data.Set as X (Set)
-import Data.Sequence as X (Seq)
-import Data.IntMap as X (IntMap)
-import Data.IntSet as X (IntSet)
+import           Data.IntMap              as X (IntMap)
+import           Data.IntSet              as X (IntSet)
+import           Data.Map                 as X (Map)
+import           Data.Sequence            as X (Seq)
+import           Data.Set                 as X (Set)
 
 #if ( __GLASGOW_HASKELL__ >= 710 )
-import Data.Proxy as X (
-    Proxy(..)
-  )
+import           Data.Proxy               as X (Proxy (..))
 
-import Data.Typeable as X (
-    TypeRep
-  , Typeable
-  , typeRep
-  , cast
-  , eqT
-  )
+import           Data.Typeable            as X (TypeRep, Typeable, cast, eqT, typeRep)
 
-import Data.Type.Coercion as X (
-    Coercion(..)
-  , coerceWith
-  )
+import           Data.Type.Coercion       as X (Coercion (..), coerceWith)
 
-import Data.Type.Equality as X (
-    (:~:)(..)
-  , type (==)
-  , sym
-  , trans
-  , castWith
-  , gcastWith
-  )
+import           Data.Type.Equality       as X ((:~:) (..), type (==), castWith,
+                                                gcastWith, sym, trans)
 
-import Data.Void as X (
-    Void
-  , absurd
-  , vacuous
-  )
+import           Data.Void                as X (Void, absurd, vacuous)
 #endif
 
 -- Monad transformers
-import Control.Monad.State as X (
-    MonadState
-  , State
-  , StateT
-  , put
-  , get
-  , gets
-  , modify
-  , state
-  , withState
+import           Control.Monad.State      as X (MonadState, State, StateT, evalState,
+                                                evalStateT, execState, execStateT, get,
+                                                gets, modify, put, runState, runStateT,
+                                                state, withState)
 
-  , runState
-  , execState
-  , evalState
+import           Control.Monad.Reader     as X (MonadReader, Reader, ReaderT, ask, asks,
+                                                local, reader, runReader, runReaderT)
 
-  , runStateT
-  , execStateT
-  , evalStateT
-  )
+import           Control.Monad.Except     as X (Except, ExceptT, MonadError, catchError,
+                                                runExcept, runExceptT, throwError)
 
-import Control.Monad.Reader as X (
-    MonadReader
-  , Reader
-  , ReaderT
-  , ask
-  , asks
-  , local
-  , reader
-  , runReader
-  , runReaderT
-  )
-
-import Control.Monad.Except as X (
-    MonadError
-  , Except
-  , ExceptT
-  , throwError
-  , catchError
-  , runExcept
-  , runExceptT
-  )
-
-import Control.Monad.Trans as X (
-    MonadIO
-  , lift
-  , liftIO
-  )
+import           Control.Monad.Trans      as X (MonadIO, lift, liftIO)
 
 -- Base types
-import Data.Int as X
-import Data.Bits as X hiding (
-    unsafeShiftL
-  , unsafeShiftR
-  )
-import Data.Word as X
-import Data.Either as X
-import Data.Complex as X
-import Data.Char as X (chr)
-import Data.Bool as X hiding (bool)
-import Data.Maybe as X hiding (fromJust)
+import           Data.Bits                as X hiding (unsafeShiftL, unsafeShiftR)
+import           Data.Bool                as X hiding (bool)
+import           Data.Char                as X (chr)
+import           Data.Complex             as X
+import           Data.Either              as X
+import           Data.Int                 as X
+import           Data.Maybe               as X hiding (fromJust)
+import           Data.Word                as X
 
-import Data.Function as X (
-    const
-  , (.)
-  , ($)
-  , flip
-  , fix
-  , on
-  )
+import           Data.Function            as X (const, fix, flip, on, ($), (.))
 
 -- Genericss
-import GHC.Generics as X (
-    Generic(..)
-  , Rep
-  , K1(..)
-  , M1(..)
-  , U1(..)
-  , V1
-  , D1
-  , C1
-  , S1
-  , (:+:)
-  , (:*:)
-  , Rec0
-  , Constructor(..)
-  , Selector(..)
-  , Fixity(..)
-#if ( __GLASGOW_HASKELL__ >= 800 )
-  , Meta(..)
-#endif
-  )
+import           GHC.Generics             as X ((:*:), (:+:), C1, Constructor (..), D1,
+                                                Fixity (..), Generic (..), K1 (..),
+                                                M1 (..), Meta (..), Rec0, Rep, S1,
+                                                Selector (..), U1 (..), V1)
 
 -- ByteString
+import           Data.ByteString          as X (ByteString)
 import qualified Data.ByteString.Lazy
-import Data.ByteString as X (ByteString)
 
 -- Text
-import Data.Text as X (Text)
+import           Data.Text                as X (Text)
 import qualified Data.Text.Lazy
 
-import Data.Text.IO as X (
-    getLine
-  , getContents
-  , interact
-  , readFile
-  , writeFile
-  , appendFile
-  )
+import           Data.Text.IO             as X (appendFile, getContents, getLine,
+                                                interact, readFile, writeFile)
 
-import Data.Text.Lazy as X (
-    toStrict
-  , fromStrict
-  )
+import           Data.Text.Lazy           as X (fromStrict, toStrict)
 
-import Data.Text.Encoding as X (
-    encodeUtf8
-  , decodeUtf8
-  , decodeUtf8'
-  , decodeUtf8With
-  )
+import           Data.Text.Encoding       as X (decodeUtf8, decodeUtf8', decodeUtf8With,
+                                                encodeUtf8)
 
 -- IO
-import System.Exit as X
-import System.Environment as X (getArgs)
-import System.IO as X (
-    Handle
-  , FilePath
-  , IOMode(..)
-  , stdin
-  , stdout
-  , stderr
-  , withFile
-  , openFile
-  )
+import           System.Environment       as X (getArgs)
+import           System.Exit              as X
+import           System.IO                as X (FilePath, Handle, IOMode (..), openFile,
+                                                stderr, stdin, stdout, withFile)
 
 -- ST
-import Control.Monad.ST as X
+import           Control.Monad.ST         as X
 
 -- Concurrency and Parallelism
-import Control.Exception as X hiding (
-    throw    -- Impure throw is forbidden.
-  , throwIO
-  , throwTo
-  , assert
-  , displayException
-  )
+import           Control.Exception        as X hiding (assert, displayException, throw,
+                                                throwIO, throwTo)
 
 import qualified Control.Exception
 
-import Control.Monad.STM as X
-import Control.Concurrent as X hiding (
-    throwTo
-  )
-import Control.Concurrent.Async as X
+import           Control.Concurrent       as X hiding (throwTo)
+import           Control.Concurrent.Async as X
+import           Control.Monad.STM        as X
 
-import Foreign.Storable as X (Storable)
+import           Foreign.Storable         as X (Storable)
 
 -- Read instances hiding unsafe builtins (read)
-import Text.Read as X (
-    Read
-  , reads
-  , readMaybe
-  , readEither
-  )
+import           Text.Read                as X (Read, readEither, readMaybe, reads)
 
 -- Type synonymss for lazy texts
 type LText = Data.Text.Lazy.Text
@@ -379,7 +208,7 @@ unsnoc :: [x] -> Maybe ([x],x)
 unsnoc = foldr go Nothing
   where
     go x mxs = Just (case mxs of
-       Nothing -> ([], x)
+       Nothing      -> ([], x)
        Just (xs, e) -> (x:xs, e))
 
 applyN :: Int -> (a -> a) -> a -> a

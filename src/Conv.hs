@@ -1,29 +1,29 @@
-{-# LANGUAGE Trustworthy #-}
-{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE Trustworthy           #-}
+{-# LANGUAGE TypeSynonymInstances  #-}
 
-module Conv (
-  StringConv (..)
-, toS
-, toSL
-, Leniency (..)
-) where
+module Conv
+       ( StringConv (..)
+       , toS
+       , toSL
+       , Leniency (..)
+       ) where
 
-import Data.ByteString.Char8      as B
-import Data.ByteString.Lazy.Char8 as LB
-import Data.Text                  as T
-import Data.Text.Encoding         as T
-import Data.Text.Encoding.Error   as T
-import Data.Text.Lazy             as LT
-import Data.Text.Lazy.Encoding    as LT
+import           Data.ByteString.Char8      as B
+import           Data.ByteString.Lazy.Char8 as LB
+import           Data.Text                  as T
+import           Data.Text.Encoding         as T
+import           Data.Text.Encoding.Error   as T
+import           Data.Text.Lazy             as LT
+import           Data.Text.Lazy.Encoding    as LT
 
-import Base
-import Data.Eq (Eq(..))
-import Data.Ord (Ord(..))
-import Data.Function ((.), id)
-import Data.String (String)
-import Control.Applicative (pure)
+import           Base
+import           Control.Applicative        (pure)
+import           Data.Eq                    (Eq (..))
+import           Data.Function              (id, (.))
+import           Data.Ord                   (Ord (..))
+import           Data.String                (String)
 
 data Leniency = Lenient | Strict
   deriving (Eq,Show,Ord,Enum,Bounded)
@@ -69,8 +69,8 @@ instance StringConv LT.Text B.ByteString where strConv l = strConv l . LT.encode
 
 decodeUtf8T :: Leniency -> B.ByteString -> T.Text
 decodeUtf8T Lenient = T.decodeUtf8With T.lenientDecode
-decodeUtf8T Strict = T.decodeUtf8With T.strictDecode
+decodeUtf8T Strict  = T.decodeUtf8With T.strictDecode
 
 decodeUtf8LT :: Leniency -> LB.ByteString -> LT.Text
 decodeUtf8LT Lenient = LT.decodeUtf8With T.lenientDecode
-decodeUtf8LT Strict = LT.decodeUtf8With T.strictDecode
+decodeUtf8LT Strict  = LT.decodeUtf8With T.strictDecode

@@ -1,12 +1,12 @@
-{-# LANGUAGE Safe #-}
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE Safe              #-}
 
-module Semiring (
-  Semiring(..),
-  zero,
-) where
+module Semiring
+       ( Semiring(..)
+       , zero
+       ) where
 
-import Data.Monoid
+import           Data.Monoid
 
 -- | Alias for 'mempty'
 zero :: Monoid m => m

@@ -1,20 +1,20 @@
-{-# LANGUAGE Unsafe #-}
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE Unsafe            #-}
 
-module Unsafe (
-  unsafeHead,
-  unsafeTail,
-  unsafeInit,
-  unsafeLast,
-  unsafeFromJust,
-  unsafeIndex,
-  unsafeThrow,
-) where
+module Unsafe
+       ( unsafeHead
+       , unsafeTail
+       , unsafeInit
+       , unsafeLast
+       , unsafeFromJust
+       , unsafeIndex
+       , unsafeThrow
+       ) where
 
-import Base (Int)
-import qualified Data.List as List
-import qualified Data.Maybe as Maybe
+import           Base              (Int)
 import qualified Control.Exception as Exc
+import qualified Data.List         as List
+import qualified Data.Maybe        as Maybe
 
 unsafeHead :: [a] -> a
 unsafeHead = List.head
