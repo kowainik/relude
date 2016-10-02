@@ -102,14 +102,7 @@ import           Data.Set                 as X (Set)
 
 #if ( __GLASGOW_HASKELL__ >= 710 )
 import           Data.Proxy               as X (Proxy (..))
-
-import           Data.Typeable            as X (TypeRep, Typeable, cast, eqT, typeRep)
-
-import           Data.Type.Coercion       as X (Coercion (..), coerceWith)
-
-import           Data.Type.Equality       as X ((:~:) (..), type (==), castWith,
-                                                gcastWith, sym, trans)
-
+import           Data.Typeable            as X (Typeable)
 import           Data.Void                as X (Void, absurd, vacuous)
 #endif
 
