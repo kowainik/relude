@@ -65,7 +65,7 @@ import           Data.Eq                  as X
 import           Data.Foldable            as X hiding (foldl1, foldr1)
 import           Data.Functor.Identity    as X
 import           Data.Ord                 as X
-import           Data.Traversable         as X
+import           Data.Traversable         as X hiding (for)
 import           Semiring                 as X
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
@@ -167,7 +167,7 @@ import           Control.Exception        as X hiding (assert, displayException,
 import qualified Control.Exception
 
 import           Control.Concurrent       as X hiding (throwTo)
-import           Control.Concurrent.Async as X
+import           Control.Concurrent.Async as X hiding (wait)
 import           Control.Monad.STM        as X
 
 import           Foreign.Storable         as X (Storable)
