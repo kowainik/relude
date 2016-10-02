@@ -139,11 +139,8 @@ import           Data.Word                as X
 
 import           Data.Function            as X (const, fix, flip, on, ($), (.))
 
--- Genericss
-import           GHC.Generics             as X ((:*:), (:+:), C1, Constructor (..), D1,
-                                                Fixity (..), Generic (..), K1 (..),
-                                                M1 (..), Meta (..), Rec0, Rep, S1,
-                                                Selector (..), U1 (..), V1)
+-- Generics
+import           GHC.Generics             as X (Generic)
 
 -- ByteString
 import           Data.ByteString          as X (ByteString)
