@@ -5,3 +5,5 @@ dist
 cabal.sandbox.config
 *.hi
 *.o
+
+*~
