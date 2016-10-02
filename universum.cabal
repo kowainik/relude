@@ -11,7 +11,7 @@ copyright:           2016 Stephen Diehl
 category:            Prelude
 build-type:          Simple
 cabal-version:       >=1.10
-tested-with:         
+tested-with:
   GHC == 7.6.1,
   GHC == 7.6.2,
   GHC == 7.6.3,
@@ -31,7 +31,7 @@ Source-Repository head
     location: git@github.com:serokell/universum.git
 
 library
-  exposed-modules:     
+  exposed-modules:
     Universum
     Unsafe
     Base
@@ -48,19 +48,15 @@ library
     Bifunctor
     Panic
 
-  other-modules:
-
   default-extensions:
     NoImplicitPrelude
     OverloadedStrings
-    FlexibleContexts
-    MultiParamTypeClasses
 
   ghc-options:
     -Wall
     -fwarn-implicit-prelude
 
-  build-depends:       
+  build-depends:
     base             >= 4.6  && <4.10,
     ghc-prim         >= 0.3  && <0.6,
     safe             >= 0.3  && <0.4,
