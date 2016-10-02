@@ -94,9 +94,11 @@ import           Data.List                as X (break, cycle, drop, dropWhile, f
                                                 zipWith)
 import           Data.Tuple               as X
 
-import           Data.IntMap              as X (IntMap)
+import           Data.HashMap.Strict      as X (HashMap)
+import           Data.HashSet             as X (HashSet)
+import           Data.IntMap.Strict       as X (IntMap)
 import           Data.IntSet              as X (IntSet)
-import           Data.Map                 as X (Map)
+import           Data.Map.Strict          as X (Map)
 import           Data.Sequence            as X (Seq)
 import           Data.Set                 as X (Set)
 
