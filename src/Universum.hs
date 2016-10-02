@@ -5,7 +5,7 @@
 {-# LANGUAGE ExplicitNamespaces #-}
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
-module Protolude (
+module Universum (
   module X,
   module Base,
   identity,

@@ -32,7 +32,7 @@ Source-Repository head
 
 library
   exposed-modules:     
-    Protolude
+    Universum
     Unsafe
     Base
     Applicative
