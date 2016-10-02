@@ -19,7 +19,7 @@ import           GHC.Err              as X (error, undefined)
 import           GHC.Exts             as X (Constraint, FunPtr, Ptr)
 import           GHC.Float            as X
 import           GHC.Num              as X
-import           GHC.Real             as X
+import           GHC.Real             as X hiding ((%))
 import           GHC.Show             as X (Show (..))
 import           System.IO            as X (print, putStr, putStrLn)
 
