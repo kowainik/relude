@@ -1,8 +1,7 @@
-Protolude
+Universum
 =========
 
 [![Build Status](https://travis-ci.org/sdiehl/protolude.svg?branch=master)](https://travis-ci.org/sdiehl/protolude)
-[![Hackage](https://img.shields.io/hackage/v/protolude.svg)](https://hackage.haskell.org/package/protolude)
 
 A sensible starting Prelude for building custom Preludes.
 
