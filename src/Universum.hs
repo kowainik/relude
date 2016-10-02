@@ -108,9 +108,9 @@ import           Data.Void                as X (Void, absurd, vacuous)
 
 -- Monad transformers
 import           Control.Monad.State      as X (MonadState, State, StateT, evalState,
-                                                evalStateT, execState, execStateT, get,
-                                                gets, modify, put, runState, runStateT,
-                                                state, withState)
+                                                evalStateT, execState, execStateT, gets,
+                                                modify, runState, runStateT, state,
+                                                withState)
 
 import           Control.Monad.Reader     as X (MonadReader, Reader, ReaderT, ask, asks,
                                                 local, reader, runReader, runReaderT)
