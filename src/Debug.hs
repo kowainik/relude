@@ -58,8 +58,10 @@ traceM s = trace (unpack s) (return ())
 traceId :: Text -> Text
 traceId s = trace s s
 
+{-# WARNING notImplemented "'notImplemented' remains in code" #-}
 notImplemented :: a
 notImplemented = P.error "Not implemented"
 
+{-# WARNING undefined "'undefined' remains in code" #-}
 undefined :: a
 undefined = P.undefined
