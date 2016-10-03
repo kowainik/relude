@@ -1,144 +1,124 @@
 Universum
 =========
 
-[![Build Status](https://travis-ci.org/sdiehl/protolude.svg?branch=master)](https://travis-ci.org/sdiehl/protolude)
+[![Build Status](https://travis-ci.org/serokell/universum.svg?branch=master)](https://travis-ci.org/serokell/universum)
 
-A sensible starting Prelude for building custom Preludes.
+Prelude used in Serokell.
 
-Design points:
 
-* Banishes String.
-* Banishes partial functions.
-* Compiler warning on bottoms.
-* Polymorphic string IO functions.
-* Polymorphic show.
-* Automatic string conversions.
-* Types for common data structures in scope.
-* Types for all common string types (Text/ByteString) in scope.
-* Banishes impure exception throwing outside of IO.
-* StateT/ReaderT/ExceptT transformers in scope by default.
-* Foldable / Traversable functions in scope by default.
-* Unsafe functions are prefixed with "unsafe" in separate module.
-* Compiler agnostic, GHC internal modules are abstracted out into Base.
-* Compatibility with GHC 8.0.
-* Includes Semiring for GHC >= 7.6.
-* Includes Bifunctor for GHC >= 7.6.
-* Includes Semigroup for GHC >= 7.6.
+How to use
+----------
 
-Supports:
+Import `Universum`.
 
- * GHC 7.6.1
- * GHC 7.6.2
- * GHC 7.6.3
- * GHC 7.8.1
- * GHC 7.8.2
- * GHC 7.8.3
- * GHC 7.8.4
- * GHC 7.10.1
- * GHC 7.10.2
- * GHC 7.10.3
- * GHC 8.0.1
- * GHC HEAD
+You should also have `NoImplicitPrelude` enabled – it's recommended to put it into the `default-extensions` section in your `.cabal` file.
 
-Usage
------
 
-In your project simply disable the default Prelude and import Protolude.
+Things that you were already using but now don't have to import explicitly
+--------------------------------------------------------------------------
 
-```haskell
-{-# LANGUAGE NoImplicitPrelude #-}
+First of all, we reexport some generally useful modules: `Control.Applicative`, `Data.Traversable`, `Data.Monoid`, `Control.DeepSeq`, `Data.List`, and lots of others. Just remove unneeded imports after importing `Universum` (GHC should tell you, which ones).
 
-import Protolude
-```
+Then, some commonly used types: `Map/HashMap/IntMap`, `Set/HashSet/IntSet`, `Seq`, `Text` and `ByteString` (as well as synonyms `LText` and `LByteString` for lazy versions).
 
-To try out standalone prelude at the interactive shell, from the Protolude
-project directory run.
+`liftIO` and `MonadIO` are exported by default. Several functions are generalised to `MonadIO`.
 
-```haskell
-$ stack exec ghci
-> import Protolude
-```
+`deepseq` is exported. For instance, if you want to force deep evaluation of some value (in IO), you can write `evaluate (force a)`. WHNF evaluation is possible with `evaluate a`.
 
-Exported Functions
-------------------
+Also we reexport big chunks of these libraries: `mtl`, `stm`, `safe`.
 
-The list of exports is given in the [Symbols.md](./Symbols.md) file. Haddock
-unfortunately breaks in the presence of module reexports and is unable to render
-documentation.
 
-Dependencies
-------------
+Things that are missing
+-----------------------
 
-Protolude tries to be light on dependencies and only pulls in *essential*
-libraries that are universally common across most real-world projects. Lower and
-upper bounds are fully specified and compatible with both vanilla Cabal and
-tracks Stack LTS resolver.
+* `id` is renamed to `identity`, because it's nice to be able to use `id` as a variable name.
 
-| Dependencies  | Lower    | Upper    |
-| -----------   | -------- | -------- |
-| array         |          | 0.5      |
-| async         | 2.1      | 2.2      |
-| base          | 4.6      | 4.10     |
-| binary        |          | 0.7      |
-| bytestring    | 0.10     | 0.11     |
-| containers    | 0.5      | 0.6      |
-| deepseq       | 1.3      | 1.5      |
-| ghc-prim      | 0.3      | 0.6      |
-| integer-gmp   | 1.0      | 1.0      |
-| mtl           | 2.1      | 2.3      |
-| safe          | 0.3      | 0.4      |
-| stm           | 2.4      | 2.5      |
-| text          | 1.2      | 1.3      |
-| transformers  | 0.4      | 0.6      |
+* `put` and `get` (for `MonadState`) are clashing with `Binary` so they're not exported. (Maybe we'll export some lens functions later to make up for that.)
 
-FAQs
+* `head`, `tail`, `(!!)` are missing. (Well, `head` isn't but it returns `Maybe` now.) Use `tailMay/Def/Safe` or import `unsafe(Index|Head|Tail|Init|Last)` from `Unsafe` if you need it.
+
+* `error` isn't missing but it triggers a compiler warning, which is likely not what you want. Either use `throwIO`, `Except`, or `panic`.
+
+
+Generalised functions
+---------------------
+
+* `map` is `fmap` now.
+
+* `show` can produce any string-like type.
+
+* `putStrLn`, `print`, `throwIO` are generalised to `MonadIO`.
+
+
+Debugging and `undefined`s
+--------------------------
+
+`trace`, `traceM`, `traceShow`, etc are available by default. GHC will warn you if you leave them in code accidentally, however. (Same for `undefined` and `error`.)
+
+We also have `notImplemented :: a`.
+
+
+Text
 ----
 
-* **My ``putStrLn`` and ``putStr`` instances are no longer inferred in the presense
-of the ``-XOverloadedStrings`` extension?**
+We export `Text` and `LText`, and some functions works with `Text` instead of `String` – specifically, IO functions (`readFile`, `putStrLn`, etc) and `show`. In fact, `show` is polymorphic and can produce strict or lazy `Text`, `String`, or `ByteString`. Also, `toS` can convert any string type to any string type.
 
-Because the print functions are polymorphic the type of the print functions may
-require annotations if the type is not fully specified by inference. To force a
-specific type at the call site use either 
+`error` takes `Text` (but you should use `panic` instead or throw exceptions).
 
-```haskell
-putText :: MonadIO m => T.Text -> m ()
-putLText :: MonadIO m => TL.Text -> m ()
-```
+If you try to do something like `putStrLn "hi"`, you'll get an error message if `OverloadedStrings` is enabled – it happens because the compiler doesn't know what type to infer for the string. Use `putText` in this case.
 
-* **How do I write manual Show instances if ``show`` isn't provided?**
+Since `show` doesn't come from `Show` anymore, you can't write `Show` instances easily. Either use autoderived instances or `Buildable` (which isn't exported by universum yet).
 
-Generally speaking writing manual instances of Show is a [Haskell antipattern](
-http://www.stephendiehl.com/posts/strings.html) because it produces
-law-violating instances of Show. You probably want to use a [pretty
-printer](https://hackage.haskell.org/package/wl-pprint-text) library for custom
-printing.
 
-If backwards compatibility is needed then the base library can be imported
-manually.
+Lists
+-----
 
-```haskell
-import GHC.Show (Show(..))
-```
+We export some utility functions:
 
-Automatic deriving of ``Show`` for your types is still supported since the class
-is in scope by default.
+* `uncons` and `unsnoc` split a list at the first/last element.
 
-* **Partial functions like ``undefined`` and ``error`` raise compiler warnings on
-  usage.**
+* `ordNub` is an O (n log n) version of `nub` (which is quadratic).
 
-This is by design. For fatal uncatchable errors use the provided ``panic``
-function if you intend the program to immediately abort.
+* `sortOn` sorts a list based on some property of its elements (e.g. `sortOn length` would sort elements by length).
 
-```haskell
-panic "Thus I die. Thus, thus, thus. Now I am dead"
-```
+* Functions from [`safe`](https://hackage.haskell.org/package/safe) – safe variants of common list/`Maybe` functions from base. `(head|tail|last|at)May` return `Maybe` instead of failing. `(head|init|last|at)Def` let you specify a default value in case of failure. `(init|tail)Safe` return an empty list in case of failure.
 
-If inside of IO simply use ``throwIO`` for exception handling, or if in pure
-business logic use well-typed checked exceptions of the ``ExceptT`` variety.
 
-License
--------
+Other utility functions
+-----------------------
 
-Released under the MIT License.
-Copyright (c) 2016, Stephen Diehl
+* `(&)` – reverse application. `f & x & y` instead of `y $ x $ f` is useful sometimes.
+
+* `applyN n` applies a function to a value `n` times.
+
+* `whenM`, `unlessM`, `ifM`, `guardM` are available and do what you expect them to do (e.g. `whenM (doesFileExist "foo")`).
+
+* `concatMapM`, too, is available and does what you expect.
+
+* `orEmpty` conditionally applies `pure` to something. E.g.
+
+  ```haskell
+  > orEmpty True 3
+  Just 3
+  
+  > orEmpty False 3
+  Nothing
+  ```
+  
+  It works for any `Alternative`.
+  
+  TODO: describe `orAlt`.
+
+* `for_` for loops (or instead of `whenJust`). There's also `forM_` but `for_` looks a bit nicer.
+
+  ```haskell
+  for_ [1..10] $ \i -> do
+    ...
+
+  for_ maybeX $ \x -> do
+    ...
+  ```
+  
+* `first` and `second` apply a function to first/second part of a tuple. `bimap` takes two functions and applies them to first and second parts respectively.
+  
+* `readMaybe` and `readEither` are like `read` but give either `Maybe` or `Either` with parse error.
