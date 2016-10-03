@@ -61,7 +61,7 @@ We also have `notImplemented :: a`.
 Text
 ----
 
-We export `Text` and `LText`, and some functions works with `Text` instead of `String` – specifically, IO functions (`readFile`, `putStrLn`, etc) and `show`. In fact, `show` is polymorphic and can produce strict or lazy `Text`, `String`, or `ByteString`. Also, `toS` can convert any string type to any string type.
+We export `Text` and `LText`, and some functions work with `Text` instead of `String` – specifically, IO functions (`readFile`, `putStrLn`, etc) and `show`. In fact, `show` is polymorphic and can produce strict or lazy `Text`, `String`, or `ByteString`. Also, `toS` can convert any string type to any string type.
 
 `error` takes `Text` (but you should use `panic` instead or throw exceptions).
 
@@ -77,7 +77,7 @@ We export some utility functions:
 
 * `uncons` and `unsnoc` split a list at the first/last element.
 
-* `ordNub` is an O (n log n) version of `nub` (which is quadratic).
+* `ordNub` is an O(n log n) version of `nub` (which is quadratic).
 
 * `sortOn` sorts a list based on some property of its elements (e.g. `sortOn length` would sort elements by length).
 
@@ -87,7 +87,7 @@ We export some utility functions:
 Other utility functions
 -----------------------
 
-* `(&)` – reverse application. `f & x & y` instead of `y $ x $ f` is useful sometimes.
+* `(&)` – reverse application. `x & f & g` instead of `g $ f $ x` is useful sometimes.
 
 * `applyN n` applies a function to a value `n` times.
 
