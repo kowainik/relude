@@ -34,7 +34,7 @@ traceIO string expr = do
     putStrLn string
     return expr
 
-{-# WARNING error "'error' remains in code" #-}
+{-# WARNING error "'error' remains in code (or use 'panic')" #-}
 error :: Text -> a
 error s = P.error (unpack s)
 
@@ -62,6 +62,6 @@ traceId s = trace s s
 notImplemented :: a
 notImplemented = P.error "Not implemented"
 
-{-# WARNING undefined "'undefined' remains in code" #-}
+{-# WARNING undefined "'undefined' remains in code (or use 'panic')" #-}
 undefined :: a
 undefined = P.undefined
