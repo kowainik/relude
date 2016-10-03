@@ -28,16 +28,26 @@ Then, some commonly used types: `Map/HashMap/IntMap`, `Set/HashSet/IntSet`, `Seq
 Also we reexport big chunks of these libraries: `mtl`, `stm`, `safe`.
 
 
+Gotchas
+-------
+
+* `id` is renamed to `identity` (because it's nice to be able to use `id` as a variable name).
+
+* `head` returns `Maybe`.
+
+* `error` triggers a compiler warning, which is likely not what you want. Either use `throwIO`, `Except`, or `panic`.
+
+* If you try to do something like `putStrLn "hi"`, you'll get an error message if `OverloadedStrings` is enabled – it happens because the compiler doesn't know what type to infer for the string. Use `putText` in this case.
+
+* Since `show` doesn't come from `Show` anymore, you can't write `Show` instances easily. Either use autoderived instances or `Buildable` (which isn't exported by universum yet).
+
+
 Things that are missing
 -----------------------
 
-* `id` is renamed to `identity`, because it's nice to be able to use `id` as a variable name.
-
 * `put` and `get` (for `MonadState`) are clashing with `Binary` so they're not exported. (Maybe we'll export some lens functions later to make up for that.)
 
-* `head`, `tail`, `(!!)` are missing. (Well, `head` isn't but it returns `Maybe` now.) Use `tailMay/Def/Safe` or import `unsafe(Index|Head|Tail|Init|Last)` from `Unsafe` if you need it.
-
-* `error` isn't missing but it triggers a compiler warning, which is likely not what you want. Either use `throwIO`, `Except`, or `panic`.
+* `head`, `tail`, `(!!)` are missing. Use `tailMay/Def/Safe` or import `unsafe(Index|Head|Tail|Init|Last)` from `Unsafe` if you need them.
 
 
 Generalised functions
@@ -64,10 +74,6 @@ Text
 We export `Text` and `LText`, and some functions work with `Text` instead of `String` – specifically, IO functions (`readFile`, `putStrLn`, etc) and `show`. In fact, `show` is polymorphic and can produce strict or lazy `Text`, `String`, or `ByteString`. Also, `toS` can convert any string type to any string type.
 
 `error` takes `Text` (but you should use `panic` instead or throw exceptions).
-
-If you try to do something like `putStrLn "hi"`, you'll get an error message if `OverloadedStrings` is enabled – it happens because the compiler doesn't know what type to infer for the string. Use `putText` in this case.
-
-Since `show` doesn't come from `Show` anymore, you can't write `Show` instances easily. Either use autoderived instances or `Buildable` (which isn't exported by universum yet).
 
 
 Lists
