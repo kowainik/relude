@@ -55,6 +55,8 @@ Generalised functions
 
 * `map` is `fmap` now.
 
+* `foreach` is `flip fmap`.
+
 * `show` can produce any string-like type.
 
 * `putStrLn`, `print`, `throwIO` are generalised to `MonadIO`.
