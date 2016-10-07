@@ -66,7 +66,6 @@ import           Data.Foldable            as X hiding (foldl1, foldr1)
 import           Data.Functor.Identity    as X
 import           Data.Ord                 as X
 import           Data.Traversable         as X hiding (for)
-import           Semiring                 as X
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import           Data.Monoid              as X hiding ((<>))
