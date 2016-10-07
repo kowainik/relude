@@ -1,3 +1,5 @@
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE Trustworthy       #-}
 
@@ -11,13 +13,19 @@ module Debug
        , traceShow
        , traceShowId
        , traceShowM
-       , notImplemented,
+       , notImplemented
+       , NotImplemented(..)
        ) where
 
 import           Control.Monad    (Monad, return)
 import           Data.Text        (Text, unpack)
 
+import           GHC.Generics     (Generic)
+import           Data.Data        (Data)
+import           Data.Typeable    (Typeable)
+
 import qualified Base             as P
+import qualified Prelude          as P
 import           Show             (Print, putStrLn)
 
 import           System.IO.Unsafe (unsafePerformIO)
@@ -61,6 +69,10 @@ traceId s = trace s s
 {-# WARNING notImplemented "'notImplemented' remains in code" #-}
 notImplemented :: a
 notImplemented = P.error "Not implemented"
+
+{-# WARNING NotImplemented "'NotImplemented' remains in code" #-}
+data NotImplemented = NotImplemented
+    deriving (P.Eq, P.Ord, P.Show, Data, Typeable, Generic)
 
 {-# WARNING undefined "'undefined' remains in code (or use 'panic')" #-}
 undefined :: a
