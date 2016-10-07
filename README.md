@@ -67,7 +67,7 @@ Debugging and `undefined`s
 
 `trace`, `traceM`, `traceShow`, etc are available by default. GHC will warn you if you leave them in code accidentally, however. (Same for `undefined` and `error`.)
 
-We also have `notImplemented :: a`.
+We also have `notImplemented :: a` and `data NotImplemented = NotImplemented` (which, too, come with warnings).
 
 
 Text
@@ -103,6 +103,21 @@ Other utility functions
 
 * `concatMapM`, too, is available and does what you expect.
 
+* `whenJust` and `whenJustM` let you conditionally execute something if `Just`. Before:
+
+  ```haskell
+  case mbX of
+      Nothing -> return ()
+      Just x  -> ... x ...
+  ```
+
+  After:
+
+  ```haskell
+  whenJust mbX $ \x ->
+      ... x ...
+  ```
+
 * `orEmpty` conditionally applies `pure` to something. E.g.
 
   ```haskell
@@ -117,14 +132,11 @@ Other utility functions
   
   TODO: describe `orAlt`.
 
-* `for_` for loops (or instead of `whenJust`). There's also `forM_` but `for_` looks a bit nicer.
+* `for_` for loops. There's also `forM_` but `for_` looks a bit nicer.
 
   ```haskell
   for_ [1..10] $ \i -> do
-    ...
-
-  for_ maybeX $ \x -> do
-    ...
+      ...
   ```
   
 * `first` and `second` apply a function to first/second part of a tuple. `bimap` takes two functions and applies them to first and second parts respectively.
