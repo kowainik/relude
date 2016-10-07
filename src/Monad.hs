@@ -28,6 +28,9 @@ module Monad
        , when
        , unless
 
+       , whenJust
+       , whenJustM
+
        , liftM
        , liftM2
        , liftM3
@@ -40,11 +43,14 @@ module Monad
        , (<$!>)
        ) where
 
-import           Base          (seq)
-import           Data.List     (concat)
+import           Base                (seq)
+import           Control.Applicative (Applicative)
+import           Data.Foldable       (for_)
+import           Data.List           (concat)
+import           Data.Maybe          (Maybe)
 
 #if (__GLASGOW_HASKELL__ >= 710)
-import           Control.Monad hiding ((<$!>))
+import           Control.Monad       hiding ((<$!>))
 #else
 import           Control.Monad
 #endif
@@ -70,3 +76,12 @@ f <$!> m = do
   let z = f x
   z `seq` return z
 {-# INLINE (<$!>) #-}
+
+whenJust :: Applicative f => Maybe a -> (a -> f ()) -> f ()
+whenJust = for_
+{-# INLINE whenJust #-}
+
+whenJustM :: Monad m => m (Maybe a) -> (a -> m ()) -> m ()
+whenJustM m f = mapM_ f =<< m
+{-# INLINE whenJustM #-}
+
