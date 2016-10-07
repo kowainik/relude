@@ -162,8 +162,13 @@ import           System.IO                as X (FilePath, Handle, IOMode (..), o
 import           Control.Monad.ST         as X
 
 -- Concurrency and Parallelism
+#if ( __GLASGOW_HASKELL__ >= 710 )
 import           Control.Exception        as X hiding (assert, displayException, throw,
                                                 throwIO, throwTo)
+#else
+import           Control.Exception        as X hiding (assert, throw,
+                                                throwIO, throwTo)
+#endif
 
 import qualified Control.Exception
 

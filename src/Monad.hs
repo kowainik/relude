@@ -47,7 +47,7 @@ import           Base                (seq)
 import           Control.Applicative (Applicative)
 import           Data.Foldable       (for_)
 import           Data.List           (concat)
-import           Data.Maybe          (Maybe)
+import           Data.Maybe          (Maybe, maybe)
 
 #if (__GLASGOW_HASKELL__ >= 710)
 import           Control.Monad       hiding ((<$!>))
@@ -82,6 +82,6 @@ whenJust = for_
 {-# INLINE whenJust #-}
 
 whenJustM :: Monad m => m (Maybe a) -> (a -> m ()) -> m ()
-whenJustM m f = mapM_ f =<< m
+whenJustM mm f = maybe (return ()) f =<< mm
 {-# INLINE whenJustM #-}
 

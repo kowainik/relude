@@ -23,8 +23,11 @@ import           GHC.Real             as X hiding ((%))
 import           GHC.Show             as X (Show (..))
 import           System.IO            as X (print, putStr, putStrLn)
 
-import           GHC.Types            as X (Bool, Char, Coercible, IO, Int, Ordering,
-                                            Word)
+import           GHC.Types            as X (Bool, Char, IO, Int, Ordering, Word)
+
+#if ( __GLASGOW_HASKELL__ >= 710 )
+import           GHC.Types            as X (Coercible)
+#endif
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import           GHC.OverloadedLabels as X (IsLabel (..))
