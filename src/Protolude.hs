@@ -35,6 +35,7 @@ import Either as X
 import Applicative as X
 import Conv as X
 import Panic as X
+import Exceptions as X
 
 import Base as Base hiding (
     putStr           -- Overriden by Show.putStr

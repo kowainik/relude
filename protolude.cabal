@@ -46,6 +46,7 @@ library
     Functor
     Semiring
     Bifunctor
+    Exceptions
     Panic
 
   other-modules:
