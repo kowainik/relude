@@ -19,6 +19,7 @@ module Protolude (
   throwTo,
   foreach,
   show,
+  pass,
 
   LText,
   LByteString,
@@ -396,6 +397,9 @@ throwTo tid e = liftIO (Control.Exception.throwTo tid e)
 
 foreach :: Functor f => f a -> (a -> b) -> f b
 foreach = flip fmap
+
+pass :: Applicative f => f ()
+pass = pure ()
 
 show :: (Show a, StringConv String b) => a -> b
 show x = toS (PBase.show x)
