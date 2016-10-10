@@ -1,3 +1,13 @@
+0.1.8
+=====
+
+* ``foreach`` for applicative traversals.
+* ``hush`` function for error handling.
+* ``tryIO`` function for error handling.
+* ``pass`` function for noop applicative branches.
+* Mask ``Handler`` typeclass export.
+* Mask ``yield`` function export.
+
 0.1.7
 =====
 
