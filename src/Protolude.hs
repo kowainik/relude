@@ -337,6 +337,7 @@ import Control.Exception as X hiding (
   , throwTo
   , assert
   , displayException
+  , Handler(..)
   )
 
 import qualified Control.Exception
