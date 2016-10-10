@@ -21,7 +21,7 @@ hush :: Alternative m => Either e a -> m a
 hush (Left _)  = empty
 hush (Right x) = pure x
 
-note :: (MonadError e m) => e -> Maybe a -> m a
+note :: (MonadError e m, Applicative m) => e -> Maybe a -> m a
 note err = maybe (throwError err) pure
 
 tryIO :: MonadIO m => IO a -> ExceptT IOException m a
