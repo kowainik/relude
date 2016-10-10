@@ -345,6 +345,7 @@ import qualified Control.Exception
 import Control.Monad.STM as X
 import Control.Concurrent as X hiding (
     throwTo
+  , yield
   )
 import Control.Concurrent.Async as X
 
