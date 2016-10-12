@@ -138,6 +138,11 @@ panic "Thus I die. Thus, thus, thus. Now I am dead"
 If inside of IO simply use ``throwIO`` for exception handling, or if in pure
 business logic use well-typed checked exceptions of the ``ExceptT`` variety.
 
+* **Why is ``id`` not in scope?**
+
+It has been renamed to ``identity`` to reserve the ``id`` identifier for the
+more common use case of business logic.
+
 License
 -------
 
