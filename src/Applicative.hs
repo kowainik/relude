@@ -33,4 +33,3 @@ liftAA2 = liftA2 . liftA2
 
 (<<*>>) :: (Applicative f, Applicative g)  => f (g (a -> b)) -> f (g a) -> f (g b)
 (<<*>>) = liftA2 (<*>)
-

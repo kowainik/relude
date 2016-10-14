@@ -23,6 +23,7 @@ import Data.Functor (
   )
 
 import Data.Function (flip)
+import Data.Function ((.))
 
 infixl 4 $>
 
