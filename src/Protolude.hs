@@ -20,7 +20,8 @@ module Protolude (
   foreach,
   show,
   pass,
-
+  guarded,
+  guardedA,
   LText,
   LByteString,
 ) where
@@ -403,6 +404,13 @@ foreach = flip fmap
 
 pass :: Applicative f => f ()
 pass = pure ()
+
+guarded :: (Alternative f) => (a -> Bool) -> a -> f a
+guarded p x = bool empty (pure x) (p x)
+
+guardedA :: (Functor f, Alternative t) => (a -> f Bool) -> a -> f (t a)
+guardedA p x = bool empty (pure x) <$> p x
+
 
 show :: (Show a, StringConv String b) => a -> b
 show x = toS (PBase.show x)
