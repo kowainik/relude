@@ -21,6 +21,7 @@ Design points:
 * Foldable / Traversable functions in scope by default.
 * Unsafe functions are prefixed with "unsafe" in separate module.
 * Compiler agnostic, GHC internal modules are abstracted out into Base.
+* ``sum`` and ``product`` are strict by default.
 * Compatibility with GHC 8.0.
 * Includes Semiring for GHC >= 7.6.
 * Includes Bifunctor for GHC >= 7.6.
