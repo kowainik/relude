@@ -95,6 +95,8 @@ import Data.Traversable as X
 import Data.Foldable as X hiding (
     foldr1
   , foldl1
+  , product
+  , sum
   )
 import Semiring as X
 import Data.Functor.Identity as X

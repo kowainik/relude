@@ -1,3 +1,8 @@
+0.1.9
+====
+
+* Make `sum` and `product` strict
+
 0.1.8
 =====
 
