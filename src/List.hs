@@ -18,7 +18,7 @@ import Data.Function ((.))
 import Data.Functor (fmap)
 import Control.Monad (return)
 import qualified Data.Set as Set
-import GHC.Num (Num, (+))
+import GHC.Num (Num, (+), (*))
 
 head :: (Foldable f) => f a -> Maybe a
 head = foldr (\x _ -> return x) Nothing
@@ -43,7 +43,7 @@ list def f xs = case xs of
 
 {-# INLINE product #-}
 product :: (Foldable f, Num a) => f a -> a
-product = foldl' (+) 1
+product = foldl' (*) 1
 
 {-# INLINE sum #-}
 sum :: (Foldable f, Num a) => f a -> a
