@@ -4,68 +4,103 @@
 {-# LANGUAGE TypeSynonymInstances  #-}
 
 module Conv
-       ( StringConv (..)
-       , toS
-       , toSL
+       ( ConvertUtf8 (..)
+       , ToString (..)
+       , ToLText (..)
+       , ToText (..)
        , Leniency (..)
        ) where
 
-import           Data.ByteString.Char8      as B
-import           Data.ByteString.Lazy.Char8 as LB
-import           Data.Text                  as T
-import           Data.Text.Encoding         as T
-import           Data.Text.Encoding.Error   as T
-import           Data.Text.Lazy             as LT
-import           Data.Text.Lazy.Encoding    as LT
+import qualified Data.ByteString.Char8      as B
+import qualified Data.ByteString.Lazy.Char8 as LB
+import qualified Data.Text                  as T
+import qualified Data.Text.Encoding         as T
+import qualified Data.Text.Encoding.Error   as T
+import qualified Data.Text.Lazy             as LT
+import qualified Data.Text.Lazy.Encoding    as LT
 
 import           Base
+import           Bifunctor                  (bimap)
 import           Control.Applicative        (pure)
+import           Data.Either                (Either)
 import           Data.Eq                    (Eq (..))
 import           Data.Function              (id, (.))
 import           Data.Ord                   (Ord (..))
 import           Data.String                (String)
 
 data Leniency = Lenient | Strict
-  deriving (Eq,Show,Ord,Enum,Bounded)
+    deriving (Eq,Show,Ord,Enum,Bounded)
 
-class StringConv a b where
-  strConv :: Leniency -> a -> b
+class ConvertUtf8 a b where
+    encodeUtf8 :: a -> b
+    decodeUtf8 :: b -> a
+    decodeUtf8Strict :: b -> Either T.UnicodeException a
 
-toS :: StringConv a b => a -> b
-toS = strConv Strict
+instance ConvertUtf8 String B.ByteString where
+    encodeUtf8 = B.pack
+    decodeUtf8 = B.unpack
+    decodeUtf8Strict = bimap id T.unpack . decodeUtf8Strict
 
-toSL :: StringConv a b => a -> b
-toSL = strConv Lenient
+instance ConvertUtf8 T.Text B.ByteString where
+    encodeUtf8 = T.encodeUtf8
+    decodeUtf8 = decodeUtf8T Lenient
+    decodeUtf8Strict = T.decodeUtf8'
 
-instance StringConv String String where strConv _ = id
-instance StringConv String B.ByteString where strConv _ = B.pack
-instance StringConv String LB.ByteString where strConv _ = LB.pack
-instance StringConv String T.Text where strConv _ = T.pack
-instance StringConv String LT.Text where strConv _ = LT.pack
+instance ConvertUtf8 LT.Text B.ByteString where
+    encodeUtf8 = LB.toStrict . encodeUtf8
+    decodeUtf8 = decodeUtf8LT Lenient . LB.fromChunks . pure
+    decodeUtf8Strict = decodeUtf8Strict . LB.fromChunks . pure
 
-instance StringConv B.ByteString String where strConv _ = B.unpack
-instance StringConv B.ByteString B.ByteString where strConv _ = id
-instance StringConv B.ByteString LB.ByteString where strConv _ = LB.fromChunks . pure
-instance StringConv B.ByteString T.Text where strConv = decodeUtf8T
-instance StringConv B.ByteString LT.Text where strConv l = strConv l . LB.fromChunks . pure
+instance ConvertUtf8 String LB.ByteString where
+    encodeUtf8 = LB.pack
+    decodeUtf8 = LB.unpack
+    decodeUtf8Strict = bimap id T.unpack . decodeUtf8Strict
 
-instance StringConv LB.ByteString String where strConv _ = LB.unpack
-instance StringConv LB.ByteString B.ByteString where strConv _ = B.concat . LB.toChunks
-instance StringConv LB.ByteString LB.ByteString where strConv _ = id
-instance StringConv LB.ByteString T.Text where strConv l = decodeUtf8T l . strConv l
-instance StringConv LB.ByteString LT.Text where strConv = decodeUtf8LT
+instance ConvertUtf8 T.Text LB.ByteString where
+    encodeUtf8 = LB.fromStrict . T.encodeUtf8
+    decodeUtf8 = decodeUtf8
+    decodeUtf8Strict = T.decodeUtf8' . LB.toStrict
 
-instance StringConv T.Text String where strConv _ = T.unpack
-instance StringConv T.Text B.ByteString where strConv _ = T.encodeUtf8
-instance StringConv T.Text LB.ByteString where strConv l = strConv l . T.encodeUtf8
-instance StringConv T.Text LT.Text where strConv _ = LT.fromStrict
-instance StringConv T.Text T.Text where strConv _ = id
+instance ConvertUtf8 LT.Text LB.ByteString where
+    encodeUtf8 = LT.encodeUtf8
+    decodeUtf8 = decodeUtf8LT Lenient
+    decodeUtf8Strict = LT.decodeUtf8'
 
-instance StringConv LT.Text String where strConv _ = LT.unpack
-instance StringConv LT.Text T.Text where strConv _ = LT.toStrict
-instance StringConv LT.Text LT.Text where strConv _ = id
-instance StringConv LT.Text LB.ByteString where strConv _ = LT.encodeUtf8
-instance StringConv LT.Text B.ByteString where strConv l = strConv l . LT.encodeUtf8
+class ToText a where
+    toText :: a -> T.Text
+
+instance ToText String where
+    toText = T.pack
+
+instance ToText T.Text where
+    toText = id
+
+instance ToText LT.Text where
+    toText = LT.toStrict
+
+class ToLText a where
+    toLText :: a -> LT.Text
+
+instance ToLText String where
+    toLText = LT.pack
+
+instance ToLText T.Text where
+    toLText = LT.fromStrict
+
+instance ToLText LT.Text where
+    toLText = id
+
+class ToString a where
+    toString :: a -> String
+
+instance ToString String where
+    toString = id
+
+instance ToString T.Text where
+    toString = T.unpack
+
+instance ToString LT.Text where
+    toString = LT.unpack
 
 decodeUtf8T :: Leniency -> B.ByteString -> T.Text
 decodeUtf8T Lenient = T.decodeUtf8With T.lenientDecode
