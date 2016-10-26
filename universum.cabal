@@ -45,6 +45,7 @@ library
     Either
     Functor
     Bifunctor
+    Exceptions
     Panic
 
   default-extensions:

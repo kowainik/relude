@@ -35,7 +35,7 @@ import           Conv                     as X
 import           Debug                    as X
 import           Either                   as X
 import           Functor                  as X
-import           List                     as X
+import           List                     as X hiding (product, sum)
 import           Monad                    as X
 import           Panic                    as X
 import           Show                     as X
