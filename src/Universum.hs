@@ -19,8 +19,6 @@ module Universum
        , unsnoc
        , applyN
        , print
-       , throwIO
-       , throwTo
        , foreach
        , show
 
@@ -108,6 +106,8 @@ import           Data.Void                as X (Void, absurd, vacuous)
 #endif
 
 -- Monad transformers
+import           Control.Monad.Catch      as X (MonadCatch (catch), MonadMask (..),
+                                                MonadThrow (throwM))
 import           Control.Monad.State      as X (MonadState, State, StateT, evalState,
                                                 evalStateT, execState, execStateT, gets,
                                                 modify, runState, runStateT, state,
@@ -115,9 +115,6 @@ import           Control.Monad.State      as X (MonadState, State, StateT, evalS
 
 import           Control.Monad.Reader     as X (MonadReader, Reader, ReaderT, ask, asks,
                                                 local, reader, runReader, runReaderT)
-
-import           Control.Monad.Except     as X (Except, ExceptT, MonadError, catchError,
-                                                runExcept, runExceptT, throwError)
 
 import           Control.Monad.Trans      as X (MonadIO, lift, liftIO)
 
@@ -163,14 +160,14 @@ import           Control.Monad.ST         as X
 
 -- Concurrency and Parallelism
 #if ( __GLASGOW_HASKELL__ >= 710 )
-import           Control.Exception        as X hiding (assert, displayException, throw,
-                                                throwIO, throwTo)
+import           Control.Exception        as X hiding (assert, catch, displayException,
+                                                ioError, mask, throw, throwIO, throwTo,
+                                                uninterruptibleMask)
 #else
-import           Control.Exception        as X hiding (assert, throw,
-                                                throwIO, throwTo)
+import           Control.Exception        as X hiding (assert, catch, ioError, mask,
+                                                throw, throwIO, throwTo,
+                                                uninterruptibleMask)
 #endif
-
-import qualified Control.Exception
 
 import           Control.Concurrent       as X hiding (throwTo)
 import           Control.Concurrent.Async as X hiding (wait)
@@ -212,12 +209,6 @@ applyN n f = X.foldr (.) identity (X.replicate n f)
 
 print :: (X.MonadIO m, PBase.Show a) => a -> m ()
 print = liftIO . PBase.print
-
-throwIO :: (X.MonadIO m, Exception e) => e -> m a
-throwIO = liftIO . Control.Exception.throwIO
-
-throwTo :: (X.MonadIO m, Exception e) => ThreadId -> e -> m ()
-throwTo tid e = liftIO (Control.Exception.throwTo tid e)
 
 foreach :: Functor f => f a -> (a -> b) -> f b
 foreach = flip fmap
