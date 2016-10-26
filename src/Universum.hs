@@ -175,7 +175,7 @@ import           Control.Exception        as X hiding (assert, catch, ioError, m
                                                 uninterruptibleMask)
 #endif
 
-import           Control.Concurrent       as X hiding (throwTo)
+import           Control.Concurrent       as X hiding (ThreadId, throwTo)
 import           Control.Concurrent.Async as X hiding (wait)
 import           Control.Monad.STM        as X
 
