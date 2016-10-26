@@ -18,6 +18,8 @@ module Universum
        , uncons
        , unsnoc
        , applyN
+       , pretty
+       , pretty'
        , print
        , foreach
        , show
@@ -133,6 +135,10 @@ import           Data.Function            as X (const, fix, flip, on, ($), (.))
 -- Generics
 import           GHC.Generics             as X (Generic)
 
+-- Buildable
+import           Data.Text.Buildable      (Buildable (build))
+import           Data.Text.Lazy.Builder   (toLazyText)
+
 -- ByteString
 import           Data.ByteString          as X (ByteString)
 import qualified Data.ByteString.Lazy
@@ -220,3 +226,10 @@ show x = toS (PBase.show x)
 {-# SPECIALIZE show :: Show  a => a -> ByteString  #-}
 {-# SPECIALIZE show :: Show  a => a -> LByteString  #-}
 {-# SPECIALIZE show :: Show  a => a -> String  #-}
+
+-- | Functions to show pretty output for buildable data types.
+pretty :: Buildable a => a -> Text
+pretty = X.toStrict . pretty'
+
+pretty' :: Buildable a => a -> LText
+pretty' = toLazyText . build
