@@ -6,13 +6,17 @@ module List
        , ordNub
        , sortOn
        , list
+       , unzip
+       , unzip3
+       , zip
+       , zip3
        ) where
 
 import           Control.Monad (return)
 import           Data.Foldable (Foldable, foldr)
 import           Data.Function ((.))
 import           Data.Functor  (fmap)
-import           Data.List     (sortBy)
+import           Data.List     (sortBy, unzip, unzip3, zip, zip3)
 import           Data.Maybe    (Maybe (..))
 import           Data.Ord      (Ord, comparing)
 import qualified Data.Set      as Set
