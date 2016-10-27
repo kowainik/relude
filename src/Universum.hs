@@ -40,24 +40,28 @@ import           Monad                    as X
 import           Panic                    as X
 import           Show                     as X
 
-import           Base                     as Base hiding (error, print, putStr, putStrLn,
-                                                   show, showFloat, showList, showSigned,
-                                                   showSignedFloat, showsPrec, undefined)
+import           Base                     as Base hiding (error, print, putStr,
+                                                   putStrLn, show, showFloat,
+                                                   showList, showSigned,
+                                                   showSignedFloat, showsPrec,
+                                                   undefined)
 import qualified Base                     as PBase
 
 -- Used for 'show', not exported.
 import           Data.String              (String)
-import           Data.String              as X (IsString)
+import           Data.String              as X (IsString (..))
 
 -- Maybe'ized version of partial functions
-import           Safe                     as X (atDef, atMay, foldl1May, foldr1May,
-                                                headDef, headMay, initDef, initMay,
-                                                initSafe, lastDef, lastMay, tailDef,
+import           Safe                     as X (atDef, atMay, foldl1May,
+                                                foldr1May, headDef, headMay,
+                                                initDef, initMay, initSafe,
+                                                lastDef, lastMay, tailDef,
                                                 tailMay, tailSafe)
 
 -- Applicatives
-import           Control.Applicative      as X (Alternative (..), Applicative (..),
-                                                Const (..), ZipList (..), liftA, liftA2,
+import           Control.Applicative      as X (Alternative (..),
+                                                Applicative (..), Const (..),
+                                                ZipList (..), liftA, liftA2,
                                                 liftA3, optional, (<**>))
 
 -- Base typeclasses
@@ -81,15 +85,19 @@ import           Bifunctor                as X (Bifunctor (..))
 #endif
 
 -- Deepseq
-import           Control.DeepSeq          as X (NFData (..), deepseq, force, ($!!))
+import           Control.DeepSeq          as X (NFData (..), deepseq, force,
+                                                ($!!))
 
 -- Data structures
-import           Data.List                as X (break, cycle, drop, dropWhile, filter,
-                                                group, inits, intercalate, intersperse,
-                                                isPrefixOf, iterate, permutations, repeat,
-                                                replicate, reverse, scanl, scanr, sort,
-                                                sortBy, splitAt, subsequences, tails,
-                                                take, takeWhile, transpose, unfoldr, zip,
+import           Data.List                as X (break, cycle, drop, dropWhile,
+                                                filter, group, inits,
+                                                intercalate, intersperse,
+                                                isPrefixOf, iterate,
+                                                permutations, repeat, replicate,
+                                                reverse, scanl, scanr, sort,
+                                                sortBy, splitAt, subsequences,
+                                                tails, take, takeWhile,
+                                                transpose, unfoldr, zip,
                                                 zipWith)
 import           Data.Tuple               as X
 
@@ -108,21 +116,25 @@ import           Data.Void                as X (Void, absurd, vacuous)
 #endif
 
 -- Monad transformers
-import           Control.Monad.State      as X (MonadState, State, StateT, evalState,
-                                                evalStateT, execState, execStateT, gets,
-                                                modify, runState, runStateT, state,
-                                                withState)
+import           Control.Monad.State      as X (MonadState, State, StateT,
+                                                evalState, evalStateT,
+                                                execState, execStateT, gets,
+                                                modify, runState, runStateT,
+                                                state, withState)
 
-import           Control.Monad.Reader     as X (MonadReader, Reader, ReaderT, ask, asks,
-                                                local, reader, runReader, runReaderT)
+import           Control.Monad.Reader     as X (MonadReader, Reader, ReaderT,
+                                                ask, asks, local, reader,
+                                                runReader, runReaderT)
 
-import           Control.Monad.Except     as X (Except, ExceptT, MonadError, catchError,
-                                                runExcept, runExceptT, throwError)
+import           Control.Monad.Except     as X (Except, ExceptT, MonadError,
+                                                catchError, runExcept,
+                                                runExceptT, throwError)
 
 import           Control.Monad.Trans      as X (MonadIO, lift, liftIO)
 
 -- Base types
-import           Data.Bits                as X hiding (unsafeShiftL, unsafeShiftR)
+import           Data.Bits                as X hiding (unsafeShiftL,
+                                                unsafeShiftR)
 import           Data.Bool                as X hiding (bool)
 import           Data.Char                as X (chr)
 import           Data.Complex             as X
@@ -144,30 +156,31 @@ import qualified Data.ByteString.Lazy
 import           Data.Text                as X (Text)
 import qualified Data.Text.Lazy
 
-import           Data.Text.IO             as X (appendFile, getContents, getLine,
-                                                interact, readFile, writeFile)
+import           Data.Text.IO             as X (appendFile, getContents,
+                                                getLine, interact, readFile,
+                                                writeFile)
 
 import           Data.Text.Lazy           as X (fromStrict, toStrict)
 
-import           Data.Text.Encoding       as X (decodeUtf8, decodeUtf8', decodeUtf8With,
-                                                encodeUtf8)
+import           Data.Text.Encoding       as X (decodeUtf8', decodeUtf8With)
 
 -- IO
 import           System.Environment       as X (getArgs)
 import           System.Exit              as X
-import           System.IO                as X (FilePath, Handle, IOMode (..), openFile,
-                                                stderr, stdin, stdout, withFile)
+import           System.IO                as X (FilePath, Handle, IOMode (..),
+                                                openFile, stderr, stdin, stdout,
+                                                withFile)
 
 -- ST
 import           Control.Monad.ST         as X
 
 -- Concurrency and Parallelism
 #if ( __GLASGOW_HASKELL__ >= 710 )
-import           Control.Exception        as X hiding (assert, displayException, throw,
-                                                throwIO, throwTo)
+import           Control.Exception        as X hiding (assert, displayException,
+                                                throw, throwIO, throwTo)
 #else
-import           Control.Exception        as X hiding (assert, throw,
-                                                throwIO, throwTo)
+import           Control.Exception        as X hiding (assert, throw, throwIO,
+                                                throwTo)
 #endif
 
 import qualified Control.Exception
@@ -179,7 +192,8 @@ import           Control.Monad.STM        as X
 import           Foreign.Storable         as X (Storable)
 
 -- Read instances hiding unsafe builtins (read)
-import           Text.Read                as X (Read, readEither, readMaybe, reads)
+import           Text.Read                as X (Read, readEither, readMaybe,
+                                                reads)
 
 -- Type synonymss for lazy texts
 type LText = Data.Text.Lazy.Text
@@ -222,8 +236,8 @@ throwTo tid e = liftIO (Control.Exception.throwTo tid e)
 foreach :: Functor f => f a -> (a -> b) -> f b
 foreach = flip fmap
 
-show :: (Show a, StringConv String b) => a -> b
-show x = toS (PBase.show x)
+show :: (Show a, IsString b) => a -> b
+show x = X.fromString (PBase.show x)
 {-# SPECIALIZE show :: Show  a => a -> Text  #-}
 {-# SPECIALIZE show :: Show  a => a -> LText  #-}
 {-# SPECIALIZE show :: Show  a => a -> ByteString  #-}
