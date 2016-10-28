@@ -57,6 +57,8 @@ Generalised functions
 
 * `foreach` is `flip fmap`.
 
+* ``sum`` and ``product`` are strict by default.
+
 * `show` can produce any string-like type.
 
 * `putStrLn`, `print`, `throwIO` are generalised to `MonadIO`.

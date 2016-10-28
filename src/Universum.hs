@@ -18,10 +18,13 @@ module Universum
        , uncons
        , unsnoc
        , applyN
+       , pretty
+       , pretty'
        , print
-       , throwIO
-       , throwTo
        , foreach
+       , pass
+       , guarded
+       , guardedA
        , show
 
          -- * Convenient type aliases
@@ -35,7 +38,7 @@ import           Conv                     as X
 import           Debug                    as X
 import           Either                   as X
 import           Functor                  as X
-import           List                     as X
+import           List                     as X hiding (product, sum)
 import           Monad                    as X
 import           Panic                    as X
 import           Show                     as X
@@ -116,6 +119,9 @@ import           Data.Void                as X (Void, absurd, vacuous)
 #endif
 
 -- Monad transformers
+import           Control.Monad.Catch      as X (MonadCatch (catch),
+                                                MonadMask (..),
+                                                MonadThrow (throwM))
 import           Control.Monad.State      as X (MonadState, State, StateT,
                                                 evalState, evalStateT,
                                                 execState, execStateT, gets,
@@ -125,10 +131,6 @@ import           Control.Monad.State      as X (MonadState, State, StateT,
 import           Control.Monad.Reader     as X (MonadReader, Reader, ReaderT,
                                                 ask, asks, local, reader,
                                                 runReader, runReaderT)
-
-import           Control.Monad.Except     as X (Except, ExceptT, MonadError,
-                                                catchError, runExcept,
-                                                runExceptT, throwError)
 
 import           Control.Monad.Trans      as X (MonadIO, lift, liftIO)
 
@@ -147,6 +149,10 @@ import           Data.Function            as X (const, fix, flip, on, ($), (.))
 
 -- Generics
 import           GHC.Generics             as X (Generic)
+
+-- Buildable
+import           Data.Text.Buildable      (Buildable (build))
+import           Data.Text.Lazy.Builder   (toLazyText)
 
 -- ByteString
 import           Data.ByteString          as X (ByteString)
@@ -176,16 +182,17 @@ import           Control.Monad.ST         as X
 
 -- Concurrency and Parallelism
 #if ( __GLASGOW_HASKELL__ >= 710 )
-import           Control.Exception        as X hiding (assert, displayException,
-                                                throw, throwIO, throwTo)
+import           Control.Exception        as X hiding (assert, catch,
+                                                displayException, ioError, mask,
+                                                throw, throwIO, throwTo,
+                                                uninterruptibleMask)
 #else
-import           Control.Exception        as X hiding (assert, throw, throwIO,
-                                                throwTo)
+import           Control.Exception        as X hiding (assert, catch, ioError,
+                                                mask, throw, throwIO, throwTo,
+                                                uninterruptibleMask)
 #endif
 
-import qualified Control.Exception
-
-import           Control.Concurrent       as X hiding (throwTo)
+import           Control.Concurrent       as X hiding (ThreadId, throwTo)
 import           Control.Concurrent.Async as X hiding (wait)
 import           Control.Monad.STM        as X
 
@@ -227,14 +234,17 @@ applyN n f = X.foldr (.) identity (X.replicate n f)
 print :: (X.MonadIO m, PBase.Show a) => a -> m ()
 print = liftIO . PBase.print
 
-throwIO :: (X.MonadIO m, Exception e) => e -> m a
-throwIO = liftIO . Control.Exception.throwIO
-
-throwTo :: (X.MonadIO m, Exception e) => ThreadId -> e -> m ()
-throwTo tid e = liftIO (Control.Exception.throwTo tid e)
-
 foreach :: Functor f => f a -> (a -> b) -> f b
 foreach = flip fmap
+
+pass :: Applicative f => f ()
+pass = pure ()
+
+guarded :: (Alternative f) => (a -> Bool) -> a -> f a
+guarded p x = X.bool empty (pure x) (p x)
+
+guardedA :: (Functor f, Alternative t) => (a -> f Bool) -> a -> f (t a)
+guardedA p x = X.bool empty (pure x) <$> p x
 
 show :: (Show a, IsString b) => a -> b
 show x = X.fromString (PBase.show x)
@@ -243,3 +253,10 @@ show x = X.fromString (PBase.show x)
 {-# SPECIALIZE show :: Show  a => a -> ByteString  #-}
 {-# SPECIALIZE show :: Show  a => a -> LByteString  #-}
 {-# SPECIALIZE show :: Show  a => a -> String  #-}
+
+-- | Functions to show pretty output for buildable data types.
+pretty :: Buildable a => a -> Text
+pretty = X.toStrict . pretty'
+
+pretty' :: Buildable a => a -> LText
+pretty' = toLazyText . build
