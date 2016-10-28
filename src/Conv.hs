@@ -10,21 +10,20 @@ module Conv
        , ToText (..)
        ) where
 
-import qualified Data.ByteString.Char8      as B
-import qualified Data.ByteString.Lazy.Char8 as LB
-import qualified Data.ByteString.Lazy.UTF8  as LBU
-import qualified Data.ByteString.UTF8       as BU
-import qualified Data.Text                  as T
-import qualified Data.Text.Encoding         as T
-import qualified Data.Text.Encoding.Error   as T
-import qualified Data.Text.Lazy             as LT
-import qualified Data.Text.Lazy.Encoding    as LT
+import qualified Data.ByteString           as B
+import qualified Data.ByteString.Lazy      as LB
+import qualified Data.ByteString.Lazy.UTF8 as LBU
+import qualified Data.ByteString.UTF8      as BU
+import qualified Data.Text                 as T
+import qualified Data.Text.Encoding        as T
+import qualified Data.Text.Encoding.Error  as T
+import qualified Data.Text.Lazy            as LT
+import qualified Data.Text.Lazy.Encoding   as LT
 
-import           Control.Applicative        (pure)
-import           Data.Either                (Either)
-import           Data.Function              (id, (.))
-import           Data.String                (String)
-import           Functor                    ((<$>))
+import           Data.Either               (Either)
+import           Data.Function             (id, (.))
+import           Data.String               (String)
+import           Functor                   ((<$>))
 
 class ConvertUtf8 a b where
     encodeUtf8 :: a -> b
@@ -43,7 +42,7 @@ instance ConvertUtf8 T.Text B.ByteString where
 
 instance ConvertUtf8 LT.Text B.ByteString where
     encodeUtf8 = LB.toStrict . encodeUtf8
-    decodeUtf8 = LT.decodeUtf8With T.lenientDecode . LB.fromChunks . pure
+    decodeUtf8 = LT.decodeUtf8With T.lenientDecode . LB.fromStrict
     decodeUtf8Strict = decodeUtf8Strict . LB.fromStrict
 
 instance ConvertUtf8 String LB.ByteString where
