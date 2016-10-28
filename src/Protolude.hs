@@ -155,6 +155,14 @@ import Data.List as X (
   , zip
   )
 
+-- Hashing
+import Data.Hashable as X (
+    Hashable
+  , hash
+  , hashWithSalt
+  , hashUsing
+  )
+
 import Data.Map as X (Map)
 import Data.Set as X (Set)
 import Data.Sequence as X (Seq)
