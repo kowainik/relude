@@ -150,7 +150,7 @@ import           Data.ByteString          as X (ByteString)
 import qualified Data.ByteString.Lazy
 
 -- Text
-import           Data.Text                as X (Text)
+import           Data.Text                as X (Text, lines, unlines, unwords, words)
 import qualified Data.Text.Lazy
 
 import           Data.Text.IO             as X (appendFile, getContents, getLine,
