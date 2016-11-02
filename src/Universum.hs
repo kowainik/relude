@@ -115,7 +115,8 @@ import           Data.Void                as X (Void, absurd, vacuous)
 
 -- Monad transformers
 import           Control.Monad.Catch      as X (MonadCatch (catch), MonadMask (..),
-                                                MonadThrow (throwM))
+                                                MonadThrow (throwM), bracket, bracket_,
+                                                catchAll, finally)
 import           Control.Monad.State      as X (MonadState, State, StateT, evalState,
                                                 evalStateT, execState, execStateT, gets,
                                                 modify, runState, runStateT, state,
@@ -170,15 +171,7 @@ import           System.IO                as X (FilePath, Handle, IOMode (..), o
 import           Control.Monad.ST         as X
 
 -- Concurrency and Parallelism
-#if ( __GLASGOW_HASKELL__ >= 710 )
-import           Control.Exception        as X hiding (assert, catch, displayException,
-                                                ioError, mask, throw, throwIO, throwTo,
-                                                uninterruptibleMask)
-#else
-import           Control.Exception        as X hiding (assert, catch, ioError, mask,
-                                                throw, throwIO, throwTo,
-                                                uninterruptibleMask)
-#endif
+import           Control.Exception        as X (Exception, SomeException)
 
 import           Control.Concurrent       as X hiding (ThreadId, throwTo)
 import           Control.Concurrent.Async as X hiding (wait)
