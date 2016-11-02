@@ -11,6 +11,9 @@ module Universum
          module X
        , module Base
 
+         -- * Useful classes
+       , Buildable
+
          -- * Useful standard unclassifed functions
        , identity
        , map
