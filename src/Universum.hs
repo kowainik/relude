@@ -171,7 +171,7 @@ import           System.IO                as X (FilePath, Handle, IOMode (..), o
 import           Control.Monad.ST         as X
 
 -- Concurrency and Parallelism
-import           Control.Exception        as X (Exception, SomeException)
+import           Control.Exception        as X (Exception, SomeException (..))
 
 import           Control.Concurrent       as X hiding (ThreadId, killThread, throwTo)
 import           Control.Concurrent.Async as X hiding (wait)
