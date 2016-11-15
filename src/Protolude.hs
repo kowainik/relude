@@ -102,8 +102,19 @@ import Semiring as X
 import Data.Functor.Identity as X
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
-import Data.Monoid as X hiding ((<>))
-import Data.Semigroup as X ( Semigroup(..) )
+import Data.Monoid as X
+import Data.Semigroup as X (
+    Semigroup(sconcat, stimes)
+  , WrappedMonoid
+  , Option(..)
+  , option
+  , diff
+  , cycle1
+  , stimesMonoid
+  , stimesIdempotent
+  , stimesIdempotentMonoid
+  , mtimesDefault
+  )
 #else
 import Data.Monoid as X
 #endif
