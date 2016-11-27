@@ -1,5 +1,5 @@
 name:                universum
-version:             0.1.9
+version:             0.1.10
 synopsis:            A sensible set of defaults for writing custom Preludes.
 description:         A sensible set of defaults for writing custom Preludes.
 homepage:            https://github.com/serokell/universum
@@ -45,6 +45,7 @@ library
     Bifunctor
     Exceptions
     Panic
+    Lifted
 
   default-extensions:
     NoImplicitPrelude

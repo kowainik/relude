@@ -1,5 +1,11 @@
+0.1.10
+======
+
+* Generalize most `IO` functions to `MonadIO`
+* Make `die` available for older versions of base
+
 0.1.9
-====
+=====
 
 * Make `sum` and `product` strict
 

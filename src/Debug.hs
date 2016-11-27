@@ -1,7 +1,7 @@
 {-# LANGUAGE DeriveDataTypeable #-}
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE Trustworthy       #-}
+{-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE NoImplicitPrelude  #-}
+{-# LANGUAGE Trustworthy        #-}
 
 module Debug
        ( undefined
@@ -17,18 +17,20 @@ module Debug
        , NotImplemented(..)
        ) where
 
-import           Control.Monad    (Monad, return)
-import           Data.Text        (Text, unpack)
+import           Control.Monad          (Monad, return)
+import           Data.Text              (Text, unpack)
 
-import           GHC.Generics     (Generic)
-import           Data.Data        (Data)
-import           Data.Typeable    (Typeable)
+import           Data.Data              (Data)
+import           Data.Typeable          (Typeable)
+import           GHC.Generics           (Generic)
 
-import qualified Base             as P
-import qualified Prelude          as P
-import           Show             (Print, putStrLn)
+import           Control.Monad.IO.Class (MonadIO)
 
-import           System.IO.Unsafe (unsafePerformIO)
+import qualified Base                   as P
+import qualified Prelude                as P
+import           Show                   (Print, putStrLn)
+
+import           System.IO.Unsafe       (unsafePerformIO)
 
 {-# WARNING trace "'trace' remains in code" #-}
 trace :: Print b => b -> a -> a
@@ -37,7 +39,7 @@ trace string expr = unsafePerformIO (do
     return expr)
 
 {-# WARNING traceIO "'traceIO' remains in code" #-}
-traceIO :: Print b => b -> a -> P.IO a
+traceIO :: (Print b, MonadIO m) => b -> a -> m a
 traceIO string expr = do
     putStrLn string
     return expr

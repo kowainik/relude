@@ -41,6 +41,7 @@ import           Conv                     as X
 import           Debug                    as X
 import           Either                   as X
 import           Functor                  as X
+import           Lifted                   as X
 import           List                     as X hiding (product, sum)
 import           Monad                    as X
 import           Panic                    as X
@@ -154,28 +155,29 @@ import qualified Data.ByteString.Lazy
 import           Data.Text                as X (Text, lines, unlines, unwords, words)
 import qualified Data.Text.Lazy
 
-import           Data.Text.IO             as X (appendFile, getContents, getLine,
-                                                interact, readFile, writeFile)
-
 import           Data.Text.Lazy           as X (fromStrict, toStrict)
 
 import           Data.Text.Encoding       as X (decodeUtf8', decodeUtf8With)
 
 -- IO
-import           System.Environment       as X (getArgs)
-import           System.Exit              as X
-import           System.IO                as X (FilePath, Handle, IOMode (..), openFile,
-                                                stderr, stdin, stdout, withFile)
+import           System.Exit              as X hiding (die, exitFailure, exitSuccess,
+                                                exitWith)
+import           System.IO                as X (FilePath, Handle, IOMode (..), stderr,
+                                                stdin, stdout, withFile)
 
 -- ST
-import           Control.Monad.ST         as X
+import           Control.Monad.ST         as X hiding (stToIO)
 
 -- Concurrency and Parallelism
 import           Control.Exception        as X (Exception, SomeException (..))
 
-import           Control.Concurrent       as X hiding (ThreadId, killThread, throwTo)
+import           Control.Concurrent       as X hiding (ThreadId, getNumCapabilities,
+                                                isCurrentThreadBound, killThread,
+                                                mkWeakThreadId, myThreadId,
+                                                setNumCapabilities, threadCapability,
+                                                throwTo)
 import           Control.Concurrent.Async as X hiding (wait)
-import           Control.Monad.STM        as X
+import           Control.Monad.STM        as X hiding (atomically)
 
 import           Foreign.Storable         as X (Storable)
 
