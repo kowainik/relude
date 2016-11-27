@@ -9,6 +9,8 @@ module Show
        ( Print (..)
        , putText
        , putLText
+       , putByteString
+       , putLByteString
        ) where
 
 import qualified Base
@@ -57,3 +59,11 @@ putText = putStrLn
 putLText :: MonadIO m => TL.Text -> m ()
 putLText = putStrLn
 {-# SPECIALIZE putLText :: TL.Text -> Base.IO () #-}
+
+putByteString :: MonadIO m => BS.ByteString -> m ()
+putByteString = putStrLn
+{-# SPECIALIZE putByteString :: BS.ByteString -> Base.IO () #-}
+
+putLByteString :: MonadIO m => BL.ByteString -> m ()
+putLByteString = putStrLn
+{-# SPECIALIZE putLByteString :: BL.ByteString -> Base.IO () #-}

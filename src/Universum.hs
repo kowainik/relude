@@ -75,8 +75,11 @@ import           Data.Ord                 as X
 import           Data.Traversable         as X hiding (for)
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
-import           Data.Monoid              as X hiding ((<>))
-import           Data.Semigroup           as X (Semigroup (..))
+import           Data.Monoid              as X
+import           Data.Semigroup           as X (Option (..), Semigroup (sconcat, stimes),
+                                                WrappedMonoid, cycle1, mtimesDefault,
+                                                stimesIdempotent, stimesIdempotentMonoid,
+                                                stimesMonoid)
 #else
 import           Data.Monoid              as X
 #endif
@@ -100,6 +103,7 @@ import           Data.List                as X (break, cycle, drop, dropWhile, f
                                                 zipWith)
 import           Data.Tuple               as X
 
+import           Data.Hashable            as X (Hashable)
 import           Data.HashMap.Strict      as X (HashMap)
 import           Data.HashSet             as X (HashSet)
 import           Data.IntMap.Strict       as X (IntMap)

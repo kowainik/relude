@@ -1,3 +1,10 @@
+0.1.11
+======
+
+* Add specialized print functions for `ByteString`
+* Export more stuff from `Semigroup` and use `(<>)` from `Monoid`
+* Export `Hashable`
+
 0.1.10
 ======
 
