@@ -10,6 +10,8 @@ maintainer:          hi@serokell.io
 copyright:           2016-2016 Stephen Diehl, 2016-2016 Serokell
 category:            Prelude
 build-type:          Simple
+extra-source-files:
+  CHANGES.md
 cabal-version:       >=1.10
 tested-with:
   GHC == 7.8.3,
