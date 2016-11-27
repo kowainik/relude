@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP                #-}
 {-# LANGUAGE ExplicitNamespaces #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
 {-# LANGUAGE Safe               #-}
@@ -29,29 +30,37 @@ module Lifted
        , atomically
        ) where
 
-import           Control.Concurrent  (ThreadId)
-import           Control.Monad.ST    (RealWorld, ST)
-import           Control.Monad.STM   (STM)
-import           Control.Monad.Trans (MonadIO, liftIO)
-import           Data.String         (String)
-import           Data.Text           (Text)
-import           Prelude             (Bool, FilePath, Int, (>>))
-import           System.Exit         (ExitCode)
-import           System.IO           (Handle, IOMode, stderr)
-import qualified System.IO           (hPutStrLn)
-import           System.Mem.Weak     (Weak)
+import           Control.Concurrent    (ThreadId)
+#if ( __GLASGOW_HASKELL__ >= 710 )
+import           Control.Monad.ST      (RealWorld, ST)
+#else
+import           Control.Monad.ST.Safe (RealWorld, ST)
+#endif
+import           Control.Monad.STM     (STM)
+import           Control.Monad.Trans   (MonadIO, liftIO)
+import           Data.String           (String)
+import           Data.Text             (Text)
+import           Prelude               (Bool, FilePath, Int, (>>))
+import           System.Exit           (ExitCode)
+import           System.IO             (Handle, IOMode, stderr)
+import qualified System.IO             (hPutStrLn)
+import           System.Mem.Weak       (Weak)
 
 -- Text
-import qualified Data.Text.IO        as XIO
+import qualified Data.Text.IO          as XIO
 -- IO
-import qualified System.Environment  as XIO
-import qualified System.Exit         as XIO
-import qualified System.IO           as XIO (openFile)
+import qualified System.Environment    as XIO
+import qualified System.Exit           as XIO
+import qualified System.IO             as XIO (openFile)
 -- ST
-import qualified Control.Monad.ST    as XIO
+#if ( __GLASGOW_HASKELL__ >= 710 )
+import qualified Control.Monad.ST      as XIO
+#else
+import qualified Control.Monad.ST.Safe as XIO
+#endif
 -- Concurrency and parallelism
-import qualified Control.Concurrent  as XIO
-import qualified Control.Monad.STM   as XIO
+import qualified Control.Concurrent    as XIO
+import qualified Control.Monad.STM     as XIO
 
 ----------------------------------------------------------------------------
 -- Text
