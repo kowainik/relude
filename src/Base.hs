@@ -84,7 +84,7 @@ import GHC.Records as X (
 -}
 
 #if ( __GLASGOW_HASKELL__ >= 710 )
-import GHC.TypeLits (
+import GHC.TypeLits as X (
   Symbol,
   SomeSymbol(..),
   Nat,
