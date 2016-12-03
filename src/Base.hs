@@ -83,6 +83,22 @@ import GHC.Records as X (
   )
 -}
 
+#if ( __GLASGOW_HASKELL__ >= 710 )
+import GHC.TypeLits (
+  Symbol,
+  SomeSymbol(..),
+  Nat,
+  SomeNat(..),
+  CmpNat,
+  KnownSymbol,
+  KnownNat,
+  natVal,
+  someNatVal,
+  symbolVal,
+  someSymbolVal
+  )
+#endif
+
 import Data.Kind as X (
     type (*)
   , type Type
