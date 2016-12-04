@@ -1,3 +1,10 @@
+0.1.11
+====
+
+* Expose `Symbol` and `Nat` types from `GHC.TypeLits` by default.
+* Switch exported `(<>)` to be from `Data.Monoid` instead of Semigroup.
+* Expose `putByteString` and `putLByteString` monomorphic versions of `putStrLn` functions
+
 0.1.9
 ====
 
@@ -37,3 +44,5 @@
 
 0.1.5
 =====
+
+* Initial release.
