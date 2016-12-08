@@ -164,6 +164,11 @@ import Data.List as X (
   , tails
   , zipWith
   , zip
+  , genericLength
+  , genericTake
+  , genericDrop
+  , genericSplitAt
+  , genericReplicate
   )
 
 -- Hashing
