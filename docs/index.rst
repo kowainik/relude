@@ -4,7 +4,7 @@ Protolude Documentation
 An alternative Prelude.
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 0
   Printing     
   Files        
   Strings      
@@ -28,7 +28,7 @@ An alternative Prelude.
   ST           
   Concurrency  
   Storable     
-  Systsem      
+  System      
   Map          
   Set          
   Tuple      

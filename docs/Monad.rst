@@ -1,7 +1,8 @@
 Monads
 ======
 
-#### Monad
+Monad
+~~~~~
 
 ```haskell
 class Applicative m => Monad (m :: * -> *) where
@@ -119,7 +120,8 @@ ap :: Monad m => m (a -> b) -> m a -> m b
 (<$!>) :: Monad m => (a -> b) -> m a -> m b
 ```
 
-#### MonadPlus
+MonadPlus
+~~~~~~~~~
 
 ```haskell
 class (Alternative m, Monad m) => MonadPlus (m :: * -> *) where

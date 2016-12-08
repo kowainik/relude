@@ -1,7 +1,8 @@
 List
 ====
 
-#### Slicing
+Slicing
+~~~~~~~
 
 ```haskell
 head :: Foldable f => f a -> Maybe a
@@ -47,7 +48,8 @@ drop :: Int -> [a] -> [a]
 take :: Int -> [a] -> [a]
 ```
 
-#### Unpacking
+Unpacking
+~~~~~~~~~
 
 ```haskell
 uncons :: [a] -> Maybe (a, [a])
@@ -57,19 +59,22 @@ uncons :: [a] -> Maybe (a, [a])
 unsnoc :: [x] -> Maybe ([x],x)
 ```
 
-#### Sorting
+Sorting
+~~~~~~~~~
 
 ```haskell
 sortOn :: Ord o => (a -> o) -> [a] -> [a]
 ```
 
-#### Removing
+Removing
+~~~~~~~~~
 
 ```haskell
 ordNub :: Ord a => [a] -> [a]
 ```
 
-#### Splitting
+Splitting
+~~~~~~~~~
 
 ```haskell
 splitAt :: Int -> [a] -> ([a], [a])
@@ -83,13 +88,15 @@ splitAt :: Int -> [a] -> ([a], [a])
 intercalate :: [a] -> [[a]] -> [a]
 ```
 
-#### Comparison
+Comparison
+~~~~~~~~~
 
 ```haskell
 isPrefixOf :: Eq a => [a] -> [a] -> Bool
 ```
 
-#### Filter
+Filtering
+~~~~~~~~~
 
 ```haskell
 filter :: (a -> Bool) -> [a] -> [a]
