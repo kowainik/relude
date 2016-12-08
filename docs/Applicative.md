@@ -2,7 +2,7 @@ Applicative
 ===========
 
 Functor
-~~~~~~~
+-------
 
 ```haskell
 class Functor (f :: * -> *) where
@@ -19,7 +19,7 @@ class Functor (f :: * -> *) where
 ```
 
 Applicatives 
-~~~~~~~~~~~~
+-------
 
 ```haskell
 class Functor f => Applicative (f :: * -> *) where
@@ -46,7 +46,7 @@ eitherA :: (Alternative f) => f a -> f b -> f (Either a b)
 ```
 
 Alternative 
-~~~~~~~~~~~
+-------
 
 ```haskell
 class Applicative f => Alternative (f :: * -> *) where

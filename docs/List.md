@@ -2,7 +2,7 @@ List
 ====
 
 Slicing
-~~~~~~~
+-------
 
 ```haskell
 head :: Foldable f => f a -> Maybe a
@@ -49,7 +49,7 @@ take :: Int -> [a] -> [a]
 ```
 
 Unpacking
-~~~~~~~~~
+---------
 
 ```haskell
 uncons :: [a] -> Maybe (a, [a])
@@ -60,21 +60,21 @@ unsnoc :: [x] -> Maybe ([x],x)
 ```
 
 Sorting
-~~~~~~~~~
+---------
 
 ```haskell
 sortOn :: Ord o => (a -> o) -> [a] -> [a]
 ```
 
 Removing
-~~~~~~~~~
+---------
 
 ```haskell
 ordNub :: Ord a => [a] -> [a]
 ```
 
 Splitting
-~~~~~~~~~
+---------
 
 ```haskell
 splitAt :: Int -> [a] -> ([a], [a])
@@ -89,14 +89,14 @@ intercalate :: [a] -> [[a]] -> [a]
 ```
 
 Comparison
-~~~~~~~~~
+---------
 
 ```haskell
 isPrefixOf :: Eq a => [a] -> [a] -> Bool
 ```
 
 Filtering
-~~~~~~~~~
+---------
 
 ```haskell
 filter :: (a -> Bool) -> [a] -> [a]

@@ -6,6 +6,7 @@ An alternative Prelude.
 .. toctree::
    :maxdepth: 0
   Printing     
+  Debug
   Files        
   Strings      
   Function     

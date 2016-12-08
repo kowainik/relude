@@ -30,6 +30,16 @@ vacuous :: Functor f => f Void -> f a
 data Proxy (t :: k) = Proxy
 ```
 
+#### Symbol
+
+* symbolVal
+* someSymbolVal
+
+#### Nat
+
+* natVal
+* someNatVal
+
 #### Type Equality
 
 ```haskell
