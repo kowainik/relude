@@ -45,20 +45,33 @@ Supports:
 Usage
 -----
 
-In your project simply disable the default Prelude and import Protolude.
-
-```haskell
-{-# LANGUAGE NoImplicitPrelude #-}
-
-import Protolude
-```
-
 To try out standalone prelude at the interactive shell, from the Protolude
 project directory run.
 
 ```haskell
 $ stack exec ghci
 > import Protolude
+```
+
+Swapping out the old Prelude
+----------------------------
+
+Disable the built-in prelude at the top of your file:
+
+```haskell
+{-# LANGUAGE NoImplicitPrelude #-}
+```
+
+Or directly in your project cabal file:
+
+```haskell
+default-extensions: NoImplicitPrelude
+```
+
+Then in your modules:
+
+```haskell
+import Protolude
 ```
 
 Exported Functions
