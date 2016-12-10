@@ -35,6 +35,7 @@ An alternative Prelude.
   Set          
   Tuple      
   Generics     
+  Hashable
   TypeLevel    
   Unsafe       
 

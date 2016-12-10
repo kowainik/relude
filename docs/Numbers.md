@@ -11,3 +11,21 @@ Numbers
 * Word16
 * Word32
 * Word64
+
+Arithemtic 
+----------
+
+Trigonometric 
+-------------
+
+Comparisons
+-----------
+
+Ratios
+------
+
+Complex Numbers
+---------------
+
+Conversions
+-----------
