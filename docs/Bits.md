@@ -1,6 +1,14 @@
 Bits
 ====
 
+```haskell
+{-# LANGUAGE BinaryLiterals #-}
+```
+
+```python
+42 = 0b101010
+```
+
 Bit Operations
 --------------
 
@@ -28,10 +36,29 @@ xor :: Bits a => a -> a -> a
 
 *Example*:
 
+```haskell
+> True `xor` False
+True
+
+> True `xor` True
+False
+
+> 0b101 `xor` 0b011
+6 -- 0b110
+```
+
 #### complement
 
 ```haskell
 complement :: Bits a => a -> a
+```
+
+```haskell
+> complement True
+False
+
+> complement 0b101
+-2 -- -0b010
 ```
 
 *Example*:
@@ -81,17 +108,45 @@ setBit :: Bits a => a -> Int -> a
 clearBit :: Bits a => a -> Int -> a
 ```
 
+#### complementBit
+
 ```haskell
 complementBit :: Bits a => a -> Int -> a
 ```
+
+*Example*:
+
+```haskell
+λ> 0b100 `complementBit` 1
+6 -- 0b110
+```
+
+#### testBit
 
 ```haskell
 testBit :: Bits a => a -> Int -> Bool
 ```
 
+*Example*:
+
+```haskell
+> 0b10 `testBit` 0
+False
+> 0b10 `testBit` 1
+True
+```
+
+#### isSigned
 
 ```haskell
 isSigned :: Bits a => a -> Bool
+```
+
+```haskell
+> isSigned 42
+True
+> isSigned True
+False
 ```
 
 Bit Size

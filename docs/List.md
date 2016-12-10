@@ -59,6 +59,10 @@ uncons :: [a] -> Maybe (a, [a])
 unsnoc :: [x] -> Maybe ([x],x)
 ```
 
+```haskell
+list :: [b] -> (a -> b) -> [a] -> [b]
+```
+
 Sorting
 ---------
 

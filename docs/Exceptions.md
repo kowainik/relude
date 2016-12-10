@@ -1,5 +1,5 @@
-Exception Handling
-==================
+Exceptions
+==========
 
 #### MonadError
 
@@ -59,6 +59,20 @@ throwSTM :: Exception e => e -> STM a
 
 ```haskell
 throwError :: MonadError e m => e -> m a
+```
+
+#### Utilities
+
+```haskell
+hush :: Alternative m => Either e a -> m a
+```
+
+```haskell
+note :: (MonadError e m, Applicative m) => e -> Maybe a -> m a
+```
+
+```haskell
+tryIO :: MonadIO m => IO a -> ExceptT IOException m a
 ```
 
 #### Fatal Errors

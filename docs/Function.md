@@ -68,7 +68,23 @@ identity :: a -> a
 
 The identity function maps any value to itself.
 
+#### applyN
+
+Apply a function to a value `n` times.
+
 *Example*:
+
+```haskell
+applyN :: Int -> (a -> a) -> a -> a
+```
+
+```haskell
+> applyN 25 (+2) 0
+50
+
+> applyN 3 (1:) []
+[1,1,1]
+```
 
 Strictness
 -----------

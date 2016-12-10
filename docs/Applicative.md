@@ -41,6 +41,11 @@ orEmpty :: Alternative f => Bool -> a -> f a
 eitherA :: (Alternative f) => f a -> f b -> f (Either a b)
 ```
 
+```haskell
+pass :: Applicative f => f ()
+```
+
+
 Alternative 
 -------
 
@@ -74,4 +79,12 @@ liftA :: Applicative f => (a -> b) -> f a -> f b
 
 ```haskell
 empty :: Alternative f => f a
+```
+
+```haskell
+guarded :: (Alternative f) => (a -> Bool) -> a -> f a
+```
+
+```haskell
+guardedA :: (Functor f, Alternative t) => (a -> f Bool) -> a -> f (t a)
 ```

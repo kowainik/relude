@@ -119,6 +119,22 @@ ap :: Monad m => m (a -> b) -> m a -> m b
 (<$!>) :: Monad m => (a -> b) -> m a -> m b
 ```
 
+```haskell
+whenM :: Monad m => m Bool -> m () -> m ()
+```
+
+```haskell
+unlessM :: Monad m => m Bool -> m () -> m ()
+```
+
+```haskell
+ifM :: Monad m => m Bool -> m a -> m a -> m a
+```
+
+```haskell
+guardM :: MonadPlus m => m Bool -> m ()
+```
+
 MonadPlus
 -----
 
