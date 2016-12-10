@@ -196,6 +196,7 @@ import Data.Typeable as X (
 import Data.Type.Coercion as X (
     Coercion(..)
   , coerceWith
+  , repr
   )
 
 import Data.Type.Equality as X (
@@ -269,7 +270,17 @@ import Data.Bits as X hiding (
     unsafeShiftL
   , unsafeShiftR
   )
-import Data.Word as X
+import Data.Word as X (
+    byteSwap16
+  , byteSwap32
+  , byteSwap64
+  , Word
+  , Word16
+  , Word32
+  , Word64
+  , Word8
+  )
+
 import Data.Either as X
 import Data.Complex as X
 import Data.Char as X (chr)

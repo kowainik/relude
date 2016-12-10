@@ -5,17 +5,17 @@ An alternative Prelude.
 
 .. toctree::
    :maxdepth: 0
+  Function     
+  Strings      
+  Bool         
+  Numbers      
   Printing     
   Debug
   Files        
-  Strings      
-  Function     
   Applicative  
   Monad        
   Maybe        
   Either       
-  Bool         
-  Numbers      
   Monoid       
   Semigroup    
   Bifunctor    

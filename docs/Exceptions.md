@@ -61,7 +61,7 @@ throwSTM :: Exception e => e -> STM a
 throwError :: MonadError e m => e -> m a
 ```
 
-#### Panic
+#### Fatal Errors
 
 ```haskell
 data FatalError = FatalError {msg :: Text}

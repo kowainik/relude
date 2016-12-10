@@ -30,10 +30,6 @@ class Functor f => Applicative (f :: * -> *) where
 ```
 
 ```haskell
-(<$>) :: Functor f => (a -> b) -> f a -> f b
-```
-
-```haskell
 orAlt :: (Alternative f, Monoid a) => f a -> f a
 ```
 

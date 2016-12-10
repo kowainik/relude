@@ -1,84 +1,76 @@
 Tuples
 ======
 
-.. highlight:: haskell
+#### fst
 
-fst
-***
-
-::
-
-  fst :: (a, b) -> a
+```haskell
+fst :: (a, b) -> a
+```
 
 Extract the first component of a pair.
 
 *Example*:
 
-::
-  
-  > fst (1,2)
-  1
+```haskell
+> fst (1,2)
+```
 
-snd
-***
+#### snd
 
-::
-
-  snd :: (a, b) -> b
+```haskell
+snd :: (a, b) -> b
+```
 
 Extract the second component of a pair.
 
 *Example*:
 
-::
-  
-  > snd (1,2)
-  2
+```haskell
+> snd (1,2)
+2
+```
 
-swap
-****
+#### swap
 
-::
-
-  swap :: (a, b) -> (b, a)
+```haskell
+swap :: (a, b) -> (b, a)
+```
 
 Swap the components of a pair.
 
 *Example*:
 
-::
-  
-  > swap (1,2)
-  (2,1)
+```haskell
+> swap (1,2)
+(2,1)
+```
 
-curry
-*****
+#### curry
 
-::
-
-  curry :: ((a, b) -> c) -> a -> b -> c
+```haskell
+curry :: ((a, b) -> c) -> a -> b -> c
+```
 
 curry converts an uncurried function to a curried function.
 
 *Example*:
 
-::
+```haskell
+> curry fst 1 2
+1
+```
 
-  > curry fst 1 2
-  1
+#### uncurry
 
-uncurry
-*******
-
-::
-
-  uncurry :: (a -> b -> c) -> (a, b) -> c
+```haskell
+uncurry :: (a -> b -> c) -> (a, b) -> c
+```
 
 uncurry converts a curried function to a function on pairs.
 
 *Example*:
 
-::
-
-  > uncurry (+) (1,2)
-  3
+```haskell
+> uncurry (+) (1,2)
+3
+```
