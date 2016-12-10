@@ -32,13 +32,41 @@ data Proxy (t :: k) = Proxy
 
 #### Symbol
 
-* symbolVal
-* someSymbolVal
+```haskell
+symbolVal :: KnownSymbol n => proxy n -> String
+```
+
+*Example*:
+
+```haskell
+b :: String
+b = symbolVal (Proxy :: Proxy "foo")
+```
+
+```haskell
+someSymbolVal :: String -> SomeSymbol
+```
+
+*Example*:
 
 #### Nat
 
-* natVal
-* someNatVal
+```haskell
+natVal :: KnownNat n => proxy n -> Integer
+```
+
+*Example*:
+
+```haskell
+a :: Integer
+a = natVal (Proxy :: Proxy 1)
+```
+
+```haskell
+someNatVal :: Integer -> Maybe SomeNat
+```
+
+*Example*:
 
 #### Type Equality
 

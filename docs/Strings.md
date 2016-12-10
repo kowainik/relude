@@ -20,6 +20,14 @@ Bytestring
 LBytestring
 -----------
 
+Encoding
+----------
+
+* encodeUtf8
+* decodeUtf8
+* decodeUtf8'
+* decodeUtf8With
+
 Conversion
 ----------
 

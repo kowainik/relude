@@ -10,8 +10,9 @@ An alternative Prelude.
   Bool         
   Numbers      
   Printing     
-  Debug
   Files        
+  Debug
+  Bits
   Applicative  
   Monad        
   Maybe        
