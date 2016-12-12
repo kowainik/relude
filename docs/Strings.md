@@ -29,22 +29,32 @@ Encoding
 encodeUtf8 :: Text -> ByteString
 ```
 
+```haskell
+> encodeUtf8 "ポケット"
+"\227\131\157\227\130\177\227\131\131\227\131\136"
+```
+
 #### decodeUtf8
 
 ```haskell
 decodeUtf8 :: ByteString -> Text
 ```
 
+```haskell
+> putStrLn $ decodeUtf8 "\227\131\157\227\130\177\227\131\131\227\131\136"
+ポケット
+```
+
 #### decodeUtf8'
 
 ```haskell
-decodeUtf8' :: ByteString -> Text
+decodeUtf8' :: ByteString -> Either UnicodeException Text
 ```
 
 #### decodeUtf8With
 
 ```haskell
-decodeUtf8With :: Data.Text.Encoding.Error.OnDecodeError -> ByteString -> Text
+decodeUtf8With :: OnDecodeError -> ByteString -> Text
 ```
 
 Conversion

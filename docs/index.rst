@@ -13,6 +13,7 @@ An alternative Prelude.
   Files        
   Debug
   Bits
+  Functor
   Applicative  
   Monad        
   Maybe        

@@ -352,6 +352,7 @@ import Data.Text.Encoding as X (
 import Data.Text.Encoding.Error as X (
     OnDecodeError
   , OnError
+  , UnicodeException
   , lenientDecode
   , strictDecode
   , ignore
