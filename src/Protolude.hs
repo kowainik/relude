@@ -271,14 +271,16 @@ import Data.Bits as X hiding (
   , unsafeShiftR
   )
 import Data.Word as X (
-    byteSwap16
-  , byteSwap32
-  , byteSwap64
-  , Word
+    Word
   , Word16
   , Word32
   , Word64
   , Word8
+#if (__GLASGOW_HASKELL__ >= 710)
+  , byteSwap16
+  , byteSwap32
+  , byteSwap64
+#endif
   )
 
 import Data.Either as X
