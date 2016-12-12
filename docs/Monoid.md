@@ -4,6 +4,28 @@ Monoid
 Monoid
 ------
 
+#### mempty
+
+```haskell
+mempty :: Monoid a => a
+```
+
+#### <>
+
+```haskell
+(<>) :: Monoid m => m -> m -> m
+```
+
+```haskell
+mappend :: Monoid a => a -> a -> a
+```
+
+#### mconcat
+
+```haskell
+mconcat :: Monoid a => [a] -> a
+```
+
 Semigroup
 ---------
 
