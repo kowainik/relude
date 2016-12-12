@@ -103,6 +103,10 @@ import Data.Functor.Identity as X
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import Data.Monoid as X
+import Data.List.NonEmpty as X (
+    NonEmpty(..)
+  , nonEmpty
+  )
 import Data.Semigroup as X (
     Semigroup(sconcat, stimes)
   , WrappedMonoid

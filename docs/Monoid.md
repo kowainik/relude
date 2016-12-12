@@ -29,6 +29,17 @@ mconcat :: Monoid a => [a] -> a
 Semigroup
 ---------
 
+```haskell
+(<>) :: Semigroup a => a -> a -> a
+```
+
+```haskell
+sconcat :: Semigroup a => NonEmpty a -> a
+```
+
+```haskell
+stimes :: (Semigroup a, Integral b) => b -> a -> a
+```
 
 ```haskell
 option :: b -> (a -> b) -> Option a -> b
@@ -57,3 +68,6 @@ stimesIdempotentMonoid :: (Integral b, Monoid a) => b -> a -> a
 ```haskell
 mtimesDefault :: (Integral b, Monoid a) => b -> a -> a
 ```
+
+NonEmpty
+---------
