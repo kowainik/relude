@@ -349,6 +349,15 @@ import Data.Text.Encoding as X (
   , decodeUtf8With
   )
 
+import Data.Text.Encoding.Error as X (
+    OnDecodeError
+  , OnError
+  , lenientDecode
+  , strictDecode
+  , ignore
+  , replace
+  )
+
 -- IO
 import System.Exit as X
 import System.Environment as X (getArgs)

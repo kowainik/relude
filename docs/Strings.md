@@ -23,10 +23,29 @@ LBytestring
 Encoding
 ----------
 
-* encodeUtf8
-* decodeUtf8
-* decodeUtf8'
-* decodeUtf8With
+#### encodeUtf8
+
+```haskell
+encodeUtf8 :: Text -> ByteString
+```
+
+#### decodeUtf8
+
+```haskell
+decodeUtf8 :: ByteString -> Text
+```
+
+#### decodeUtf8'
+
+```haskell
+decodeUtf8' :: ByteString -> Text
+```
+
+#### decodeUtf8With
+
+```haskell
+decodeUtf8With :: Data.Text.Encoding.Error.OnDecodeError -> ByteString -> Text
+```
 
 Conversion
 ----------
