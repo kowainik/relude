@@ -305,6 +305,7 @@ import Data.Function as X (
 -- Genericss
 import GHC.Generics as X (
     Generic(..)
+  , Generic1
   , Rep
   , K1(..)
   , M1(..)

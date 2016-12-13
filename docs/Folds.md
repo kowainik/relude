@@ -160,3 +160,12 @@ notElem :: (Foldable t, Eq a) => a -> t a -> Bool
 ```haskell
 find :: Foldable t => (a -> Bool) -> t a -> Maybe a
 ```
+
+
+```haskell
+foldr1May :: (a -> a -> a) -> [a] -> Maybe a
+```
+
+```haskell
+foldl1May :: (a -> a -> a) -> [a] -> Maybe a
+```

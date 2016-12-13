@@ -29,13 +29,19 @@ mconcat :: Monoid a => [a] -> a
 Semigroup
 ---------
 
+#### <>
+
 ```haskell
 (<>) :: Semigroup a => a -> a -> a
 ```
 
+#### sconcat
+
 ```haskell
 sconcat :: Semigroup a => NonEmpty a -> a
 ```
+
+#### stimes
 
 ```haskell
 stimes :: (Semigroup a, Integral b) => b -> a -> a

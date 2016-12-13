@@ -109,3 +109,14 @@ filter :: (a -> Bool) -> [a] -> [a]
 ```haskell
 replicate :: Int -> a -> [a]
 ```
+
+Indexing
+--------
+
+```haskell
+atMay :: [a] -> Int -> Maybe a
+```
+
+```haskell
+atDef :: a -> [a] -> Int -> a
+```
