@@ -4,6 +4,7 @@
 * Expose `Symbol` and `Nat` types from `GHC.TypeLits` by default.
 * Switch exported `(<>)` to be from `Data.Monoid` instead of Semigroup.
 * Expose `putByteString` and `putLByteString` monomorphic versions of `putStrLn` functions
+* Export `ExceptT`, `ReaderT`, and `StateT` constructors.
 
 0.1.9
 ====

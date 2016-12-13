@@ -223,7 +223,7 @@ import Data.Void as X (
 import Control.Monad.State as X (
     MonadState
   , State
-  , StateT
+  , StateT(StateT)
   , put
   , get
   , gets
@@ -243,7 +243,7 @@ import Control.Monad.State as X (
 import Control.Monad.Reader as X (
     MonadReader
   , Reader
-  , ReaderT
+  , ReaderT(ReaderT)
   , ask
   , asks
   , local
@@ -255,7 +255,7 @@ import Control.Monad.Reader as X (
 import Control.Monad.Except as X (
     MonadError
   , Except
-  , ExceptT
+  , ExceptT(ExceptT)
   , throwError
   , catchError
   , runExcept
