@@ -426,7 +426,7 @@ map :: Functor f => (a -> b) -> f a -> f b
 map = fmap
 
 uncons :: [a] -> Maybe (a, [a])
-uncons []     = Nothing
+uncons [] = Nothing
 uncons (x:xs) = Just (x, xs)
 
 unsnoc :: [x] -> Maybe ([x],x)
