@@ -36,7 +36,7 @@ An alternative Prelude.
   Set          
   Tuple      
   Generics     
-  Hashable
+  Hashing
   TypeLevel    
   Unsafe       
 
@@ -44,5 +44,4 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
