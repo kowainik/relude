@@ -79,7 +79,7 @@ uncons :: [a] -> Maybe (a, [a])
 unsnoc :: [x] -> Maybe ([x],x)
 ```
 
-#### unsnoc
+#### list
 
 ```haskell
 list :: [b] -> (a -> b) -> [a] -> [b]
