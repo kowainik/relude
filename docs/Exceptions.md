@@ -118,3 +118,9 @@ data FatalError = FatalError {msg :: Text}
 ```haskell
 panic :: Text -> a
 ```
+
+Terminate with an uncatchable fatal error.
+
+```haskell
+> panic "Fatal error occured. 
+```
