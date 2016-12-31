@@ -20,8 +20,6 @@ tested-with:
   GHC == 8.0.1
 Bug-Reports:         https://github.com/serokell/universum/issues
 
-description:
-    A sensible set of defaults for writing custom Preludes.
 Source-Repository head
     type: git
     location: git@github.com:serokell/universum.git
