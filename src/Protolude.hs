@@ -10,7 +10,6 @@ module Protolude (
   module Base,
   identity,
   map,
-  (&),
   uncons,
   unsnoc,
   applyN,
@@ -24,6 +23,9 @@ module Protolude (
   guardedA,
   LText,
   LByteString,
+#if !MIN_VERSION_base(4,8,0)
+  (&),
+#endif
 ) where
 
 import List as X
@@ -305,6 +307,9 @@ import Data.Function as X (
   , flip
   , fix
   , on
+#if ( __GLASGOW_HASKELL__ >= 800 )
+  , (&)
+#endif
   )
 
 -- Genericss
@@ -419,10 +424,13 @@ import Text.Read as X (
 type LText = Data.Text.Lazy.Text
 type LByteString = Data.ByteString.Lazy.ByteString
 
+
+#if !MIN_VERSION_base(4,8,0)
 infixl 1 &
 
 (&) :: a -> (a -> b) -> b
 x & f = f x
+#endif
 
 identity :: a -> a
 identity x = x
