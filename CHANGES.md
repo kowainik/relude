@@ -5,6 +5,7 @@
 * Switch exported `(<>)` to be from `Data.Monoid` instead of Semigroup.
 * Expose `putByteString` and `putLByteString` monomorphic versions of `putStrLn` functions
 * Export `ExceptT`, `ReaderT`, and `StateT` constructors.
+* Export `NonEmpty` type and constructor for GHC 8.0.
 
 0.1.9
 ====
