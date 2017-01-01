@@ -31,6 +31,11 @@ module Monad
        , whenJust
        , whenJustM
 
+       , allM
+       , anyM
+       , andM
+       , orM
+
        , liftM
        , liftM2
        , liftM3
@@ -43,11 +48,12 @@ module Monad
        , (<$!>)
        ) where
 
-import           Base                (seq)
+import           Base                (IO, seq)
 import           Control.Applicative (Applicative)
 import           Data.Foldable       (for_)
 import           Data.List           (concat)
 import           Data.Maybe          (Maybe, maybe)
+import           Prelude             (Bool (..))
 
 #if (__GLASGOW_HASKELL__ >= 710)
 import           Control.Monad       hiding ((<$!>))
@@ -85,3 +91,33 @@ whenJustM :: Monad m => m (Maybe a) -> (a -> m ()) -> m ()
 whenJustM mm f = maybe (return ()) f =<< mm
 {-# INLINE whenJustM #-}
 
+-- Copied from 'monad-loops' by James Cook (the library is in public domain)
+
+andM :: (Monad m) => [m Bool] -> m Bool
+andM []     = return True
+andM (p:ps) = do
+  q <- p
+  if q then andM ps else return False
+
+orM :: (Monad m) => [m Bool] -> m Bool
+orM []     = return False
+orM (p:ps) = do
+  q <- p
+  if q then return True else orM ps
+
+anyM :: (Monad m) => (a -> m Bool) -> [a] -> m Bool
+anyM _ []     = return False
+anyM p (x:xs) = do
+  q <- p x
+  if q then return True else anyM p xs
+
+allM :: (Monad m) => (a -> m Bool) -> [a] -> m Bool
+allM _ []     = return True
+allM p (x:xs) = do
+  q <- p x
+  if q then allM p xs else return False
+
+{-# SPECIALIZE andM :: [IO Bool] -> IO Bool #-}
+{-# SPECIALIZE orM  :: [IO Bool] -> IO Bool #-}
+{-# SPECIALIZE anyM :: (a -> IO Bool) -> [a] -> IO Bool #-}
+{-# SPECIALIZE allM :: (a -> IO Bool) -> [a] -> IO Bool #-}
