@@ -65,6 +65,7 @@ import           Control.Monad                   hiding (fail)
 #if __GLASGOW_HASKELL__ >= 800
 import           Control.Monad.Fail              (MonadFail (..))
 #else
+import           Prelude                         (String)
 import qualified Prelude                         as P (fail)
 import           Text.ParserCombinators.ReadP
 import           Text.ParserCombinators.ReadPrec
