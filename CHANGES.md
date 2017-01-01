@@ -5,6 +5,8 @@
 
 * Add `allM`, `anyM,` `andM`, `orM`.
 
+* Reexport `fail` and `MonadFail`.
+
 0.1.11
 ======
 

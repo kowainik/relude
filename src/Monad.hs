@@ -4,6 +4,7 @@
 
 module Monad
        ( Monad ((>>=), return)
+       , MonadFail (fail)
        , MonadPlus (..)
 
        , (=<<)
@@ -48,17 +49,25 @@ module Monad
        , (<$!>)
        ) where
 
-import           Base                (IO, seq)
-import           Control.Applicative (Applicative)
-import           Data.Foldable       (for_)
-import           Data.List           (concat)
-import           Data.Maybe          (Maybe, maybe)
-import           Prelude             (Bool (..))
+import           Base                            (IO, seq)
+import           Control.Applicative             (Applicative)
+import           Data.Foldable                   (for_)
+import           Data.List                       (concat)
+import           Data.Maybe                      (Maybe, maybe)
+import           Prelude                         (Bool (..))
 
-#if (__GLASGOW_HASKELL__ >= 710)
-import           Control.Monad       hiding ((<$!>))
+#if __GLASGOW_HASKELL__ >= 710
+import           Control.Monad                   hiding (fail, (<$!>))
 #else
-import           Control.Monad
+import           Control.Monad                   hiding (fail)
+#endif
+
+#if __GLASGOW_HASKELL__ >= 800
+import           Control.Monad.Fail              (MonadFail (..))
+#else
+import qualified Prelude                         as P (fail)
+import           Text.ParserCombinators.ReadP
+import           Text.ParserCombinators.ReadPrec
 #endif
 
 concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
@@ -121,3 +130,22 @@ allM p (x:xs) = do
 {-# SPECIALIZE orM  :: [IO Bool] -> IO Bool #-}
 {-# SPECIALIZE anyM :: (a -> IO Bool) -> [a] -> IO Bool #-}
 {-# SPECIALIZE allM :: (a -> IO Bool) -> [a] -> IO Bool #-}
+
+-- Copied from 'fail' by Herbert Valerio Riedel (the library is under BSD3)
+
+#if __GLASGOW_HASKELL__ < 800
+class Monad m => MonadFail m where
+    fail :: String -> m a
+
+instance MonadFail [] where
+    fail _ = []
+
+instance MonadFail IO where
+    fail = P.fail
+
+instance MonadFail ReadPrec where
+    fail = P.fail -- = P (\_ -> fail s)
+
+instance MonadFail ReadP where
+    fail = P.fail
+#endif
