@@ -92,9 +92,8 @@ tracks Stack LTS resolver.
 | Dependencies  | Lower    | Upper    |
 | -----------   | -------- | -------- |
 | array         |          | 0.5      |
-| async         | 2.1      | 2.2      |
+| async         | 2.0      | 2.2      |
 | base          | 4.6      | 4.10     |
-| binary        |          | 0.7      |
 | bytestring    | 0.10     | 0.11     |
 | containers    | 0.5      | 0.6      |
 | deepseq       | 1.3      | 1.5      |
@@ -104,6 +103,7 @@ tracks Stack LTS resolver.
 | safe          | 0.3      | 0.4      |
 | stm           | 2.4      | 2.5      |
 | text          | 1.2      | 1.3      |
+| hashable      | 1.2      | 1.3      |
 | transformers  | 0.4      | 0.6      |
 
 FAQs
@@ -161,4 +161,4 @@ License
 -------
 
 Released under the MIT License.
-Copyright (c) 2016, Stephen Diehl
+Copyright (c) 2016-2017, Stephen Diehl

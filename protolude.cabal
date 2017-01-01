@@ -1,5 +1,5 @@
 name:                protolude
-version:             0.1.11
+version:             0.2
 synopsis:            A sensible set of defaults for writing custom Preludes.
 description:         A sensible set of defaults for writing custom Preludes.
 homepage:            https://github.com/sdiehl/protolude

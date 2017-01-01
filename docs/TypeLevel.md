@@ -30,6 +30,44 @@ vacuous :: Functor f => f Void -> f a
 data Proxy (t :: k) = Proxy
 ```
 
+#### Symbol
+
+```haskell
+symbolVal :: KnownSymbol n => proxy n -> String
+```
+
+*Example*:
+
+```haskell
+b :: String
+b = symbolVal (Proxy :: Proxy "foo")
+```
+
+```haskell
+someSymbolVal :: String -> SomeSymbol
+```
+
+*Example*:
+
+#### Nat
+
+```haskell
+natVal :: KnownNat n => proxy n -> Integer
+```
+
+*Example*:
+
+```haskell
+a :: Integer
+a = natVal (Proxy :: Proxy 1)
+```
+
+```haskell
+someNatVal :: Integer -> Maybe SomeNat
+```
+
+*Example*:
+
 #### Type Equality
 
 ```haskell

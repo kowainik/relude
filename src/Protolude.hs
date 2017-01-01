@@ -103,6 +103,10 @@ import Data.Functor.Identity as X
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import Data.Monoid as X
+import Data.List.NonEmpty as X (
+    NonEmpty(..)
+  , nonEmpty
+  )
 import Data.Semigroup as X (
     Semigroup(sconcat, stimes)
   , WrappedMonoid
@@ -201,6 +205,7 @@ import Data.Typeable as X (
 import Data.Type.Coercion as X (
     Coercion(..)
   , coerceWith
+  , repr
   )
 
 import Data.Type.Equality as X (
@@ -223,7 +228,7 @@ import Data.Void as X (
 import Control.Monad.State as X (
     MonadState
   , State
-  , StateT
+  , StateT(StateT)
   , put
   , get
   , gets
@@ -243,7 +248,7 @@ import Control.Monad.State as X (
 import Control.Monad.Reader as X (
     MonadReader
   , Reader
-  , ReaderT
+  , ReaderT(ReaderT)
   , ask
   , asks
   , local
@@ -255,7 +260,7 @@ import Control.Monad.Reader as X (
 import Control.Monad.Except as X (
     MonadError
   , Except
-  , ExceptT
+  , ExceptT(ExceptT)
   , throwError
   , catchError
   , runExcept
@@ -274,7 +279,19 @@ import Data.Bits as X hiding (
     unsafeShiftL
   , unsafeShiftR
   )
-import Data.Word as X
+import Data.Word as X (
+    Word
+  , Word16
+  , Word32
+  , Word64
+  , Word8
+#if (__GLASGOW_HASKELL__ >= 710)
+  , byteSwap16
+  , byteSwap32
+  , byteSwap64
+#endif
+  )
+
 import Data.Either as X
 import Data.Complex as X
 import Data.Char as X (chr)
@@ -293,6 +310,7 @@ import Data.Function as X (
 -- Genericss
 import GHC.Generics as X (
     Generic(..)
+  , Generic1
   , Rep
   , K1(..)
   , M1(..)
@@ -339,6 +357,16 @@ import Data.Text.Encoding as X (
   , decodeUtf8
   , decodeUtf8'
   , decodeUtf8With
+  )
+
+import Data.Text.Encoding.Error as X (
+    OnDecodeError
+  , OnError
+  , UnicodeException
+  , lenientDecode
+  , strictDecode
+  , ignore
+  , replace
   )
 
 -- IO
@@ -403,7 +431,7 @@ map :: Functor f => (a -> b) -> f a -> f b
 map = fmap
 
 uncons :: [a] -> Maybe (a, [a])
-uncons []     = Nothing
+uncons [] = Nothing
 uncons (x:xs) = Just (x, xs)
 
 unsnoc :: [x] -> Maybe ([x],x)
