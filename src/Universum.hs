@@ -37,12 +37,13 @@ module Universum
 
 import           Applicative              as X
 import           Bool                     as X
+import           Containers               as X
 import           Conv                     as X
 import           Debug                    as X
 import           Either                   as X
 import           Functor                  as X
 import           Lifted                   as X
-import           List                     as X hiding (product, sum)
+import           List                     as X
 import           Monad                    as X
 import           Panic                    as X
 import           Show                     as X
@@ -69,7 +70,8 @@ import           Control.Applicative      as X (Alternative (..), Applicative (.
 
 -- Base typeclasses
 import           Data.Eq                  as X
-import           Data.Foldable            as X hiding (foldl1, foldr1)
+import           Data.Foldable            as X (Foldable, concat, concatMap, foldlM,
+                                                foldrM, maximumBy, minimumBy)
 import           Data.Functor.Identity    as X
 import           Data.Ord                 as X
 import           Data.Traversable         as X hiding (for)

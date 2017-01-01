@@ -1,3 +1,8 @@
+0.1.12
+======
+
+* Use custom classes instead of `Foldable`. Thanks to this, `length` and similar functions can't anymore be used on tuples or `Maybe`, but can be used on e.g. `Text`, `ByteString` and `IntSet`.
+
 0.1.11
 ======
 

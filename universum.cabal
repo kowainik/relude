@@ -39,6 +39,7 @@ library
     Either
     Functor
     Bifunctor
+    Containers
     Exceptions
     Panic
     Lifted

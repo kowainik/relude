@@ -1,0 +1,449 @@
+{-# LANGUAGE CPP                     #-}
+{-# LANGUAGE ConstrainedClassMethods #-}
+{-# LANGUAGE DataKinds               #-}
+{-# LANGUAGE FlexibleContexts        #-}
+{-# LANGUAGE FlexibleInstances       #-}
+{-# LANGUAGE NoImplicitPrelude       #-}
+{-# LANGUAGE Trustworthy             #-}
+{-# LANGUAGE TypeFamilies            #-}
+{-# LANGUAGE UndecidableInstances    #-}
+
+module Containers
+       ( Element
+       , Container(..)
+       , NontrivialContainer(..)
+
+       , sum
+       , product
+
+       , mapM_
+       , forM_
+       , traverse_
+       , for_
+       , sequenceA_
+       , sequence_
+       , asum
+       ) where
+
+import           Control.Applicative    (Alternative (..))
+import           Control.Monad.Identity (Identity)
+import           Data.Coerce            (Coercible, coerce)
+import           Data.Foldable          (Foldable)
+import qualified Data.Foldable          as F
+import           Data.Maybe             (fromMaybe)
+import           Data.Monoid            (All(..), Any(..), First(..))
+import           Data.Word              (Word8)
+import           Prelude                hiding (all, any, Foldable (..), mapM_,
+                                                sequence_)
+
+#if __GLASGOW_HASKELL__ >= 800
+import           GHC.Err                (errorWithoutStackTrace)
+import           GHC.TypeLits           (ErrorMessage (Text), TypeError)
+#endif
+
+import qualified Data.ByteString        as BS
+import qualified Data.ByteString.Lazy   as BSL
+
+import qualified Data.Text              as T
+import qualified Data.Text.Lazy         as TL
+
+import qualified Data.IntSet            as IS
+
+
+----------------------------------------------------------------------------
+-- Containers (e.g. tuples aren't containers)
+----------------------------------------------------------------------------
+
+type family Element t
+
+type instance Element (f a) = a
+type instance Element T.Text = Char
+type instance Element TL.Text = Char
+type instance Element BS.ByteString = Word8
+type instance Element BSL.ByteString = Word8
+type instance Element IS.IntSet = Int
+
+class Container t where
+  toList :: t -> [Element t]
+  null :: t -> Bool
+
+instance {-# OVERLAPPABLE #-} Foldable f => Container (f a) where
+  toList = F.toList
+  {-# INLINE toList #-}
+  null = F.null
+  {-# INLINE null #-}
+
+instance Container T.Text where
+  toList = T.unpack
+  {-# INLINE toList #-}
+  null = T.null
+  {-# INLINE null #-}
+
+instance Container TL.Text where
+  toList = TL.unpack
+  {-# INLINE toList #-}
+  null = TL.null
+  {-# INLINE null #-}
+
+instance Container BS.ByteString where
+  toList = BS.unpack
+  {-# INLINE toList #-}
+  null = BS.null
+  {-# INLINE null #-}
+
+instance Container BSL.ByteString where
+  toList = BSL.unpack
+  {-# INLINE toList #-}
+  null = BSL.null
+  {-# INLINE null #-}
+
+instance Container IS.IntSet where
+  toList = IS.toList
+  {-# INLINE toList #-}
+  null = IS.null
+  {-# INLINE null #-}
+
+----------------------------------------------------------------------------
+-- Additional operations that don't make much sense for e.g. Maybe
+----------------------------------------------------------------------------
+
+-- | A class for 'Container's that aren't trivial like 'Maybe' (e.g. can hold
+-- more than one value)
+class Container t => NontrivialContainer t where
+  foldMap :: Monoid m => (Element t -> m) -> t -> m
+  foldMap f = foldr (mappend . f) mempty
+  {-# INLINE foldMap #-}
+
+  fold :: Monoid (Element t) => t -> Element t
+  fold = foldMap id
+
+  foldr :: (Element t -> b -> b) -> b -> t -> b
+  foldr' :: (Element t -> b -> b) -> b -> t -> b
+  foldr' f z0 xs = foldl f' id xs z0
+    where f' k x z = k $! f x z
+  foldl :: (b -> Element t -> b) -> b -> t -> b
+  foldl' :: (b -> Element t -> b) -> b -> t -> b
+  foldr1 :: (Element t -> Element t -> Element t) -> t -> Element t
+  foldr1 f xs =
+#if __GLASGOW_HASKELL__ >= 800
+      fromMaybe (errorWithoutStackTrace "foldr1: empty structure")
+                (foldr mf Nothing xs)
+#else
+      fromMaybe (error "foldr1: empty structure")
+                (foldr mf Nothing xs)
+#endif
+    where
+      mf x m = Just (case m of
+                       Nothing -> x
+                       Just y  -> f x y)
+  foldl1 :: (Element t -> Element t -> Element t) -> t -> Element t
+  foldl1 f xs =
+#if __GLASGOW_HASKELL__ >= 800
+      fromMaybe (errorWithoutStackTrace "foldl1: empty structure")
+                (foldl mf Nothing xs)
+#else
+      fromMaybe (error "foldl1: empty structure")
+                (foldl mf Nothing xs)
+#endif
+    where
+      mf m y = Just (case m of
+                       Nothing -> y
+                       Just x  -> f x y)
+
+  length :: t -> Int
+
+  elem :: Eq (Element t) => Element t -> t -> Bool
+
+  maximum :: Ord (Element t) => t -> Element t
+  minimum :: Ord (Element t) => t -> Element t
+
+  all :: (Element t -> Bool) -> t -> Bool
+  all p = getAll #. foldMap (All #. p)
+  any :: (Element t -> Bool) -> t -> Bool
+  any p = getAny #. foldMap (Any #. p)
+
+  and :: (Element t ~ Bool) => t -> Bool
+  and = getAll #. foldMap All
+  or :: (Element t ~ Bool) => t -> Bool
+  or = getAny #. foldMap Any
+
+  find :: (Element t -> Bool) -> t -> Maybe (Element t)
+  find p = getFirst . foldMap (\ x -> First (if p x then Just x else Nothing))
+
+  head :: t -> Maybe (Element t)
+  head = foldr (\x _ -> Just x) Nothing
+  {-# INLINE head #-}
+
+instance {-# OVERLAPPABLE #-} Foldable f => NontrivialContainer (f a) where
+  foldMap = F.foldMap
+  {-# INLINE foldMap #-}
+  fold = F.fold
+  {-# INLINE fold #-}
+  foldr = F.foldr
+  {-# INLINE foldr #-}
+  foldr' = F.foldr'
+  {-# INLINE foldr' #-}
+  foldl = F.foldl
+  {-# INLINE foldl #-}
+  foldl' = F.foldl'
+  {-# INLINE foldl' #-}
+  foldr1 = F.foldr1
+  {-# INLINE foldr1 #-}
+  foldl1 = F.foldl1
+  {-# INLINE foldl1 #-}
+  length = F.length
+  {-# INLINE length #-}
+  elem = F.elem
+  {-# INLINE elem #-}
+  maximum = F.maximum
+  {-# INLINE maximum #-}
+  minimum = F.minimum
+  {-# INLINE minimum #-}
+  all = F.all
+  {-# INLINE all #-}
+  any = F.any
+  {-# INLINE any #-}
+  and = F.and
+  {-# INLINE and #-}
+  or = F.or
+  {-# INLINE or #-}
+  find = F.find
+  {-# INLINE find #-}
+
+instance NontrivialContainer T.Text where
+  foldr = T.foldr
+  {-# INLINE foldr #-}
+  foldl = T.foldl
+  {-# INLINE foldl #-}
+  foldl' = T.foldl'
+  {-# INLINE foldl' #-}
+  foldr1 = T.foldr1
+  {-# INLINE foldr1 #-}
+  foldl1 = T.foldl1
+  {-# INLINE foldl1 #-}
+  length = T.length
+  {-# INLINE length #-}
+  elem c = T.isInfixOf (T.singleton c)  -- there are rewrite rules for this
+  {-# INLINE elem #-}
+  maximum = T.maximum
+  {-# INLINE maximum #-}
+  minimum = T.minimum
+  {-# INLINE minimum #-}
+  all = T.all
+  {-# INLINE all #-}
+  any = T.any
+  {-# INLINE any #-}
+  find = T.find
+  {-# INLINE find #-}
+  head = fmap fst . T.uncons
+  {-# INLINE head #-}
+
+instance NontrivialContainer TL.Text where
+  foldr = TL.foldr
+  {-# INLINE foldr #-}
+  foldl = TL.foldl
+  {-# INLINE foldl #-}
+  foldl' = TL.foldl'
+  {-# INLINE foldl' #-}
+  foldr1 = TL.foldr1
+  {-# INLINE foldr1 #-}
+  foldl1 = TL.foldl1
+  {-# INLINE foldl1 #-}
+  length = fromIntegral . TL.length
+  {-# INLINE length #-}
+  -- will be okay thanks to rewrite rules
+  elem c s = TL.isInfixOf (TL.singleton c) s 
+  {-# INLINE elem #-}
+  maximum = TL.maximum
+  {-# INLINE maximum #-}
+  minimum = TL.minimum
+  {-# INLINE minimum #-}
+  all = TL.all
+  {-# INLINE all #-}
+  any = TL.any
+  {-# INLINE any #-}
+  find = TL.find
+  {-# INLINE find #-}
+  head = fmap fst . TL.uncons
+  {-# INLINE head #-}
+
+instance NontrivialContainer BS.ByteString where
+  foldr = BS.foldr
+  {-# INLINE foldr #-}
+  foldl = BS.foldl
+  {-# INLINE foldl #-}
+  foldl' = BS.foldl'
+  {-# INLINE foldl' #-}
+  foldr1 = BS.foldr1
+  {-# INLINE foldr1 #-}
+  foldl1 = BS.foldl1
+  {-# INLINE foldl1 #-}
+  length = BS.length
+  {-# INLINE length #-}
+  elem = BS.elem
+  {-# INLINE elem #-}
+  maximum = BS.maximum
+  {-# INLINE maximum #-}
+  minimum = BS.minimum
+  {-# INLINE minimum #-}
+  all = BS.all
+  {-# INLINE all #-}
+  any = BS.any
+  {-# INLINE any #-}
+  find = BS.find
+  {-# INLINE find #-}
+  head = fmap fst . BS.uncons
+  {-# INLINE head #-}
+
+instance NontrivialContainer BSL.ByteString where
+  foldr = BSL.foldr
+  {-# INLINE foldr #-}
+  foldl = BSL.foldl
+  {-# INLINE foldl #-}
+  foldl' = BSL.foldl'
+  {-# INLINE foldl' #-}
+  foldr1 = BSL.foldr1
+  {-# INLINE foldr1 #-}
+  foldl1 = BSL.foldl1
+  {-# INLINE foldl1 #-}
+  length = fromIntegral . BSL.length
+  {-# INLINE length #-}
+  elem = BSL.elem
+  {-# INLINE elem #-}
+  maximum = BSL.maximum
+  {-# INLINE maximum #-}
+  minimum = BSL.minimum
+  {-# INLINE minimum #-}
+  all = BSL.all
+  {-# INLINE all #-}
+  any = BSL.any
+  {-# INLINE any #-}
+  find = BSL.find
+  {-# INLINE find #-}
+  head = fmap fst . BSL.uncons
+  {-# INLINE head #-}
+
+instance NontrivialContainer IS.IntSet where
+  foldr = IS.foldr
+  {-# INLINE foldr #-}
+  foldl = IS.foldl
+  {-# INLINE foldl #-}
+  foldl' = IS.foldl'
+  {-# INLINE foldl' #-}
+  length = IS.size
+  {-# INLINE length #-}
+  elem = IS.member
+  {-# INLINE elem #-}
+  maximum = IS.findMax
+  {-# INLINE maximum #-}
+  minimum = IS.findMin
+  {-# INLINE minimum #-}
+  head = fmap fst . IS.minView
+  {-# INLINE head #-}
+
+----------------------------------------------------------------------------
+-- Derivative functions
+----------------------------------------------------------------------------
+
+sum :: (NontrivialContainer t, Num (Element t)) => t -> Element t
+sum = foldl' (+) 0
+
+product :: (NontrivialContainer t, Num (Element t)) => t -> Element t
+product = foldl' (*) 1
+
+traverse_
+    :: (NontrivialContainer t, Applicative f)
+    => (Element t -> f b) -> t -> f ()
+traverse_ f = foldr ((*>) . f) (pure ())
+
+for_
+    :: (NontrivialContainer t, Applicative f)
+    => t -> (Element t -> f b) -> f ()
+for_ = flip traverse_
+{-# INLINE for_ #-}
+
+mapM_
+    :: (NontrivialContainer t, Monad m)
+    => (Element t -> m b) -> t -> m ()
+mapM_ f= foldr ((>>) . f) (return ())
+
+forM_
+    :: (NontrivialContainer t, Monad m)
+    => t -> (Element t -> m b) -> m ()
+forM_ = flip mapM_
+{-# INLINE forM_ #-}
+
+sequenceA_
+    :: (NontrivialContainer t, Applicative f, Element t ~ f a)
+    => t -> f ()
+sequenceA_ = foldr (*>) (pure ())
+
+sequence_
+    :: (NontrivialContainer t, Monad m, Element t ~ m a)
+    => t -> m ()
+sequence_ = foldr (>>) (return ())
+
+asum
+    :: (NontrivialContainer t, Alternative f, Element t ~ f a)
+    => t -> f a
+asum = foldr (<|>) empty
+{-# INLINE asum #-}
+
+----------------------------------------------------------------------------
+-- Disallowed instances
+----------------------------------------------------------------------------
+
+#define DISALLOW_CONTAINER_8(t, z) \
+    instance TypeError ('Text "Do not use 'Foldable' methods on z") => \
+      Container (t) where { \
+        toList = undefined; \
+        null = undefined; } \
+
+#define DISALLOW_NONTRIVIAL_CONTAINER_8(t, z) \
+    instance TypeError ('Text "Do not use 'Foldable' methods on z") => \
+      NontrivialContainer (t) where { \
+        foldr = undefined; \
+        foldl = undefined; \
+        foldl' = undefined; \
+        length = undefined; \
+        elem = undefined; \
+        maximum = undefined; \
+        minimum = undefined; } \
+
+#define DISALLOW_CONTAINER_7(t) \
+    instance ForbiddenFoldable (t) => Container (t) where { \
+        toList = undefined; \
+        null = undefined; } \
+
+#define DISALLOW_NONTRIVIAL_CONTAINER_7(t) \
+    instance ForbiddenFoldable (t) => NontrivialContainer (t) where { \
+        foldr = undefined; \
+        foldl = undefined; \
+        foldl' = undefined; \
+        length = undefined; \
+        elem = undefined; \
+        maximum = undefined; \
+        minimum = undefined; } \
+
+#if __GLASGOW_HASKELL__ >= 800
+DISALLOW_CONTAINER_8((a, b),tuples)
+DISALLOW_NONTRIVIAL_CONTAINER_8((a, b),tuples)
+DISALLOW_NONTRIVIAL_CONTAINER_8(Maybe a,Maybe)
+DISALLOW_NONTRIVIAL_CONTAINER_8(Identity a,Identity)
+DISALLOW_NONTRIVIAL_CONTAINER_8(Either a b,Either)
+#else
+class ForbiddenFoldable a
+DISALLOW_CONTAINER_7((a, b))
+DISALLOW_NONTRIVIAL_CONTAINER_7((a, b))
+DISALLOW_NONTRIVIAL_CONTAINER_7(Maybe a)
+DISALLOW_NONTRIVIAL_CONTAINER_7(Identity a)
+DISALLOW_NONTRIVIAL_CONTAINER_7(Either a b)
+#endif
+
+----------------------------------------------------------------------------
+-- Utils
+----------------------------------------------------------------------------
+
+(#.) :: Coercible b c => (b -> c) -> (a -> b) -> (a -> c)
+(#.) _f = coerce
+{-# INLINE (#.) #-}
