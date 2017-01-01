@@ -110,7 +110,7 @@ Fatal Errors
 ------------
 
 ```haskell
-data FatalError = FatalError {msg :: Text}
+data FatalError = FatalError {fatalErrorMessage :: Text}
 ```
 
 #### panic

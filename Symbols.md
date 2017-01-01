@@ -426,6 +426,7 @@
 * expt
 * expts
 * expts10
+* fatalErrorMessage
 * filter
 * filterM
 * finally
@@ -658,7 +659,6 @@
 * modifyMVarMasked_
 * modifyMVar_
 * mplus
-* msg
 * msum
 * myThreadId
 * mzero
