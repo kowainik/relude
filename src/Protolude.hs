@@ -297,9 +297,11 @@ import Data.Word as X (
   , Word32
   , Word64
   , Word8
+#if MIN_VERSION_base(4,7,0)
   , byteSwap16
   , byteSwap32
   , byteSwap64
+#endif
   )
 
 import Data.Either as X (
@@ -307,9 +309,11 @@ import Data.Either as X (
   , either 
   , lefts
   , rights
+  , partitionEithers
+#if MIN_VERSION_base(4,7,0)
   , isLeft
   , isRight
-  , partitionEithers
+#endif
   )
 
 import Data.Complex as X (
