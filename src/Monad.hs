@@ -53,7 +53,7 @@ import           Base                            (IO, seq)
 import           Control.Applicative             (Applicative)
 import           Data.Foldable                   (for_)
 import           Data.List                       (concat)
-import           Data.Maybe                      (Maybe, maybe)
+import           Data.Maybe                      (Maybe (..), maybe)
 import           Prelude                         (Bool (..))
 
 #if __GLASGOW_HASKELL__ >= 710
@@ -137,6 +137,9 @@ allM p (x:xs) = do
 #if __GLASGOW_HASKELL__ < 800
 class Monad m => MonadFail m where
     fail :: String -> m a
+
+instance MonadFail Maybe where
+    fail _ = Nothing
 
 instance MonadFail [] where
     fail _ = []
