@@ -13,10 +13,24 @@ module Base (
 #if defined(__GLASGOW_HASKELL__) && ( __GLASGOW_HASKELL__ >= 600 )
 
 -- Base GHC types
-import GHC.Num as X
-import GHC.Enum as X
+import GHC.Num as X (
+    Num(..)
+  , Integer
+  , subtract
+  )
+import GHC.Enum as X (
+    Bounded(..)
+  , Enum(..)
+  , boundedEnumFrom
+  , boundedEnumFromThen
+  )
 import GHC.Real as X
-import GHC.Float as X
+import GHC.Float as X (
+    Float(..)
+  , Double(..)
+  , showFloat
+  , showSignedFloat
+  )
 import GHC.Err as X (
     undefined
   , error
@@ -37,6 +51,8 @@ import GHC.Base as X (
   , maxInt
   , minInt
   )
+
+-- Exported for lifting into new functions.
 import System.IO as X (
     print
   , putStr
@@ -55,6 +71,10 @@ import GHC.Types as X (
 #endif
   )
 
+#if ( __GLASGOW_HASKELL__ >= 710 )
+import GHC.StaticPtr as X (StaticPtr)
+#endif
+
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import GHC.OverloadedLabels as X (
     IsLabel(..)
@@ -69,12 +89,13 @@ import GHC.ExecutionStack as X (
 
 import GHC.Stack as X (
     CallStack
-  , HasCallStack
+  , type HasCallStack
   , callStack
   , prettySrcLoc
   , currentCallStack
   , getCallStack
   , prettyCallStack
+  , withFrozenCallStack
   )
 
 {-
@@ -105,6 +126,7 @@ import Data.Kind as X (
   )
 #endif
 
+-- Default Prelude defines this at the toplevel module, so we do as well.
 infixr 0 $!
 
 ($!) :: (a -> b) -> a -> b

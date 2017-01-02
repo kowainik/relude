@@ -372,12 +372,17 @@ import GHC.Generics as X (
   , S1
   , (:+:)
   , (:*:)
+  , (:.:)
   , Rec0
   , Constructor(..)
+  , Datatype(..)
   , Selector(..)
   , Fixity(..)
+  , Associativity(..)
 #if ( __GLASGOW_HASKELL__ >= 800 )
   , Meta(..)
+  , FixityI(..)
+  , URec
 #endif
   )
 
