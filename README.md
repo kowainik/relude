@@ -91,7 +91,7 @@ tracks Stack LTS resolver.
 
 | Dependencies  | Lower    | Upper    |
 | -----------   | -------- | -------- |
-| array         |          | 0.5      |
+| array         | 0.4      | 0.5      |
 | async         | 2.0      | 2.2      |
 | base          | 4.6      | 4.10     |
 | bytestring    | 0.10     | 0.11     |

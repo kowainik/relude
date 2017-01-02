@@ -93,8 +93,15 @@ import Control.Applicative as X (
   )
 
 -- Base typeclasses
-import Data.Eq as X
-import Data.Ord as X
+import Data.Eq as X (
+    Eq(..)
+  )
+import Data.Ord as X (
+    Ord(..)
+  , Ordering(..)
+  , Down(..)
+  , comparing
+  )
 import Data.Traversable as X
 import Data.Foldable as X hiding (
     foldr1
@@ -102,7 +109,9 @@ import Data.Foldable as X hiding (
   , product
   , sum
   )
-import Data.Functor.Identity as X
+import Data.Functor.Identity as X (
+    Identity(..)
+  )
 
 #if MIN_VERSION_base(4,9,0)
 import Data.List.NonEmpty as X (
@@ -286,17 +295,23 @@ import Control.Monad.Trans as X (
   )
 
 -- Base types
-import Data.Int as X
+import Data.Int as X (
+    Int
+  , Int8
+  , Int16
+  , Int32
+  , Int64
+  )
 import Data.Bits as X hiding (
     unsafeShiftL
   , unsafeShiftR
   )
 import Data.Word as X (
     Word
+  , Word8
   , Word16
   , Word32
   , Word64
-  , Word8
 #if MIN_VERSION_base(4,7,0)
   , byteSwap16
   , byteSwap32
@@ -445,12 +460,52 @@ import Control.Exception as X hiding (
 
 import qualified Control.Exception
 
-import Control.Monad.STM as X
+import Control.Monad.STM as X (
+    STM
+  , atomically
+  , always
+  , alwaysSucceeds
+  , retry
+  , orElse
+  , check
+  , throwSTM 
+  , catchSTM
+  )
 import Control.Concurrent as X hiding (
     throwTo
   , yield
   )
-import Control.Concurrent.Async as X
+import Control.Concurrent.Async as X (
+    Async(..)
+  , Concurrently(..)
+  , async
+  , asyncBound
+  , asyncOn
+  , withAsync
+  , withAsyncBound
+  , withAsyncOn
+  , wait
+  , poll
+  , waitCatch
+  , cancel 
+  , cancelWith
+  , asyncThreadId
+  , waitAny
+  , waitAnyCatch
+  , waitAnyCancel
+  , waitAnyCatchCancel
+  , waitEither
+  , waitEitherCatch
+  , waitEitherCancel
+  , waitEitherCatchCancel
+  , waitEither_
+  , waitBoth
+  , link
+  , link2
+  , race
+  , race_
+  , concurrently
+  )
 
 import Foreign.Storable as X (Storable)
 

@@ -16,12 +16,12 @@ import Data.Ord (Ord, comparing)
 import Data.Foldable (Foldable, foldr, foldl')
 import Data.Function ((.))
 import Data.Functor (fmap)
-import Control.Monad (return)
+import Control.Applicative (pure)
 import qualified Data.Set as Set
 import GHC.Num (Num, (+), (*))
 
 head :: (Foldable f) => f a -> Maybe a
-head = foldr (\x _ -> return x) Nothing
+head = foldr (\x _ -> pure x) Nothing
 
 sortOn :: (Ord o) => (a -> o) -> [a] -> [a]
 sortOn = sortBy . comparing
