@@ -28,6 +28,7 @@ module Protolude (
 #endif
 ) where
 
+-- Protolude module exports.
 import List as X
 import Show as X
 import Bool as X
@@ -39,6 +40,7 @@ import Applicative as X
 import Conv as X
 import Panic as X
 import Exceptions as X
+import Semiring as X
 
 import Base as Base hiding (
     putStr           -- Overriden by Show.putStr
@@ -100,11 +102,9 @@ import Data.Foldable as X hiding (
   , product
   , sum
   )
-import Semiring as X
 import Data.Functor.Identity as X
 
-#if ( __GLASGOW_HASKELL__ >= 800 )
-import Data.Monoid as X
+#if MIN_VERSION_base(4,9,0)
 import Data.List.NonEmpty as X (
     NonEmpty(..)
   , nonEmpty
@@ -121,14 +121,14 @@ import Data.Semigroup as X (
   , stimesIdempotentMonoid
   , mtimesDefault
   )
-#else
-import Data.Monoid as X
 #endif
 
-#if (__GLASGOW_HASKELL__ >= 710)
-import Data.Bifunctor as X (Bifunctor(..))
-#else
+import Data.Monoid as X
+
+#if !MIN_VERSION_base(4,8,0)
 import Bifunctor as X (Bifunctor(..))
+#else
+import Data.Bifunctor as X (Bifunctor(..))
 #endif
 
 -- Deepseq
@@ -140,7 +140,14 @@ import Control.DeepSeq as X (
   )
 
 -- Data structures
-import Data.Tuple as X
+import Data.Tuple as X (
+    fst
+  , snd
+  , curry 
+  , uncurry
+  , swap
+  ) 
+
 import Data.List as X (
     splitAt
   , break
@@ -191,7 +198,7 @@ import Data.Sequence as X (Seq)
 import Data.IntMap as X (IntMap)
 import Data.IntSet as X (IntSet)
 
-#if ( __GLASGOW_HASKELL__ >= 710 )
+#if !MIN_VERSION_base(4,7,0)
 import Data.Proxy as X (
     Proxy(..)
   )
@@ -287,15 +294,32 @@ import Data.Word as X (
   , Word32
   , Word64
   , Word8
-#if (__GLASGOW_HASKELL__ >= 710)
   , byteSwap16
   , byteSwap32
   , byteSwap64
-#endif
   )
 
-import Data.Either as X
-import Data.Complex as X
+import Data.Either as X (
+    Either(..)
+  , either 
+  , lefts
+  , rights
+  , isLeft
+  , isRight
+  , partitionEithers
+  )
+
+import Data.Complex as X (
+    Complex(..)
+  , realPart
+  , imagPart
+  , mkPolar
+  , cis
+  , polar
+  , magnitude
+  , phase
+  , conjugate
+  )
 import Data.Char as X (chr)
 import Data.Bool as X hiding (bool)
 import Data.Maybe as X hiding (fromJust)
@@ -307,7 +331,7 @@ import Data.Function as X (
   , flip
   , fix
   , on
-#if ( __GLASGOW_HASKELL__ >= 800 )
+#if MIN_VERSION_base(4,8,0)
   , (&)
 #endif
   )
@@ -375,8 +399,16 @@ import Data.Text.Encoding.Error as X (
   )
 
 -- IO
-import System.Exit as X
 import System.Environment as X (getArgs)
+import System.Exit as X (
+    ExitCode(..)
+  , exitWith
+  , exitFailure
+  , exitSuccess
+#if MIN_VERSION_base(4,8,0)
+  , die
+#endif
+  )
 import System.IO as X (
     Handle
   , FilePath
@@ -389,7 +421,11 @@ import System.IO as X (
   )
 
 -- ST
-import Control.Monad.ST as X
+import Control.Monad.ST as X (
+    ST
+  , runST
+  , fixST
+  )
 
 -- Concurrency and Parallelism
 import Control.Exception as X hiding (
@@ -397,7 +433,6 @@ import Control.Exception as X hiding (
   , throwIO
   , throwTo
   , assert
-  , displayException
   , Handler(..)
   )
 

@@ -7,7 +7,10 @@
 * Export `genericLength` and other generic list return functions.
 * Rename `msg` to `fatalErrorMessage`.
 * Export `ExceptT`, `ReaderT`, and `StateT` constructors.
-* Export `NonEmpty` type and constructor for GHC 8.0.
+* Mask `displayException` from default exports.
+* Mask `stToIO` from default exports.
+* Export `NonEmpty` type and constructor for Base 4.9 only.
+* Export `Data.Semigroup` type and functions for Base 4.9 only.
 
 0.1.9
 ====
