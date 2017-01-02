@@ -198,7 +198,7 @@ import Data.Sequence as X (Seq)
 import Data.IntMap as X (IntMap)
 import Data.IntSet as X (IntSet)
 
-#if !MIN_VERSION_base(4,7,0)
+#if MIN_VERSION_base(4,7,0)
 import Data.Proxy as X (
     Proxy(..)
   )
@@ -226,6 +226,9 @@ import Data.Type.Equality as X (
   , gcastWith
   )
 
+#endif
+
+#if MIN_VERSION_base(4,8,0)
 import Data.Void as X (
     Void
   , absurd
