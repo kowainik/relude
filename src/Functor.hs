@@ -12,7 +12,7 @@ module Functor (
 
 import Data.Function ((.))
 
-#if (__GLASGOW_HASKELL__ >= 710)
+#if MIN_VERSION_base(4,7,0)
 import Data.Functor (
     Functor(..)
   , ($>)

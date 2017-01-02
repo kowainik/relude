@@ -42,12 +42,7 @@ module Monad (
 
 import Base (seq)
 import Data.List (concat)
-
-#if (__GLASGOW_HASKELL__ >= 710)
-import Control.Monad hiding ((<$!>))
-#else
 import Control.Monad
-#endif
 
 concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
 concatMapM f xs = liftM concat (mapM f xs)
@@ -64,9 +59,11 @@ liftM2' f a b = do
   z `seq` return z
 {-# INLINE liftM2' #-}
 
+#if !MIN_VERSION_base(4,8,0)
 (<$!>) :: Monad m => (a -> b) -> m a -> m b
 f <$!> m = do
   x <- m
   let z = f x
   z `seq` return z
 {-# INLINE (<$!>) #-}
+#endif

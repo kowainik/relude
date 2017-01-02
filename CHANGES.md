@@ -11,6 +11,7 @@
 * Mask `stToIO` from default exports.
 * Export `NonEmpty` type and constructor for Base 4.9 only.
 * Export `Data.Semigroup` type and functions for Base 4.9 only.
+* Restrict exported symbols from ``async`` to set available in 2.0.
 
 0.1.9
 ====
