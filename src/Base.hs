@@ -1,8 +1,8 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE Unsafe #-}
 {-# LANGUAGE BangPatterns #-}
-{-# LANGUAGE ExplicitNamespaces #-}
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE ExplicitNamespaces #-}
 
 module Base (
   module X,
@@ -98,12 +98,6 @@ import GHC.Stack as X (
   , withFrozenCallStack
   )
 
-{-
-import GHC.Records as X (
-    HasField(..)
-  )
--}
-
 #if ( __GLASGOW_HASKELL__ >= 710 )
 import GHC.TypeLits as X (
   Symbol,
@@ -120,10 +114,19 @@ import GHC.TypeLits as X (
   )
 #endif
 
+-- Pending GHC 8.2 we'll expose these.
+
+{-
+import GHC.Records as X (
+    HasField(..)
+  )
+
 import Data.Kind as X (
     type (*)
   , type Type
   )
+-}
+
 #endif
 
 -- Default Prelude defines this at the toplevel module, so we do as well.
