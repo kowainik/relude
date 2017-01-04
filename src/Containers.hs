@@ -5,8 +5,11 @@
 {-# LANGUAGE FlexibleInstances       #-}
 {-# LANGUAGE NoImplicitPrelude       #-}
 {-# LANGUAGE Trustworthy             #-}
+{-# LANGUAGE TypeOperators           #-}
 {-# LANGUAGE TypeFamilies            #-}
 {-# LANGUAGE UndecidableInstances    #-}
+
+{-# OPTIONS_GHC -fno-warn-unticked-promoted-constructors #-}
 
 module Containers
        ( Element
@@ -38,7 +41,7 @@ import           Prelude                hiding (all, any, Foldable (..), mapM_,
 
 #if __GLASGOW_HASKELL__ >= 800
 import           GHC.Err                (errorWithoutStackTrace)
-import           GHC.TypeLits           (ErrorMessage (Text), TypeError)
+import           GHC.TypeLits           (ErrorMessage (..), TypeError)
 #endif
 
 import qualified Data.ByteString        as BS
@@ -394,13 +397,13 @@ asum = foldr (<|>) empty
 ----------------------------------------------------------------------------
 
 #define DISALLOW_CONTAINER_8(t, z) \
-    instance TypeError ('Text "Do not use 'Foldable' methods on z") => \
+    instance TypeError (Text "Do not use 'Foldable' methods on " :<>: Text z) => \
       Container (t) where { \
         toList = undefined; \
         null = undefined; } \
 
 #define DISALLOW_NONTRIVIAL_CONTAINER_8(t, z) \
-    instance TypeError ('Text "Do not use 'Foldable' methods on z") => \
+    instance TypeError (Text "Do not use 'Foldable' methods on " :<>: Text z) => \
       NontrivialContainer (t) where { \
         foldr = undefined; \
         foldl = undefined; \
@@ -426,11 +429,11 @@ asum = foldr (<|>) empty
         minimum = undefined; } \
 
 #if __GLASGOW_HASKELL__ >= 800
-DISALLOW_CONTAINER_8((a, b),tuples)
-DISALLOW_NONTRIVIAL_CONTAINER_8((a, b),tuples)
-DISALLOW_NONTRIVIAL_CONTAINER_8(Maybe a,Maybe)
-DISALLOW_NONTRIVIAL_CONTAINER_8(Identity a,Identity)
-DISALLOW_NONTRIVIAL_CONTAINER_8(Either a b,Either)
+DISALLOW_CONTAINER_8((a, b),"tuples")
+DISALLOW_NONTRIVIAL_CONTAINER_8((a, b),"tuples")
+DISALLOW_NONTRIVIAL_CONTAINER_8(Maybe a,"Maybe")
+DISALLOW_NONTRIVIAL_CONTAINER_8(Identity a,"Identity")
+DISALLOW_NONTRIVIAL_CONTAINER_8(Either a b,"Either")
 #else
 class ForbiddenFoldable a
 DISALLOW_CONTAINER_7((a, b))
