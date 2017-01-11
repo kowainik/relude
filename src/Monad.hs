@@ -50,7 +50,7 @@ module Monad
        ) where
 
 import           Base                            (IO, seq)
-import           Control.Applicative             (Applicative)
+import           Control.Applicative             (Applicative, pure)
 import           Data.Foldable                   (for_)
 import           Data.List                       (concat)
 import           Data.Maybe                      (Maybe (..), maybe)
