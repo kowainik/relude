@@ -94,7 +94,8 @@ f <$!> m = do
 {-# INLINE (<$!>) #-}
 
 whenJust :: Applicative f => Maybe a -> (a -> f ()) -> f ()
-whenJust = for_
+whenJust (Just x) f = f x
+whenJust Nothing _  = pure ()
 {-# INLINE whenJust #-}
 
 whenJustM :: Monad m => m (Maybe a) -> (a -> m ()) -> m ()

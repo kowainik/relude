@@ -1,3 +1,8 @@
+0.1.13
+======
+
+* Fix a space leak in `whenJust`.
+
 0.1.12
 ======
 
