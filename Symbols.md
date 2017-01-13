@@ -239,7 +239,6 @@
 * StateT
 * Storable
 * Strict
-* String
 * StringConv
 * Sum
 * Sum
