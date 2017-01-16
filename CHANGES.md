@@ -1,6 +1,8 @@
 0.1.13
 ======
 
+* Add lenses from `microlens`.
+* Add `(<&>)`.
 * Fix a space leak in `whenJust`.
 
 0.1.12

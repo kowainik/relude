@@ -190,7 +190,12 @@ import           Foreign.Storable         as X (Storable)
 -- Read instances hiding unsafe builtins (read)
 import           Text.Read                as X (Read, readEither, readMaybe, reads)
 
--- Type synonymss for lazy texts
+-- Lenses
+import           Lens.Micro               as X (over, set, (%~), (.~), (<&>), (^.), (^..),
+                                                (^?), _1, _2, _3, _4, _5)
+import           Lens.Micro.Mtl           as X (preuse, preview, use, view)
+
+-- Type synonyms for lazy types
 type LText = Data.Text.Lazy.Text
 type LByteString = Data.ByteString.Lazy.ByteString
 
