@@ -191,8 +191,9 @@ import           Foreign.Storable         as X (Storable)
 import           Text.Read                as X (Read, readEither, readMaybe, reads)
 
 -- Lenses
-import           Lens.Micro               as X (over, set, (%~), (&), (.~), (<&>), (^.),
-                                                (^..), (^?), _1, _2, _3, _4, _5)
+import           Lens.Micro               as X (Lens, Lens', Traversal, Traversal', over,
+                                                set, (%~), (&), (.~), (<&>), (^.), (^..),
+                                                (^?), _1, _2, _3, _4, _5)
 import           Lens.Micro.Mtl           as X (preuse, preview, use, view)
 
 -- Type synonyms for lazy types
