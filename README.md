@@ -2,6 +2,7 @@ Universum
 =========
 
 [![Build Status](https://travis-ci.org/serokell/universum.svg?branch=master)](https://travis-ci.org/serokell/universum)
+[![Hackage](https://img.shields.io/hackage/v/universum.svg)](https://hackage.haskell.org/package/universum)
 
 Prelude used in Serokell.
 
