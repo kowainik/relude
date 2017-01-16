@@ -51,7 +51,6 @@ module Monad
 
 import           Base                            (IO, seq)
 import           Control.Applicative             (Applicative, pure)
-import           Data.Foldable                   (for_)
 import           Data.List                       (concat)
 import           Data.Maybe                      (Maybe (..), maybe)
 import           Prelude                         (Bool (..))
