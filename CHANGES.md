@@ -3,6 +3,9 @@
 
 * Add lenses from `microlens`.
 * Add `(<&>)`.
+* Reexport `(&)` from `Data.Function` if it's present there instead
+  of always defining our own (this is actually done by reexporting it
+  from `Lens.Micro` which does the right thing).
 * Fix a space leak in `whenJust`.
 
 0.1.12

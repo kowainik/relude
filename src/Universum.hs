@@ -191,18 +191,13 @@ import           Foreign.Storable         as X (Storable)
 import           Text.Read                as X (Read, readEither, readMaybe, reads)
 
 -- Lenses
-import           Lens.Micro               as X (over, set, (%~), (.~), (<&>), (^.), (^..),
-                                                (^?), _1, _2, _3, _4, _5)
+import           Lens.Micro               as X (over, set, (%~), (&), (.~), (<&>), (^.),
+                                                (^..), (^?), _1, _2, _3, _4, _5)
 import           Lens.Micro.Mtl           as X (preuse, preview, use, view)
 
 -- Type synonyms for lazy types
 type LText = Data.Text.Lazy.Text
 type LByteString = Data.ByteString.Lazy.ByteString
-
-infixl 1 &
-
-(&) :: a -> (a -> b) -> b
-x & f = f x
 
 identity :: a -> a
 identity x = x
