@@ -1,10 +1,9 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE Safe              #-}
+{-# LANGUAGE Safe #-}
 
 module List
-       ( ordNub
+       ( list
+       , ordNub
        , sortOn
-       , list
        , unzip
        , unzip3
        , zip

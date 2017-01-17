@@ -17,7 +17,6 @@ module Universum
          -- * Useful standard unclassifed functions
        , identity
        , map
-       , (&)
        , uncons
        , unsnoc
        , applyN
@@ -69,14 +68,16 @@ import           Control.Applicative      as X (Alternative (..), Applicative (.
                                                 liftA3, optional, (<**>))
 
 -- Base typeclasses
-import           Data.Eq                  as X
+import           Data.Eq                  as X (Eq (..))
 import           Data.Foldable            as X (Foldable, concat, concatMap, foldlM,
                                                 foldrM, maximumBy, minimumBy)
-import           Data.Functor.Identity    as X
-import           Data.Ord                 as X
+import           Data.Functor.Identity    as X (Identity (..))
+import           Data.Ord                 as X (Down (..), Ord (..), Ordering (..),
+                                                comparing)
 import           Data.Traversable         as X hiding (for)
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
+import           Data.List.NonEmpty       as X (NonEmpty (..), nonEmpty)
 import           Data.Monoid              as X
 import           Data.Semigroup           as X (Option (..), Semigroup (sconcat, stimes),
                                                 WrappedMonoid, cycle1, mtimesDefault,
@@ -96,23 +97,24 @@ import           Bifunctor                as X (Bifunctor (..))
 import           Control.DeepSeq          as X (NFData (..), deepseq, force, ($!!))
 
 -- Data structures
-import           Data.List                as X (break, cycle, drop, dropWhile, filter,
-                                                group, inits, intercalate, intersperse,
-                                                isPrefixOf, iterate, permutations, repeat,
-                                                replicate, reverse, scanl, scanr, sort,
-                                                sortBy, splitAt, subsequences, tails,
-                                                take, takeWhile, transpose, unfoldr, zip,
-                                                zipWith)
-import           Data.Tuple               as X
-
 import           Data.Hashable            as X (Hashable)
 import           Data.HashMap.Strict      as X (HashMap)
 import           Data.HashSet             as X (HashSet)
 import           Data.IntMap.Strict       as X (IntMap)
 import           Data.IntSet              as X (IntSet)
+import           Data.List                as X (break, cycle, drop, dropWhile, filter,
+                                                genericDrop, genericLength,
+                                                genericReplicate, genericSplitAt,
+                                                genericTake, group, inits, intercalate,
+                                                intersperse, isPrefixOf, iterate,
+                                                permutations, repeat, replicate, reverse,
+                                                scanl, scanr, sort, sortBy, splitAt,
+                                                subsequences, tails, take, takeWhile,
+                                                transpose, unfoldr, zip, zipWith)
 import           Data.Map.Strict          as X (Map)
 import           Data.Sequence            as X (Seq)
 import           Data.Set                 as X (Set)
+import           Data.Tuple               as X (curry, fst, snd, swap, uncurry)
 
 #if ( __GLASGOW_HASKELL__ >= 710 )
 import           Data.Proxy               as X (Proxy (..))
@@ -124,13 +126,13 @@ import           Data.Void                as X (Void, absurd, vacuous)
 import           Control.Monad.Catch      as X (MonadCatch (catch), MonadMask (..),
                                                 MonadThrow (throwM), bracket, bracket_,
                                                 catchAll, finally)
-import           Control.Monad.State      as X (MonadState, State, StateT, evalState,
+import           Control.Monad.Except     as X (ExceptT (..), runExceptT)
+import           Control.Monad.State      as X (MonadState, State, StateT (..), evalState,
                                                 evalStateT, execState, execStateT, gets,
-                                                modify, runState, runStateT, state,
-                                                withState)
+                                                modify, runState, state, withState)
 
-import           Control.Monad.Reader     as X (MonadReader, Reader, ReaderT, ask, asks,
-                                                local, reader, runReader, runReaderT)
+import           Control.Monad.Reader     as X (MonadReader, Reader, ReaderT (..), ask,
+                                                asks, local, reader, runReader)
 
 import           Control.Monad.Trans      as X (MonadIO, lift, liftIO)
 
@@ -138,16 +140,23 @@ import           Control.Monad.Trans      as X (MonadIO, lift, liftIO)
 import           Data.Bits                as X hiding (unsafeShiftL, unsafeShiftR)
 import           Data.Bool                as X hiding (bool)
 import           Data.Char                as X (chr)
-import           Data.Complex             as X
-import           Data.Either              as X
-import           Data.Int                 as X
+import           Data.Either              as X (Either (..), either, isLeft, isRight,
+                                                lefts, partitionEithers, rights)
+import           Data.Int                 as X (Int, Int16, Int32, Int64, Int8)
 import           Data.Maybe               as X hiding (fromJust)
-import           Data.Word                as X
+import           Data.Word                as X (Word, Word16, Word32, Word64, Word8,
+                                                byteSwap16, byteSwap32, byteSwap64)
 
 import           Data.Function            as X (const, fix, flip, on, ($), (.))
 
--- Generics
+-- Generics and type level magic
 import           GHC.Generics             as X (Generic)
+#if ( __GLASGOW_HASKELL__ >= 710 )
+import           GHC.TypeLits             as X (CmpNat, KnownNat, KnownSymbol, Nat,
+                                                SomeNat (..), SomeSymbol (..), Symbol,
+                                                natVal, someNatVal, someSymbolVal,
+                                                symbolVal)
+#endif
 
 -- Buildable
 import           Data.Text.Buildable      (Buildable (build))
@@ -164,15 +173,15 @@ import qualified Data.Text.Lazy
 import           Data.Text.Lazy           as X (fromStrict, toStrict)
 
 import           Data.Text.Encoding       as X (decodeUtf8', decodeUtf8With)
+import           Data.Text.Encoding.Error as X (OnDecodeError, OnError, UnicodeException,
+                                                lenientDecode, strictDecode)
 
 -- IO
-import           System.Exit              as X hiding (die, exitFailure, exitSuccess,
-                                                exitWith)
 import           System.IO                as X (FilePath, Handle, IOMode (..), stderr,
                                                 stdin, stdout, withFile)
 
 -- ST
-import           Control.Monad.ST         as X hiding (stToIO)
+import           Control.Monad.ST         as X (ST, fixST, runST)
 
 -- Concurrency and Parallelism
 import           Control.Exception        as X (Exception, SomeException (..))
@@ -182,8 +191,18 @@ import           Control.Concurrent       as X hiding (ThreadId, getNumCapabilit
                                                 mkWeakThreadId, myThreadId,
                                                 setNumCapabilities, threadCapability,
                                                 throwTo)
-import           Control.Concurrent.Async as X hiding (wait)
-import           Control.Monad.STM        as X hiding (atomically)
+import           Control.Concurrent.Async as X (Async (..), Concurrently (..), async,
+                                                asyncBound, asyncOn, asyncThreadId,
+                                                cancel, cancelWith, concurrently, link,
+                                                link2, poll, race, race_, waitAny,
+                                                waitAnyCancel, waitAnyCatch,
+                                                waitAnyCatchCancel, waitBoth, waitCatch,
+                                                waitEither, waitEitherCancel,
+                                                waitEitherCatch, waitEitherCatchCancel,
+                                                waitEither_, withAsync, withAsyncBound,
+                                                withAsyncOn)
+import           Control.Monad.STM        as X (STM, always, alwaysSucceeds, catchSTM,
+                                                check, orElse, retry, throwSTM)
 
 import           Foreign.Storable         as X (Storable)
 

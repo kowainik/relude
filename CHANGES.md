@@ -1,3 +1,14 @@
+0.2
+===
+
+* Expose `Symbol` and `Nat` types from `GHC.TypeLits` by default.
+* Export `genericLength` and other generic list return functions.
+* Rename `msg` to `fatalErrorMessage`.
+* Export `ExceptT`
+* Export `ReaderT`, and `StateT` constructors.
+* Export `NonEmpty` type and constructor for Base 4.9 only.
+* Export `Data.Semigroup` type and functions for Base 4.9 only.
+
 0.1.13
 ======
 
@@ -20,8 +31,8 @@
 0.1.11
 ======
 
-* Add specialized print functions for `ByteString`
-* Export more stuff from `Semigroup` and use `(<>)` from `Monoid`
+* Expose `putByteString` and `putLByteString` monomorphic versions of `putStrLn` functions
+* Switch exported `(<>)` to be from `Data.Monoid` instead of Semigroup.
 * Export `Hashable`
 
 0.1.10
@@ -69,3 +80,5 @@
 
 0.1.5
 =====
+
+* Initial release.

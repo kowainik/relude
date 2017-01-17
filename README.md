@@ -60,17 +60,13 @@ Generalised functions
 
 * ``sum`` and ``product`` are strict by default.
 
-* `show` can produce any string-like type.
-
-* `putStrLn`, `print`, `throwIO` are generalised to `MonadIO`.
-
-
 Debugging and `undefined`s
 --------------------------
 
 `trace`, `traceM`, `traceShow`, etc are available by default. GHC will warn you if you leave them in code accidentally, however. (Same for `undefined` and `error`.)
 
 We also have `notImplemented :: a` and `data NotImplemented = NotImplemented` (which, too, come with warnings).
+
 
 
 Text
@@ -126,13 +122,13 @@ Other utility functions
   ```haskell
   > orEmpty True 3
   Just 3
-  
+
   > orEmpty False 3
   Nothing
   ```
-  
+
   It works for any `Alternative`.
-  
+
   TODO: describe `orAlt`.
 
 * `for_` for loops. There's also `forM_` but `for_` looks a bit nicer.
@@ -141,7 +137,52 @@ Other utility functions
   for_ [1..10] $ \i -> do
       ...
   ```
-  
-* `first` and `second` apply a function to first/second part of a tuple. `bimap` takes two functions and applies them to first and second parts respectively.
-  
+
+* `first` and `second` apply a function to first/second part of a tuple.
+  `bimap` takes two functions and applies them to first and second parts respectively.
+
 * `readMaybe` and `readEither` are like `read` but give either `Maybe` or `Either` with parse error.
+
+Usage
+-----
+To try out standalone prelude at the interactive shell, from the Protolude
+project directory run.
+
+```haskell
+$ stack exec ghci
+> import Universum
+```
+
+Swapping out the old Prelude
+----------------------------
+
+Disable the built-in prelude at the top of your file:
+
+```haskell
+{-# LANGUAGE NoImplicitPrelude #-}
+```
+
+Or directly in your project cabal file:
+
+```haskell
+default-extensions: NoImplicitPrelude
+```
+
+Then in your modules:
+
+```haskell
+import Universum
+```
+
+Exported Functions
+------------------
+
+The list of exports is given in the [Symbols.md](./Symbols.md) file. Haddock
+unfortunately breaks in the presence of module reexports and is unable to render
+documentation.
+
+License
+-------
+
+Released under the MIT License.
+Copyright (c) 2016-2017, Stephen Diehl, 2017, Serokell

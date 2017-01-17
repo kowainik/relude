@@ -1,7 +1,8 @@
 Applicative
 ===========
 
-#### Functor
+Functor
+-------
 
 ```haskell
 class Functor (f :: * -> *) where
@@ -17,7 +18,8 @@ class Functor (f :: * -> *) where
 ($>) :: Functor f => f a -> b -> f b
 ```
 
-#### Applicatives 
+Applicatives 
+-------
 
 ```haskell
 class Functor f => Applicative (f :: * -> *) where
@@ -25,10 +27,6 @@ class Functor f => Applicative (f :: * -> *) where
   (<*>) :: f (a -> b) -> f a -> f b
   (*>) :: f a -> f b -> f b
   (<*) :: f a -> f b -> f a
-```
-
-```haskell
-(<$>) :: Functor f => (a -> b) -> f a -> f b
 ```
 
 ```haskell
@@ -43,7 +41,13 @@ orEmpty :: Alternative f => Bool -> a -> f a
 eitherA :: (Alternative f) => f a -> f b -> f (Either a b)
 ```
 
-#### Alternative 
+```haskell
+pass :: Applicative f => f ()
+```
+
+
+Alternative 
+-------
 
 ```haskell
 class Applicative f => Alternative (f :: * -> *) where
@@ -75,4 +79,12 @@ liftA :: Applicative f => (a -> b) -> f a -> f b
 
 ```haskell
 empty :: Alternative f => f a
+```
+
+```haskell
+guarded :: (Alternative f) => (a -> Bool) -> a -> f a
+```
+
+```haskell
+guardedA :: (Functor f, Alternative t) => (a -> f Bool) -> a -> f (t a)
 ```

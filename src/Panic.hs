@@ -12,7 +12,7 @@ import           Data.Text         (Text)
 import           Data.Typeable     (Typeable)
 
 -- | Uncatchable exceptions thrown and never caught.
-data FatalError = FatalError { msg :: Text }
+data FatalError = FatalError { fatalErrorMessage :: Text }
   deriving (Show, Typeable)
 
 instance Exception FatalError

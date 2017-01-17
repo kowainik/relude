@@ -1,14 +1,14 @@
 Monads
 ======
 
-#### Monad
+Monad
+-----
 
 ```haskell
 class Applicative m => Monad (m :: * -> *) where
   (>>=) :: m a -> (a -> m b) -> m b
   (>>) :: m a -> m b -> m b
   return :: a -> m a
-  GHC.Base.fail :: GHC.Base.String -> m a
 ```
 
 ```haskell
@@ -119,7 +119,24 @@ ap :: Monad m => m (a -> b) -> m a -> m b
 (<$!>) :: Monad m => (a -> b) -> m a -> m b
 ```
 
-#### MonadPlus
+```haskell
+whenM :: Monad m => m Bool -> m () -> m ()
+```
+
+```haskell
+unlessM :: Monad m => m Bool -> m () -> m ()
+```
+
+```haskell
+ifM :: Monad m => m Bool -> m a -> m a -> m a
+```
+
+```haskell
+guardM :: MonadPlus m => m Bool -> m ()
+```
+
+MonadPlus
+-----
 
 ```haskell
 class (Alternative m, Monad m) => MonadPlus (m :: * -> *) where
