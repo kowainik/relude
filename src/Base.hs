@@ -17,8 +17,8 @@ import           GHC.Enum             as X (Bounded (..), Enum (..), boundedEnum
                                             boundedEnumFromThen)
 import           GHC.Err              as X (error, undefined)
 import           GHC.Exts             as X (Constraint, FunPtr, Ptr)
-import           GHC.Float            as X (Double (..), Float (..), showFloat,
-                                            showSignedFloat)
+import           GHC.Float            as X (Double (..), Float (..), Floating (..),
+                                            showFloat, showSignedFloat)
 import           GHC.Num              as X (Integer, Num (..), subtract)
 import           GHC.Real             as X hiding ((%))
 import           GHC.Show             as X (Show (..))
