@@ -40,6 +40,7 @@ import           Containers               as X
 import           Conv                     as X
 import           Debug                    as X
 import           Either                   as X
+import           Exceptions               as X
 import           Functor                  as X
 import           Lifted                   as X
 import           List                     as X
