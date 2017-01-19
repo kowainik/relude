@@ -12,7 +12,9 @@
 {-# OPTIONS_GHC -fno-warn-unticked-promoted-constructors #-}
 
 module Containers
-       ( Element
+       (
+       -- * Foldable-like classes and methods
+         Element
        , Container(..)
        , NontrivialContainer(..)
 
@@ -26,6 +28,9 @@ module Containers
        , sequenceA_
        , sequence_
        , asum
+
+       -- * Others
+       , One(..)
        ) where
 
 import           Control.Applicative    (Alternative (..))
@@ -44,14 +49,29 @@ import           GHC.Err                (errorWithoutStackTrace)
 import           GHC.TypeLits           (ErrorMessage (..), TypeError)
 #endif
 
+#if ( __GLASGOW_HASKELL__ >= 800 )
+import qualified Data.List.NonEmpty     as NE
+#endif
+
 import qualified Data.ByteString        as BS
 import qualified Data.ByteString.Lazy   as BSL
 
 import qualified Data.Text              as T
 import qualified Data.Text.Lazy         as TL
 
+import qualified Data.Map               as M
+import qualified Data.Set               as S
+import qualified Data.IntMap            as IM
 import qualified Data.IntSet            as IS
+import qualified Data.HashMap.Strict    as HM
+import qualified Data.HashSet           as HS
 
+import qualified Data.Vector            as V
+import qualified Data.Vector.Unboxed    as VU
+import qualified Data.Vector.Primitive  as VP
+import qualified Data.Vector.Storable   as VS
+
+import Data.Hashable (Hashable)
 
 ----------------------------------------------------------------------------
 -- Containers (e.g. tuples aren't containers)
@@ -442,6 +462,107 @@ DISALLOW_NONTRIVIAL_CONTAINER_7(Maybe a)
 DISALLOW_NONTRIVIAL_CONTAINER_7(Identity a)
 DISALLOW_NONTRIVIAL_CONTAINER_7(Either a b)
 #endif
+
+----------------------------------------------------------------------------
+-- One
+----------------------------------------------------------------------------
+
+class One x where
+    type OneItem x
+    -- | Create a list, map, 'Text', etc from a single element.
+    one :: OneItem x -> x
+
+-- Lists
+
+instance One [a] where
+    type OneItem [a] = a
+    one = (:[])
+    {-# INLINE one #-}
+
+#if ( __GLASGOW_HASKELL__ >= 800 )
+instance One (NE.NonEmpty a) where
+    type OneItem (NE.NonEmpty a) = a
+    one = (NE.:|[])
+    {-# INLINE one #-}
+#endif
+
+-- Monomorphic sequences
+
+instance One T.Text where
+    type OneItem T.Text = Char
+    one = T.singleton
+    {-# INLINE one #-}
+
+instance One TL.Text where
+    type OneItem TL.Text = Char
+    one = TL.singleton
+    {-# INLINE one #-}
+
+instance One BS.ByteString where
+    type OneItem BS.ByteString = Word8
+    one = BS.singleton
+    {-# INLINE one #-}
+
+instance One BSL.ByteString where
+    type OneItem BSL.ByteString = Word8
+    one = BSL.singleton
+    {-# INLINE one #-}
+
+-- Maps
+
+instance One (M.Map k v) where
+    type OneItem (M.Map k v) = (k, v)
+    one = uncurry M.singleton
+    {-# INLINE one #-}
+
+instance Hashable k => One (HM.HashMap k v) where
+    type OneItem (HM.HashMap k v) = (k, v)
+    one = uncurry HM.singleton
+    {-# INLINE one #-}
+
+instance One (IM.IntMap v) where
+    type OneItem (IM.IntMap v) = (Int, v)
+    one = uncurry IM.singleton
+    {-# INLINE one #-}
+
+-- Sets
+
+instance One (S.Set v) where
+    type OneItem (S.Set v) = v
+    one = S.singleton
+    {-# INLINE one #-}
+
+instance Hashable v => One (HS.HashSet v) where
+    type OneItem (HS.HashSet v) = v
+    one = HS.singleton
+    {-# INLINE one #-}
+
+instance One IS.IntSet where
+    type OneItem IS.IntSet = Int
+    one = IS.singleton
+    {-# INLINE one #-}
+
+-- Vectors
+
+instance One (V.Vector a) where
+    type OneItem (V.Vector a) = a
+    one = V.singleton
+    {-# INLINE one #-}
+
+instance VU.Unbox a => One (VU.Vector a) where
+    type OneItem (VU.Vector a) = a
+    one = VU.singleton
+    {-# INLINE one #-}
+
+instance VP.Prim a => One (VP.Vector a) where
+    type OneItem (VP.Vector a) = a
+    one = VP.singleton
+    {-# INLINE one #-}
+
+instance VS.Storable a => One (VS.Vector a) where
+    type OneItem (VS.Vector a) = a
+    one = VS.singleton
+    {-# INLINE one #-}
 
 ----------------------------------------------------------------------------
 -- Utils

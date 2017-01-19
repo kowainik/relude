@@ -1,6 +1,7 @@
 0.2
 ===
 
+* Add `one` (similar to `singleton`).
 * Expose `Symbol` and `Nat` types from `GHC.TypeLits` by default.
 * Export `genericLength` and other generic list return functions.
 * Rename `msg` to `fatalErrorMessage`.
