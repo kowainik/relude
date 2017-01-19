@@ -52,8 +52,6 @@ import           Base                     as Base hiding (error, print, putStr, 
                                                    showSignedFloat, showsPrec, undefined)
 import qualified Base                     as PBase
 
--- Used for 'show', not exported.
-import           Data.String              (String)
 import           Data.String              as X (IsString (..))
 
 -- Maybe'ized version of partial functions

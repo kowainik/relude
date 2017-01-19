@@ -8,6 +8,7 @@
 * Export `ReaderT`, and `StateT` constructors.
 * Export `NonEmpty` type and constructor for Base 4.9 only.
 * Export `Data.Semigroup` type and functions for Base 4.9 only.
+* Export `String`.
 
 0.1.13
 ======

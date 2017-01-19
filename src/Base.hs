@@ -12,7 +12,8 @@ module Base
 #if defined(__GLASGOW_HASKELL__) && ( __GLASGOW_HASKELL__ >= 600 )
 
 -- Base GHC types
-import           GHC.Base             as X (asTypeOf, maxInt, minInt, ord, seq, (++))
+import           GHC.Base             as X (String, asTypeOf, maxInt, minInt, ord, seq,
+                                            (++))
 import           GHC.Enum             as X (Bounded (..), Enum (..), boundedEnumFrom,
                                             boundedEnumFromThen)
 import           GHC.Err              as X (error, undefined)
