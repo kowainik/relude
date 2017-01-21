@@ -27,22 +27,26 @@ Source-Repository head
 library
   exposed-modules:
     Universum
-    Unsafe
-    Base
+
     Applicative
-    Bool
-    Debug
-    List
-    Monad
-    Show
-    Conv
-    Either
-    Functor
+    Base
     Bifunctor
+    Bool
     Containers
+    Conv
+    Debug
     Exceptions
-    Panic
+    Functor
     Lifted
+    List
+    Panic
+    Show
+    Unsafe
+
+    Monad
+    Monad.Either
+    Monad.Maybe
+    Monad.Trans
 
   default-extensions:
     NoImplicitPrelude

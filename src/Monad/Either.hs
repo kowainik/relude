@@ -1,15 +1,18 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE Safe              #-}
+{-# LANGUAGE Safe #-}
 
-module Either
-       ( maybeToLeft
+-- | Utilites to work with @Either@ data type.
+
+module Monad.Either
+       ( module Data.Either
+       , maybeToLeft
        , maybeToRight
        , leftToMaybe
        , rightToMaybe
        , maybeToEither
        ) where
 
-import           Data.Either   (Either (..), either)
+import           Data.Either   (Either (..), either, isLeft, isRight, lefts,
+                                partitionEithers, rights)
 import           Data.Function (const)
 import           Data.Maybe    (Maybe (..), maybe)
 import           Data.Monoid   (Monoid, mempty)
@@ -26,5 +29,6 @@ maybeToRight l = maybe (Left l) Right
 maybeToLeft :: r -> Maybe l -> Either l r
 maybeToLeft r = maybe (Right r) Left
 
+-- TODO: why this is @toEither@?
 maybeToEither :: Monoid b => (a -> b) -> Maybe a -> b
 maybeToEither = maybe mempty
