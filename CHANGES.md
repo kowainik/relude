@@ -4,7 +4,10 @@
 * #24: Add `whenNothing`, `whenNothing_`, `whenNothingM`, `whenNothingM_`,
   `whenLeft`, `whenLeftM`, `whenRight`, `whenRightM`,
   `whenNotNull`, `whenNotNullM`.
-
+* #26: Add `usingReader`, `usingReaderT`,
+       `usingState`, `usingStateT`,
+       `executingState`, `executingStateT`,
+       `evaluatingState`, `evaluatingStateT`.
 
 0.2
 ===
