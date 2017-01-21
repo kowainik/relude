@@ -6,6 +6,7 @@ module Applicative
        , orEmpty
        , eitherA
        , liftAA2
+       , pass
        , purer
        , (<<*>>)
        ) where
@@ -15,6 +16,9 @@ import           Data.Bool           (Bool)
 import           Data.Either         (Either (..))
 import           Data.Function       ((.))
 import           Data.Monoid         (Monoid (..))
+
+pass :: Applicative f => f ()
+pass = pure ()
 
 orAlt :: (Alternative f, Monoid a) => f a -> f a
 orAlt f = f <|> pure mempty

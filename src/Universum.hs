@@ -24,7 +24,6 @@ module Universum
        , prettyL
        , print
        , foreach
-       , pass
        , guarded
        , guardedA
        , show
@@ -226,9 +225,6 @@ print = liftIO . PBase.print
 
 foreach :: Functor f => f a -> (a -> b) -> f b
 foreach = flip fmap
-
-pass :: Applicative f => f ()
-pass = pure ()
 
 guarded :: (Alternative f) => (a -> Bool) -> a -> f a
 guarded p x = X.bool empty (pure x) (p x)

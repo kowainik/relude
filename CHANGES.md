@@ -1,3 +1,11 @@
+0.2.1
+=====
+
+* #24: Add `whenNothing`, `whenNothing_`, `whenNothingM`, `whenNothingM_`,
+  `whenLeft`, `whenLeftM`, `whenRight`, `whenRightM`,
+  `whenNotNull`, `whenNotNullM`.
+
+
 0.2
 ===
 

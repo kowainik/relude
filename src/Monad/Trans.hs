@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 -- | Monad transformers utilities.
 
 module Monad.Trans
