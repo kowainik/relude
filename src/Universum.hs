@@ -24,7 +24,6 @@ module Universum
        , prettyL
        , print
        , foreach
-       , pass
        , guarded
        , guardedA
        , show
@@ -39,7 +38,6 @@ import           Bool                     as X
 import           Containers               as X
 import           Conv                     as X
 import           Debug                    as X
-import           Either                   as X
 import           Exceptions               as X
 import           Functor                  as X
 import           Lifted                   as X
@@ -121,26 +119,10 @@ import           Data.Typeable            as X (Typeable)
 import           Data.Void                as X (Void, absurd, vacuous)
 #endif
 
--- Monad transformers
-import           Control.Monad.Catch      as X (MonadCatch (catch), MonadMask (..),
-                                                MonadThrow (throwM), bracket, bracket_,
-                                                catchAll, finally)
-import           Control.Monad.Except     as X (ExceptT (..), runExceptT)
-import           Control.Monad.State      as X (MonadState, State, StateT (..), evalState,
-                                                evalStateT, execState, execStateT, gets,
-                                                modify, runState, state, withState)
-
-import           Control.Monad.Reader     as X (MonadReader, Reader, ReaderT (..), ask,
-                                                asks, local, reader, runReader)
-
-import           Control.Monad.Trans      as X (MonadIO, lift, liftIO)
-
 -- Base types
 import           Data.Bits                as X hiding (unsafeShiftL, unsafeShiftR)
 import           Data.Bool                as X hiding (bool)
 import           Data.Char                as X (chr)
-import           Data.Either              as X (Either (..), either, isLeft, isRight,
-                                                lefts, partitionEithers, rights)
 import           Data.Int                 as X (Int, Int16, Int32, Int64, Int8)
 import           Data.Maybe               as X hiding (fromJust)
 import           Data.Word                as X (Word, Word16, Word32, Word64, Word8,
@@ -243,9 +225,6 @@ print = liftIO . PBase.print
 
 foreach :: Functor f => f a -> (a -> b) -> f b
 foreach = flip fmap
-
-pass :: Applicative f => f ()
-pass = pure ()
 
 guarded :: (Alternative f) => (a -> Bool) -> a -> f a
 guarded p x = X.bool empty (pure x) (p x)

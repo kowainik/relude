@@ -3,7 +3,9 @@
 {-# LANGUAGE Trustworthy       #-}
 
 module Monad
-       ( Monad ((>>=), return)
+       ( module Export
+
+       , Monad ((>>=), return)
        , MonadFail (fail)
        , MonadPlus (..)
 
@@ -29,9 +31,6 @@ module Monad
        , when
        , unless
 
-       , whenJust
-       , whenJustM
-
        , allM
        , anyM
        , andM
@@ -49,10 +48,12 @@ module Monad
        , (<$!>)
        ) where
 
+import           Monad.Either                    as Export
+import           Monad.Maybe                     as Export
+import           Monad.Trans                     as Export
+
 import           Base                            (IO, seq)
-import           Control.Applicative             (Applicative, pure)
 import           Data.List                       (concat)
-import           Data.Maybe                      (Maybe (..), maybe)
 import           Prelude                         (Bool (..))
 
 #if __GLASGOW_HASKELL__ >= 710
@@ -92,14 +93,6 @@ f <$!> m = do
   z `seq` return z
 {-# INLINE (<$!>) #-}
 
-whenJust :: Applicative f => Maybe a -> (a -> f ()) -> f ()
-whenJust (Just x) f = f x
-whenJust Nothing _  = pure ()
-{-# INLINE whenJust #-}
-
-whenJustM :: Monad m => m (Maybe a) -> (a -> m ()) -> m ()
-whenJustM mm f = maybe (return ()) f =<< mm
-{-# INLINE whenJustM #-}
 
 -- Copied from 'monad-loops' by James Cook (the library is in public domain)
 
