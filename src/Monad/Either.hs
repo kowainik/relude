@@ -8,7 +8,6 @@ module Monad.Either
        , maybeToRight
        , leftToMaybe
        , rightToMaybe
-       , maybeToEither
        , whenLeft
        , whenLeftM
        , whenRight
@@ -21,7 +20,6 @@ import           Data.Either         (Either (..), either, isLeft, isRight, left
                                       partitionEithers, rights)
 import           Data.Function       (const)
 import           Data.Maybe          (Maybe (..), maybe)
-import           Data.Monoid         (Monoid, mempty)
 
 import           Applicative         (pass)
 
@@ -36,10 +34,6 @@ maybeToRight l = maybe (Left l) Right
 
 maybeToLeft :: r -> Maybe l -> Either l r
 maybeToLeft r = maybe (Right r) Left
-
--- TODO: why this is @toEither@?
-maybeToEither :: Monoid b => (a -> b) -> Maybe a -> b
-maybeToEither = maybe mempty
 
 whenLeft :: Applicative f => Either l r -> (l -> f ()) -> f ()
 whenLeft (Left  l) f = f l

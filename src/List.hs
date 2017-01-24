@@ -7,8 +7,10 @@ module List
        , sortOn
        , unzip
        , unzip3
+#if ( __GLASGOW_HASKELL__ >= 800 )
        , whenNotNull
        , whenNotNullM
+#endif
        , zip
        , zip3
        ) where

@@ -1,13 +1,16 @@
 0.2.1
 =====
 
-* #24: Add `whenNothing`, `whenNothing_`, `whenNothingM`, `whenNothingM_`,
+* [#24](https://github.com/serokell/universum/issues/26):
+  Add `whenNothing`, `whenNothing_`, `whenNothingM`, `whenNothingM_`,
   `whenLeft`, `whenLeftM`, `whenRight`, `whenRightM`,
   `whenNotNull`, `whenNotNullM`.
-* #26: Add `usingReader`, `usingReaderT`,
+* [#26](https://github.com/serokell/universum/issues/24):
+   Add `usingReader`, `usingReaderT`,
        `usingState`, `usingStateT`,
        `executingState`, `executingStateT`,
        `evaluatingState`, `evaluatingStateT`.
+* Remove `maybeToEither`.
 
 0.2
 ===
