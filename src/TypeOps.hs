@@ -9,7 +9,7 @@
 {-# LANGUAGE TypeOperators      #-}
 
 module TypeOps
-       ( type AllOf
+       ( type Each
        , type ($)
        ) where
 
@@ -24,7 +24,7 @@ import           Control.Type.Operator (type ($), type (<+>))
 -- | Map several constraints over a several variables.
 --
 -- @
--- f :: AllOf [Show, Read] [a, b] => a -> b -> String
+-- f :: Each [Show, Read] [a, b] => a -> b -> String
 -- =
 -- f :: (Show a, Show b, Read a, Show b) => a -> b -> String
 -- @
@@ -33,8 +33,8 @@ import           Control.Type.Operator (type ($), type (<+>))
 -- it with @\'@:
 --
 -- @
--- f :: AllOf '[Show] [a, b] => a -> b -> String
+-- f :: Each '[Show] [a, b] => a -> b -> String
 -- @
-type family AllOf (c :: [k -> Constraint]) (as :: [k]) where
-    AllOf c '[] = (() :: Constraint)
-    AllOf c (h ': t) = (c <+> h, AllOf c t)
+type family Each (c :: [k -> Constraint]) (as :: [k]) where
+    Each c '[] = (() :: Constraint)
+    Each c (h ': t) = (c <+> h, Each c t)
