@@ -63,7 +63,7 @@ traceShowM a = trace (P.show a) pass
 traceM :: (Monad m) => Text -> m ()
 traceM s = trace (unpack s) pass
 
-{-# WARNING traceId "'traceM' remains in code" #-}
+{-# WARNING traceId "'traceId' remains in code" #-}
 traceId :: Text -> Text
 traceId s = trace s s
 
