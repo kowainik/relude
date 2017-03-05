@@ -45,6 +45,7 @@ import           List                     as X
 import           Monad                    as X
 import           Panic                    as X
 import           Show                     as X
+import           TypeOps                  as X
 
 import           Base                     as Base hiding (error, print, putStr, putStrLn,
                                                    show, showFloat, showList, showSigned,
