@@ -54,6 +54,8 @@ import           GHC.TypeLits           (ErrorMessage (..), TypeError)
 import qualified Data.List.NonEmpty     as NE
 #endif
 
+import qualified Data.Sequence          as SEQ
+
 import qualified Data.ByteString        as BS
 import qualified Data.ByteString.Lazy   as BSL
 
@@ -486,6 +488,11 @@ instance One (NE.NonEmpty a) where
     one = (NE.:|[])
     {-# INLINE one #-}
 #endif
+
+instance One (SEQ.Seq a) where
+    type OneItem (SEQ.Seq a) = a
+    one = (SEQ.empty SEQ.|>)
+    {-# INLINE one #-}
 
 -- Monomorphic sequences
 
