@@ -18,19 +18,18 @@ module Debug
        ) where
 
 import           Control.Monad          (Monad, return)
-import           Data.Text              (Text, unpack)
-
+import           Control.Monad.IO.Class (MonadIO)
 import           Data.Data              (Data)
+import           Data.Text              (Text, unpack)
 import           Data.Typeable          (Typeable)
 import           GHC.Generics           (Generic)
-
-import           Control.Monad.IO.Class (MonadIO)
+import           System.IO.Unsafe       (unsafePerformIO)
 
 import qualified Base                   as P
 import qualified Prelude                as P
 import           Show                   (Print, putStrLn)
 
-import           System.IO.Unsafe       (unsafePerformIO)
+import           Applicative            (pass)
 
 {-# WARNING trace "'trace' remains in code" #-}
 trace :: Print b => b -> a -> a
@@ -58,13 +57,13 @@ traceShowId a = trace (P.show a) a
 
 {-# WARNING traceShowM "'traceShowM' remains in code" #-}
 traceShowM :: (P.Show a, Monad m) => a -> m ()
-traceShowM a = trace (P.show a) (return ())
+traceShowM a = trace (P.show a) pass
 
 {-# WARNING traceM "'traceM' remains in code" #-}
 traceM :: (Monad m) => Text -> m ()
-traceM s = trace (unpack s) (return ())
+traceM s = trace (unpack s) pass
 
-{-# WARNING traceId "'traceM' remains in code" #-}
+{-# WARNING traceId "'traceId' remains in code" #-}
 traceId :: Text -> Text
 traceId s = trace s s
 

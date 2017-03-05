@@ -65,10 +65,10 @@ import           Control.Monad                   hiding (fail)
 #if __GLASGOW_HASKELL__ >= 800
 import           Control.Monad.Fail              (MonadFail (..))
 #else
-import           Prelude                         (String)
+import           Prelude                         (Maybe (Nothing), String)
 import qualified Prelude                         as P (fail)
-import           Text.ParserCombinators.ReadP
-import           Text.ParserCombinators.ReadPrec
+import           Text.ParserCombinators.ReadP    (ReadP)
+import           Text.ParserCombinators.ReadPrec (ReadPrec)
 #endif
 
 concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]

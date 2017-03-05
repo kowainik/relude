@@ -13,7 +13,7 @@
 
 module Containers
        (
-       -- * Foldable-like classes and methods
+         -- * Foldable-like classes and methods
          Element
        , Container(..)
        , NontrivialContainer(..)
@@ -29,7 +29,7 @@ module Containers
        , sequence_
        , asum
 
-       -- * Others
+         -- * Others
        , One(..)
        ) where
 
@@ -38,6 +38,7 @@ import           Control.Monad.Identity (Identity)
 import           Data.Coerce            (Coercible, coerce)
 import           Data.Foldable          (Foldable)
 import qualified Data.Foldable          as F
+import           Data.Hashable          (Hashable)
 import           Data.Maybe             (fromMaybe)
 import           Data.Monoid            (All(..), Any(..), First(..))
 import           Data.Word              (Word8)
@@ -52,6 +53,8 @@ import           GHC.TypeLits           (ErrorMessage (..), TypeError)
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import qualified Data.List.NonEmpty     as NE
 #endif
+
+import qualified Data.Sequence          as SEQ
 
 import qualified Data.ByteString        as BS
 import qualified Data.ByteString.Lazy   as BSL
@@ -71,7 +74,7 @@ import qualified Data.Vector.Unboxed    as VU
 import qualified Data.Vector.Primitive  as VP
 import qualified Data.Vector.Storable   as VS
 
-import Data.Hashable (Hashable)
+import           Applicative            (pass)
 
 ----------------------------------------------------------------------------
 -- Containers (e.g. tuples aren't containers)
@@ -275,7 +278,7 @@ instance NontrivialContainer TL.Text where
   length = fromIntegral . TL.length
   {-# INLINE length #-}
   -- will be okay thanks to rewrite rules
-  elem c s = TL.isInfixOf (TL.singleton c) s 
+  elem c s = TL.isInfixOf (TL.singleton c) s
   {-# INLINE elem #-}
   maximum = TL.maximum
   {-# INLINE maximum #-}
@@ -377,7 +380,7 @@ product = foldl' (*) 1
 traverse_
     :: (NontrivialContainer t, Applicative f)
     => (Element t -> f b) -> t -> f ()
-traverse_ f = foldr ((*>) . f) (pure ())
+traverse_ f = foldr ((*>) . f) pass
 
 for_
     :: (NontrivialContainer t, Applicative f)
@@ -388,7 +391,7 @@ for_ = flip traverse_
 mapM_
     :: (NontrivialContainer t, Monad m)
     => (Element t -> m b) -> t -> m ()
-mapM_ f= foldr ((>>) . f) (return ())
+mapM_ f= foldr ((>>) . f) pass
 
 forM_
     :: (NontrivialContainer t, Monad m)
@@ -399,12 +402,12 @@ forM_ = flip mapM_
 sequenceA_
     :: (NontrivialContainer t, Applicative f, Element t ~ f a)
     => t -> f ()
-sequenceA_ = foldr (*>) (pure ())
+sequenceA_ = foldr (*>) pass
 
 sequence_
     :: (NontrivialContainer t, Monad m, Element t ~ m a)
     => t -> m ()
-sequence_ = foldr (>>) (return ())
+sequence_ = foldr (>>) pass
 
 asum
     :: (NontrivialContainer t, Alternative f, Element t ~ f a)
@@ -485,6 +488,11 @@ instance One (NE.NonEmpty a) where
     one = (NE.:|[])
     {-# INLINE one #-}
 #endif
+
+instance One (SEQ.Seq a) where
+    type OneItem (SEQ.Seq a) = a
+    one = (SEQ.empty SEQ.|>)
+    {-# INLINE one #-}
 
 -- Monomorphic sequences
 
