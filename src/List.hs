@@ -15,8 +15,6 @@ module List
        , zip3
        ) where
 
-import           Control.Applicative (Applicative)
-import           Control.Monad       (Monad (..))
 import           Data.Function       ((.))
 import           Data.Functor        (fmap)
 import           Data.List           (sortBy, unzip, unzip3, zip, zip3)
@@ -24,10 +22,13 @@ import           Data.Ord            (Ord, comparing)
 import qualified Data.Set            as Set
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
+import           Control.Applicative (Applicative)
+import           Control.Monad       (Monad (..))
 import           Data.List.NonEmpty  as X (NonEmpty (..))
-#endif
 
 import           Applicative         (pass)
+#endif
+
 
 sortOn :: (Ord o) => (a -> o) -> [a] -> [a]
 sortOn = sortBy . comparing
