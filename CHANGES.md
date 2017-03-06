@@ -1,3 +1,9 @@
+0.2.2
+=====
+
+* [#33](https://github.com/serokell/universum/issues/33):
+  Add `($)` and `Each` type operators.
+
 0.2.1
 =====
 

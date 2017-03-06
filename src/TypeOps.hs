@@ -21,7 +21,7 @@ import           Data.Kind             (Constraint)
 
 import           Control.Type.Operator (type ($), type (<+>))
 
--- | Map several constraints over a several variables.
+-- | Map several constraints over several variables.
 --
 -- @
 -- f :: Each [Show, Read] [a, b] => a -> b -> String
