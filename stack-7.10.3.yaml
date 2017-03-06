@@ -1,6 +1,9 @@
 resolver: lts-6.24
 packages:
 - '.'
+
 extra-deps:
+- type-operators-0.1.0.4
+
 flags: {}
 extra-package-dbs: []
