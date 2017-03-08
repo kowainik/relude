@@ -9,8 +9,9 @@
 * [#32](https://github.com/serokell/universum/issues/32):
   Remove `orAlt`, `orEmpty`, `liftAA2`, `eitherA`, `purer`, `<<*>>`,
   `traceIO`, `guardM`, `hush`, `tryIO`, `liftM'`, `liftM2'`,
-  `applyN`, `guardedA`.
+  `applyN`, `guardedA`,
   Bifunctor instances for tuples of length higher than 2.
+  Generalize `concatMapM`, add `concatForM` and operator versions.
 * [#33](https://github.com/serokell/universum/issues/33):
   Add `($)` and `Each` type operators.
 * [#35](https://github.com/serokell/universum/issues/35):

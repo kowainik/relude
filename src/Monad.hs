@@ -26,7 +26,11 @@ module Monad
        , foldM_
        , replicateM
        , replicateM_
+
        , concatMapM
+       , concatForM
+       , (.>>=.)
+       , (.=<<.)
 
        , guard
        , when
@@ -52,10 +56,11 @@ import           Monad.Maybe                     as Export
 import           Monad.Trans                     as Export
 
 import           Base                            (IO, seq)
-import           Control.Applicative             (pure)
+import           Control.Applicative             (Applicative (pure))
 import           Data.Function                   ((.))
-import           Data.List                       (concat)
-import           Prelude                         (Bool (..))
+import           Data.Functor                    (fmap)
+import           Data.Traversable                (Traversable (traverse))
+import           Prelude                         (Bool (..), flip)
 
 #if __GLASGOW_HASKELL__ >= 710
 import           Control.Monad                   hiding (fail, (<$!>))
@@ -74,8 +79,41 @@ import           Text.ParserCombinators.ReadPrec (ReadPrec)
 
 import           Containers                      (Element, NontrivialContainer, toList)
 
-concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
-concatMapM f xs = liftM concat (mapM f xs)
+-- old specialized to list version
+-- concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
+-- | Lifting bind into a monad. Generalized version of @concatMap@
+-- that works with a monadic predicate.
+concatMapM :: (Applicative q, Monad m, Traversable m)
+           => (a -> q (m b))
+           -> m a
+           -> q (m b)
+concatMapM f = fmap join . traverse f
+{-# INLINE concatMapM #-}
+
+-- | Like 'concatMapM', but has its arguments flipped, so can be used
+-- instead of the common @fmap concat $ forM@ pattern.
+concatForM :: (Applicative q, Monad m, Traversable m)
+           => m a
+           -> (a -> q (m b))
+           -> q (m b)
+concatForM = flip concatMapM
+{-# INLINE concatForM #-}
+
+-- | Operator version of 'concatMapM'.
+(.=<<.) :: (Applicative q, Monad m, Traversable m)
+        => (a -> q (m b))
+        -> m a
+        -> q (m b)
+(.=<<.) = concatMapM
+{-# INLINE (.=<<.) #-}
+
+-- | Operator version of 'concatForM'.
+(.>>=.) :: (Applicative q, Monad m, Traversable m)
+        => m a
+        -> (a -> q (m b))
+        -> q (m b)
+(.>>=.) = concatForM
+{-# INLINE (.>>=.) #-}
 
 (<$!>) :: Monad m => (a -> b) -> m a -> m b
 f <$!> m = do
