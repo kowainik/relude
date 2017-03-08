@@ -1,9 +1,12 @@
 0.3
 =====
 
-* [#32](https://github.com/serokell/universum/issues/33):
+* [#28](https://github.com/serokell/universum/issues/28):
+  Remove `putByteString` and `putLByteString`.
+* [#32](https://github.com/serokell/universum/issues/32):
   Remove `orAlt`, `orEmpty`, `liftAA2`, `eitherA`, `purer`, `<<*>>`,
-  `traceIO`, `guardM`, `hush`, `tryIO`, `liftM'`, `liftM2'`
+  `traceIO`, `guardM`, `hush`, `tryIO`, `liftM'`, `liftM2'`,
+  `applyN`, `guardedA`.
   Bifunctor instances for tuples of length higher than 2.
 * [#33](https://github.com/serokell/universum/issues/33):
   Add `($)` and `Each` type operators.
