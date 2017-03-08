@@ -2,24 +2,15 @@
 {-# LANGUAGE Safe              #-}
 
 module Applicative
-       ( orAlt
-       , orEmpty
-       , eitherA
-       , liftAA2
-       , pass
-       , purer
-       , (<<*>>)
+       ( pass
        ) where
 
-import           Control.Applicative
-import           Data.Bool           (Bool)
-import           Data.Either         (Either (..))
-import           Data.Function       ((.))
-import           Data.Monoid         (Monoid (..))
+import           Control.Applicative (Applicative (pure))
 
 pass :: Applicative f => f ()
 pass = pure ()
 
+{-
 orAlt :: (Alternative f, Monoid a) => f a -> f a
 orAlt f = f <|> pure mempty
 
@@ -37,3 +28,4 @@ liftAA2 = liftA2 . liftA2
 
 (<<*>>) :: (Applicative f, Applicative g)  => f (g (a -> b)) -> f (g a) -> f (g b)
 (<<*>>) = liftA2 (<*>)
+-}

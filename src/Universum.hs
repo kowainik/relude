@@ -4,7 +4,6 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE Trustworthy           #-}
-{-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
 module Universum
        ( -- * Reexports from base and from modules in this repo
@@ -19,13 +18,11 @@ module Universum
        , map
        , uncons
        , unsnoc
-       , applyN
        , pretty
        , prettyL
        , print
        , foreach
        , guarded
-       , guardedA
        , show
 
          -- * Convenient type aliases
@@ -218,9 +215,6 @@ unsnoc = foldr go Nothing
        Nothing      -> ([], x)
        Just (xs, e) -> (x:xs, e))
 
-applyN :: Int -> (a -> a) -> a -> a
-applyN n f = X.foldr (.) identity (X.replicate n f)
-
 print :: (X.MonadIO m, PBase.Show a) => a -> m ()
 print = liftIO . PBase.print
 
@@ -229,9 +223,6 @@ foreach = flip fmap
 
 guarded :: (Alternative f) => (a -> Bool) -> a -> f a
 guarded p x = X.bool empty (pure x) (p x)
-
-guardedA :: (Functor f, Alternative t) => (a -> f Bool) -> a -> f (t a)
-guardedA p x = X.bool empty (pure x) <$> p x
 
 show :: (Show a, IsString b) => a -> b
 show x = X.fromString (PBase.show x)

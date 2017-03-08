@@ -41,8 +41,6 @@ module Monad
        , liftM3
        , liftM4
        , liftM5
-       , liftM'
-       , liftM2'
        , ap
 
        , (<$!>)
@@ -74,25 +72,12 @@ import           Text.ParserCombinators.ReadPrec (ReadPrec)
 concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
 concatMapM f xs = liftM concat (mapM f xs)
 
-liftM' :: Monad m => (a -> b) -> m a -> m b
-liftM' = (<$!>)
-{-# INLINE liftM' #-}
-
-liftM2' :: Monad m => (a -> b -> c) -> m a -> m b -> m c
-liftM2' f a b = do
-  x <- a
-  y <- b
-  let z = f x y
-  z `seq` return z
-{-# INLINE liftM2' #-}
-
 (<$!>) :: Monad m => (a -> b) -> m a -> m b
 f <$!> m = do
   x <- m
   let z = f x
   z `seq` return z
 {-# INLINE (<$!>) #-}
-
 
 -- Copied from 'monad-loops' by James Cook (the library is in public domain)
 

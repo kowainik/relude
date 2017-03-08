@@ -9,7 +9,6 @@ module Debug
        , trace
        , traceM
        , traceId
-       , traceIO
        , traceShow
        , traceShowId
        , traceShowM
@@ -17,31 +16,24 @@ module Debug
        , NotImplemented(..)
        ) where
 
-import           Control.Monad          (Monad, return)
-import           Control.Monad.IO.Class (MonadIO)
-import           Data.Data              (Data)
-import           Data.Text              (Text, unpack)
-import           Data.Typeable          (Typeable)
-import           GHC.Generics           (Generic)
-import           System.IO.Unsafe       (unsafePerformIO)
+import           Control.Monad    (Monad, return)
+import           Data.Data        (Data)
+import           Data.Text        (Text, unpack)
+import           Data.Typeable    (Typeable)
+import           GHC.Generics     (Generic)
+import           System.IO.Unsafe (unsafePerformIO)
 
-import qualified Base                   as P
-import qualified Prelude                as P
-import           Show                   (Print, putStrLn)
+import qualified Base             as P
+import qualified Prelude          as P
+import           Show             (Print, putStrLn)
 
-import           Applicative            (pass)
+import           Applicative      (pass)
 
 {-# WARNING trace "'trace' remains in code" #-}
 trace :: Print b => b -> a -> a
 trace string expr = unsafePerformIO (do
     putStrLn string
     return expr)
-
-{-# WARNING traceIO "'traceIO' remains in code" #-}
-traceIO :: (Print b, MonadIO m) => b -> a -> m a
-traceIO string expr = do
-    putStrLn string
-    return expr
 
 {-# WARNING error "'error' remains in code (or use 'panic')" #-}
 error :: Text -> a

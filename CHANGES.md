@@ -1,6 +1,10 @@
-0.2.2
+0.3
 =====
 
+* [#32](https://github.com/serokell/universum/issues/33):
+  Remove `orAlt`, `orEmpty`, `liftAA2`, `eitherA`, `purer`, `<<*>>`,
+  `traceIO`, `guardM`, `hush`, `tryIO`, `liftM'`, `liftM2'`
+  Bifunctor instances for tuples of length higher than 2.
 * [#33](https://github.com/serokell/universum/issues/33):
   Add `($)` and `Each` type operators.
 
