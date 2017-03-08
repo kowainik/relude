@@ -37,7 +37,6 @@ library
     Functor
     Lifted
     List
-    Panic
     Show
     TypeOps
     Unsafe

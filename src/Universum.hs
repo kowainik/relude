@@ -40,7 +40,6 @@ import           Functor                  as X
 import           Lifted                   as X
 import           List                     as X
 import           Monad                    as X
-import           Panic                    as X
 import           Show                     as X
 import           TypeOps                  as X
 

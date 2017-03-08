@@ -3,6 +3,9 @@
 
 * [#28](https://github.com/serokell/universum/issues/28):
   Remove `putByteString` and `putLByteString`.
+* [#29](https://github.com/serokell/universum/issues/29):
+  Remove `panic`, `FatalError` and `notImplemented`.
+  Rename `NotImplemented` into `Undefined`.
 * [#32](https://github.com/serokell/universum/issues/32):
   Remove `orAlt`, `orEmpty`, `liftAA2`, `eitherA`, `purer`, `<<*>>`,
   `traceIO`, `guardM`, `hush`, `tryIO`, `liftM'`, `liftM2'`,

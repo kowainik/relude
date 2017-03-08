@@ -12,8 +12,7 @@ module Debug
        , traceShow
        , traceShowId
        , traceShowM
-       , notImplemented
-       , NotImplemented(..)
+       , Undefined (..)
        ) where
 
 import           Control.Monad    (Monad, return)
@@ -59,14 +58,10 @@ traceM s = trace (unpack s) pass
 traceId :: Text -> Text
 traceId s = trace s s
 
-{-# WARNING notImplemented "'notImplemented' remains in code" #-}
-notImplemented :: a
-notImplemented = P.error "Not implemented"
+{-# WARNING Undefined "'Undefined' type remains in code" #-}
+data Undefined = Undefined
+    deriving (P.Eq, P.Ord, P.Show, P.Read, P.Enum, P.Bounded, Data, Typeable, Generic)
 
-{-# WARNING NotImplemented "'NotImplemented' remains in code" #-}
-data NotImplemented = NotImplemented
-    deriving (P.Eq, P.Ord, P.Show, Data, Typeable, Generic)
-
-{-# WARNING undefined "'undefined' remains in code (or use 'panic')" #-}
+{-# WARNING undefined "'undefined' function remains in code (or use 'error')" #-}
 undefined :: a
 undefined = P.undefined
