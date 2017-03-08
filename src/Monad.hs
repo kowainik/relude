@@ -1,6 +1,7 @@
 {-# LANGUAGE CPP               #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE Trustworthy       #-}
+{-# LANGUAGE TypeFamilies      #-}
 
 module Monad
        ( module Export
@@ -51,6 +52,8 @@ import           Monad.Maybe                     as Export
 import           Monad.Trans                     as Export
 
 import           Base                            (IO, seq)
+import           Control.Applicative             (pure)
+import           Data.Function                   ((.))
 import           Data.List                       (concat)
 import           Prelude                         (Bool (..))
 
@@ -69,6 +72,8 @@ import           Text.ParserCombinators.ReadP    (ReadP)
 import           Text.ParserCombinators.ReadPrec (ReadPrec)
 #endif
 
+import           Containers                      (Element, NontrivialContainer, toList)
+
 concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
 concatMapM f xs = liftM concat (mapM f xs)
 
@@ -79,31 +84,37 @@ f <$!> m = do
   z `seq` return z
 {-# INLINE (<$!>) #-}
 
--- Copied from 'monad-loops' by James Cook (the library is in public domain)
+andM :: (NontrivialContainer f, Element f ~ m Bool, Monad m) => f -> m Bool
+andM = go . toList
+  where
+    go []     = pure True
+    go (p:ps) = do
+        q <- p
+        if q then go ps else pure False
 
-andM :: (Monad m) => [m Bool] -> m Bool
-andM []     = return True
-andM (p:ps) = do
-  q <- p
-  if q then andM ps else return False
+orM :: (NontrivialContainer f, Element f ~ m Bool, Monad m) => f -> m Bool
+orM = go . toList
+  where
+    go []     = pure False
+    go (p:ps) = do
+        q <- p
+        if q then pure True else go ps
 
-orM :: (Monad m) => [m Bool] -> m Bool
-orM []     = return False
-orM (p:ps) = do
-  q <- p
-  if q then return True else orM ps
+allM :: (NontrivialContainer f, Monad m) => (Element f -> m Bool) -> f -> m Bool
+allM p = go . toList
+  where
+    go []     = pure True
+    go (x:xs) = do
+        q <- p x
+        if q then go xs else pure False
 
-anyM :: (Monad m) => (a -> m Bool) -> [a] -> m Bool
-anyM _ []     = return False
-anyM p (x:xs) = do
-  q <- p x
-  if q then return True else anyM p xs
-
-allM :: (Monad m) => (a -> m Bool) -> [a] -> m Bool
-allM _ []     = return True
-allM p (x:xs) = do
-  q <- p x
-  if q then allM p xs else return False
+anyM :: (NontrivialContainer f, Monad m) => (Element f -> m Bool) -> f -> m Bool
+anyM p = go . toList
+  where
+    go []     = pure False
+    go (x:xs) = do
+        q <- p x
+        if q then pure True else go xs
 
 {-# SPECIALIZE andM :: [IO Bool] -> IO Bool #-}
 {-# SPECIALIZE orM  :: [IO Bool] -> IO Bool #-}
