@@ -34,7 +34,6 @@ trace string expr = unsafePerformIO (do
     putStrLn string
     return expr)
 
-{-# WARNING error "'error' remains in code (or use 'panic')" #-}
 error :: Text -> a
 error s = P.error (unpack s)
 

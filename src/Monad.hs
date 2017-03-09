@@ -29,8 +29,6 @@ module Monad
 
        , concatMapM
        , concatForM
-       , (.>>=.)
-       , (.=<<.)
 
        , guard
        , when
@@ -98,22 +96,6 @@ concatForM :: (Applicative q, Monad m, Traversable m)
            -> q (m b)
 concatForM = flip concatMapM
 {-# INLINE concatForM #-}
-
--- | Operator version of 'concatMapM'.
-(.=<<.) :: (Applicative q, Monad m, Traversable m)
-        => (a -> q (m b))
-        -> m a
-        -> q (m b)
-(.=<<.) = concatMapM
-{-# INLINE (.=<<.) #-}
-
--- | Operator version of 'concatForM'.
-(.>>=.) :: (Applicative q, Monad m, Traversable m)
-        => m a
-        -> (a -> q (m b))
-        -> q (m b)
-(.>>=.) = concatForM
-{-# INLINE (.>>=.) #-}
 
 (<$!>) :: Monad m => (a -> b) -> m a -> m b
 f <$!> m = do
