@@ -12,10 +12,14 @@
   `applyN`, `guardedA`,
   Bifunctor instances for tuples of length higher than 2.
   Generalize `concatMapM`, add `concatForM` and operator versions.
-* [#33](https://github.com/serokell/universum/issues/33):
-  Add `($)` and `Each` type operators.
 * [#35](https://github.com/serokell/universum/issues/35):
   Generalize `andM`, `orM`, `allM`, `anyM` over container type.
+
+0.2.2
+=====
+
+* [#33](https://github.com/serokell/universum/issues/33):
+  Add `($)` and `Each` type operators.
 
 0.2.1
 =====
