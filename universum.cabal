@@ -1,5 +1,5 @@
 name:                universum
-version:             0.2.2
+version:             0.3
 synopsis:            Custom prelude used in Serokell
 description:         Custom prelude used in Serokell
 homepage:            https://github.com/serokell/universum
@@ -30,6 +30,7 @@ library
     Base
     Bifunctor
     Bool
+    Concurrent
     Containers
     Conv
     Debug
@@ -37,7 +38,6 @@ library
     Functor
     Lifted
     List
-    Panic
     Show
     TypeOps
     Unsafe
@@ -56,7 +56,6 @@ library
     -fwarn-implicit-prelude
 
   build-depends:
-    async                 >= 2.1    && <2.2,
     base                  >= 4.7    && <4.10,
     bytestring            >= 0.10   && <0.11,
     containers            >= 0.5    && <0.6,

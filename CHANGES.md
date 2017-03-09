@@ -1,3 +1,20 @@
+0.3
+=====
+
+* [#28](https://github.com/serokell/universum/issues/28):
+  Remove `putByteString` and `putLByteString`.
+* [#29](https://github.com/serokell/universum/issues/29):
+  Remove `panic`, `FatalError` and `notImplemented`.
+  Rename `NotImplemented` into `Undefined`.
+* [#32](https://github.com/serokell/universum/issues/32):
+  Remove `orAlt`, `orEmpty`, `liftAA2`, `eitherA`, `purer`, `<<*>>`,
+  `traceIO`, `guardM`, `hush`, `tryIO`, `liftM'`, `liftM2'`,
+  `applyN`, `guardedA`,
+  Bifunctor instances for tuples of length higher than 2.
+  Generalize `concatMapM`, add `concatForM` and operator versions.
+* [#35](https://github.com/serokell/universum/issues/35):
+  Generalize `andM`, `orM`, `allM`, `anyM` over container type.
+
 0.2.2
 =====
 

@@ -1,6 +1,7 @@
 {-# LANGUAGE CPP               #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE Trustworthy       #-}
+{-# LANGUAGE TypeFamilies      #-}
 
 module Monad
        ( module Export
@@ -25,7 +26,9 @@ module Monad
        , foldM_
        , replicateM
        , replicateM_
+
        , concatMapM
+       , concatForM
 
        , guard
        , when
@@ -41,8 +44,6 @@ module Monad
        , liftM3
        , liftM4
        , liftM5
-       , liftM'
-       , liftM2'
        , ap
 
        , (<$!>)
@@ -53,8 +54,11 @@ import           Monad.Maybe                     as Export
 import           Monad.Trans                     as Export
 
 import           Base                            (IO, seq)
-import           Data.List                       (concat)
-import           Prelude                         (Bool (..))
+import           Control.Applicative             (Applicative (pure))
+import           Data.Function                   ((.))
+import           Data.Functor                    (fmap)
+import           Data.Traversable                (Traversable (traverse))
+import           Prelude                         (Bool (..), flip)
 
 #if __GLASGOW_HASKELL__ >= 710
 import           Control.Monad                   hiding (fail, (<$!>))
@@ -71,20 +75,27 @@ import           Text.ParserCombinators.ReadP    (ReadP)
 import           Text.ParserCombinators.ReadPrec (ReadPrec)
 #endif
 
-concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
-concatMapM f xs = liftM concat (mapM f xs)
+import           Containers                      (Element, NontrivialContainer, toList)
 
-liftM' :: Monad m => (a -> b) -> m a -> m b
-liftM' = (<$!>)
-{-# INLINE liftM' #-}
+-- old specialized to list version
+-- concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
+-- | Lifting bind into a monad. Generalized version of @concatMap@
+-- that works with a monadic predicate.
+concatMapM :: (Applicative q, Monad m, Traversable m)
+           => (a -> q (m b))
+           -> m a
+           -> q (m b)
+concatMapM f = fmap join . traverse f
+{-# INLINE concatMapM #-}
 
-liftM2' :: Monad m => (a -> b -> c) -> m a -> m b -> m c
-liftM2' f a b = do
-  x <- a
-  y <- b
-  let z = f x y
-  z `seq` return z
-{-# INLINE liftM2' #-}
+-- | Like 'concatMapM', but has its arguments flipped, so can be used
+-- instead of the common @fmap concat $ forM@ pattern.
+concatForM :: (Applicative q, Monad m, Traversable m)
+           => m a
+           -> (a -> q (m b))
+           -> q (m b)
+concatForM = flip concatMapM
+{-# INLINE concatForM #-}
 
 (<$!>) :: Monad m => (a -> b) -> m a -> m b
 f <$!> m = do
@@ -93,32 +104,37 @@ f <$!> m = do
   z `seq` return z
 {-# INLINE (<$!>) #-}
 
+andM :: (NontrivialContainer f, Element f ~ m Bool, Monad m) => f -> m Bool
+andM = go . toList
+  where
+    go []     = pure True
+    go (p:ps) = do
+        q <- p
+        if q then go ps else pure False
 
--- Copied from 'monad-loops' by James Cook (the library is in public domain)
+orM :: (NontrivialContainer f, Element f ~ m Bool, Monad m) => f -> m Bool
+orM = go . toList
+  where
+    go []     = pure False
+    go (p:ps) = do
+        q <- p
+        if q then pure True else go ps
 
-andM :: (Monad m) => [m Bool] -> m Bool
-andM []     = return True
-andM (p:ps) = do
-  q <- p
-  if q then andM ps else return False
+allM :: (NontrivialContainer f, Monad m) => (Element f -> m Bool) -> f -> m Bool
+allM p = go . toList
+  where
+    go []     = pure True
+    go (x:xs) = do
+        q <- p x
+        if q then go xs else pure False
 
-orM :: (Monad m) => [m Bool] -> m Bool
-orM []     = return False
-orM (p:ps) = do
-  q <- p
-  if q then return True else orM ps
-
-anyM :: (Monad m) => (a -> m Bool) -> [a] -> m Bool
-anyM _ []     = return False
-anyM p (x:xs) = do
-  q <- p x
-  if q then return True else anyM p xs
-
-allM :: (Monad m) => (a -> m Bool) -> [a] -> m Bool
-allM _ []     = return True
-allM p (x:xs) = do
-  q <- p x
-  if q then allM p xs else return False
+anyM :: (NontrivialContainer f, Monad m) => (Element f -> m Bool) -> f -> m Bool
+anyM p = go . toList
+  where
+    go []     = pure False
+    go (x:xs) = do
+        q <- p x
+        if q then pure True else go xs
 
 {-# SPECIALIZE andM :: [IO Bool] -> IO Bool #-}
 {-# SPECIALIZE orM  :: [IO Bool] -> IO Bool #-}

@@ -4,7 +4,6 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE Trustworthy           #-}
-{-# OPTIONS_GHC -fno-warn-unused-imports #-}
 
 module Universum
        ( -- * Reexports from base and from modules in this repo
@@ -19,13 +18,11 @@ module Universum
        , map
        , uncons
        , unsnoc
-       , applyN
        , pretty
        , prettyL
        , print
        , foreach
        , guarded
-       , guardedA
        , show
 
          -- * Convenient type aliases
@@ -35,6 +32,7 @@ module Universum
 
 import           Applicative              as X
 import           Bool                     as X
+import           Concurrent               as X
 import           Containers               as X
 import           Conv                     as X
 import           Debug                    as X
@@ -43,7 +41,6 @@ import           Functor                  as X
 import           Lifted                   as X
 import           List                     as X
 import           Monad                    as X
-import           Panic                    as X
 import           Show                     as X
 import           TypeOps                  as X
 
@@ -72,7 +69,9 @@ import           Data.Foldable            as X (Foldable, concat, concatMap, fol
 import           Data.Functor.Identity    as X (Identity (..))
 import           Data.Ord                 as X (Down (..), Ord (..), Ordering (..),
                                                 comparing)
-import           Data.Traversable         as X hiding (for)
+import           Data.Traversable         as X (Traversable (..), fmapDefault,
+                                                foldMapDefault, forM, mapAccumL,
+                                                mapAccumR)
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import           Data.List.NonEmpty       as X (NonEmpty (..), nonEmpty)
@@ -121,11 +120,12 @@ import           Data.Void                as X (Void, absurd, vacuous)
 #endif
 
 -- Base types
-import           Data.Bits                as X hiding (unsafeShiftL, unsafeShiftR)
-import           Data.Bool                as X hiding (bool)
+import           Data.Bits                as X (xor)
+import           Data.Bool                as X (Bool (..), not, otherwise, (&&), (||))
 import           Data.Char                as X (chr)
 import           Data.Int                 as X (Int, Int16, Int32, Int64, Int8)
-import           Data.Maybe               as X hiding (fromJust)
+import           Data.Maybe               as X (Maybe (..), catMaybes, fromMaybe, isJust,
+                                                isNothing, mapMaybe, maybe, maybeToList)
 import           Data.Word                as X (Word, Word16, Word32, Word64, Word8,
                                                 byteSwap16, byteSwap32, byteSwap64)
 
@@ -157,39 +157,11 @@ import           Data.Text.Lazy           as X (fromStrict, toStrict)
 import           Data.Text.Encoding       as X (decodeUtf8', decodeUtf8With)
 import           Data.Text.Encoding.Error as X (OnDecodeError, OnError, UnicodeException,
                                                 lenientDecode, strictDecode)
+import           Text.Read                as X (Read, readEither, readMaybe, reads)
 
 -- IO
 import           System.IO                as X (FilePath, Handle, IOMode (..), stderr,
                                                 stdin, stdout, withFile)
-
--- ST
-import           Control.Monad.ST         as X (ST, fixST, runST)
-
--- Concurrency and Parallelism
-import           Control.Exception        as X (Exception, SomeException (..))
-
-import           Control.Concurrent       as X hiding (ThreadId, getNumCapabilities,
-                                                isCurrentThreadBound, killThread,
-                                                mkWeakThreadId, myThreadId,
-                                                setNumCapabilities, threadCapability,
-                                                throwTo)
-import           Control.Concurrent.Async as X (Async (..), Concurrently (..), async,
-                                                asyncBound, asyncOn, asyncThreadId,
-                                                cancel, cancelWith, concurrently, link,
-                                                link2, poll, race, race_, waitAny,
-                                                waitAnyCancel, waitAnyCatch,
-                                                waitAnyCatchCancel, waitBoth, waitCatch,
-                                                waitEither, waitEitherCancel,
-                                                waitEitherCatch, waitEitherCatchCancel,
-                                                waitEither_, withAsync, withAsyncBound,
-                                                withAsyncOn)
-import           Control.Monad.STM        as X (STM, always, alwaysSucceeds, catchSTM,
-                                                check, orElse, retry, throwSTM)
-
-import           Foreign.Storable         as X (Storable)
-
--- Read instances hiding unsafe builtins (read)
-import           Text.Read                as X (Read, readEither, readMaybe, reads)
 
 -- Lenses
 import           Lens.Micro               as X (Lens, Lens', Traversal, Traversal', over,
@@ -218,9 +190,6 @@ unsnoc = foldr go Nothing
        Nothing      -> ([], x)
        Just (xs, e) -> (x:xs, e))
 
-applyN :: Int -> (a -> a) -> a -> a
-applyN n f = X.foldr (.) identity (X.replicate n f)
-
 print :: (X.MonadIO m, PBase.Show a) => a -> m ()
 print = liftIO . PBase.print
 
@@ -229,9 +198,6 @@ foreach = flip fmap
 
 guarded :: (Alternative f) => (a -> Bool) -> a -> f a
 guarded p x = X.bool empty (pure x) (p x)
-
-guardedA :: (Functor f, Alternative t) => (a -> f Bool) -> a -> f (t a)
-guardedA p x = X.bool empty (pure x) <$> p x
 
 show :: (Show a, IsString b) => a -> b
 show x = X.fromString (PBase.show x)

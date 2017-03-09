@@ -20,31 +20,20 @@ module Lifted
        , die
          -- * ST
        , stToIO
-         -- * Concurrency and parallelism
-       , myThreadId
-       , getNumCapabilities
-       , setNumCapabilities
-       , threadCapability
-       , isCurrentThreadBound
-       , mkWeakThreadId
-       , atomically
        ) where
 
-import           Control.Concurrent    (ThreadId)
 #if ( __GLASGOW_HASKELL__ >= 710 )
 import           Control.Monad.ST      (RealWorld, ST)
 #else
 import           Control.Monad.ST.Safe (RealWorld, ST)
 #endif
-import           Control.Monad.STM     (STM)
 import           Control.Monad.Trans   (MonadIO, liftIO)
 import           Data.String           (String)
 import           Data.Text             (Text)
-import           Prelude               (Bool, FilePath, Int, (>>))
+import           Prelude               (FilePath, (>>))
 import           System.Exit           (ExitCode)
 import           System.IO             (Handle, IOMode, stderr)
 import qualified System.IO             (hPutStrLn)
-import           System.Mem.Weak       (Weak)
 
 -- Text
 import qualified Data.Text.IO          as XIO
@@ -58,9 +47,6 @@ import qualified Control.Monad.ST      as XIO
 #else
 import qualified Control.Monad.ST.Safe as XIO
 #endif
--- Concurrency and parallelism
-import qualified Control.Concurrent    as XIO
-import qualified Control.Monad.STM     as XIO
 
 ----------------------------------------------------------------------------
 -- Text
@@ -129,36 +115,3 @@ die err = liftIO (System.IO.hPutStrLn stderr err) >> exitFailure
 stToIO :: MonadIO m => ST RealWorld a -> m a
 stToIO a = liftIO (XIO.stToIO a)
 {-# INLINABLE stToIO #-}
-
-----------------------------------------------------------------------------
--- Concurrency and parallelism
-----------------------------------------------------------------------------
-
-myThreadId :: MonadIO m => m ThreadId
-myThreadId = liftIO XIO.myThreadId
-{-# INLINABLE myThreadId #-}
-
-getNumCapabilities :: MonadIO m => m Int
-getNumCapabilities = liftIO XIO.getNumCapabilities
-{-# INLINABLE getNumCapabilities #-}
-
-setNumCapabilities :: MonadIO m => Int -> m ()
-setNumCapabilities a = liftIO (XIO.setNumCapabilities a)
-{-# INLINABLE setNumCapabilities #-}
-
-threadCapability :: MonadIO m => ThreadId -> m (Int, Bool)
-threadCapability a = liftIO (XIO.threadCapability a)
-{-# INLINABLE threadCapability #-}
-
-isCurrentThreadBound :: MonadIO m => m Bool
-isCurrentThreadBound = liftIO XIO.isCurrentThreadBound
-{-# INLINABLE isCurrentThreadBound #-}
-
-mkWeakThreadId :: MonadIO m => ThreadId -> m (Weak ThreadId)
-mkWeakThreadId a = liftIO (XIO.mkWeakThreadId a)
-{-# INLINABLE mkWeakThreadId #-}
-
-atomically :: MonadIO m => STM a -> m a
-atomically a = liftIO (XIO.atomically a)
-{-# INLINABLE atomically #-}
-
