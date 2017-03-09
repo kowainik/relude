@@ -30,6 +30,7 @@ library
     Base
     Bifunctor
     Bool
+    Concurrent
     Containers
     Conv
     Debug
@@ -55,7 +56,6 @@ library
     -fwarn-implicit-prelude
 
   build-depends:
-    async                 >= 2.1    && <2.2,
     base                  >= 4.7    && <4.10,
     bytestring            >= 0.10   && <0.11,
     containers            >= 0.5    && <0.6,

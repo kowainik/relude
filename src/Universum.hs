@@ -32,6 +32,7 @@ module Universum
 
 import           Applicative              as X
 import           Bool                     as X
+import           Concurrent               as X
 import           Containers               as X
 import           Conv                     as X
 import           Debug                    as X
@@ -153,39 +154,11 @@ import           Data.Text.Lazy           as X (fromStrict, toStrict)
 import           Data.Text.Encoding       as X (decodeUtf8', decodeUtf8With)
 import           Data.Text.Encoding.Error as X (OnDecodeError, OnError, UnicodeException,
                                                 lenientDecode, strictDecode)
+import           Text.Read                as X (Read, readEither, readMaybe, reads)
 
 -- IO
 import           System.IO                as X (FilePath, Handle, IOMode (..), stderr,
                                                 stdin, stdout, withFile)
-
--- ST
-import           Control.Monad.ST         as X (ST, fixST, runST)
-
--- Concurrency and Parallelism
-import           Control.Exception        as X (Exception, SomeException (..))
-
-import           Control.Concurrent       as X hiding (ThreadId, getNumCapabilities,
-                                                isCurrentThreadBound, killThread,
-                                                mkWeakThreadId, myThreadId,
-                                                setNumCapabilities, threadCapability,
-                                                throwTo)
-import           Control.Concurrent.Async as X (Async (..), Concurrently (..), async,
-                                                asyncBound, asyncOn, asyncThreadId,
-                                                cancel, cancelWith, concurrently, link,
-                                                link2, poll, race, race_, waitAny,
-                                                waitAnyCancel, waitAnyCatch,
-                                                waitAnyCatchCancel, waitBoth, waitCatch,
-                                                waitEither, waitEitherCancel,
-                                                waitEitherCatch, waitEitherCatchCancel,
-                                                waitEither_, withAsync, withAsyncBound,
-                                                withAsyncOn)
-import           Control.Monad.STM        as X (STM, always, alwaysSucceeds, catchSTM,
-                                                check, orElse, retry, throwSTM)
-
-import           Foreign.Storable         as X (Storable)
-
--- Read instances hiding unsafe builtins (read)
-import           Text.Read                as X (Read, readEither, readMaybe, reads)
 
 -- Lenses
 import           Lens.Micro               as X (Lens, Lens', Traversal, Traversal', over,

@@ -3,10 +3,13 @@
 {-# LANGUAGE Safe                  #-}
 
 module Exceptions
-       ( note
+       ( Exception
+       , SomeException (..)
+       , note
        ) where
 
 import           Control.Applicative  (Applicative (pure))
+import           Control.Exception    (Exception, SomeException (..))
 import           Control.Monad.Except (MonadError, throwError)
 import           Data.Maybe           (Maybe, maybe)
 
