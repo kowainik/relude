@@ -69,7 +69,9 @@ import           Data.Foldable            as X (Foldable, concat, concatMap, fol
 import           Data.Functor.Identity    as X (Identity (..))
 import           Data.Ord                 as X (Down (..), Ord (..), Ordering (..),
                                                 comparing)
-import           Data.Traversable         as X hiding (for)
+import           Data.Traversable         as X (Traversable (..), fmapDefault,
+                                                foldMapDefault, forM, mapAccumL,
+                                                mapAccumR)
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import           Data.List.NonEmpty       as X (NonEmpty (..), nonEmpty)
@@ -118,11 +120,12 @@ import           Data.Void                as X (Void, absurd, vacuous)
 #endif
 
 -- Base types
-import           Data.Bits                as X hiding (unsafeShiftL, unsafeShiftR)
-import           Data.Bool                as X hiding (bool)
+import           Data.Bits                as X (xor)
+import           Data.Bool                as X (Bool (..), not, otherwise, (&&), (||))
 import           Data.Char                as X (chr)
 import           Data.Int                 as X (Int, Int16, Int32, Int64, Int8)
-import           Data.Maybe               as X hiding (fromJust)
+import           Data.Maybe               as X (Maybe (..), catMaybes, fromMaybe, isJust,
+                                                isNothing, mapMaybe, maybe, maybeToList)
 import           Data.Word                as X (Word, Word16, Word32, Word64, Word8,
                                                 byteSwap16, byteSwap32, byteSwap64)
 
