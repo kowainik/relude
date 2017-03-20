@@ -2,6 +2,9 @@ resolver: lts-8.2
 packages:
 - '.'
 
+nix:
+  packages: [binutils,gmp]
+
 extra-deps:
 - type-operators-0.1.0.4
 
