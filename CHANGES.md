@@ -1,5 +1,10 @@
-0.3
+0.3.1
 =====
+
+* Add _haddock_ documentation with 100% coverage.
+
+0.3
+===
 
 * [#28](https://github.com/serokell/universum/issues/28):
   Remove `putByteString` and `putLByteString`.

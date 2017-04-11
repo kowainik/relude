@@ -1,7 +1,8 @@
-{-# LANGUAGE CPP                #-}
-{-# LANGUAGE ExplicitNamespaces #-}
-{-# LANGUAGE NoImplicitPrelude  #-}
-{-# LANGUAGE Safe               #-}
+{-# LANGUAGE CPP  #-}
+{-# LANGUAGE Safe #-}
+
+-- | Lifted versions of functions working with files and environment.
+-- All functions are specialized to 'Data.Text.Text` if possible.
 
 module Lifted
        ( -- * Text
@@ -11,6 +12,7 @@ module Lifted
        , interact
        , readFile
        , writeFile
+
          -- * IO
        , getArgs
        , openFile
@@ -18,6 +20,7 @@ module Lifted
        , exitFailure
        , exitSuccess
        , die
+
          -- * ST
        , stToIO
        ) where
@@ -52,66 +55,79 @@ import qualified Control.Monad.ST.Safe as XIO
 -- Text
 ----------------------------------------------------------------------------
 
+-- | Lifted version of 'Data.Text.appendFile'.
 appendFile :: MonadIO m => FilePath -> Text -> m ()
 appendFile a b = liftIO (XIO.appendFile a b)
-{-# INLINABLE appendFile #-}
+{-# INLINE appendFile #-}
 
+-- | Lifted version of 'Data.Text.getContents'.
 getContents :: MonadIO m => m Text
 getContents = liftIO XIO.getContents
-{-# INLINABLE getContents #-}
+{-# INLINE getContents #-}
 
+-- | Lifted version of 'Data.Text.getLine'.
 getLine :: MonadIO m => m Text
 getLine = liftIO XIO.getLine
-{-# INLINABLE getLine #-}
+{-# INLINE getLine #-}
 
+-- | Lifted version of 'Data.Text.interact'.
 interact :: MonadIO m => (Text -> Text) -> m ()
 interact a = liftIO (XIO.interact a)
-{-# INLINABLE interact #-}
+{-# INLINE interact #-}
 
+-- | Lifted version of 'Data.Text.readFile'.
 readFile :: MonadIO m => FilePath -> m Text
 readFile a = liftIO (XIO.readFile a)
-{-# INLINABLE readFile #-}
+{-# INLINE readFile #-}
 
+-- | Lifted version of 'Data.Text.writeFile'.
 writeFile :: MonadIO m => FilePath -> Text -> m ()
 writeFile a b = liftIO (XIO.writeFile a b)
-{-# INLINABLE writeFile #-}
+{-# INLINE writeFile #-}
 
 ----------------------------------------------------------------------------
 -- IO
 ----------------------------------------------------------------------------
 
+-- | Lifted version of 'System.Environment.getArgs'.
 getArgs :: MonadIO m => m [String]
 getArgs = liftIO (XIO.getArgs)
-{-# INLINABLE getArgs #-}
+{-# INLINE getArgs #-}
 
+-- | Lifted version of 'System.IO.openFile'.
 openFile :: MonadIO m => FilePath -> IOMode -> m Handle
 openFile a b = liftIO (XIO.openFile a b)
-{-# INLINABLE openFile #-}
+{-# INLINE openFile #-}
 
 -- 'withFile' can't be lifted into 'MonadIO', as it uses 'bracket'
 
+-- | Lifted version of 'System.Exit.exitWith'.
 exitWith :: MonadIO m => ExitCode -> m a
 exitWith a = liftIO (XIO.exitWith a)
-{-# INLINABLE exitWith #-}
+{-# INLINE exitWith #-}
 
+-- | Lifted version of 'System.Exit.exitFailure'.
 exitFailure :: MonadIO m => m a
 exitFailure = liftIO XIO.exitFailure
-{-# INLINABLE exitFailure #-}
+{-# INLINE exitFailure #-}
 
+-- | Lifted version of 'System.Exit.exitSuccess'.
 exitSuccess :: MonadIO m => m a
 exitSuccess = liftIO XIO.exitSuccess
-{-# INLINABLE exitSuccess #-}
+{-# INLINE exitSuccess #-}
 
--- 'die' is available since base-4.8, but it's more convenient to
--- redefine it instead of using CPP
+-- | Lifted version of 'System.Exit.die'.
+-- 'XIO.die' is available since base-4.8, but it's more convenient to
+-- redefine it instead of using CPP.
 die :: MonadIO m => String -> m ()
 die err = liftIO (System.IO.hPutStrLn stderr err) >> exitFailure
-{-# INLINABLE die #-}
+{-# INLINE die #-}
 
 ----------------------------------------------------------------------------
 -- ST
 ----------------------------------------------------------------------------
 
+-- | Lifted version of 'XIO.stToIO'.
 stToIO :: MonadIO m => ST RealWorld a -> m a
 stToIO a = liftIO (XIO.stToIO a)
-{-# INLINABLE stToIO #-}
+{-# INLINE stToIO #-}

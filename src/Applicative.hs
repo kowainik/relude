@@ -1,12 +1,20 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE Safe              #-}
 
+-- | Convenient utils to work with 'Applicative'. There were more functions in this module
+-- (see <https://www.stackage.org/haddock/lts-8.9/protolude-0.1.10/Applicative.html protolude version>)
+-- but only convenient ans most used are left.
+
 module Applicative
        ( pass
        ) where
 
 import           Control.Applicative (Applicative (pure))
 
+-- | Shorter alias for @pure ()@.
+--
+-- >>> pass :: Maybe ()
+-- Just ()
 pass :: Applicative f => f ()
 pass = pure ()
 

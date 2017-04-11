@@ -5,8 +5,11 @@
 {-# LANGUAGE KindSignatures     #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
 {-# LANGUAGE PolyKinds          #-}
+{-# LANGUAGE Safe               #-}
 {-# LANGUAGE TypeFamilies       #-}
 {-# LANGUAGE TypeOperators      #-}
+
+-- | Type operators for writing convenient type signatures.
 
 module TypeOps
        ( type Each
