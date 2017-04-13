@@ -22,17 +22,19 @@ module Universum
        , Buildable
 
          -- * Useful standard unclassifed functions
+       , evaluateNF
+       , evaluateWHNF
+       , foreach
+       , guarded
        , identity
        , map
-       , uncons
-       , unsnoc
        , pretty
        , prettyL
        , print
        , readEither
-       , foreach
-       , guarded
        , show
+       , uncons
+       , unsnoc
 
          -- * Convenient type aliases
        , LText
@@ -173,8 +175,9 @@ import           Lens.Micro               as X (Lens, Lens', Traversal, Traversa
                                                 (^?), _1, _2, _3, _4, _5)
 import           Lens.Micro.Mtl           as X (preuse, preview, use, view)
 
--- For internal usage
-import qualified Prelude                  as Prelude
+-- For internal usage only
+import qualified Control.Exception.Base   (evaluate)
+import qualified Prelude                  (print)
 import qualified Text.Read                (readEither)
 
 -- | Type synonym for 'Data.Text.Lazy.Text'.
@@ -257,3 +260,11 @@ pretty = X.toStrict . prettyL
 -- | Similar to 'pretty' but for 'LText'.
 prettyL :: Buildable a => a -> LText
 prettyL = toLazyText . build
+
+-- | Lifted alias for 'Control.Exception.Base.evaluate' with clearer name.
+evaluateWHNF :: MonadIO m => a -> m a
+evaluateWHNF = liftIO . Control.Exception.Base.evaluate
+
+-- | Alias for 'evaluateWHNF . force' with clearer name.
+evaluateNF :: (X.NFData a, MonadIO m) => a -> m a
+evaluateNF = evaluateWHNF . force

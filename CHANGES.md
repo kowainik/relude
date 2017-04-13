@@ -5,6 +5,8 @@
 * Rewrite README tutorial.
 * [#37](https://github.com/serokell/universum/issues/37):
   Add generalized version of `readEither`.
+* [#38](https://github.com/serokell/universum/issues/38):
+  Add `evaluateNF` and `evaluateWHNF`.
 
 0.3
 ===

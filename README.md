@@ -253,6 +253,8 @@ Finally, we can move to part describing what new cool features we bring with `un
 * `using(Reader|State)[T]` functions as aliases for `flip run(Reader|State)[T]`.
 * [`One` type class](https://github.com/serokell/universum/blob/master/src/Containers.hs#L473)
   for creating singleton containers. Even monomorhpic like `Text`.
+* `evaluateWHNF` and `evaluateNF` functions as clearer and lifted aliases for
+  `evaluate` and `evaluate . force`.
 
 License
 -------
