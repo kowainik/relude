@@ -43,6 +43,7 @@ library
     Lifted.Concurrent
     Lifted.Env
     Lifted.File
+    Lifted.IORef
 
     Monad
     Monad.Either

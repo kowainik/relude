@@ -6,6 +6,7 @@ module Lifted
        ( module Lifted.Concurrent
        , module Lifted.Env
        , module Lifted.File
+       , module Lifted.IORef
 
        , stToIO
        ) where
@@ -13,6 +14,7 @@ module Lifted
 import           Lifted.Concurrent
 import           Lifted.Env
 import           Lifted.File
+import           Lifted.IORef
 
 import qualified Control.Monad.ST    as XIO
 import           Control.Monad.Trans (MonadIO, liftIO)
