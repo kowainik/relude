@@ -34,7 +34,7 @@ import           Control.Type.Operator (type ($), type (<+>))
 -- @
 -- f :: Each [Show, Read] [a, b] => a -> b -> String
 -- =
--- f :: (Show a, Show b, Read a, Show b) => a -> b -> String
+-- f :: (Show a, Show b, Read a, Read b) => a -> b -> String
 -- @
 --
 -- To specify list with single constraint / variable, don't forget to prefix
