@@ -7,6 +7,8 @@
   Add generalized version of `readEither`.
 * [#38](https://github.com/serokell/universum/issues/38):
   Add `evaluateNF` and `evaluateWHNF`.
+* [#39](https://github.com/serokell/universum/issues/39):
+  Add lifted versions of `IORef` functions.
 
 0.3
 ===
