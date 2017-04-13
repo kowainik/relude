@@ -5,9 +5,14 @@
 {-# LANGUAGE KindSignatures     #-}
 {-# LANGUAGE NoImplicitPrelude  #-}
 {-# LANGUAGE PolyKinds          #-}
-{-# LANGUAGE Safe               #-}
 {-# LANGUAGE TypeFamilies       #-}
 {-# LANGUAGE TypeOperators      #-}
+
+#if __GLASGOW_HASKELL__ <= 710
+{-# LANGUAGE Trustworthy        #-}
+#else
+{-# LANGUAGE Safe               #-}
+#endif
 
 -- | Type operators for writing convenient type signatures.
 
