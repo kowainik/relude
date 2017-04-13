@@ -9,14 +9,13 @@ module Monad
        , module Monad.Either
        , module Monad.Trans
 
-       , Monad ((>>=), return)
+       , Monad ((>>=), (>>), return)
        , MonadFail (fail)
        , MonadPlus (..)
 
        , (=<<)
        , (>=>)
        , (<=<)
-       , (>>)
        , forever
 
        , join
