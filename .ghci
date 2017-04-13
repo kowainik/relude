@@ -1,3 +1,3 @@
 :set -XNoImplicitPrelude
 :set -XOverloadedStrings
-import Prelude ()
+import Universum
