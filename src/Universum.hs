@@ -29,6 +29,7 @@ module Universum
        , pretty
        , prettyL
        , print
+       , readEither
        , foreach
        , guarded
        , show
@@ -160,7 +161,7 @@ import           Data.Text.Lazy           as X (fromStrict, toStrict)
 import           Data.Text.Encoding       as X (decodeUtf8', decodeUtf8With)
 import           Data.Text.Encoding.Error as X (OnDecodeError, OnError, UnicodeException,
                                                 lenientDecode, strictDecode)
-import           Text.Read                as X (Read, readEither, readMaybe, reads)
+import           Text.Read                as X (Read, readMaybe, reads)
 
 -- IO
 import           System.IO                as X (FilePath, Handle, IOMode (..), stderr,
@@ -174,6 +175,7 @@ import           Lens.Micro.Mtl           as X (preuse, preview, use, view)
 
 -- For internal usage
 import qualified Prelude                  as Prelude
+import qualified Text.Read                (readEither)
 
 -- | Type synonym for 'Data.Text.Lazy.Text'.
 type LText = Data.Text.Lazy.Text
@@ -188,6 +190,10 @@ identity x = x
 -- | 'Prelude.map' generalized to 'Functor'.
 map :: Functor f => (a -> b) -> f a -> f b
 map = fmap
+
+-- | Alias for @flip map@.
+foreach :: Functor f => f a -> (a -> b) -> f b
+foreach = flip fmap
 
 -- | Destructuring list into its head and tail if possible. This function is total.
 --
@@ -214,9 +220,14 @@ unsnoc = foldr go Nothing
 print :: (X.MonadIO m, PBase.Show a) => a -> m ()
 print = liftIO . Prelude.print
 
--- | Alias for @flip map@.
-foreach :: Functor f => f a -> (a -> b) -> f b
-foreach = flip fmap
+-- | Polymorhpic version of 'Text.Read.readEither'.
+--
+-- >>> readEither @Text @Int "123"
+-- Right 123
+-- >>> readEither @Text @Int "aa"
+-- Left "Prelude.read: no parse"
+readEither :: (ToString a, Read b) => a -> Either Text b
+readEither = X.first toText . Text.Read.readEither . X.toString
 
 -- | Version of 'Prelude.guard' that takes verification function.
 -- Can be used in some similar way:

@@ -1,7 +1,10 @@
-0.3.1
-=====
+0.4
+===
 
 * Add _haddock_ documentation with 100% coverage.
+* Rewrite README tutorial.
+* [#37](https://github.com/serokell/universum/issues/37):
+  Add generalized version of `readEither`.
 
 0.3
 ===
