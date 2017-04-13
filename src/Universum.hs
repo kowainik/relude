@@ -43,7 +43,6 @@ module Universum
 
 import           Applicative              as X
 import           Bool                     as X
-import           Concurrent               as X
 import           Containers               as X
 import           Conv                     as X
 import           Debug                    as X

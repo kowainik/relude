@@ -29,17 +29,20 @@ library
     Applicative
     Base
     Bool
-    Concurrent
     Containers
     Conv
     Debug
     Exceptions
     Functor
-    Lifted
     List
     Print
     TypeOps
     Unsafe
+
+    Lifted
+    Lifted.Concurrent
+    Lifted.Env
+    Lifted.File
 
     Monad
     Monad.Either
