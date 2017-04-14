@@ -19,8 +19,8 @@ This tutorial has several parts:
 1. Philosophy and motivation.
 2. How to use it.
 3. What we've changed in `Prelude` (some gotchas).
-4. What already known things but that are not in `Prelude` we've brought into scope.
-5. What new thing we've added.
+4. What already known things that are not in `Prelude` we've brought into scope.
+5. What new things we've added.
 
 This is not a tutorial on _Haskell_ or not even tutorial on each function. For detailed
 documentation of every function with examples and usages see
