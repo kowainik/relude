@@ -4,7 +4,7 @@ Universum
 [![Build Status](https://travis-ci.org/serokell/universum.svg?branch=master)](https://travis-ci.org/serokell/universum)
 [![Hackage](https://img.shields.io/hackage/v/universum.svg)](https://hackage.haskell.org/package/universum)
 
-Custom _Prelude_ used in Serokell.
+Custom prelude used in Serokell.
 
 What is this?
 -------------
@@ -50,7 +50,7 @@ Next section describes why we made this choice and what we're willing to do.
 This tutorial doesn't cover differences from `protolude`. Intstead it says what
 differs from custom `Prelude`.
 
-### Main goals motivation
+### Main goals
 
 While creating and maintaining custom prelude we're following next goals:
 
@@ -67,6 +67,7 @@ While creating and maintaining custom prelude we're following next goals:
    as it's done in [`classy-prelude`](https://github.com/snoyberg/mono-traversable).
    Instead we just reexport common and well-known things from `base` and some other
    libraries used in everyday production programming in _Haskell_.
+   > **Note**: well, we didn't managed to avoid inventing something new, but just a little bit.
 4. Export more useful and commonly used functions. [Hello, my name is Dmitry. I was
    coding _Haskell_ for 3 years but still hoogling which module `liftIO` comes from.](https://twitter.com/magnars/status/834683466130345984)
    Things like `liftIO`, `ReaderT` type, `MVar`-related functions have unambigous names,
@@ -159,14 +160,14 @@ Then, some commonly used types: `Map/HashMap/IntMap`, `Set/HashSet/IntSet`, `Seq
 `liftIO` and `MonadIO` are exported by default. A lot of functions are generalised to `MonadIO`.
 
 `deepseq` is exported. For instance, if you want to force deep evaluation of some value (in IO),
-you can write `evaluate (force a)`. WHNF evaluation is possible with `evaluate a`.
+you can write `evaluateNF a`. WHNF evaluation is possible with `evaluateWHNF a`.
 
-Also we reexport big chunks of these libraries: `mtl`, `stm`, `safe`, `microlens`.
+Also we reexport big chunks of these libraries: `mtl`, `stm`, `safe`, `microlens`, `microlens-mtl`.
 
 However, `put` and `get` (for `MonadState`) are clashing with `Binary` so they're not exported.
 
 More precisely about functions from [`safe`](https://hackage.haskell.org/package/safe):
-safe variants of common list/`Maybe` functions from base.
+we bring into scope safe variants of common list/`Maybe` functions from base.
 
 * `(head|tail|last|at)May` return `Maybe` instead of failing.
 * `(head|init|last|at)Def` let you specify a default value in case of failure.
@@ -201,9 +202,8 @@ What's new?
 
 Finally, we can move to part describing what new cool features we bring with `universum`.
 
-* `foreach` is `flip fmap`.
 * `uncons` and `unsnoc` split a list at the first/last element.
-* `ordNub` is an O(n log n) version of `nub` (which is quadratic).
+* `ordNub` is an _O(n log n)_ version of `nub` (which is quadratic).
 * `(&)` – reverse application. `x & f & g` instead of `g $ f $ x` is useful sometimes.
 * `pretty` and `prettyL` for converting `Buildable` into `Text` (can be used instead of `show`).
 * `whenM`, `unlessM`, `ifM`, `guardM` are available and do what you expect
@@ -245,7 +245,7 @@ Finally, we can move to part describing what new cool features we bring with `un
   translates into this:
 
   ```haskell
-  f :: (Show a, Show b, Read a, Show b) => a -> b -> String
+  f :: (Show a, Show b, Read a, Read b) => a -> b -> String
   ```
 
 * Conversions between `Either` and `Maybe` like `rightToMaybe` and `maybeToLeft`

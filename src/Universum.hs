@@ -23,8 +23,9 @@ module Universum
 
          -- * Useful standard unclassifed functions
        , evaluateNF
+       , evaluateNF_
        , evaluateWHNF
-       , foreach
+       , evaluateWHNF_
        , guarded
        , identity
        , map
@@ -193,10 +194,6 @@ identity x = x
 map :: Functor f => (a -> b) -> f a -> f b
 map = fmap
 
--- | Alias for @flip map@.
-foreach :: Functor f => f a -> (a -> b) -> f b
-foreach = flip fmap
-
 -- | Destructuring list into its head and tail if possible. This function is total.
 --
 -- >>> uncons []
@@ -264,6 +261,15 @@ prettyL = toLazyText . build
 evaluateWHNF :: MonadIO m => a -> m a
 evaluateWHNF = liftIO . Control.Exception.Base.evaluate
 
--- | Alias for 'evaluateWHNF . force' with clearer name.
+-- | Like 'evaluateWNHF' but discards value.
+evaluateWHNF_ :: MonadIO m => a -> m ()
+evaluateWHNF_ what = (`seq` ()) <$!> evaluateWHNF what
+
+-- | Alias for @evaluateWHNF . force@ with clearer name.
 evaluateNF :: (X.NFData a, MonadIO m) => a -> m a
 evaluateNF = evaluateWHNF . force
+
+-- | Alias for @evaluateWHNF . rnf@. Similar to 'evaluateNF'
+-- but discards resulting value.
+evaluateNF_ :: (X.NFData a, MonadIO m) => a -> m ()
+evaluateNF_ = evaluateWHNF . rnf
