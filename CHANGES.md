@@ -10,6 +10,9 @@
 * [#39](https://github.com/serokell/universum/issues/39):
   Add lifted versions of `IORef` functions.
 * Remove `foreach`
+* Reexport `(&&&)` from `Control.Arrow`.
+* Add lifted version of `readTVarIO`.
+* `interact` and `getContents` work with _Lazy Text_.
 
 0.3
 ===

@@ -17,6 +17,8 @@ module Lifted.File
 import           Control.Monad.Trans (MonadIO, liftIO)
 import           Data.Text           (Text)
 import qualified Data.Text.IO        as XIO
+import qualified Data.Text.Lazy      as L (Text)
+import qualified Data.Text.Lazy.IO   as LIO (getContents, interact)
 import           Prelude             (FilePath)
 import           System.IO           (Handle, IOMode)
 import qualified System.IO           as XIO (openFile)
@@ -31,8 +33,8 @@ appendFile a b = liftIO (XIO.appendFile a b)
 {-# INLINE appendFile #-}
 
 -- | Lifted version of 'Data.Text.getContents'.
-getContents :: MonadIO m => m Text
-getContents = liftIO XIO.getContents
+getContents :: MonadIO m => m L.Text
+getContents = liftIO LIO.getContents
 {-# INLINE getContents #-}
 
 -- | Lifted version of 'Data.Text.getLine'.
@@ -41,8 +43,8 @@ getLine = liftIO XIO.getLine
 {-# INLINE getLine #-}
 
 -- | Lifted version of 'Data.Text.interact'.
-interact :: MonadIO m => (Text -> Text) -> m ()
-interact a = liftIO (XIO.interact a)
+interact :: MonadIO m => (L.Text -> L.Text) -> m ()
+interact a = liftIO (LIO.interact a)
 {-# INLINE interact #-}
 
 -- | Lifted version of 'Data.Text.readFile'.

@@ -20,6 +20,7 @@ module Lifted.Concurrent
        , TVar
        , atomically
        , newTVarIO
+       , readTVarIO
        , STM.modifyTVar'
        , STM.newTVar
        , STM.readTVar
@@ -31,7 +32,7 @@ import qualified Control.Concurrent.MVar     as CCM (newEmptyMVar, newMVar, putM
                                                      readMVar, swapMVar, takeMVar,
                                                      tryPutMVar, tryReadMVar, tryTakeMVar)
 import qualified Control.Concurrent.STM.TVar as STM (modifyTVar', newTVar, newTVarIO,
-                                                     readTVar, writeTVar)
+                                                     readTVar, readTVarIO, writeTVar)
 import qualified Control.Monad.STM           as STM (atomically)
 
 import           Control.Concurrent.MVar     (MVar)
@@ -104,3 +105,8 @@ atomically = liftIO . STM.atomically
 newTVarIO :: MonadIO m => a -> m (TVar a)
 newTVarIO = liftIO . STM.newTVarIO
 {-# INLINE newTVarIO #-}
+
+-- | Lifted to 'MonadIO' version of 'STM.readTVarIO'.
+readTVarIO :: MonadIO m => TVar a -> m a
+readTVarIO = liftIO . STM.readTVarIO
+{-# INLINE readTVarIO #-}

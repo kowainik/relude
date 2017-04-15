@@ -68,10 +68,11 @@ import           Safe                     as X (atDef, atMay, foldl1May, foldr1M
                                                 initSafe, lastDef, lastMay, tailDef,
                                                 tailMay, tailSafe)
 
--- Applicatives and Bifunctors
+-- Applicatives and Bifunctors and Arrows
 import           Control.Applicative      as X (Alternative (..), Applicative (..),
                                                 Const (..), ZipList (..), liftA, liftA2,
                                                 liftA3, optional, (<**>))
+import           Control.Arrow            as X ((&&&))
 import           Data.Bifunctor           as X (Bifunctor (..))
 
 -- Base typeclasses
