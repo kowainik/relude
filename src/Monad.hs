@@ -1,19 +1,21 @@
-{-# LANGUAGE CPP               #-}
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE Trustworthy       #-}
-{-# LANGUAGE TypeFamilies      #-}
+{-# LANGUAGE CPP          #-}
+{-# LANGUAGE Trustworthy  #-}
+{-# LANGUAGE TypeFamilies #-}
+
+-- | Reexporting useful monadic stuff.
 
 module Monad
-       ( module Export
+       ( module Monad.Maybe
+       , module Monad.Either
+       , module Monad.Trans
 
-       , Monad ((>>=), return)
+       , Monad ((>>=), (>>), return)
        , MonadFail (fail)
        , MonadPlus (..)
 
        , (=<<)
        , (>=>)
        , (<=<)
-       , (>>)
        , forever
 
        , join
@@ -49,9 +51,9 @@ module Monad
        , (<$!>)
        ) where
 
-import           Monad.Either                    as Export
-import           Monad.Maybe                     as Export
-import           Monad.Trans                     as Export
+import           Monad.Either
+import           Monad.Maybe
+import           Monad.Trans
 
 import           Base                            (IO, seq)
 import           Control.Applicative             (Applicative (pure))
@@ -77,10 +79,13 @@ import           Text.ParserCombinators.ReadPrec (ReadPrec)
 
 import           Containers                      (Element, NontrivialContainer, toList)
 
--- old specialized to list version
--- concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
 -- | Lifting bind into a monad. Generalized version of @concatMap@
--- that works with a monadic predicate.
+-- that works with a monadic predicate. Old and simpler specialized to list
+-- version had next type:
+--
+-- @
+--     concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
+-- @
 concatMapM :: (Applicative q, Monad m, Traversable m)
            => (a -> q (m b))
            -> m a
@@ -97,6 +102,7 @@ concatForM :: (Applicative q, Monad m, Traversable m)
 concatForM = flip concatMapM
 {-# INLINE concatForM #-}
 
+-- | Stricter version of 'Data.Functor.<$>'.
 (<$!>) :: Monad m => (a -> b) -> m a -> m b
 f <$!> m = do
   x <- m
@@ -104,6 +110,20 @@ f <$!> m = do
   z `seq` return z
 {-# INLINE (<$!>) #-}
 
+-- | Monadic and constrained to 'NonTrivialContainer' version of 'Prelude.and'.
+--
+-- >>> andM [Just True, Just False]
+-- Just False
+-- >>> andM [Just True]
+-- Just True
+-- >>> andM [Just True, Just False, Nothing]
+-- Just False
+-- >>> andM [Just True, Nothing]
+-- Nothing
+-- >>> andM [putStrLn "1" >> pure True, putStrLn "2" >> pure False, putStrLn "3" >> undefined]
+-- 1
+-- 2
+-- False
 andM :: (NontrivialContainer f, Element f ~ m Bool, Monad m) => f -> m Bool
 andM = go . toList
   where
@@ -112,6 +132,14 @@ andM = go . toList
         q <- p
         if q then go ps else pure False
 
+-- | Monadic and constrained to 'NonTrivialContainer' version of 'Prelude.or'.
+--
+-- >>> orM [Just True, Just False]
+-- Just True
+-- >>> orM [Just True, Nothing]
+-- Just True
+-- >>> orM [Nothing, Just True]
+-- Nothing
 orM :: (NontrivialContainer f, Element f ~ m Bool, Monad m) => f -> m Bool
 orM = go . toList
   where
@@ -120,6 +148,14 @@ orM = go . toList
         q <- p
         if q then pure True else go ps
 
+-- | Monadic and constrained to 'NonTrivialContainer' version of 'Prelude.all'.
+--
+-- >>> allM (readMaybe >=> pure . even) ["6", "10"]
+-- Just True
+-- >>> allM (readMaybe >=> pure . even) ["5", "aba"]
+-- Just False
+-- >>> allM (readMaybe >=> pure . even) ["aba", "10"]
+-- Nothing
 allM :: (NontrivialContainer f, Monad m) => (Element f -> m Bool) -> f -> m Bool
 allM p = go . toList
   where
@@ -128,6 +164,14 @@ allM p = go . toList
         q <- p x
         if q then go xs else pure False
 
+-- | Monadic and constrained to 'NonTrivialContainer' version of 'Prelude.any'.
+--
+-- >>> anyM (readMaybe >=> pure . even) ["5", "10"]
+-- Just True
+-- >>> anyM (readMaybe >=> pure . even) ["10", "aba"]
+-- Just True
+-- >>> anyM (readMaybe >=> pure . even) ["aba", "10"]
+-- Nothing
 anyM :: (NontrivialContainer f, Monad m) => (Element f -> m Bool) -> f -> m Bool
 anyM p = go . toList
   where
@@ -141,9 +185,10 @@ anyM p = go . toList
 {-# SPECIALIZE anyM :: (a -> IO Bool) -> [a] -> IO Bool #-}
 {-# SPECIALIZE allM :: (a -> IO Bool) -> [a] -> IO Bool #-}
 
--- Copied from 'fail' by Herbert Valerio Riedel (the library is under BSD3)
 
 #if __GLASGOW_HASKELL__ < 800
+-- | Class for 'Monad's that can 'fail'.
+-- Copied from 'fail' by Herbert Valerio Riedel (the library is under BSD3).
 class Monad m => MonadFail m where
     fail :: String -> m a
 

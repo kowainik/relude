@@ -3,13 +3,19 @@
 {-# LANGUAGE DataKinds               #-}
 {-# LANGUAGE FlexibleContexts        #-}
 {-# LANGUAGE FlexibleInstances       #-}
-{-# LANGUAGE NoImplicitPrelude       #-}
 {-# LANGUAGE Trustworthy             #-}
 {-# LANGUAGE TypeOperators           #-}
 {-# LANGUAGE TypeFamilies            #-}
 {-# LANGUAGE UndecidableInstances    #-}
 
 {-# OPTIONS_GHC -fno-warn-unticked-promoted-constructors #-}
+
+-- | Reimagined approach for 'Foldable' type hierarchy. Forbids usages
+-- of 'length' function and similar over 'Maybe' and other potentially unsafe
+-- data types. It was proposed to use @-XTypeApplication@ for such cases.
+-- But this approach is not robust enough because programmers are human and can
+-- easily forget to do this. For discussion see this topic:
+-- <https://www.reddit.com/r/haskell/comments/60r9hu/proposal_suggest_explicit_type_application_for/ Suggest explicit type application for Foldable length and friends>
 
 module Containers
        (
@@ -80,6 +86,9 @@ import           Applicative            (pass)
 -- Containers (e.g. tuples aren't containers)
 ----------------------------------------------------------------------------
 
+-- | Type of element for some container. Implemented as a type family because
+-- some containers are monomorphic over element type (like 'T.Text', 'IS.IntSet', etc.)
+-- so we can't implement nice interface using old higher-kinded types approach.
 type family Element t
 
 type instance Element (f a) = a
@@ -89,10 +98,28 @@ type instance Element BS.ByteString = Word8
 type instance Element BSL.ByteString = Word8
 type instance Element IS.IntSet = Int
 
+-- | Type class for container. Fully compatible with 'Foldable'.
+-- Contains very small and safe subset of 'Foldable' functions.
 class Container t where
+  -- | Convert container to list of elements.
+  --
+  -- >>> toList (Just True)
+  -- [True]
+  -- >>> toList @Text "aba"
+  -- "aba"
+  -- >>> :t toList @Text "aba"
+  -- toList @Text "aba" :: [Char]
   toList :: t -> [Element t]
+
+  -- | Checks whether container is empty.
+  --
+  -- >>> null @Text ""
+  -- True
+  -- >>> null @Text "aba"
+  -- False
   null :: t -> Bool
 
+-- | This instance makes 'Container' compatible and overlappable by 'Foldable'.
 instance {-# OVERLAPPABLE #-} Foldable f => Container (f a) where
   toList = F.toList
   {-# INLINE toList #-}
@@ -371,44 +398,69 @@ instance NontrivialContainer IS.IntSet where
 -- Derivative functions
 ----------------------------------------------------------------------------
 
+-- | Stricter version of 'Prelude.sum'.
+--
+-- >>> sum [1..10]
+-- 55
+-- >>> sum (Just 3)
+-- <interactive>:43:1: error:
+--     • Do not use 'Foldable' methods on Maybe
+--     • In the expression: sum (Just 3)
+--       In an equation for ‘it’: it = sum (Just 3)
 sum :: (NontrivialContainer t, Num (Element t)) => t -> Element t
 sum = foldl' (+) 0
 
+-- | Stricter version of 'Prelude.product'.
+--
+-- >>> product [1..10]
+-- 3628800
+-- >>> product (Right 3)
+-- <interactive>:45:1: error:
+--     • Do not use 'Foldable' methods on Either
+--     • In the expression: product (Right 3)
+--       In an equation for ‘it’: it = product (Right 3)
 product :: (NontrivialContainer t, Num (Element t)) => t -> Element t
 product = foldl' (*) 1
 
+-- | Constrained to 'NonTrivialContainer' version of 'Data.Foldable.traverse_'.
 traverse_
     :: (NontrivialContainer t, Applicative f)
     => (Element t -> f b) -> t -> f ()
 traverse_ f = foldr ((*>) . f) pass
 
+-- | Constrained to 'NonTrivialContainer' version of 'Data.Foldable.for_'.
 for_
     :: (NontrivialContainer t, Applicative f)
     => t -> (Element t -> f b) -> f ()
 for_ = flip traverse_
 {-# INLINE for_ #-}
 
+-- | Constrained to 'NonTrivialContainer' version of 'Data.Foldable.mapM_'.
 mapM_
     :: (NontrivialContainer t, Monad m)
     => (Element t -> m b) -> t -> m ()
 mapM_ f= foldr ((>>) . f) pass
 
+-- | Constrained to 'NonTrivialContainer' version of 'Data.Foldable.forM_'.
 forM_
     :: (NontrivialContainer t, Monad m)
     => t -> (Element t -> m b) -> m ()
 forM_ = flip mapM_
 {-# INLINE forM_ #-}
 
+-- | Constrained to 'NonTrivialContainer' version of 'Data.Foldable.sequenceA_'.
 sequenceA_
     :: (NontrivialContainer t, Applicative f, Element t ~ f a)
     => t -> f ()
 sequenceA_ = foldr (*>) pass
 
+-- | Constrained to 'NonTrivialContainer' version of 'Data.Foldable.sequence_'.
 sequence_
     :: (NontrivialContainer t, Monad m, Element t ~ m a)
     => t -> m ()
 sequence_ = foldr (>>) pass
 
+-- | Constrained to 'NonTrivialContainer' version of 'Data.Foldable.asum'.
 asum
     :: (NontrivialContainer t, Alternative f, Element t ~ f a)
     => t -> f a
@@ -470,6 +522,16 @@ DISALLOW_NONTRIVIAL_CONTAINER_7(Either a b)
 -- One
 ----------------------------------------------------------------------------
 
+-- | Type class for types that can be created from one element. @singleton@
+-- is lone name for this function. Also constructions of different type differ:
+-- @:[]@ for lists, two arguments for Maps. Also some data types are monomorphic.
+--
+-- >>> one True :: [Bool]
+-- [True]
+-- >>> one 'a' :: Text
+-- "a"
+-- >>> one (3, "hello") :: HashMap Int String
+-- fromList [(3,"hello")]
 class One x where
     type OneItem x
     -- | Create a list, map, 'Text', etc from a single element.

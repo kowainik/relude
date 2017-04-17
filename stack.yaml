@@ -1,9 +1,9 @@
-resolver: lts-8.2
+resolver: lts-8.9
 packages:
 - '.'
 
 nix:
-  packages: [binutils,gmp]
+  packages: [binutils, gmp]
 
 extra-deps:
 - type-operators-0.1.0.4

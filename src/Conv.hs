@@ -3,6 +3,8 @@
 {-# LANGUAGE Safe                  #-}
 {-# LANGUAGE TypeSynonymInstances  #-}
 
+-- | Type classes for convertion between different string representations.
+
 module Conv
        ( ConvertUtf8 (..)
        , ToString (..)
@@ -25,9 +27,28 @@ import           Data.Function             (id, (.))
 import           Data.String               (String)
 import           Functor                   ((<$>))
 
+-- | Type class for conversion to utf8 representation of text.
 class ConvertUtf8 a b where
+    -- | Encode as utf8 string (usually 'B.ByteString').
+    --
+    -- >>> encodeUtf8 @Text @ByteString "патак"
+    -- "\208\191\208\176\209\130\208\176\208\186"
     encodeUtf8 :: a -> b
+
+    -- | Decode from utf8 string.
+    --
+    -- >>> decodeUtf8 @Text @ByteString "\208\191\208\176\209\130\208\176\208\186"
+    -- "\1087\1072\1090\1072\1082"
+    -- >>> putStrLn $ decodeUtf8 @Text @ByteString "\208\191\208\176\209\130\208\176\208\186"
+    -- патак
     decodeUtf8 :: b -> a
+
+    -- | Decode as utf8 string but returning execption if byte sequence is malformed.
+    --
+    -- >>> decodeUtf8 @Text @ByteString "\208\208\176\209\130\208\176\208\186"
+    -- "\65533\65533\1090\1072\1082"
+    -- >>> decodeUtf8Strict @Text @ByteString "\208\208\176\209\130\208\176\208\186"
+    -- Left Cannot decode byte '\xd0': Data.Text.Internal.Encoding.decodeUtf8: Invalid UTF-8 stream
     decodeUtf8Strict :: b -> Either T.UnicodeException a
 
 instance ConvertUtf8 String B.ByteString where
@@ -60,6 +81,7 @@ instance ConvertUtf8 LT.Text LB.ByteString where
     decodeUtf8 = LT.decodeUtf8With T.lenientDecode
     decodeUtf8Strict = LT.decodeUtf8'
 
+-- | Type class for converting other strings to 'T.Text'.
 class ToText a where
     toText :: a -> T.Text
 
@@ -72,6 +94,7 @@ instance ToText T.Text where
 instance ToText LT.Text where
     toText = LT.toStrict
 
+-- | Type class for converting other strings to 'LT.Text'.
 class ToLText a where
     toLText :: a -> LT.Text
 
@@ -84,6 +107,7 @@ instance ToLText T.Text where
 instance ToLText LT.Text where
     toLText = id
 
+-- | Type class for converting other strings to 'String'.
 class ToString a where
     toString :: a -> String
 

@@ -1,29 +1,41 @@
 {-# LANGUAGE CPP                   #-}
-{-# LANGUAGE ExplicitNamespaces    #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude     #-}
 {-# LANGUAGE Trustworthy           #-}
+
+-- | Main module that reexports all functionality allowed to use
+-- without importing any other modules. Just add next lines to your
+-- module to replace default ugly 'Prelude' with better one.
+--
+-- @
+--     {-# LANGUAGE NoImplicitPrelude #-}
+--
+--     import Universum
+-- @
 
 module Universum
        ( -- * Reexports from base and from modules in this repo
-         module X
+         module X  -- Should I expand this to all modules to remove haddock warnings?
        , module Base
 
          -- * Useful classes
        , Buildable
 
          -- * Useful standard unclassifed functions
+       , evaluateNF
+       , evaluateNF_
+       , evaluateWHNF
+       , evaluateWHNF_
+       , guarded
        , identity
        , map
-       , uncons
-       , unsnoc
        , pretty
        , prettyL
        , print
-       , foreach
-       , guarded
+       , readEither
        , show
+       , uncons
+       , unsnoc
 
          -- * Convenient type aliases
        , LText
@@ -32,7 +44,6 @@ module Universum
 
 import           Applicative              as X
 import           Bool                     as X
-import           Concurrent               as X
 import           Containers               as X
 import           Conv                     as X
 import           Debug                    as X
@@ -41,12 +52,12 @@ import           Functor                  as X
 import           Lifted                   as X
 import           List                     as X
 import           Monad                    as X
-import           Show                     as X
+import           Print                    as X
 import           TypeOps                  as X
 
-import           Base                     as Base hiding (error, print, putStr, putStrLn,
-                                                   show, showFloat, showList, showSigned,
-                                                   showSignedFloat, showsPrec, undefined)
+import           Base                     as Base hiding (error, show, showFloat,
+                                                   showList, showSigned, showSignedFloat,
+                                                   showsPrec, undefined)
 import qualified Base                     as PBase
 
 import           Data.String              as X (IsString (..))
@@ -57,10 +68,12 @@ import           Safe                     as X (atDef, atMay, foldl1May, foldr1M
                                                 initSafe, lastDef, lastMay, tailDef,
                                                 tailMay, tailSafe)
 
--- Applicatives
+-- Applicatives and Bifunctors and Arrows
 import           Control.Applicative      as X (Alternative (..), Applicative (..),
                                                 Const (..), ZipList (..), liftA, liftA2,
                                                 liftA3, optional, (<**>))
+import           Control.Arrow            as X ((&&&))
+import           Data.Bifunctor           as X (Bifunctor (..))
 
 -- Base typeclasses
 import           Data.Eq                  as X (Eq (..))
@@ -82,12 +95,6 @@ import           Data.Semigroup           as X (Option (..), Semigroup (sconcat,
                                                 stimesMonoid)
 #else
 import           Data.Monoid              as X
-#endif
-
-#if (__GLASGOW_HASKELL__ >= 710)
-import           Data.Bifunctor           as X (Bifunctor (..))
-#else
-import           Bifunctor                as X (Bifunctor (..))
 #endif
 
 -- Deepseq
@@ -157,7 +164,7 @@ import           Data.Text.Lazy           as X (fromStrict, toStrict)
 import           Data.Text.Encoding       as X (decodeUtf8', decodeUtf8With)
 import           Data.Text.Encoding.Error as X (OnDecodeError, OnError, UnicodeException,
                                                 lenientDecode, strictDecode)
-import           Text.Read                as X (Read, readEither, readMaybe, reads)
+import           Text.Read                as X (Read, readMaybe, reads)
 
 -- IO
 import           System.IO                as X (FilePath, Handle, IOMode (..), stderr,
@@ -169,20 +176,39 @@ import           Lens.Micro               as X (Lens, Lens', Traversal, Traversa
                                                 (^?), _1, _2, _3, _4, _5)
 import           Lens.Micro.Mtl           as X (preuse, preview, use, view)
 
--- Type synonyms for lazy types
+-- For internal usage only
+import qualified Control.Exception.Base   (evaluate)
+import qualified Prelude                  (print)
+import qualified Text.Read                (readEither)
+
+-- | Type synonym for 'Data.Text.Lazy.Text'.
 type LText = Data.Text.Lazy.Text
+
+-- | Type synonym for 'Data.ByteString.Lazy.ByteString'.
 type LByteString = Data.ByteString.Lazy.ByteString
 
+-- | Renamed version of 'Prelude.id'.
 identity :: a -> a
 identity x = x
 
+-- | 'Prelude.map' generalized to 'Functor'.
 map :: Functor f => (a -> b) -> f a -> f b
 map = fmap
 
+-- | Destructuring list into its head and tail if possible. This function is total.
+--
+-- >>> uncons []
+-- Nothing
+-- >>> uncons [1..5]
+-- Just (1,[2,3,4,5])
+-- >>> uncons (5 : [1..5]) >>= \(f, l) -> pure $ f == length l
+-- Just True
 uncons :: [a] -> Maybe (a, [a])
 uncons []     = Nothing
 uncons (x:xs) = Just (x, xs)
 
+-- | Similar to 'uncons' but destructuring list into its last element and
+-- everything before it.
 unsnoc :: [x] -> Maybe ([x],x)
 unsnoc = foldr go Nothing
   where
@@ -190,15 +216,32 @@ unsnoc = foldr go Nothing
        Nothing      -> ([], x)
        Just (xs, e) -> (x:xs, e))
 
+-- | Lifted version of 'Prelude.print'.
 print :: (X.MonadIO m, PBase.Show a) => a -> m ()
-print = liftIO . PBase.print
+print = liftIO . Prelude.print
 
-foreach :: Functor f => f a -> (a -> b) -> f b
-foreach = flip fmap
+-- | Polymorhpic version of 'Text.Read.readEither'.
+--
+-- >>> readEither @Text @Int "123"
+-- Right 123
+-- >>> readEither @Text @Int "aa"
+-- Left "Prelude.read: no parse"
+readEither :: (ToString a, Read b) => a -> Either Text b
+readEither = X.first toText . Text.Read.readEither . X.toString
 
+-- | Version of 'Prelude.guard' that takes verification function.
+-- Can be used in some similar way:
+-- @
+--     safeSum :: Int -> Int -> Maybe Int
+--     safeSum a b = do
+--         verifiedA <- guarded (>0) a
+--         verifiedB <- guarded (>0) b
+--         pure $ verifiedA + verifiedB
+-- @
 guarded :: (Alternative f) => (a -> Bool) -> a -> f a
 guarded p x = X.bool empty (pure x) (p x)
 
+-- | Generalized version of 'Prelude.show'.
 show :: (Show a, IsString b) => a -> b
 show x = X.fromString (PBase.show x)
 {-# SPECIALIZE show :: Show  a => a -> Text  #-}
@@ -211,5 +254,23 @@ show x = X.fromString (PBase.show x)
 pretty :: Buildable a => a -> Text
 pretty = X.toStrict . prettyL
 
+-- | Similar to 'pretty' but for 'LText'.
 prettyL :: Buildable a => a -> LText
 prettyL = toLazyText . build
+
+-- | Lifted alias for 'Control.Exception.Base.evaluate' with clearer name.
+evaluateWHNF :: MonadIO m => a -> m a
+evaluateWHNF = liftIO . Control.Exception.Base.evaluate
+
+-- | Like 'evaluateWNHF' but discards value.
+evaluateWHNF_ :: MonadIO m => a -> m ()
+evaluateWHNF_ what = (`seq` ()) <$!> evaluateWHNF what
+
+-- | Alias for @evaluateWHNF . force@ with clearer name.
+evaluateNF :: (X.NFData a, MonadIO m) => a -> m a
+evaluateNF = evaluateWHNF . force
+
+-- | Alias for @evaluateWHNF . rnf@. Similar to 'evaluateNF'
+-- but discards resulting value.
+evaluateNF_ :: (X.NFData a, MonadIO m) => a -> m ()
+evaluateNF_ = evaluateWHNF . rnf

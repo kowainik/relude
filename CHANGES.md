@@ -1,5 +1,22 @@
+0.4
+===
+
+* Add _haddock_ documentation with 100% coverage.
+* Rewrite README tutorial.
+* [#37](https://github.com/serokell/universum/issues/37):
+  Add generalized version of `readEither`.
+* [#38](https://github.com/serokell/universum/issues/38):
+  Add `evaluateNF`, `evaluateNF_`, `evaluateWHNF`, `evaluateWHNF_`.
+* [#39](https://github.com/serokell/universum/issues/39):
+  Add lifted versions of `IORef` functions.
+* Remove `foreach`
+* Reexport `(&&&)` from `Control.Arrow`.
+* Add lifted version of `readTVarIO`.
+* `interact` and `getContents` work with _Lazy Text_.
+* Reexport `MaybeT`, `maybeToExceptT`, `exceptToMaybeT`.
+
 0.3
-=====
+===
 
 * [#28](https://github.com/serokell/universum/issues/28):
   Remove `putByteString` and `putLByteString`.

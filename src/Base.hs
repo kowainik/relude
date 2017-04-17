@@ -1,56 +1,57 @@
-{-# LANGUAGE BangPatterns       #-}
-{-# LANGUAGE CPP                #-}
-{-# LANGUAGE ExplicitNamespaces #-}
-{-# LANGUAGE Unsafe             #-}
+{-# LANGUAGE BangPatterns #-}
+{-# LANGUAGE CPP          #-}
+{-# LANGUAGE Unsafe       #-}
+
+-- | Reexports from @GHC.*@ modules of <https://www.stackage.org/lts-8.9/package/base-4.9.1.0 base>
+-- package.
 
 module Base
-       ( module X
+       ( module GHC.Base
+       , module GHC.Enum
+       , module GHC.Err
+       , module GHC.Exts
+       , module GHC.Float
+       , module GHC.Num
+       , module GHC.Real
+       , module GHC.Show
+       , module GHC.TypeLits
+       , module GHC.Types
+
+#if ( __GLASGOW_HASKELL__ >= 800 )
+       , module GHC.OverloadedLabels
+       , module GHC.ExecutionStack
+       , module GHC.Stack
+#endif
+
        , ($!)
        ) where
 
--- Glorious Glasgow Haskell Compiler
-#if defined(__GLASGOW_HASKELL__) && ( __GLASGOW_HASKELL__ >= 600 )
-
 -- Base GHC types
-import           GHC.Base             as X (String, asTypeOf, maxInt, minInt, ord, seq,
-                                            (++))
-import           GHC.Enum             as X (Bounded (..), Enum (..), boundedEnumFrom,
-                                            boundedEnumFromThen)
-import           GHC.Err              as X (error, undefined)
-import           GHC.Exts             as X (Constraint, FunPtr, Ptr)
-import           GHC.Float            as X (Double (..), Float (..), Floating (..),
-                                            showFloat, showSignedFloat)
-import           GHC.Num              as X (Integer, Num (..), subtract)
-import           GHC.Real             as X hiding ((%))
-import           GHC.Show             as X (Show (..))
-import           System.IO            as X (print, putStr, putStrLn)
+import           GHC.Base             (String, asTypeOf, maxInt, minInt, ord, seq, (++))
+import           GHC.Enum             (Bounded (..), Enum (..), boundedEnumFrom,
+                                       boundedEnumFromThen)
+import           GHC.Err              (error, undefined)
+import           GHC.Exts             (Constraint, FunPtr, Ptr)
+import           GHC.Float            (Double (..), Float (..), Floating (..), showFloat,
+                                       showSignedFloat)
+import           GHC.Num              (Integer, Num (..), subtract)
+import           GHC.Real             hiding ((%))
+import           GHC.Show             (Show (..))
+import           GHC.TypeLits         (CmpNat, KnownNat, KnownSymbol, Nat, SomeNat (..),
+                                       SomeSymbol (..), Symbol, natVal, someNatVal,
+                                       someSymbolVal, symbolVal)
+import           GHC.Types            (Bool, Char, Coercible, IO, Int, Ordering, Word)
 
-import           GHC.Types            as X (Bool, Char, IO, Int, Ordering, Word)
-
-
-#if ( __GLASGOW_HASKELL__ >= 710 )
-import           GHC.Types            as X (Coercible)
-#endif
-
-#if ( __GLASGOW_HASKELL__ >= 710 )
-import           GHC.StaticPtr        as X (StaticPtr)
-#endif
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
-import           GHC.OverloadedLabels as X (IsLabel (..))
+import           GHC.OverloadedLabels (IsLabel (..))
 
-import           GHC.ExecutionStack   as X (Location (..), SrcLoc (..), getStackTrace,
-                                            showStackTrace)
+import           GHC.ExecutionStack   (Location (..), SrcLoc (..), getStackTrace,
+                                       showStackTrace)
 
-import           GHC.Stack            as X (CallStack, HasCallStack, callStack,
-                                            currentCallStack, getCallStack,
-                                            prettyCallStack, prettySrcLoc,
-                                            withFrozenCallStack)
-
-#if ( __GLASGOW_HASKELL__ >= 710 )
-import           GHC.TypeLits         as X (CmpNat, KnownNat, KnownSymbol, Nat,
-                                            SomeNat (..), SomeSymbol (..), Symbol, natVal,
-                                            someNatVal, someSymbolVal, symbolVal)
+import           GHC.Stack            (CallStack, HasCallStack, callStack,
+                                       currentCallStack, getCallStack, prettyCallStack,
+                                       prettySrcLoc, withFrozenCallStack)
 #endif
 
 -- Pending GHC 8.2 we'll expose these.
@@ -68,12 +69,15 @@ import Data.Kind as X (
   )
 -}
 
-#endif
 
+-- | Stricter version of 'Data.Function.$' operator.
 -- Default Prelude defines this at the toplevel module, so we do as well.
-infixr 0 $!
-
+--
+-- >>> const 3 $  undefined
+-- 3
+-- >>> const 3 $! undefined
+-- CallStack (from HasCallStack):
+--   error, called at libraries/base/GHC/Err.hs:79:14 in base:GHC.Err
 ($!) :: (a -> b) -> a -> b
-f $! x  = let !vx = x in f vx
-
-#endif
+f $! x = let !vx = x in f vx
+infixr 0 $!

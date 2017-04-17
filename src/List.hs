@@ -1,9 +1,12 @@
 {-# LANGUAGE CPP  #-}
 {-# LANGUAGE Safe #-}
 
+-- | Utility functions to work with lists.
+
 module List
        ( list
        , ordNub
+       , sortBy
        , sortOn
        , unzip
        , unzip3
@@ -15,10 +18,9 @@ module List
        , zip3
        ) where
 
-import           Data.Function       ((.))
 import           Data.Functor        (fmap)
-import           Data.List           (sortBy, unzip, unzip3, zip, zip3)
-import           Data.Ord            (Ord, comparing)
+import           Data.List           (sortBy, sortOn, unzip, unzip3, zip, zip3)
+import           Data.Ord            (Ord)
 import qualified Data.Set            as Set
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
@@ -29,11 +31,7 @@ import           Data.List.NonEmpty  as X (NonEmpty (..))
 import           Applicative         (pass)
 #endif
 
-
-sortOn :: (Ord o) => (a -> o) -> [a] -> [a]
-sortOn = sortBy . comparing
-
--- O(n * log n)
+-- | Like 'Prelude.nub' but runs in @O(n * log n)@ time and requires 'Ord'.
 ordNub :: (Ord a) => [a] -> [a]
 ordNub l = go Set.empty l
   where
@@ -43,17 +41,26 @@ ordNub l = go Set.empty l
       then go s xs
       else x : go (Set.insert x s) xs
 
+-- | Returns default list if given list is empty.
+-- Otherwise applies given function to every element.
+--
+-- >>> list [True] even []
+-- [True]
+-- >>> list [True] even [1..5]
+-- [False,True,False,True,False]
 list :: [b] -> (a -> b) -> [a] -> [b]
 list def f xs = case xs of
-  [] -> def
-  _  -> fmap f xs
+    [] -> def
+    _  -> fmap f xs
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
+-- | Performs given action over 'NonEmpty' list if given list is non empty.
 whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f ()
 whenNotNull []     _ = pass
 whenNotNull (x:xs) f = f (x :| xs)
 {-# INLINE whenNotNull #-}
 
+-- | Monadic version of 'whenNotNull'.
 whenNotNullM :: Monad m => m [a] -> (NonEmpty a -> m ()) -> m ()
 whenNotNullM ml f = ml >>= \l -> whenNotNull l f
 {-# INLINE whenNotNullM #-}
