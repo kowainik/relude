@@ -13,6 +13,7 @@
 * Reexport `(&&&)` from `Control.Arrow`.
 * Add lifted version of `readTVarIO`.
 * `interact` and `getContents` work with _Lazy Text_.
+* Reexport `MaybeT`, `maybeToExceptT`, `exceptToMaybeT`.
 
 0.3
 ===
