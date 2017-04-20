@@ -1,3 +1,8 @@
+0.4.1
+=====
+
+* Reexport `sortWith` from `GHC.Exts`.
+
 0.4
 ===
 

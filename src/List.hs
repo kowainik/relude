@@ -1,5 +1,5 @@
-{-# LANGUAGE CPP  #-}
-{-# LANGUAGE Safe #-}
+{-# LANGUAGE CPP         #-}
+{-# LANGUAGE Trustworthy #-}
 
 -- | Utility functions to work with lists.
 
@@ -8,6 +8,7 @@ module List
        , ordNub
        , sortBy
        , sortOn
+       , sortWith
        , unzip
        , unzip3
 #if ( __GLASGOW_HASKELL__ >= 800 )
@@ -22,6 +23,7 @@ import           Data.Functor        (fmap)
 import           Data.List           (sortBy, sortOn, unzip, unzip3, zip, zip3)
 import           Data.Ord            (Ord)
 import qualified Data.Set            as Set
+import           GHC.Exts            (sortWith)
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import           Control.Applicative (Applicative)
