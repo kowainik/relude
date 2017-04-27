@@ -45,3 +45,11 @@ install:
 
 script:
   - stack -j 2 build --haddock --no-terminal
+
+notifications:
+  email: false
+  slack:
+    rooms:
+      - serokell:RfJUgurMOLH2S49BEcRsAdVw
+    on_success: change
+    on_failure: always
