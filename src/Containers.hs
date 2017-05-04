@@ -4,8 +4,8 @@
 {-# LANGUAGE FlexibleContexts        #-}
 {-# LANGUAGE FlexibleInstances       #-}
 {-# LANGUAGE Trustworthy             #-}
-{-# LANGUAGE TypeOperators           #-}
 {-# LANGUAGE TypeFamilies            #-}
+{-# LANGUAGE TypeOperators           #-}
 {-# LANGUAGE UndecidableInstances    #-}
 
 {-# OPTIONS_GHC -fno-warn-unticked-promoted-constructors #-}
@@ -46,10 +46,9 @@ import           Data.Foldable          (Foldable)
 import qualified Data.Foldable          as F
 import           Data.Hashable          (Hashable)
 import           Data.Maybe             (fromMaybe)
-import           Data.Monoid            (All(..), Any(..), First(..))
+import           Data.Monoid            (All (..), Any (..), First (..))
 import           Data.Word              (Word8)
-import           Prelude                hiding (all, any, Foldable (..), mapM_,
-                                                sequence_)
+import           Prelude                hiding (Foldable (..), all, any, mapM_, sequence_)
 
 #if __GLASGOW_HASKELL__ >= 800
 import           GHC.Err                (errorWithoutStackTrace)
@@ -68,17 +67,17 @@ import qualified Data.ByteString.Lazy   as BSL
 import qualified Data.Text              as T
 import qualified Data.Text.Lazy         as TL
 
-import qualified Data.Map               as M
-import qualified Data.Set               as S
-import qualified Data.IntMap            as IM
-import qualified Data.IntSet            as IS
 import qualified Data.HashMap.Strict    as HM
 import qualified Data.HashSet           as HS
+import qualified Data.IntMap            as IM
+import qualified Data.IntSet            as IS
+import qualified Data.Map               as M
+import qualified Data.Set               as S
 
 import qualified Data.Vector            as V
-import qualified Data.Vector.Unboxed    as VU
 import qualified Data.Vector.Primitive  as VP
 import qualified Data.Vector.Storable   as VS
+import qualified Data.Vector.Unboxed    as VU
 
 import           Applicative            (pass)
 
@@ -472,13 +471,17 @@ asum = foldr (<|>) empty
 ----------------------------------------------------------------------------
 
 #define DISALLOW_CONTAINER_8(t, z) \
-    instance TypeError (Text "Do not use 'Foldable' methods on " :<>: Text z) => \
+    instance TypeError \
+        (Text "Do not use 'Foldable' methods on " :<>: Text z :$$: \
+         Text "NB. If you tried to use 'for_' on Maybe or Either, use 'whenJust' or 'whenRight' instead" ) => \
       Container (t) where { \
         toList = undefined; \
         null = undefined; } \
 
 #define DISALLOW_NONTRIVIAL_CONTAINER_8(t, z) \
-    instance TypeError (Text "Do not use 'Foldable' methods on " :<>: Text z) => \
+    instance TypeError \
+        (Text "Do not use 'Foldable' methods on " :<>: Text z :$$: \
+         Text "NB. If you tried to use 'for_' on Maybe or Either, use 'whenJust' or 'whenRight' instead" ) => \
       NontrivialContainer (t) where { \
         foldr = undefined; \
         foldl = undefined; \
