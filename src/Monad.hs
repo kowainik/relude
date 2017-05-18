@@ -60,7 +60,7 @@ import           Control.Applicative             (Applicative (pure))
 import           Data.Function                   ((.))
 import           Data.Functor                    (fmap)
 import           Data.Traversable                (Traversable (traverse))
-import           Prelude                         (Bool (..), flip)
+import           Prelude                         (Bool (..), Monoid, flip)
 
 #if __GLASGOW_HASKELL__ >= 710
 import           Control.Monad                   hiding (fail, (<$!>))
@@ -77,7 +77,8 @@ import           Text.ParserCombinators.ReadP    (ReadP)
 import           Text.ParserCombinators.ReadPrec (ReadPrec)
 #endif
 
-import           Containers                      (Element, NontrivialContainer, toList)
+import           Containers                      (Element, NontrivialContainer, fold,
+                                                  toList)
 
 -- | Lifting bind into a monad. Generalized version of @concatMap@
 -- that works with a monadic predicate. Old and simpler specialized to list
@@ -86,19 +87,25 @@ import           Containers                      (Element, NontrivialContainer, 
 -- @
 --     concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
 -- @
-concatMapM :: (Applicative q, Monad m, Traversable m)
-           => (a -> q (m b))
-           -> m a
-           -> q (m b)
-concatMapM f = fmap join . traverse f
+concatMapM
+    :: ( Applicative f
+       , Monoid m
+       , NontrivialContainer (l m)
+       , Traversable l
+       )
+    => (a -> f m) -> l a -> f m
+concatMapM f = fmap fold . traverse f
 {-# INLINE concatMapM #-}
 
 -- | Like 'concatMapM', but has its arguments flipped, so can be used
 -- instead of the common @fmap concat $ forM@ pattern.
-concatForM :: (Applicative q, Monad m, Traversable m)
-           => m a
-           -> (a -> q (m b))
-           -> q (m b)
+concatForM
+    :: ( Applicative f
+       , Monoid m
+       , NontrivialContainer (l m)
+       , Traversable l
+       )
+    => l a -> (a -> f m) -> f m
 concatForM = flip concatMapM
 {-# INLINE concatForM #-}
 
