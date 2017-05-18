@@ -1,3 +1,9 @@
+0.4.2
+=====
+
+* [#25](https://github.com/serokell/universum/issues/25):
+  Add vararg functions composition operator (...).
+
 0.4.1
 =====
 

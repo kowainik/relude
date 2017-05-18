@@ -54,6 +54,7 @@ import           List                     as X
 import           Monad                    as X
 import           Print                    as X
 import           TypeOps                  as X
+import           VarArg                   as X
 
 import           Base                     as Base hiding (error, show, showFloat,
                                                    showList, showSigned, showSignedFloat,
