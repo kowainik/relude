@@ -38,6 +38,7 @@ library
     Print
     TypeOps
     Unsafe
+    VarArg
 
     Lifted
     Lifted.Concurrent
