@@ -87,6 +87,21 @@ import           Containers                      (Element, NontrivialContainer, 
 -- @
 --     concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
 -- @
+--
+-- Side note: previously it had type
+--
+-- @
+--     concatMapM :: (Applicative q, Monad m, Traversable m)
+--                => (a -> q (m b)) -> m a -> q (m b)
+-- @
+--
+-- Such signature didn't allow to use this function when traversed container
+-- type and type of returned by function-argument differed.
+-- Now you can use it like e.g.
+--
+-- @
+--     concatMapM readFile files >>= putStrLn
+-- @
 concatMapM
     :: ( Applicative f
        , Monoid m

@@ -3,6 +3,8 @@
 
 * [#25](https://github.com/serokell/universum/issues/25):
   Add vararg functions composition operator (...).
+* Rewrite `concatMapM` & `concatForM` so that they allow traversed
+  and returned-by-function container types differ.
 
 0.4.1
 =====
