@@ -1,3 +1,8 @@
+0.4.3
+=====
+
+* Assign associativity and priority to (...).
+
 0.4.2
 =====
 
