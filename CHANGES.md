@@ -1,7 +1,7 @@
 0.4.3
 =====
 
-* Assign associativity and priority to (...).
+* Assign associativity and priority to (...), export typeclass itself.
 
 0.4.2
 =====

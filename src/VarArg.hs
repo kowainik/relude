@@ -1,18 +1,17 @@
-{-# LANGUAGE FlexibleInstances         #-}
-{-# LANGUAGE FunctionalDependencies    #-}
-{-# LANGUAGE IncoherentInstances       #-}
-{-# LANGUAGE MultiParamTypeClasses     #-}
-{-# LANGUAGE NoMonomorphismRestriction #-}
-{-# LANGUAGE TypeFamilies              #-}
-{-# LANGUAGE UndecidableInstances      #-}
+{-# LANGUAGE FlexibleInstances      #-}
+{-# LANGUAGE FunctionalDependencies #-}
+{-# LANGUAGE IncoherentInstances    #-}
+{-# LANGUAGE MultiParamTypeClasses  #-}
+{-# LANGUAGE TypeFamilies           #-}
+{-# LANGUAGE UndecidableInstances   #-}
 
 -- | Provides operator of variable-arguments function composition.
 
 module VarArg
-    ( (...)
+    ( SuperComposition(..)
     ) where
 
-class Composition a b c | a b -> c where
+class SuperComposition a b c | a b -> c where
     -- | Allows to apply function to result of another function with multiple
     -- arguments.
     --
@@ -29,11 +28,11 @@ class Composition a b c | a b -> c where
 infixl 8 ...
 
 instance (a ~ c, r ~ b) =>
-         Composition (a -> b) c r where
+         SuperComposition (a -> b) c r where
     f ... g = f g
     {-# INLINE (...) #-}
 
-instance (Composition (a -> b) d r1, r ~ (c -> r1)) =>
-         Composition (a -> b) (c -> d) r where
+instance (SuperComposition (a -> b) d r1, r ~ (c -> r1)) =>
+         SuperComposition (a -> b) (c -> d) r where
     (f ... g) c = f ... g c
     {-# INLINE (...) #-}
