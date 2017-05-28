@@ -1,12 +1,12 @@
 name:                universum
-version:             0.4.2
+version:             0.4.3
 synopsis:            Custom prelude used in Serokell
 description:         Custom prelude used in Serokell
 homepage:            https://github.com/serokell/universum
 license:             MIT
 license-file:        LICENSE
-author:              Stephen Diehl
-maintainer:          hi@serokell.io
+author:              Stephen Diehl, @serokell
+maintainer:          Serokell <hi@serokell.io>
 copyright:           2016-2016 Stephen Diehl, 2016-2017 Serokell
 category:            Prelude
 build-type:          Simple
