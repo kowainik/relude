@@ -34,7 +34,7 @@ import           Control.Monad.Reader      (MonadReader, Reader, ReaderT (..), a
 import           Control.Monad.State       (MonadState, State, StateT (..), evalState,
                                             evalStateT, execState, execStateT, gets,
                                             modify, runState, state, withState)
-import           Control.Monad.Trans       (MonadIO, lift, liftIO)
+import           Control.Monad.Trans       (MonadIO, MonadTrans, lift, liftIO)
 import           Control.Monad.Trans.Maybe (MaybeT (..), exceptToMaybeT, maybeToExceptT)
 
 import           Prelude                   (Functor, flip, fst, snd, (<$>))

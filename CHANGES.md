@@ -1,3 +1,8 @@
+0.4.4
+=====
+
+* Export `MonadTrans` typeclass.
+
 0.4.3
 =====
 
