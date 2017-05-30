@@ -143,9 +143,7 @@ import           Data.Function            as X (const, fix, flip, on, ($), (.))
 import           GHC.Generics             as X (Generic)
 #if ( __GLASGOW_HASKELL__ >= 710 )
 import           GHC.TypeLits             as X (CmpNat, KnownNat, KnownSymbol, Nat,
-                                                SomeNat (..), SomeSymbol (..), Symbol,
-                                                natVal, someNatVal, someSymbolVal,
-                                                symbolVal)
+                                                SomeNat (..), natVal, someNatVal)
 #endif
 
 -- Buildable

@@ -2,6 +2,7 @@
 =====
 
 * Export `MonadTrans` typeclass.
+* Remove `Symbol`-related exports from `GHC.TypeLits`.
 
 0.4.3
 =====
