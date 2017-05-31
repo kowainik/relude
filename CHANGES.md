@@ -3,6 +3,7 @@
 
 * Export `MonadTrans` typeclass.
 * Remove `Symbol`-related exports from `GHC.TypeLits`.
+* Add `With` type operator.
 
 0.4.3
 =====
