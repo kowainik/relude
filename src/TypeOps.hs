@@ -18,6 +18,7 @@
 
 module TypeOps
        ( type Each
+       , type With
        , type ($)
        ) where
 
@@ -46,3 +47,13 @@ import           Control.Type.Operator (type ($), type (<+>))
 type family Each (c :: [k -> Constraint]) (as :: [k]) where
     Each c '[] = (() :: Constraint)
     Each c (h ': t) = (c <+> h, Each c t)
+
+-- | Map several constraints over a single variable.
+-- Note, that @With a b ≡ Each a '[b]@
+--
+-- @
+-- a :: With [Show, Read] a => a -> a
+-- =
+-- a :: (Show a, Read a) => a -> a
+-- @
+type With a b = a <+> b
