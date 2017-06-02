@@ -257,7 +257,7 @@ Finally, we can move to part describing what new cool features we bring with `un
 
   translates into this:
 
-  ```hakell
+  ```haskell
   a :: (Show a, Read a) => a -> a
   ```
 
