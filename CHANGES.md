@@ -1,9 +1,10 @@
-0.4.4
+0.5
 =====
 
 * Export `MonadTrans` typeclass.
 * Remove `Symbol`-related exports from `GHC.TypeLits`.
 * Add `With` type operator.
+* Add `hashNub`.
 
 0.4.3
 =====

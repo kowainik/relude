@@ -5,6 +5,7 @@
 
 module List
        ( list
+       , hashNub
        , ordNub
        , sortBy
        , sortOn
@@ -19,7 +20,10 @@ module List
        , zip3
        ) where
 
+import           Data.Eq             (Eq)
 import           Data.Functor        (fmap)
+import           Data.Hashable       (Hashable)
+import           Data.HashSet        as HS
 import           Data.List           (sortBy, sortOn, unzip, unzip3, zip, zip3)
 import           Data.Ord            (Ord)
 import qualified Data.Set            as Set
@@ -42,6 +46,16 @@ ordNub l = go Set.empty l
       if x `Set.member` s
       then go s xs
       else x : go (Set.insert x s) xs
+
+-- | Like 'Prelude.nub' but runs in @O(n * log_16(n))@ time and requires 'Hashable'.
+hashNub :: (Eq a, Hashable a) => [a] -> [a]
+hashNub l = go HS.empty l
+  where
+    go _ []     = []
+    go s (x:xs) =
+      if x `HS.member` s
+      then go s xs
+      else x : go (HS.insert x s) xs
 
 -- | Returns default list if given list is empty.
 -- Otherwise applies given function to every element.
