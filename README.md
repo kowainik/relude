@@ -203,7 +203,8 @@ What's new?
 Finally, we can move to part describing what new cool features we bring with `universum`.
 
 * `uncons` and `unsnoc` split a list at the first/last element.
-* `ordNub` is an _O(n log n)_ version of `nub` (which is quadratic).
+* `ordNub` is an _O(n log n)_ version of `nub` (which is quadratic) and `hashNub` is almost
+  an _O(n)_ version of `nub`.
 * `(&)` – reverse application. `x & f & g` instead of `g $ f $ x` is useful sometimes.
 * `pretty` and `prettyL` for converting `Buildable` into `Text` (can be used instead of `show`).
 * `whenM`, `unlessM`, `ifM`, `guardM` are available and do what you expect
@@ -246,6 +247,32 @@ Finally, we can move to part describing what new cool features we bring with `un
 
   ```haskell
   f :: (Show a, Show b, Read a, Read b) => a -> b -> String
+  ```
+
+* `With` type operator. So this:
+
+  ```haskell
+  a :: With [Show, Read] a => a -> a
+  ```
+
+  translates into this:
+
+  ```hakell
+  a :: (Show a, Read a) => a -> a
+  ```
+
+* Variadic composition operator `(...)`. So you can write:
+
+  ```haskell
+  ghci> (show ... (+)) 1 2
+  "3"
+  ghci> show ... 5
+  "5"
+  ghci> (null ... zip5) [1] [2] [3] [] [5]
+  True
+  ghci> let process = map (+3) ... filter
+  ghci> process even [1..5]
+  [5,7]
   ```
 
 * Conversions between `Either` and `Maybe` like `rightToMaybe` and `maybeToLeft`
