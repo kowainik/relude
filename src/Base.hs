@@ -44,11 +44,8 @@ import           GHC.Types            (Bool, Char, Coercible, IO, Int, Ordering,
 
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
+import           GHC.ExecutionStack   (getStackTrace, showStackTrace)
 import           GHC.OverloadedLabels (IsLabel (..))
-
-import           GHC.ExecutionStack   (Location (..), SrcLoc (..), getStackTrace,
-                                       showStackTrace)
-
 import           GHC.Stack            (CallStack, HasCallStack, callStack,
                                        currentCallStack, getCallStack, prettyCallStack,
                                        prettySrcLoc, withFrozenCallStack)

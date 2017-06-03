@@ -3,6 +3,7 @@
 
 * Export `MonadTrans` typeclass.
 * Remove `Symbol`-related exports from `GHC.TypeLits`.
+* Remove `SrcLoc` and `Location` reexports from `GHC.ExecutionStack`.
 * Add `With` type operator.
 * Add `hashNub`.
 
