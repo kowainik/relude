@@ -7,7 +7,7 @@ module Monad.Trans
          module Control.Monad.Catch
        , module Control.Monad.Except
        , module Control.Monad.Reader
-       , module Control.Monad.State
+       , module Control.Monad.State.Strict
        , module Control.Monad.Trans
        , module Control.Monad.Trans.Maybe
 
@@ -25,19 +25,19 @@ module Monad.Trans
        ) where
 
 -- Monad transformers
-import           Control.Monad.Catch       (MonadCatch (catch), MonadMask (..),
-                                            MonadThrow (throwM), bracket, bracket_,
-                                            catchAll, finally)
-import           Control.Monad.Except      (ExceptT (..), runExceptT)
-import           Control.Monad.Reader      (MonadReader, Reader, ReaderT (..), ask, asks,
-                                            local, reader, runReader)
-import           Control.Monad.State       (MonadState, State, StateT (..), evalState,
-                                            evalStateT, execState, execStateT, gets,
-                                            modify, runState, state, withState)
-import           Control.Monad.Trans       (MonadIO, MonadTrans, lift, liftIO)
-import           Control.Monad.Trans.Maybe (MaybeT (..), exceptToMaybeT, maybeToExceptT)
+import           Control.Monad.Catch        (MonadCatch (catch), MonadMask (..),
+                                             MonadThrow (throwM), bracket, bracket_,
+                                             catchAll, finally)
+import           Control.Monad.Except       (ExceptT (..), runExceptT)
+import           Control.Monad.Reader       (MonadReader, Reader, ReaderT (..), ask, asks,
+                                             local, reader, runReader)
+import           Control.Monad.State.Strict (MonadState, State, StateT (..), evalState,
+                                             evalStateT, execState, execStateT, gets,
+                                             modify, runState, state, withState)
+import           Control.Monad.Trans        (MonadIO, MonadTrans, lift, liftIO)
+import           Control.Monad.Trans.Maybe  (MaybeT (..), exceptToMaybeT, maybeToExceptT)
 
-import           Prelude                   (Functor, flip, fst, snd, (<$>))
+import           Prelude                    (Functor, flip, fst, snd, (<$>))
 
 -- | Shorter and more readable alias for @flip runReaderT@.
 usingReaderT :: r -> ReaderT r m a -> m a

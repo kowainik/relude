@@ -6,6 +6,7 @@
 * Remove `SrcLoc` and `Location` reexports from `GHC.ExecutionStack`.
 * Add `With` type operator.
 * Add `hashNub`.
+* Export strict `StateT` instead of lazy.
 
 0.4.3
 =====
