@@ -51,7 +51,7 @@ This tutorial doesn't cover the differences from `protolude`. Instead, it explai
 
 ### Main goals
 
-While creating and maintaining a custom prelude, we're following the following goals:
+While creating and maintaining a custom prelude, we are pursuing the following goals:
 
 1. Avoid all [partial functions](https://www.reddit.com/r/haskell/comments/5n51u3/why_are_partial_functions_as_in_head_tail_bad/).
    We like [total](http://mathworld.wolfram.com/TotalFunction.html) and exception-free functions.
