@@ -4,6 +4,8 @@
 
 module Monad.Either
        ( module Data.Either
+       , fromLeft
+       , fromRight
        , maybeToLeft
        , maybeToRight
        , leftToMaybe
@@ -22,6 +24,27 @@ import           Data.Function       (const)
 import           Data.Maybe          (Maybe (..), maybe)
 
 import           Applicative         (pass)
+
+
+-- | Extracts value from 'Left' or return given default value.
+--
+-- >>> fromLeft 0 (Left 3)
+-- 3
+-- >>> fromLeft 0 (Right 5)
+-- 0
+fromLeft :: a -> Either a b -> a
+fromLeft _ (Left a)  = a
+fromLeft a (Right _) = a
+
+-- | Extracts value from 'Right' or return given default value.
+--
+-- >>> fromRight 0 (Left 3)
+-- 0
+-- >>> fromRight 0 (Right 5)
+-- 5
+fromRight :: b -> Either a b -> b
+fromRight b (Left _)  = b
+fromRight _ (Right b) = b
 
 -- | Maps left part of 'Either' to 'Maybe'.
 --

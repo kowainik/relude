@@ -5,6 +5,8 @@
   Export boxed `Vector` type.
 * [#49](https://github.com/serokell/universum/issues/49):
   Export `IdentityT` and `runIdentityT`.
+* [#51](https://github.com/serokell/universum/issues/51):
+  Add `fromRight` and `fromLeft` that behave like `fromMaybe` but for `Either`.
 
 0.6.1
 =====
