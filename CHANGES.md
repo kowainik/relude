@@ -1,6 +1,8 @@
 0.7.0
 =====
 
+* [#48](https://github.com/serokell/universum/issues/48):
+  Export boxed `Vector` type.
 * [#49](https://github.com/serokell/universum/issues/49):
   Export `IdentityT` and `runIdentityT`.
 

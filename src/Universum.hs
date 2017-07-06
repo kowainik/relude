@@ -120,6 +120,7 @@ import           Data.Map.Strict          as X (Map)
 import           Data.Sequence            as X (Seq)
 import           Data.Set                 as X (Set)
 import           Data.Tuple               as X (curry, fst, snd, swap, uncurry)
+import           Data.Vector              as X (Vector)
 
 #if ( __GLASGOW_HASKELL__ >= 710 )
 import           Data.Proxy               as X (Proxy (..))
