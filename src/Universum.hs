@@ -133,8 +133,6 @@ import           Data.Bits                as X (xor)
 import           Data.Bool                as X (Bool (..), not, otherwise, (&&), (||))
 import           Data.Char                as X (chr)
 import           Data.Int                 as X (Int, Int16, Int32, Int64, Int8)
-import           Data.Maybe               as X (Maybe (..), catMaybes, fromMaybe, isJust,
-                                                isNothing, mapMaybe, maybe, maybeToList)
 import           Data.Word                as X (Word, Word16, Word32, Word64, Word8,
                                                 byteSwap16, byteSwap32, byteSwap64)
 

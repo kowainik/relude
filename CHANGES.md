@@ -7,6 +7,8 @@
   Export `IdentityT` and `runIdentityT`.
 * [#51](https://github.com/serokell/universum/issues/51):
   Add `fromRight` and `fromLeft` that behave like `fromMaybe` but for `Either`.
+* [#52](https://github.com/serokell/universum/issues/52):
+  Add `maybeToMonoid :: Monoid m => Maybe m -> m`.
 
 0.6.1
 =====
