@@ -1,10 +1,16 @@
+0.7.0
+=====
+
+* [#49](https://github.com/serokell/universum/issues/49):
+  Export `IdentityT` and `runIdentityT`.
+
 0.6.1
 =====
 
 * Fixed version number bug (it had 4 numbers).
 
 0.6.0.0
-=====
+=======
 
 * [#62](https://github.com/serokell/universum/issues/62):
   Export exceptions-related functions from 'safe-exceptions'.
@@ -15,7 +21,7 @@
 * Fix an infinite loop in `decodeUtf8` from `Text` to `ByteString.Lazy`.
 
 0.5
-=====
+===
 
 * Export `MonadTrans` typeclass.
 * Remove `Symbol`-related exports from `GHC.TypeLits`.
