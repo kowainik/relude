@@ -138,12 +138,8 @@ import           Data.Word                as X (Word, Word16, Word32, Word64, Wo
 
 import           Data.Function            as X (const, fix, flip, on, ($), (.))
 
--- Generics and type level magic
+-- Generics
 import           GHC.Generics             as X (Generic)
-#if ( __GLASGOW_HASKELL__ >= 710 )
-import           GHC.TypeLits             as X (CmpNat, KnownNat, KnownSymbol, Nat,
-                                                SomeNat (..), natVal, someNatVal)
-#endif
 
 -- Buildable
 import           Data.Text.Buildable      (Buildable (build))

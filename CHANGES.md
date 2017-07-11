@@ -9,6 +9,7 @@
   Add `fromRight` and `fromLeft` that behave like `fromMaybe` but for `Either`.
 * [#52](https://github.com/serokell/universum/issues/52):
   Add `maybeToMonoid :: Monoid m => Maybe m -> m`.
+* Remove `Symbol`-related types for sure.
 
 0.6.1
 =====

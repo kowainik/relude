@@ -37,9 +37,9 @@ import           GHC.Float            (Double (..), Float (..), Floating (..), s
 import           GHC.Num              (Integer, Num (..), subtract)
 import           GHC.Real             hiding ((%))
 import           GHC.Show             (Show (..))
-import           GHC.TypeLits         (CmpNat, KnownNat, KnownSymbol, Nat, SomeNat (..),
-                                       SomeSymbol (..), Symbol, natVal, someNatVal,
-                                       someSymbolVal, symbolVal)
+import           GHC.TypeLits         (CmpNat, KnownNat, Nat, SomeNat (..), natVal,
+                                       someNatVal)
+
 import           GHC.Types            (Bool, Char, Coercible, IO, Int, Ordering, Word)
 
 
