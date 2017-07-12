@@ -1,17 +1,24 @@
 {-# LANGUAGE Safe #-}
 
--- | Convenient commonly used and very helpful functions to work with 'Bool'.
+-- | Convenient commonly used and very helpful functions to work with
+-- 'Bool' and also with monads.
 
 module Bool
-       ( whenM
-       , unlessM
+       ( bool
+       , guard
+       , guarded
+       , guardM
        , ifM
-       , bool
+       , unless
+       , unlessM
+       , when
+       , whenM
        ) where
 
-import           Control.Monad (Monad, unless, when, (>>=))
-import           Data.Bool     (Bool)
-import           Data.Function (flip)
+import           Control.Applicative (Alternative (empty), pure)
+import           Control.Monad       (Monad, MonadPlus, guard, unless, when, (>>=))
+import           Data.Bool           (Bool)
+import           Data.Function       (flip)
 
 -- | Reversed version of @if-then-else@.
 --
@@ -52,8 +59,32 @@ unlessM p m = p >>= flip unless m
 -- True text
 ifM :: Monad m => m Bool -> m a -> m a -> m a
 ifM p x y = p >>= \b -> if b then x else y
+{-# INLINE ifM #-}
 
-{-
+-- | Version of 'guard' that takes verification function.
+-- Can be used in some similar way:
+-- @
+--     safeSum :: Int -> Int -> Maybe Int
+--     safeSum a b = do
+--         verifiedA <- guarded (>0) a
+--         verifiedB <- guarded (>0) b
+--         pure $ verifiedA + verifiedB
+-- @
+guarded :: Alternative f => (a -> Bool) -> a -> f a
+guarded p x = bool empty (pure x) (p x)
+{-# INLINE guarded #-}
+
+-- | Monadic version of 'guard'. Occasionally useful.
+-- Here some complex but real-life example:
+-- @
+--   findSomePath :: IO (Maybe FilePath)
+--
+--   somePath :: MaybeT IO FilePath
+--   somePath = do
+--       path <- MaybeT findSomePath
+--       guardM $ liftIO $ doesDirectoryExist path
+--       return path
+-- @
 guardM :: MonadPlus m => m Bool -> m ()
-guardM f = guard =<< f
--}
+guardM f = f >>= guard
+{-# INLINE guardM #-}

@@ -26,7 +26,6 @@ module Universum
        , evaluateNF_
        , evaluateWHNF
        , evaluateWHNF_
-       , guarded
        , identity
        , map
        , pretty
@@ -222,18 +221,6 @@ print = liftIO . Prelude.print
 -- Left "Prelude.read: no parse"
 readEither :: (ToString a, Read b) => a -> Either Text b
 readEither = X.first toText . Text.Read.readEither . X.toString
-
--- | Version of 'Prelude.guard' that takes verification function.
--- Can be used in some similar way:
--- @
---     safeSum :: Int -> Int -> Maybe Int
---     safeSum a b = do
---         verifiedA <- guarded (>0) a
---         verifiedB <- guarded (>0) b
---         pure $ verifiedA + verifiedB
--- @
-guarded :: (Alternative f) => (a -> Bool) -> a -> f a
-guarded p x = X.bool empty (pure x) (p x)
 
 -- | Generalized version of 'Prelude.show'.
 show :: (Show a, IsString b) => a -> b
