@@ -4,27 +4,31 @@
 -- | Utility functions to work with lists.
 
 module List
-       ( list
+       ( module Data.List
+
+       , list
        , hashNub
        , ordNub
-       , sortBy
-       , sortOn
        , sortWith
-       , unzip
-       , unzip3
 #if ( __GLASGOW_HASKELL__ >= 800 )
        , whenNotNull
        , whenNotNullM
 #endif
-       , zip
-       , zip3
        ) where
+
+import           Data.List           (break, cycle, drop, dropWhile, filter, genericDrop,
+                                      genericLength, genericReplicate, genericSplitAt,
+                                      genericTake, group, inits, intercalate, intersperse,
+                                      isPrefixOf, iterate, permutations, repeat,
+                                      replicate, reverse, scanl, scanr, sort, sortBy,
+                                      sortBy, sortOn, splitAt, subsequences, tails, take,
+                                      takeWhile, transpose, unfoldr, unzip, unzip3, zip,
+                                      zip3, zipWith)
 
 import           Data.Eq             (Eq)
 import           Data.Functor        (fmap)
 import           Data.Hashable       (Hashable)
 import           Data.HashSet        as HS
-import           Data.List           (sortBy, sortOn, unzip, unzip3, zip, zip3)
 import           Data.Ord            (Ord)
 import qualified Data.Set            as Set
 import           GHC.Exts            (sortWith)

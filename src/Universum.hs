@@ -106,15 +106,6 @@ import           Data.HashMap.Strict      as X (HashMap)
 import           Data.HashSet             as X (HashSet)
 import           Data.IntMap.Strict       as X (IntMap)
 import           Data.IntSet              as X (IntSet)
-import           Data.List                as X (break, cycle, drop, dropWhile, filter,
-                                                genericDrop, genericLength,
-                                                genericReplicate, genericSplitAt,
-                                                genericTake, group, inits, intercalate,
-                                                intersperse, isPrefixOf, iterate,
-                                                permutations, repeat, replicate, reverse,
-                                                scanl, scanr, sort, sortBy, splitAt,
-                                                subsequences, tails, take, takeWhile,
-                                                transpose, unfoldr, zip, zipWith)
 import           Data.Map.Strict          as X (Map)
 import           Data.Sequence            as X (Seq)
 import           Data.Set                 as X (Set)

@@ -11,6 +11,7 @@
   Add `maybeToMonoid :: Monoid m => Maybe m -> m`.
 * Remove `Symbol`-related types for sure.
 * Return back seems to be useful function `guardM` removed in `0.3`.
+* Add `notElem` for `NonTrivialContainer`.
 
 0.6.1
 =====
