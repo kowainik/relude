@@ -1,3 +1,8 @@
+next
+====
+
+* Fix an infinite loop in `decodeUtf8`.
+
 0.5
 =====
 

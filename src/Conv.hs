@@ -73,7 +73,7 @@ instance ConvertUtf8 String LB.ByteString where
 
 instance ConvertUtf8 T.Text LB.ByteString where
     encodeUtf8 = LB.fromStrict . T.encodeUtf8
-    decodeUtf8 = decodeUtf8
+    decodeUtf8 = T.decodeUtf8With T.lenientDecode . LB.toStrict
     decodeUtf8Strict = T.decodeUtf8' . LB.toStrict
 
 instance ConvertUtf8 LT.Text LB.ByteString where
