@@ -1,7 +1,7 @@
-next
-====
+0.5.1
+=====
 
-* Fix an infinite loop in `decodeUtf8`.
+* Fix an infinite loop in `decodeUtf8` from `Text` to `ByteString.Lazy`.
 
 0.5
 =====
