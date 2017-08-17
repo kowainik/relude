@@ -3,6 +3,7 @@ Universum
 
 [![Build Status](https://travis-ci.org/serokell/universum.svg?branch=master)](https://travis-ci.org/serokell/universum)
 [![Hackage](https://img.shields.io/hackage/v/universum.svg)](https://hackage.haskell.org/package/universum)
+[![universum](http://stackage.org/package/universum/badge/nightly)](http://stackage.org/nightly/package/universum)
 
 A custom prelude used in Serokell.
 
