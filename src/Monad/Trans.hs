@@ -4,8 +4,7 @@
 
 module Monad.Trans
        ( -- * Reexports from @Control.Monad.*@
-         module Control.Monad.Catch
-       , module Control.Monad.Except
+         module Control.Monad.Except
        , module Control.Monad.Reader
        , module Control.Monad.State.Strict
        , module Control.Monad.Trans
@@ -25,9 +24,6 @@ module Monad.Trans
        ) where
 
 -- Monad transformers
-import           Control.Monad.Catch        (MonadCatch (catch), MonadMask (..),
-                                             MonadThrow (throwM), bracket, bracket_,
-                                             catchAll, finally)
 import           Control.Monad.Except       (ExceptT (..), runExceptT)
 import           Control.Monad.Reader       (MonadReader, Reader, ReaderT (..), ask, asks,
                                              local, reader, runReader)
