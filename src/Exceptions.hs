@@ -2,18 +2,21 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Safe                  #-}
 
--- | Some functions to work with exceptions over 'MonadError'.
+-- | Re-exports most useful functionality from 'safe-exceptions'. Also
+-- provides some functions to work with exceptions over 'MonadError'.
 
 module Exceptions
-       ( Exception
-       , SomeException (..)
+       ( module Control.Exception.Safe
+
        , note
        ) where
 
-import           Control.Applicative  (Applicative (pure))
-import           Control.Exception    (Exception, SomeException (..))
-import           Control.Monad.Except (MonadError, throwError)
-import           Data.Maybe           (Maybe, maybe)
+import           Control.Applicative    (Applicative (pure))
+import           Control.Exception.Safe (Exception, MonadCatch, MonadMask (..),
+                                         MonadThrow, SomeException (..), bracket,
+                                         bracket_, catch, catchAny, finally, throwM)
+import           Control.Monad.Except   (MonadError, throwError)
+import           Data.Maybe             (Maybe, maybe)
 
 -- To suppress redundant applicative constraint warning on GHC 8.0
 -- | Throws error for 'Maybe' if 'Data.Maybe.Nothing' is given.

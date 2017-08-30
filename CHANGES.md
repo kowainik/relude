@@ -1,3 +1,9 @@
+0.6.0
+=====
+
+* [#62](https://github.com/serokell/universum/issues/62):
+  Export exceptions-related functions from 'safe-exceptions'.
+
 0.5.1
 =====
 
