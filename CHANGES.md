@@ -1,4 +1,9 @@
-0.6.0
+0.6.1
+=====
+
+* Fixed version number bug (it had 4 numbers).
+
+0.6.0.0
 =====
 
 * [#62](https://github.com/serokell/universum/issues/62):
