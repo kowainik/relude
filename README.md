@@ -195,6 +195,12 @@ if you accidentally leave them in code, however (same for `undefined`).
 
 We also have `data Undefined = Undefined` (which, too, comes with warnings).
 
+### Exceptions
+
+We use [`safe-exceptions`](https://github.com/fpco/safe-exceptions)
+library for exceptions handling. Don't export `Control.Exceptions`
+module explicitly. Instead use functionality from `safe-exceptions`
+provided by `universum` or import `Control.Exceptions.Safe` module.
 
 What's new?
 -----------
