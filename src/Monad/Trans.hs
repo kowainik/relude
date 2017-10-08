@@ -29,8 +29,9 @@ import           Control.Monad.Except         (ExceptT (..), runExceptT)
 import           Control.Monad.Reader         (MonadReader, Reader, ReaderT (..), ask,
                                                asks, local, reader, runReader)
 import           Control.Monad.State.Strict   (MonadState, State, StateT (..), evalState,
-                                               evalStateT, execState, execStateT, gets,
-                                               modify, runState, state, withState)
+                                               evalStateT, execState, execStateT, get,
+                                               gets, modify, put, runState, state,
+                                               withState)
 import           Control.Monad.Trans          (MonadIO, MonadTrans, lift, liftIO)
 import           Control.Monad.Trans.Identity (IdentityT (runIdentityT))
 import           Control.Monad.Trans.Maybe    (MaybeT (..), exceptToMaybeT,
