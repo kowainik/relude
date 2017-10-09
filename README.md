@@ -35,7 +35,7 @@ Why another custom Prelude?
 In [Serokell](https://github.com/serokell/),  we want to be as much productive as possible.
 That's why we are using [_Haskell_](https://haskell-lang.org/). This choice of language implies
 that we're restricted to use [`Prelude`](http://hackage.haskell.org/package/base-4.9.1.0/docs/Prelude.html):
-implicit import of basic functions, type classes and data type. But the default `Prelude`
+implicit import of basic functions, type classes and data types. But the default `Prelude`
 [is considered to be not so good](https://news.ycombinator.com/item?id=8002749)
 due to some historical reasons.
 
@@ -163,8 +163,6 @@ Then, some commonly used types: `Map/HashMap/IntMap`, `Set/HashSet/IntSet`, `Seq
 you can write `evaluateNF a`. WHNF evaluation is possible with `evaluateWHNF a`.
 
 We also reexport big chunks of these libraries: `mtl`, `stm`, `safe`, `microlens`, `microlens-mtl`.
-
-However, `put` and `get` (for `MonadState`) are clashing with `Binary` so they're not exported.
 
 More precisely about functions from [`safe`](https://hackage.haskell.org/package/safe):
 we bring into scope safe variants of common list/`Maybe` functions from base.
