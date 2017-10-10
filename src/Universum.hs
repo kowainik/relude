@@ -26,7 +26,6 @@ module Universum
        , evaluateNF_
        , evaluateWHNF
        , evaluateWHNF_
-       , guarded
        , identity
        , map
        , pretty
@@ -107,19 +106,11 @@ import           Data.HashMap.Strict      as X (HashMap)
 import           Data.HashSet             as X (HashSet)
 import           Data.IntMap.Strict       as X (IntMap)
 import           Data.IntSet              as X (IntSet)
-import           Data.List                as X (break, cycle, drop, dropWhile, filter,
-                                                genericDrop, genericLength,
-                                                genericReplicate, genericSplitAt,
-                                                genericTake, group, inits, intercalate,
-                                                intersperse, isPrefixOf, iterate,
-                                                permutations, repeat, replicate, reverse,
-                                                scanl, scanr, sort, sortBy, splitAt,
-                                                subsequences, tails, take, takeWhile,
-                                                transpose, unfoldr, zip, zipWith)
 import           Data.Map.Strict          as X (Map)
 import           Data.Sequence            as X (Seq)
 import           Data.Set                 as X (Set)
 import           Data.Tuple               as X (curry, fst, snd, swap, uncurry)
+import           Data.Vector              as X (Vector)
 
 #if ( __GLASGOW_HASKELL__ >= 710 )
 import           Data.Proxy               as X (Proxy (..))
@@ -132,19 +123,13 @@ import           Data.Bits                as X (xor)
 import           Data.Bool                as X (Bool (..), not, otherwise, (&&), (||))
 import           Data.Char                as X (chr)
 import           Data.Int                 as X (Int, Int16, Int32, Int64, Int8)
-import           Data.Maybe               as X (Maybe (..), catMaybes, fromMaybe, isJust,
-                                                isNothing, mapMaybe, maybe, maybeToList)
 import           Data.Word                as X (Word, Word16, Word32, Word64, Word8,
                                                 byteSwap16, byteSwap32, byteSwap64)
 
 import           Data.Function            as X (const, fix, flip, on, ($), (.))
 
--- Generics and type level magic
+-- Generics
 import           GHC.Generics             as X (Generic)
-#if ( __GLASGOW_HASKELL__ >= 710 )
-import           GHC.TypeLits             as X (CmpNat, KnownNat, KnownSymbol, Nat,
-                                                SomeNat (..), natVal, someNatVal)
-#endif
 
 -- Buildable
 import           Data.Text.Buildable      (Buildable (build))
@@ -227,18 +212,6 @@ print = liftIO . Prelude.print
 -- Left "Prelude.read: no parse"
 readEither :: (ToString a, Read b) => a -> Either Text b
 readEither = X.first toText . Text.Read.readEither . X.toString
-
--- | Version of 'Prelude.guard' that takes verification function.
--- Can be used in some similar way:
--- @
---     safeSum :: Int -> Int -> Maybe Int
---     safeSum a b = do
---         verifiedA <- guarded (>0) a
---         verifiedB <- guarded (>0) b
---         pure $ verifiedA + verifiedB
--- @
-guarded :: (Alternative f) => (a -> Bool) -> a -> f a
-guarded p x = X.bool empty (pure x) (p x)
 
 -- | Generalized version of 'Prelude.show'.
 show :: (Show a, IsString b) => a -> b

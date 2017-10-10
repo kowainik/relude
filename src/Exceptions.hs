@@ -11,10 +11,12 @@ module Exceptions
        , note
        ) where
 
-import           Control.Applicative    (Applicative (pure))
+-- exceptions from safe-exceptions
 import           Control.Exception.Safe (Exception, MonadCatch, MonadMask (..),
                                          MonadThrow, SomeException (..), bracket,
                                          bracket_, catch, catchAny, finally, throwM)
+
+import           Control.Applicative    (Applicative (pure))
 import           Control.Monad.Except   (MonadError, throwError)
 import           Data.Maybe             (Maybe, maybe)
 

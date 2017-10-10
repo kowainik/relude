@@ -1,15 +1,20 @@
 {-# LANGUAGE Safe #-}
 
--- | Convenient commonly used and very helpful functions to work with 'Bool'.
+-- | Convenient commonly used and very helpful functions to work with
+-- 'Bool' and also with monads.
 
 module Bool
-       ( whenM
-       , unlessM
+       ( bool
+       , guard
+       , guardM
        , ifM
-       , bool
+       , unless
+       , unlessM
+       , when
+       , whenM
        ) where
 
-import           Control.Monad (Monad, unless, when, (>>=))
+import           Control.Monad (Monad, MonadPlus, guard, unless, when, (>>=))
 import           Data.Bool     (Bool)
 import           Data.Function (flip)
 
@@ -52,8 +57,19 @@ unlessM p m = p >>= flip unless m
 -- True text
 ifM :: Monad m => m Bool -> m a -> m a -> m a
 ifM p x y = p >>= \b -> if b then x else y
+{-# INLINE ifM #-}
 
-{-
+-- | Monadic version of 'guard'. Occasionally useful.
+-- Here some complex but real-life example:
+-- @
+--   findSomePath :: IO (Maybe FilePath)
+--
+--   somePath :: MaybeT IO FilePath
+--   somePath = do
+--       path <- MaybeT findSomePath
+--       guardM $ liftIO $ doesDirectoryExist path
+--       return path
+-- @
 guardM :: MonadPlus m => m Bool -> m ()
-guardM f = guard =<< f
--}
+guardM f = f >>= guard
+{-# INLINE guardM #-}

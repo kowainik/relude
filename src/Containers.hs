@@ -206,6 +206,9 @@ class Container t => NontrivialContainer t where
 
   elem :: Eq (Element t) => Element t -> t -> Bool
 
+  notElem :: Eq (Element t) => Element t -> t -> Bool
+  notElem x = not . elem x
+
   maximum :: Ord (Element t) => t -> Element t
   minimum :: Ord (Element t) => t -> Element t
 
@@ -247,6 +250,8 @@ instance {-# OVERLAPPABLE #-} Foldable f => NontrivialContainer (f a) where
   {-# INLINE length #-}
   elem = F.elem
   {-# INLINE elem #-}
+  notElem = F.notElem
+  {-# INLINE notElem #-}
   maximum = F.maximum
   {-# INLINE maximum #-}
   minimum = F.minimum
@@ -334,6 +339,8 @@ instance NontrivialContainer BS.ByteString where
   {-# INLINE length #-}
   elem = BS.elem
   {-# INLINE elem #-}
+  notElem = BS.notElem
+  {-# INLINE notElem #-}
   maximum = BS.maximum
   {-# INLINE maximum #-}
   minimum = BS.minimum
@@ -362,6 +369,8 @@ instance NontrivialContainer BSL.ByteString where
   {-# INLINE length #-}
   elem = BSL.elem
   {-# INLINE elem #-}
+  notElem = BSL.notElem
+  {-# INLINE notElem #-}
   maximum = BSL.maximum
   {-# INLINE maximum #-}
   minimum = BSL.minimum

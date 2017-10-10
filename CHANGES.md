@@ -1,10 +1,25 @@
+0.7.0
+=====
+
+* [#48](https://github.com/serokell/universum/issues/48):
+  Export boxed `Vector` type.
+* [#49](https://github.com/serokell/universum/issues/49):
+  Export `IdentityT` and `runIdentityT`.
+* [#51](https://github.com/serokell/universum/issues/51):
+  Add `fromRight` and `fromLeft` that behave like `fromMaybe` but for `Either`.
+* [#52](https://github.com/serokell/universum/issues/52):
+  Add `maybeToMonoid :: Monoid m => Maybe m -> m`.
+* Remove `Symbol`-related types for sure.
+* Return back seems to be useful function `guardM` removed in `v0.3`.
+* Add `notElem` for `NonTrivialContainer`.
+
 0.6.1
 =====
 
 * Fixed version number bug (it had 4 numbers).
 
 0.6.0.0
-=====
+=======
 
 * [#62](https://github.com/serokell/universum/issues/62):
   Export exceptions-related functions from 'safe-exceptions'.
@@ -15,7 +30,7 @@
 * Fix an infinite loop in `decodeUtf8` from `Text` to `ByteString.Lazy`.
 
 0.5
-=====
+===
 
 * Export `MonadTrans` typeclass.
 * Remove `Symbol`-related exports from `GHC.TypeLits`.

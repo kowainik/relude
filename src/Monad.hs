@@ -32,10 +32,6 @@ module Monad
        , concatMapM
        , concatForM
 
-       , guard
-       , when
-       , unless
-
        , allM
        , anyM
        , andM
