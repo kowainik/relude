@@ -6,7 +6,6 @@
 module Bool
        ( bool
        , guard
-       , guarded
        , guardM
        , ifM
        , unless
@@ -15,10 +14,9 @@ module Bool
        , whenM
        ) where
 
-import           Control.Applicative (Alternative (empty), pure)
-import           Control.Monad       (Monad, MonadPlus, guard, unless, when, (>>=))
-import           Data.Bool           (Bool)
-import           Data.Function       (flip)
+import           Control.Monad (Monad, MonadPlus, guard, unless, when, (>>=))
+import           Data.Bool     (Bool)
+import           Data.Function (flip)
 
 -- | Reversed version of @if-then-else@.
 --
@@ -60,19 +58,6 @@ unlessM p m = p >>= flip unless m
 ifM :: Monad m => m Bool -> m a -> m a -> m a
 ifM p x y = p >>= \b -> if b then x else y
 {-# INLINE ifM #-}
-
--- | Version of 'guard' that takes verification function.
--- Can be used in some similar way:
--- @
---     safeSum :: Int -> Int -> Maybe Int
---     safeSum a b = do
---         verifiedA <- guarded (>0) a
---         verifiedB <- guarded (>0) b
---         pure $ verifiedA + verifiedB
--- @
-guarded :: Alternative f => (a -> Bool) -> a -> f a
-guarded p x = bool empty (pure x) (p x)
-{-# INLINE guarded #-}
 
 -- | Monadic version of 'guard'. Occasionally useful.
 -- Here some complex but real-life example:
