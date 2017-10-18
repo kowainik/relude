@@ -97,6 +97,8 @@ benchmark universum-benchmark
     universum,
     containers            >= 0.5    && <0.6,
     criterion,
+    deepseq,
     hashable,
     semigroups,
+    text                  >= 1.2    && <1.3,
     unordered-containers

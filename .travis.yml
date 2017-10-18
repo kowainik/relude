@@ -51,7 +51,7 @@ install:
   - stack -j 2 build --only-snapshot --no-terminal
 
 script:
-  - stack -j 2 build --haddock --no-terminal
+  - stack -j 2 build --bench --no-run-benchmarks --haddock --no-terminal
 
 notifications:
   email: false
