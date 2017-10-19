@@ -105,6 +105,7 @@ bgroupSuperComposition = bgroup "(...)"
   , bgroup "5arg"  [ bench "super" $ nf (\x -> super5arg x x x x x) [()]
                    , bench "norm"  $ nf (\x -> norm5args x x x x x) [()]
                    , bench "unty"  $ nf (\x -> unty5args x x x x x) [()]
+                   , bench "line"  $ nf (\x -> line5args x x x x x) [()]
                    ]
   ]
  where
@@ -122,6 +123,9 @@ bgroupSuperComposition = bgroup "(...)"
   super5arg = super10 ... map fst5 ... zip5
 
   unty5args = super10 ... map fst5 ... zip5
+
+  line5args = super10 ... map fst5 ... zip5
+  {-# INLINE line5args #-}
 
   norm5args :: [()] -> [()] -> [()] -> [()] -> [()] -> Bool
   norm5args a b c d = norm10 . map fst5 . zip5 a b c d
