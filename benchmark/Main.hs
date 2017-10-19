@@ -102,6 +102,10 @@ bgroupSuperComposition = bgroup "(...)"
   , bgroup "10x"   [ bench "super" $ nf super10 [()]
                    , bench "norm"  $ nf norm10  [()]
                    ]
+  , bgroup "5arg"  [ bench "super" $ nf (\x -> super5arg x x x x x) [()]
+                   , bench "norm"  $ nf (\x -> norm5args x x x x x) [()]
+                   , bench "unty"  $ nf (\x -> unty5args x x x x x) [()]
+                   ]
   ]
  where
   super10 = null
@@ -113,3 +117,14 @@ bgroupSuperComposition = bgroup "(...)"
          . (: []) . head . pure . head
          . (: [(), (), (), ()]) . head . (: []) . head
          . (: [()]) . head . (: [(), ()]) . head
+
+  super5arg :: [()] -> [()] -> [()] -> [()] -> [()] -> Bool
+  super5arg = super10 ... map fst5 ... zip5
+
+  unty5args = super10 ... map fst5 ... zip5
+
+  norm5args :: [()] -> [()] -> [()] -> [()] -> [()] -> Bool
+  norm5args a b c d = norm10 . map fst5 . zip5 a b c d
+
+  fst5 :: (a,b,c,d,e) -> a
+  fst5 (a, _, _, _, _) = a
