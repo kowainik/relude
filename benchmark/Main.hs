@@ -1,18 +1,20 @@
 {-# LANGUAGE ExplicitForAll      #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-import           Control.DeepSeq    (NFData)
-import           Criterion.Main     (Benchmark, bench, bgroup, defaultMain, nf)
-import           Data.Hashable      (Hashable)
-import qualified Data.HashSet       as HSet
-import           Data.List          (group, head, nub, sort, zip5)
-import qualified Data.List.NonEmpty as NonEmpty
-import qualified Data.Set           as Set
-import           Data.Text          (Text)
-import qualified Data.Text          as T
+import           Control.DeepSeq        (NFData)
+import           Control.Monad.Identity (Identity (..))
+import           Criterion.Main         (Benchmark, bench, bgroup, defaultMain, nf)
+import           Data.Hashable          (Hashable)
+import qualified Data.HashSet           as HSet
+import           Data.List              (group, head, nub, sort, zip5)
+import qualified Data.List.NonEmpty     as NonEmpty
+import qualified Data.Set               as Set
+import           Data.Text              (Text)
+import qualified Data.Text              as T
 
-import           List               (hashNub, ordNub)
-import           VarArg             ((...))
+import           List                   (hashNub, ordNub)
+import           Monad                  (concatMapM)
+import           VarArg                 ((...))
 
 main :: IO ()
 main = defaultMain
@@ -21,6 +23,7 @@ main = defaultMain
   , bgroupList (nStrings 'z') "small str"
   , bgroupList (nStrings 'c') "big str"
   , bgroupSuperComposition
+  , bgroupConcatMap
   ]
 
 bgroupList :: forall a .
@@ -90,14 +93,14 @@ nStrings ch n = take n $ map T.pack $ allStrings ch
 
 bgroupSuperComposition :: Benchmark
 bgroupSuperComposition = bgroup "(...)"
-  [ bgroup "show+" [ bench "super" $ nf (show ... (+) 1) (2 :: Int)
-                   , bench "norm"  $ nf (show . ((+) 1)) (2 :: Int)
+  [ bgroup "show+" [ bench "super" $ nf (show ... (+ 1)) (2 :: Int)
+                   , bench "norm"  $ nf (show  .  (+ 1)) (2 :: Int)
                    ]
   , bgroup "show"  [ bench "super" $ nf (show ...) (5 :: Int)
                    , bench "norm"  $ nf show       (5 :: Int)
                    ]
   , bgroup "zip5"  [ bench "super" $ nf ((null ... zip5) [()] [()] [()] []) [()]
-                   , bench "norm"  $ nf (null . (zip5 [()] [()] [()] []) )  [()]
+                   , bench "norm"  $ nf (null   .  zip5  [()] [()] [()] []) [()]
                    ]
   , bgroup "10x"   [ bench "super" $ nf super10 [()]
                    , bench "norm"  $ nf norm10  [()]
@@ -132,3 +135,22 @@ bgroupSuperComposition = bgroup "(...)"
 
   fst5 :: (a,b,c,d,e) -> a
   fst5 (a, _, _, _, _) = a
+
+bgroupConcatMap :: Benchmark
+bgroupConcatMap = bgroup "concat"
+  [ concatGroup 10
+  , concatGroup 100
+  , concatGroup 1000
+  ]
+ where
+  concatGroup :: Int -> Benchmark
+  concatGroup n = bgroup (show n)
+    [ bench "simple"   $ nf concatSimple n
+    , bench "identity" $ nf concatIdentity n
+    ]
+
+  concatSimple :: Int -> [()]
+  concatSimple n = concatMap pure $ replicate n ()
+
+  concatIdentity :: Int -> Identity [()]
+  concatIdentity n = concatMapM (Identity . pure) $ replicate n ()

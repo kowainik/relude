@@ -99,6 +99,7 @@ benchmark universum-benchmark
     criterion,
     deepseq,
     hashable,
+    mtl,
     semigroups,
     text                  >= 1.2    && <1.3,
     unordered-containers
