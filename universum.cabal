@@ -13,78 +13,72 @@ stability:           well...
 build-type:          Simple
 extra-source-files:  CHANGES.md
 cabal-version:       >=1.10
-Bug-Reports:         https://github.com/serokell/universum/issues
-tested-with:
-  GHC == 7.10.3,
-  GHC == 8.0.1,
-  GHC == 8.0.2,
-  GHC == 8.2.1
+bug-reports:         https://github.com/serokell/universum/issues
+tested-with:         GHC == 7.10.3
+                   , GHC == 8.0.1
+                   , GHC == 8.0.2
+                   , GHC == 8.2.1
 
-Source-Repository head
-    type: git
-    location: git@github.com:serokell/universum.git
+source-repository head
+  type:     git
+  location: git@github.com:serokell/universum.git
 
 library
-  exposed-modules:
-    Universum
-
-    Applicative
-    Base
-    Bool
-    Containers
-    Conv
-    Debug
-    Exceptions
-    Functor
-    List
-    Print
-    TypeOps
-    Unsafe
-    VarArg
-
-    Lifted
-    Lifted.Concurrent
-    Lifted.Env
-    Lifted.File
-    Lifted.IORef
-
-    Monad
-    Monad.Either
-    Monad.Maybe
-    Monad.Trans
-
-  default-extensions:
-    NoImplicitPrelude
-    OverloadedStrings
-
-  ghc-options:
-    -Wall
-    -fwarn-implicit-prelude
-
-  build-depends:
-    base                  >= 4.7    && <4.11,
-    bytestring            >= 0.10   && <0.11,
-    containers            >= 0.5    && <0.6,
-    deepseq               >= 1.3    && <1.5,
-    exceptions,
-    ghc-prim              >= 0.3    && <0.6,
-    hashable,
-    microlens             >= 0.4    && <0.5,
-    microlens-mtl         >= 0.1.7  && <0.2,
-    mtl                   >= 2.1    && <2.3,
-    safe                  >= 0.3    && <0.4,
-    safe-exceptions,
-    stm                   >= 2.4    && <2.5,
-    text                  >= 1.2    && <1.3,
-    text-format,
-    transformers          >= 0.4    && <0.6,
-    type-operators        == 0.1.0.4,
-    unordered-containers,
-    utf8-string           >= 1.0    && <1.1,
-    vector
-
   hs-source-dirs:      src
+  exposed-modules:
+                       Universum
+
+                       Applicative
+                       Base
+                       Bool
+                       Containers
+                       Conv
+                       Debug
+                       Exceptions
+                       Functor
+                       List
+                       Print
+                       TypeOps
+                       Unsafe
+                       VarArg
+
+                       Lifted
+                         Lifted.Concurrent
+                         Lifted.Env
+                         Lifted.File
+                         Lifted.IORef
+
+                       Monad
+                         Monad.Either
+                         Monad.Maybe
+                         Monad.Trans
+
+  ghc-options:         -Wall -fwarn-implicit-prelude
+
+  build-depends:       base
+                     , bytestring
+                     , containers
+                     , deepseq
+                     , exceptions
+                     , ghc-prim
+                     , hashable
+                     , microlens
+                     , microlens-mtl
+                     , mtl
+                     , safe
+                     , safe-exceptions
+                     , stm
+                     , text
+                     , text-format
+                     , transformers
+                     , type-operators
+                     , unordered-containers
+                     , utf8-string
+                     , vector
+
   default-language:    Haskell2010
+  default-extensions:  NoImplicitPrelude
+                       OverloadedStrings
 
 benchmark universum-benchmark
   type:                exitcode-stdio-1.0
@@ -92,14 +86,13 @@ benchmark universum-benchmark
   ghc-options:         -Wall -O2 -threaded -rtsopts -with-rtsopts=-N
   hs-source-dirs:      benchmark
   main-is:             Main.hs
-  build-depends:
-    base                  >= 4.7    && <4.11,
-    universum,
-    containers            >= 0.5    && <0.6,
-    criterion,
-    deepseq,
-    hashable,
-    mtl,
-    semigroups,
-    text                  >= 1.2    && <1.3,
-    unordered-containers
+  build-depends:       base
+                     , universum
+                     , containers
+                     , criterion
+                     , deepseq
+                     , hashable
+                     , mtl
+                     , semigroups
+                     , text
+                     , unordered-containers
