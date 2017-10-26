@@ -1,3 +1,15 @@
+0.7.1
+=====
+
+* [#68](https://github.com/serokell/universum/issues/68):
+  Separate all 'nub' functions to `Nub` module, add `sortNub` and `unstableNub` there.
+* [#54](https://github.com/serokell/universum/issues/54):
+  Reorganize .cabal.
+* [#21](https://github.com/serokell/universum/issues/21):
+  Add benchmarks.
+* [#65](https://github.com/serokell/universum/issues/65):
+  Use `TypeNats` instead of `TypeLits` when possible.
+
 0.7.0
 =====
 
