@@ -1,4 +1,4 @@
-{-| Functions to remove dublicates from a list.
+{-| Functions to remove duplicates from a list.
 
  = Performance
  To check the performance there was done a bunch of benchmarks.
@@ -18,7 +18,7 @@
 
  * 'sortNub' has better performance than 'ordNub' but should be used when sorting is also needed.
 
- * 'unstableNub' has better performance than 'hashNub'.
+ * 'unstableNub' has better performance than 'hashNub' but doesn't save the original order.
 -}
 
 module Nub
@@ -37,8 +37,8 @@ import           Prelude       ((.))
 
 -- | Like 'Prelude.nub' but runs in @O(n * log n)@ time and requires 'Ord'.
 --
--- >>> ordNub [3, 3, 3, 2, 2, 1]
--- [3, 2, 1]
+-- >>> ordNub [3, 3, 3, 2, 2, -1, 1]
+-- [3, 2, -1, 1]
 ordNub :: (Ord a) => [a] -> [a]
 ordNub = go Set.empty
   where
@@ -49,6 +49,9 @@ ordNub = go Set.empty
       else x : go (Set.insert x s) xs
 
 -- | Like 'Prelude.nub' but runs in @O(n * log_16(n))@ time and requires 'Hashable'.
+--
+-- >>> hashNub [3, 3, 3, 2, 2, -1, 1]
+-- [3, 2, -1, 1]
 hashNub :: (Eq a, Hashable a) => [a] -> [a]
 hashNub = go HashSet.empty
   where
@@ -60,11 +63,14 @@ hashNub = go HashSet.empty
 
 -- | Like 'ordNub' but also sorts a list.
 --
--- >>> sortNub [3, 3, 3, 2, 2, 1]
--- [1, 2, 3]
+-- >>> sortNub [3, 3, 3, 2, 2, -1, 1]
+-- [-1, 1, 2, 3]
 sortNub :: (Ord a) => [a] -> [a]
 sortNub = Set.toList . Set.fromList
 
 -- | Like 'hashNub' but has better performance and also doesn't save the order.
+--
+-- >>> unstableNub [3, 3, 3, 2, 2, -1, 1]
+-- [1, 2, 3, -1]
 unstableNub :: (Eq a, Hashable a) => [a] -> [a]
 unstableNub = HashSet.toList . HashSet.fromList
