@@ -1,4 +1,25 @@
--- | Functions to remove dublicates from a list.
+{-| Functions to remove dublicates from a list.
+
+ = Performance
+ To check the performance there was done a bunch of benchmarks.
+ Benchmarks were made on lists of 'Prelude.Int's and 'Data.Text.Text's.
+ There were two types of list to use:
+
+ * Lists which consist of many different elements
+
+ * Lists which consist of many same elements
+
+
+ Here are some recomendations for usage of particular functions based on benchmarking resutls.
+
+ * 'hashNub' is faster than 'ordNub' when there're not so many different values in the list.
+
+ * 'hashNub' is the fastest with 'Data.Text.Text'.
+
+ * 'sortNub' has better performance than 'ordNub' but should be used when sorting is also needed.
+
+ * 'unstableNub' has better performance than 'hashNub'.
+-}
 
 module Nub
        ( hashNub
@@ -47,18 +68,3 @@ sortNub = Set.toList . Set.fromList
 -- | Like 'hashNub' but has better performance and also doesn't save the order.
 unstableNub :: (Eq a, Hashable a) => [a] -> [a]
 unstableNub = HashSet.toList . HashSet.fromList
-
--- * Performance
-{-|
- Here are recomendations of usage of particular functions based on benchmarking resutls.
- Benchmarks were made on lists of 'Prelude.Int's and 'Data.Text.Text's.
-
- * 'hashNub' is faster than 'ordNub' when there're not so many different values in the list.
-
- * 'hashNub' is the fastest with 'Data.Text.Text'.
-
- * 'sortNub' has better performance than 'ordNub' but should be used when sorting is also needed.
-
- * 'unstableNub' has better performance than 'hashNub'.
-
--}
