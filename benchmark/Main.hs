@@ -5,15 +5,13 @@ import           Control.DeepSeq        (NFData)
 import           Control.Monad.Identity (Identity (..))
 import           Criterion.Main         (Benchmark, bench, bgroup, defaultMain, nf)
 import           Data.Hashable          (Hashable)
-import qualified Data.HashSet           as HSet
 import           Data.List              (group, head, nub, sort, zip5)
 import qualified Data.List.NonEmpty     as NonEmpty
-import qualified Data.Set               as Set
 import           Data.Text              (Text)
 import qualified Data.Text              as T
 
-import           List                   (hashNub, ordNub)
 import           Monad                  (concatMapM)
+import           Nub                    (hashNub, ordNub, sortNub, unstableNub)
 import           VarArg                 ((...))
 
 main :: IO ()
@@ -59,19 +57,13 @@ bgroupList f name = bgroup name $
       (if isNub
       then (:) (bench "nub" $ nf nub listN)
       else id)
-      [ bench "ordNub"   $ nf ordNub     (listN :: [a])
-      , bench "hashNub"  $ nf hashNub    (listN :: [a])
-      , bench "set"      $ nf setNub     (listN :: [a])
-      , bench "hashSet"  $ nf hashSetNub (listN :: [a])
-      , bench "sort"     $ nf groupSort  (listN :: [a])
-      , bench "safeSort" $ nf safeSort   (listN :: [a])
+      [ bench "ordNub"    $ nf ordNub      (listN :: [a])
+      , bench "hashNub"   $ nf hashNub     (listN :: [a])
+      , bench "sortNub"   $ nf sortNub     (listN :: [a])
+      , bench "hashSet"   $ nf unstableNub (listN :: [a])
+      , bench "groupSort" $ nf groupSort   (listN :: [a])
+      , bench "safeSort"  $ nf safeSort    (listN :: [a])
       ]
-
-  setNub :: [a] -> [a]
-  setNub = Set.toList . Set.fromList
-
-  hashSetNub :: [a] -> [a]
-  hashSetNub = HSet.toList . HSet.fromList
 
   groupSort :: [a] -> [a]
   groupSort = map head . group . sort
