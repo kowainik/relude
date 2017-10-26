@@ -7,8 +7,6 @@ module List
        ( module Data.List
 
        , list
-       , hashNub
-       , ordNub
        , sortWith
 #if ( __GLASGOW_HASKELL__ >= 800 )
        , whenNotNull
@@ -25,12 +23,7 @@ import           Data.List           (break, cycle, drop, dropWhile, filter, gen
                                       takeWhile, transpose, unfoldr, unzip, unzip3, zip,
                                       zip3, zipWith)
 
-import           Data.Eq             (Eq)
 import           Data.Functor        (fmap)
-import           Data.Hashable       (Hashable)
-import           Data.HashSet        as HS
-import           Data.Ord            (Ord)
-import qualified Data.Set            as Set
 import           GHC.Exts            (sortWith)
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
@@ -40,26 +33,6 @@ import           Data.List.NonEmpty  as X (NonEmpty (..))
 
 import           Applicative         (pass)
 #endif
-
--- | Like 'Prelude.nub' but runs in @O(n * log n)@ time and requires 'Ord'.
-ordNub :: (Ord a) => [a] -> [a]
-ordNub l = go Set.empty l
-  where
-    go _ []     = []
-    go s (x:xs) =
-      if x `Set.member` s
-      then go s xs
-      else x : go (Set.insert x s) xs
-
--- | Like 'Prelude.nub' but runs in @O(n * log_16(n))@ time and requires 'Hashable'.
-hashNub :: (Eq a, Hashable a) => [a] -> [a]
-hashNub l = go HS.empty l
-  where
-    go _ []     = []
-    go s (x:xs) =
-      if x `HS.member` s
-      then go s xs
-      else x : go (HS.insert x s) xs
 
 -- | Returns default list if given list is empty.
 -- Otherwise applies given function to every element.

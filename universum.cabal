@@ -37,6 +37,7 @@ library
                        Exceptions
                        Functor
                        List
+                       Nub
                        Print
                        TypeOps
                        Unsafe
