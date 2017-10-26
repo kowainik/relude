@@ -206,8 +206,8 @@ What's new?
 Finally, we can move to part describing the new cool features we bring with `universum`.
 
 * `uncons` and `unsnoc` split a list at the first/last element.
-* `ordNub` is an _O(n log n)_ version of `nub` (which is quadratic) and `hashNub` is almost
-  an _O(n)_ version of `nub`.
+* `ordNub` and `sortNub` are _O(n log n)_ versions of `nub` (which is quadratic)
+  and `hashNub` and `unstableNub` are almost _O(n)_ versions of `nub`.
 * `(&)` – reverse application. `x & f & g` instead of `g $ f $ x` is useful sometimes.
 * `pretty` and `prettyL` for converting `Buildable` into `Text` (can be used instead of `show`).
 * `whenM`, `unlessM`, `ifM`, `guardM` are available and do what you expect
