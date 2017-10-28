@@ -1,3 +1,9 @@
+0.7.1.1
+=======
+
+* [#69](https://github.com/serokell/universum/issues/69):
+  Document `SuperComposition` operator `(...)`.
+
 0.7.1
 =====
 
