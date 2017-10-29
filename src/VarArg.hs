@@ -26,12 +26,13 @@ class SuperComposition a b c | a b -> c where
     --
     -- ==== Performance
     -- To check the performance there was done a bunch of benchmarks. Benchmarks were made on
-    -- examples given above and also on a function of many arguments.
+    -- examples given above and also on the functions of many arguments.
     -- The results are showing that the operator ('...') performs as fast as
-    -- plain applications of the operator ('Prelude..') on all the tests.
-    --
-    -- But keep in mind that providing explicit type declarations for functions is very
-    -- important here. Slow behavior was noticed on functions without type specifications.
+    -- plain applications of the operator ('Prelude..') on almost all the tests, but ('...')
+    -- leads to the performance draw-down if @ghc@ fails to inline it.
+    -- Slow behavior was noticed on functions without type specifications.
+    -- That's why keep in mind that providing explicit type declarations for functions is very
+    -- important when using ('...').
     -- Relying on type inference will lead to the situation when all optimizations
     -- disappear due to very general inferred type. However, functions without type
     -- specification but with applied @INLINE@ pragma are fast again.
