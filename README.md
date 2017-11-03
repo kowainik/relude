@@ -25,7 +25,7 @@ This tutorial has several parts:
 
 This is not a tutorial on _Haskell_, and not even a tutorial on each function. For the detailed
 documentation of every function with examples and usages see
-[_Haddock documentation_](http://hackage.haskell.org/package/).
+[_Haddock documentation_](http://hackage.haskell.org/package/universum).
 
 Why another custom Prelude?
 ---------------------------

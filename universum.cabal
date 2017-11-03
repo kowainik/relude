@@ -56,7 +56,7 @@ library
 
   ghc-options:         -Wall -fwarn-implicit-prelude
 
-  build-depends:       base > 4.7 && < 5
+  build-depends:       base
                      , bytestring
                      , containers
                      , deepseq
