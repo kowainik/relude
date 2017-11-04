@@ -1,3 +1,9 @@
+0.7.2.0
+=======
+
+* [#77](https://github.com/serokell/universum/issues/77)
+  Add `modify'` function to export list.
+
 0.7.1.1
 =======
 
