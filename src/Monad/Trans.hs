@@ -30,8 +30,8 @@ import           Control.Monad.Reader         (MonadReader, Reader, ReaderT (..)
                                                asks, local, reader, runReader)
 import           Control.Monad.State.Strict   (MonadState, State, StateT (..), evalState,
                                                evalStateT, execState, execStateT, get,
-                                               gets, modify, put, runState, state,
-                                               withState)
+                                               gets, modify, modify', put, runState,
+                                               state, withState)
 import           Control.Monad.Trans          (MonadIO, MonadTrans, lift, liftIO)
 import           Control.Monad.Trans.Identity (IdentityT (runIdentityT))
 import           Control.Monad.Trans.Maybe    (MaybeT (..), exceptToMaybeT,
