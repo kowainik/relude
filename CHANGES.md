@@ -1,4 +1,4 @@
-0.7.2.0
+0.7.2
 =======
 
 * [#77](https://github.com/serokell/universum/issues/77)
