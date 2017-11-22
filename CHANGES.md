@@ -1,8 +1,11 @@
-0.7.3
+0.8.0
 =====
 
 * [#83](https://github.com/serokell/universum/issues/83):
   Change the order of types in `show` and `print` functions.
+* Move string related reexports and functions to `Conv` module.
+* Rename `Conv` module to `String`.
+* Move `print` function to `Print` module.
 
 0.7.2
 =======

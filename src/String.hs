@@ -1,31 +1,80 @@
+{-# LANGUAGE ExplicitForAll        #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE Safe                  #-}
 {-# LANGUAGE TypeSynonymInstances  #-}
 
 -- | Type classes for convertion between different string representations.
 
-module Conv
-       ( ConvertUtf8 (..)
+module String
+       ( module Data.String
+
+         -- * Text
+       , module Text.Read
+       , module Data.Text
+       , module Data.Text.Lazy
+       , module Data.Text.Encoding
+       , module Data.Text.Encoding.Error
+
+       , module Data.ByteString
+
+       , ConvertUtf8 (..)
        , ToString (..)
        , ToLText (..)
        , ToText (..)
+
+         -- * Buildable class
+       , Buildable
+
+         -- * Show and read functions
+       , readEither
+       , show
+       , pretty
+       , prettyL
+
+         -- * Convenient type aliases
+       , LText
+       , LByteString
        ) where
 
-import qualified Data.ByteString           as B
-import qualified Data.ByteString.Lazy      as LB
-import qualified Data.ByteString.Lazy.UTF8 as LBU
-import qualified Data.ByteString.UTF8      as BU
-import qualified Data.Text                 as T
-import qualified Data.Text.Encoding        as T
-import qualified Data.Text.Encoding.Error  as T
-import qualified Data.Text.Lazy            as LT
-import qualified Data.Text.Lazy.Encoding   as LT
 
-import           Data.Either               (Either)
-import           Data.Function             (id, (.))
-import           Data.String               (String)
-import           Functor                   ((<$>))
+-- for reexport
+import Data.ByteString (ByteString)
+import Data.String (IsString (..))
+import Data.Text (Text, lines, unlines, unwords, words)
+import Data.Text.Buildable (Buildable (build))
+import Data.Text.Encoding (decodeUtf8', decodeUtf8With)
+import Data.Text.Encoding.Error (OnDecodeError, OnError, UnicodeException, lenientDecode,
+                                 strictDecode)
+import Data.Text.Lazy (fromStrict, toStrict)
+import Text.Read (Read, readMaybe, reads)
+
+-- for internal usage
+import Data.Bifunctor (first)
+import Data.Either (Either)
+import Data.Function (id, (.))
+import Data.String (String)
+import Data.Text.Lazy.Builder (toLazyText)
+
+import Functor ((<$>))
+
+import qualified Base as Base (Show (show))
+import qualified Data.ByteString as B
+import qualified Data.ByteString.Lazy as LB
+import qualified Data.ByteString.Lazy.UTF8 as LBU
+import qualified Data.ByteString.UTF8 as BU
+import qualified Data.Text as T
+import qualified Data.Text.Encoding as T
+import qualified Data.Text.Encoding.Error as T
+import qualified Data.Text.Lazy as LT
+import qualified Data.Text.Lazy.Encoding as LT
+import qualified Text.Read (readEither)
+
+-- | Type synonym for 'Data.Text.Lazy.Text'.
+type LText = LT.Text
+
+-- | Type synonym for 'Data.ByteString.Lazy.ByteString'.
+type LByteString = LB.ByteString
+
 
 -- | Type class for conversion to utf8 representation of text.
 class ConvertUtf8 a b where
@@ -119,3 +168,29 @@ instance ToString T.Text where
 
 instance ToString LT.Text where
     toString = LT.unpack
+
+-- | Polymorhpic version of 'Text.Read.readEither'.
+--
+-- >>> readEither @Text @Int "123"
+-- Right 123
+-- >>> readEither @Text @Int "aa"
+-- Left "Prelude.read: no parse"
+readEither :: (ToString a, Read b) => a -> Either Text b
+readEither = first toText . Text.Read.readEither . toString
+
+-- | Generalized version of 'Prelude.show'.
+show :: forall b a . (Base.Show a, IsString b) => a -> b
+show x = fromString (Base.show x)
+{-# SPECIALIZE show :: Base.Show  a => a -> Text  #-}
+{-# SPECIALIZE show :: Base.Show  a => a -> LText  #-}
+{-# SPECIALIZE show :: Base.Show  a => a -> ByteString  #-}
+{-# SPECIALIZE show :: Base.Show  a => a -> LByteString  #-}
+{-# SPECIALIZE show :: Base.Show  a => a -> String  #-}
+
+-- | Functions to show pretty output for buildable data types.
+pretty :: Buildable a => a -> Text
+pretty = toStrict . prettyL
+
+-- | Similar to 'pretty' but for 'LText'.
+prettyL :: Buildable a => a -> LText
+prettyL = toLazyText . build

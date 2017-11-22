@@ -19,9 +19,6 @@ module Universum
          module X  -- Should I expand this to all modules to remove haddock warnings?
        , module Base
 
-         -- * Useful classes
-       , Buildable
-
          -- * Useful standard unclassifed functions
        , evaluateNF
        , evaluateNF_
@@ -29,23 +26,13 @@ module Universum
        , evaluateWHNF_
        , identity
        , map
-       , pretty
-       , prettyL
-       , print
-       , readEither
-       , show
        , uncons
        , unsnoc
-
-         -- * Convenient type aliases
-       , LText
-       , LByteString
        ) where
 
 import           Applicative              as X
 import           Bool                     as X
 import           Containers               as X
-import           Conv                     as X
 import           Debug                    as X
 import           Exceptions               as X
 import           Functor                  as X
@@ -53,15 +40,13 @@ import           Lifted                   as X
 import           List                     as X
 import           Monad                    as X
 import           Print                    as X
+import           String                   as X
 import           TypeOps                  as X
 import           VarArg                   as X
 
 import           Base                     as Base hiding (error, show, showFloat,
                                                    showList, showSigned, showSignedFloat,
                                                    showsPrec, undefined)
-import qualified Base                     as PBase
-
-import           Data.String              as X (IsString (..))
 
 -- Maybe'ized version of partial functions
 import           Safe                     as X (atDef, atMay, foldl1May, foldr1May,
@@ -132,25 +117,6 @@ import           Data.Function            as X (const, fix, flip, on, ($), (.))
 -- Generics
 import           GHC.Generics             as X (Generic)
 
--- Buildable
-import           Data.Text.Buildable      (Buildable (build))
-import           Data.Text.Lazy.Builder   (toLazyText)
-
--- ByteString
-import           Data.ByteString          as X (ByteString)
-import qualified Data.ByteString.Lazy
-
--- Text
-import           Data.Text                as X (Text, lines, unlines, unwords, words)
-import qualified Data.Text.Lazy
-
-import           Data.Text.Lazy           as X (fromStrict, toStrict)
-
-import           Data.Text.Encoding       as X (decodeUtf8', decodeUtf8With)
-import           Data.Text.Encoding.Error as X (OnDecodeError, OnError, UnicodeException,
-                                                lenientDecode, strictDecode)
-import           Text.Read                as X (Read, readMaybe, reads)
-
 -- IO
 import           System.IO                as X (FilePath, Handle, IOMode (..), stderr,
                                                 stdin, stdout, withFile)
@@ -163,14 +129,6 @@ import           Lens.Micro.Mtl           as X (preuse, preview, use, view)
 
 -- For internal usage only
 import qualified Control.Exception.Base   (evaluate)
-import qualified Prelude                  (print)
-import qualified Text.Read                (readEither)
-
--- | Type synonym for 'Data.Text.Lazy.Text'.
-type LText = Data.Text.Lazy.Text
-
--- | Type synonym for 'Data.ByteString.Lazy.ByteString'.
-type LByteString = Data.ByteString.Lazy.ByteString
 
 -- | Renamed version of 'Prelude.id'.
 identity :: a -> a
@@ -200,36 +158,6 @@ unsnoc = foldr go Nothing
     go x mxs = Just (case mxs of
        Nothing      -> ([], x)
        Just (xs, e) -> (x:xs, e))
-
--- | Lifted version of 'Prelude.print'.
-print :: forall a m . (X.MonadIO m, PBase.Show a) => a -> m ()
-print = liftIO . Prelude.print
-
--- | Polymorhpic version of 'Text.Read.readEither'.
---
--- >>> readEither @Text @Int "123"
--- Right 123
--- >>> readEither @Text @Int "aa"
--- Left "Prelude.read: no parse"
-readEither :: (ToString a, Read b) => a -> Either Text b
-readEither = X.first toText . Text.Read.readEither . X.toString
-
--- | Generalized version of 'Prelude.show'.
-show :: forall b a . (Show a, IsString b) => a -> b
-show x = X.fromString (PBase.show x)
-{-# SPECIALIZE show :: Show  a => a -> Text  #-}
-{-# SPECIALIZE show :: Show  a => a -> LText  #-}
-{-# SPECIALIZE show :: Show  a => a -> ByteString  #-}
-{-# SPECIALIZE show :: Show  a => a -> LByteString  #-}
-{-# SPECIALIZE show :: Show  a => a -> String  #-}
-
--- | Functions to show pretty output for buildable data types.
-pretty :: Buildable a => a -> Text
-pretty = X.toStrict . prettyL
-
--- | Similar to 'pretty' but for 'LText'.
-prettyL :: Buildable a => a -> LText
-prettyL = toLazyText . build
 
 -- | Lifted alias for 'Control.Exception.Base.evaluate' with clearer name.
 evaluateWHNF :: MonadIO m => a -> m a

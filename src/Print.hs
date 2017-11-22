@@ -1,3 +1,4 @@
+{-# LANGUAGE ExplicitForAll    #-}
 {-# LANGUAGE FlexibleContexts  #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE Trustworthy       #-}
@@ -6,24 +7,26 @@
 
 module Print
        ( Print (..)
+       , print
        , putText
        , putLText
        ) where
 
-import qualified Base
-import           Data.Function              ((.))
-import qualified Prelude                    as Prelude
+import Data.Function ((.))
 
-import           Control.Monad.IO.Class     (MonadIO, liftIO)
-import qualified Data.ByteString.Char8      as BS
+import Monad.Trans (MonadIO, liftIO)
+
+import qualified Base
+import qualified Prelude (print, putStr, putStrLn)
+
+import qualified Data.ByteString.Char8 as BS
 import qualified Data.ByteString.Lazy.Char8 as BL
 
-import qualified Data.Text                  as T
-import qualified Data.Text.IO               as T
+import qualified Data.Text as T
+import qualified Data.Text.IO as T
 
-import qualified Data.Text.Lazy             as TL
-import qualified Data.Text.Lazy.IO          as TL
-
+import qualified Data.Text.Lazy as TL
+import qualified Data.Text.Lazy.IO as TL
 
 -- | Polymorfic over string and lifted to 'MonadIO' printing functions.
 class Print a where
@@ -49,6 +52,10 @@ instance Print BL.ByteString where
 instance Print [Base.Char] where
   putStr = liftIO . Prelude.putStr
   putStrLn = liftIO . Prelude.putStrLn
+
+-- | Lifted version of 'Prelude.print'.
+print :: forall a m . (MonadIO m, Base.Show a) => a -> m ()
+print = liftIO . Prelude.print
 
 -- | Specialized to 'T.Text' version of 'putStrLn' or forcing type inference.
 putText :: MonadIO m => T.Text -> m ()
