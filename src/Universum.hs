@@ -1,4 +1,5 @@
 {-# LANGUAGE CPP                   #-}
+{-# LANGUAGE ExplicitForAll        #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Trustworthy           #-}
@@ -201,7 +202,7 @@ unsnoc = foldr go Nothing
        Just (xs, e) -> (x:xs, e))
 
 -- | Lifted version of 'Prelude.print'.
-print :: (X.MonadIO m, PBase.Show a) => a -> m ()
+print :: forall a m . (X.MonadIO m, PBase.Show a) => a -> m ()
 print = liftIO . Prelude.print
 
 -- | Polymorhpic version of 'Text.Read.readEither'.
@@ -214,7 +215,7 @@ readEither :: (ToString a, Read b) => a -> Either Text b
 readEither = X.first toText . Text.Read.readEither . X.toString
 
 -- | Generalized version of 'Prelude.show'.
-show :: (Show a, IsString b) => a -> b
+show :: forall b a . (Show a, IsString b) => a -> b
 show x = X.fromString (PBase.show x)
 {-# SPECIALIZE show :: Show  a => a -> Text  #-}
 {-# SPECIALIZE show :: Show  a => a -> LText  #-}

@@ -1,7 +1,13 @@
+0.7.3
+=====
+
+* [#83](https://github.com/serokell/universum/issues/83):
+  Change the order of types in `show` and `print` functions.
+
 0.7.2
 =======
 
-* [#77](https://github.com/serokell/universum/issues/77)
+* [#77](https://github.com/serokell/universum/issues/77):
   Add `modify'` function to export list.
 
 0.7.1.1
