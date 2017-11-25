@@ -74,13 +74,13 @@ import           Data.Traversable         as X (Traversable (..), fmapDefault,
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import           Data.List.NonEmpty       as X (NonEmpty (..), nonEmpty)
-import           Data.Monoid              as X
-import           Data.Semigroup           as X (Option (..), Semigroup (sconcat, stimes),
+import           Data.Monoid              as X hiding ((<>))
+import           Data.Semigroup           as X (Option (..), Semigroup (sconcat, stimes, (<>)),
                                                 WrappedMonoid, cycle1, mtimesDefault,
                                                 stimesIdempotent, stimesIdempotentMonoid,
                                                 stimesMonoid)
 #else
-import           Data.Monoid              as X
+import           Data.Monoid              as X hiding ((<>))
 #endif
 
 -- Deepseq
