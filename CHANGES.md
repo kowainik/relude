@@ -1,3 +1,8 @@
+0.9.0
+=====
+* [#79](https://github.com/serokell/universum/issues/79):
+  Import '(<>)' from Semigroup, not Monoid.
+
 0.8.0
 =====
 
