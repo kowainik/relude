@@ -1,8 +1,11 @@
 0.9.0
 =====
+
 * [#79](https://github.com/serokell/universum/issues/79):
   Import '(<>)' from Semigroup, not Monoid.
 * Improve travis configartion.
+* [#80](https://github.com/serokell/universum/issues/80):
+  Rename `Container` to `ToList`, `NontrivialContainer` to `Container`.
 
 0.8.0
 =====

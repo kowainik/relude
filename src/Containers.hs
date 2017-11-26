@@ -21,8 +21,8 @@ module Containers
        (
          -- * Foldable-like classes and methods
          Element
+       , ToList(..)
        , Container(..)
-       , NontrivialContainer(..)
 
        , sum
        , product
@@ -39,47 +39,48 @@ module Containers
        , One(..)
        ) where
 
-import           Control.Applicative    (Alternative (..))
-import           Control.Monad.Identity (Identity)
-import           Data.Coerce            (Coercible, coerce)
-import           Data.Foldable          (Foldable)
-import qualified Data.Foldable          as F
-import           Data.Hashable          (Hashable)
-import           Data.Maybe             (fromMaybe)
-import           Data.Monoid            (All (..), Any (..), First (..))
-import           Data.Word              (Word8)
-import           Prelude                hiding (Foldable (..), all, any, mapM_, sequence_)
+import Control.Applicative (Alternative (..))
+import Control.Monad.Identity (Identity)
+import Data.Coerce (Coercible, coerce)
+import Data.Foldable (Foldable)
+import Data.Hashable (Hashable)
+import Data.Maybe (fromMaybe)
+import Data.Monoid (All (..), Any (..), First (..))
+import Data.Word (Word8)
+import Prelude hiding (Foldable (..), all, any, mapM_, sequence_)
 
 #if __GLASGOW_HASKELL__ >= 800
-import           GHC.Err                (errorWithoutStackTrace)
-import           GHC.TypeLits           (ErrorMessage (..), TypeError)
+import GHC.Err (errorWithoutStackTrace)
+import GHC.TypeLits (ErrorMessage (..), TypeError)
 #endif
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
-import qualified Data.List.NonEmpty     as NE
+import qualified Data.List.NonEmpty as NE
 #endif
 
-import qualified Data.Sequence          as SEQ
+import qualified Data.Foldable as F
 
-import qualified Data.ByteString        as BS
-import qualified Data.ByteString.Lazy   as BSL
+import qualified Data.Sequence as SEQ
 
-import qualified Data.Text              as T
-import qualified Data.Text.Lazy         as TL
+import qualified Data.ByteString as BS
+import qualified Data.ByteString.Lazy as BSL
 
-import qualified Data.HashMap.Strict    as HM
-import qualified Data.HashSet           as HS
-import qualified Data.IntMap            as IM
-import qualified Data.IntSet            as IS
-import qualified Data.Map               as M
-import qualified Data.Set               as S
+import qualified Data.Text as T
+import qualified Data.Text.Lazy as TL
 
-import qualified Data.Vector            as V
-import qualified Data.Vector.Primitive  as VP
-import qualified Data.Vector.Storable   as VS
-import qualified Data.Vector.Unboxed    as VU
+import qualified Data.HashMap.Strict as HM
+import qualified Data.HashSet as HS
+import qualified Data.IntMap as IM
+import qualified Data.IntSet as IS
+import qualified Data.Map as M
+import qualified Data.Set as S
 
-import           Applicative            (pass)
+import qualified Data.Vector as V
+import qualified Data.Vector.Primitive as VP
+import qualified Data.Vector.Storable as VS
+import qualified Data.Vector.Unboxed as VU
+
+import Applicative (pass)
 
 ----------------------------------------------------------------------------
 -- Containers (e.g. tuples aren't containers)
@@ -97,9 +98,10 @@ type instance Element BS.ByteString = Word8
 type instance Element BSL.ByteString = Word8
 type instance Element IS.IntSet = Int
 
--- | Type class for container. Fully compatible with 'Foldable'.
+-- | Type class for data types that can be converted to List.
+-- Fully compatible with 'Foldable'.
 -- Contains very small and safe subset of 'Foldable' functions.
-class Container t where
+class ToList t where
   -- | Convert container to list of elements.
   --
   -- >>> toList (Just True)
@@ -118,38 +120,38 @@ class Container t where
   -- False
   null :: t -> Bool
 
--- | This instance makes 'Container' compatible and overlappable by 'Foldable'.
-instance {-# OVERLAPPABLE #-} Foldable f => Container (f a) where
+-- | This instance makes 'ToList' compatible and overlappable by 'Foldable'.
+instance {-# OVERLAPPABLE #-} Foldable f => ToList (f a) where
   toList = F.toList
   {-# INLINE toList #-}
   null = F.null
   {-# INLINE null #-}
 
-instance Container T.Text where
+instance ToList T.Text where
   toList = T.unpack
   {-# INLINE toList #-}
   null = T.null
   {-# INLINE null #-}
 
-instance Container TL.Text where
+instance ToList TL.Text where
   toList = TL.unpack
   {-# INLINE toList #-}
   null = TL.null
   {-# INLINE null #-}
 
-instance Container BS.ByteString where
+instance ToList BS.ByteString where
   toList = BS.unpack
   {-# INLINE toList #-}
   null = BS.null
   {-# INLINE null #-}
 
-instance Container BSL.ByteString where
+instance ToList BSL.ByteString where
   toList = BSL.unpack
   {-# INLINE toList #-}
   null = BSL.null
   {-# INLINE null #-}
 
-instance Container IS.IntSet where
+instance ToList IS.IntSet where
   toList = IS.toList
   {-# INLINE toList #-}
   null = IS.null
@@ -159,9 +161,9 @@ instance Container IS.IntSet where
 -- Additional operations that don't make much sense for e.g. Maybe
 ----------------------------------------------------------------------------
 
--- | A class for 'Container's that aren't trivial like 'Maybe' (e.g. can hold
+-- | A class for 'ToList's that aren't trivial like 'Maybe' (e.g. can hold
 -- more than one value)
-class Container t => NontrivialContainer t where
+class ToList t => Container t where
   foldMap :: Monoid m => (Element t -> m) -> t -> m
   foldMap f = foldr (mappend . f) mempty
   {-# INLINE foldMap #-}
@@ -229,7 +231,7 @@ class Container t => NontrivialContainer t where
   head = foldr (\x _ -> Just x) Nothing
   {-# INLINE head #-}
 
-instance {-# OVERLAPPABLE #-} Foldable f => NontrivialContainer (f a) where
+instance {-# OVERLAPPABLE #-} Foldable f => Container (f a) where
   foldMap = F.foldMap
   {-# INLINE foldMap #-}
   fold = F.fold
@@ -267,7 +269,7 @@ instance {-# OVERLAPPABLE #-} Foldable f => NontrivialContainer (f a) where
   find = F.find
   {-# INLINE find #-}
 
-instance NontrivialContainer T.Text where
+instance Container T.Text where
   foldr = T.foldr
   {-# INLINE foldr #-}
   foldl = T.foldl
@@ -295,7 +297,7 @@ instance NontrivialContainer T.Text where
   head = fmap fst . T.uncons
   {-# INLINE head #-}
 
-instance NontrivialContainer TL.Text where
+instance Container TL.Text where
   foldr = TL.foldr
   {-# INLINE foldr #-}
   foldl = TL.foldl
@@ -324,7 +326,7 @@ instance NontrivialContainer TL.Text where
   head = fmap fst . TL.uncons
   {-# INLINE head #-}
 
-instance NontrivialContainer BS.ByteString where
+instance Container BS.ByteString where
   foldr = BS.foldr
   {-# INLINE foldr #-}
   foldl = BS.foldl
@@ -354,7 +356,7 @@ instance NontrivialContainer BS.ByteString where
   head = fmap fst . BS.uncons
   {-# INLINE head #-}
 
-instance NontrivialContainer BSL.ByteString where
+instance Container BSL.ByteString where
   foldr = BSL.foldr
   {-# INLINE foldr #-}
   foldl = BSL.foldl
@@ -384,7 +386,7 @@ instance NontrivialContainer BSL.ByteString where
   head = fmap fst . BSL.uncons
   {-# INLINE head #-}
 
-instance NontrivialContainer IS.IntSet where
+instance Container IS.IntSet where
   foldr = IS.foldr
   {-# INLINE foldr #-}
   foldl = IS.foldl
@@ -415,7 +417,7 @@ instance NontrivialContainer IS.IntSet where
 --     • Do not use 'Foldable' methods on Maybe
 --     • In the expression: sum (Just 3)
 --       In an equation for ‘it’: it = sum (Just 3)
-sum :: (NontrivialContainer t, Num (Element t)) => t -> Element t
+sum :: (Container t, Num (Element t)) => t -> Element t
 sum = foldl' (+) 0
 
 -- | Stricter version of 'Prelude.product'.
@@ -427,50 +429,50 @@ sum = foldl' (+) 0
 --     • Do not use 'Foldable' methods on Either
 --     • In the expression: product (Right 3)
 --       In an equation for ‘it’: it = product (Right 3)
-product :: (NontrivialContainer t, Num (Element t)) => t -> Element t
+product :: (Container t, Num (Element t)) => t -> Element t
 product = foldl' (*) 1
 
--- | Constrained to 'NonTrivialContainer' version of 'Data.Foldable.traverse_'.
+-- | Constrained to 'Container' version of 'Data.Foldable.traverse_'.
 traverse_
-    :: (NontrivialContainer t, Applicative f)
+    :: (Container t, Applicative f)
     => (Element t -> f b) -> t -> f ()
 traverse_ f = foldr ((*>) . f) pass
 
--- | Constrained to 'NonTrivialContainer' version of 'Data.Foldable.for_'.
+-- | Constrained to 'Container' version of 'Data.Foldable.for_'.
 for_
-    :: (NontrivialContainer t, Applicative f)
+    :: (Container t, Applicative f)
     => t -> (Element t -> f b) -> f ()
 for_ = flip traverse_
 {-# INLINE for_ #-}
 
--- | Constrained to 'NonTrivialContainer' version of 'Data.Foldable.mapM_'.
+-- | Constrained to 'Container' version of 'Data.Foldable.mapM_'.
 mapM_
-    :: (NontrivialContainer t, Monad m)
+    :: (Container t, Monad m)
     => (Element t -> m b) -> t -> m ()
 mapM_ f= foldr ((>>) . f) pass
 
--- | Constrained to 'NonTrivialContainer' version of 'Data.Foldable.forM_'.
+-- | Constrained to 'Container' version of 'Data.Foldable.forM_'.
 forM_
-    :: (NontrivialContainer t, Monad m)
+    :: (Container t, Monad m)
     => t -> (Element t -> m b) -> m ()
 forM_ = flip mapM_
 {-# INLINE forM_ #-}
 
--- | Constrained to 'NonTrivialContainer' version of 'Data.Foldable.sequenceA_'.
+-- | Constrained to 'Container' version of 'Data.Foldable.sequenceA_'.
 sequenceA_
-    :: (NontrivialContainer t, Applicative f, Element t ~ f a)
+    :: (Container t, Applicative f, Element t ~ f a)
     => t -> f ()
 sequenceA_ = foldr (*>) pass
 
--- | Constrained to 'NonTrivialContainer' version of 'Data.Foldable.sequence_'.
+-- | Constrained to 'Container' version of 'Data.Foldable.sequence_'.
 sequence_
-    :: (NontrivialContainer t, Monad m, Element t ~ m a)
+    :: (Container t, Monad m, Element t ~ m a)
     => t -> m ()
 sequence_ = foldr (>>) pass
 
--- | Constrained to 'NonTrivialContainer' version of 'Data.Foldable.asum'.
+-- | Constrained to 'Container' version of 'Data.Foldable.asum'.
 asum
-    :: (NontrivialContainer t, Alternative f, Element t ~ f a)
+    :: (Container t, Alternative f, Element t ~ f a)
     => t -> f a
 asum = foldr (<|>) empty
 {-# INLINE asum #-}
@@ -479,19 +481,19 @@ asum = foldr (<|>) empty
 -- Disallowed instances
 ----------------------------------------------------------------------------
 
+#define DISALLOW_TO_LIST_8(t, z) \
+    instance TypeError \
+        (Text "Do not use 'Foldable' methods on " :<>: Text z :$$: \
+         Text "NB. If you tried to use 'for_' on Maybe or Either, use 'whenJust' or 'whenRight' instead" ) => \
+      ToList (t) where { \
+        toList = undefined; \
+        null = undefined; } \
+
 #define DISALLOW_CONTAINER_8(t, z) \
     instance TypeError \
         (Text "Do not use 'Foldable' methods on " :<>: Text z :$$: \
          Text "NB. If you tried to use 'for_' on Maybe or Either, use 'whenJust' or 'whenRight' instead" ) => \
       Container (t) where { \
-        toList = undefined; \
-        null = undefined; } \
-
-#define DISALLOW_NONTRIVIAL_CONTAINER_8(t, z) \
-    instance TypeError \
-        (Text "Do not use 'Foldable' methods on " :<>: Text z :$$: \
-         Text "NB. If you tried to use 'for_' on Maybe or Either, use 'whenJust' or 'whenRight' instead" ) => \
-      NontrivialContainer (t) where { \
         foldr = undefined; \
         foldl = undefined; \
         foldl' = undefined; \
@@ -500,13 +502,13 @@ asum = foldr (<|>) empty
         maximum = undefined; \
         minimum = undefined; } \
 
-#define DISALLOW_CONTAINER_7(t) \
-    instance ForbiddenFoldable (t) => Container (t) where { \
+#define DISALLOW_TO_LIST_7(t) \
+    instance ForbiddenFoldable (t) => ToList (t) where { \
         toList = undefined; \
         null = undefined; } \
 
-#define DISALLOW_NONTRIVIAL_CONTAINER_7(t) \
-    instance ForbiddenFoldable (t) => NontrivialContainer (t) where { \
+#define DISALLOW_CONTAINER_7(t) \
+    instance ForbiddenFoldable (t) => Container (t) where { \
         foldr = undefined; \
         foldl = undefined; \
         foldl' = undefined; \
@@ -516,18 +518,18 @@ asum = foldr (<|>) empty
         minimum = undefined; } \
 
 #if __GLASGOW_HASKELL__ >= 800
+DISALLOW_TO_LIST_8((a, b),"tuples")
 DISALLOW_CONTAINER_8((a, b),"tuples")
-DISALLOW_NONTRIVIAL_CONTAINER_8((a, b),"tuples")
-DISALLOW_NONTRIVIAL_CONTAINER_8(Maybe a,"Maybe")
-DISALLOW_NONTRIVIAL_CONTAINER_8(Identity a,"Identity")
-DISALLOW_NONTRIVIAL_CONTAINER_8(Either a b,"Either")
+DISALLOW_CONTAINER_8(Maybe a,"Maybe")
+DISALLOW_CONTAINER_8(Identity a,"Identity")
+DISALLOW_CONTAINER_8(Either a b,"Either")
 #else
 class ForbiddenFoldable a
+DISALLOW_TO_LIST_7((a, b))
 DISALLOW_CONTAINER_7((a, b))
-DISALLOW_NONTRIVIAL_CONTAINER_7((a, b))
-DISALLOW_NONTRIVIAL_CONTAINER_7(Maybe a)
-DISALLOW_NONTRIVIAL_CONTAINER_7(Identity a)
-DISALLOW_NONTRIVIAL_CONTAINER_7(Either a b)
+DISALLOW_CONTAINER_7(Maybe a)
+DISALLOW_CONTAINER_7(Identity a)
+DISALLOW_CONTAINER_7(Either a b)
 #endif
 
 ----------------------------------------------------------------------------

@@ -47,34 +47,34 @@ module Monad
        , (<$!>)
        ) where
 
-import           Monad.Either
-import           Monad.Maybe
-import           Monad.Trans
+import Monad.Either
+import Monad.Maybe
+import Monad.Trans
 
-import           Base                            (IO, seq)
-import           Control.Applicative             (Applicative (pure))
-import           Data.Function                   ((.))
-import           Data.Functor                    (fmap)
-import           Data.Traversable                (Traversable (traverse))
-import           Prelude                         (Bool (..), Monoid, flip)
+import Base (IO, seq)
+import Control.Applicative (Applicative (pure))
+import Data.Function ((.))
+import Data.Functor (fmap)
+import Data.Traversable (Traversable (traverse))
+import Prelude (Bool (..), Monoid, flip)
 
 #if __GLASGOW_HASKELL__ >= 710
-import           Control.Monad                   hiding (fail, (<$!>))
+import Control.Monad hiding (fail, (<$!>))
 #else
-import           Control.Monad                   hiding (fail)
+import Control.Monad hiding (fail)
 #endif
 
 #if __GLASGOW_HASKELL__ >= 800
-import           Control.Monad.Fail              (MonadFail (..))
+import Control.Monad.Fail (MonadFail (..))
 #else
-import           Prelude                         (Maybe (Nothing), String)
-import qualified Prelude                         as P (fail)
-import           Text.ParserCombinators.ReadP    (ReadP)
-import           Text.ParserCombinators.ReadPrec (ReadPrec)
+import Prelude (Maybe (Nothing), String)
+import Text.ParserCombinators.ReadP (ReadP)
+import Text.ParserCombinators.ReadPrec (ReadPrec)
+
+import qualified Prelude as P (fail)
 #endif
 
-import           Containers                      (Element, NontrivialContainer, fold,
-                                                  toList)
+import Containers (Container, Element, fold, toList)
 
 -- | Lifting bind into a monad. Generalized version of @concatMap@
 -- that works with a monadic predicate. Old and simpler specialized to list
@@ -101,7 +101,7 @@ import           Containers                      (Element, NontrivialContainer, 
 concatMapM
     :: ( Applicative f
        , Monoid m
-       , NontrivialContainer (l m)
+       , Container (l m)
        , Traversable l
        )
     => (a -> f m) -> l a -> f m
@@ -113,7 +113,7 @@ concatMapM f = fmap fold . traverse f
 concatForM
     :: ( Applicative f
        , Monoid m
-       , NontrivialContainer (l m)
+       , Container (l m)
        , Traversable l
        )
     => l a -> (a -> f m) -> f m
@@ -128,7 +128,7 @@ f <$!> m = do
   z `seq` return z
 {-# INLINE (<$!>) #-}
 
--- | Monadic and constrained to 'NonTrivialContainer' version of 'Prelude.and'.
+-- | Monadic and constrained to 'Container' version of 'Prelude.and'.
 --
 -- >>> andM [Just True, Just False]
 -- Just False
@@ -142,7 +142,7 @@ f <$!> m = do
 -- 1
 -- 2
 -- False
-andM :: (NontrivialContainer f, Element f ~ m Bool, Monad m) => f -> m Bool
+andM :: (Container f, Element f ~ m Bool, Monad m) => f -> m Bool
 andM = go . toList
   where
     go []     = pure True
@@ -150,7 +150,7 @@ andM = go . toList
         q <- p
         if q then go ps else pure False
 
--- | Monadic and constrained to 'NonTrivialContainer' version of 'Prelude.or'.
+-- | Monadic and constrained to 'Container' version of 'Prelude.or'.
 --
 -- >>> orM [Just True, Just False]
 -- Just True
@@ -158,7 +158,7 @@ andM = go . toList
 -- Just True
 -- >>> orM [Nothing, Just True]
 -- Nothing
-orM :: (NontrivialContainer f, Element f ~ m Bool, Monad m) => f -> m Bool
+orM :: (Container f, Element f ~ m Bool, Monad m) => f -> m Bool
 orM = go . toList
   where
     go []     = pure False
@@ -166,7 +166,7 @@ orM = go . toList
         q <- p
         if q then pure True else go ps
 
--- | Monadic and constrained to 'NonTrivialContainer' version of 'Prelude.all'.
+-- | Monadic and constrained to 'Container' version of 'Prelude.all'.
 --
 -- >>> allM (readMaybe >=> pure . even) ["6", "10"]
 -- Just True
@@ -174,7 +174,7 @@ orM = go . toList
 -- Just False
 -- >>> allM (readMaybe >=> pure . even) ["aba", "10"]
 -- Nothing
-allM :: (NontrivialContainer f, Monad m) => (Element f -> m Bool) -> f -> m Bool
+allM :: (Container f, Monad m) => (Element f -> m Bool) -> f -> m Bool
 allM p = go . toList
   where
     go []     = pure True
@@ -182,7 +182,7 @@ allM p = go . toList
         q <- p x
         if q then go xs else pure False
 
--- | Monadic and constrained to 'NonTrivialContainer' version of 'Prelude.any'.
+-- | Monadic and constrained to 'Container' version of 'Prelude.any'.
 --
 -- >>> anyM (readMaybe >=> pure . even) ["5", "10"]
 -- Just True
@@ -190,7 +190,7 @@ allM p = go . toList
 -- Just True
 -- >>> anyM (readMaybe >=> pure . even) ["aba", "10"]
 -- Nothing
-anyM :: (NontrivialContainer f, Monad m) => (Element f -> m Bool) -> f -> m Bool
+anyM :: (Container f, Monad m) => (Element f -> m Bool) -> f -> m Bool
 anyM p = go . toList
   where
     go []     = pure False
