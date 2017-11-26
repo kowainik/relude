@@ -1,3 +1,5 @@
+-- | This module reexports all container related stuff from 'Prelude'.
+
 module Container.Reexport
        ( module Data.Hashable
        , module Data.HashMap.Strict

@@ -26,6 +26,8 @@ module Container.Class
        , Container(..)
        , NontrivialContainer
 
+       , WrappedList (..)
+
        , sum
        , product
 
@@ -49,7 +51,7 @@ import Data.Hashable (Hashable)
 import Data.Maybe (fromMaybe)
 import Data.Monoid (All (..), Any (..), First (..))
 import Data.Word (Word8)
-import Prelude hiding (Foldable (..), all, any, head, mapM_, sequence_)
+import Prelude hiding (Foldable (..), all, and, any, head, mapM_, notElem, or, sequence_)
 
 #if __GLASGOW_HASKELL__ >= 800
 import GHC.Err (errorWithoutStackTrace)
@@ -109,7 +111,7 @@ type instance Element IS.IntSet = Int
 -- You can define 'Tolist' by just defining 'toList' function.
 -- But the following law should be met:
 --
--- @null x ≡ null (toList x)@
+-- @'null' ≡ 'List.null' . 'toList'@
 --
 class ToList t where
     {-# MINIMAL toList #-}
@@ -430,22 +432,47 @@ type instance Element (WrappedList f a) = a
 
 instance ToList (f a) => ToList (WrappedList f a) where
     toList (WrappedList l) = toList l
+    {-# INLINE toList #-}
+    null (WrappedList l) = null l
+    {-# INLINE null #-}
 
 instance ToList (f a) => Container (WrappedList f a) where
-    foldr f z t = foldr f z (toList t)
+    foldMap f = foldMap f . toList
+    {-# INLINE foldMap #-}
+    fold = fold . toList
+    {-# INLINE fold #-}
+    foldr f z = foldr f z . toList
     {-# INLINE foldr #-}
-    foldl f z t = foldl f z (toList t)
+    foldr' f z = foldr' f z . toList
+    {-# INLINE foldr' #-}
+    foldl f z = foldl f z . toList
     {-# INLINE foldl #-}
-    foldl' f z t = foldl' f z (toList t)
+    foldl' f z = foldl' f z . toList
     {-# INLINE foldl' #-}
+    foldr1 f = foldr1 f . toList
+    {-# INLINE foldr1 #-}
+    foldl1 f = foldl1 f . toList
+    {-# INLINE foldl1 #-}
     length = length . toList
     {-# INLINE length #-}
     elem x = elem x . toList
     {-# INLINE elem #-}
+    notElem x = notElem x . toList
+    {-# INLINE notElem #-}
     maximum = maximum . toList
     {-# INLINE maximum #-}
     minimum = minimum . toList
     {-# INLINE minimum #-}
+    all p = all p . toList
+    {-# INLINE all #-}
+    any p = any p . toList
+    {-# INLINE any #-}
+    and = and . toList
+    {-# INLINE and #-}
+    or = or . toList
+    {-# INLINE or #-}
+    find p = find p . toList
+    {-# INLINE find #-}
     head = head . toList
     {-# INLINE head #-}
 

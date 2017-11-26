@@ -6,7 +6,7 @@
 * Improve travis configartion.
 * [#80](https://github.com/serokell/universum/issues/80):
   Rename `Container` to `ToList`, `NontrivialContainer` to `Container`.
-  Add `NonTrivialContainer` type.
+  Keep `NontrivialContainer` as type alias.
 * Rename `Containers` module to `Container.Class`.
 * Move all container-related reexports from `Universum` to `Container.Reexport`.
 * Add default implementation of `null` function.
