@@ -1,5 +1,6 @@
 {-# LANGUAGE CPP                     #-}
 {-# LANGUAGE ConstrainedClassMethods #-}
+{-# LANGUAGE ConstraintKinds         #-}
 {-# LANGUAGE DataKinds               #-}
 {-# LANGUAGE FlexibleContexts        #-}
 {-# LANGUAGE FlexibleInstances       #-}
@@ -17,12 +18,13 @@
 -- easily forget to do this. For discussion see this topic:
 -- <https://www.reddit.com/r/haskell/comments/60r9hu/proposal_suggest_explicit_type_application_for/ Suggest explicit type application for Foldable length and friends>
 
-module Containers
+module Container.Class
        (
          -- * Foldable-like classes and methods
          Element
        , ToList(..)
        , Container(..)
+       , NontrivialContainer
 
        , sum
        , product
@@ -47,11 +49,11 @@ import Data.Hashable (Hashable)
 import Data.Maybe (fromMaybe)
 import Data.Monoid (All (..), Any (..), First (..))
 import Data.Word (Word8)
-import Prelude hiding (Foldable (..), all, any, mapM_, sequence_)
+import Prelude hiding (Foldable (..), all, any, head, mapM_, sequence_)
 
 #if __GLASGOW_HASKELL__ >= 800
 import GHC.Err (errorWithoutStackTrace)
-import GHC.TypeLits (ErrorMessage (..), TypeError)
+import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 #endif
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
@@ -59,6 +61,8 @@ import qualified Data.List.NonEmpty as NE
 #endif
 
 import qualified Data.Foldable as F
+
+import qualified Data.List as List (null)
 
 import qualified Data.Sequence as SEQ
 
@@ -101,61 +105,69 @@ type instance Element IS.IntSet = Int
 -- | Type class for data types that can be converted to List.
 -- Fully compatible with 'Foldable'.
 -- Contains very small and safe subset of 'Foldable' functions.
+--
+-- You can define 'Tolist' by just defining 'toList' function.
+-- But the following law should be met:
+--
+-- @null x ≡ null (toList x)@
+--
 class ToList t where
-  -- | Convert container to list of elements.
-  --
-  -- >>> toList (Just True)
-  -- [True]
-  -- >>> toList @Text "aba"
-  -- "aba"
-  -- >>> :t toList @Text "aba"
-  -- toList @Text "aba" :: [Char]
-  toList :: t -> [Element t]
+    {-# MINIMAL toList #-}
+    -- | Convert container to list of elements.
+    --
+    -- >>> toList (Just True)
+    -- [True]
+    -- >>> toList @Text "aba"
+    -- "aba"
+    -- >>> :t toList @Text "aba"
+    -- toList @Text "aba" :: [Char]
+    toList :: t -> [Element t]
 
-  -- | Checks whether container is empty.
-  --
-  -- >>> null @Text ""
-  -- True
-  -- >>> null @Text "aba"
-  -- False
-  null :: t -> Bool
+    -- | Checks whether container is empty.
+    --
+    -- >>> null @Text ""
+    -- True
+    -- >>> null @Text "aba"
+    -- False
+    null :: t -> Bool
+    null = List.null . toList
 
 -- | This instance makes 'ToList' compatible and overlappable by 'Foldable'.
 instance {-# OVERLAPPABLE #-} Foldable f => ToList (f a) where
-  toList = F.toList
-  {-# INLINE toList #-}
-  null = F.null
-  {-# INLINE null #-}
+    toList = F.toList
+    {-# INLINE toList #-}
+    null = F.null
+    {-# INLINE null #-}
 
 instance ToList T.Text where
-  toList = T.unpack
-  {-# INLINE toList #-}
-  null = T.null
-  {-# INLINE null #-}
+    toList = T.unpack
+    {-# INLINE toList #-}
+    null = T.null
+    {-# INLINE null #-}
 
 instance ToList TL.Text where
-  toList = TL.unpack
-  {-# INLINE toList #-}
-  null = TL.null
-  {-# INLINE null #-}
+    toList = TL.unpack
+    {-# INLINE toList #-}
+    null = TL.null
+    {-# INLINE null #-}
 
 instance ToList BS.ByteString where
-  toList = BS.unpack
-  {-# INLINE toList #-}
-  null = BS.null
-  {-# INLINE null #-}
+    toList = BS.unpack
+    {-# INLINE toList #-}
+    null = BS.null
+    {-# INLINE null #-}
 
 instance ToList BSL.ByteString where
-  toList = BSL.unpack
-  {-# INLINE toList #-}
-  null = BSL.null
-  {-# INLINE null #-}
+    toList = BSL.unpack
+    {-# INLINE toList #-}
+    null = BSL.null
+    {-# INLINE null #-}
 
 instance ToList IS.IntSet where
-  toList = IS.toList
-  {-# INLINE toList #-}
-  null = IS.null
-  {-# INLINE null #-}
+    toList = IS.toList
+    {-# INLINE toList #-}
+    null = IS.null
+    {-# INLINE null #-}
 
 ----------------------------------------------------------------------------
 -- Additional operations that don't make much sense for e.g. Maybe
@@ -164,21 +176,21 @@ instance ToList IS.IntSet where
 -- | A class for 'ToList's that aren't trivial like 'Maybe' (e.g. can hold
 -- more than one value)
 class ToList t => Container t where
-  foldMap :: Monoid m => (Element t -> m) -> t -> m
-  foldMap f = foldr (mappend . f) mempty
-  {-# INLINE foldMap #-}
+    foldMap :: Monoid m => (Element t -> m) -> t -> m
+    foldMap f = foldr (mappend . f) mempty
+    {-# INLINE foldMap #-}
 
-  fold :: Monoid (Element t) => t -> Element t
-  fold = foldMap id
+    fold :: Monoid (Element t) => t -> Element t
+    fold = foldMap id
 
-  foldr :: (Element t -> b -> b) -> b -> t -> b
-  foldr' :: (Element t -> b -> b) -> b -> t -> b
-  foldr' f z0 xs = foldl f' id xs z0
-    where f' k x z = k $! f x z
-  foldl :: (b -> Element t -> b) -> b -> t -> b
-  foldl' :: (b -> Element t -> b) -> b -> t -> b
-  foldr1 :: (Element t -> Element t -> Element t) -> t -> Element t
-  foldr1 f xs =
+    foldr :: (Element t -> b -> b) -> b -> t -> b
+    foldr' :: (Element t -> b -> b) -> b -> t -> b
+    foldr' f z0 xs = foldl f' id xs z0
+      where f' k x z = k $! f x z
+    foldl :: (b -> Element t -> b) -> b -> t -> b
+    foldl' :: (b -> Element t -> b) -> b -> t -> b
+    foldr1 :: (Element t -> Element t -> Element t) -> t -> Element t
+    foldr1 f xs =
 #if __GLASGOW_HASKELL__ >= 800
       fromMaybe (errorWithoutStackTrace "foldr1: empty structure")
                 (foldr mf Nothing xs)
@@ -186,12 +198,12 @@ class ToList t => Container t where
       fromMaybe (error "foldr1: empty structure")
                 (foldr mf Nothing xs)
 #endif
-    where
-      mf x m = Just (case m of
-                       Nothing -> x
-                       Just y  -> f x y)
-  foldl1 :: (Element t -> Element t -> Element t) -> t -> Element t
-  foldl1 f xs =
+      where
+        mf x m = Just (case m of
+                           Nothing -> x
+                           Just y  -> f x y)
+    foldl1 :: (Element t -> Element t -> Element t) -> t -> Element t
+    foldl1 f xs =
 #if __GLASGOW_HASKELL__ >= 800
       fromMaybe (errorWithoutStackTrace "foldl1: empty structure")
                 (foldl mf Nothing xs)
@@ -199,210 +211,244 @@ class ToList t => Container t where
       fromMaybe (error "foldl1: empty structure")
                 (foldl mf Nothing xs)
 #endif
-    where
-      mf m y = Just (case m of
-                       Nothing -> y
-                       Just x  -> f x y)
+      where
+        mf m y = Just (case m of
+                           Nothing -> y
+                           Just x  -> f x y)
 
-  length :: t -> Int
+    length :: t -> Int
 
-  elem :: Eq (Element t) => Element t -> t -> Bool
+    elem :: Eq (Element t) => Element t -> t -> Bool
 
-  notElem :: Eq (Element t) => Element t -> t -> Bool
-  notElem x = not . elem x
+    notElem :: Eq (Element t) => Element t -> t -> Bool
+    notElem x = not . elem x
 
-  maximum :: Ord (Element t) => t -> Element t
-  minimum :: Ord (Element t) => t -> Element t
+    maximum :: Ord (Element t) => t -> Element t
+    minimum :: Ord (Element t) => t -> Element t
 
-  all :: (Element t -> Bool) -> t -> Bool
-  all p = getAll #. foldMap (All #. p)
-  any :: (Element t -> Bool) -> t -> Bool
-  any p = getAny #. foldMap (Any #. p)
+    all :: (Element t -> Bool) -> t -> Bool
+    all p = getAll #. foldMap (All #. p)
+    any :: (Element t -> Bool) -> t -> Bool
+    any p = getAny #. foldMap (Any #. p)
 
-  and :: (Element t ~ Bool) => t -> Bool
-  and = getAll #. foldMap All
-  or :: (Element t ~ Bool) => t -> Bool
-  or = getAny #. foldMap Any
+    and :: (Element t ~ Bool) => t -> Bool
+    and = getAll #. foldMap All
+    or :: (Element t ~ Bool) => t -> Bool
+    or = getAny #. foldMap Any
 
-  find :: (Element t -> Bool) -> t -> Maybe (Element t)
-  find p = getFirst . foldMap (\ x -> First (if p x then Just x else Nothing))
+    find :: (Element t -> Bool) -> t -> Maybe (Element t)
+    find p = getFirst . foldMap (\ x -> First (if p x then Just x else Nothing))
 
-  head :: t -> Maybe (Element t)
-  head = foldr (\x _ -> Just x) Nothing
-  {-# INLINE head #-}
+    head :: t -> Maybe (Element t)
+    head = foldr (\x _ -> Just x) Nothing
+    {-# INLINE head #-}
+
+-- | To save backwards compatibility with previous naming.
+type NontrivialContainer t = Container t
 
 instance {-# OVERLAPPABLE #-} Foldable f => Container (f a) where
-  foldMap = F.foldMap
-  {-# INLINE foldMap #-}
-  fold = F.fold
-  {-# INLINE fold #-}
-  foldr = F.foldr
-  {-# INLINE foldr #-}
-  foldr' = F.foldr'
-  {-# INLINE foldr' #-}
-  foldl = F.foldl
-  {-# INLINE foldl #-}
-  foldl' = F.foldl'
-  {-# INLINE foldl' #-}
-  foldr1 = F.foldr1
-  {-# INLINE foldr1 #-}
-  foldl1 = F.foldl1
-  {-# INLINE foldl1 #-}
-  length = F.length
-  {-# INLINE length #-}
-  elem = F.elem
-  {-# INLINE elem #-}
-  notElem = F.notElem
-  {-# INLINE notElem #-}
-  maximum = F.maximum
-  {-# INLINE maximum #-}
-  minimum = F.minimum
-  {-# INLINE minimum #-}
-  all = F.all
-  {-# INLINE all #-}
-  any = F.any
-  {-# INLINE any #-}
-  and = F.and
-  {-# INLINE and #-}
-  or = F.or
-  {-# INLINE or #-}
-  find = F.find
-  {-# INLINE find #-}
+    foldMap = F.foldMap
+    {-# INLINE foldMap #-}
+    fold = F.fold
+    {-# INLINE fold #-}
+    foldr = F.foldr
+    {-# INLINE foldr #-}
+    foldr' = F.foldr'
+    {-# INLINE foldr' #-}
+    foldl = F.foldl
+    {-# INLINE foldl #-}
+    foldl' = F.foldl'
+    {-# INLINE foldl' #-}
+    foldr1 = F.foldr1
+    {-# INLINE foldr1 #-}
+    foldl1 = F.foldl1
+    {-# INLINE foldl1 #-}
+    length = F.length
+    {-# INLINE length #-}
+    elem = F.elem
+    {-# INLINE elem #-}
+    notElem = F.notElem
+    {-# INLINE notElem #-}
+    maximum = F.maximum
+    {-# INLINE maximum #-}
+    minimum = F.minimum
+    {-# INLINE minimum #-}
+    all = F.all
+    {-# INLINE all #-}
+    any = F.any
+    {-# INLINE any #-}
+    and = F.and
+    {-# INLINE and #-}
+    or = F.or
+    {-# INLINE or #-}
+    find = F.find
+    {-# INLINE find #-}
 
 instance Container T.Text where
-  foldr = T.foldr
-  {-# INLINE foldr #-}
-  foldl = T.foldl
-  {-# INLINE foldl #-}
-  foldl' = T.foldl'
-  {-# INLINE foldl' #-}
-  foldr1 = T.foldr1
-  {-# INLINE foldr1 #-}
-  foldl1 = T.foldl1
-  {-# INLINE foldl1 #-}
-  length = T.length
-  {-# INLINE length #-}
-  elem c = T.isInfixOf (T.singleton c)  -- there are rewrite rules for this
-  {-# INLINE elem #-}
-  maximum = T.maximum
-  {-# INLINE maximum #-}
-  minimum = T.minimum
-  {-# INLINE minimum #-}
-  all = T.all
-  {-# INLINE all #-}
-  any = T.any
-  {-# INLINE any #-}
-  find = T.find
-  {-# INLINE find #-}
-  head = fmap fst . T.uncons
-  {-# INLINE head #-}
+    foldr = T.foldr
+    {-# INLINE foldr #-}
+    foldl = T.foldl
+    {-# INLINE foldl #-}
+    foldl' = T.foldl'
+    {-# INLINE foldl' #-}
+    foldr1 = T.foldr1
+    {-# INLINE foldr1 #-}
+    foldl1 = T.foldl1
+    {-# INLINE foldl1 #-}
+    length = T.length
+    {-# INLINE length #-}
+    elem c = T.isInfixOf (T.singleton c)  -- there are rewrite rules for this
+    {-# INLINE elem #-}
+    maximum = T.maximum
+    {-# INLINE maximum #-}
+    minimum = T.minimum
+    {-# INLINE minimum #-}
+    all = T.all
+    {-# INLINE all #-}
+    any = T.any
+    {-# INLINE any #-}
+    find = T.find
+    {-# INLINE find #-}
+    head = fmap fst . T.uncons
+    {-# INLINE head #-}
 
 instance Container TL.Text where
-  foldr = TL.foldr
-  {-# INLINE foldr #-}
-  foldl = TL.foldl
-  {-# INLINE foldl #-}
-  foldl' = TL.foldl'
-  {-# INLINE foldl' #-}
-  foldr1 = TL.foldr1
-  {-# INLINE foldr1 #-}
-  foldl1 = TL.foldl1
-  {-# INLINE foldl1 #-}
-  length = fromIntegral . TL.length
-  {-# INLINE length #-}
-  -- will be okay thanks to rewrite rules
-  elem c s = TL.isInfixOf (TL.singleton c) s
-  {-# INLINE elem #-}
-  maximum = TL.maximum
-  {-# INLINE maximum #-}
-  minimum = TL.minimum
-  {-# INLINE minimum #-}
-  all = TL.all
-  {-# INLINE all #-}
-  any = TL.any
-  {-# INLINE any #-}
-  find = TL.find
-  {-# INLINE find #-}
-  head = fmap fst . TL.uncons
-  {-# INLINE head #-}
+    foldr = TL.foldr
+    {-# INLINE foldr #-}
+    foldl = TL.foldl
+    {-# INLINE foldl #-}
+    foldl' = TL.foldl'
+    {-# INLINE foldl' #-}
+    foldr1 = TL.foldr1
+    {-# INLINE foldr1 #-}
+    foldl1 = TL.foldl1
+    {-# INLINE foldl1 #-}
+    length = fromIntegral . TL.length
+    {-# INLINE length #-}
+    -- will be okay thanks to rewrite rules
+    elem c s = TL.isInfixOf (TL.singleton c) s
+    {-# INLINE elem #-}
+    maximum = TL.maximum
+    {-# INLINE maximum #-}
+    minimum = TL.minimum
+    {-# INLINE minimum #-}
+    all = TL.all
+    {-# INLINE all #-}
+    any = TL.any
+    {-# INLINE any #-}
+    find = TL.find
+    {-# INLINE find #-}
+    head = fmap fst . TL.uncons
+    {-# INLINE head #-}
 
 instance Container BS.ByteString where
-  foldr = BS.foldr
-  {-# INLINE foldr #-}
-  foldl = BS.foldl
-  {-# INLINE foldl #-}
-  foldl' = BS.foldl'
-  {-# INLINE foldl' #-}
-  foldr1 = BS.foldr1
-  {-# INLINE foldr1 #-}
-  foldl1 = BS.foldl1
-  {-# INLINE foldl1 #-}
-  length = BS.length
-  {-# INLINE length #-}
-  elem = BS.elem
-  {-# INLINE elem #-}
-  notElem = BS.notElem
-  {-# INLINE notElem #-}
-  maximum = BS.maximum
-  {-# INLINE maximum #-}
-  minimum = BS.minimum
-  {-# INLINE minimum #-}
-  all = BS.all
-  {-# INLINE all #-}
-  any = BS.any
-  {-# INLINE any #-}
-  find = BS.find
-  {-# INLINE find #-}
-  head = fmap fst . BS.uncons
-  {-# INLINE head #-}
+    foldr = BS.foldr
+    {-# INLINE foldr #-}
+    foldl = BS.foldl
+    {-# INLINE foldl #-}
+    foldl' = BS.foldl'
+    {-# INLINE foldl' #-}
+    foldr1 = BS.foldr1
+    {-# INLINE foldr1 #-}
+    foldl1 = BS.foldl1
+    {-# INLINE foldl1 #-}
+    length = BS.length
+    {-# INLINE length #-}
+    elem = BS.elem
+    {-# INLINE elem #-}
+    notElem = BS.notElem
+    {-# INLINE notElem #-}
+    maximum = BS.maximum
+    {-# INLINE maximum #-}
+    minimum = BS.minimum
+    {-# INLINE minimum #-}
+    all = BS.all
+    {-# INLINE all #-}
+    any = BS.any
+    {-# INLINE any #-}
+    find = BS.find
+    {-# INLINE find #-}
+    head = fmap fst . BS.uncons
+    {-# INLINE head #-}
 
 instance Container BSL.ByteString where
-  foldr = BSL.foldr
-  {-# INLINE foldr #-}
-  foldl = BSL.foldl
-  {-# INLINE foldl #-}
-  foldl' = BSL.foldl'
-  {-# INLINE foldl' #-}
-  foldr1 = BSL.foldr1
-  {-# INLINE foldr1 #-}
-  foldl1 = BSL.foldl1
-  {-# INLINE foldl1 #-}
-  length = fromIntegral . BSL.length
-  {-# INLINE length #-}
-  elem = BSL.elem
-  {-# INLINE elem #-}
-  notElem = BSL.notElem
-  {-# INLINE notElem #-}
-  maximum = BSL.maximum
-  {-# INLINE maximum #-}
-  minimum = BSL.minimum
-  {-# INLINE minimum #-}
-  all = BSL.all
-  {-# INLINE all #-}
-  any = BSL.any
-  {-# INLINE any #-}
-  find = BSL.find
-  {-# INLINE find #-}
-  head = fmap fst . BSL.uncons
-  {-# INLINE head #-}
+    foldr = BSL.foldr
+    {-# INLINE foldr #-}
+    foldl = BSL.foldl
+    {-# INLINE foldl #-}
+    foldl' = BSL.foldl'
+    {-# INLINE foldl' #-}
+    foldr1 = BSL.foldr1
+    {-# INLINE foldr1 #-}
+    foldl1 = BSL.foldl1
+    {-# INLINE foldl1 #-}
+    length = fromIntegral . BSL.length
+    {-# INLINE length #-}
+    elem = BSL.elem
+    {-# INLINE elem #-}
+    notElem = BSL.notElem
+    {-# INLINE notElem #-}
+    maximum = BSL.maximum
+    {-# INLINE maximum #-}
+    minimum = BSL.minimum
+    {-# INLINE minimum #-}
+    all = BSL.all
+    {-# INLINE all #-}
+    any = BSL.any
+    {-# INLINE any #-}
+    find = BSL.find
+    {-# INLINE find #-}
+    head = fmap fst . BSL.uncons
+    {-# INLINE head #-}
 
 instance Container IS.IntSet where
-  foldr = IS.foldr
-  {-# INLINE foldr #-}
-  foldl = IS.foldl
-  {-# INLINE foldl #-}
-  foldl' = IS.foldl'
-  {-# INLINE foldl' #-}
-  length = IS.size
-  {-# INLINE length #-}
-  elem = IS.member
-  {-# INLINE elem #-}
-  maximum = IS.findMax
-  {-# INLINE maximum #-}
-  minimum = IS.findMin
-  {-# INLINE minimum #-}
-  head = fmap fst . IS.minView
-  {-# INLINE head #-}
+    foldr = IS.foldr
+    {-# INLINE foldr #-}
+    foldl = IS.foldl
+    {-# INLINE foldl #-}
+    foldl' = IS.foldl'
+    {-# INLINE foldl' #-}
+    length = IS.size
+    {-# INLINE length #-}
+    elem = IS.member
+    {-# INLINE elem #-}
+    maximum = IS.findMax
+    {-# INLINE maximum #-}
+    minimum = IS.findMin
+    {-# INLINE minimum #-}
+    head = fmap fst . IS.minView
+    {-# INLINE head #-}
+
+----------------------------------------------------------------------------
+-- Wrapped List
+----------------------------------------------------------------------------
+-- | This can be useful if you want to use 'Container' methods for your data type
+-- but you don't want to implement all methods of this type class for that.
+newtype WrappedList f a = WrappedList (f a)
+
+type instance Element (WrappedList f a) = a
+
+instance ToList (f a) => ToList (WrappedList f a) where
+    toList (WrappedList l) = toList l
+
+instance ToList (f a) => Container (WrappedList f a) where
+    foldr f z t = foldr f z (toList t)
+    {-# INLINE foldr #-}
+    foldl f z t = foldl f z (toList t)
+    {-# INLINE foldl #-}
+    foldl' f z t = foldl' f z (toList t)
+    {-# INLINE foldl' #-}
+    length = length . toList
+    {-# INLINE length #-}
+    elem x = elem x . toList
+    {-# INLINE elem #-}
+    maximum = maximum . toList
+    {-# INLINE maximum #-}
+    minimum = minimum . toList
+    {-# INLINE minimum #-}
+    head = head . toList
+    {-# INLINE head #-}
+
 
 ----------------------------------------------------------------------------
 -- Derivative functions
@@ -481,18 +527,31 @@ asum = foldr (<|>) empty
 -- Disallowed instances
 ----------------------------------------------------------------------------
 
+#if __GLASGOW_HASKELL__ >= 800
+type family DisallowInstance (z :: Symbol) :: ErrorMessage where
+    DisallowInstance z  = Text "Do not use 'Foldable' methods on " :<>: Text z
+        :$$: Text "Suggestions:"
+        :$$: Text "    Instead of"
+        :$$: Text "        for_ :: (Foldable t, Applicative f) => t a -> (a -> f b) -> f ()"
+        :$$: Text "    use"
+        :$$: Text "        whenJust  :: Applicative f => Maybe a    -> (a -> f ()) -> f ()"
+        :$$: Text "        whenRight :: Applicative f => Either l r -> (r -> f ()) -> f ()"
+        :$$: Text ""
+        :$$: Text "    Instead of"
+        :$$: Text "        fold :: (Foldable t, Monoid m) => t m -> m"
+        :$$: Text "    use"
+        :$$: Text "        maybeToMonoid :: Monoid m => Maybe m -> m"
+        :$$: Text ""
+#endif
+
 #define DISALLOW_TO_LIST_8(t, z) \
-    instance TypeError \
-        (Text "Do not use 'Foldable' methods on " :<>: Text z :$$: \
-         Text "NB. If you tried to use 'for_' on Maybe or Either, use 'whenJust' or 'whenRight' instead" ) => \
+    instance TypeError (DisallowInstance z) => \
       ToList (t) where { \
         toList = undefined; \
         null = undefined; } \
 
 #define DISALLOW_CONTAINER_8(t, z) \
-    instance TypeError \
-        (Text "Do not use 'Foldable' methods on " :<>: Text z :$$: \
-         Text "NB. If you tried to use 'for_' on Maybe or Either, use 'whenJust' or 'whenRight' instead" ) => \
+    instance TypeError (DisallowInstance z) => \
       Container (t) where { \
         foldr = undefined; \
         foldl = undefined; \

@@ -74,7 +74,7 @@ import Text.ParserCombinators.ReadPrec (ReadPrec)
 import qualified Prelude as P (fail)
 #endif
 
-import Containers (Container, Element, fold, toList)
+import Container (Container, Element, fold, toList)
 
 -- | Lifting bind into a monad. Generalized version of @concatMap@
 -- that works with a monadic predicate. Old and simpler specialized to list
