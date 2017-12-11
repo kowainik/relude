@@ -2,6 +2,7 @@
 =====
 * [#79](https://github.com/serokell/universum/issues/79):
   Import '(<>)' from Semigroup, not Monoid.
+* Improve travis configartion.
 
 0.8.0
 =====
