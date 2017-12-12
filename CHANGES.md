@@ -1,8 +1,17 @@
 0.9.0
 =====
+
 * [#79](https://github.com/serokell/universum/issues/79):
   Import '(<>)' from Semigroup, not Monoid.
 * Improve travis configartion.
+* [#80](https://github.com/serokell/universum/issues/80):
+  Rename `Container` to `ToList`, `NontrivialContainer` to `Container`.
+  Keep `NontrivialContainer` as type alias.
+* Rename `Containers` module to `Container.Class`.
+* Move all container-related reexports from `Universum` to `Container.Reexport`.
+* Add default implementation of `null` function.
+* Add `WrappedList` newtype with instance of `Container`.
+* Improve compile time error messages for disallowed instances.
 
 0.8.0
 =====

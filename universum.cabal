@@ -31,7 +31,9 @@ library
                        Applicative
                        Base
                        Bool
-                       Containers
+                       Container
+                         Container.Class
+                         Container.Reexport
                        Debug
                        Exceptions
                        Functor

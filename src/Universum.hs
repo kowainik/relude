@@ -32,7 +32,7 @@ module Universum
 
 import           Applicative              as X
 import           Bool                     as X
-import           Containers               as X
+import           Container                as X
 import           Debug                    as X
 import           Exceptions               as X
 import           Functor                  as X
@@ -87,16 +87,7 @@ import           Data.Monoid              as X hiding ((<>))
 import           Control.DeepSeq          as X (NFData (..), deepseq, force, ($!!))
 
 -- Data structures
-import           Data.Hashable            as X (Hashable)
-import           Data.HashMap.Strict      as X (HashMap)
-import           Data.HashSet             as X (HashSet)
-import           Data.IntMap.Strict       as X (IntMap)
-import           Data.IntSet              as X (IntSet)
-import           Data.Map.Strict          as X (Map)
-import           Data.Sequence            as X (Seq)
-import           Data.Set                 as X (Set)
 import           Data.Tuple               as X (curry, fst, snd, swap, uncurry)
-import           Data.Vector              as X (Vector)
 
 #if ( __GLASGOW_HASKELL__ >= 710 )
 import           Data.Proxy               as X (Proxy (..))
