@@ -1,12 +1,9 @@
 resolver: nightly-2017-10-08
-packages:
-- '.'
+packages: [.]
 
 nix:
   packages: [binutils, gmp]
 
-extra-deps:
-- type-operators-0.1.0.4
-
+extra-deps: []
 flags: {}
 extra-package-dbs: []
