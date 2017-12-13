@@ -1,3 +1,8 @@
+0.9.1
+=====
+
+* Change `base` version to be `< 5`.
+
 0.9.0
 =====
 
@@ -21,10 +26,6 @@
 * Move string related reexports and functions to `Conv` module.
 * Rename `Conv` module to `String`.
 * Move `print` function to `Print` module.
-
-0.7.2
-=======
-
 * [#77](https://github.com/serokell/universum/issues/77):
   Add `modify'` function to export list.
 
