@@ -1,5 +1,5 @@
 name:                universum
-version:             0.9.0
+version:             0.9.1
 synopsis:            Custom prelude used in Serokell
 description:         Custom prelude used in Serokell
 homepage:            https://github.com/serokell/universum
@@ -58,7 +58,7 @@ library
 
   ghc-options:         -Wall -fwarn-implicit-prelude
 
-  build-depends:       base
+  build-depends:       base < 5
                      , bytestring
                      , containers
                      , deepseq
@@ -89,7 +89,7 @@ benchmark universum-benchmark
   ghc-options:         -Wall -O2 -threaded -rtsopts -with-rtsopts=-N
   hs-source-dirs:      benchmark
   main-is:             Main.hs
-  build-depends:       base
+  build-depends:       base < 5
                      , universum
                      , containers
                      , criterion

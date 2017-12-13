@@ -1,3 +1,8 @@
+0.9.1
+=====
+
+* Change `base` version to be `< 5`.
+
 0.9.0
 =====
 
