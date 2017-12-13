@@ -2,7 +2,7 @@
 
 -- | Lifted versions of functions that work with environment.
 
-module Lifted.Env
+module Universum.Lifted.Env
        ( getArgs
        , exitWith
        , exitFailure
@@ -10,14 +10,15 @@ module Lifted.Env
        , die
        ) where
 
-import           Control.Monad.Trans (MonadIO, liftIO)
-import           Data.String         (String)
-import           Prelude             ((>>))
-import qualified System.Environment  as XIO
-import           System.Exit         (ExitCode)
-import qualified System.Exit         as XIO
-import           System.IO           (stderr)
-import qualified System.IO           (hPutStrLn)
+import Control.Monad.Trans (MonadIO, liftIO)
+import Data.String (String)
+import Prelude ((>>))
+import System.Exit (ExitCode)
+import System.IO (stderr)
+
+import qualified System.Environment as XIO
+import qualified System.Exit as XIO
+import qualified System.IO (hPutStrLn)
 
 -- | Lifted version of 'System.Environment.getArgs'.
 getArgs :: MonadIO m => m [String]

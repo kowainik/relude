@@ -4,10 +4,10 @@
 
 -- | Reexporting useful monadic stuff.
 
-module Monad
-       ( module Monad.Maybe
-       , module Monad.Either
-       , module Monad.Trans
+module Universum.Monad
+       ( module Universum.Monad.Maybe
+       , module Universum.Monad.Either
+       , module Universum.Monad.Trans
 
        , Monad ((>>=), (>>), return)
        , MonadFail (fail)
@@ -47,16 +47,17 @@ module Monad
        , (<$!>)
        ) where
 
-import Monad.Either
-import Monad.Maybe
-import Monad.Trans
+import Universum.Monad.Either
+import Universum.Monad.Maybe
+import Universum.Monad.Trans
 
-import Base (IO, seq)
 import Control.Applicative (Applicative (pure))
 import Data.Function ((.))
 import Data.Functor (fmap)
 import Data.Traversable (Traversable (traverse))
 import Prelude (Bool (..), Monoid, flip)
+
+import Universum.Base (IO, seq)
 
 #if __GLASGOW_HASKELL__ >= 710
 import Control.Monad hiding (fail, (<$!>))
@@ -74,7 +75,7 @@ import Text.ParserCombinators.ReadPrec (ReadPrec)
 import qualified Prelude as P (fail)
 #endif
 
-import Container (Container, Element, fold, toList)
+import Universum.Container (Container, Element, fold, toList)
 
 -- | Lifting bind into a monad. Generalized version of @concatMap@
 -- that works with a monadic predicate. Old and simpler specialized to list

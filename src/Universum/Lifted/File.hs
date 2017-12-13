@@ -4,7 +4,7 @@
 -- | Lifted versions of functions working with files and common IO.
 -- All functions are specialized to 'Data.Text.Text'.
 
-module Lifted.File
+module Universum.Lifted.File
        ( appendFile
        , getContents
        , getLine
@@ -14,14 +14,15 @@ module Lifted.File
        , writeFile
        ) where
 
-import           Control.Monad.Trans (MonadIO, liftIO)
-import           Data.Text           (Text)
-import qualified Data.Text.IO        as XIO
-import qualified Data.Text.Lazy      as L (Text)
-import qualified Data.Text.Lazy.IO   as LIO (getContents, interact)
-import           Prelude             (FilePath)
-import           System.IO           (Handle, IOMode)
-import qualified System.IO           as XIO (openFile)
+import Control.Monad.Trans (MonadIO, liftIO)
+import Data.Text (Text)
+import Prelude (FilePath)
+import System.IO (Handle, IOMode)
+
+import qualified Data.Text.IO as XIO
+import qualified Data.Text.Lazy as L (Text)
+import qualified Data.Text.Lazy.IO as LIO (getContents, interact)
+import qualified System.IO as XIO (openFile)
 
 ----------------------------------------------------------------------------
 -- Text

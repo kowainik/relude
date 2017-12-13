@@ -3,7 +3,7 @@
 
 -- | Utility functions to work with lists.
 
-module List
+module Universum.List
        ( module Data.List
 
        , list
@@ -14,24 +14,21 @@ module List
 #endif
        ) where
 
-import           Data.List           (break, cycle, drop, dropWhile, filter, genericDrop,
-                                      genericLength, genericReplicate, genericSplitAt,
-                                      genericTake, group, inits, intercalate, intersperse,
-                                      isPrefixOf, iterate, permutations, repeat,
-                                      replicate, reverse, scanl, scanr, sort, sortBy,
-                                      sortBy, sortOn, splitAt, subsequences, tails, take,
-                                      takeWhile, transpose, unfoldr, unzip, unzip3, zip,
-                                      zip3, zipWith)
+import Data.List (break, cycle, drop, dropWhile, filter, genericDrop, genericLength,
+                  genericReplicate, genericSplitAt, genericTake, group, inits, intercalate,
+                  intersperse, isPrefixOf, iterate, permutations, repeat, replicate, reverse, scanl,
+                  scanr, sort, sortBy, sortBy, sortOn, splitAt, subsequences, tails, take,
+                  takeWhile, transpose, unfoldr, unzip, unzip3, zip, zip3, zipWith)
 
-import           Data.Functor        (fmap)
-import           GHC.Exts            (sortWith)
+import Data.Functor (fmap)
+import GHC.Exts (sortWith)
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
-import           Control.Applicative (Applicative)
-import           Control.Monad       (Monad (..))
-import           Data.List.NonEmpty  as X (NonEmpty (..))
+import Control.Applicative (Applicative)
+import Control.Monad (Monad (..))
+import Data.List.NonEmpty as X (NonEmpty (..))
 
-import           Applicative         (pass)
+import Universum.Applicative (pass)
 #endif
 
 -- | Returns default list if given list is empty.

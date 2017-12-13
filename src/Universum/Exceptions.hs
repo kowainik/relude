@@ -5,20 +5,20 @@
 -- | Re-exports most useful functionality from 'safe-exceptions'. Also
 -- provides some functions to work with exceptions over 'MonadError'.
 
-module Exceptions
+module Universum.Exceptions
        ( module Control.Exception.Safe
 
        , note
        ) where
 
 -- exceptions from safe-exceptions
-import           Control.Exception.Safe (Exception, MonadCatch, MonadMask (..),
-                                         MonadThrow, SomeException (..), bracket,
-                                         bracket_, catch, catchAny, finally, throwM)
+import Control.Exception.Safe (Exception, MonadCatch, MonadMask (..), MonadThrow,
+                               SomeException (..), bracket, bracket_, catch, catchAny, finally,
+                               throwM)
 
-import           Control.Applicative    (Applicative (pure))
-import           Control.Monad.Except   (MonadError, throwError)
-import           Data.Maybe             (Maybe, maybe)
+import Control.Applicative (Applicative (pure))
+import Control.Monad.Except (MonadError, throwError)
+import Data.Maybe (Maybe, maybe)
 
 -- To suppress redundant applicative constraint warning on GHC 8.0
 -- | Throws error for 'Maybe' if 'Data.Maybe.Nothing' is given.

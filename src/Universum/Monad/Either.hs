@@ -2,7 +2,7 @@
 
 -- | Utilites to work with @Either@ data type.
 
-module Monad.Either
+module Universum.Monad.Either
        ( module Data.Either
        , fromLeft
        , fromRight
@@ -16,14 +16,13 @@ module Monad.Either
        , whenRightM
        ) where
 
-import           Control.Applicative (Applicative)
-import           Control.Monad       (Monad (..))
-import           Data.Either         (Either (..), either, isLeft, isRight, lefts,
-                                      partitionEithers, rights)
-import           Data.Function       (const)
-import           Data.Maybe          (Maybe (..), maybe)
+import Control.Applicative (Applicative)
+import Control.Monad (Monad (..))
+import Data.Either (Either (..), either, isLeft, isRight, lefts, partitionEithers, rights)
+import Data.Function (const)
+import Data.Maybe (Maybe (..), maybe)
 
-import           Applicative         (pass)
+import Universum.Applicative (pass)
 
 
 -- | Extracts value from 'Left' or return given default value.

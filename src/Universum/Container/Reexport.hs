@@ -1,6 +1,6 @@
 -- | This module reexports all container related stuff from 'Prelude'.
 
-module Container.Reexport
+module Universum.Container.Reexport
        ( module Data.Hashable
        , module Data.HashMap.Strict
        , module Data.HashSet

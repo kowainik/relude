@@ -2,7 +2,7 @@
 
 -- | Lifted reexports from 'Data.IORef' module.
 
-module Lifted.IORef
+module Universum.Lifted.IORef
        ( IORef
        , atomicModifyIORef
        , atomicModifyIORef'
@@ -14,13 +14,12 @@ module Lifted.IORef
        , writeIORef
        ) where
 
-import qualified Data.IORef          as Ref (atomicModifyIORef, atomicModifyIORef',
-                                             atomicWriteIORef, modifyIORef, modifyIORef',
-                                             newIORef, readIORef, writeIORef)
+import Control.Monad.Trans (MonadIO, liftIO)
+import Data.Function (($), (.))
+import Data.IORef (IORef)
 
-import           Control.Monad.Trans (MonadIO, liftIO)
-import           Data.Function       (($), (.))
-import           Data.IORef          (IORef)
+import qualified Data.IORef as Ref (atomicModifyIORef, atomicModifyIORef', atomicWriteIORef,
+                                    modifyIORef, modifyIORef', newIORef, readIORef, writeIORef)
 
 -- | Lifted version of 'Ref.newIORef'.
 newIORef :: MonadIO m => a -> m (IORef a)

@@ -2,7 +2,7 @@
 
 -- | Monad transformers utilities.
 
-module Monad.Trans
+module Universum.Monad.Trans
        ( -- * Reexports from @Control.Monad.*@
          module Control.Monad.Except
        , module Control.Monad.Reader
@@ -25,19 +25,16 @@ module Monad.Trans
        ) where
 
 -- Monad transformers
-import           Control.Monad.Except         (ExceptT (..), runExceptT)
-import           Control.Monad.Reader         (MonadReader, Reader, ReaderT (..), ask,
-                                               asks, local, reader, runReader)
-import           Control.Monad.State.Strict   (MonadState, State, StateT (..), evalState,
-                                               evalStateT, execState, execStateT, get,
-                                               gets, modify, modify', put, runState,
-                                               state, withState)
-import           Control.Monad.Trans          (MonadIO, MonadTrans, lift, liftIO)
-import           Control.Monad.Trans.Identity (IdentityT (runIdentityT))
-import           Control.Monad.Trans.Maybe    (MaybeT (..), exceptToMaybeT,
-                                               maybeToExceptT)
+import Control.Monad.Except (ExceptT (..), runExceptT)
+import Control.Monad.Reader (MonadReader, Reader, ReaderT (..), ask, asks, local, reader, runReader)
+import Control.Monad.State.Strict (MonadState, State, StateT (..), evalState, evalStateT, execState,
+                                   execStateT, get, gets, modify, modify', put, runState, state,
+                                   withState)
+import Control.Monad.Trans (MonadIO, MonadTrans, lift, liftIO)
+import Control.Monad.Trans.Identity (IdentityT (runIdentityT))
+import Control.Monad.Trans.Maybe (MaybeT (..), exceptToMaybeT, maybeToExceptT)
 
-import           Prelude                      (Functor, flip, fst, snd, (<$>))
+import Prelude (Functor, flip, fst, snd, (<$>))
 
 -- | Shorter and more readable alias for @flip runReaderT@.
 usingReaderT :: r -> ReaderT r m a -> m a

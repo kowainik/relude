@@ -30,96 +30,85 @@ module Universum
        , unsnoc
        ) where
 
-import           Applicative              as X
-import           Bool                     as X
-import           Container                as X
-import           Debug                    as X
-import           Exceptions               as X
-import           Functor                  as X
-import           Lifted                   as X
-import           List                     as X
-import           Monad                    as X
-import           Print                    as X
-import           String                   as X
-import           TypeOps                  as X
-import           VarArg                   as X
+import Universum.Applicative as X
+import Universum.Bool as X
+import Universum.Container as X
+import Universum.Debug as X
+import Universum.Exceptions as X
+import Universum.Functor as X
+import Universum.Lifted as X
+import Universum.List as X
+import Universum.Monad as X
+import Universum.Nub as X
+import Universum.Print as X
+import Universum.String as X
+import Universum.TypeOps as X
+import Universum.VarArg as X
 
-import           Base                     as Base hiding (error, show, showFloat,
-                                                   showList, showSigned, showSignedFloat,
-                                                   showsPrec, undefined)
+import Universum.Base as Base hiding (error, show, showFloat, showList, showSigned, showSignedFloat,
+                               showsPrec, undefined)
 
 -- Maybe'ized version of partial functions
-import           Safe                     as X (atDef, atMay, foldl1May, foldr1May,
-                                                headDef, headMay, initDef, initMay,
-                                                initSafe, lastDef, lastMay, tailDef,
-                                                tailMay, tailSafe)
+import Safe as X (atDef, atMay, foldl1May, foldr1May, headDef, headMay, initDef, initMay, initSafe,
+                  lastDef, lastMay, tailDef, tailMay, tailSafe)
 
 -- Applicatives and Bifunctors and Arrows
-import           Control.Applicative      as X (Alternative (..), Applicative (..),
-                                                Const (..), ZipList (..), liftA, liftA2,
-                                                liftA3, optional, (<**>))
-import           Control.Arrow            as X ((&&&))
-import           Data.Bifunctor           as X (Bifunctor (..))
+import Control.Applicative as X (Alternative (..), Applicative (..), Const (..), ZipList (..),
+                                 liftA, liftA2, liftA3, optional, (<**>))
+import Control.Arrow as X ((&&&))
+import Data.Bifunctor as X (Bifunctor (..))
 
 -- Base typeclasses
-import           Data.Eq                  as X (Eq (..))
-import           Data.Foldable            as X (Foldable, concat, concatMap, foldlM,
-                                                foldrM, maximumBy, minimumBy)
-import           Data.Functor.Identity    as X (Identity (..))
-import           Data.Ord                 as X (Down (..), Ord (..), Ordering (..),
-                                                comparing)
-import           Data.Traversable         as X (Traversable (..), fmapDefault,
-                                                foldMapDefault, forM, mapAccumL,
-                                                mapAccumR)
+import Data.Eq as X (Eq (..))
+import Data.Foldable as X (Foldable, concat, concatMap, foldlM, foldrM, maximumBy, minimumBy)
+import Data.Functor.Identity as X (Identity (..))
+import Data.Ord as X (Down (..), Ord (..), Ordering (..), comparing)
+import Data.Traversable as X (Traversable (..), fmapDefault, foldMapDefault, forM, mapAccumL,
+                              mapAccumR)
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
-import           Data.List.NonEmpty       as X (NonEmpty (..), nonEmpty)
-import           Data.Monoid              as X hiding ((<>))
-import           Data.Semigroup           as X (Option (..), Semigroup (sconcat, stimes, (<>)),
-                                                WrappedMonoid, cycle1, mtimesDefault,
-                                                stimesIdempotent, stimesIdempotentMonoid,
-                                                stimesMonoid)
+import Data.List.NonEmpty as X (NonEmpty (..), nonEmpty)
+import Data.Monoid as X hiding ((<>))
+import Data.Semigroup as X (Option (..), Semigroup (sconcat, stimes, (<>)), WrappedMonoid, cycle1,
+                            mtimesDefault, stimesIdempotent, stimesIdempotentMonoid, stimesMonoid)
 #else
-import           Data.Monoid              as X hiding ((<>))
+import Data.Monoid as X hiding ((<>))
 #endif
 
 -- Deepseq
-import           Control.DeepSeq          as X (NFData (..), deepseq, force, ($!!))
+import Control.DeepSeq as X (NFData (..), deepseq, force, ($!!))
 
 -- Data structures
-import           Data.Tuple               as X (curry, fst, snd, swap, uncurry)
+import Data.Tuple as X (curry, fst, snd, swap, uncurry)
 
 #if ( __GLASGOW_HASKELL__ >= 710 )
-import           Data.Proxy               as X (Proxy (..))
-import           Data.Typeable            as X (Typeable)
-import           Data.Void                as X (Void, absurd, vacuous)
+import Data.Proxy as X (Proxy (..))
+import Data.Typeable as X (Typeable)
+import Data.Void as X (Void, absurd, vacuous)
 #endif
 
 -- Base types
-import           Data.Bits                as X (xor)
-import           Data.Bool                as X (Bool (..), not, otherwise, (&&), (||))
-import           Data.Char                as X (chr)
-import           Data.Int                 as X (Int, Int16, Int32, Int64, Int8)
-import           Data.Word                as X (Word, Word16, Word32, Word64, Word8,
-                                                byteSwap16, byteSwap32, byteSwap64)
+import Data.Bits as X (xor)
+import Data.Bool as X (Bool (..), not, otherwise, (&&), (||))
+import Data.Char as X (chr)
+import Data.Int as X (Int, Int16, Int32, Int64, Int8)
+import Data.Word as X (Word, Word16, Word32, Word64, Word8, byteSwap16, byteSwap32, byteSwap64)
 
-import           Data.Function            as X (const, fix, flip, on, ($), (.))
+import Data.Function as X (const, fix, flip, on, ($), (.))
 
 -- Generics
-import           GHC.Generics             as X (Generic)
+import GHC.Generics as X (Generic)
 
 -- IO
-import           System.IO                as X (FilePath, Handle, IOMode (..), stderr,
-                                                stdin, stdout, withFile)
+import System.IO as X (FilePath, Handle, IOMode (..), stderr, stdin, stdout, withFile)
 
 -- Lenses
-import           Lens.Micro               as X (Lens, Lens', Traversal, Traversal', over,
-                                                set, (%~), (&), (.~), (<&>), (^.), (^..),
-                                                (^?), _1, _2, _3, _4, _5)
-import           Lens.Micro.Mtl           as X (preuse, preview, use, view)
+import Lens.Micro as X (Lens, Lens', Traversal, Traversal', over, set, (%~), (&), (.~), (<&>), (^.),
+                        (^..), (^?), _1, _2, _3, _4, _5)
+import Lens.Micro.Mtl as X (preuse, preview, use, view)
 
 -- For internal usage only
-import qualified Control.Exception.Base   (evaluate)
+import qualified Control.Exception.Base (evaluate)
 
 -- | Renamed version of 'Prelude.id'.
 identity :: a -> a

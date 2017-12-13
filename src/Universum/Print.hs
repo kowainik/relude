@@ -5,7 +5,7 @@
 
 -- | Generalization of 'Prelude.putStr' and 'Prelude.putStrLn' functions.
 
-module Print
+module Universum.Print
        ( Print (..)
        , print
        , putText
@@ -14,9 +14,8 @@ module Print
 
 import Data.Function ((.))
 
-import Monad.Trans (MonadIO, liftIO)
+import Universum.Monad.Trans (MonadIO, liftIO)
 
-import qualified Base
 import qualified Prelude (print, putStr, putStrLn)
 
 import qualified Data.ByteString.Char8 as BS
@@ -27,6 +26,8 @@ import qualified Data.Text.IO as T
 
 import qualified Data.Text.Lazy as TL
 import qualified Data.Text.Lazy.IO as TL
+
+import qualified Universum.Base as Base
 
 -- | Polymorfic over string and lifted to 'MonadIO' printing functions.
 class Print a where

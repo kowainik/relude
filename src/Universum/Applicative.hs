@@ -5,11 +5,11 @@
 -- (see <https://www.stackage.org/haddock/lts-8.9/protolude-0.1.10/Applicative.html protolude version>)
 -- but only convenient ans most used are left.
 
-module Applicative
+module Universum.Applicative
        ( pass
        ) where
 
-import           Control.Applicative (Applicative (pure))
+import Control.Applicative (Applicative (pure))
 
 -- | Shorter alias for @pure ()@.
 --

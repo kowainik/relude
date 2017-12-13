@@ -3,7 +3,7 @@
 
 -- | Convenient functions to work with 'Functor'.
 
-module Functor
+module Universum.Functor
        ( Functor (..)
        , void
        , ($>)
@@ -11,8 +11,8 @@ module Functor
        , (<<$>>)
        ) where
 
-import           Data.Function ((.))
-import           Data.Functor  (Functor (..), void, ($>), (<$>))
+import Data.Function ((.))
+import Data.Functor (Functor (..), void, ($>), (<$>))
 
 -- | Alias for @fmap . fmap@. Convenient to work with two nested 'Functor's.
 --

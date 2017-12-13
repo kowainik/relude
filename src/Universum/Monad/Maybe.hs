@@ -2,7 +2,7 @@
 
 -- | Utility functions to work with 'Data.Maybe' data type as monad.
 
-module Monad.Maybe
+module Universum.Monad.Maybe
        ( module Data.Maybe
 
        , maybeToMonoid
@@ -14,14 +14,14 @@ module Monad.Maybe
        , whenNothingM_
        ) where
 
-import           Data.Maybe          (Maybe (..), catMaybes, fromMaybe, isJust, isNothing,
-                                      mapMaybe, maybe, maybeToList)
+import Data.Maybe (Maybe (..), catMaybes, fromMaybe, isJust, isNothing, mapMaybe, maybe,
+                   maybeToList)
 
-import           Control.Applicative (Applicative, pure)
-import           Control.Monad       (Monad (..))
-import           Data.Monoid         (Monoid (mempty))
+import Control.Applicative (Applicative, pure)
+import Control.Monad (Monad (..))
+import Data.Monoid (Monoid (mempty))
 
-import           Applicative         (pass)
+import Universum.Applicative (pass)
 
 -- | Extracts 'Monoid' value from 'Maybe' returning 'mempty' if 'Nothing'.
 --

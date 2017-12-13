@@ -16,19 +16,19 @@
 
 -- | Type operators for writing convenient type signatures.
 
-module TypeOps
+module Universum.TypeOps
        ( type Each
        , type With
        , type ($)
        ) where
 
 #if __GLASGOW_HASKELL__ <= 710
-import           GHC.Prim              (Constraint)
+import GHC.Prim (Constraint)
 #else
-import           Data.Kind             (Constraint)
+import Data.Kind (Constraint)
 #endif
 
-import           Control.Type.Operator (type ($), type (<+>))
+import Control.Type.Operator (type ($), type (<+>))
 
 -- | Map several constraints over several variables.
 --

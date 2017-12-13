@@ -5,7 +5,7 @@
 
 -- | Type classes for convertion between different string representations.
 
-module String
+module Universum.String
        ( module Data.String
 
          -- * Text
@@ -55,9 +55,8 @@ import Data.Function (id, (.))
 import Data.String (String)
 import Data.Text.Lazy.Builder (toLazyText)
 
-import Functor ((<$>))
+import Universum.Functor ((<$>))
 
-import qualified Base as Base (Show (show))
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Lazy as LB
 import qualified Data.ByteString.Lazy.UTF8 as LBU
@@ -68,6 +67,8 @@ import qualified Data.Text.Encoding.Error as T
 import qualified Data.Text.Lazy as LT
 import qualified Data.Text.Lazy.Encoding as LT
 import qualified Text.Read (readEither)
+
+import qualified Universum.Base as Base (Show (show))
 
 -- | Type synonym for 'Data.Text.Lazy.Text'.
 type LText = LT.Text

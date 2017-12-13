@@ -21,19 +21,20 @@
  * 'unstableNub' has better performance than 'hashNub' but doesn't save the original order.
 -}
 
-module Nub
+module Universum.Nub
        ( hashNub
        , ordNub
        , sortNub
        , unstableNub
        ) where
 
-import           Data.Eq       (Eq)
-import           Data.Hashable (Hashable)
-import           Data.HashSet  as HashSet
-import           Data.Ord      (Ord)
-import qualified Data.Set      as Set
-import           Prelude       ((.))
+import Data.Eq (Eq)
+import Data.Hashable (Hashable)
+import Data.HashSet as HashSet
+import Data.Ord (Ord)
+import Prelude ((.))
+
+import qualified Data.Set as Set
 
 -- | Like 'Prelude.nub' but runs in @O(n * log n)@ time and requires 'Ord'.
 --

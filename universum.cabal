@@ -28,33 +28,34 @@ library
   exposed-modules:
                        Universum
 
-                       Applicative
-                       Base
-                       Bool
-                       Container
-                         Container.Class
-                         Container.Reexport
-                       Debug
-                       Exceptions
-                       Functor
-                       List
-                       Nub
-                       Print
-                       String
-                       TypeOps
-                       Unsafe
-                       VarArg
+                       Universum.Applicative
+                       Universum.Base
+                       Universum.Bool
+                       Universum.Container
+                           Universum.Container.Class
+                           Universum.Container.Reexport
+                       Universum.Debug
+                       Universum.Exceptions
+                       Universum.Functor
+                       Universum.List
+                       Universum.Nub
+                       Universum.Print
+                       Universum.String
+                       Universum.TypeOps
+                       Universum.Unsafe
+                       Universum.VarArg
 
-                       Lifted
-                         Lifted.Concurrent
-                         Lifted.Env
-                         Lifted.File
-                         Lifted.IORef
+                       Universum.Lifted
+                           Universum.Lifted.Concurrent
+                           Universum.Lifted.Env
+                           Universum.Lifted.File
+                           Universum.Lifted.IORef
+                           Universum.Lifted.ST
 
-                       Monad
-                         Monad.Either
-                         Monad.Maybe
-                         Monad.Trans
+                       Universum.Monad
+                         Universum.Monad.Either
+                         Universum.Monad.Maybe
+                         Universum.Monad.Trans
 
   ghc-options:         -Wall -fwarn-implicit-prelude
 

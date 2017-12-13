@@ -4,7 +4,7 @@
 -- Sometimes unavoidable but better don't use them. This module
 -- is not even included in default prelude exports.
 
-module Unsafe
+module Universum.Unsafe
        ( unsafeHead
        , unsafeTail
        , unsafeInit
@@ -13,8 +13,9 @@ module Unsafe
        , unsafeIndex
        ) where
 
-import           Base       (Int)
-import qualified Data.List  as List
+import Universum.Base (Int)
+
+import qualified Data.List as List
 import qualified Data.Maybe as Maybe
 
 -- | Cautionary alias for 'List.head'.

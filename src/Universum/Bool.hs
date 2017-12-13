@@ -3,7 +3,7 @@
 -- | Convenient commonly used and very helpful functions to work with
 -- 'Bool' and also with monads.
 
-module Bool
+module Universum.Bool
        ( bool
        , guard
        , guardM
@@ -14,9 +14,9 @@ module Bool
        , whenM
        ) where
 
-import           Control.Monad (Monad, MonadPlus, guard, unless, when, (>>=))
-import           Data.Bool     (Bool)
-import           Data.Function (flip)
+import Control.Monad (Monad, MonadPlus, guard, unless, when, (>>=))
+import Data.Bool (Bool)
+import Data.Function (flip)
 
 -- | Reversed version of @if-then-else@.
 --

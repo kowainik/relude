@@ -2,7 +2,7 @@
 
 -- | Concurrency useful and common functions.
 
-module Lifted.Concurrent
+module Universum.Lifted.Concurrent
        ( -- * MVar
          MVar
        , newEmptyMVar
@@ -27,21 +27,19 @@ module Lifted.Concurrent
        , STM.writeTVar
        ) where
 
+import Control.Concurrent.MVar (MVar)
+import Control.Concurrent.STM.TVar (TVar)
+import Control.Monad.STM (STM)
+import Control.Monad.Trans (MonadIO, liftIO)
+import Data.Bool (Bool)
+import Data.Function (($), (.))
+import Data.Maybe (Maybe)
 
-import qualified Control.Concurrent.MVar     as CCM (newEmptyMVar, newMVar, putMVar,
-                                                     readMVar, swapMVar, takeMVar,
-                                                     tryPutMVar, tryReadMVar, tryTakeMVar)
-import qualified Control.Concurrent.STM.TVar as STM (modifyTVar', newTVar, newTVarIO,
-                                                     readTVar, readTVarIO, writeTVar)
-import qualified Control.Monad.STM           as STM (atomically)
-
-import           Control.Concurrent.MVar     (MVar)
-import           Control.Concurrent.STM.TVar (TVar)
-import           Control.Monad.STM           (STM)
-import           Control.Monad.Trans         (MonadIO, liftIO)
-import           Data.Bool                   (Bool)
-import           Data.Function               (($), (.))
-import           Data.Maybe                  (Maybe)
+import qualified Control.Concurrent.MVar as CCM (newEmptyMVar, newMVar, putMVar, readMVar, swapMVar,
+                                                 takeMVar, tryPutMVar, tryReadMVar, tryTakeMVar)
+import qualified Control.Concurrent.STM.TVar as STM (modifyTVar', newTVar, newTVarIO, readTVar,
+                                                     readTVarIO, writeTVar)
+import qualified Control.Monad.STM as STM (atomically)
 
 ----------------------------------------------------------------------------
 -- Lifted Control.Concurrent.MVar

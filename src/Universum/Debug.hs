@@ -6,7 +6,7 @@
 -- then warning is generated to remind you about left usages. Also some
 -- functions (and data types) are convenient for prototyping.
 
-module Debug
+module Universum.Debug
        ( undefined
        , error
        , trace
@@ -18,18 +18,17 @@ module Debug
        , Undefined (..)
        ) where
 
-import           Control.Monad    (Monad, return)
-import           Data.Data        (Data)
-import           Data.Text        (Text, unpack)
-import           Data.Typeable    (Typeable)
-import           GHC.Generics     (Generic)
-import           System.IO.Unsafe (unsafePerformIO)
+import Control.Monad (Monad, return)
+import Data.Data (Data)
+import Data.Text (Text, unpack)
+import Data.Typeable (Typeable)
+import GHC.Generics (Generic)
+import System.IO.Unsafe (unsafePerformIO)
 
-import qualified Base             as P
-import qualified Prelude          as P
-import           Print            (Print, putStrLn)
+import Universum.Applicative (pass)
+import Universum.Print (Print, putStrLn)
 
-import           Applicative      (pass)
+import qualified Prelude as P
 
 -- | Generalized over string version of 'Debug.Trace.trace' that leaves warnings.
 {-# WARNING trace "'trace' remains in code" #-}

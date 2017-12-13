@@ -18,7 +18,7 @@
 -- easily forget to do this. For discussion see this topic:
 -- <https://www.reddit.com/r/haskell/comments/60r9hu/proposal_suggest_explicit_type_application_for/ Suggest explicit type application for Foldable length and friends>
 
-module Container.Class
+module Universum.Container.Class
        (
          -- * Foldable-like classes and methods
          Element
@@ -58,6 +58,8 @@ import GHC.Err (errorWithoutStackTrace)
 import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 #endif
 
+import Universum.Applicative (pass)
+
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import qualified Data.List.NonEmpty as NE
 #endif
@@ -86,7 +88,6 @@ import qualified Data.Vector.Primitive as VP
 import qualified Data.Vector.Storable as VS
 import qualified Data.Vector.Unboxed as VU
 
-import Applicative (pass)
 
 ----------------------------------------------------------------------------
 -- Containers (e.g. tuples aren't containers)

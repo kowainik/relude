@@ -7,7 +7,7 @@
 
 -- | Provides operator of variable-arguments function composition.
 
-module VarArg
+module Universum.VarArg
     ( SuperComposition(..)
     ) where
 
