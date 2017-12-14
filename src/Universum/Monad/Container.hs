@@ -8,8 +8,6 @@ module Universum.Monad.Container
        , anyM
        , andM
        , orM
-
-       , (<$!>)
        ) where
 
 import Control.Applicative (Applicative (pure))
@@ -17,7 +15,7 @@ import Data.Function ((.))
 import Data.Traversable (Traversable (traverse))
 import Prelude (Bool (..), Monoid, flip)
 
-import Universum.Base (IO, seq)
+import Universum.Base (IO)
 import Universum.Container (Container, Element, fold, toList)
 import Universum.Functor (fmap)
 import Universum.Monad.Reexport (Monad (..))
@@ -65,14 +63,6 @@ concatForM
     => l a -> (a -> f m) -> f m
 concatForM = flip concatMapM
 {-# INLINE concatForM #-}
-
--- | Stricter version of 'Data.Functor.<$>'.
-(<$!>) :: Monad m => (a -> b) -> m a -> m b
-f <$!> m = do
-  x <- m
-  let z = f x
-  z `seq` return z
-{-# INLINE (<$!>) #-}
 
 -- | Monadic and constrained to 'Container' version of 'Prelude.and'.
 --

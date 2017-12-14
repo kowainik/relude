@@ -1,6 +1,6 @@
 {-# LANGUAGE Safe #-}
 
-module Universum.Functor.Compose
+module Universum.Functor.Fmap
        ( map
        , (<<$>>)
        ) where

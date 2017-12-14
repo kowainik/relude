@@ -41,6 +41,8 @@ module Universum.Monad.Reexport
        , liftM4
        , liftM5
        , ap
+
+       , (<$!>)
        ) where
 
 -- Monad transformers
@@ -60,11 +62,7 @@ import Data.Maybe (Maybe (..), catMaybes, fromMaybe, isJust, isNothing, listToMa
 -- Either
 import Data.Either (Either (..), either, isLeft, isRight, lefts, partitionEithers, rights)
 
-#if __GLASGOW_HASKELL__ >= 710
-import Control.Monad hiding (fail, (<$!>))
-#else
 import Control.Monad hiding (fail)
-#endif
 
 #if __GLASGOW_HASKELL__ >= 800
 import Control.Monad.Fail (MonadFail (..))
@@ -73,11 +71,9 @@ import Prelude (String)
 import Text.ParserCombinators.ReadP (ReadP)
 import Text.ParserCombinators.ReadPrec (ReadPrec)
 
-import qualified Prelude as P (fail)
-#endif
-
-#if __GLASGOW_HASKELL__ < 800
 import Universum.Base (IO)
+
+import qualified Prelude as P (fail)
 
 -- | Class for 'Monad's that can 'fail'.
 -- Copied from 'fail' by Herbert Valerio Riedel (the library is under BSD3).

@@ -12,13 +12,13 @@ module Universum.Monoid
        , maybeToMonoid
        ) where
 
+import Data.Monoid (All (..), Alt (..), Any (..), Dual (..), Endo (..), First (..), Last (..),
+                    Monoid (..), Product (..), Sum (..))
+
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import Data.List.NonEmpty (NonEmpty (..), nonEmpty)
-import Data.Monoid hiding ((<>))
 import Data.Semigroup (Option (..), Semigroup (sconcat, stimes, (<>)), WrappedMonoid, cycle1,
                             mtimesDefault, stimesIdempotent, stimesIdempotentMonoid, stimesMonoid)
-#else
-import Data.Monoid hiding ((<>))
 #endif
 
 import Universum.Monad.Reexport (Maybe, fromMaybe)

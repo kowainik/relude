@@ -41,7 +41,7 @@ library
                        Universum.Exception
                        Universum.Function
                        Universum.Functor
-                           Universum.Functor.Compose
+                           Universum.Functor.Fmap
                            Universum.Functor.Reexport
                        Universum.Lifted
                            Universum.Lifted.Concurrent

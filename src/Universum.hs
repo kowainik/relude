@@ -5,7 +5,7 @@
 -- module to replace default ugly 'Prelude' with better one.
 --
 -- @
---     {-# LANGUAGE NoImplicitPrelude #-}
+--     {-\# LANGUAGE NoImplicitPrelude \#-}
 --
 --     import Universum
 -- @
