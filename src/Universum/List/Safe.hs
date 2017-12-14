@@ -4,24 +4,19 @@
 module Universum.List.Safe
        ( list
        , uncons
-       , unsnoc
 #if ( __GLASGOW_HASKELL__ >= 800 )
        , whenNotNull
        , whenNotNullM
 #endif
        ) where
 
-import Data.Functor (fmap)
-
 #if ( __GLASGOW_HASKELL__ >= 800 )
-import Control.Applicative (Applicative)
-import Control.Monad (Monad (..))
-import Data.List.NonEmpty as X (NonEmpty (..))
-
-import Universum.Applicative (pass)
+import Universum.Applicative (Applicative, pass)
+import Universum.Monad (Monad (..))
+import Universum.Monoid (NonEmpty (..))
 #endif
 
-import Universum.Container (foldr)
+import Universum.Functor (fmap)
 import Universum.Monad (Maybe (..))
 
 -- | Returns default list if given list is empty.
@@ -47,15 +42,6 @@ list def f xs = case xs of
 uncons :: [a] -> Maybe (a, [a])
 uncons []     = Nothing
 uncons (x:xs) = Just (x, xs)
-
--- | Similar to 'uncons' but destructuring list into its last element and
--- everything before it.
-unsnoc :: [x] -> Maybe ([x],x)
-unsnoc = foldr go Nothing
-  where
-    go x mxs = Just (case mxs of
-       Nothing      -> ([], x)
-       Just (xs, e) -> (x:xs, e))
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 -- | Performs given action over 'NonEmpty' list if given list is non empty.

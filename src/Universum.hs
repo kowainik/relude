@@ -31,9 +31,6 @@ module Universum
        , module Universum.TypeOps
        , module Universum.VarArg
 
-         -- * Safe functions
-       , module Safe
-
          -- * Lenses
        , module Lens.Micro
        , module Lens.Micro.Mtl
@@ -59,10 +56,6 @@ import Universum.VarArg
 
 import Universum.Base hiding (error, show, showFloat, showList, showSigned, showSignedFloat,
                        showsPrec, undefined)
-
--- Maybe'ized version of partial functions
-import Safe (atDef, atMay, foldl1May, foldr1May, headDef, headMay, initDef, initMay, initSafe,
-             lastDef, lastMay, tailDef, tailMay, tailSafe)
 
 -- Lenses
 import Lens.Micro (Lens, Lens', Traversal, Traversal', over, set, (%~), (&), (.~), (<&>), (^.),

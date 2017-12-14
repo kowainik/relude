@@ -241,9 +241,9 @@ class ToList t => Container t where
     find :: (Element t -> Bool) -> t -> Maybe (Element t)
     find p = getFirst . foldMap (\ x -> First (if p x then Just x else Nothing))
 
-    head :: t -> Maybe (Element t)
-    head = foldr (\x _ -> Just x) Nothing
-    {-# INLINE head #-}
+    safeHead :: t -> Maybe (Element t)
+    safeHead = foldr (\x _ -> Just x) Nothing
+    {-# INLINE safeHead #-}
 
 -- | To save backwards compatibility with previous naming.
 type NontrivialContainer t = Container t
@@ -311,8 +311,8 @@ instance Container T.Text where
     {-# INLINE any #-}
     find = T.find
     {-# INLINE find #-}
-    head = fmap fst . T.uncons
-    {-# INLINE head #-}
+    safeHead = fmap fst . T.uncons
+    {-# INLINE safeHead #-}
 
 instance Container TL.Text where
     foldr = TL.foldr
@@ -340,8 +340,8 @@ instance Container TL.Text where
     {-# INLINE any #-}
     find = TL.find
     {-# INLINE find #-}
-    head = fmap fst . TL.uncons
-    {-# INLINE head #-}
+    safeHead = fmap fst . TL.uncons
+    {-# INLINE safeHead #-}
 
 instance Container BS.ByteString where
     foldr = BS.foldr
@@ -370,8 +370,8 @@ instance Container BS.ByteString where
     {-# INLINE any #-}
     find = BS.find
     {-# INLINE find #-}
-    head = fmap fst . BS.uncons
-    {-# INLINE head #-}
+    safeHead = fmap fst . BS.uncons
+    {-# INLINE safeHead #-}
 
 instance Container BSL.ByteString where
     foldr = BSL.foldr
@@ -400,8 +400,8 @@ instance Container BSL.ByteString where
     {-# INLINE any #-}
     find = BSL.find
     {-# INLINE find #-}
-    head = fmap fst . BSL.uncons
-    {-# INLINE head #-}
+    safeHead = fmap fst . BSL.uncons
+    {-# INLINE safeHead #-}
 
 instance Container IS.IntSet where
     foldr = IS.foldr
@@ -418,8 +418,8 @@ instance Container IS.IntSet where
     {-# INLINE maximum #-}
     minimum = IS.findMin
     {-# INLINE minimum #-}
-    head = fmap fst . IS.minView
-    {-# INLINE head #-}
+    safeHead = fmap fst . IS.minView
+    {-# INLINE safeHead #-}
 
 ----------------------------------------------------------------------------
 -- Wrapped List
@@ -473,8 +473,8 @@ instance ToList (f a) => Container (WrappedList f a) where
     {-# INLINE or #-}
     find p = find p . toList
     {-# INLINE find #-}
-    head = head . toList
-    {-# INLINE head #-}
+    safeHead = safeHead . toList
+    {-# INLINE safeHead #-}
 
 
 ----------------------------------------------------------------------------

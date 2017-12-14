@@ -9,6 +9,11 @@
 * [#81](https://github.com/serokell/universum/issues/81):
   Make `putText` and `putLText` to be versions of `putStr`.
   Add `putTextLn` and `putLTextLn` -- versions of `putStrLn`.
+* [#5](https://github.com/serokell/universum/issues/5):
+  Add safe versions of `head`, `tail`, `init`, `last` functions for `NonEmpty` list.
+  Old `head` (which returns `Maybe`) is renamed to `safeHead`.
+  Reexports from `safe` are removed.
+* Remove `unsnoc` (this function is very slow and shouldn't be used).
 
 0.9.1
 =====
