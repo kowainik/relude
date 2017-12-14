@@ -25,8 +25,6 @@ module Universum.Container.Class
        , Container(..)
        , NontrivialContainer
 
-       , WrappedList (..)
-
        , sum
        , product
 
@@ -420,62 +418,6 @@ instance Container IS.IntSet where
     {-# INLINE minimum #-}
     safeHead = fmap fst . IS.minView
     {-# INLINE safeHead #-}
-
-----------------------------------------------------------------------------
--- Wrapped List
-----------------------------------------------------------------------------
--- | This can be useful if you want to use 'Container' methods for your data type
--- but you don't want to implement all methods of this type class for that.
-newtype WrappedList f a = WrappedList (f a)
-
-type instance Element (WrappedList f a) = a
-
-instance ToList (f a) => ToList (WrappedList f a) where
-    toList (WrappedList l) = toList l
-    {-# INLINE toList #-}
-    null (WrappedList l) = null l
-    {-# INLINE null #-}
-
-instance ToList (f a) => Container (WrappedList f a) where
-    foldMap f = foldMap f . toList
-    {-# INLINE foldMap #-}
-    fold = fold . toList
-    {-# INLINE fold #-}
-    foldr f z = foldr f z . toList
-    {-# INLINE foldr #-}
-    foldr' f z = foldr' f z . toList
-    {-# INLINE foldr' #-}
-    foldl f z = foldl f z . toList
-    {-# INLINE foldl #-}
-    foldl' f z = foldl' f z . toList
-    {-# INLINE foldl' #-}
-    foldr1 f = foldr1 f . toList
-    {-# INLINE foldr1 #-}
-    foldl1 f = foldl1 f . toList
-    {-# INLINE foldl1 #-}
-    length = length . toList
-    {-# INLINE length #-}
-    elem x = elem x . toList
-    {-# INLINE elem #-}
-    notElem x = notElem x . toList
-    {-# INLINE notElem #-}
-    maximum = maximum . toList
-    {-# INLINE maximum #-}
-    minimum = minimum . toList
-    {-# INLINE minimum #-}
-    all p = all p . toList
-    {-# INLINE all #-}
-    any p = any p . toList
-    {-# INLINE any #-}
-    and = and . toList
-    {-# INLINE and #-}
-    or = or . toList
-    {-# INLINE or #-}
-    find p = find p . toList
-    {-# INLINE find #-}
-    safeHead = safeHead . toList
-    {-# INLINE safeHead #-}
-
 
 ----------------------------------------------------------------------------
 -- Derivative functions

@@ -16,6 +16,8 @@
 * Remove `unsnoc` (this function is very slow and shouldn't be used).
 * [#88](https://github.com/serokell/universum/issues/88):
   Add `HasCallStack =>` to `error` and `undefined` functions.
+* [#58](https://github.com/serokell/universum/issues/58):
+  Remove `WrappedList` `newtype` because it's not needed anymore (because issue #58 can't be fixed in neat way).
 
 0.9.1
 =====
