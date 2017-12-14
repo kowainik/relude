@@ -37,6 +37,7 @@ module Universum
        ) where
 
 import Universum.Applicative
+import Universum.Base
 import Universum.Bool
 import Universum.Container
 import Universum.Debug
@@ -53,9 +54,6 @@ import Universum.Print
 import Universum.String
 import Universum.TypeOps
 import Universum.VarArg
-
-import Universum.Base hiding (error, show, showFloat, showList, showSigned, showSignedFloat,
-                       showsPrec, undefined)
 
 -- Lenses
 import Lens.Micro (Lens, Lens', Traversal, Traversal', over, set, (%~), (&), (.~), (<&>), (^.),

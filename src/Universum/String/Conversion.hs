@@ -42,7 +42,7 @@ import qualified Data.Text.Lazy as LT
 import qualified Data.Text.Lazy.Encoding as LT
 import qualified Text.Read (readEither)
 
-import qualified Universum.Base as Base (Show (show))
+import qualified GHC.Show as Show (Show (show))
 
 -- | Type synonym for 'Data.Text.Lazy.Text'.
 type LText = LT.Text
@@ -154,13 +154,13 @@ readEither :: (ToString a, Read b) => a -> Either Text b
 readEither = first toText . Text.Read.readEither . toString
 
 -- | Generalized version of 'Prelude.show'.
-show :: forall b a . (Base.Show a, IsString b) => a -> b
-show x = fromString (Base.show x)
-{-# SPECIALIZE show :: Base.Show  a => a -> Text  #-}
-{-# SPECIALIZE show :: Base.Show  a => a -> LText  #-}
-{-# SPECIALIZE show :: Base.Show  a => a -> ByteString  #-}
-{-# SPECIALIZE show :: Base.Show  a => a -> LByteString  #-}
-{-# SPECIALIZE show :: Base.Show  a => a -> String  #-}
+show :: forall b a . (Show.Show a, IsString b) => a -> b
+show x = fromString (Show.show x)
+{-# SPECIALIZE show :: Show.Show  a => a -> Text  #-}
+{-# SPECIALIZE show :: Show.Show  a => a -> LText  #-}
+{-# SPECIALIZE show :: Show.Show  a => a -> ByteString  #-}
+{-# SPECIALIZE show :: Show.Show  a => a -> LByteString  #-}
+{-# SPECIALIZE show :: Show.Show  a => a -> String  #-}
 
 -- | Functions to show pretty output for buildable data types.
 pretty :: Buildable a => a -> Text

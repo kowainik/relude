@@ -29,7 +29,6 @@ module Universum.Base
 #endif
        , module GHC.Base
        , module GHC.Enum
-       , module GHC.Err
        , module GHC.Exts
        , module GHC.Float
        , module GHC.Generics
@@ -77,13 +76,12 @@ import Data.Void (Void, absurd, vacuous)
 
 import GHC.Base (String, asTypeOf, maxInt, minInt, ord, seq, (++))
 import GHC.Enum (Bounded (..), Enum (..), boundedEnumFrom, boundedEnumFromThen)
-import GHC.Err (error, undefined)
 import GHC.Exts (Constraint, FunPtr, Ptr)
-import GHC.Float (Double (..), Float (..), Floating (..), showFloat, showSignedFloat)
+import GHC.Float (Double (..), Float (..), Floating (..))
 import GHC.Generics (Generic)
 import GHC.Num (Integer, Num (..), subtract)
-import GHC.Real hiding ((%))
-import GHC.Show (Show (..))
+import GHC.Real hiding (showSigned, (%))
+import GHC.Show (Show)
 #if MIN_VERSION_base(4,10,0)
 import GHC.TypeNats (CmpNat, KnownNat, Nat, SomeNat (..), natVal, someNatVal)
 #else
