@@ -1,5 +1,5 @@
-{-# LANGUAGE CPP  #-}
-{-# LANGUAGE Safe #-}
+{-# LANGUAGE CPP         #-}
+{-# LANGUAGE Trustworthy #-}
 
 module Universum.Monad.Reexport
        ( -- * Reexport transformers
@@ -69,7 +69,7 @@ import Control.Monad hiding (fail)
 #if __GLASGOW_HASKELL__ >= 800
 import Control.Monad.Fail (MonadFail (..))
 #else
-import Prelude (Maybe (Nothing), String)
+import Prelude (String)
 import Text.ParserCombinators.ReadP (ReadP)
 import Text.ParserCombinators.ReadPrec (ReadPrec)
 
@@ -77,6 +77,8 @@ import qualified Prelude as P (fail)
 #endif
 
 #if __GLASGOW_HASKELL__ < 800
+import Universum.Base (IO)
+
 -- | Class for 'Monad's that can 'fail'.
 -- Copied from 'fail' by Herbert Valerio Riedel (the library is under BSD3).
 class Monad m => MonadFail m where
