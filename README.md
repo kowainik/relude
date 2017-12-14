@@ -67,7 +67,7 @@ While creating and maintaining a custom prelude, we are pursuing the following g
    as it's done in [`classy-prelude`](https://github.com/snoyberg/mono-traversable).
    Instead, we reexport common and well-known things from `base` and some other
    libraries used in everyday production programming in _Haskell_.
-   > **Note**: well, we did end up inventing something new — but just a little bit.
+   > **Note**: well, we did end up inventing something new.
 4. Export more useful and commonly used functions. [Hello, my name is Dmitry. I was
    coding _Haskell_ for 3 years but still hoogling which module `liftIO` comes from.](https://twitter.com/magnars/status/834683466130345984)
    Things like `liftIO`, `ReaderT` type, `MVar`-related functions have unambiguous names,
@@ -79,7 +79,7 @@ Unlike `protolude`, we are:
 1. Not trying to be as general as possible (thus we don't export much from
    [`GHC.Generics`](https://github.com/sdiehl/protolude/blob/41710698eedc66fb0bfc5623d3c3a672421fbab5/src/Protolude.hs#L365)).
 2. Not trying to maintain every version of `ghc` compiler (only the
-   [latest 3](https://github.com/serokell/universum/blob/f2ccf8afd862e37ccd204c0ef9efde48a05c2d29/.travis.yml#L3)).
+   [latest 3](https://github.com/serokell/universum/blob/b6353285859e9ed3544bddbf55d70237330ad64a/.travis.yml#L15)
 3. Trying to make writing production code easier (see
    [enhancements and fixes](https://github.com/serokell/universum/issues)).
 
@@ -116,9 +116,8 @@ Gotchas
 -------
 
 * `id` is renamed to `identity` (because it's nice to be able to use `id` as a variable name).
-* `head` returns `Maybe`.
-* `tail`, `last`, `init`, `(!!)` are missing. Use `tailMay/Def/Safe` or import
-  `unsafe(Index|Head|Tail|Init|Last)` from `Unsafe` if you need them.
+* `head`, `tail`, `last`, `init` work with `NonEmpty a` instead of `[a]`.
+* Safe analogue for `head` function: `safeHead :: [a] -> Maybe a`.
 * `undefined` triggers a compiler warning, which is probably not what you want. Either use `throwIO`, `Except`, or `error`.
 * `map` is `fmap` now.
 * `sortOn` is available without import. This function efficiently sorts a list based on some
@@ -134,14 +133,14 @@ Gotchas
   `Foldable` generalization is useful but
   [potentially error-prone](https://www.reddit.com/r/haskell/comments/60r9hu/proposal_suggest_explicit_type_application_for/).
   Instead we created our own fully compatible with `Foldable`
-  [`Container` type class](https://github.com/serokell/universum/blob/54a742c10720f11c739f2d268365d723924b83a9/src/Containers.hs)
+  [`Container` type class](https://github.com/serokell/universum/blob/b6353285859e9ed3544bddbf55d70237330ad64a/src/Universum/Container/Class.hs#L180)
   but that restricts the usage of functions like `length` over `Maybe`, `Either`, `Identity` and tuples.
   We're also using _GHC 8_ feature of
   [custom compile-time errors](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#custom-compile-time-errors)
   to produce
   [more helpful messages](https://github.com/serokell/universum/blob/54a742c10720f11c739f2d268365d723924b83a9/src/Containers.hs#L474).
 * As a consequence of previous point, some functions like `traverse_`, `forM_`, `sequenceA_`, etc.
-  are generalized over `Container` and `NonTrivialContainer` type classes.
+  are generalized over `Container` type classes.
 * `error` takes `Text`.
 
 
@@ -162,16 +161,7 @@ Then, some commonly used types: `Map/HashMap/IntMap`, `Set/HashSet/IntSet`, `Seq
 `deepseq` is exported. For instance, if you want to force deep evaluation of some value (in IO),
 you can write `evaluateNF a`. WHNF evaluation is possible with `evaluateWHNF a`.
 
-We also reexport big chunks of these libraries: `mtl`, `stm`, `safe`, `microlens`, `microlens-mtl`.
-
-More precisely about functions from [`safe`](https://hackage.haskell.org/package/safe):
-we bring into scope safe variants of common list/`Maybe` functions from base.
-
-* `(head|tail|last|at)May` return `Maybe` instead of failing.
-* `(head|init|last|at)Def` let you specify a default value in case of failure.
-* `(init|tail)Safe` return an empty list in case of failure.
-
-However, there's still a [pending issue](https://github.com/serokell/universum/issues/5) about some enhancements.
+We also reexport big chunks of these libraries: `mtl`, `stm`, `microlens`, `microlens-mtl`.
 
 [`Bifunctor`](http://hackage.haskell.org/package/base-4.9.1.0/docs/Data-Bifunctor.html)
 type class with useful instances is exported.
@@ -205,7 +195,7 @@ What's new?
 
 Finally, we can move to part describing the new cool features we bring with `universum`.
 
-* `uncons` and `unsnoc` split a list at the first/last element.
+* `uncons` split a list at the first element.
 * `ordNub` and `sortNub` are _O(n log n)_ versions of `nub` (which is quadratic)
   and `hashNub` and `unstableNub` are almost _O(n)_ versions of `nub`.
 * `(&)` – reverse application. `x & f & g` instead of `g $ f $ x` is useful sometimes.

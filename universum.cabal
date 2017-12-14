@@ -7,9 +7,9 @@ license:             MIT
 license-file:        LICENSE
 author:              Stephen Diehl, @serokell
 maintainer:          Serokell <hi@serokell.io>
-copyright:           2016-2016 Stephen Diehl, 2016-2017 Serokell
+copyright:           2016 Stephen Diehl, 2016-2017 Serokell
 category:            Prelude
-stability:           well...
+stability:           stable
 build-type:          Simple
 extra-source-files:  CHANGES.md
 cabal-version:       >=1.10

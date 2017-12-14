@@ -17,7 +17,11 @@
 * [#88](https://github.com/serokell/universum/issues/88):
   Add `HasCallStack =>` to `error` and `undefined` functions.
 * [#58](https://github.com/serokell/universum/issues/58):
-  Remove `WrappedList` `newtype` because it's not needed anymore (because issue #58 can't be fixed in neat way).
+  Make `Element` type family be associated type family.
+  Remove `{-# OVERLAPPABLE #-}` instance for `ToList` and `Container`. Add default instances for basic types.
+  Remove `WrappedList` `newtype` because it's not needed anymore.
+* [#56](https://github.com/serokell/universum/issues/56):
+  Make `elem` and `notElem` faster for `Set` and `HashSet` by introducing `ElementConstraint` associated type family.
 
 0.9.1
 =====
