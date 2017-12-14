@@ -1,18 +1,21 @@
 {-# LANGUAGE ExplicitForAll      #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-import           Control.DeepSeq        (NFData)
-import           Control.Monad.Identity (Identity (..))
-import           Criterion.Main         (Benchmark, bench, bgroup, defaultMain, nf)
-import           Data.Hashable          (Hashable)
-import           Data.List              (group, head, nub, sort, zip5)
-import qualified Data.List.NonEmpty     as NonEmpty
-import           Data.Text              (Text)
-import qualified Data.Text              as T
+module Main where
 
-import           Monad                  (concatMapM)
-import           Nub                    (hashNub, ordNub, sortNub, unstableNub)
-import           VarArg                 ((...))
+import Control.DeepSeq (NFData)
+import Control.Monad.Identity (Identity (..))
+import Criterion.Main (Benchmark, bench, bgroup, defaultMain, nf)
+import Data.Hashable (Hashable)
+import Data.List (group, head, nub, sort, zip5)
+import Data.Text (Text)
+
+import Universum.Monad (concatMapM)
+import Universum.Nub (hashNub, ordNub, sortNub, unstableNub)
+import Universum.VarArg ((...))
+
+import qualified Data.List.NonEmpty as NonEmpty
+import qualified Data.Text as T
 
 main :: IO ()
 main = defaultMain

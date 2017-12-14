@@ -28,33 +28,45 @@ library
   exposed-modules:
                        Universum
 
-                       Applicative
-                       Base
-                       Bool
-                       Container
-                         Container.Class
-                         Container.Reexport
-                       Debug
-                       Exceptions
-                       Functor
-                       List
-                       Nub
-                       Print
-                       String
-                       TypeOps
-                       Unsafe
-                       VarArg
-
-                       Lifted
-                         Lifted.Concurrent
-                         Lifted.Env
-                         Lifted.File
-                         Lifted.IORef
-
-                       Monad
-                         Monad.Either
-                         Monad.Maybe
-                         Monad.Trans
+                       Universum.Applicative
+                       Universum.Base
+                       Universum.Bool
+                           Universum.Bool.Guard
+                           Universum.Bool.Reexport
+                       Universum.Container
+                           Universum.Container.Class
+                           Universum.Container.Reexport
+                       Universum.Debug
+                       Universum.DeepSeq
+                       Universum.Exception
+                       Universum.Function
+                       Universum.Functor
+                           Universum.Functor.Fmap
+                           Universum.Functor.Reexport
+                       Universum.Lifted
+                           Universum.Lifted.Concurrent
+                           Universum.Lifted.Env
+                           Universum.Lifted.File
+                           Universum.Lifted.IORef
+                           Universum.Lifted.ST
+                       Universum.List
+                           Universum.List.Reexport
+                           Universum.List.Safe
+                       Universum.Monad
+                           Universum.Monad.Container
+                           Universum.Monad.Either
+                           Universum.Monad.Maybe
+                           Universum.Monad.Reexport
+                           Universum.Monad.Trans
+                       Universum.Monoid
+                       Universum.Nub
+                       Universum.Print
+                       Universum.String
+                           Universum.String.Conversion
+                           Universum.String.Reexport
+                       Universum.TypeOps
+                       Universum.Unsafe
+                       Universum.VarArg
 
   ghc-options:         -Wall -fwarn-implicit-prelude
 
