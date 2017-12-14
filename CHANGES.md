@@ -1,3 +1,15 @@
+1.0.0
+=====
+
+* [#90](https://github.com/serokell/universum/issues/90):
+  Improve project structure.
+* [#89](https://github.com/serokell/universum/issues/89):
+  Add export of `Universum.Nub` module to `Universum`.
+* Add `listToMaybe` to `Universum.Monad.Reexport`.
+* [#81](https://github.com/serokell/universum/issues/81):
+  Make `putText` and `putLText` to be versions of `putStr`.
+  Add `putTextLn` and `putLTextLn` -- versions of `putStrLn`.
+
 0.9.1
 =====
 
