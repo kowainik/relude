@@ -14,6 +14,8 @@
   Old `head` (which returns `Maybe`) is renamed to `safeHead`.
   Reexports from `safe` are removed.
 * Remove `unsnoc` (this function is very slow and shouldn't be used).
+* [#88](https://github.com/serokell/universum/issues/88):
+  Add `HasCallStack =>` to `error` and `undefined` functions.
 
 0.9.1
 =====
