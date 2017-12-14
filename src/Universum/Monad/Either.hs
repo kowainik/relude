@@ -3,8 +3,7 @@
 -- | Utilites to work with @Either@ data type.
 
 module Universum.Monad.Either
-       ( module Data.Either
-       , fromLeft
+       ( fromLeft
        , fromRight
        , maybeToLeft
        , maybeToRight
@@ -18,11 +17,11 @@ module Universum.Monad.Either
 
 import Control.Applicative (Applicative)
 import Control.Monad (Monad (..))
-import Data.Either (Either (..), either, isLeft, isRight, lefts, partitionEithers, rights)
 import Data.Function (const)
 import Data.Maybe (Maybe (..), maybe)
 
 import Universum.Applicative (pass)
+import Universum.Monad.Reexport (Either (..), either)
 
 
 -- | Extracts value from 'Left' or return given default value.

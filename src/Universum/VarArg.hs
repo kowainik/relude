@@ -8,8 +8,8 @@
 -- | Provides operator of variable-arguments function composition.
 
 module Universum.VarArg
-    ( SuperComposition(..)
-    ) where
+       ( SuperComposition(..)
+       ) where
 
 class SuperComposition a b c | a b -> c where
     -- | Allows to apply function to result of another function with multiple

@@ -1,15 +1,16 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE Safe              #-}
+{-# LANGUAGE Safe #-}
 
 -- | Convenient utils to work with 'Applicative'. There were more functions in this module
 -- (see <https://www.stackage.org/haddock/lts-8.9/protolude-0.1.10/Applicative.html protolude version>)
 -- but only convenient ans most used are left.
 
 module Universum.Applicative
-       ( pass
+       ( module Control.Applicative
+       , pass
        ) where
 
-import Control.Applicative (Applicative (pure))
+import Control.Applicative (Alternative (..), Applicative (..), Const (..), ZipList (..), liftA2,
+                            liftA3, optional, (<**>))
 
 -- | Shorter alias for @pure ()@.
 --

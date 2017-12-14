@@ -5,9 +5,8 @@
 -- | Re-exports most useful functionality from 'safe-exceptions'. Also
 -- provides some functions to work with exceptions over 'MonadError'.
 
-module Universum.Exceptions
+module Universum.Exception
        ( module Control.Exception.Safe
-
        , note
        ) where
 

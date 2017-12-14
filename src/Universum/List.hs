@@ -1,57 +1,11 @@
-{-# LANGUAGE CPP         #-}
-{-# LANGUAGE Trustworthy #-}
+{-# LANGUAGE Safe #-}
 
 -- | Utility functions to work with lists.
 
 module Universum.List
-       ( module Data.List
-
-       , list
-       , sortWith
-#if ( __GLASGOW_HASKELL__ >= 800 )
-       , whenNotNull
-       , whenNotNullM
-#endif
+       ( module Universum.List.Reexport
+       , module Universum.List.Safe
        ) where
 
-import Data.List (break, cycle, drop, dropWhile, filter, genericDrop, genericLength,
-                  genericReplicate, genericSplitAt, genericTake, group, inits, intercalate,
-                  intersperse, isPrefixOf, iterate, permutations, repeat, replicate, reverse, scanl,
-                  scanr, sort, sortBy, sortBy, sortOn, splitAt, subsequences, tails, take,
-                  takeWhile, transpose, unfoldr, unzip, unzip3, zip, zip3, zipWith)
-
-import Data.Functor (fmap)
-import GHC.Exts (sortWith)
-
-#if ( __GLASGOW_HASKELL__ >= 800 )
-import Control.Applicative (Applicative)
-import Control.Monad (Monad (..))
-import Data.List.NonEmpty as X (NonEmpty (..))
-
-import Universum.Applicative (pass)
-#endif
-
--- | Returns default list if given list is empty.
--- Otherwise applies given function to every element.
---
--- >>> list [True] even []
--- [True]
--- >>> list [True] even [1..5]
--- [False,True,False,True,False]
-list :: [b] -> (a -> b) -> [a] -> [b]
-list def f xs = case xs of
-    [] -> def
-    _  -> fmap f xs
-
-#if ( __GLASGOW_HASKELL__ >= 800 )
--- | Performs given action over 'NonEmpty' list if given list is non empty.
-whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f ()
-whenNotNull []     _ = pass
-whenNotNull (x:xs) f = f (x :| xs)
-{-# INLINE whenNotNull #-}
-
--- | Monadic version of 'whenNotNull'.
-whenNotNullM :: Monad m => m [a] -> (NonEmpty a -> m ()) -> m ()
-whenNotNullM ml f = ml >>= \l -> whenNotNull l f
-{-# INLINE whenNotNullM #-}
-#endif
+import Universum.List.Reexport
+import Universum.List.Safe

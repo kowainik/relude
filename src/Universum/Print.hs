@@ -14,7 +14,7 @@ module Universum.Print
 
 import Data.Function ((.))
 
-import Universum.Monad.Trans (MonadIO, liftIO)
+import Universum.Monad.Reexport (MonadIO, liftIO)
 
 import qualified Prelude (print, putStr, putStrLn)
 

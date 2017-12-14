@@ -7,7 +7,7 @@
 -- functions (and data types) are convenient for prototyping.
 
 module Universum.Debug
-       ( undefined
+       ( Undefined (..)
        , error
        , trace
        , traceM
@@ -15,7 +15,7 @@ module Universum.Debug
        , traceShow
        , traceShowId
        , traceShowM
-       , Undefined (..)
+       , undefined
        ) where
 
 import Control.Monad (Monad, return)

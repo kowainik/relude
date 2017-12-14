@@ -9,6 +9,7 @@ module Universum.Container.Reexport
        , module Data.Map.Strict
        , module Data.Sequence
        , module Data.Set
+       , module Data.Tuple
        , module Data.Vector
        ) where
 
@@ -20,4 +21,5 @@ import Data.IntSet (IntSet)
 import Data.Map.Strict (Map)
 import Data.Sequence (Seq)
 import Data.Set (Set)
+import Data.Tuple (curry, fst, snd, swap, uncurry)
 import Data.Vector (Vector)

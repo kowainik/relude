@@ -19,8 +19,7 @@
 -- <https://www.reddit.com/r/haskell/comments/60r9hu/proposal_suggest_explicit_type_application_for/ Suggest explicit type application for Foldable length and friends>
 
 module Universum.Container.Class
-       (
-         -- * Foldable-like classes and methods
+       ( -- * Foldable-like classes and methods
          Element
        , ToList(..)
        , Container(..)

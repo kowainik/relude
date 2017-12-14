@@ -3,10 +3,7 @@
 -- | Utility functions to work with 'Data.Maybe' data type as monad.
 
 module Universum.Monad.Maybe
-       ( module Data.Maybe
-
-       , maybeToMonoid
-       , whenJust
+       ( whenJust
        , whenJustM
        , whenNothing
        , whenNothing_
@@ -14,23 +11,8 @@ module Universum.Monad.Maybe
        , whenNothingM_
        ) where
 
-import Data.Maybe (Maybe (..), catMaybes, fromMaybe, isJust, isNothing, mapMaybe, maybe,
-                   maybeToList)
-
-import Control.Applicative (Applicative, pure)
-import Control.Monad (Monad (..))
-import Data.Monoid (Monoid (mempty))
-
-import Universum.Applicative (pass)
-
--- | Extracts 'Monoid' value from 'Maybe' returning 'mempty' if 'Nothing'.
---
--- >>> maybeToMonoid (Just [1,2,3] :: Maybe [Int])
--- [1,2,3]
--- >>> maybeToMonoid (Nothing :: Maybe [Int])
--- []
-maybeToMonoid :: Monoid m => Maybe m -> m
-maybeToMonoid = fromMaybe mempty
+import Universum.Applicative (Applicative, pass, pure)
+import Universum.Monad.Reexport (Maybe (..), Monad (..))
 
 -- | Specialized version of 'for_' for 'Maybe'. It's used for code readability.
 -- Also helps to avoid space leaks:
