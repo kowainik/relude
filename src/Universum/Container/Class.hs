@@ -22,7 +22,6 @@ module Universum.Container.Class
        ( -- * Foldable-like classes and methods
          ToList    (..)
        , Container (..)
-       , NontrivialContainer
 
        , sum
        , product
@@ -118,6 +117,7 @@ class ToList t where
     toList :: t -> [Element t]
     default toList :: (Foldable f, t ~ f a, Element t ~ a) => t -> [Element t]
     toList = Foldable.toList
+    {-# INLINE toList #-}
 
     -- | Checks whether container is empty.
     --
@@ -127,6 +127,7 @@ class ToList t where
     -- False
     null :: t -> Bool
     null = List.null . toList
+    {-# INLINE null #-}
 
 ----------------------------------------------------------------------------
 -- Instances for monomorphic containers
@@ -205,19 +206,54 @@ instance ToList (Vector a)
 -- | A class for 'ToList's that aren't trivial like 'Maybe' (e.g. can hold
 -- more than one value)
 class ToList t => Container t where
+    foldr :: (Element t -> b -> b) -> b -> t -> b
+    default foldr :: (Foldable f, t ~ f a, Element t ~ a) => (Element t -> b -> b) -> b -> t -> b
+    foldr = Foldable.foldr
+    {-# INLINE foldr #-}
+
+    foldl :: (b -> Element t -> b) -> b -> t -> b
+    default foldl :: (Foldable f, t ~ f a, Element t ~ a) => (b -> Element t -> b) -> b -> t -> b
+    foldl = Foldable.foldl
+    {-# INLINE foldl #-}
+
+    foldl' :: (b -> Element t -> b) -> b -> t -> b
+    default foldl' :: (Foldable f, t ~ f a, Element t ~ a) => (b -> Element t -> b) -> b -> t -> b
+    foldl' = Foldable.foldl'
+    {-# INLINE foldl' #-}
+
+    length :: t -> Int
+    default length :: (Foldable f, t ~ f a, Element t ~ a) => t -> Int
+    length = Foldable.length
+    {-# INLINE length #-}
+
+    elem :: Eq (Element t) => Element t -> t -> Bool
+    default elem :: (Foldable f, t ~ f a, Element t ~ a, Eq (Element t)) => Element t -> t -> Bool
+    elem = Foldable.elem
+    {-# INLINE elem #-}
+
+    maximum :: Ord (Element t) => t -> Element t
+    default maximum :: (Foldable f, t ~ f a, Element t ~ a, Ord (Element t)) => t -> Element t
+    maximum = Foldable.maximum
+    {-# INLINE maximum #-}
+
+    minimum :: Ord (Element t) => t -> Element t
+    default minimum :: (Foldable f, t ~ f a, Element t ~ a, Ord (Element t)) => t -> Element t
+    minimum = Foldable.minimum
+    {-# INLINE minimum #-}
+
     foldMap :: Monoid m => (Element t -> m) -> t -> m
     foldMap f = foldr (mappend . f) mempty
     {-# INLINE foldMap #-}
 
     fold :: Monoid (Element t) => t -> Element t
     fold = foldMap id
+    {-# INLINE fold #-}
 
-    foldr :: (Element t -> b -> b) -> b -> t -> b
     foldr' :: (Element t -> b -> b) -> b -> t -> b
     foldr' f z0 xs = foldl f' id xs z0
       where f' k x z = k $! f x z
-    foldl :: (b -> Element t -> b) -> b -> t -> b
-    foldl' :: (b -> Element t -> b) -> b -> t -> b
+    {-# INLINE foldr' #-}
+
     foldr1 :: (Element t -> Element t -> Element t) -> t -> Element t
     foldr1 f xs =
 #if __GLASGOW_HASKELL__ >= 800
@@ -231,6 +267,8 @@ class ToList t => Container t where
         mf x m = Just (case m of
                            Nothing -> x
                            Just y  -> f x y)
+    {-# INLINE foldr1 #-}
+
     foldl1 :: (Element t -> Element t -> Element t) -> t -> Element t
     foldl1 f xs =
 #if __GLASGOW_HASKELL__ >= 800
@@ -244,74 +282,37 @@ class ToList t => Container t where
         mf m y = Just (case m of
                            Nothing -> y
                            Just x  -> f x y)
-
-    length :: t -> Int
-
-    elem :: Eq (Element t) => Element t -> t -> Bool
+    {-# INLINE foldl1 #-}
 
     notElem :: Eq (Element t) => Element t -> t -> Bool
     notElem x = not . elem x
-
-    maximum :: Ord (Element t) => t -> Element t
-    minimum :: Ord (Element t) => t -> Element t
+    {-# INLINE notElem #-}
 
     all :: (Element t -> Bool) -> t -> Bool
     all p = getAll #. foldMap (All #. p)
     any :: (Element t -> Bool) -> t -> Bool
     any p = getAny #. foldMap (Any #. p)
+    {-# INLINE all #-}
+    {-# INLINE any #-}
 
     and :: (Element t ~ Bool) => t -> Bool
     and = getAll #. foldMap All
     or :: (Element t ~ Bool) => t -> Bool
     or = getAny #. foldMap Any
+    {-# INLINE and #-}
+    {-# INLINE or #-}
 
     find :: (Element t -> Bool) -> t -> Maybe (Element t)
     find p = getFirst . foldMap (\ x -> First (if p x then Just x else Nothing))
+    {-# INLINE find #-}
 
     safeHead :: t -> Maybe (Element t)
     safeHead = foldr (\x _ -> Just x) Nothing
     {-# INLINE safeHead #-}
 
--- | To save backwards compatibility with previous naming.
-type NontrivialContainer t = Container t
-
--- instance {-# OVERLAPPABLE #-} Foldable f => Container (f a) where
---     foldMap = Foldable.foldMap
---     {-# INLINE foldMap #-}
---     fold = Foldable.fold
---     {-# INLINE fold #-}
---     foldr = Foldable.foldr
---     {-# INLINE foldr #-}
---     foldr' = Foldable.foldr'
---     {-# INLINE foldr' #-}
---     foldl = Foldable.foldl
---     {-# INLINE foldl #-}
---     foldl' = Foldable.foldl'
---     {-# INLINE foldl' #-}
---     foldr1 = Foldable.foldr1
---     {-# INLINE foldr1 #-}
---     foldl1 = Foldable.foldl1
---     {-# INLINE foldl1 #-}
---     length = Foldable.length
---     {-# INLINE length #-}
---     elem = Foldable.elem
---     {-# INLINE elem #-}
---     notElem = Foldable.notElem
---     {-# INLINE notElem #-}
---     maximum = Foldable.maximum
---     {-# INLINE maximum #-}
---     minimum = Foldable.minimum
---     {-# INLINE minimum #-}
---     all = Foldable.all
---     {-# INLINE all #-}
---     any = Foldable.any
---     {-# INLINE any #-}
---     and = Foldable.and
---     {-# INLINE and #-}
---     or = Foldable.or
---     {-# INLINE or #-}
---     find = Foldable.find
---     {-# INLINE find #-}
+----------------------------------------------------------------------------
+-- Instances for monomorphic containers
+----------------------------------------------------------------------------
 
 instance Container T.Text where
     foldr = T.foldr
@@ -447,6 +448,34 @@ instance Container IS.IntSet where
     {-# INLINE minimum #-}
     safeHead = fmap fst . IS.minView
     {-# INLINE safeHead #-}
+
+----------------------------------------------------------------------------
+-- Boilerplate instances (duplicate Foldable)
+----------------------------------------------------------------------------
+
+-- Basic types
+instance Container [a]
+instance Container (Const a b)
+instance Container (ZipList a)
+
+-- Algebraic types
+instance Container (Dual a)
+instance Container (First a)
+instance Container (Last a)
+instance Container (Product a)
+instance Container (Sum a)
+#if __GLASGOW_HASKELL__ >= 800
+instance Container (NonEmpty a)
+#endif
+
+-- Containers
+instance Container (HashMap k v)
+instance Container (HashSet v)
+instance Container (IntMap v)
+instance Container (Map k v)
+instance Container (Set v)
+instance Container (Seq a)
+instance Container (Vector a)
 
 ----------------------------------------------------------------------------
 -- Derivative functions

@@ -46,6 +46,7 @@ concatMapM
     :: ( Applicative f
        , Monoid m
        , Container (l m)
+       , Element (l m) ~ m
        , Traversable l
        )
     => (a -> f m) -> l a -> f m
@@ -58,6 +59,7 @@ concatForM
     :: ( Applicative f
        , Monoid m
        , Container (l m)
+       , Element (l m) ~ m
        , Traversable l
        )
     => l a -> (a -> f m) -> f m
