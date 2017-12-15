@@ -179,16 +179,16 @@ instance ToList (Maybe a)
 instance ToList (Either a b)
 instance ToList (Identity a)
 instance ToList (Const a b)
-instance ToList (ZipList a)
 
+#if __GLASGOW_HASKELL__ >= 800
 -- Algebraic types
 instance ToList (Dual a)
 instance ToList (First a)
 instance ToList (Last a)
 instance ToList (Product a)
 instance ToList (Sum a)
-#if __GLASGOW_HASKELL__ >= 800
 instance ToList (NonEmpty a)
+instance ToList (ZipList a)
 #endif
 
 -- Containers
@@ -486,16 +486,16 @@ instance Container (HashSet v) where
 -- Basic types
 instance Container [a]
 instance Container (Const a b)
-instance Container (ZipList a)
 
+#if __GLASGOW_HASKELL__ >= 800
 -- Algebraic types
 instance Container (Dual a)
 instance Container (First a)
 instance Container (Last a)
 instance Container (Product a)
 instance Container (Sum a)
-#if __GLASGOW_HASKELL__ >= 800
 instance Container (NonEmpty a)
+instance Container (ZipList a)
 #endif
 
 -- Containers
