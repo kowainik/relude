@@ -4,6 +4,7 @@
 {-# LANGUAGE DataKinds               #-}
 {-# LANGUAGE DefaultSignatures       #-}
 {-# LANGUAGE FlexibleContexts        #-}
+{-# LANGUAGE FlexibleInstances       #-}
 {-# LANGUAGE Trustworthy             #-}
 {-# LANGUAGE TypeFamilies            #-}
 {-# LANGUAGE TypeOperators           #-}
@@ -43,7 +44,7 @@ import Prelude hiding (all, and, any, elem, foldMap, foldl, foldr, mapM_, notEle
                 sequence_, sum)
 
 import Universum.Applicative (Alternative (..), Const, ZipList, pass)
-import Universum.Base (Foldable, Word8)
+import Universum.Base (Constraint, Foldable, Word8)
 import Universum.Container.Reexport
 import Universum.Functor (Identity)
 import Universum.Monad.Reexport (fromMaybe)
@@ -71,11 +72,11 @@ import qualified Data.Text as T
 import qualified Data.Text.Lazy as TL
 
 import qualified Data.HashMap.Strict as HM
-import qualified Data.HashSet as HS
+import qualified Data.HashSet as HashSet
 import qualified Data.IntMap as IM
 import qualified Data.IntSet as IS
 import qualified Data.Map as M
-import qualified Data.Set as S
+import qualified Data.Set as Set
 
 import qualified Data.Vector as V
 import qualified Data.Vector.Primitive as VP
@@ -206,6 +207,11 @@ instance ToList (Vector a)
 -- | A class for 'ToList's that aren't trivial like 'Maybe' (e.g. can hold
 -- more than one value)
 class ToList t => Container t where
+    -- | Constraint for elements. This can be used to implement more efficient
+    -- implementation of some methods.
+    type ElementConstraint t :: * -> Constraint
+    type ElementConstraint t = Eq
+
     foldr :: (Element t -> b -> b) -> b -> t -> b
     default foldr :: (Foldable f, t ~ f a, Element t ~ a) => (Element t -> b -> b) -> b -> t -> b
     foldr = Foldable.foldr
@@ -226,8 +232,13 @@ class ToList t => Container t where
     length = Foldable.length
     {-# INLINE length #-}
 
-    elem :: Eq (Element t) => Element t -> t -> Bool
-    default elem :: (Foldable f, t ~ f a, Element t ~ a, Eq (Element t)) => Element t -> t -> Bool
+    elem :: ElementConstraint t (Element t) => Element t -> t -> Bool
+    default elem :: ( Foldable f
+                    , t ~ f a
+                    , Element t ~ a
+                    , ElementConstraint t ~ Eq
+                    , ElementConstraint t (Element t)
+                    ) => Element t -> t -> Bool
     elem = Foldable.elem
     {-# INLINE elem #-}
 
@@ -284,7 +295,7 @@ class ToList t => Container t where
                            Just x  -> f x y)
     {-# INLINE foldl1 #-}
 
-    notElem :: Eq (Element t) => Element t -> t -> Bool
+    notElem :: ElementConstraint t (Element t) => Element t -> t -> Bool
     notElem x = not . elem x
     {-# INLINE notElem #-}
 
@@ -450,6 +461,25 @@ instance Container IS.IntSet where
     {-# INLINE safeHead #-}
 
 ----------------------------------------------------------------------------
+-- Efficient instances
+----------------------------------------------------------------------------
+
+instance Container (Set v) where
+    type ElementConstraint (Set v) = Ord
+    elem = Set.member
+    {-# INLINE elem #-}
+    notElem = Set.notMember
+    {-# INLINE notElem #-}
+
+class (Eq a, Hashable a) => CanHash a
+instance (Eq a, Hashable a) => CanHash a
+
+instance Container (HashSet v) where
+    type ElementConstraint (HashSet v) = CanHash
+    elem = HashSet.member
+    {-# INLINE elem #-}
+
+----------------------------------------------------------------------------
 -- Boilerplate instances (duplicate Foldable)
 ----------------------------------------------------------------------------
 
@@ -470,10 +500,8 @@ instance Container (NonEmpty a)
 
 -- Containers
 instance Container (HashMap k v)
-instance Container (HashSet v)
 instance Container (IntMap v)
 instance Container (Map k v)
-instance Container (Set v)
 instance Container (Seq a)
 instance Container (Vector a)
 
@@ -697,14 +725,14 @@ instance One (IM.IntMap v) where
 
 -- Sets
 
-instance One (S.Set v) where
-    type OneItem (S.Set v) = v
-    one = S.singleton
+instance One (Set v) where
+    type OneItem (Set v) = v
+    one = Set.singleton
     {-# INLINE one #-}
 
-instance Hashable v => One (HS.HashSet v) where
-    type OneItem (HS.HashSet v) = v
-    one = HS.singleton
+instance Hashable v => One (HashSet v) where
+    type OneItem (HashSet v) = v
+    one = HashSet.singleton
     {-# INLINE one #-}
 
 instance One IS.IntSet where
