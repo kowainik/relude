@@ -5,7 +5,7 @@ module Main where
 
 import Control.DeepSeq (NFData)
 import Control.Monad.Identity (Identity (..))
-import Criterion.Main (Benchmark, bench, bgroup, defaultMain, nf)
+import Criterion.Main (Benchmark, bench, bgroup, defaultMain, nf, whnf)
 import Data.Hashable (Hashable)
 import Data.List (group, head, nub, sort, zip5)
 import Data.Text (Text)
@@ -14,8 +14,12 @@ import Universum.Monad (concatMapM)
 import Universum.Nub (hashNub, ordNub, sortNub, unstableNub)
 import Universum.VarArg ((...))
 
+import qualified Data.Foldable as Foldable (elem)
+import qualified Data.HashSet as HashSet (fromList)
 import qualified Data.List.NonEmpty as NonEmpty
+import qualified Data.Set as Set (fromList)
 import qualified Data.Text as T
+import qualified Universum.Container as Container (elem)
 
 main :: IO ()
 main = defaultMain
@@ -25,6 +29,7 @@ main = defaultMain
   , bgroupList (nStrings 'c') "big str"
   , bgroupSuperComposition
   , bgroupConcatMap
+  , bgroupMember
   ]
 
 bgroupList :: forall a .
@@ -149,3 +154,16 @@ bgroupConcatMap = bgroup "concat"
 
   concatIdentity :: Int -> Identity [()]
   concatIdentity n = concatMapM (Identity . pure) $ replicate n ()
+
+-- | Checks that 'member' is implemented efficiently for 'Set' and 'HashSet'.
+bgroupMember :: Benchmark
+bgroupMember = do
+    let testList    = [1..100000] :: [Int]
+    let sample      = 50000
+    let listSet     = Set.fromList     testList
+    let listHashSet = HashSet.fromList testList
+    bgroup "member" [ bench "Set/foldable"     $ whnf (Foldable.elem  sample) listSet
+                    , bench "Set/elem"         $ whnf (Container.elem sample) listSet
+                    , bench "HashSet/Foldable" $ whnf (Foldable.elem  sample) listHashSet
+                    , bench "HashSet/elem"     $ whnf (Container.elem sample) listHashSet
+                    ]
