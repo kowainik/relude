@@ -2,8 +2,8 @@
 {-# LANGUAGE ConstrainedClassMethods #-}
 {-# LANGUAGE ConstraintKinds         #-}
 {-# LANGUAGE DataKinds               #-}
+{-# LANGUAGE DefaultSignatures       #-}
 {-# LANGUAGE FlexibleContexts        #-}
-{-# LANGUAGE FlexibleInstances       #-}
 {-# LANGUAGE Trustworthy             #-}
 {-# LANGUAGE TypeFamilies            #-}
 {-# LANGUAGE TypeOperators           #-}
@@ -20,8 +20,8 @@
 
 module Universum.Container.Class
        ( -- * Foldable-like classes and methods
-         ToList(..)
-       , Container(..)
+         ToList    (..)
+       , Container (..)
        , NontrivialContainer
 
        , sum
@@ -40,14 +40,15 @@ module Universum.Container.Class
        ) where
 
 import Data.Coerce (Coercible, coerce)
-import Prelude hiding (Foldable (..), all, and, any, head, mapM_, notElem, or, sequence_)
+import Prelude hiding (all, and, any, elem, foldMap, foldl, foldr, mapM_, notElem, or, product,
+                sequence_, sum)
 
-import Universum.Applicative (Alternative (..), pass)
+import Universum.Applicative (Alternative (..), Const, ZipList, pass)
 import Universum.Base (Foldable, Word8)
-import Universum.Container.Reexport (Hashable)
+import Universum.Container.Reexport
 import Universum.Functor (Identity)
 import Universum.Monad.Reexport (fromMaybe)
-import Universum.Monoid (All (..), Any (..), First (..))
+import Universum.Monoid
 
 #if __GLASGOW_HASKELL__ >= 800
 import GHC.Err (errorWithoutStackTrace)
@@ -58,7 +59,7 @@ import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 import qualified Data.List.NonEmpty as NE
 #endif
 
-import qualified Data.Foldable as F
+import qualified Data.Foldable as Foldable
 
 import qualified Data.List as List (null)
 
@@ -100,8 +101,6 @@ type family ElementDefault (t :: *) :: * where
 -- @'null' ≡ 'List.null' . 'toList'@
 --
 class ToList t where
-    {-# MINIMAL toList #-}
-
     -- | Type of element for some container. Implemented as a type family because
     -- some containers are monomorphic over element type (like 'T.Text', 'IS.IntSet', etc.)
     -- so we can't implement nice interface using old higher-kinded types approach.
@@ -117,6 +116,8 @@ class ToList t where
     -- >>> :t toList @Text "aba"
     -- toList @Text "aba" :: [Char]
     toList :: t -> [Element t]
+    default toList :: (Foldable f, t ~ f a, Element t ~ a) => t -> [Element t]
+    toList = Foldable.toList
 
     -- | Checks whether container is empty.
     --
@@ -127,12 +128,9 @@ class ToList t where
     null :: t -> Bool
     null = List.null . toList
 
--- | This instance makes 'ToList' compatible and overlappable by 'Foldable'.
-instance {-# OVERLAPPABLE #-} Foldable f => ToList (f a) where
-    toList = F.toList
-    {-# INLINE toList #-}
-    null = F.null
-    {-# INLINE null #-}
+----------------------------------------------------------------------------
+-- Instances for monomorphic containers
+----------------------------------------------------------------------------
 
 instance ToList T.Text where
     type Element T.Text = Char
@@ -168,6 +166,37 @@ instance ToList IS.IntSet where
     {-# INLINE toList #-}
     null = IS.null
     {-# INLINE null #-}
+
+----------------------------------------------------------------------------
+-- Boilerplate instances (duplicate Foldable)
+----------------------------------------------------------------------------
+
+-- Basic types
+instance ToList [a]
+instance ToList (Maybe a)
+instance ToList (Either a b)
+instance ToList (Identity a)
+instance ToList (Const a b)
+instance ToList (ZipList a)
+
+-- Algebraic types
+instance ToList (Dual a)
+instance ToList (First a)
+instance ToList (Last a)
+instance ToList (Product a)
+instance ToList (Sum a)
+#if __GLASGOW_HASKELL__ >= 800
+instance ToList (NonEmpty a)
+#endif
+
+-- Containers
+instance ToList (HashMap k v)
+instance ToList (HashSet v)
+instance ToList (IntMap v)
+instance ToList (Map k v)
+instance ToList (Set v)
+instance ToList (Seq a)
+instance ToList (Vector a)
 
 ----------------------------------------------------------------------------
 -- Additional operations that don't make much sense for e.g. Maybe
@@ -246,43 +275,43 @@ class ToList t => Container t where
 -- | To save backwards compatibility with previous naming.
 type NontrivialContainer t = Container t
 
-instance {-# OVERLAPPABLE #-} Foldable f => Container (f a) where
-    foldMap = F.foldMap
-    {-# INLINE foldMap #-}
-    fold = F.fold
-    {-# INLINE fold #-}
-    foldr = F.foldr
-    {-# INLINE foldr #-}
-    foldr' = F.foldr'
-    {-# INLINE foldr' #-}
-    foldl = F.foldl
-    {-# INLINE foldl #-}
-    foldl' = F.foldl'
-    {-# INLINE foldl' #-}
-    foldr1 = F.foldr1
-    {-# INLINE foldr1 #-}
-    foldl1 = F.foldl1
-    {-# INLINE foldl1 #-}
-    length = F.length
-    {-# INLINE length #-}
-    elem = F.elem
-    {-# INLINE elem #-}
-    notElem = F.notElem
-    {-# INLINE notElem #-}
-    maximum = F.maximum
-    {-# INLINE maximum #-}
-    minimum = F.minimum
-    {-# INLINE minimum #-}
-    all = F.all
-    {-# INLINE all #-}
-    any = F.any
-    {-# INLINE any #-}
-    and = F.and
-    {-# INLINE and #-}
-    or = F.or
-    {-# INLINE or #-}
-    find = F.find
-    {-# INLINE find #-}
+-- instance {-# OVERLAPPABLE #-} Foldable f => Container (f a) where
+--     foldMap = Foldable.foldMap
+--     {-# INLINE foldMap #-}
+--     fold = Foldable.fold
+--     {-# INLINE fold #-}
+--     foldr = Foldable.foldr
+--     {-# INLINE foldr #-}
+--     foldr' = Foldable.foldr'
+--     {-# INLINE foldr' #-}
+--     foldl = Foldable.foldl
+--     {-# INLINE foldl #-}
+--     foldl' = Foldable.foldl'
+--     {-# INLINE foldl' #-}
+--     foldr1 = Foldable.foldr1
+--     {-# INLINE foldr1 #-}
+--     foldl1 = Foldable.foldl1
+--     {-# INLINE foldl1 #-}
+--     length = Foldable.length
+--     {-# INLINE length #-}
+--     elem = Foldable.elem
+--     {-# INLINE elem #-}
+--     notElem = Foldable.notElem
+--     {-# INLINE notElem #-}
+--     maximum = Foldable.maximum
+--     {-# INLINE maximum #-}
+--     minimum = Foldable.minimum
+--     {-# INLINE minimum #-}
+--     all = Foldable.all
+--     {-# INLINE all #-}
+--     any = Foldable.any
+--     {-# INLINE any #-}
+--     and = Foldable.and
+--     {-# INLINE and #-}
+--     or = Foldable.or
+--     {-# INLINE or #-}
+--     find = Foldable.find
+--     {-# INLINE find #-}
 
 instance Container T.Text where
     foldr = T.foldr
