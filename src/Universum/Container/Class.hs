@@ -20,8 +20,7 @@
 
 module Universum.Container.Class
        ( -- * Foldable-like classes and methods
-         Element
-       , ToList(..)
+         ToList(..)
        , Container(..)
        , NontrivialContainer
 
@@ -40,22 +39,20 @@ module Universum.Container.Class
        , One(..)
        ) where
 
-import Control.Applicative (Alternative (..))
-import Control.Monad.Identity (Identity)
 import Data.Coerce (Coercible, coerce)
-import Data.Foldable (Foldable)
-import Data.Hashable (Hashable)
-import Data.Maybe (fromMaybe)
-import Data.Monoid (All (..), Any (..), First (..))
-import Data.Word (Word8)
 import Prelude hiding (Foldable (..), all, and, any, head, mapM_, notElem, or, sequence_)
+
+import Universum.Applicative (Alternative (..), pass)
+import Universum.Base (Foldable, Word8)
+import Universum.Container.Reexport (Hashable)
+import Universum.Functor (Identity)
+import Universum.Monad.Reexport (fromMaybe)
+import Universum.Monoid (All (..), Any (..), First (..))
 
 #if __GLASGOW_HASKELL__ >= 800
 import GHC.Err (errorWithoutStackTrace)
 import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 #endif
-
-import Universum.Applicative (pass)
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import qualified Data.List.NonEmpty as NE
@@ -85,22 +82,13 @@ import qualified Data.Vector.Primitive as VP
 import qualified Data.Vector.Storable as VS
 import qualified Data.Vector.Unboxed as VU
 
-
 ----------------------------------------------------------------------------
 -- Containers (e.g. tuples aren't containers)
 ----------------------------------------------------------------------------
 
--- | Type of element for some container. Implemented as a type family because
--- some containers are monomorphic over element type (like 'T.Text', 'IS.IntSet', etc.)
--- so we can't implement nice interface using old higher-kinded types approach.
-type family Element t
-
-type instance Element (f a) = a
-type instance Element T.Text = Char
-type instance Element TL.Text = Char
-type instance Element BS.ByteString = Word8
-type instance Element BSL.ByteString = Word8
-type instance Element IS.IntSet = Int
+-- | Default implementation of 'Element' associated type family.
+type family ElementDefault (t :: *) :: * where
+    ElementDefault (f a) = a
 
 -- | Type class for data types that can be converted to List.
 -- Fully compatible with 'Foldable'.
@@ -113,6 +101,13 @@ type instance Element IS.IntSet = Int
 --
 class ToList t where
     {-# MINIMAL toList #-}
+
+    -- | Type of element for some container. Implemented as a type family because
+    -- some containers are monomorphic over element type (like 'T.Text', 'IS.IntSet', etc.)
+    -- so we can't implement nice interface using old higher-kinded types approach.
+    type Element t :: *
+    type Element t = ElementDefault t
+
     -- | Convert container to list of elements.
     --
     -- >>> toList (Just True)
@@ -140,30 +135,35 @@ instance {-# OVERLAPPABLE #-} Foldable f => ToList (f a) where
     {-# INLINE null #-}
 
 instance ToList T.Text where
+    type Element T.Text = Char
     toList = T.unpack
     {-# INLINE toList #-}
     null = T.null
     {-# INLINE null #-}
 
 instance ToList TL.Text where
+    type Element TL.Text = Char
     toList = TL.unpack
     {-# INLINE toList #-}
     null = TL.null
     {-# INLINE null #-}
 
 instance ToList BS.ByteString where
+    type Element BS.ByteString = Word8
     toList = BS.unpack
     {-# INLINE toList #-}
     null = BS.null
     {-# INLINE null #-}
 
 instance ToList BSL.ByteString where
+    type Element BSL.ByteString = Word8
     toList = BSL.unpack
     {-# INLINE toList #-}
     null = BSL.null
     {-# INLINE null #-}
 
 instance ToList IS.IntSet where
+    type Element IS.IntSet = Int
     toList = IS.toList
     {-# INLINE toList #-}
     null = IS.null
