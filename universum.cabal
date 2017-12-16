@@ -68,7 +68,7 @@ library
 
   ghc-options:         -Wall -fwarn-implicit-prelude
 
-  build-depends:       base < 5
+  build-depends:       base >= 4.8 && < 5
                      , bytestring
                      , containers
                      , deepseq
