@@ -2,6 +2,7 @@
 {-# LANGUAGE ConstrainedClassMethods #-}
 {-# LANGUAGE ConstraintKinds         #-}
 {-# LANGUAGE DataKinds               #-}
+{-# LANGUAGE DefaultSignatures       #-}
 {-# LANGUAGE FlexibleContexts        #-}
 {-# LANGUAGE FlexibleInstances       #-}
 {-# LANGUAGE Trustworthy             #-}
@@ -20,12 +21,8 @@
 
 module Universum.Container.Class
        ( -- * Foldable-like classes and methods
-         Element
-       , ToList(..)
-       , Container(..)
-       , NontrivialContainer
-
-       , WrappedList (..)
+         ToList    (..)
+       , Container (..)
 
        , sum
        , product
@@ -42,28 +39,29 @@ module Universum.Container.Class
        , One(..)
        ) where
 
-import Control.Applicative (Alternative (..))
-import Control.Monad.Identity (Identity)
 import Data.Coerce (Coercible, coerce)
-import Data.Foldable (Foldable)
-import Data.Hashable (Hashable)
-import Data.Maybe (fromMaybe)
-import Data.Monoid (All (..), Any (..), First (..))
-import Data.Word (Word8)
-import Prelude hiding (Foldable (..), all, and, any, head, mapM_, notElem, or, sequence_)
+import Prelude hiding (all, and, any, elem, foldMap, foldl, foldr, mapM_, notElem, or, product,
+                sequence_, sum)
+
+import Universum.Applicative (Alternative (..), Const, ZipList, pass)
+import Universum.Base (Constraint, Word8)
+import Universum.Container.Reexport (HashMap, HashSet, Hashable, IntMap, IntSet, Map, Seq, Set,
+                                     Vector)
+import Universum.Functor (Identity)
+import Universum.Monad.Reexport (fromMaybe)
+import Universum.Monoid (All (..), Any (..), Dual, First (..), Last, Product, Sum)
 
 #if __GLASGOW_HASKELL__ >= 800
 import GHC.Err (errorWithoutStackTrace)
 import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 #endif
 
-import Universum.Applicative (pass)
-
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import qualified Data.List.NonEmpty as NE
+import Universum.Monoid (NonEmpty)
 #endif
 
-import qualified Data.Foldable as F
+import qualified Data.Foldable as Foldable
 
 import qualified Data.List as List (null)
 
@@ -76,33 +74,24 @@ import qualified Data.Text as T
 import qualified Data.Text.Lazy as TL
 
 import qualified Data.HashMap.Strict as HM
-import qualified Data.HashSet as HS
+import qualified Data.HashSet as HashSet
 import qualified Data.IntMap as IM
 import qualified Data.IntSet as IS
 import qualified Data.Map as M
-import qualified Data.Set as S
+import qualified Data.Set as Set
 
 import qualified Data.Vector as V
 import qualified Data.Vector.Primitive as VP
 import qualified Data.Vector.Storable as VS
 import qualified Data.Vector.Unboxed as VU
 
-
 ----------------------------------------------------------------------------
 -- Containers (e.g. tuples aren't containers)
 ----------------------------------------------------------------------------
 
--- | Type of element for some container. Implemented as a type family because
--- some containers are monomorphic over element type (like 'T.Text', 'IS.IntSet', etc.)
--- so we can't implement nice interface using old higher-kinded types approach.
-type family Element t
-
-type instance Element (f a) = a
-type instance Element T.Text = Char
-type instance Element TL.Text = Char
-type instance Element BS.ByteString = Word8
-type instance Element BSL.ByteString = Word8
-type instance Element IS.IntSet = Int
+-- | Default implementation of 'Element' associated type family.
+type family ElementDefault (t :: *) :: * where
+    ElementDefault (f a) = a
 
 -- | Type class for data types that can be converted to List.
 -- Fully compatible with 'Foldable'.
@@ -114,7 +103,14 @@ type instance Element IS.IntSet = Int
 -- @'null' ≡ 'List.null' . 'toList'@
 --
 class ToList t where
-    {-# MINIMAL toList #-}
+    -- | Type of element for some container. Implemented as an asscociated type family because
+    -- some containers are monomorphic over element type (like 'T.Text', 'IntSet', etc.)
+    -- so we can't implement nice interface using old higher-kinded types
+    -- approach. Implementing this as an associated type family instead of
+    -- top-level family gives you more control over element types.
+    type Element t :: *
+    type Element t = ElementDefault t
+
     -- | Convert container to list of elements.
     --
     -- >>> toList (Just True)
@@ -124,6 +120,9 @@ class ToList t where
     -- >>> :t toList @Text "aba"
     -- toList @Text "aba" :: [Char]
     toList :: t -> [Element t]
+    default toList :: (Foldable f, t ~ f a, Element t ~ a) => t -> [Element t]
+    toList = Foldable.toList
+    {-# INLINE toList #-}
 
     -- | Checks whether container is empty.
     --
@@ -133,43 +132,77 @@ class ToList t where
     -- False
     null :: t -> Bool
     null = List.null . toList
-
--- | This instance makes 'ToList' compatible and overlappable by 'Foldable'.
-instance {-# OVERLAPPABLE #-} Foldable f => ToList (f a) where
-    toList = F.toList
-    {-# INLINE toList #-}
-    null = F.null
     {-# INLINE null #-}
 
+----------------------------------------------------------------------------
+-- Instances for monomorphic containers
+----------------------------------------------------------------------------
+
 instance ToList T.Text where
+    type Element T.Text = Char
     toList = T.unpack
     {-# INLINE toList #-}
     null = T.null
     {-# INLINE null #-}
 
 instance ToList TL.Text where
+    type Element TL.Text = Char
     toList = TL.unpack
     {-# INLINE toList #-}
     null = TL.null
     {-# INLINE null #-}
 
 instance ToList BS.ByteString where
+    type Element BS.ByteString = Word8
     toList = BS.unpack
     {-# INLINE toList #-}
     null = BS.null
     {-# INLINE null #-}
 
 instance ToList BSL.ByteString where
+    type Element BSL.ByteString = Word8
     toList = BSL.unpack
     {-# INLINE toList #-}
     null = BSL.null
     {-# INLINE null #-}
 
-instance ToList IS.IntSet where
+instance ToList IntSet where
+    type Element IntSet = Int
     toList = IS.toList
     {-# INLINE toList #-}
     null = IS.null
     {-# INLINE null #-}
+
+----------------------------------------------------------------------------
+-- Boilerplate instances (duplicate Foldable)
+----------------------------------------------------------------------------
+
+-- Basic types
+instance ToList [a]
+instance ToList (Maybe a)
+instance ToList (Either a b)
+instance ToList (Identity a)
+instance ToList (Const a b)
+
+#if __GLASGOW_HASKELL__ >= 800
+-- Algebraic types
+instance ToList (Dual a)
+instance ToList (First a)
+instance ToList (Last a)
+instance ToList (Product a)
+instance ToList (Sum a)
+instance ToList (NonEmpty a)
+instance ToList (ZipList a)
+#endif
+
+-- Containers
+instance ToList (HashMap k v)
+instance ToList (HashSet v)
+instance ToList (IntMap v)
+instance ToList (Map k v)
+instance ToList (Set v)
+instance ToList (Seq a)
+instance ToList (Vector a)
 
 ----------------------------------------------------------------------------
 -- Additional operations that don't make much sense for e.g. Maybe
@@ -178,19 +211,64 @@ instance ToList IS.IntSet where
 -- | A class for 'ToList's that aren't trivial like 'Maybe' (e.g. can hold
 -- more than one value)
 class ToList t => Container t where
+    -- | Constraint for elements. This can be used to implement more efficient
+    -- implementation of some methods.
+    type ElementConstraint t :: * -> Constraint
+    type ElementConstraint t = Eq
+
+    foldr :: (Element t -> b -> b) -> b -> t -> b
+    default foldr :: (Foldable f, t ~ f a, Element t ~ a) => (Element t -> b -> b) -> b -> t -> b
+    foldr = Foldable.foldr
+    {-# INLINE foldr #-}
+
+    foldl :: (b -> Element t -> b) -> b -> t -> b
+    default foldl :: (Foldable f, t ~ f a, Element t ~ a) => (b -> Element t -> b) -> b -> t -> b
+    foldl = Foldable.foldl
+    {-# INLINE foldl #-}
+
+    foldl' :: (b -> Element t -> b) -> b -> t -> b
+    default foldl' :: (Foldable f, t ~ f a, Element t ~ a) => (b -> Element t -> b) -> b -> t -> b
+    foldl' = Foldable.foldl'
+    {-# INLINE foldl' #-}
+
+    length :: t -> Int
+    default length :: (Foldable f, t ~ f a, Element t ~ a) => t -> Int
+    length = Foldable.length
+    {-# INLINE length #-}
+
+    elem :: ElementConstraint t (Element t) => Element t -> t -> Bool
+    default elem :: ( Foldable f
+                    , t ~ f a
+                    , Element t ~ a
+                    , ElementConstraint t ~ Eq
+                    , ElementConstraint t (Element t)
+                    ) => Element t -> t -> Bool
+    elem = Foldable.elem
+    {-# INLINE elem #-}
+
+    maximum :: Ord (Element t) => t -> Element t
+    default maximum :: (Foldable f, t ~ f a, Element t ~ a, Ord (Element t)) => t -> Element t
+    maximum = Foldable.maximum
+    {-# INLINE maximum #-}
+
+    minimum :: Ord (Element t) => t -> Element t
+    default minimum :: (Foldable f, t ~ f a, Element t ~ a, Ord (Element t)) => t -> Element t
+    minimum = Foldable.minimum
+    {-# INLINE minimum #-}
+
     foldMap :: Monoid m => (Element t -> m) -> t -> m
     foldMap f = foldr (mappend . f) mempty
     {-# INLINE foldMap #-}
 
     fold :: Monoid (Element t) => t -> Element t
     fold = foldMap id
+    {-# INLINE fold #-}
 
-    foldr :: (Element t -> b -> b) -> b -> t -> b
     foldr' :: (Element t -> b -> b) -> b -> t -> b
     foldr' f z0 xs = foldl f' id xs z0
       where f' k x z = k $! f x z
-    foldl :: (b -> Element t -> b) -> b -> t -> b
-    foldl' :: (b -> Element t -> b) -> b -> t -> b
+    {-# INLINE foldr' #-}
+
     foldr1 :: (Element t -> Element t -> Element t) -> t -> Element t
     foldr1 f xs =
 #if __GLASGOW_HASKELL__ >= 800
@@ -204,6 +282,8 @@ class ToList t => Container t where
         mf x m = Just (case m of
                            Nothing -> x
                            Just y  -> f x y)
+    {-# INLINE foldr1 #-}
+
     foldl1 :: (Element t -> Element t -> Element t) -> t -> Element t
     foldl1 f xs =
 #if __GLASGOW_HASKELL__ >= 800
@@ -217,74 +297,37 @@ class ToList t => Container t where
         mf m y = Just (case m of
                            Nothing -> y
                            Just x  -> f x y)
+    {-# INLINE foldl1 #-}
 
-    length :: t -> Int
-
-    elem :: Eq (Element t) => Element t -> t -> Bool
-
-    notElem :: Eq (Element t) => Element t -> t -> Bool
+    notElem :: ElementConstraint t (Element t) => Element t -> t -> Bool
     notElem x = not . elem x
-
-    maximum :: Ord (Element t) => t -> Element t
-    minimum :: Ord (Element t) => t -> Element t
+    {-# INLINE notElem #-}
 
     all :: (Element t -> Bool) -> t -> Bool
     all p = getAll #. foldMap (All #. p)
     any :: (Element t -> Bool) -> t -> Bool
     any p = getAny #. foldMap (Any #. p)
+    {-# INLINE all #-}
+    {-# INLINE any #-}
 
     and :: (Element t ~ Bool) => t -> Bool
     and = getAll #. foldMap All
     or :: (Element t ~ Bool) => t -> Bool
     or = getAny #. foldMap Any
+    {-# INLINE and #-}
+    {-# INLINE or #-}
 
     find :: (Element t -> Bool) -> t -> Maybe (Element t)
     find p = getFirst . foldMap (\ x -> First (if p x then Just x else Nothing))
-
-    head :: t -> Maybe (Element t)
-    head = foldr (\x _ -> Just x) Nothing
-    {-# INLINE head #-}
-
--- | To save backwards compatibility with previous naming.
-type NontrivialContainer t = Container t
-
-instance {-# OVERLAPPABLE #-} Foldable f => Container (f a) where
-    foldMap = F.foldMap
-    {-# INLINE foldMap #-}
-    fold = F.fold
-    {-# INLINE fold #-}
-    foldr = F.foldr
-    {-# INLINE foldr #-}
-    foldr' = F.foldr'
-    {-# INLINE foldr' #-}
-    foldl = F.foldl
-    {-# INLINE foldl #-}
-    foldl' = F.foldl'
-    {-# INLINE foldl' #-}
-    foldr1 = F.foldr1
-    {-# INLINE foldr1 #-}
-    foldl1 = F.foldl1
-    {-# INLINE foldl1 #-}
-    length = F.length
-    {-# INLINE length #-}
-    elem = F.elem
-    {-# INLINE elem #-}
-    notElem = F.notElem
-    {-# INLINE notElem #-}
-    maximum = F.maximum
-    {-# INLINE maximum #-}
-    minimum = F.minimum
-    {-# INLINE minimum #-}
-    all = F.all
-    {-# INLINE all #-}
-    any = F.any
-    {-# INLINE any #-}
-    and = F.and
-    {-# INLINE and #-}
-    or = F.or
-    {-# INLINE or #-}
-    find = F.find
     {-# INLINE find #-}
+
+    safeHead :: t -> Maybe (Element t)
+    safeHead = foldr (\x _ -> Just x) Nothing
+    {-# INLINE safeHead #-}
+
+----------------------------------------------------------------------------
+-- Instances for monomorphic containers
+----------------------------------------------------------------------------
 
 instance Container T.Text where
     foldr = T.foldr
@@ -311,8 +354,8 @@ instance Container T.Text where
     {-# INLINE any #-}
     find = T.find
     {-# INLINE find #-}
-    head = fmap fst . T.uncons
-    {-# INLINE head #-}
+    safeHead = fmap fst . T.uncons
+    {-# INLINE safeHead #-}
 
 instance Container TL.Text where
     foldr = TL.foldr
@@ -340,8 +383,8 @@ instance Container TL.Text where
     {-# INLINE any #-}
     find = TL.find
     {-# INLINE find #-}
-    head = fmap fst . TL.uncons
-    {-# INLINE head #-}
+    safeHead = fmap fst . TL.uncons
+    {-# INLINE safeHead #-}
 
 instance Container BS.ByteString where
     foldr = BS.foldr
@@ -370,8 +413,8 @@ instance Container BS.ByteString where
     {-# INLINE any #-}
     find = BS.find
     {-# INLINE find #-}
-    head = fmap fst . BS.uncons
-    {-# INLINE head #-}
+    safeHead = fmap fst . BS.uncons
+    {-# INLINE safeHead #-}
 
 instance Container BSL.ByteString where
     foldr = BSL.foldr
@@ -400,10 +443,10 @@ instance Container BSL.ByteString where
     {-# INLINE any #-}
     find = BSL.find
     {-# INLINE find #-}
-    head = fmap fst . BSL.uncons
-    {-# INLINE head #-}
+    safeHead = fmap fst . BSL.uncons
+    {-# INLINE safeHead #-}
 
-instance Container IS.IntSet where
+instance Container IntSet where
     foldr = IS.foldr
     {-# INLINE foldr #-}
     foldl = IS.foldl
@@ -418,64 +461,53 @@ instance Container IS.IntSet where
     {-# INLINE maximum #-}
     minimum = IS.findMin
     {-# INLINE minimum #-}
-    head = fmap fst . IS.minView
-    {-# INLINE head #-}
+    safeHead = fmap fst . IS.minView
+    {-# INLINE safeHead #-}
 
 ----------------------------------------------------------------------------
--- Wrapped List
+-- Efficient instances
 ----------------------------------------------------------------------------
--- | This can be useful if you want to use 'Container' methods for your data type
--- but you don't want to implement all methods of this type class for that.
-newtype WrappedList f a = WrappedList (f a)
 
-type instance Element (WrappedList f a) = a
-
-instance ToList (f a) => ToList (WrappedList f a) where
-    toList (WrappedList l) = toList l
-    {-# INLINE toList #-}
-    null (WrappedList l) = null l
-    {-# INLINE null #-}
-
-instance ToList (f a) => Container (WrappedList f a) where
-    foldMap f = foldMap f . toList
-    {-# INLINE foldMap #-}
-    fold = fold . toList
-    {-# INLINE fold #-}
-    foldr f z = foldr f z . toList
-    {-# INLINE foldr #-}
-    foldr' f z = foldr' f z . toList
-    {-# INLINE foldr' #-}
-    foldl f z = foldl f z . toList
-    {-# INLINE foldl #-}
-    foldl' f z = foldl' f z . toList
-    {-# INLINE foldl' #-}
-    foldr1 f = foldr1 f . toList
-    {-# INLINE foldr1 #-}
-    foldl1 f = foldl1 f . toList
-    {-# INLINE foldl1 #-}
-    length = length . toList
-    {-# INLINE length #-}
-    elem x = elem x . toList
+instance Container (Set v) where
+    type ElementConstraint (Set v) = Ord
+    elem = Set.member
     {-# INLINE elem #-}
-    notElem x = notElem x . toList
+    notElem = Set.notMember
     {-# INLINE notElem #-}
-    maximum = maximum . toList
-    {-# INLINE maximum #-}
-    minimum = minimum . toList
-    {-# INLINE minimum #-}
-    all p = all p . toList
-    {-# INLINE all #-}
-    any p = any p . toList
-    {-# INLINE any #-}
-    and = and . toList
-    {-# INLINE and #-}
-    or = or . toList
-    {-# INLINE or #-}
-    find p = find p . toList
-    {-# INLINE find #-}
-    head = head . toList
-    {-# INLINE head #-}
 
+class (Eq a, Hashable a) => CanHash a
+instance (Eq a, Hashable a) => CanHash a
+
+instance Container (HashSet v) where
+    type ElementConstraint (HashSet v) = CanHash
+    elem = HashSet.member
+    {-# INLINE elem #-}
+
+----------------------------------------------------------------------------
+-- Boilerplate instances (duplicate Foldable)
+----------------------------------------------------------------------------
+
+-- Basic types
+instance Container [a]
+instance Container (Const a b)
+
+#if __GLASGOW_HASKELL__ >= 800
+-- Algebraic types
+instance Container (Dual a)
+instance Container (First a)
+instance Container (Last a)
+instance Container (Product a)
+instance Container (Sum a)
+instance Container (NonEmpty a)
+instance Container (ZipList a)
+#endif
+
+-- Containers
+instance Container (HashMap k v)
+instance Container (IntMap v)
+instance Container (Map k v)
+instance Container (Seq a)
+instance Container (Vector a)
 
 ----------------------------------------------------------------------------
 -- Derivative functions
@@ -697,25 +729,25 @@ instance One (IM.IntMap v) where
 
 -- Sets
 
-instance One (S.Set v) where
-    type OneItem (S.Set v) = v
-    one = S.singleton
+instance One (Set v) where
+    type OneItem (Set v) = v
+    one = Set.singleton
     {-# INLINE one #-}
 
-instance Hashable v => One (HS.HashSet v) where
-    type OneItem (HS.HashSet v) = v
-    one = HS.singleton
+instance Hashable v => One (HashSet v) where
+    type OneItem (HashSet v) = v
+    one = HashSet.singleton
     {-# INLINE one #-}
 
-instance One IS.IntSet where
-    type OneItem IS.IntSet = Int
+instance One IntSet where
+    type OneItem IntSet = Int
     one = IS.singleton
     {-# INLINE one #-}
 
 -- Vectors
 
-instance One (V.Vector a) where
-    type OneItem (V.Vector a) = a
+instance One (Vector a) where
+    type OneItem (Vector a) = a
     one = V.singleton
     {-# INLINE one #-}
 

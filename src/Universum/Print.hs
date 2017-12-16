@@ -9,7 +9,9 @@ module Universum.Print
        ( Print (..)
        , print
        , putText
+       , putTextLn
        , putLText
+       , putLTextLn
        ) where
 
 import Data.Function ((.))
@@ -58,12 +60,22 @@ instance Print [Base.Char] where
 print :: forall a m . (MonadIO m, Base.Show a) => a -> m ()
 print = liftIO . Prelude.print
 
--- | Specialized to 'T.Text' version of 'putStrLn' or forcing type inference.
+-- | Specialized to 'T.Text' version of 'putStr' or forcing type inference.
 putText :: MonadIO m => T.Text -> m ()
-putText = putStrLn
+putText = putStr
 {-# SPECIALIZE putText :: T.Text -> Base.IO () #-}
 
--- | Specialized to 'TL.Text' version of 'putStrLn' or forcing type inference.
+-- | Specialized to 'T.Text' version of 'putStrLn' or forcing type inference.
+putTextLn :: MonadIO m => T.Text -> m ()
+putTextLn = putStrLn
+{-# SPECIALIZE putTextLn :: T.Text -> Base.IO () #-}
+
+-- | Specialized to 'TL.Text' version of 'putStr' or forcing type inference.
 putLText :: MonadIO m => TL.Text -> m ()
-putLText = putStrLn
+putLText = putStr
 {-# SPECIALIZE putLText :: TL.Text -> Base.IO () #-}
+
+-- | Specialized to 'TL.Text' version of 'putStrLn' or forcing type inference.
+putLTextLn :: MonadIO m => TL.Text -> m ()
+putLTextLn = putStrLn
+{-# SPECIALIZE putLTextLn :: TL.Text -> Base.IO () #-}

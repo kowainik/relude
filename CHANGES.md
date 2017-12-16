@@ -1,3 +1,29 @@
+1.0.0
+=====
+
+* [#90](https://github.com/serokell/universum/issues/90):
+  Improve project structure.
+* [#89](https://github.com/serokell/universum/issues/89):
+  Add export of `Universum.Nub` module to `Universum`.
+* Add `listToMaybe` to `Universum.Monad.Reexport`.
+* [#81](https://github.com/serokell/universum/issues/81):
+  Make `putText` and `putLText` to be versions of `putStr`.
+  Add `putTextLn` and `putLTextLn` -- versions of `putStrLn`.
+* [#5](https://github.com/serokell/universum/issues/5):
+  Add safe versions of `head`, `tail`, `init`, `last` functions for `NonEmpty` list.
+  Old `head` (which returns `Maybe`) is renamed to `safeHead`.
+  Reexports from `safe` are removed.
+* Remove `unsnoc` (this function is very slow and shouldn't be used).
+* [#88](https://github.com/serokell/universum/issues/88):
+  Add `HasCallStack =>` to `error` and `undefined` functions.
+* [#58](https://github.com/serokell/universum/issues/58):
+  Make `Element` type family be associated type family.
+  Remove `{-# OVERLAPPABLE #-}` instance for `ToList` and `Container`. Add default instances for basic types.
+  Remove `WrappedList` `newtype` because it's not needed anymore.
+  Remove `NontrivialContainer` constraint alias.
+* [#56](https://github.com/serokell/universum/issues/56):
+  Make `elem` and `notElem` faster for `Set` and `HashSet` by introducing `ElementConstraint` associated type family.
+
 0.9.1
 =====
 

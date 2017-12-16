@@ -1,5 +1,9 @@
+{-# LANGUAGE CPP                #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE DeriveGeneric      #-}
+{-# LANGUAGE KindSignatures     #-}
+{-# LANGUAGE PolyKinds          #-}
+{-# LANGUAGE RankNTypes         #-}
 {-# LANGUAGE Trustworthy        #-}
 
 -- | Functions for debugging. If you left these functions in your code
@@ -25,6 +29,12 @@ import Data.Typeable (Typeable)
 import GHC.Generics (Generic)
 import System.IO.Unsafe (unsafePerformIO)
 
+#if ( __GLASGOW_HASKELL__ >= 800 )
+import GHC.Exts (RuntimeRep, TYPE)
+
+import Universum.Base (HasCallStack)
+#endif
+
 import Universum.Applicative (pass)
 import Universum.Print (Print, putStrLn)
 
@@ -38,7 +48,12 @@ trace string expr = unsafePerformIO (do
     return expr)
 
 -- | 'P.error' that takes 'Text' as an argument.
+#if ( __GLASGOW_HASKELL__ >= 800 )
+error :: forall (r :: RuntimeRep) . forall (a :: TYPE r) . HasCallStack
+      => Text -> a
+#else
 error :: Text -> a
+#endif
 error s = P.error (unpack s)
 
 -- | Version of 'Debug.Trace.traceShow' that leaves warning.
@@ -73,5 +88,9 @@ data Undefined = Undefined
 
 -- | 'P.undefined' that leaves warning in code on every usage.
 {-# WARNING undefined "'undefined' function remains in code (or use 'error')" #-}
+#if ( __GLASGOW_HASKELL__ >= 800 )
+undefined :: forall (r :: RuntimeRep) . forall (a :: TYPE r) . HasCallStack => a
+#else
 undefined :: a
+#endif
 undefined = P.undefined
