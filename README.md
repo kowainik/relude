@@ -195,7 +195,7 @@ What's new?
 
 Finally, we can move to part describing the new cool features we bring with `universum`.
 
-* `uncons` split a list at the first element.
+* `uncons` splits a list at the first element.
 * `ordNub` and `sortNub` are _O(n log n)_ versions of `nub` (which is quadratic)
   and `hashNub` and `unstableNub` are almost _O(n)_ versions of `nub`.
 * `(&)` – reverse application. `x & f & g` instead of `g $ f $ x` is useful sometimes.

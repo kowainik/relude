@@ -44,11 +44,12 @@ import Prelude hiding (all, and, any, elem, foldMap, foldl, foldr, mapM_, notEle
                 sequence_, sum)
 
 import Universum.Applicative (Alternative (..), Const, ZipList, pass)
-import Universum.Base (Constraint, Foldable, Word8)
-import Universum.Container.Reexport
+import Universum.Base (Constraint, Word8)
+import Universum.Container.Reexport (HashMap, HashSet, Hashable, IntMap, IntSet, Map, Seq, Set,
+                                     Vector)
 import Universum.Functor (Identity)
 import Universum.Monad.Reexport (fromMaybe)
-import Universum.Monoid
+import Universum.Monoid (All (..), Any (..), Dual, First (..), Last, Product, Sum)
 
 #if __GLASGOW_HASKELL__ >= 800
 import GHC.Err (errorWithoutStackTrace)
@@ -57,6 +58,7 @@ import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import qualified Data.List.NonEmpty as NE
+import Universum.Monoid (NonEmpty)
 #endif
 
 import qualified Data.Foldable as Foldable
@@ -101,9 +103,11 @@ type family ElementDefault (t :: *) :: * where
 -- @'null' ≡ 'List.null' . 'toList'@
 --
 class ToList t where
-    -- | Type of element for some container. Implemented as a type family because
-    -- some containers are monomorphic over element type (like 'T.Text', 'IS.IntSet', etc.)
-    -- so we can't implement nice interface using old higher-kinded types approach.
+    -- | Type of element for some container. Implemented as an asscociated type family because
+    -- some containers are monomorphic over element type (like 'T.Text', 'IntSet', etc.)
+    -- so we can't implement nice interface using old higher-kinded types
+    -- approach. Implementing this as an associated type family instead of
+    -- top-level family gives you more control over element types.
     type Element t :: *
     type Element t = ElementDefault t
 
@@ -162,8 +166,8 @@ instance ToList BSL.ByteString where
     null = BSL.null
     {-# INLINE null #-}
 
-instance ToList IS.IntSet where
-    type Element IS.IntSet = Int
+instance ToList IntSet where
+    type Element IntSet = Int
     toList = IS.toList
     {-# INLINE toList #-}
     null = IS.null
@@ -442,7 +446,7 @@ instance Container BSL.ByteString where
     safeHead = fmap fst . BSL.uncons
     {-# INLINE safeHead #-}
 
-instance Container IS.IntSet where
+instance Container IntSet where
     foldr = IS.foldr
     {-# INLINE foldr #-}
     foldl = IS.foldl
@@ -735,15 +739,15 @@ instance Hashable v => One (HashSet v) where
     one = HashSet.singleton
     {-# INLINE one #-}
 
-instance One IS.IntSet where
-    type OneItem IS.IntSet = Int
+instance One IntSet where
+    type OneItem IntSet = Int
     one = IS.singleton
     {-# INLINE one #-}
 
 -- Vectors
 
-instance One (V.Vector a) where
-    type OneItem (V.Vector a) = a
+instance One (Vector a) where
+    type OneItem (Vector a) = a
     one = V.singleton
     {-# INLINE one #-}
 

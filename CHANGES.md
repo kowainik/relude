@@ -20,6 +20,7 @@
   Make `Element` type family be associated type family.
   Remove `{-# OVERLAPPABLE #-}` instance for `ToList` and `Container`. Add default instances for basic types.
   Remove `WrappedList` `newtype` because it's not needed anymore.
+  Remove `NontrivialContainer` constraint alias.
 * [#56](https://github.com/serokell/universum/issues/56):
   Make `elem` and `notElem` faster for `Set` and `HashSet` by introducing `ElementConstraint` associated type family.
 
