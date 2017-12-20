@@ -1,4 +1,4 @@
-resolver: nightly-2017-10-08
+resolver: lts-9.18
 packages: [.]
 
 nix:
