@@ -11,13 +11,14 @@ copyright:           2016 Stephen Diehl, 2016-2017 Serokell
 category:            Prelude
 stability:           stable
 build-type:          Simple
-extra-source-files:  CHANGES.md
-cabal-version:       >=1.10
+cabal-version:       >=1.18
 bug-reports:         https://github.com/serokell/universum/issues
 tested-with:         GHC == 7.10.3
                    , GHC == 8.0.1
                    , GHC == 8.0.2
                    , GHC == 8.2.2
+extra-doc-files:     CHANGES.md
+                   , README.md
 
 source-repository head
   type:     git
