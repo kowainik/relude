@@ -1,5 +1,5 @@
 name:                universum
-version:             1.0.0
+version:             1.0.1
 synopsis:            Custom prelude used in Serokell
 description:         Custom prelude used in Serokell
 homepage:            https://github.com/serokell/universum
