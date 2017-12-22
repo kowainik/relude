@@ -15,7 +15,7 @@ import Data.List (break, cycle, drop, dropWhile, filter, genericDrop, genericLen
                   genericReplicate, genericSplitAt, genericTake, group, inits, intercalate,
                   intersperse, isPrefixOf, iterate, permutations, repeat, replicate, reverse, scanl,
                   scanr, sort, sortBy, sortOn, splitAt, subsequences, tails, take, takeWhile,
-                  transpose, unfoldr, unzip, unzip3, zip, zip3, zipWith)
+                  transpose, unfoldr, unzip, unzip3, zip, zip3, zipWith, (++))
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import Data.List.NonEmpty (head, init, last, tail)

@@ -1,3 +1,9 @@
+1.0.1
+=====
+
+* [#100](https://github.com/serokell/universum/issues/100):
+  Add `bug` function = `impureThrow`.
+
 1.0.0
 =====
 

@@ -74,7 +74,7 @@ import Data.Typeable (Typeable)
 import Data.Void (Void, absurd, vacuous)
 #endif
 
-import GHC.Base (String, asTypeOf, maxInt, minInt, ord, seq, (++))
+import GHC.Base (String, asTypeOf, maxInt, minInt, ord, seq)
 import GHC.Enum (Bounded (..), Enum (..), boundedEnumFrom, boundedEnumFromThen)
 import GHC.Exts (Constraint, FunPtr, Ptr)
 import GHC.Float (Double (..), Float (..), Floating (..))
