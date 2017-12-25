@@ -13,9 +13,10 @@ import Data.Text (Text)
 import Universum.Monad (concatMapM)
 import Universum.Nub (hashNub, ordNub, sortNub, unstableNub)
 import Universum.VarArg ((...))
+import Universum.List (foldl')
 
 import qualified Data.Foldable as Foldable (elem)
-import qualified Data.HashSet as HashSet (fromList)
+import qualified Data.HashSet as HashSet (fromList, insert)
 import qualified Data.List.NonEmpty as NonEmpty
 import qualified Data.Set as Set (fromList)
 import qualified Data.Text as T
@@ -30,6 +31,7 @@ main = defaultMain
   , bgroupSuperComposition
   , bgroupConcatMap
   , bgroupMember
+  , bgroupFold
   ]
 
 bgroupList :: forall a .
@@ -166,4 +168,12 @@ bgroupMember = do
                     , bench "Set/elem"         $ whnf (Container.elem sample) listSet
                     , bench "HashSet/Foldable" $ whnf (Foldable.elem  sample) listHashSet
                     , bench "HashSet/elem"     $ whnf (Container.elem sample) listHashSet
+                    ]
+
+-- | Checks that 'foldl'' is implemented efficiently for 'Universum.List'
+bgroupFold :: Benchmark
+bgroupFold = do
+    let testList    = [1..100000] :: [Int]
+    let foo         = foldl' HashSet.insert mempty
+    bgroup "fold"   [ bench "List/foldl'" $ nf foo testList
                     ]
