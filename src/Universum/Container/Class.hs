@@ -22,6 +22,7 @@
 module Universum.Container.Class
        ( -- * Foldable-like classes and methods
          ToList    (..)
+       , ToPairs   (..)
        , Container (..)
 
        , sum
@@ -94,7 +95,6 @@ type family ElementDefault (t :: *) :: * where
     ElementDefault (f a) = a
 
 -- | Type class for data types that can be converted to List.
--- Fully compatible with 'Foldable'.
 -- Contains very small and safe subset of 'Foldable' functions.
 --
 -- You can define 'Tolist' by just defining 'toList' function.
@@ -203,6 +203,84 @@ instance ToList (Map k v)
 instance ToList (Set v)
 instance ToList (Seq a)
 instance ToList (Vector a)
+
+----------------------------------------------------------------------------
+-- ToPairs
+----------------------------------------------------------------------------
+
+{- | Type class for data types that can be converted to List of Pairs.
+ You can define 'ToPairs' by just defining 'toPairs' function.
+
+ But the following laws should be met:
+
+@
+'toPairs' m ≡ 'zip' ('keys' m) ('elems' m)
+'keys'      ≡ 'map' 'fst' . 'toPairs'
+'elems'     ≡ 'map' 'snd' . 'toPairs'
+@
+
+-}
+class ToPairs t where
+    {-# MINIMAL toPairs #-}
+    -- | Type of keys of the mapping.
+    type Key t :: *
+    -- | Type of value of the mapping.
+    type Val t :: *
+
+    -- | Converts the structure to the list of the key-value pairs.
+    -- >>> import qualified Data.HashMap as HashMap
+    -- >>> toPairs (HashMap.fromList [('a', "xxx"), ('b', "yyy")])
+    -- [('a', "xxx"), ('b', "yyy")]
+    toPairs :: t -> [(Key t, Val t)]
+
+    -- | Converts the structure to the list of the keys.
+    --
+    -- >>> keys (HashMap.fromList [('a', "xxx"), ('b', "yyy")])
+    -- "ab"
+    keys :: t -> [Key t]
+    keys = map fst . toPairs
+    {-# INLINE keys #-}
+
+    -- | Converts the structure to the list of the values.
+    --
+    -- >>> elems (HashMap.fromList [('a', "xxx"), ('b', "yyy")])
+    -- ["xxx", "yyy"]
+    elems :: t -> [Val t]
+    elems = map snd . toPairs
+    {-# INLINE elems #-}
+
+-- Instances
+
+instance ToPairs (HashMap k v) where
+    type Key (HashMap k v) = k
+    type Val (HashMap k v) = v
+    toPairs = HM.toList
+    {-# INLINE toPairs #-}
+    keys    = HM.keys
+    {-# INLINE keys #-}
+    elems   = HM.elems
+    {-# INLINE elems #-}
+
+instance ToPairs (IntMap v) where
+    type Key (IntMap v) = Int
+    type Val (IntMap v) = v
+    toPairs = IM.toList
+    {-# INLINE toPairs #-}
+    keys    = IM.keys
+    {-# INLINE keys #-}
+    elems   = IM.elems
+    {-# INLINE elems #-}
+
+instance ToPairs (Map k v) where
+    type Key (Map k v) = k
+    type Val (Map k v) = v
+    toPairs = M.toList
+    {-# INLINE toPairs #-}
+    keys    = M.keys
+    {-# INLINE keys #-}
+    elems   = M.elems
+    {-# INLINE elems #-}
+
 
 ----------------------------------------------------------------------------
 -- Additional operations that don't make much sense for e.g. Maybe

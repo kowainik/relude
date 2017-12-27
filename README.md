@@ -278,6 +278,7 @@ Finally, we can move to part describing the new cool features we bring with `uni
   for creating singleton containers. Even monomorhpic ones like `Text`.
 * `evaluateWHNF` and `evaluateNF` functions as clearer and lifted aliases for
   `evaluate` and `evaluate . force`.
+* `ToPairs` type class for data types that can be converted to list of pairs.
 
 License
 -------
