@@ -39,7 +39,7 @@ module Universum
 import Universum.Applicative
 import Universum.Base
 import Universum.Bool
-import Universum.Container hiding (foldl')
+import Universum.Container
 import Universum.Debug
 import Universum.DeepSeq
 import Universum.Exception
