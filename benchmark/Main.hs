@@ -177,6 +177,6 @@ bgroupFold = do
     let universumFoldl' = Container.foldl' HashSet.insert mempty
     let ghcFoldl'       = List.foldl' (\hashSet element -> 
                           HashSet.insert element hashSet) mempty
-    bgroup "fold"   [ bench "List/foldl'" $ nf universumFoldl' testList
-                    , bench "Base/foldl'" $ nf ghcFoldl' testList
+    bgroup "foldl'" [ bench "universum" $ nf universumFoldl' testList
+                    , bench "base"      $ nf ghcFoldl' testList
                     ]
