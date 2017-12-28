@@ -1,3 +1,9 @@
+1.0.2
+=====
+
+* [#91](https://github.com/serokell/universum/issues/91):
+  Change argument order of foldl'
+
 1.0.1
 =====
 
