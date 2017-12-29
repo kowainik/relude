@@ -226,9 +226,9 @@ class ToList t => Container t where
     foldl = Foldable.foldl
     {-# INLINE foldl #-}
 
-    foldl' :: (b -> Element t -> b) -> b -> t -> b
-    default foldl' :: (Foldable f, t ~ f a, Element t ~ a) => (b -> Element t -> b) -> b -> t -> b
-    foldl' = Foldable.foldl'
+    foldl' :: (Element t -> b -> b) -> b -> t -> b
+    default foldl' :: (Foldable f, t ~ f a, Element t ~ a) => (Element t -> b -> b) -> b -> t -> b
+    foldl' f = Foldable.foldl' (flip f)
     {-# INLINE foldl' #-}
 
     length :: t -> Int
@@ -334,7 +334,7 @@ instance Container T.Text where
     {-# INLINE foldr #-}
     foldl = T.foldl
     {-# INLINE foldl #-}
-    foldl' = T.foldl'
+    foldl' f = T.foldl' (flip f)
     {-# INLINE foldl' #-}
     foldr1 = T.foldr1
     {-# INLINE foldr1 #-}
@@ -362,7 +362,7 @@ instance Container TL.Text where
     {-# INLINE foldr #-}
     foldl = TL.foldl
     {-# INLINE foldl #-}
-    foldl' = TL.foldl'
+    foldl' f = TL.foldl' (flip f)
     {-# INLINE foldl' #-}
     foldr1 = TL.foldr1
     {-# INLINE foldr1 #-}
@@ -391,7 +391,7 @@ instance Container BS.ByteString where
     {-# INLINE foldr #-}
     foldl = BS.foldl
     {-# INLINE foldl #-}
-    foldl' = BS.foldl'
+    foldl' f = BS.foldl' (flip f)
     {-# INLINE foldl' #-}
     foldr1 = BS.foldr1
     {-# INLINE foldr1 #-}
@@ -421,7 +421,7 @@ instance Container BSL.ByteString where
     {-# INLINE foldr #-}
     foldl = BSL.foldl
     {-# INLINE foldl #-}
-    foldl' = BSL.foldl'
+    foldl' f = BSL.foldl' (flip f)
     {-# INLINE foldl' #-}
     foldr1 = BSL.foldr1
     {-# INLINE foldr1 #-}
@@ -451,7 +451,7 @@ instance Container IntSet where
     {-# INLINE foldr #-}
     foldl = IS.foldl
     {-# INLINE foldl #-}
-    foldl' = IS.foldl'
+    foldl' f = IS.foldl' (flip f)
     {-# INLINE foldl' #-}
     length = IS.size
     {-# INLINE length #-}
