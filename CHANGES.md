@@ -2,7 +2,9 @@
 =====
 
 * [#91](https://github.com/serokell/universum/issues/91):
-  Change argument order of foldl'
+  Change argument order of `foldl'`.
+* [#97](https://github.com/serokell/universum/issues/97):
+  Add `ToPairs` type class with the ability to have list of pairs.
 
 1.0.1
 =====
