@@ -58,8 +58,6 @@ While creating and maintaining a custom prelude, we are pursuing the following g
 
 1. Avoid all [partial functions](https://www.reddit.com/r/haskell/comments/5n51u3/why_are_partial_functions_as_in_head_tail_bad/).
    We like [total](http://mathworld.wolfram.com/TotalFunction.html) and exception-free functions.
-   You can still use some [_unsafe_](https://github.com/serokell/universum/blob/master/src/Unsafe.hs)
-   functions but they are not exported by default.
 2. Use more efficient [string representations](https://www.reddit.com/r/haskell/comments/29jw0s/whats_wrong_with_string/).
    `String` type is crushingly inefficient. All our functions either try to be polymorphic over string
    types, or use [`Text`](http://hackage.haskell.org/package/text-1.2.2.1/docs/Data-Text.html)
