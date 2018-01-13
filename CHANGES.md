@@ -1,3 +1,9 @@
+1.0.3
+=====
+
+* [#114](https://github.com/serokell/universum/issues/114):
+  Reexport more functions from `safe-exceptions`.
+
 1.0.2
 =====
 
