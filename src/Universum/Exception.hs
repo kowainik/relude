@@ -16,8 +16,9 @@ module Universum.Exception
 
 -- exceptions from safe-exceptions
 import Control.Exception.Safe (Exception, MonadCatch, MonadMask (..), MonadThrow,
-                               SomeException (..), bracket, bracket_, catch, catchAny, finally,
-                               throwM)
+                               SomeException (..), bracket, bracketOnError, bracket_, catch,
+                               catchAny, displayException, finally, handleAny, mask_, onException,
+                               throwM, try, tryAny)
 
 import Control.Applicative (Applicative (pure))
 import Control.Monad.Except (MonadError, throwError)
