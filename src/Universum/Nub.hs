@@ -39,7 +39,7 @@ import qualified Data.Set as Set
 -- | Like 'Prelude.nub' but runs in @O(n * log n)@ time and requires 'Ord'.
 --
 -- >>> ordNub [3, 3, 3, 2, 2, -1, 1]
--- [3, 2, -1, 1]
+-- [3,2,-1,1]
 ordNub :: (Ord a) => [a] -> [a]
 ordNub = go Set.empty
   where
@@ -52,7 +52,7 @@ ordNub = go Set.empty
 -- | Like 'Prelude.nub' but runs in @O(n * log_16(n))@ time and requires 'Hashable'.
 --
 -- >>> hashNub [3, 3, 3, 2, 2, -1, 1]
--- [3, 2, -1, 1]
+-- [3,2,-1,1]
 hashNub :: (Eq a, Hashable a) => [a] -> [a]
 hashNub = go HashSet.empty
   where
@@ -65,13 +65,13 @@ hashNub = go HashSet.empty
 -- | Like 'ordNub' but also sorts a list.
 --
 -- >>> sortNub [3, 3, 3, 2, 2, -1, 1]
--- [-1, 1, 2, 3]
+-- [-1,1,2,3]
 sortNub :: (Ord a) => [a] -> [a]
 sortNub = Set.toList . Set.fromList
 
 -- | Like 'hashNub' but has better performance and also doesn't save the order.
 --
 -- >>> unstableNub [3, 3, 3, 2, 2, -1, 1]
--- [1, 2, 3, -1]
+-- [1,2,3,-1]
 unstableNub :: (Eq a, Hashable a) => [a] -> [a]
 unstableNub = HashSet.toList . HashSet.fromList

@@ -11,6 +11,12 @@ module Universum.VarArg
        ( SuperComposition(..)
        ) where
 
+-- $setup
+-- >>> import Universum.Base ((+))
+-- >>> import Universum.Container (null)
+-- >>> import Prelude (show)
+-- >>> import Data.List (zip5)
+
 class SuperComposition a b c | a b -> c where
     -- | Allows to apply function to result of another function with multiple
     -- arguments.

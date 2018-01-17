@@ -41,8 +41,8 @@ module Universum.Container.Class
        ) where
 
 import Data.Coerce (Coercible, coerce)
-import Prelude hiding (all, and, any, elem, foldMap, foldl, foldr, mapM_, notElem, or, product,
-                sequence_, sum)
+import Prelude hiding (all, and, any, elem, foldMap, foldl, foldr, mapM_, notElem, null, or,
+                product, sequence_, sum)
 
 import Universum.Applicative (Alternative (..), Const, ZipList, pass)
 import Universum.Base (Constraint, Word8)
@@ -85,6 +85,10 @@ import qualified Data.Vector as V
 import qualified Data.Vector.Primitive as VP
 import qualified Data.Vector.Storable as VS
 import qualified Data.Vector.Unboxed as VU
+
+-- $setup
+-- >>> import Universum.String (Text)
+-- >>> import qualified Data.HashMap.Strict as HashMap
 
 ----------------------------------------------------------------------------
 -- Containers (e.g. tuples aren't containers)
@@ -228,9 +232,8 @@ class ToPairs t where
     type Val t :: *
 
     -- | Converts the structure to the list of the key-value pairs.
-    -- >>> import qualified Data.HashMap as HashMap
     -- >>> toPairs (HashMap.fromList [('a', "xxx"), ('b', "yyy")])
-    -- [('a', "xxx"), ('b', "yyy")]
+    -- [('a',"xxx"),('b',"yyy")]
     toPairs :: t -> [(Key t, Val t)]
 
     -- | Converts the structure to the list of the keys.
@@ -244,7 +247,7 @@ class ToPairs t where
     -- | Converts the structure to the list of the values.
     --
     -- >>> elems (HashMap.fromList [('a', "xxx"), ('b', "yyy")])
-    -- ["xxx", "yyy"]
+    -- ["xxx","yyy"]
     elems :: t -> [Val t]
     elems = map snd . toPairs
     {-# INLINE elems #-}
@@ -591,27 +594,53 @@ instance Container (Vector a)
 -- Derivative functions
 ----------------------------------------------------------------------------
 
+-- TODO: I should put different strings for different versions but I'm too lazy to do it...
+
+#if MIN_VERSION_base(4,10,1)
 -- | Stricter version of 'Prelude.sum'.
 --
 -- >>> sum [1..10]
 -- 55
 -- >>> sum (Just 3)
--- <interactive>:43:1: error:
+-- ...
 --     • Do not use 'Foldable' methods on Maybe
---     • In the expression: sum (Just 3)
---       In an equation for ‘it’: it = sum (Just 3)
+--       Suggestions:
+--           Instead of
+--               for_ :: (Foldable t, Applicative f) => t a -> (a -> f b) -> f ()
+--           use
+--               whenJust  :: Applicative f => Maybe a    -> (a -> f ()) -> f ()
+--               whenRight :: Applicative f => Either l r -> (r -> f ()) -> f ()
+-- ...
+--           Instead of
+--               fold :: (Foldable t, Monoid m) => t m -> m
+--           use
+--               maybeToMonoid :: Monoid m => Maybe m -> m
+-- ...
+#endif
 sum :: (Container t, Num (Element t)) => t -> Element t
 sum = foldl' (+) 0
 
+#if MIN_VERSION_base(4,10,1)
 -- | Stricter version of 'Prelude.product'.
 --
 -- >>> product [1..10]
 -- 3628800
 -- >>> product (Right 3)
--- <interactive>:45:1: error:
+-- ...
 --     • Do not use 'Foldable' methods on Either
---     • In the expression: product (Right 3)
---       In an equation for ‘it’: it = product (Right 3)
+--       Suggestions:
+--           Instead of
+--               for_ :: (Foldable t, Applicative f) => t a -> (a -> f b) -> f ()
+--           use
+--               whenJust  :: Applicative f => Maybe a    -> (a -> f ()) -> f ()
+--               whenRight :: Applicative f => Either l r -> (r -> f ()) -> f ()
+-- ...
+--           Instead of
+--               fold :: (Foldable t, Monoid m) => t m -> m
+--           use
+--               maybeToMonoid :: Monoid m => Maybe m -> m
+-- ...
+#endif
 product :: (Container t, Num (Element t)) => t -> Element t
 product = foldl' (*) 1
 

@@ -98,6 +98,9 @@ import GHC.Stack (CallStack, HasCallStack, callStack, currentCallStack, getCallS
                   prettyCallStack, prettySrcLoc, withFrozenCallStack)
 #endif
 
+-- $setup
+-- >>> import Universum.Function (const, ($))
+
 -- Pending GHC 8.2 we'll expose these.
 
 {-
@@ -117,11 +120,13 @@ import Data.Kind as X (
 -- | Stricter version of 'Data.Function.$' operator.
 -- Default Prelude defines this at the toplevel module, so we do as well.
 --
--- >>> const 3 $  undefined
+-- >>> const 3 $ Prelude.undefined
 -- 3
--- >>> const 3 $! undefined
+-- >>> const 3 $! Prelude.undefined
+-- *** Exception: Prelude.undefined
 -- CallStack (from HasCallStack):
 --   error, called at libraries/base/GHC/Err.hs:79:14 in base:GHC.Err
+-- ...
 ($!) :: (a -> b) -> a -> b
 f $! x = let !vx = x in f vx
 infixr 0 $!

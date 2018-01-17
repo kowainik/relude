@@ -19,6 +19,13 @@ import Universum.Monoid (NonEmpty (..))
 import Universum.Functor (fmap)
 import Universum.Monad (Maybe (..))
 
+-- $setup
+-- >>> import Universum.Applicative (pure)
+-- >>> import Universum.Base ((==), even)
+-- >>> import Universum.Bool (Bool (..))
+-- >>> import Universum.Container (length)
+-- >>> import Universum.Function (($))
+
 -- | Returns default list if given list is empty.
 -- Otherwise applies given function to every element.
 --

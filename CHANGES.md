@@ -1,3 +1,9 @@
+1.0.4
+=====
+
+* [#53](https://github.com/serokell/universum/issues/53):
+  Add `doctest` to `universum`. Also imporove and fix documentation.
+
 1.0.3
 =====
 

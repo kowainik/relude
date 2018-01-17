@@ -14,6 +14,11 @@ module Universum.Monad.Maybe
 import Universum.Applicative (Applicative, pass, pure)
 import Universum.Monad.Reexport (Maybe (..), Monad (..))
 
+-- $setup
+-- >>> import Universum.Bool (Bool (..))
+-- >>> import Universum.Function (($))
+-- >>> import Universum.Print (putTextLn)
+
 -- | Specialized version of 'for_' for 'Maybe'. It's used for code readability.
 -- Also helps to avoid space leaks:
 -- <http://www.snoyman.com/blog/2017/01/foldable-mapm-maybe-and-recursive-functions Foldable.mapM_ space leak>.
@@ -42,9 +47,9 @@ whenNothing Nothing  m = m
 -- | Performs default 'Applicative' action if 'Nothing' is given.
 -- Do nothing for 'Just'. Convenient for discarding 'Just' content.
 --
--- >>> whenNothing_ Nothing $ putText "Nothing!"
+-- >>> whenNothing_ Nothing $ putTextLn "Nothing!"
 -- Nothing!
--- >>> whenNothing_ (Just True) $ putText "Nothing!"
+-- >>> whenNothing_ (Just True) $ putTextLn "Nothing!"
 whenNothing_ :: Applicative f => Maybe a -> f () -> f ()
 whenNothing_ Nothing m = m
 whenNothing_ _       _ = pass

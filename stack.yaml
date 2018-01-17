@@ -1,9 +1,5 @@
-resolver: lts-10.0
+resolver: lts-10.3
 packages: [.]
 
 nix:
   packages: [binutils, gmp]
-
-extra-deps: []
-flags: {}
-extra-package-dbs: []

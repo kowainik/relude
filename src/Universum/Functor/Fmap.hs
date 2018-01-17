@@ -12,6 +12,10 @@ import Universum.Functor.Reexport (Functor (..))
 map :: Functor f => (a -> b) -> f a -> f b
 map = fmap
 
+-- $setup
+-- >>> import Universum.Base (negate)
+-- >>> import Universum.Monad (Maybe (..))
+
 -- | Alias for @fmap . fmap@. Convenient to work with two nested 'Functor's.
 --
 -- >>> negate <<$>> Just [1,2,3]

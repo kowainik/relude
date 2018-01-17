@@ -23,6 +23,10 @@ import Data.Semigroup (Option (..), Semigroup (sconcat, stimes, (<>)), WrappedMo
 
 import Universum.Monad.Reexport (Maybe, fromMaybe)
 
+-- $setup
+-- >>> import Universum.Base (Int)
+-- >>> import Universum.Monad (Maybe (..))
+
 -- | Extracts 'Monoid' value from 'Maybe' returning 'mempty' if 'Nothing'.
 --
 -- >>> maybeToMonoid (Just [1,2,3] :: Maybe [Int])
