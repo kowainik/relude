@@ -23,6 +23,8 @@ import Data.Maybe (Maybe (..), maybe)
 import Universum.Applicative (pass)
 import Universum.Monad.Reexport (Either (..), either)
 
+-- $setup
+-- >>> import Universum.Bool (Bool (..))
 
 -- | Extracts value from 'Left' or return given default value.
 --
@@ -57,7 +59,7 @@ leftToMaybe = either Just (const Nothing)
 --
 -- >>> rightToMaybe (Left True)
 -- Nothing
--- >>> leftToMaybe (Right "aba")
+-- >>> rightToMaybe (Right "aba")
 -- Just "aba"
 rightToMaybe :: Either l r -> Maybe r
 rightToMaybe = either (const Nothing) Just
@@ -75,7 +77,7 @@ maybeToRight l = maybe (Left l) Right
 --
 -- >>> maybeToLeft True (Just "aba")
 -- Left "aba"
--- >>> maybeToRight True Nothing
+-- >>> maybeToLeft True Nothing
 -- Right True
 maybeToLeft :: r -> Maybe l -> Either l r
 maybeToLeft r = maybe (Right r) Left

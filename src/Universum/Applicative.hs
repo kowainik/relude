@@ -12,6 +12,9 @@ module Universum.Applicative
 import Control.Applicative (Alternative (..), Applicative (..), Const (..), ZipList (..), liftA2,
                             liftA3, optional, (<**>))
 
+-- $setup
+-- >>> import Universum.Monad (Maybe)
+
 -- | Shorter alias for @pure ()@.
 --
 -- >>> pass :: Maybe ()

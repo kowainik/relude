@@ -20,19 +20,26 @@ import Universum.Container (Container, Element, fold, toList)
 import Universum.Functor (fmap)
 import Universum.Monad.Reexport (Monad (..))
 
+-- $setup
+-- :set -XOverloadedStrings
+-- >>> import Universum.Base (even)
+-- >>> import Universum.Monad (Maybe (..), (>=>))
+-- >>> import Universum.Print (putTextLn)
+-- >>> import Universum.String (readMaybe)
+
 -- | Lifting bind into a monad. Generalized version of @concatMap@
 -- that works with a monadic predicate. Old and simpler specialized to list
 -- version had next type:
 --
 -- @
---     concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
+-- concatMapM :: Monad m => (a -> m [b]) -> [a] -> m [b]
 -- @
 --
 -- Side note: previously it had type
 --
 -- @
---     concatMapM :: (Applicative q, Monad m, Traversable m)
---                => (a -> q (m b)) -> m a -> q (m b)
+-- concatMapM :: (Applicative q, Monad m, Traversable m)
+--            => (a -> q (m b)) -> m a -> q (m b)
 -- @
 --
 -- Such signature didn't allow to use this function when traversed container
@@ -40,7 +47,7 @@ import Universum.Monad.Reexport (Monad (..))
 -- Now you can use it like e.g.
 --
 -- @
---     concatMapM readFile files >>= putStrLn
+-- concatMapM readFile files >>= putTextLn
 -- @
 concatMapM
     :: ( Applicative f
@@ -76,7 +83,7 @@ concatForM = flip concatMapM
 -- Just False
 -- >>> andM [Just True, Nothing]
 -- Nothing
--- >>> andM [putStrLn "1" >> pure True, putStrLn "2" >> pure False, putStrLn "3" >> undefined]
+-- >>> andM [putTextLn "1" >> pure True, putTextLn "2" >> pure False, putTextLn "3" >> pure True]
 -- 1
 -- 2
 -- False

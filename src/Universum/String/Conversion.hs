@@ -44,6 +44,12 @@ import qualified Text.Read (readEither)
 
 import qualified GHC.Show as Show (Show (show))
 
+-- $setup
+-- >>> :set -XTypeApplications -XOverloadedStrings
+-- >>> import Universum.Base (Int)
+-- >>> import Universum.Function (($))
+-- >>> import Universum.Print (putStrLn)
+
 -- | Type synonym for 'Data.Text.Lazy.Text'.
 type LText = LT.Text
 
