@@ -7,6 +7,8 @@
   Drop the support of `GHC-8.0.1`.
 * [#104](https://github.com/serokell/universum/issues/104):
   Reexport `hashWithSalt` from `Data.Hashable`.
+* [#95](https://github.com/serokell/universum/issues/95):
+  Reexport `Compose` from `Data.Functor.Compose`.
 
 1.0.3
 =====
