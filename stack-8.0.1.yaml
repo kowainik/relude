@@ -1,9 +1,0 @@
-resolver: lts-7.8
-packages:
-- '.'
-
-extra-deps:
-- type-operators-0.1.0.4
-
-flags: {}
-extra-package-dbs: []
