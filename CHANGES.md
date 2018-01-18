@@ -5,6 +5,8 @@
   Add `doctest` to `universum`. Also imporove and fix documentation.
 * [#117](https://github.com/serokell/universum/issues/117):
   Drop the support of `GHC-8.0.1`.
+* [#104](https://github.com/serokell/universum/issues/104):
+  Reexport `hashWithSalt` from `Data.Hashable`.
 
 1.0.3
 =====
