@@ -13,7 +13,7 @@ module Universum.Container.Reexport
        , module Data.Vector
        ) where
 
-import Data.Hashable (Hashable)
+import Data.Hashable (Hashable (hashWithSalt))
 import Data.HashMap.Strict (HashMap)
 import Data.HashSet (HashSet)
 import Data.IntMap.Strict (IntMap)
