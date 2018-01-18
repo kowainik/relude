@@ -2,6 +2,7 @@ Universum
 =========
 
 [![Build Status](https://travis-ci.org/serokell/universum.svg?branch=master)](https://travis-ci.org/serokell/universum)
+[![Windows build status](https://ci.appveyor.com/api/projects/status/github/serokell/universum?branch=master&svg=true)](https://ci.appveyor.com/project/ChShersh/universum)
 [![Hackage](https://img.shields.io/hackage/v/universum.svg)](https://hackage.haskell.org/package/universum)
 [![Stackage LTS](http://stackage.org/package/universum/badge/lts)](http://stackage.org/lts/package/universum)
 [![Stackage Nightly](http://stackage.org/package/universum/badge/nightly)](http://stackage.org/nightly/package/universum)

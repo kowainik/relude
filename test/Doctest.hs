@@ -2,7 +2,12 @@
 
 module Main (main) where
 
-#if MIN_VERSION_base(4,10,1)
+#if defined(mingw32_HOST_OS) || __GLASGOW_HASKELL__ < 802
+
+main :: IO ()
+main = return ()
+
+#else
 
 import System.FilePath.Glob (glob)
 import Test.DocTest (doctest)
@@ -11,10 +16,5 @@ main :: IO ()
 main = do
     sourceFiles <- glob "src/**/*.hs"
     doctest $ "-XNoImplicitPrelude" : sourceFiles
-
-#else
-
-main :: IO ()
-main = return ()
 
 #endif
