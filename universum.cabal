@@ -72,7 +72,7 @@ library
                      , bytestring
                      , containers
                      , deepseq
-                     , ghc-prim
+                     , ghc-prim >= 0.4.0.0
                      , hashable
                      , microlens
                      , microlens-mtl

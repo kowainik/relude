@@ -9,6 +9,8 @@
   Reexport `hashWithSalt` from `Data.Hashable`.
 * [#95](https://github.com/serokell/universum/issues/95):
   Reexport `Compose` from `Data.Functor.Compose`.
+* [#124](https://github.com/serokell/universum/issues/124):
+  Export methods of class `Exception`.
 
 1.0.3
 =====
