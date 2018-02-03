@@ -24,6 +24,9 @@ matrix:
   - ghc: 8.2.2
     env: GHCVER='8.2.2' STACK_YAML="$HOME/build/serokell/universum/stack.yaml"
 
+  - ghc: 8.2.2
+    env: GHCVER='8.2.2' STACK_YAML="$HOME/build/serokell/universum/stack-nightly.yaml"
+
 
 addons:
   apt:
