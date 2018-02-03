@@ -1,3 +1,9 @@
+1.0.4.1
+=====
+
+* [#127](https://github.com/serokell/universum/issues/127):
+  Fix `doctest` for `text-1.2.3`.
+
 1.0.4
 =====
 

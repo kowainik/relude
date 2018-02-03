@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP                   #-}
 {-# LANGUAGE ExplicitForAll        #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
@@ -73,12 +74,18 @@ class ConvertUtf8 a b where
     -- патак
     decodeUtf8 :: b -> a
 
-    -- | Decode as utf8 string but returning execption if byte sequence is malformed.
-    --
-    -- >>> decodeUtf8 @Text @ByteString "\208\208\176\209\130\208\176\208\186"
-    -- "\65533\65533\1090\1072\1082"
-    -- >>> decodeUtf8Strict @Text @ByteString "\208\208\176\209\130\208\176\208\186"
-    -- Left Cannot decode byte '\xd0': Data.Text.Internal.Encoding.decodeUtf8: Invalid UTF-8 stream
+    {- | Decode as utf8 string but returning execption if byte sequence is malformed.
+
+#if MIN_VERSION_text(1,2,3)
+    >>> decodeUtf8 @Text @ByteString "\208\208\176\209\130\208\176\208\186"
+    "\65533\1072\1090\1072\1082"
+#else
+    >>> decodeUtf8 @Text @ByteString "\208\208\176\209\130\208\176\208\186"
+    "\65533\65533\1090\1072\1082"
+#endif
+    >>> decodeUtf8Strict @Text @ByteString "\208\208\176\209\130\208\176\208\186"
+    Left Cannot decode byte '\xd0': Data.Text.Internal.Encoding.decodeUtf8: Invalid UTF-8 stream
+    -}
     decodeUtf8Strict :: b -> Either T.UnicodeException a
 
 instance ConvertUtf8 String B.ByteString where
