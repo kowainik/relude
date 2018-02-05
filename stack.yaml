@@ -1,4 +1,10 @@
 resolver: lts-10.4
 
 nix:
-  packages: [binutils, gmp]
+  enable: true
+  shell-file: shell.nix
+
+extra-deps:
+- tasty-0.12.0.1
+
+allow-newer: true
