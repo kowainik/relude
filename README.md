@@ -119,14 +119,16 @@ Gotchas
 * `id` is renamed to `identity` (because it's nice to be able to use `id` as a variable name).
 * `head`, `tail`, `last`, `init` work with `NonEmpty a` instead of `[a]`.
 * Safe analogue for `head` function: `safeHead :: [a] -> Maybe a`.
-* `undefined` triggers a compiler warning, which is probably not what you want. Either use `throwIO`, `Except`, or `error`.
+* `undefined` triggers a compiler warning, which is probably not what you want. Either use `throwIO`, `Except`, `error` or `bug`.
 * `map` is `fmap` now.
-* `sortOn` is available without import. This function efficiently sorts a list based on some
-  property of its elements (e.g. `sortOn length` would sort elements by length).
+* Multiple sorting functions are available without imports:
+  + `sortBy :: (a -> a -> Ordering) -> [a] -> [a]`: sorts list using given custom comparator.
+  + `sortWith :: Ord b => (a -> b) -> [a] -> [a]`: sorts a list based on some property of its elements.
+  + `sortOn :: Ord b => (a -> b) -> [a] -> [a]`: just like `sortWith`, but more time-efficient if function is calculated slowly (though less space-efficient). So you should write `sortOn length` (would sort elements by length) but `sortWith fst` (would sort list of pairs by first element).
 * Functions `sum` and `product` are strict now, which makes them more efficient.
 * If you try to do something like `putStrLn "hi"`, you'll get an error message if
   `OverloadedStrings` is enabled – it happens because the compiler doesn't know what
-  type to infer for the string. Use `putText` in this case.
+  type to infer for the string. Use `putTextLn` in this case.
 * Since `show` doesn't come from `Show` anymore, you can't write `Show` instances easily.
   Either use autoderived instances or
   [`Buildable`](https://github.com/serokell/universum/blob/f2ccf8afd862e37ccd204c0ef9efde48a05c2d29/src/Universum.hs#L144).
@@ -158,7 +160,7 @@ Just remove unneeded imports after importing `Universum` (GHC should tell you wh
 Then, some commonly used types: `Map/HashMap/IntMap`, `Set/HashSet/IntSet`, `Seq`, `Text` and `ByteString`
 (as well as synonyms `LText` and `LByteString` for lazy versions).
 
-`liftIO` and `MonadIO` are exported by default. A lot of functions are generalized to `MonadIO`.
+`liftIO` and `MonadIO` are exported by default. A lot of `IO` functions are generalized to `MonadIO`.
 
 `deepseq` is exported. For instance, if you want to force deep evaluation of some value (in IO),
 you can write `evaluateNF a`. WHNF evaluation is possible with `evaluateWHNF a`.
@@ -176,7 +178,7 @@ type class with useful instances is exported.
 We export `Text` and `LText`, and some functions work with `Text` instead of `String` –
 specifically, IO functions (`readFile`, `putStrLn`, etc) and `show`. In fact, `show`
 is polymorphic and can produce strict or lazy `Text`, `String`, or `ByteString`.
-Also, `toS` can convert any string type to any string type, but you can use `toText`, `toByteString`, `toString` functions to convert to any specific type.
+Also, `toText/toLText/toString` can convert `Text|LText|String` types to `Text/LText/String`. If you want to convert to and from `ByteString` use `encodeUtf8/decodeUtf8` functions.
 
 ### Debugging and `undefined`s
 
@@ -201,7 +203,7 @@ Finally, we can move to part describing the new cool features we bring with `uni
 * `ordNub` and `sortNub` are _O(n log n)_ versions of `nub` (which is quadratic)
   and `hashNub` and `unstableNub` are almost _O(n)_ versions of `nub`.
 * `(&)` – reverse application. `x & f & g` instead of `g $ f $ x` is useful sometimes.
-* `pretty` and `prettyL` for converting `Buildable` into `Text` (can be used instead of `show`).
+* `pretty` and `prettyL` for converting `Buildable` into `Text` (suggested be used instead of `show`).
 * `whenM`, `unlessM`, `ifM`, `guardM` are available and do what you expect
   them to do (e.g. `whenM (doesFileExist "foo")`).
 * Very generalized version of `concatMapM`, too, is available and does what expected.
@@ -277,7 +279,7 @@ Finally, we can move to part describing the new cool features we bring with `uni
   for creating singleton containers. Even monomorhpic ones like `Text`.
 * `evaluateWHNF` and `evaluateNF` functions as clearer and lifted aliases for
   `evaluate` and `evaluate . force`.
-* `ToPairs` type class for data types that can be converted to list of pairs.
+* `ToPairs` type class for data types that can be converted to list of pairs (like `Map` or `HashMap` or `IntMap`).
 
 License
 -------
