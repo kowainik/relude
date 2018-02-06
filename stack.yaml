@@ -1,5 +1,4 @@
 resolver: lts-10.4
 
 nix:
-  enable: true
   shell-file: shell.nix
