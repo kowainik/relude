@@ -104,7 +104,7 @@ test-suite universum-test
                      , text
                      , utf8-string
                      , hedgehog         ^>= 0.5.1
-                     , tasty            ^>= 0.12
+                     , tasty            ^>= 0.11
                      , tasty-hedgehog   ^>= 0.1
 
   ghc-options:         -Wall -threaded
