@@ -279,6 +279,15 @@ Finally, we can move to part describing the new cool features we bring with `uni
   `evaluate` and `evaluate . force`.
 * `ToPairs` type class for data types that can be converted to list of pairs.
 
+Projects that use Universum
+---------------------------
+
+- [cardano-report-server](https://github.com/input-output-hk/cardano-report-server)
+- [cardano-sl](https://github.com/input-output-hk/cardano-sl)
+- [importify](https://github.com/serokell/importify)
+- [log-warper](https://github.com/serokell/log-warper)
+- [orgstat](https://github.com/volhovm/orgstat)
+
 License
 -------
 
