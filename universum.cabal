@@ -103,9 +103,9 @@ test-suite universum-test
                      , bytestring
                      , text
                      , utf8-string
-                     , hedgehog         ^>= 0.5.1
-                     , tasty            ^>= 0.11
-                     , tasty-hedgehog   ^>= 0.1
+                     , hedgehog
+                     , tasty
+                     , tasty-hedgehog
 
   ghc-options:         -Wall -threaded
   default-language:    Haskell2010

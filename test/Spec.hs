@@ -1,6 +1,6 @@
 module Main where
 
-import Test.Tasty (defaultMain, testGroup)
+import Test.Tasty (defaultMain)
 
 import Test.Universum.Property (hedgehogTestTree)
 

@@ -13,13 +13,9 @@ import qualified Hedgehog.Range            as Range
 
 import qualified Data.ByteString           as B
 import qualified Data.ByteString.Lazy      as LB
-import qualified Data.ByteString.Lazy.UTF8 as LBU
-import qualified Data.ByteString.UTF8      as BU
+-- import qualified Data.ByteString.UTF8      as BU
 import qualified Data.Text                 as T
-import qualified Data.Text.Encoding        as T
-import qualified Data.Text.Encoding.Error  as T
 import qualified Data.Text.Lazy            as LT
-import qualified Data.Text.Lazy.Encoding   as LT
 
 import Data.List (nub)
 
@@ -34,14 +30,21 @@ utfProps = testGroup "utf8 conversion property tests"
     , testProperty "ByteString to Text or String invertible" prop_BytesTo
     ]
 
+unicode' :: MonadGen m => m Char
+unicode' = do
+    a <- Gen.unicode
+    if Universum.elem a ['\65534', '\65535']
+    then unicode'
+    else return a
+
 utf8String :: Gen String
-utf8String = Gen.string (Range.linear 0 10000) Gen.unicode
+utf8String = Gen.string (Range.linear 0 10000) unicode'
 
 utf8Text :: Gen T.Text
-utf8Text = Gen.text (Range.linear 0 10000) Gen.unicode
+utf8Text = Gen.text (Range.linear 0 10000) unicode'
 
 utf8Bytes :: Gen B.ByteString
-utf8Bytes = Gen.utf8 (Range.linear 0 10000) Gen.unicode
+utf8Bytes = Gen.utf8 (Range.linear 0 10000) unicode'
 
 -- "\65534" fails, but this is from BU.toString
 -- > BU.toString (BU.fromString "\65534") == "\65533"
