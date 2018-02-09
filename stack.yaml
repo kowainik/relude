@@ -1,4 +1,4 @@
 resolver: lts-10.4
 
 nix:
-  packages: [binutils, gmp]
+  shell-file: shell.nix

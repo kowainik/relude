@@ -91,6 +91,25 @@ library
   default-extensions:  NoImplicitPrelude
                        OverloadedStrings
 
+test-suite universum-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+
+  other-modules:       Test.Universum.Property
+
+  build-depends:       base             >= 4.8 && < 5
+                     , universum
+                     , bytestring
+                     , text
+                     , utf8-string
+                     , hedgehog
+                     , tasty
+                     , tasty-hedgehog
+
+  ghc-options:         -Wall -threaded
+  default-language:    Haskell2010
+
 test-suite universum-doctest
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
