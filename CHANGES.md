@@ -1,3 +1,9 @@
+1.0.5
+=====
+
+* [#136](https://github.com/serokell/universum/issues/136):
+  Change `foldl'` type back, add `flipfoldl'` instead.
+
 1.0.4.1
 =====
 
@@ -63,7 +69,7 @@
   Remove `NontrivialContainer` constraint alias.
 * [#56](https://github.com/serokell/universum/issues/56):
   Make `elem` and `notElem` faster for `Set` and `HashSet` by introducing `ElementConstraint` associated type family.
-* Remove `Unsafe` module. Though, see issue [#128](https://github.com/serokell/universum/issues/128) 
+* Remove `Unsafe` module. Though, see issue [#128](https://github.com/serokell/universum/issues/128)
   for disuccion regarding possible return of this module.
 
 0.9.1
