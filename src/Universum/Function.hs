@@ -3,8 +3,9 @@ module Universum.Function
        , identity
        ) where
 
-import Data.Function (const, fix, flip, on, ($), (.))
+import Data.Function (const, fix, flip, id, on, ($), (.))
 
 -- | Renamed version of 'Prelude.id'.
 identity :: a -> a
-identity x = x
+identity = id
+{-# INLINE identity #-}

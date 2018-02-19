@@ -1,6 +1,8 @@
 1.0.5
 =====
 
+* [#129](https://github.com/serokell/universum/issues/129):
+  Reexport `id`.
 * [#136](https://github.com/serokell/universum/issues/136):
   Change `foldl'` type back, add `flipfoldl'` instead.
 
