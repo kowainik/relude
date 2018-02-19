@@ -1,6 +1,8 @@
 1.0.5
 =====
 
+* [#128](https://github.com/serokell/universum/issues/128):
+  Add `Unsafe` module with unsafe functions to works with lists and `Maybe`.
 * [#129](https://github.com/serokell/universum/issues/129):
   Reexport `id`.
 * [#136](https://github.com/serokell/universum/issues/136):
