@@ -3,7 +3,8 @@
 -- | Utility functions to work with 'Data.Maybe' data type as monad.
 
 module Universum.Monad.Maybe
-       ( whenJust
+       ( (?:)
+       , whenJust
        , whenJustM
        , whenNothing
        , whenNothing_
@@ -12,12 +13,27 @@ module Universum.Monad.Maybe
        ) where
 
 import Universum.Applicative (Applicative, pass, pure)
+import Universum.Monad.Reexport (fromMaybe)
 import Universum.Monad.Reexport (Maybe (..), Monad (..))
 
 -- $setup
 -- >>> import Universum.Bool (Bool (..))
 -- >>> import Universum.Function (($))
 -- >>> import Universum.Print (putTextLn)
+-- >>> import Universum.String (readMaybe)
+
+{- | Similar to 'fromMaybe' but with flipped arguments.
+
+>>> readMaybe "True" ?: False
+True
+
+>>> readMaybe "Tru" ?: False
+False
+
+-}
+(?:) :: Maybe a -> a -> a
+mA ?: b = fromMaybe b mA
+{-# INLINE (?:) #-}
 
 -- | Specialized version of 'for_' for 'Maybe'. It's used for code readability.
 -- Also helps to avoid space leaks:
