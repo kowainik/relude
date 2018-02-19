@@ -116,7 +116,6 @@ a little bit if you don't want to type `import Universum` manually every time.
 Gotchas
 -------
 
-* `id` is renamed to `identity` (because it's nice to be able to use `id` as a variable name).
 * `head`, `tail`, `last`, `init` work with `NonEmpty a` instead of `[a]`.
 * Safe analogue for `head` function: `safeHead :: [a] -> Maybe a`.
 * `undefined` triggers a compiler warning, which is probably not what you want. Either use `throwIO`, `Except`, `error` or `bug`.
