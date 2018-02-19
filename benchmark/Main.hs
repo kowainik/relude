@@ -10,17 +10,17 @@ import Data.Hashable (Hashable)
 import Data.List (group, head, nub, sort, zip5)
 import Data.Text (Text)
 
+import Universum.Container (flipfoldl', foldl')
 import Universum.Monad (concatMapM)
 import Universum.Nub (hashNub, ordNub, sortNub, unstableNub)
 import Universum.VarArg ((...))
 
 import qualified Data.Foldable as Foldable (elem)
 import qualified Data.HashSet as HashSet (fromList, insert)
-import qualified Data.List as List (foldl')
 import qualified Data.List.NonEmpty as NonEmpty
 import qualified Data.Set as Set (fromList)
 import qualified Data.Text as T
-import qualified Universum.Container as Container (elem, foldl')
+import qualified Universum.Container as Container (elem)
 
 main :: IO ()
 main = defaultMain
@@ -173,10 +173,9 @@ bgroupMember = do
 -- | Checks that 'foldl'' is implemented efficiently for 'Universum.List'
 bgroupFold :: Benchmark
 bgroupFold = do
-    let testList        = [1..100000] :: [Int]
-    let universumFoldl' = Container.foldl' HashSet.insert mempty
-    let ghcFoldl'       = List.foldl' (\hashSet element -> 
-                          HashSet.insert element hashSet) mempty
-    bgroup "foldl'" [ bench "universum" $ nf universumFoldl' testList
-                    , bench "base"      $ nf ghcFoldl' testList
+    let testList   = [1..100000] :: [Int]
+    let flipFoldl' = flipfoldl' HashSet.insert mempty
+    let ghcFoldl'  = foldl' (\hashSet element -> HashSet.insert element hashSet) mempty
+    bgroup "foldl'" [ bench "flipped" $ nf flipFoldl' testList
+                    , bench "base"    $ nf ghcFoldl'  testList
                     ]

@@ -1,9 +1,7 @@
 resolver: lts-6.24
-packages:
-- '.'
 
 extra-deps:
+- hedgehog-0.5.2
+- tasty-hedgehog-0.1.0.2
 - type-operators-0.1.0.4
-
-flags: {}
-extra-package-dbs: []
+- wl-pprint-annotated-0.1.0.0

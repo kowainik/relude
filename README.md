@@ -145,7 +145,6 @@ Gotchas
 * As a consequence of previous point, some functions like `traverse_`, `forM_`, `sequenceA_`, etc.
   are generalized over `Container` type classes.
 * `error` takes `Text`.
-* `foldl'` takes a function with its arguments flipped compared with the `base` version.
 
 
 Things that you were already using, but now you don't have to import them explicitly

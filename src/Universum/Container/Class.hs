@@ -25,6 +25,8 @@ module Universum.Container.Class
        , ToPairs   (..)
        , Container (..)
 
+       , flipfoldl'
+
        , sum
        , product
 
@@ -307,9 +309,9 @@ class ToList t => Container t where
     foldl = Foldable.foldl
     {-# INLINE foldl #-}
 
-    foldl' :: (Element t -> b -> b) -> b -> t -> b
-    default foldl' :: (Foldable f, t ~ f a, Element t ~ a) => (Element t -> b -> b) -> b -> t -> b
-    foldl' f = Foldable.foldl' (flip f)
+    foldl' :: (b -> Element t -> b) -> b -> t -> b
+    default foldl' :: (Foldable f, t ~ f a, Element t ~ a) => (b -> Element t -> b) -> b -> t -> b
+    foldl' = Foldable.foldl'
     {-# INLINE foldl' #-}
 
     length :: t -> Int
@@ -415,7 +417,7 @@ instance Container T.Text where
     {-# INLINE foldr #-}
     foldl = T.foldl
     {-# INLINE foldl #-}
-    foldl' f = T.foldl' (flip f)
+    foldl' = T.foldl'
     {-# INLINE foldl' #-}
     foldr1 = T.foldr1
     {-# INLINE foldr1 #-}
@@ -443,7 +445,7 @@ instance Container TL.Text where
     {-# INLINE foldr #-}
     foldl = TL.foldl
     {-# INLINE foldl #-}
-    foldl' f = TL.foldl' (flip f)
+    foldl' = TL.foldl'
     {-# INLINE foldl' #-}
     foldr1 = TL.foldr1
     {-# INLINE foldr1 #-}
@@ -472,7 +474,7 @@ instance Container BS.ByteString where
     {-# INLINE foldr #-}
     foldl = BS.foldl
     {-# INLINE foldl #-}
-    foldl' f = BS.foldl' (flip f)
+    foldl' = BS.foldl'
     {-# INLINE foldl' #-}
     foldr1 = BS.foldr1
     {-# INLINE foldr1 #-}
@@ -502,7 +504,7 @@ instance Container BSL.ByteString where
     {-# INLINE foldr #-}
     foldl = BSL.foldl
     {-# INLINE foldl #-}
-    foldl' f = BSL.foldl' (flip f)
+    foldl' = BSL.foldl'
     {-# INLINE foldl' #-}
     foldr1 = BSL.foldr1
     {-# INLINE foldr1 #-}
@@ -532,7 +534,7 @@ instance Container IntSet where
     {-# INLINE foldr #-}
     foldl = IS.foldl
     {-# INLINE foldl #-}
-    foldl' f = IS.foldl' (flip f)
+    foldl' = IS.foldl'
     {-# INLINE foldl' #-}
     length = IS.size
     {-# INLINE length #-}
@@ -595,6 +597,16 @@ instance Container (Vector a)
 ----------------------------------------------------------------------------
 
 -- TODO: I should put different strings for different versions but I'm too lazy to do it...
+
+{- | Similar to 'foldl'' but takes a function with its arguments flipped.
+
+>>> flipfoldl' (/) 5 [2,3] :: Rational
+15 % 2
+
+-}
+flipfoldl' :: (Container t, Element t ~ a) => (a -> b -> b) -> b -> t -> b
+flipfoldl' f = foldl' (flip f)
+{-# INLINE flipfoldl' #-}
 
 #if MIN_VERSION_base(4,10,1)
 -- | Stricter version of 'Prelude.sum'.
