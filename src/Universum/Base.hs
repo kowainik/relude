@@ -11,6 +11,7 @@ module Universum.Base
        , module Data.Char
        , module Data.Int
        , module Data.Word
+       , Natural
 
          -- * Base type classes
        , module Data.Eq
@@ -57,6 +58,7 @@ import Data.Bits (xor)
 import Data.Char (chr)
 import Data.Int (Int, Int16, Int32, Int64, Int8)
 import Data.Word (Word, Word16, Word32, Word64, Word8, byteSwap16, byteSwap32, byteSwap64)
+import Numeric.Natural (Natural)
 
 -- IO
 import System.IO (FilePath, Handle, IOMode (..), stderr, stdin, stdout, withFile)
