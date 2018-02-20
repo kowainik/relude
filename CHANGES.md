@@ -1,6 +1,8 @@
 1.0.5
 =====
 
+* [#15](https://github.com/serokell/universum/issues/15):
+  Add `?:` function to `Universum.Monad.Maybe`.
 * [#128](https://github.com/serokell/universum/issues/128):
   Add `Unsafe` module with unsafe functions to works with lists and `Maybe`.
 * [#129](https://github.com/serokell/universum/issues/129):
