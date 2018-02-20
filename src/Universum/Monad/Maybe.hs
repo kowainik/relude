@@ -31,6 +31,7 @@ True
 False
 
 -}
+infixr 0 ?:
 (?:) :: Maybe a -> a -> a
 mA ?: b = fromMaybe b mA
 {-# INLINE (?:) #-}
