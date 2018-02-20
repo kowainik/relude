@@ -1,8 +1,6 @@
 1.0.5
 =====
 
-* [#60](https://github.com/serokell/universum/issues/60):
-  Reexport `Natural` type from `Numeric.Natural` module.
 * [#118](https://github.com/serokell/universum/issues/118):
   Reexport `Type` from `Data.Kind` module.
 * [#130](https://github.com/serokell/universum/issues/130):

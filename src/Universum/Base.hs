@@ -23,11 +23,10 @@ module Universum.Base
        , module System.IO
 
          -- * Base GHC types
-#if ( __GLASGOW_HASKELL__ >= 710 )
        , module Data.Proxy
        , module Data.Typeable
        , module Data.Void
-#endif
+
        , module GHC.Base
        , module GHC.Enum
        , module GHC.Exts
@@ -48,6 +47,9 @@ module Universum.Base
        , module GHC.OverloadedLabels
        , module GHC.ExecutionStack
        , module GHC.Stack
+
+         -- * Data.Kind
+       , Type
 #endif
 
        , ($!)
@@ -100,24 +102,13 @@ import GHC.Stack (CallStack, HasCallStack, callStack, currentCallStack, getCallS
                   prettyCallStack, prettySrcLoc, withFrozenCallStack)
 #endif
 
+#if ( __GLASGOW_HASKELL__ >= 800 )
+-- TODO: move Constraint here later
+import Data.Kind (Type)
+#endif
+
 -- $setup
 -- >>> import Universum.Function (const, ($))
-
--- Pending GHC 8.2 we'll expose these.
-
-{-
-import GHC.Records as X (
-    HasField(..)
-  )
-
-<<<<<<< HEAD
-=======
-import Data.Kind as X (
-    type (*)
-  , type Type
-  )
--}
-
 
 -- | Stricter version of 'Data.Function.$' operator.
 -- Default Prelude defines this at the toplevel module, so we do as well.
