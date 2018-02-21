@@ -1,6 +1,8 @@
 {-# LANGUAGE CPP                   #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Safe                  #-}
+{-# LANGUAGE ViewPatterns          #-}
 
 -- | Re-exports most useful functionality from 'safe-exceptions'. Also
 -- provides some functions to work with exceptions over 'MonadError'.
@@ -10,6 +12,7 @@ module Universum.Exception
 #if ( __GLASGOW_HASKELL__ >= 800 )
        , Bug (..)
        , bug
+       , pattern Exc
 #endif
        , note
        ) where
@@ -20,9 +23,9 @@ import Control.Exception.Safe (Exception (..), MonadCatch, MonadMask (..), Monad
                                catchAny, displayException, finally, handleAny, mask_, onException,
                                throwM, try, tryAny)
 
-import Control.Applicative (Applicative (pure))
 import Control.Monad.Except (MonadError, throwError)
-import Data.Maybe (Maybe, maybe)
+import Universum.Applicative (Applicative (pure))
+import Universum.Monad (Maybe (..), maybe)
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import Data.List ((++))
@@ -55,4 +58,33 @@ note err = maybe (throwError err) pure
 #else
 note :: (MonadError e m, Applicative m) => e -> Maybe a -> m a
 note err = maybe (throwError err) pure
+#endif
+
+
+#if ( __GLASGOW_HASKELL__ >= 800 )
+{- | Pattern synonym to easy pattern matching on exceptions. So intead of
+writing something like this:
+
+@
+isNonCriticalExc e
+    | Just (_ :: NodeAttackedError) <- fromException e = True
+    | Just DialogUnexpected{} <- fromException e = True
+    | otherwise = False
+@
+
+you can use 'Exc' pattern synonym:
+
+@
+isNonCriticalExc = \case
+    Exc (_ :: NodeAttackedError) -> True  -- matching all exceptions of type 'NodeAttackedError'
+    Exc DialogUnexpected{} -> True
+    _ -> False
+@
+
+This pattern is bidirectional. You can use @Exc e@ instead of @toException e@.
+-}
+pattern Exc :: Exception e => e -> SomeException
+pattern Exc e <- (fromException -> Just e)
+  where
+    Exc e = toException e
 #endif

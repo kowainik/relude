@@ -1,6 +1,10 @@
 1.0.5
 =====
 
+* [#144](https://github.com/serokell/universum/issues/144):
+  Add `Exc` pattern synonym.
+* [#60](https://github.com/serokell/universum/issues/60):
+  Reexport `Natural` type from `Numeric.Natura` module.
 * [#118](https://github.com/serokell/universum/issues/118):
   Reexport `Type` from `Data.Kind` module.
 * [#130](https://github.com/serokell/universum/issues/130):
