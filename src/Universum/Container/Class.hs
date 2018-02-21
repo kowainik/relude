@@ -21,8 +21,7 @@
 
 module Universum.Container.Class
        ( -- * Foldable-like classes and methods
-         ToList    (..)
-       , ToPairs   (..)
+         ToPairs   (..)
        , Container (..)
 
        , flipfoldl'
@@ -66,8 +65,6 @@ import Universum.Monoid (NonEmpty)
 
 import qualified Data.Foldable as Foldable
 
-import qualified Data.List as List (null)
-
 import qualified Data.Sequence as SEQ
 
 import qualified Data.ByteString as BS
@@ -91,124 +88,6 @@ import qualified Data.Vector.Unboxed as VU
 -- $setup
 -- >>> import Universum.String (Text)
 -- >>> import qualified Data.HashMap.Strict as HashMap
-
-----------------------------------------------------------------------------
--- Containers (e.g. tuples aren't containers)
-----------------------------------------------------------------------------
-
--- | Default implementation of 'Element' associated type family.
-type family ElementDefault (t :: *) :: * where
-    ElementDefault (f a) = a
-
--- | Type class for data types that can be converted to List.
--- Contains very small and safe subset of 'Foldable' functions.
---
--- You can define 'Tolist' by just defining 'toList' function.
--- But the following law should be met:
---
--- @'null' ≡ 'List.null' . 'toList'@
---
-class ToList t where
-    -- | Type of element for some container. Implemented as an asscociated type family because
-    -- some containers are monomorphic over element type (like 'T.Text', 'IntSet', etc.)
-    -- so we can't implement nice interface using old higher-kinded types
-    -- approach. Implementing this as an associated type family instead of
-    -- top-level family gives you more control over element types.
-    type Element t :: *
-    type Element t = ElementDefault t
-
-    -- | Convert container to list of elements.
-    --
-    -- >>> toList (Just True)
-    -- [True]
-    -- >>> toList @Text "aba"
-    -- "aba"
-    -- >>> :t toList @Text "aba"
-    -- toList @Text "aba" :: [Char]
-    toList :: t -> [Element t]
-    default toList :: (Foldable f, t ~ f a, Element t ~ a) => t -> [Element t]
-    toList = Foldable.toList
-    {-# INLINE toList #-}
-
-    -- | Checks whether container is empty.
-    --
-    -- >>> null @Text ""
-    -- True
-    -- >>> null @Text "aba"
-    -- False
-    null :: t -> Bool
-    null = List.null . toList
-    {-# INLINE null #-}
-
-----------------------------------------------------------------------------
--- Instances for monomorphic containers
-----------------------------------------------------------------------------
-
-instance ToList T.Text where
-    type Element T.Text = Char
-    toList = T.unpack
-    {-# INLINE toList #-}
-    null = T.null
-    {-# INLINE null #-}
-
-instance ToList TL.Text where
-    type Element TL.Text = Char
-    toList = TL.unpack
-    {-# INLINE toList #-}
-    null = TL.null
-    {-# INLINE null #-}
-
-instance ToList BS.ByteString where
-    type Element BS.ByteString = Word8
-    toList = BS.unpack
-    {-# INLINE toList #-}
-    null = BS.null
-    {-# INLINE null #-}
-
-instance ToList BSL.ByteString where
-    type Element BSL.ByteString = Word8
-    toList = BSL.unpack
-    {-# INLINE toList #-}
-    null = BSL.null
-    {-# INLINE null #-}
-
-instance ToList IntSet where
-    type Element IntSet = Int
-    toList = IS.toList
-    {-# INLINE toList #-}
-    null = IS.null
-    {-# INLINE null #-}
-
-----------------------------------------------------------------------------
--- Boilerplate instances (duplicate Foldable)
-----------------------------------------------------------------------------
-
--- Basic types
-instance ToList [a]
-instance ToList (Maybe a)
-instance ToList (Either a b)
-instance ToList (Identity a)
-instance ToList (Const a b)
-
-#if __GLASGOW_HASKELL__ >= 800
--- Algebraic types
-instance ToList (Dual a)
-instance ToList (First a)
-instance ToList (Last a)
-instance ToList (Product a)
-instance ToList (Sum a)
-instance ToList (NonEmpty a)
-instance ToList (ZipList a)
-#endif
-
--- Containers
-instance ToList (HashMap k v)
-instance ToList (HashSet v)
-instance ToList (IntMap v)
-instance ToList (Map k v)
-instance ToList (Set v)
-instance ToList (Seq a)
-instance ToList (Vector a)
 
 ----------------------------------------------------------------------------
 -- ToPairs
@@ -286,18 +165,62 @@ instance ToPairs (Map k v) where
     elems   = M.elems
     {-# INLINE elems #-}
 
-
 ----------------------------------------------------------------------------
--- Additional operations that don't make much sense for e.g. Maybe
+-- Containers (e.g. tuples and Maybe aren't containers)
 ----------------------------------------------------------------------------
 
--- | A class for 'ToList's that aren't trivial like 'Maybe' (e.g. can hold
--- more than one value)
-class ToList t => Container t where
+-- | Default implementation of 'Element' associated type family.
+type family ElementDefault (t :: *) :: * where
+    ElementDefault (f a) = a
+
+-- | Very similar to 'Foldable' but also allows instances for monomorphic types
+-- like 'Text' but forbids instances for 'Maybe' and similar. This class is used as
+-- a replacement for 'Foldable' type class. It solves the following problems:
+--
+-- 1. 'length', 'foldr' and other functions work on more types for which it makes sense.
+-- 2. You can't accidentally use 'length' on polymorphic 'Foldable' (like list),
+--    replace list with 'Maybe' and then debug error for two days.
+-- 3. More efficient implementaions of functions for polymorphic types (like 'elem' for 'Set').
+--
+-- The drawbacks:
+--
+-- 1. Type signatures of polymorphic functions look more scary.
+-- 2. Orphan instances are involved if you want to use 'foldr' (and similar) on types from libraries.
+class Container t where
+    -- | Type of element for some container. Implemented as an asscociated type family because
+    -- some containers are monomorphic over element type (like 'T.Text', 'IntSet', etc.)
+    -- so we can't implement nice interface using old higher-kinded types
+    -- approach. Implementing this as an associated type family instead of
+    -- top-level family gives you more control over element types.
+    type Element t :: *
+    type Element t = ElementDefault t
+
     -- | Constraint for elements. This can be used to implement more efficient
-    -- implementation of some methods.
+    -- implementation of some methods. For example 'elem' for 'Set' and 'HashSet'.
     type ElementConstraint t :: * -> Constraint
     type ElementConstraint t = Eq
+
+    -- | Convert container to list of elements.
+    --
+    -- >>> toList @Text "aba"
+    -- "aba"
+    -- >>> :t toList @Text "aba"
+    -- toList @Text "aba" :: [Char]
+    toList :: t -> [Element t]
+    default toList :: (Foldable f, t ~ f a, Element t ~ a) => t -> [Element t]
+    toList = Foldable.toList
+    {-# INLINE toList #-}
+
+    -- | Checks whether container is empty.
+    --
+    -- >>> null @Text ""
+    -- True
+    -- >>> null @Text "aba"
+    -- False
+    null :: t -> Bool
+    default null :: (Foldable f, t ~ f a, Element t ~ a) => t -> Bool
+    null = Foldable.null
+    {-# INLINE null #-}
 
     foldr :: (Element t -> b -> b) -> b -> t -> b
     default foldr :: (Foldable f, t ~ f a, Element t ~ a) => (Element t -> b -> b) -> b -> t -> b
@@ -413,6 +336,11 @@ class ToList t => Container t where
 ----------------------------------------------------------------------------
 
 instance Container T.Text where
+    type Element T.Text = Char
+    toList = T.unpack
+    {-# INLINE toList #-}
+    null = T.null
+    {-# INLINE null #-}
     foldr = T.foldr
     {-# INLINE foldr #-}
     foldl = T.foldl
@@ -441,6 +369,11 @@ instance Container T.Text where
     {-# INLINE safeHead #-}
 
 instance Container TL.Text where
+    type Element TL.Text = Char
+    toList = TL.unpack
+    {-# INLINE toList #-}
+    null = TL.null
+    {-# INLINE null #-}
     foldr = TL.foldr
     {-# INLINE foldr #-}
     foldl = TL.foldl
@@ -470,6 +403,11 @@ instance Container TL.Text where
     {-# INLINE safeHead #-}
 
 instance Container BS.ByteString where
+    type Element BS.ByteString = Word8
+    toList = BS.unpack
+    {-# INLINE toList #-}
+    null = BS.null
+    {-# INLINE null #-}
     foldr = BS.foldr
     {-# INLINE foldr #-}
     foldl = BS.foldl
@@ -500,6 +438,11 @@ instance Container BS.ByteString where
     {-# INLINE safeHead #-}
 
 instance Container BSL.ByteString where
+    type Element BSL.ByteString = Word8
+    toList = BSL.unpack
+    {-# INLINE toList #-}
+    null = BSL.null
+    {-# INLINE null #-}
     foldr = BSL.foldr
     {-# INLINE foldr #-}
     foldl = BSL.foldl
@@ -530,6 +473,11 @@ instance Container BSL.ByteString where
     {-# INLINE safeHead #-}
 
 instance Container IntSet where
+    type Element IntSet = Int
+    toList = IS.toList
+    {-# INLINE toList #-}
+    null = IS.null
+    {-# INLINE null #-}
     foldr = IS.foldr
     {-# INLINE foldr #-}
     foldl = IS.foldl
@@ -722,51 +670,17 @@ type family DisallowInstance (z :: Symbol) :: ErrorMessage where
         :$$: Text ""
 #endif
 
-#define DISALLOW_TO_LIST_8(t, z) \
-    instance TypeError (DisallowInstance z) => \
-      ToList (t) where { \
-        toList = undefined; \
-        null = undefined; } \
-
-#define DISALLOW_CONTAINER_8(t, z) \
-    instance TypeError (DisallowInstance z) => \
-      Container (t) where { \
-        foldr = undefined; \
-        foldl = undefined; \
-        foldl' = undefined; \
-        length = undefined; \
-        elem = undefined; \
-        maximum = undefined; \
-        minimum = undefined; } \
-
-#define DISALLOW_TO_LIST_7(t) \
-    instance ForbiddenFoldable (t) => ToList (t) where { \
-        toList = undefined; \
-        null = undefined; } \
-
-#define DISALLOW_CONTAINER_7(t) \
-    instance ForbiddenFoldable (t) => Container (t) where { \
-        foldr = undefined; \
-        foldl = undefined; \
-        foldl' = undefined; \
-        length = undefined; \
-        elem = undefined; \
-        maximum = undefined; \
-        minimum = undefined; } \
-
 #if __GLASGOW_HASKELL__ >= 800
-DISALLOW_TO_LIST_8((a, b),"tuples")
-DISALLOW_CONTAINER_8((a, b),"tuples")
-DISALLOW_CONTAINER_8(Maybe a,"Maybe")
-DISALLOW_CONTAINER_8(Identity a,"Identity")
-DISALLOW_CONTAINER_8(Either a b,"Either")
+instance TypeError (DisallowInstance "tuple")    => Container (a, b)
+instance TypeError (DisallowInstance "Maybe")    => Container (Maybe a)
+instance TypeError (DisallowInstance "Either")   => Container (Either a b)
+instance TypeError (DisallowInstance "Identity") => Container (Identity a)
 #else
 class ForbiddenFoldable a
-DISALLOW_TO_LIST_7((a, b))
-DISALLOW_CONTAINER_7((a, b))
-DISALLOW_CONTAINER_7(Maybe a)
-DISALLOW_CONTAINER_7(Identity a)
-DISALLOW_CONTAINER_7(Either a b)
+instance ForbiddenFoldable (a, b)       => Container (a, b)
+instance ForbiddenFoldable (Maybe a)    => Container (Maybe a)
+instance ForbiddenFoldable (Either a b) => Container (Either a b)
+instance ForbiddenFoldable (Identity a) => Container (Identity a)
 #endif
 
 ----------------------------------------------------------------------------

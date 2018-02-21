@@ -1,6 +1,14 @@
-1.0.5
+1.1.0
 =====
 
+* [#144](https://github.com/serokell/universum/issues/144):
+  Add `Exc` pattern synonym.
+* [#60](https://github.com/serokell/universum/issues/60):
+  Reexport `Natural` type from `Numeric.Natura` module.
+* [#118](https://github.com/serokell/universum/issues/118):
+  Reexport `Type` from `Data.Kind` module.
+* [#130](https://github.com/serokell/universum/issues/130):
+  Merge `ToList` and `Container` type classes into single type class `Container`.
 * [#15](https://github.com/serokell/universum/issues/15):
   Add `?:` function to `Universum.Monad.Maybe`.
 * [#128](https://github.com/serokell/universum/issues/128):
