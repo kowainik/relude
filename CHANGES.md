@@ -1,3 +1,8 @@
+1.2.0
+=====
+
+* Move reexport of `NonEmpty` to `Universum.List` module.
+
 1.1.0
 =====
 

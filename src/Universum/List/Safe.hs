@@ -12,8 +12,8 @@ module Universum.List.Safe
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import Universum.Applicative (Applicative, pass)
+import Universum.List.Reexport (NonEmpty (..))
 import Universum.Monad (Monad (..))
-import Universum.Monoid (NonEmpty (..))
 #endif
 
 import Universum.Functor (fmap)

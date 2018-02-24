@@ -60,7 +60,7 @@ import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import qualified Data.List.NonEmpty as NE
-import Universum.Monoid (NonEmpty)
+import Universum.List.Reexport (NonEmpty)
 #endif
 
 import qualified Data.Foldable as Foldable
