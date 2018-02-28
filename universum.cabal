@@ -132,10 +132,10 @@ benchmark universum-benchmark
   build-depends:       base < 5
                      , universum
                      , containers
-                     , criterion
-                     , deepseq
-                     , hashable
-                     , mtl
-                     , semigroups
-                     , text
+                     , gauge
                      , unordered-containers
+  if impl(ghc == 7.10.3)
+     build-depends:   semigroups >= 0.18
+
+  default-extensions:  NoImplicitPrelude
+                       ScopedTypeVariables

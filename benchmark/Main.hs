@@ -1,26 +1,18 @@
-{-# LANGUAGE ExplicitForAll      #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-
 module Main where
 
-import Control.DeepSeq (NFData)
-import Control.Monad.Identity (Identity (..))
-import Criterion.Main (Benchmark, bench, bgroup, defaultMain, nf, whnf)
-import Data.Hashable (Hashable)
-import Data.List (group, head, nub, sort, zip5)
-import Data.Text (Text)
+import Universum hiding (show)
 
-import Universum.Container (flipfoldl', foldl')
-import Universum.Monad (concatMapM)
-import Universum.Nub (hashNub, ordNub, sortNub, unstableNub)
-import Universum.VarArg ((...))
+import Data.List (nub, zip5)
+import Gauge (Benchmark, bench, bgroup, nf, whnf)
+import Gauge.Main (defaultMain)
+import Prelude (show)
 
 import qualified Data.Foldable as Foldable (elem)
 import qualified Data.HashSet as HashSet (fromList, insert)
-import qualified Data.List.NonEmpty as NonEmpty
+import qualified Data.List.NonEmpty as NonEmpty (group, head)
 import qualified Data.Set as Set (fromList)
-import qualified Data.Text as T
 import qualified Universum.Container as Container (elem)
+import qualified Universum.Unsafe as Unsafe
 
 main :: IO ()
 main = defaultMain
@@ -76,7 +68,7 @@ bgroupList f name = bgroup name $
       ]
 
   groupSort :: [a] -> [a]
-  groupSort = map head . group . sort
+  groupSort = map Unsafe.head . group . sort
 
   safeSort :: [a] -> [a]
   safeSort = map NonEmpty.head . NonEmpty.group . sort
@@ -91,7 +83,7 @@ allStrings :: Char -> [String]
 allStrings ch =  [ c : s | s <- "" : allStrings ch, c <- ['a'..ch] ]
 
 nStrings :: Char -> Int -> [Text]
-nStrings ch n = take n $ map T.pack $ allStrings ch
+nStrings ch n = take n $ map toText $ allStrings ch
 
 bgroupSuperComposition :: Benchmark
 bgroupSuperComposition = bgroup "(...)"
@@ -115,14 +107,14 @@ bgroupSuperComposition = bgroup "(...)"
   ]
  where
   super10 = null
-        ... (: []) ... head ... pure ... head
-        ... (: [(), (), (), ()]) ... head ... (: []) ... head
-        ... (: [()]) ... head ... (: [(), ()]) ... head
+        ... (: []) ... Unsafe.head ... pure ... Unsafe.head
+        ... (: [(), (), (), ()]) ... Unsafe.head ... (: []) ... Unsafe.head
+        ... (: [()]) ... Unsafe.head ... (: [(), ()]) ... Unsafe.head
 
   norm10 = null
-         . (: []) . head . pure . head
-         . (: [(), (), (), ()]) . head . (: []) . head
-         . (: [()]) . head . (: [(), ()]) . head
+         . (: []) . Unsafe.head . pure . Unsafe.head
+         . (: [(), (), (), ()]) . Unsafe.head . (: []) . Unsafe.head
+         . (: [()]) . Unsafe.head . (: [(), ()]) . Unsafe.head
 
   super5arg :: [()] -> [()] -> [()] -> [()] -> [()] -> Bool
   super5arg = super10 ... map fst5 ... zip5
