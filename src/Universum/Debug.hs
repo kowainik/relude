@@ -5,6 +5,9 @@
 {-# LANGUAGE PolyKinds          #-}
 {-# LANGUAGE RankNTypes         #-}
 {-# LANGUAGE Trustworthy        #-}
+#if ( __GLASGOW_HASKELL__ >= 804 )
+{-# LANGUAGE TypeInType         #-}
+#endif
 
 -- | Functions for debugging. If you left these functions in your code
 -- then warning is generated to remind you about left usages. Also some
