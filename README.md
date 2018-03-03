@@ -8,10 +8,17 @@ Universum
 [![Stackage Nightly](http://stackage.org/package/universum/badge/nightly)](http://stackage.org/nightly/package/universum)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A custom prelude used in Serokell.
+`universum` is a custom prelude used in @Serokell that has:
 
-What is this?
--------------
+1. **Excellent documentation**: tutorial, migration guide from `Prelude`,
+   Haddock with examples for (almost) every function,
+   all examples are tested with [`doctest`](http://hackage.haskell.org/package/doctest).
+2. `universum`-specific [HLint](http://hackage.haskell.org/package/hlint) rules:
+   [`.hlint.yaml`](https://github.com/serokell/universum/blob/master/.hlint.yaml)
+3. Focus on safety, convenience and efficiency.
+
+What is this file about?
+------------------------
 
 This README contains introduction to `Universum` and a tutorial on how to use it.
 
@@ -20,17 +27,18 @@ Structure of this tutorial
 
 This tutorial has several parts:
 
-1. Philosophy and motivation.
-2. How to use `universum`.
-3. Changes in `Prelude` (some gotchas).
-4. Already known things that weren't in `Prelude` brought into scope.
-5. New things added.
+1. [Philosophy and motivation.](https://github.com/serokell/universum#why-another-custom-prelude-)
+2. [How to use `universum`.](https://github.com/serokell/universum#how-to-use-universum-)
+3. [Changes in `Prelude` (some gotchas).](https://github.com/serokell/universum#gotchas-)
+4. [Already known things that weren't in `Prelude` brought into scope.](https://github.com/serokell/universum#things-that-you-were-already-using-but-now-you-dont-have-to-import-them-explicitly-)
+5. [New things added.](https://github.com/serokell/universum#whats-new-)
+6. [Migration guide from `Prelude`.](https://github.com/serokell/universum#migration-guide-from-prelude)
 
 This is not a tutorial on _Haskell_, and not even a tutorial on each function. For the detailed
 documentation of every function with examples and usages see
 [_Haddock documentation_](http://hackage.haskell.org/package/universum).
 
-Why another custom Prelude?
+Why another custom Prelude? [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
 ---------------------------
 
 ### Motivation
@@ -86,8 +94,8 @@ Unlike `protolude`, we are:
 3. Trying to make writing production code easier (see
    [enhancements and fixes](https://github.com/serokell/universum/issues)).
 
-How to use Universum
-----------
+How to use Universum [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
+--------------------
 
 Okay, enough philosophy. If you want to just start using `universum` and
 explore it with the help of compiler, set everything up according to the instructions below.
@@ -115,7 +123,7 @@ If you're using [Emacs](https://www.gnu.org/software/emacs/), you can
 a little bit if you don't want to type `import Universum` manually every time.
 
 
-Gotchas
+Gotchas [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
 -------
 
 * `head`, `tail`, `last`, `init` work with `NonEmpty a` instead of `[a]`.
@@ -148,8 +156,8 @@ Gotchas
 * `error` takes `Text`.
 
 
-Things that you were already using, but now you don't have to import them explicitly
---------------------------------------------------------------------------
+Things that you were already using, but now you don't have to import them explicitly [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
+------------------------------------------------------------------------------------
 
 ### Commonly used libraries
 
@@ -194,7 +202,7 @@ library for exceptions handling. Don't import `Control.Exceptions`
 module explicitly. Instead use functionality from `safe-exceptions`
 provided by `universum` or import `Control.Exceptions.Safe` module.
 
-What's new?
+What's new? [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
 -----------
 
 Finally, we can move to part describing the new cool features we bring with `universum`.
@@ -281,7 +289,58 @@ Finally, we can move to part describing the new cool features we bring with `uni
   `evaluate` and `evaluate . force`.
 * `ToPairs` type class for data types that can be converted to list of pairs (like `Map` or `HashMap` or `IntMap`).
 
-Projects that use Universum
+Migration guide from Prelude [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
+----------------------------
+
+In order to replace default `Prelude` with `universum` you should start with instructions given in
+[how to use universum](https://github.com/serokell/universum#how-to-use-universum) section.
+
+This section describes what you need to change to make your code compile with `universum`.
+
+1. Enable `-XOverloadedStrings` and `-XTypeFamilies` extension by default for your project.
+2. Since `head`, `tail`, `last` and `init` work for `NonEmpty` you should
+   refactor your code in one of the multiple ways described below:
+   1. Change `[a]` to `NonEmpty a` where it makes sense.
+   2. Use functions which return `Maybe`. They can be implemented using `nonEmpty` function. Like `head <$> nonEmpty l`.
+       + `head <$> nonEmpty l` is `safeHead l`
+       + `tail` is `drop 1`. It's almost never a good idea to use `tail` from `Prelude`.
+   3. Add `import qualified Universum.Unsafe as Unsafe` and replace function with qualified usage.
+3. If you use `fromJust` or `!!` you should use them from `import qualified Universum.Unsafe as Unsafe`.
+4. Derive or implement `Container` instances for your data types which implement
+   `Foldable` instances. This can be done in a single line because `Container`
+   type class automatically derives from `Foldable`.
+5. `Container` type class from `universum` replaces `Foldable` and doesn't have
+   instances for `Maybe a`, `(a, b)`, `Identity a` and `Either a b`. If you use
+   `foldr` or `forM_` or similar for something like `Maybe a` you should replace
+   usages of such function with monomorhpic alternatives:
+   * `Maybe`
+     + `(?:)          :: Maybe a -> a -> a`
+     + `fromMaybe     :: a -> Maybe a -> a`
+     + `maybeToList   :: Maybe a -> [a]`
+     + `maybeToMonoid :: Monoid m => Maybe m -> m`
+     + `maybe         :: b -> (a -> b) -> Maybe a -> b`
+     + `whenJust      :: Applicative f => Maybe a -> (a -> f ()) -> f ()`
+     + `whenJustM     :: Monad m => m (Maybe a) -> (a -> m ()) -> m ()`
+
+   * `Either`
+     + `fromLeft   :: a -> Either a b -> a`
+     + `fromRight  :: b -> Either a b -> b`
+     + `either     :: (a -> c) -> (b -> c) -> Either a b -> c`
+     + `whenRight  :: Applicative f => Either l r -> (r -> f ()) -> f ()`
+     + `whenRightM :: Monad m => m (Either l r) -> (r -> m ()) -> m ()`
+
+6. If you have types like `foo :: Foldable f => f a -> a -> a` you should chose one of the following:
+   + `Right`: Modify types for `Container` like `foo :: (Container t, Element t ~ a) => t -> a -> a`.
+   + `Left`: Import `Data.Foldable` module `qualified` and use everything `Foldable`-related qualified.
+7. Forget about `String` type.
+   + Replace `putStr` and `putStrLn` with `putText` and `putTextLn`.
+   + Replace `(++)` with `(<>)` for `String`-like types.
+   + Try to use [`fmt`](http://hackage.haskell.org/package/fmt) library if you need to construct messages.
+   + Use `toText/toLText/toString` functions to convert to `Text/LazyText/String` types.
+   + Use `encodeUtf8/decodeUtf8` to convert to/from `ByteString`.
+8. Run `hlint` using `.hlint.yaml` file from `universum` package to cleanup code and imports.
+
+Projects that use Universum [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
 ---------------------------
 
 - [cardano-report-server](https://github.com/input-output-hk/cardano-report-server)
