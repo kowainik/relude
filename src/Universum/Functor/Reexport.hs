@@ -1,5 +1,7 @@
 {-# LANGUAGE Safe #-}
 
+-- | This module reexports functionality regarding 'Functor' type class.
+
 module Universum.Functor.Reexport
        ( module Control.Arrow
        , module Data.Bifunctor

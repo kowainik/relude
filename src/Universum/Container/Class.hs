@@ -42,7 +42,7 @@ module Universum.Container.Class
        ) where
 
 import Data.Coerce (Coercible, coerce)
-import Prelude hiding (all, and, any, elem, foldMap, foldl, foldr, mapM_, notElem, null, or,
+import Prelude hiding (all, and, any, elem, foldMap, foldl, foldr, mapM_, notElem, null, or, print,
                 product, sequence_, sum)
 
 import Universum.Applicative (Alternative (..), Const, ZipList, pass)
@@ -86,6 +86,9 @@ import qualified Data.Vector.Storable as VS
 import qualified Data.Vector.Unboxed as VU
 
 -- $setup
+-- >>> import Universum.Base (even)
+-- >>> import Universum.Bool (when)
+-- >>> import Universum.Print (print, putTextLn)
 -- >>> import Universum.String (Text)
 -- >>> import qualified Data.HashMap.Strict as HashMap
 
@@ -604,45 +607,86 @@ sum = foldl' (+) 0
 product :: (Container t, Num (Element t)) => t -> Element t
 product = foldl' (*) 1
 
--- | Constrained to 'Container' version of 'Data.Foldable.traverse_'.
+{- | Constrained to 'Container' version of 'Data.Foldable.traverse_'.
+
+>>> traverse_ putTextLn ["foo", "bar"]
+foo
+bar
+
+-}
 traverse_
     :: (Container t, Applicative f)
     => (Element t -> f b) -> t -> f ()
 traverse_ f = foldr ((*>) . f) pass
 
--- | Constrained to 'Container' version of 'Data.Foldable.for_'.
+{- | Constrained to 'Container' version of 'Data.Foldable.for_'.
+
+>>> for_ [1 .. 5 :: Int] $ \i -> when (even i) (print i)
+2
+4
+
+-}
 for_
     :: (Container t, Applicative f)
     => t -> (Element t -> f b) -> f ()
 for_ = flip traverse_
 {-# INLINE for_ #-}
 
--- | Constrained to 'Container' version of 'Data.Foldable.mapM_'.
+{- | Constrained to 'Container' version of 'Data.Foldable.mapM_'.
+
+>>> mapM_ print [True, False]
+True
+False
+
+-}
 mapM_
     :: (Container t, Monad m)
     => (Element t -> m b) -> t -> m ()
 mapM_ f= foldr ((>>) . f) pass
 
--- | Constrained to 'Container' version of 'Data.Foldable.forM_'.
+{- | Constrained to 'Container' version of 'Data.Foldable.forM_'.
+
+>>> forM_ [True, False] print
+True
+False
+
+-}
 forM_
     :: (Container t, Monad m)
     => t -> (Element t -> m b) -> m ()
 forM_ = flip mapM_
 {-# INLINE forM_ #-}
 
--- | Constrained to 'Container' version of 'Data.Foldable.sequenceA_'.
+{- | Constrained to 'Container' version of 'Data.Foldable.sequenceA_'.
+
+>>> sequenceA_ [putTextLn "foo", print True]
+foo
+True
+
+-}
 sequenceA_
     :: (Container t, Applicative f, Element t ~ f a)
     => t -> f ()
 sequenceA_ = foldr (*>) pass
 
--- | Constrained to 'Container' version of 'Data.Foldable.sequence_'.
+{- | Constrained to 'Container' version of 'Data.Foldable.sequence_'.
+
+>>> sequence_ [putTextLn "foo", print True]
+foo
+True
+
+-}
 sequence_
     :: (Container t, Monad m, Element t ~ m a)
     => t -> m ()
 sequence_ = foldr (>>) pass
 
--- | Constrained to 'Container' version of 'Data.Foldable.asum'.
+{- | Constrained to 'Container' version of 'Data.Foldable.asum'.
+
+>>> asum [Nothing, Just [False, True], Nothing, Just [True]]
+Just [False,True]
+
+-}
 asum
     :: (Container t, Alternative f, Element t ~ f a)
     => t -> f a

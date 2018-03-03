@@ -1,5 +1,5 @@
 name:                universum
-version:             1.1.0
+version:             1.1.1
 synopsis:            Custom prelude used in Serokell
 description:         See README.md file for more details.
 homepage:            https://github.com/serokell/universum
@@ -126,7 +126,7 @@ test-suite universum-doctest
 benchmark universum-benchmark
   type:                exitcode-stdio-1.0
   default-language:    Haskell2010
-  ghc-options:         -Wall -O2 -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N
   hs-source-dirs:      benchmark
   main-is:             Main.hs
   build-depends:       base < 5

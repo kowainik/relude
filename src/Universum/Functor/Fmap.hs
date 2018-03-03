@@ -1,5 +1,7 @@
 {-# LANGUAGE Safe #-}
 
+-- | This module contains useful functions to work with 'Functor' type class.
+
 module Universum.Functor.Fmap
        ( map
        , (<<$>>)
@@ -8,7 +10,21 @@ module Universum.Functor.Fmap
 import Universum.Function ((.))
 import Universum.Functor.Reexport (Functor (..))
 
--- | 'Prelude.map' generalized to 'Functor'.
+-- $setup
+-- >>> import Universum.Base (negate)
+-- >>> import Universum.Bool (Bool (..), not)
+-- >>> import Universum.Lifted (getLine)
+-- >>> import Universum.Monad (Maybe (..))
+-- >>> import Universum.String (toString)
+
+{- | 'Prelude.map' generalized to 'Functor'.
+
+>>> map not (Just True)
+Just False
+>>> map not [True,False,True,True]
+[False,True,False,False]
+
+-}
 map :: Functor f => (a -> b) -> f a -> f b
 map = fmap
 

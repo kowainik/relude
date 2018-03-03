@@ -1,3 +1,5 @@
+-- | This module reexports functions to work with 'Text' and 'ByteString' types.
+
 module Universum.String.Reexport
        ( -- * String
          module Data.String

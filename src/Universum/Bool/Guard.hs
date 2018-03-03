@@ -1,3 +1,5 @@
+-- | This module contains monadic predicates.
+
 module Universum.Bool.Guard
        ( guardM
        , ifM

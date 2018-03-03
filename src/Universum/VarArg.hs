@@ -17,6 +17,7 @@ module Universum.VarArg
 -- >>> import Prelude (show)
 -- >>> import Data.List (zip5)
 
+-- | This type class allows to implement variadic composition operator.
 class SuperComposition a b c | a b -> c where
     -- | Allows to apply function to result of another function with multiple
     -- arguments.

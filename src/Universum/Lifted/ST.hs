@@ -1,3 +1,5 @@
+-- | This module contains lifted version of 'XIO.stToIO' function.
+
 module Universum.Lifted.ST
        ( stToIO
        ) where

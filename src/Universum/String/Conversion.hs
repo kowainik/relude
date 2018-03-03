@@ -4,6 +4,12 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE TypeSynonymInstances  #-}
 
+-- | This module implements type class which allow to have conversion to and
+-- from 'Text', 'String' and 'ByteString' types (including both strict and lazy
+-- versions). Usually you need to export 'Text' modules qualified and use
+-- 'T.pack' \/ 'T.unpack' functions to convert to\/from 'Text'. Now you can
+-- just use 'toText' \/ 'toString' functions.
+
 module Universum.String.Conversion
        ( -- * Convenient type aliases
          LText

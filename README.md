@@ -348,9 +348,3 @@ Projects that use Universum [↑](#structure-of-this-tutorial)
 - [importify](https://github.com/serokell/importify)
 - [log-warper](https://github.com/serokell/log-warper)
 - [orgstat](https://github.com/volhovm/orgstat)
-
-License
--------
-
-Released under the MIT License.
-Copyright (c) 2016, Stephen Diehl, 2016-2017, Serokell

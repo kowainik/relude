@@ -1,6 +1,8 @@
 {-# LANGUAGE CPP         #-}
 {-# LANGUAGE Trustworthy #-}
 
+-- | This module contains safe functions to work with list type (mostly with 'NonEmpty').
+
 module Universum.List.Safe
        ( list
        , uncons
@@ -22,9 +24,10 @@ import Universum.Monad (Maybe (..))
 -- $setup
 -- >>> import Universum.Applicative (pure)
 -- >>> import Universum.Base ((==), even)
--- >>> import Universum.Bool (Bool (..))
+-- >>> import Universum.Bool (Bool (..), not)
 -- >>> import Universum.Container (length)
 -- >>> import Universum.Function (($))
+-- >>> import Universum.Print (print)
 
 -- | Returns default list if given list is empty.
 -- Otherwise applies given function to every element.
@@ -51,7 +54,13 @@ uncons []     = Nothing
 uncons (x:xs) = Just (x, xs)
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
--- | Performs given action over 'NonEmpty' list if given list is non empty.
+{- | Performs given action over 'NonEmpty' list if given list is non empty.
+
+>>> whenNotNull [] $ \(b :| _) -> print (not b)
+>>> whenNotNull [False,True] $ \(b :| _) -> print (not b)
+True
+
+-}
 whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f ()
 whenNotNull []     _ = pass
 whenNotNull (x:xs) f = f (x :| xs)
