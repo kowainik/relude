@@ -27,18 +27,18 @@ Structure of this tutorial
 
 This tutorial has several parts:
 
-1. [Philosophy and motivation.](https://github.com/serokell/universum#why-another-custom-prelude-)
-2. [How to use `universum`.](https://github.com/serokell/universum#how-to-use-universum-)
-3. [Changes in `Prelude` (some gotchas).](https://github.com/serokell/universum#gotchas-)
-4. [Already known things that weren't in `Prelude` brought into scope.](https://github.com/serokell/universum#things-that-you-were-already-using-but-now-you-dont-have-to-import-them-explicitly-)
-5. [New things added.](https://github.com/serokell/universum#whats-new-)
-6. [Migration guide from `Prelude`.](https://github.com/serokell/universum#migration-guide-from-prelude)
+1. [Philosophy and motivation.](#why-another-custom-prelude-)
+2. [How to use `universum`.](#how-to-use-universum-)
+3. [Changes in `Prelude` (some gotchas).](#gotchas-)
+4. [Already known things that weren't in `Prelude` brought into scope.](#things-that-you-were-already-using-but-now-you-dont-have-to-import-them-explicitly-)
+5. [New things added.](#whats-new-)
+6. [Migration guide from `Prelude`.](#migration-guide-from-prelude-)
 
 This is not a tutorial on _Haskell_, and not even a tutorial on each function. For the detailed
 documentation of every function with examples and usages see
 [_Haddock documentation_](http://hackage.haskell.org/package/universum).
 
-Why another custom Prelude? [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
+Why another custom Prelude? [↑](#structure-of-this-tutorial)
 ---------------------------
 
 ### Motivation
@@ -94,7 +94,7 @@ Unlike `protolude`, we are:
 3. Trying to make writing production code easier (see
    [enhancements and fixes](https://github.com/serokell/universum/issues)).
 
-How to use Universum [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
+How to use Universum [↑](#structure-of-this-tutorial)
 --------------------
 
 Okay, enough philosophy. If you want to just start using `universum` and
@@ -123,7 +123,7 @@ If you're using [Emacs](https://www.gnu.org/software/emacs/), you can
 a little bit if you don't want to type `import Universum` manually every time.
 
 
-Gotchas [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
+Gotchas [↑](#structure-of-this-tutorial)
 -------
 
 * `head`, `tail`, `last`, `init` work with `NonEmpty a` instead of `[a]`.
@@ -156,7 +156,7 @@ Gotchas [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
 * `error` takes `Text`.
 
 
-Things that you were already using, but now you don't have to import them explicitly [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
+Things that you were already using, but now you don't have to import them explicitly [↑](#structure-of-this-tutorial)
 ------------------------------------------------------------------------------------
 
 ### Commonly used libraries
@@ -202,7 +202,7 @@ library for exceptions handling. Don't import `Control.Exceptions`
 module explicitly. Instead use functionality from `safe-exceptions`
 provided by `universum` or import `Control.Exceptions.Safe` module.
 
-What's new? [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
+What's new? [↑](#structure-of-this-tutorial)
 -----------
 
 Finally, we can move to part describing the new cool features we bring with `universum`.
@@ -289,7 +289,7 @@ Finally, we can move to part describing the new cool features we bring with `uni
   `evaluate` and `evaluate . force`.
 * `ToPairs` type class for data types that can be converted to list of pairs (like `Map` or `HashMap` or `IntMap`).
 
-Migration guide from Prelude [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
+Migration guide from Prelude [↑](#structure-of-this-tutorial)
 ----------------------------
 
 In order to replace default `Prelude` with `universum` you should start with instructions given in
@@ -340,7 +340,7 @@ This section describes what you need to change to make your code compile with `u
    + Use `encodeUtf8/decodeUtf8` to convert to/from `ByteString`.
 8. Run `hlint` using `.hlint.yaml` file from `universum` package to cleanup code and imports.
 
-Projects that use Universum [↑](https://github.com/serokell/universum#structure-of-this-tutorial)
+Projects that use Universum [↑](#structure-of-this-tutorial)
 ---------------------------
 
 - [cardano-report-server](https://github.com/input-output-hk/cardano-report-server)
