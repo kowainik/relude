@@ -136,15 +136,15 @@
 - warn: {lhs: either (const True) (const False), rhs: isLeft}
 - warn: {lhs: either (const False) (const True), rhs: isRight}
 
-- warn: {lhs: either id (const a) x, rhs: fromLeft a x}
-- warn: {lhs: either (const b) id x, rhs: fromRight b x}
+- warn: {lhs: either id (const a), rhs: fromLeft a}
+- warn: {lhs: either (const b) id, rhs: fromRight b}
 
-- warn: {lhs: either Just (const Nothing) x, rhs: leftToMaybe x}
-- warn: {lhs: either (const Nothing) Just x, rhs: rightToMaybe x}
-- warn: {lhs: maybe (Left l) Right x, rhs: maybeToRight x}
-- warn: {lhs: maybe (Right r) Left x, rhs: maybeToLeft x}
+- warn: {lhs: either Just (const Nothing), rhs: leftToMaybe}
+- warn: {lhs: either (const Nothing) Just, rhs: rightToMaybe}
+- warn: {lhs: maybe (Left l) Right, rhs: maybeToRight}
+- warn: {lhs: maybe (Right r) Left, rhs: maybeToLeft}
 
-- warn: {lhs: fromMaybe mempty m, rhs: maybeToMonoid m}
+- warn: {lhs: fromMaybe mempty, rhs: maybeToMonoid}
 - warn: {lhs: "m ?: mempty", rhs: maybeToMonoid m}
 
 
