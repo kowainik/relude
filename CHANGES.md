@@ -1,6 +1,9 @@
 1.1.1
 =====
 
+* [#113](https://github.com/serokell/universum/issues/113):
+  Annotate `at` function from `Unsafe` module and `ordNub`
+  function from `Nub` module with `liquidhaskell`.
 * [#73](https://github.com/serokell/universum/issues/73):
   Add more examples to docs and fix warnings where possible.
 * Move reexport of `NonEmpty` to `Universum.List` module.

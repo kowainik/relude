@@ -32,9 +32,25 @@ import Data.Eq (Eq)
 import Data.Hashable (Hashable)
 import Data.HashSet as HashSet
 import Data.Ord (Ord)
-import Prelude ((.))
+import Data.Set (Set)
+import Prelude (Bool, Char, (.))
 
 import qualified Data.Set as Set
+
+-- Liquid Haskell check for duplicates.
+{-@ type ListUnique a = {v : [a] | NoDups v} @-}
+
+{-@ predicate NoDups L = Set_emp (dups L) @-}
+
+{-@ measure dups :: [a] -> (Set a)
+    dups ([])   = {v | Set_emp v}
+    dups (x:xs) = {v | v =
+      if (Set_mem x (listElts xs))
+      then (Set_cup (Set_sng x) (dups xs))
+      else (dups xs)}
+@-}
+
+{-@ Set.toList :: Set a -> ListUnique a @-}
 
 -- | Like 'Prelude.nub' but runs in @O(n * log n)@ time and requires 'Ord'.
 --
@@ -66,6 +82,7 @@ hashNub = go HashSet.empty
 --
 -- >>> sortNub [3, 3, 3, 2, 2, -1, 1]
 -- [-1,1,2,3]
+{-@ sortNub :: [a] -> ListUnique a @-}
 sortNub :: (Ord a) => [a] -> [a]
 sortNub = Set.toList . Set.fromList
 
