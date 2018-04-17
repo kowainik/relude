@@ -1,6 +1,8 @@
 1.1.1
 =====
 
+* [#135](https://github.com/serokell/universum/issues/135):
+  Add documentation regarding internal module structure.
 * [#113](https://github.com/serokell/universum/issues/113):
   Annotate `at` function from `Unsafe` module and `ordNub`
   function from `Nub` module with `liquidhaskell`.

@@ -28,7 +28,6 @@ import Data.List (head, init, last, tail, (!!))
 import Data.Maybe (fromJust)
 
 import Universum.Base (Int)
-import Universum.Function (flip)
 
 -- Non empty list definition for @liquidhaskell@.
 {-@ type NonEmptyList a = {xs : [a] | len xs > 0} @-}

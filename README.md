@@ -12,10 +12,13 @@ Universum
 
 1. **Excellent documentation**: tutorial, migration guide from `Prelude`,
    Haddock with examples for (almost) every function,
-   all examples are tested with [`doctest`](http://hackage.haskell.org/package/doctest).
+   all examples are tested with [`doctest`](http://hackage.haskell.org/package/doctest),
+   documenation regarding internal module structure.
 2. `universum`-specific [HLint](http://hackage.haskell.org/package/hlint) rules:
    [`.hlint.yaml`](https://github.com/serokell/universum/blob/master/.hlint.yaml)
-3. Focus on safety, convenience and efficiency.
+3. Only a few LiquidHaskell properties right now, but LiquidHaskell is on Travis
+   CI and other properties are just waiting to be added!
+4. Focus on safety, convenience and efficiency.
 
 What is this file about?
 ------------------------
@@ -116,10 +119,15 @@ Then add the following import to your modules:
 import Universum
 ```
 
-If you're using [Emacs](https://www.gnu.org/software/emacs/), you can
+If you're using [Emacs](https://www.gnu.org/software/emacs/) and don't want to
+type `import Universum` manually every time, you can
 [modify your configs](https://github.com/serokell/universum/issues/8#issuecomment-276444879)
-a little bit if you don't want to type `import Universum` manually every time.
+a little bit.
 
+If you want to get familiar with `universum` internal structure, you can just
+read top-level documentation for
+[`Universum`](http://hackage.haskell.org/package/universum/docs/Universum.html)
+module.
 
 Gotchas [↑](#structure-of-this-tutorial)
 -------
@@ -291,7 +299,7 @@ Migration guide from Prelude [↑](#structure-of-this-tutorial)
 ----------------------------
 
 In order to replace default `Prelude` with `universum` you should start with instructions given in
-[how to use universum](https://github.com/serokell/universum#how-to-use-universum) section.
+[how to use universum](https://github.com/serokell/universum#how-to-use-universum-) section.
 
 This section describes what you need to change to make your code compile with `universum`.
 
