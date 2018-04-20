@@ -1,6 +1,8 @@
 1.1.1
 =====
 
+* [#148](https://github.com/serokell/universum/issues/148):
+  Add `CODEOWNERS` and contributing guide.
 * [#135](https://github.com/serokell/universum/issues/135):
   Add documentation regarding internal module structure.
 * [#113](https://github.com/serokell/universum/issues/113):
