@@ -24,19 +24,15 @@ module Universum.String.Conversion
          -- * Show and read functions
        , readEither
        , show
-       , pretty
-       , prettyL
        ) where
 
 import Data.Bifunctor (first)
 import Data.Either (Either)
 import Data.Function (id, (.))
 import Data.String (String)
-import Data.Text.Buildable (build)
-import Data.Text.Lazy.Builder (toLazyText)
 
 import Universum.Functor ((<$>))
-import Universum.String.Reexport (Buildable, ByteString, IsString, Read, Text, fromString, toStrict)
+import Universum.String.Reexport (ByteString, IsString, Read, Text, fromString)
 
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Lazy as LB
@@ -180,11 +176,3 @@ show x = fromString (Show.show x)
 {-# SPECIALIZE show :: Show.Show  a => a -> ByteString  #-}
 {-# SPECIALIZE show :: Show.Show  a => a -> LByteString  #-}
 {-# SPECIALIZE show :: Show.Show  a => a -> String  #-}
-
--- | Functions to show pretty output for buildable data types.
-pretty :: Buildable a => a -> Text
-pretty = toStrict . prettyL
-
--- | Similar to 'pretty' but for 'LText'.
-prettyL :: Buildable a => a -> LText
-prettyL = toLazyText . build

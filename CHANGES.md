@@ -1,3 +1,9 @@
+1.2.0
+=====
+
+* [#159](https://github.com/serokell/universum/issues/159):
+  Remove `text-format` dependency.
+
 1.1.1
 =====
 

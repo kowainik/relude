@@ -54,7 +54,7 @@ due to some historical reasons.
 
 This is why we decided to use a better tool. Luckily, _Haskell_ provides us with the ability
 to replace default `Prelude` with an alternative. All we had to do is to implement a
-new basic set of defaults. There already were plenty of [preludes](https://guide.aelve.com/haskell/alternative-preludes-zr69k1hc), 
+new basic set of defaults. There already were plenty of [preludes](https://guide.aelve.com/haskell/alternative-preludes-zr69k1hc),
 so we didn't plan to implement everything from scratch.
 After some long, hot discussions, our team decided to base our custom prelude on
 [`protolude`](https://github.com/sdiehl/protolude). If you're not familiar with it,
@@ -145,8 +145,6 @@ Gotchas [↑](#structure-of-this-tutorial)
   `OverloadedStrings` is enabled – it happens because the compiler doesn't know what
   type to infer for the string. Use `putTextLn` in this case.
 * Since `show` doesn't come from `Show` anymore, you can't write `Show` instances easily.
-  Either use autoderived instances or
-  [`Buildable`](https://github.com/serokell/universum/blob/f2ccf8afd862e37ccd204c0ef9efde48a05c2d29/src/Universum.hs#L144).
 * You can't call some `Foldable` methods over `Maybe` and some other types.
   `Foldable` generalization is useful but
   [potentially error-prone](https://www.reddit.com/r/haskell/comments/60r9hu/proposal_suggest_explicit_type_application_for/).
@@ -217,7 +215,6 @@ Finally, we can move to part describing the new cool features we bring with `uni
 * `ordNub` and `sortNub` are _O(n log n)_ versions of `nub` (which is quadratic)
   and `hashNub` and `unstableNub` are almost _O(n)_ versions of `nub`.
 * `(&)` – reverse application. `x & f & g` instead of `g $ f $ x` is useful sometimes.
-* `pretty` and `prettyL` for converting `Buildable` into `Text` (suggested be used instead of `show`).
 * `whenM`, `unlessM`, `ifM`, `guardM` are available and do what you expect
   them to do (e.g. `whenM (doesFileExist "foo")`).
 * Very generalized version of `concatMapM`, too, is available and does what expected.

@@ -1,5 +1,5 @@
 name:                universum
-version:             1.1.1
+version:             1.2.0
 synopsis:            Custom prelude used in Serokell
 description:         See README.md file for more details.
 homepage:            https://github.com/serokell/universum
@@ -16,6 +16,7 @@ bug-reports:         https://github.com/serokell/universum/issues
 tested-with:         GHC == 7.10.3
                    , GHC == 8.0.2
                    , GHC == 8.2.2
+                   , GHC == 8.4.2
 extra-doc-files:     CHANGES.md
                    , CONTRIBUTING.md
                    , README.md
@@ -82,7 +83,6 @@ library
                      , safe-exceptions
                      , stm
                      , text
-                     , text-format
                      , transformers
                      , type-operators
                      , unordered-containers

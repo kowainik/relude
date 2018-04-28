@@ -1,0 +1,7 @@
+resolver: nightly-2018-04-28
+
+nix:
+  packages: [binutils, gmp]
+
+extra-deps:
+- tasty-hedgehog-0.2.0.0
