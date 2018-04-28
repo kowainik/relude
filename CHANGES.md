@@ -3,6 +3,8 @@
 
 * [#159](https://github.com/serokell/universum/issues/159):
   Remove `text-format` dependency.
+* [#164](https://github.com/serokell/universum/issues/164):
+  Don't reexport `log :: Floating a => a -> a`.
 
 1.1.1
 =====
