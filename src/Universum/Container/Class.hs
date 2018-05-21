@@ -198,11 +198,6 @@ class Container t where
     type Element t :: *
     type Element t = ElementDefault t
 
-    -- | Constraint for elements. This can be used to implement more efficient
-    -- implementation of some methods. For example 'elem' for 'Set' and 'HashSet'.
-    type ElementConstraint t :: * -> Constraint
-    type ElementConstraint t = Eq
-
     -- | Convert container to list of elements.
     --
     -- >>> toList @Text "aba"
@@ -245,12 +240,11 @@ class Container t where
     length = Foldable.length
     {-# INLINE length #-}
 
-    elem :: ElementConstraint t (Element t) => Element t -> t -> Bool
+    elem :: Eq (Element t) => Element t -> t -> Bool
     default elem :: ( Foldable f
                     , t ~ f a
                     , Element t ~ a
-                    , ElementConstraint t ~ Eq
-                    , ElementConstraint t (Element t)
+                    , Eq a
                     ) => Element t -> t -> Bool
     elem = Foldable.elem
     {-# INLINE elem #-}
@@ -308,7 +302,7 @@ class Container t where
                            Just x  -> f x y)
     {-# INLINE foldl1 #-}
 
-    notElem :: ElementConstraint t (Element t) => Element t -> t -> Bool
+    notElem :: Eq (Element t) => Element t -> t -> Bool
     notElem x = not . elem x
     {-# INLINE notElem #-}
 
@@ -502,18 +496,13 @@ instance Container IntSet where
 -- Efficient instances
 ----------------------------------------------------------------------------
 
-instance Container (Set v) where
-    type ElementConstraint (Set v) = Ord
+instance Ord v => Container (Set v) where
     elem = Set.member
     {-# INLINE elem #-}
     notElem = Set.notMember
     {-# INLINE notElem #-}
 
-class (Eq a, Hashable a) => CanHash a
-instance (Eq a, Hashable a) => CanHash a
-
-instance Container (HashSet v) where
-    type ElementConstraint (HashSet v) = CanHash
+instance (Eq v, Hashable v) => Container (HashSet v) where
     elem = HashSet.member
     {-# INLINE elem #-}
 
