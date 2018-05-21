@@ -1,8 +1,14 @@
-1.2.0
+1.3.0
 =====
 
 * [#170](https://github.com/serokell/universum/pull/170):
   Remove `ElementConstraint` from the `Container` class.
+  
+  _Migration guide:_ remove `ElementConstraint` from every instance and every type signature.
+
+1.2.0
+=====
+
 * [#159](https://github.com/serokell/universum/issues/159) **Breaking change**:
   Remove `text-format` dependency.
 
