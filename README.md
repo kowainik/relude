@@ -346,8 +346,13 @@ This section describes what you need to change to make your code compile with `u
 Projects that use Universum [↑](#structure-of-this-tutorial)
 ---------------------------
 
-- [cardano-report-server](https://github.com/input-output-hk/cardano-report-server)
-- [cardano-sl](https://github.com/input-output-hk/cardano-sl)
-- [importify](https://github.com/serokell/importify)
-- [log-warper](https://github.com/serokell/log-warper)
-- [orgstat](https://github.com/volhovm/orgstat)
+Please submit a PR if you are using Universum!
+
+| λ |
+|---|
+| [cardano-report-server](https://github.com/input-output-hk/cardano-report-server) |
+| [cardano-sl](https://github.com/input-output-hk/cardano-sl) |
+| [importify](https://github.com/serokell/importify) |
+| [log-warper](https://github.com/serokell/log-warper) |
+| [orgstat](https://github.com/volhovm/orgstat) |
+| [tintin](https://github.com/theam/tintin) |
