@@ -1,5 +1,5 @@
 name:                universum
-version:             1.2.0
+version:             0.1.0
 synopsis:            Custom prelude
 description:         See README.md file for more details.
 homepage:            https://github.com/kowainik/universum
@@ -76,8 +76,6 @@ library
                      , deepseq
                      , ghc-prim >= 0.4.0.0
                      , hashable
-                     , microlens
-                     , microlens-mtl
                      , mtl
                      , safe-exceptions
                      , stm

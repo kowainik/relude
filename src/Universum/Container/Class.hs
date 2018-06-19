@@ -12,12 +12,20 @@
 
 {-# OPTIONS_GHC -fno-warn-unticked-promoted-constructors #-}
 
--- | Reimagined approach for 'Foldable' type hierarchy. Forbids usages
--- of 'length' function and similar over 'Maybe' and other potentially unsafe
--- data types. It was proposed to use @-XTypeApplication@ for such cases.
--- But this approach is not robust enough because programmers are human and can
--- easily forget to do this. For discussion see this topic:
--- <https://www.reddit.com/r/haskell/comments/60r9hu/proposal_suggest_explicit_type_application_for/ Suggest explicit type application for Foldable length and friends>
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
+
+{- | Reimagined approach for 'Foldable' type hierarchy. Forbids usages
+of 'length' function and similar over 'Maybe' and other potentially unsafe
+data types. It was proposed to use @-XTypeApplication@ for such cases.
+But this approach is not robust enough because programmers are human and can
+easily forget to do this. For discussion see this topic:
+<https://www.reddit.com/r/haskell/comments/60r9hu/proposal_suggest_explicit_type_application_for/ Suggest explicit type application for Foldable length and friends>
+-}
 
 module Universum.Container.Class
        ( -- * Foldable-like classes and methods
@@ -46,7 +54,7 @@ import Prelude hiding (all, and, any, elem, foldMap, foldl, foldr, mapM_, notEle
                 product, sequence_, sum)
 
 import Universum.Applicative (Alternative (..), Const, ZipList, pass)
-import Universum.Base (Constraint, Word8)
+import Universum.Base (Word8)
 import Universum.Container.Reexport (HashMap, HashSet, Hashable, IntMap, IntSet, Map, Seq, Set,
                                      Vector)
 import Universum.Functor (Identity)
