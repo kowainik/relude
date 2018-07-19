@@ -13,6 +13,8 @@ Change log
 * [#9](https://github.com/kowainik/universum/issues/9):
   Remove `safe-exceptions` from dependencies. Reexport `Exception` and
   `SomeException` from `Control.Exception` instead.
+* [#7](https://github.com/kowainik/universum/issues/7):
+  Remove `Universum.Container.Class.Container`. Export `Foldable`.
 
 
 `universum` uses [PVP Versioning][1].

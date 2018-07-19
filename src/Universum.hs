@@ -46,6 +46,7 @@ Below is a short description of what you can find under different modules:
 * __"Universum.Exception"__: reexports "Control.Exception.Safe" from
   @safe-exceptions@ package, 'bug' as better 'error', 'Exc' pattern synonym for
   convenient pattern-matching on exceptions.
+* __"Universum.Foldable"__: reexports functions for 'Foldable' and 'Traversable'.
 * __"Universum.Function"__: almost everything from "Data.Function" module.
 * __"Universum.Functor"__: reexports from "Data.Functor", "Data.Bifunctor",
   other useful 'Functor' combinators.
@@ -74,6 +75,7 @@ module Universum
        , module Universum.Debug
        , module Universum.DeepSeq
        , module Universum.Exception
+       , module Universum.Foldable
        , module Universum.Function
        , module Universum.Functor
        , module Universum.Lifted
@@ -93,6 +95,7 @@ import Universum.Container
 import Universum.Debug
 import Universum.DeepSeq
 import Universum.Exception
+import Universum.Foldable
 import Universum.Function
 import Universum.Functor
 import Universum.Lifted

@@ -76,7 +76,6 @@ While creating and maintaining a custom prelude, we are pursuing the following g
    as it's done in [`classy-prelude`](https://github.com/snoyberg/mono-traversable).
    Instead, we reexport common and well-known things from `base` and some other
    libraries that are used in everyday production programming in _Haskell_.
-   > **Note**: well, we did end up inventing _some_ new things.
 4. Export more useful and commonly used functions. [Hello, my name is Dmitry. I was
    coding _Haskell_ for 3 years but still hoogling which module `liftIO` comes from.](https://twitter.com/magnars/status/834683466130345984)
    Things like `liftIO`, `ReaderT` type, `MVar`-related functions have unambiguous names,
@@ -136,18 +135,8 @@ Gotchas [↑](#structure-of-this-tutorial)
   `OverloadedStrings` is enabled – it happens because the compiler doesn't know what
   type to infer for the string. Use `putTextLn` in this case.
 * Since `show` doesn't come from `Show` anymore, you can't write `Show` instances easily.
-* You can't call some `Foldable` methods over `Maybe` and some other types.
-  `Foldable` generalization is useful but
-  [potentially error-prone](https://www.reddit.com/r/haskell/comments/60r9hu/proposal_suggest_explicit_type_application_for/).
-  Instead we created our own fully compatible with `Foldable`
-  [`Container` type class](https://github.com/serokell/universum/blob/b6353285859e9ed3544bddbf55d70237330ad64a/src/Universum/Container/Class.hs#L180)
-  but that restricts the usage of functions like `length` over `Maybe`, `Either`, `Identity` and tuples.
-  We're also using _GHC 8_ feature of
-  [custom compile-time errors](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/glasgow_exts.html#custom-compile-time-errors)
-  to produce
-  [more helpful messages](https://github.com/serokell/universum/blob/54a742c10720f11c739f2d268365d723924b83a9/src/Containers.hs#L474).
-* As a consequence of previous point, some functions like `traverse_`, `forM_`, `sequenceA_`, etc.
-  are generalized over `Container` type classes.
+* You can't call `elem` and `notElem` functions over `Set` and `HashSet`. These
+  functions were forbidden for these two types because of performance reasons.
 * `error` takes `Text`.
 
 

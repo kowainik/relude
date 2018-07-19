@@ -25,7 +25,7 @@ import Universum.Monad (Maybe (..))
 -- >>> import Universum.Applicative (pure)
 -- >>> import Universum.Base ((==), even)
 -- >>> import Universum.Bool (Bool (..), not)
--- >>> import Universum.Container (length)
+-- >>> import Universum.Foldable (length)
 -- >>> import Universum.Function (($))
 -- >>> import Universum.Print (print)
 

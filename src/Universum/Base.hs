@@ -2,6 +2,13 @@
 {-# LANGUAGE CPP          #-}
 {-# LANGUAGE Unsafe       #-}
 
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
+
 -- | Reexports from @GHC.*@ modules of <https://www.stackage.org/lts-8.9/package/base-4.9.1.0 base>
 -- package.
 
@@ -15,14 +22,13 @@ module Universum.Base
 
          -- * Base type classes
        , module Data.Eq
-       , module Data.Foldable
        , module Data.Ord
-       , module Data.Traversable
 
          -- * System IO
        , module System.IO
 
          -- * Base GHC types
+       , module Data.Coerce
        , module Data.Proxy
        , module Data.Typeable
        , module Data.Void
@@ -41,7 +47,6 @@ module Universum.Base
 #else
        , module GHC.TypeLits
 #endif
-       , module GHC.Types
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
        , module GHC.OverloadedLabels
@@ -57,26 +62,23 @@ module Universum.Base
 
 -- Base types
 import Data.Bits (xor)
-import Data.Char (chr)
+import Data.Char (Char, chr)
 import Data.Int (Int, Int16, Int32, Int64, Int8)
 import Data.Word (Word, Word16, Word32, Word64, Word8, byteSwap16, byteSwap32, byteSwap64)
 import Numeric.Natural (Natural)
 
 -- IO
-import System.IO (FilePath, Handle, IOMode (..), stderr, stdin, stdout, withFile)
+import System.IO (FilePath, Handle, IO, IOMode (..), stderr, stdin, stdout, withFile)
 
 -- Base typeclasses
 import Data.Eq (Eq (..))
-import Data.Foldable (Foldable, concat, concatMap, foldlM, foldrM, maximumBy, minimumBy)
 import Data.Ord (Down (..), Ord (..), Ordering (..), comparing)
-import Data.Traversable (Traversable (..), fmapDefault, foldMapDefault, forM, mapAccumL, mapAccumR)
 
 -- Base GHC types
-#if ( __GLASGOW_HASKELL__ >= 710 )
+import Data.Coerce (Coercible, coerce)
 import Data.Proxy (Proxy (..))
 import Data.Typeable (Typeable)
 import Data.Void (Void, absurd, vacuous)
-#endif
 
 import GHC.Base (String, asTypeOf, maxInt, minInt, ord, seq)
 import GHC.Enum (Bounded (..), Enum (..), boundedEnumFrom, boundedEnumFromThen)
@@ -91,9 +93,6 @@ import GHC.TypeNats (CmpNat, KnownNat, Nat, SomeNat (..), natVal, someNatVal)
 #else
 import GHC.TypeLits (CmpNat, KnownNat, Nat, SomeNat (..), natVal, someNatVal)
 #endif
-
-import GHC.Types (Bool, Char, Coercible, IO, Int, Ordering, Word)
-
 
 #if ( __GLASGOW_HASKELL__ >= 800 )
 import GHC.ExecutionStack (getStackTrace, showStackTrace)
