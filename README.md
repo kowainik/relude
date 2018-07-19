@@ -192,10 +192,7 @@ We also have `data Undefined = Undefined` (which, too, comes with warnings).
 
 ### Exceptions
 
-We use [`safe-exceptions`](https://github.com/fpco/safe-exceptions)
-library for exceptions handling. Don't import `Control.Exceptions`
-module explicitly. Instead use functionality from `safe-exceptions`
-provided by `universum` or import `Control.Exceptions.Safe` module.
+TODO: write about reexports, `Bug` and `Exc` pattern.
 
 What's new? [↑](#structure-of-this-tutorial)
 -----------
