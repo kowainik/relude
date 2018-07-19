@@ -84,7 +84,6 @@ module Universum
        , module Universum.Print
        , module Universum.String
        , module Universum.TypeOps
-       , module Universum.VarArg
        ) where
 
 import Universum.Applicative
@@ -104,4 +103,3 @@ import Universum.Nub
 import Universum.Print
 import Universum.String
 import Universum.TypeOps
-import Universum.VarArg

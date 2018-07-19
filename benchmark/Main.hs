@@ -1,8 +1,15 @@
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
+
 module Main where
 
 import Universum hiding (show)
 
-import Data.List (nub, zip5)
+import Data.List (nub)
 import Gauge (Benchmark, bench, bgroup, nf, whnf)
 import Gauge.Main (defaultMain)
 import Prelude (show)
@@ -20,7 +27,6 @@ main = defaultMain
   , bgroupList listOfBig      "big"
   , bgroupList (nStrings 'z') "small str"
   , bgroupList (nStrings 'c') "big str"
-  , bgroupSuperComposition
   , bgroupConcatMap
   , bgroupMember
   , bgroupFold
@@ -31,8 +37,7 @@ bgroupList :: forall a .
            => (Int -> [a])
            -> String
            -> Benchmark
-bgroupList f name = bgroup name $
-  map ($ f)
+bgroupList f name = bgroup name $ map ($ f)
   [ bgroupNubAll 100
   , bgroupNubAll 500
   , bgroupNubAll 1000
@@ -84,51 +89,6 @@ allStrings ch =  [ c : s | s <- "" : allStrings ch, c <- ['a'..ch] ]
 
 nStrings :: Char -> Int -> [Text]
 nStrings ch n = take n $ map toText $ allStrings ch
-
-bgroupSuperComposition :: Benchmark
-bgroupSuperComposition = bgroup "(...)"
-  [ bgroup "show+" [ bench "super" $ nf (show ... (+ 1)) (2 :: Int)
-                   , bench "norm"  $ nf (show  .  (+ 1)) (2 :: Int)
-                   ]
-  , bgroup "show"  [ bench "super" $ nf (show ...) (5 :: Int)
-                   , bench "norm"  $ nf show       (5 :: Int)
-                   ]
-  , bgroup "zip5"  [ bench "super" $ nf ((null ... zip5) [()] [()] [()] []) [()]
-                   , bench "norm"  $ nf (null   .  zip5  [()] [()] [()] []) [()]
-                   ]
-  , bgroup "10x"   [ bench "super" $ nf super10 [()]
-                   , bench "norm"  $ nf norm10  [()]
-                   ]
-  , bgroup "5arg"  [ bench "super" $ nf (\x -> super5arg x x x x x) [()]
-                   , bench "norm"  $ nf (\x -> norm5args x x x x x) [()]
-                   , bench "unty"  $ nf (\x -> unty5args x x x x x) [()]
-                   , bench "line"  $ nf (\x -> line5args x x x x x) [()]
-                   ]
-  ]
- where
-  super10 = null
-        ... (: []) ... Unsafe.head ... pure ... Unsafe.head
-        ... (: [(), (), (), ()]) ... Unsafe.head ... (: []) ... Unsafe.head
-        ... (: [()]) ... Unsafe.head ... (: [(), ()]) ... Unsafe.head
-
-  norm10 = null
-         . (: []) . Unsafe.head . pure . Unsafe.head
-         . (: [(), (), (), ()]) . Unsafe.head . (: []) . Unsafe.head
-         . (: [()]) . Unsafe.head . (: [(), ()]) . Unsafe.head
-
-  super5arg :: [()] -> [()] -> [()] -> [()] -> [()] -> Bool
-  super5arg = super10 ... map fst5 ... zip5
-
-  unty5args = super10 ... map fst5 ... zip5
-
-  line5args = super10 ... map fst5 ... zip5
-  {-# INLINE line5args #-}
-
-  norm5args :: [()] -> [()] -> [()] -> [()] -> [()] -> Bool
-  norm5args a b c d = norm10 . map fst5 . zip5 a b c d
-
-  fst5 :: (a,b,c,d,e) -> a
-  fst5 (a, _, _, _, _) = a
 
 bgroupConcatMap :: Benchmark
 bgroupConcatMap = bgroup "concat"

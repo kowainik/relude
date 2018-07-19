@@ -8,6 +8,8 @@ Change log
   Remove `microlens` from dependencies.
 * [#12](https://github.com/kowainik/universum/issues/12):
   Remove `liquid-haskell` support.
+* [#10](https://github.com/kowainik/universum/issues/10):
+  Remove `Universum.VarArg` module.
 
 universum uses [PVP Versioning][1].
 The change log is available [on GitHub][2].

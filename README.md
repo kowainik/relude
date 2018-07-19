@@ -260,20 +260,6 @@ Finally, we can move to part describing the new cool features we bring with `uni
   a :: (Show a, Read a) => a -> a
   ```
 
-* Variadic composition operator `(...)`. So you can write:
-
-  ```haskell
-  ghci> (show ... (+)) 1 2
-  "3"
-  ghci> show ... 5
-  "5"
-  ghci> (null ... zip5) [1] [2] [3] [] [5]
-  True
-  ghci> let process = map (+3) ... filter
-  ghci> process even [1..5]
-  [5,7]
-  ```
-
 * Conversions between `Either` and `Maybe` like `rightToMaybe` and `maybeToLeft`
   with clear semantic.
 * `using(Reader|State)[T]` functions as aliases for `flip run(Reader|State)[T]`.
