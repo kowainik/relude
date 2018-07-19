@@ -88,9 +88,10 @@ install:
 script:
   - |
     if [ -z "$STACK_YAML" ]; then
-      cabal new-test new-bench new-haddock
+      cabal new-test
+      cabal new-haddock
     else
-      stack build --test --bench  --haddock --no-run-tests --no-run-benchmarks --no-haddock-deps --no-terminal
+      stack build --test --bench --no-run-tests --no-run-benchmarks --no-terminal
     fi
 
 notifications:
