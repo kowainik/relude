@@ -1,21 +1,20 @@
 Universum
 =========
 
-[![Build Status](https://travis-ci.org/serokell/universum.svg?branch=master)](https://travis-ci.org/serokell/universum)
-[![Windows build status](https://ci.appveyor.com/api/projects/status/github/serokell/universum?branch=master&svg=true)](https://ci.appveyor.com/project/ChShersh/universum)
+[![Build Status](https://travis-ci.org/kowainik/universum.svg?branch=master)](https://travis-ci.org/kowainik/universum)
 [![Hackage](https://img.shields.io/hackage/v/universum.svg)](https://hackage.haskell.org/package/universum)
 [![Stackage LTS](http://stackage.org/package/universum/badge/lts)](http://stackage.org/lts/package/universum)
 [![Stackage Nightly](http://stackage.org/package/universum/badge/nightly)](http://stackage.org/nightly/package/universum)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-`universum` is a custom prelude used in @Serokell that has:
+`universum` is a custom prelude that has:
 
 1. **Excellent documentation**: tutorial, migration guide from `Prelude`,
    Haddock with examples for (almost) every function,
    all examples are tested with [`doctest`](http://hackage.haskell.org/package/doctest),
    documenation regarding internal module structure.
 2. `universum`-specific [HLint](http://hackage.haskell.org/package/hlint) rules:
-   [`.hlint.yaml`](https://github.com/serokell/universum/blob/master/.hlint.yaml)
+   [`.hlint.yaml`](https://github.com/kowainik/universum/blob/master/.hlint.yaml)
 3. Only a few LiquidHaskell properties right now, but LiquidHaskell is on Travis
    CI and other properties are just waiting to be added!
 4. Focus on safety, convenience and efficiency.
@@ -46,7 +45,7 @@ Why another custom Prelude? [↑](#structure-of-this-tutorial)
 
 ### Motivation
 
-At [Serokell](https://github.com/serokell/), we strive to be as productive as possible. That's why we are using [_Haskell_](https://haskell-lang.org/). This choice of language implies
+We strive to be as productive as possible. That's why we are using [_Haskell_](https://haskell-lang.org/). This choice of language implies
 that we're restricted to use [`Prelude`](http://hackage.haskell.org/package/base-4.9.1.0/docs/Prelude.html):
 implicit import of basic functions, type classes and data types. Unfortunately, the default `Prelude`
 [is considered to be not so good](https://news.ycombinator.com/item?id=8002749)
@@ -90,10 +89,9 @@ Unlike `protolude`, we are:
 
 1. Not trying to be as general as possible (thus we don't export much from
    [`GHC.Generics`](https://github.com/sdiehl/protolude/blob/41710698eedc66fb0bfc5623d3c3a672421fbab5/src/Protolude.hs#L365)).
-2. Not trying to maintain every version of `ghc` compiler (only the
-   [latest 3](https://github.com/serokell/universum/blob/b6353285859e9ed3544bddbf55d70237330ad64a/.travis.yml#L15)
+2. Not trying to maintain every version of `ghc` compiler (only the latest 3)
 3. Trying to make writing production code easier (see
-   [enhancements and fixes](https://github.com/serokell/universum/issues)).
+   [enhancements and fixes](https://github.com/kowainik/universum/issues)).
 
 How to use Universum [↑](#structure-of-this-tutorial)
 --------------------
@@ -118,11 +116,6 @@ Then add the following import to your modules:
 ```haskell
 import Universum
 ```
-
-If you're using [Emacs](https://www.gnu.org/software/emacs/) and don't want to
-type `import Universum` manually every time, you can
-[modify your configs](https://github.com/serokell/universum/issues/8#issuecomment-276444879)
-a little bit.
 
 If you want to get familiar with `universum` internal structure, you can just
 read top-level documentation for
@@ -286,7 +279,7 @@ Finally, we can move to part describing the new cool features we bring with `uni
 * Conversions between `Either` and `Maybe` like `rightToMaybe` and `maybeToLeft`
   with clear semantic.
 * `using(Reader|State)[T]` functions as aliases for `flip run(Reader|State)[T]`.
-* [`One` type class](https://github.com/serokell/universum/blob/master/src/Containers.hs#L473)
+* [`One` type class](https://github.com/kowainik/universum/blob/master/src/Containers.hs#L473)
   for creating singleton containers. Even monomorhpic ones like `Text`.
 * `evaluateWHNF` and `evaluateNF` functions as clearer and lifted aliases for
   `evaluate` and `evaluate . force`.
@@ -296,7 +289,7 @@ Migration guide from Prelude [↑](#structure-of-this-tutorial)
 ----------------------------
 
 In order to replace default `Prelude` with `universum` you should start with instructions given in
-[how to use universum](https://github.com/serokell/universum#how-to-use-universum-) section.
+[how to use universum](https://github.com/kowainik/universum#how-to-use-universum-) section.
 
 This section describes what you need to change to make your code compile with `universum`.
 
@@ -342,18 +335,3 @@ This section describes what you need to change to make your code compile with `u
    + Use `toText/toLText/toString` functions to convert to `Text/LazyText/String` types.
    + Use `encodeUtf8/decodeUtf8` to convert to/from `ByteString`.
 8. Run `hlint` using `.hlint.yaml` file from `universum` package to cleanup code and imports.
-
-Projects that use Universum [↑](#structure-of-this-tutorial)
----------------------------
-
-Please submit a PR if you are using Universum!
-
-| λ |
-|---|
-| [cardano-report-server](https://github.com/input-output-hk/cardano-report-server) |
-| [cardano-sl](https://github.com/input-output-hk/cardano-sl) |
-| [importify](https://github.com/serokell/importify) |
-| [log-warper](https://github.com/serokell/log-warper) |
-| [orgstat](https://github.com/volhovm/orgstat) |
-| [tintin](https://github.com/theam/tintin) |
-| [require](https://theam.github.io/require/) |

@@ -10,7 +10,7 @@ putting in. Thank you for your help in making this library awesome! :sparkles:
 #### Report bugs or feature request
 If you have found any bugs or have proposals on how to make this project better,
 don't hesitate to create issues
-[here](https://github.com/serokell/universum/issues/new) in free format.
+[here](https://github.com/kowainik/universum/issues/new) in free format.
 
 #### Create a PR
 We love receiving pull requests from everyone. But, please, don't create a PR
@@ -43,4 +43,4 @@ Now you are ready to [submit a pull request][pr]!
 ----------
 Thanks for spending time on reading this contributing guide! :sparkling_heart:
 
-[pr]: https://github.com/serokell/universum/compare/
+[pr]: https://github.com/kowainik/universum/compare/

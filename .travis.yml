@@ -5,82 +5,94 @@ language: haskell
 git:
   depth: 5
 
-
 cache:
   directories:
+  - "$HOME/.cabal"
+  - "$HOME/.ghc"
   - "$HOME/.stack"
-  - "$HOME/build/serokell/universum/.stack-work"
-
+  - "$TRAVIS_BUILD_DIR/.stack-work"
 
 matrix:
+
   include:
 
   - ghc: 7.10.3
-    env: GHCVER='7.10.3' STACK_YAML="$HOME/build/serokell/universum/stack-$GHCVER.yaml"
+    env: GHCVER='7.10.3' CABALVER='head'
+    os: linux
+    addons:
+      apt:
+        sources:
+        - hvr-ghc
+        packages:
+        - ghc-7.10.3
+        - cabal-install-head
 
   - ghc: 8.0.2
-    env: GHCVER='8.0.2' STACK_YAML="$HOME/build/serokell/universum/stack-$GHCVER.yaml"
+    env: GHCVER='8.0.2' CABALVER='head'
+    os: linux
+    addons:
+      apt:
+        sources:
+        - hvr-ghc
+        packages:
+        - ghc-8.0.2
+        - cabal-install-head
 
   - ghc: 8.2.2
-    env: GHCVER='8.2.2' STACK_YAML="$HOME/build/serokell/universum/stack.yaml"
+    env: GHCVER='8.2.2' CABALVER='head'
+    os: linux
+    addons:
+      apt:
+        sources:
+        - hvr-ghc
+        packages:
+        - ghc-8.2.2
+        - cabal-install-head
 
-  - ghc: 8.4.2
-    env: GHCVER='8.4.2' STACK_YAML="$HOME/build/serokell/universum/stack-$GHCVER.yaml"
+  - ghc: 8.4.3
+    env: GHCVER='8.4.3' CABALVER='head'
+    os: linux
+    addons:
+      apt:
+        sources:
+        - hvr-ghc
+        packages:
+        - ghc-8.4.3
+        - cabal-install-head
 
-  - ghc: 8.2.2
-    env: GHCVER='8.2.2' STACK_YAML="$HOME/build/serokell/universum/stack-liquid.yaml"
-
-
-addons:
-  apt:
-    sources:
-      - sourceline: 'ppa:hvr/ghc'
-    packages:
-      - libgmp-dev
-      - cabal-install-2.0
-
-
-before_install:
-
-  - mkdir -p ~/.local/bin
-  - export PATH="$HOME/.local/bin:$PATH"
-  - travis_retry curl -L 'https://www.stackage.org/stack/linux-x86_64' | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
-  - stack --version
-
-  # Install Z3
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository ppa:hvr/z3 -y > /dev/null; sudo apt-key -qq update /dev/null; sudo apt-get -qq update; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq install z3 -y --force-yes; fi
+  - ghc: 8.4.3
+    env: STACK_YAML="$HOME/build/kowainik/universum/stack.yaml"
+    os: linux
+    addons:
+      apt:
+        packages:
+        - libgmp-dev
 
 install:
-
-  - travis_wait 30 stack setup --no-terminal
-  - stack ghc -- --version
-
-  - travis_wait 40 stack build --only-dependencies --no-terminal
-  - travis_wait 40 stack build --test --bench --haddock --no-run-tests --no-run-benchmarks --no-haddock-deps --no-terminal
-
   - |
-    if [ "$STACK_YAML" == "$HOME/build/serokell/universum/stack-liquid.yaml" ]; then
-      stack install liquidhaskell-0.8.2.4
+    if [ -z "$STACK_YAML" ]; then
+      export PATH="/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$PATH"
+      echo $PATH
+      cabal new-update
+      cabal new-build --enable-tests --enable-benchmarks
     else
-      echo "Skipping `liquidhaskell` installation"
+      echo "$TRAVIS_BUILD_DIR"
+      mkdir -p ~/.local/bin
+      export PATH="$HOME/.local/bin:$PATH"
+      travis_retry curl -L 'https://www.stackage.org/stack/linux-x86_64' | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+      stack --version
+      stack setup --no-terminal
+      stack ghc -- --version
+      stack build --only-dependencies --no-terminal
     fi
-
 script:
-
-  - travis_wait 40 stack build --test --no-terminal
   - |
-    if [ "$STACK_YAML" == "$HOME/build/serokell/universum/stack-liquid.yaml" ]; then
-      stack exec -- liquid --totalhaskell src/Universum/Unsafe.hs
-      stack exec -- liquid --totalhaskell src/Universum/Nub.hs
+    if [ -z "$STACK_YAML" ]; then
+      cabal new-test
+      cabal new-haddock
     else
-      echo "Skipping `liquidhaskell` running"
+      stack build --test --bench --no-run-tests --no-run-benchmarks --no-terminal
     fi
 
 notifications:
   email: false
-  slack:
-    rooms:
-      - serokell:RfJUgurMOLH2S49BEcRsAdVw
-    on_success: change
-    on_failure: always

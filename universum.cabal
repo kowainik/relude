@@ -1,29 +1,28 @@
 name:                universum
 version:             1.2.0
-synopsis:            Custom prelude used in Serokell
+synopsis:            Custom prelude
 description:         See README.md file for more details.
-homepage:            https://github.com/serokell/universum
+homepage:            https://github.com/kowainik/universum
+bug-reports:         https://github.com/kowainik/universum/issues
 license:             MIT
 license-file:        LICENSE
-author:              Stephen Diehl, @serokell
-maintainer:          Serokell <hi@serokell.io>
-copyright:           2016 Stephen Diehl, 2016-2018 Serokell
+author:              Stephen Diehl, @serokell, Kowainik
+maintainer:          Kowainik <xrom.xkov@gmail.com>
+copyright:           2016 Stephen Diehl, 2016-2018 Serokell, 2018 Kowainik
 category:            Prelude
 stability:           stable
 build-type:          Simple
 cabal-version:       >=1.18
-bug-reports:         https://github.com/serokell/universum/issues
 tested-with:         GHC == 7.10.3
                    , GHC == 8.0.2
                    , GHC == 8.2.2
                    , GHC == 8.4.2
-extra-doc-files:     CHANGES.md
-                   , CONTRIBUTING.md
+extra-doc-files:     CONTRIBUTING.md
                    , README.md
 
 source-repository head
   type:     git
-  location: git@github.com:serokell/universum.git
+  location: git@github.com:kowainik/universum.git
 
 library
   hs-source-dirs:      src
