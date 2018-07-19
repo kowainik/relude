@@ -16,8 +16,9 @@ cabal-version:       >=1.18
 tested-with:         GHC == 7.10.3
                    , GHC == 8.0.2
                    , GHC == 8.2.2
-                   , GHC == 8.4.2
-extra-doc-files:     CONTRIBUTING.md
+                   , GHC == 8.4.3
+extra-doc-files:     CHANGELOG.md
+                   , CONTRIBUTING.md
                    , README.md
 
 source-repository head
