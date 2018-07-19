@@ -1,5 +1,5 @@
 name:                universum
-version:             1.2.0
+version:             0.1.0
 synopsis:            Custom prelude
 description:         See README.md file for more details.
 homepage:            https://github.com/kowainik/universum
@@ -16,8 +16,9 @@ cabal-version:       >=1.18
 tested-with:         GHC == 7.10.3
                    , GHC == 8.0.2
                    , GHC == 8.2.2
-                   , GHC == 8.4.2
-extra-doc-files:     CONTRIBUTING.md
+                   , GHC == 8.4.3
+extra-doc-files:     CHANGELOG.md
+                   , CONTRIBUTING.md
                    , README.md
 
 source-repository head
@@ -76,8 +77,6 @@ library
                      , deepseq
                      , ghc-prim >= 0.4.0.0
                      , hashable
-                     , microlens
-                     , microlens-mtl
                      , mtl
                      , safe-exceptions
                      , stm

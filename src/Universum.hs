@@ -1,5 +1,12 @@
 {-# LANGUAGE Trustworthy #-}
 
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
+
 {- | Main module that reexports all functionality allowed to use
 without importing any other modules. Just add next lines to your
 module to replace default 'Prelude' with better one.
@@ -78,10 +85,6 @@ module Universum
        , module Universum.String
        , module Universum.TypeOps
        , module Universum.VarArg
-
-         -- * Lenses
-       , module Lens.Micro
-       , module Lens.Micro.Mtl
        ) where
 
 import Universum.Applicative
@@ -102,8 +105,3 @@ import Universum.Print
 import Universum.String
 import Universum.TypeOps
 import Universum.VarArg
-
--- Lenses
-import Lens.Micro (Lens, Lens', Traversal, Traversal', over, set, (%~), (&), (.~), (<&>), (^.),
-                   (^..), (^?), _1, _2, _3, _4, _5)
-import Lens.Micro.Mtl (preuse, preview, use, view)
