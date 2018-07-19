@@ -6,7 +6,8 @@ Change log
 
 * [#2](https://github.com/kowainik/universum/issues/2):
   Remove `microlens` from dependencies.
-
+* [#12](https://github.com/kowainik/universum/issues/12):
+  Remove `liquid-haskell` support.
 
 universum uses [PVP Versioning][1].
 The change log is available [on GitHub][2].
