@@ -15,9 +15,7 @@ Universum
    documenation regarding internal module structure.
 2. `universum`-specific [HLint](http://hackage.haskell.org/package/hlint) rules:
    [`.hlint.yaml`](https://github.com/kowainik/universum/blob/master/.hlint.yaml)
-3. Only a few LiquidHaskell properties right now, but LiquidHaskell is on Travis
-   CI and other properties are just waiting to be added!
-4. Focus on safety, convenience and efficiency.
+3. Focus on safety, convenience and efficiency.
 
 What is this file about?
 ------------------------

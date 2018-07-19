@@ -1,3 +1,10 @@
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
+
 {-| Functions to remove duplicates from a list.
 
  = Performance
@@ -32,30 +39,16 @@ import Data.Eq (Eq)
 import Data.Hashable (Hashable)
 import Data.HashSet as HashSet
 import Data.Ord (Ord)
-import Data.Set (Set)
-import Prelude (Bool, Char, (.))
+import Prelude ((.))
 
 import qualified Data.Set as Set
 
--- Liquid Haskell check for duplicates.
-{-@ type ListUnique a = {v : [a] | NoDups v} @-}
+{- | Like 'Prelude.nub' but runs in @O(n * log n)@ time and requires 'Ord'.
 
-{-@ predicate NoDups L = Set_emp (dups L) @-}
+>>> ordNub [3, 3, 3, 2, 2, -1, 1]
+[3,2,-1,1]
 
-{-@ measure dups :: [a] -> (Set a)
-    dups ([])   = {v | Set_emp v}
-    dups (x:xs) = {v | v =
-      if (Set_mem x (listElts xs))
-      then (Set_cup (Set_sng x) (dups xs))
-      else (dups xs)}
-@-}
-
-{-@ Set.toList :: Set a -> ListUnique a @-}
-
--- | Like 'Prelude.nub' but runs in @O(n * log n)@ time and requires 'Ord'.
---
--- >>> ordNub [3, 3, 3, 2, 2, -1, 1]
--- [3,2,-1,1]
+-}
 ordNub :: (Ord a) => [a] -> [a]
 ordNub = go Set.empty
   where
@@ -65,10 +58,12 @@ ordNub = go Set.empty
       then go s xs
       else x : go (Set.insert x s) xs
 
--- | Like 'Prelude.nub' but runs in @O(n * log_16(n))@ time and requires 'Hashable'.
---
--- >>> hashNub [3, 3, 3, 2, 2, -1, 1]
--- [3,2,-1,1]
+{- | Like 'Prelude.nub' but runs in @O(n * log_16(n))@ time and requires 'Hashable'.
+
+>>> hashNub [3, 3, 3, 2, 2, -1, 1]
+[3,2,-1,1]
+
+-}
 hashNub :: (Eq a, Hashable a) => [a] -> [a]
 hashNub = go HashSet.empty
   where
@@ -78,17 +73,20 @@ hashNub = go HashSet.empty
       then go s xs
       else x : go (HashSet.insert x s) xs
 
--- | Like 'ordNub' but also sorts a list.
---
--- >>> sortNub [3, 3, 3, 2, 2, -1, 1]
--- [-1,1,2,3]
-{-@ sortNub :: [a] -> ListUnique a @-}
+{- | Like 'ordNub' but also sorts a list.
+
+>>> sortNub [3, 3, 3, 2, 2, -1, 1]
+[-1,1,2,3]
+
+-}
 sortNub :: (Ord a) => [a] -> [a]
 sortNub = Set.toList . Set.fromList
 
--- | Like 'hashNub' but has better performance and also doesn't save the order.
---
--- >>> unstableNub [3, 3, 3, 2, 2, -1, 1]
--- [1,2,3,-1]
+{- | Like 'hashNub' but has better performance and also doesn't save the order.
+
+>>> unstableNub [3, 3, 3, 2, 2, -1, 1]
+[1,2,3,-1]
+
+-}
 unstableNub :: (Eq a, Hashable a) => [a] -> [a]
 unstableNub = HashSet.toList . HashSet.fromList
