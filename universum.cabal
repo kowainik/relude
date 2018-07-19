@@ -67,7 +67,6 @@ library
                                Universum.String.Reexport
                            Universum.TypeOps
                            Universum.Unsafe
-                           Universum.VarArg
 
   ghc-options:         -Wall -fwarn-implicit-prelude
 
