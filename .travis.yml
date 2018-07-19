@@ -10,7 +10,7 @@ cache:
   - "$HOME/.cabal"
   - "$HOME/.ghc"
   - "$HOME/.stack"
-  - "$HOME/build/kowainik/universum/.stack-work"
+  - "$TRAVIS_BUILD_DIR/.stack-work"
 
 matrix:
 
@@ -24,7 +24,7 @@ matrix:
         sources:
         - hvr-ghc
         packages:
-        - ghc-8.0.2
+        - ghc-7.10.3
         - cabal-install-head
 
   - ghc: 8.0.2
@@ -81,7 +81,7 @@ install:
       export PATH="$HOME/.local/bin:$PATH"
       travis_retry curl -L 'https://www.stackage.org/stack/linux-x86_64' | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
       stack --version
-      stack setup --no-terminal --install-cabal 2.0.1.0
+      stack setup --no-terminal
       stack ghc -- --version
       stack build --only-dependencies --no-terminal
     fi
