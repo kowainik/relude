@@ -1,7 +1,0 @@
-resolver: lts-9.21
-
-nix:
-  packages: [binutils, gmp]
-
-extra-deps:
-- tasty-hedgehog-0.1.0.2

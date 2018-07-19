@@ -1,4 +1,4 @@
-resolver: lts-11.5
+resolver: lts-12.1
 
 nix:
-  shell-file: shell.nix
+  packages: [binutils, gmp]

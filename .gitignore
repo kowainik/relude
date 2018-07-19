@@ -1,8 +1,11 @@
 *.sw[pon]
 .stack-work
 dist
+dist-newstyle/
 .cabal-sandbox
 cabal.sandbox.config
+.ghc.environment.*
+
 *.hi
 *.o
 TAGS
@@ -13,3 +16,5 @@ TAGS
 *.html
 
 *.liquid
+
+.DS_Store
