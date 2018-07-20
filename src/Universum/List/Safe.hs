@@ -39,8 +39,9 @@ Just 1
 Nothing
 
 -}
-viaNonEmpty :: (NonEmpty a -> a) -> [a] -> Maybe a
+viaNonEmpty :: (NonEmpty a -> b) -> [a] -> Maybe b
 viaNonEmpty f = fmap f . nonEmpty
+{-# INLINE viaNonEmpty #-}
 
 {- | Destructuring list into its head and tail if possible. This function is total.
 
