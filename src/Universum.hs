@@ -59,10 +59,8 @@ Below is a short description of what you can find under different modules:
 * __"Universum.Print"__: polymorphic 'putStrLn' function and functions to print 'Text'.
 * __"Universum.String"__: reexports from @text@ and @bytestring@ packages with
     conversion functions between different textual types.
-* __"Universum.TypeOps"__: convenient and fancy type-level operators.
 * __"Universum.Unsafe"__: unsafe functions (produce 'error').
   Not exported by "Universum" module by default.
-* __"Universum.VarArg"__: variadic composition operator '...'.
 -}
 
 module Universum
@@ -83,7 +81,6 @@ module Universum
        , module Universum.Nub
        , module Universum.Print
        , module Universum.String
-       , module Universum.TypeOps
        ) where
 
 import Universum.Applicative
@@ -102,4 +99,3 @@ import Universum.Monoid
 import Universum.Nub
 import Universum.Print
 import Universum.String
-import Universum.TypeOps
