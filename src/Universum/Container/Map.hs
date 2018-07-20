@@ -8,6 +8,7 @@ module Universum.Container.Map
        ( StaticMap (..)
        , DynamicMap (..)
        , (!?)
+       , notMember
 
          -- * To pairs
        , toPairs
@@ -18,8 +19,8 @@ module Universum.Container.Map
 import GHC.Exts (IsList (Item, toList))
 
 import Universum.Applicative (pure, (*>))
-import Universum.Base (Eq, Int, Ord)
-import Universum.Bool (Bool, guard)
+import Universum.Base (Eq, Int, Ord, Type)
+import Universum.Bool (Bool, guard, not)
 import Universum.Container.Reexport (HashMap, HashSet, Hashable, IntMap, IntSet, Map, Set, fst, snd)
 import Universum.Function ((.))
 import Universum.Functor (map)
@@ -36,11 +37,12 @@ import qualified Data.Set as S
 -- Static Map
 ----------------------------------------------------------------------------
 
-{- | Read-only map or set.
+{- | Read-only map or set. Contains polymorhic functions which work for both
+sets and maps.
 -}
 class StaticMap t where
-    type Key t :: *
-    type Val t :: *
+    type Key t :: Type
+    type Val t :: Type
 
     size   :: t -> Int
     lookup :: Key t -> t -> Maybe (Val t)
@@ -118,6 +120,11 @@ infixl 9 !?
 (!?) m k = lookup k m
 {-# INLINE (!?) #-}
 
+-- | Inverse of 'member' function.
+notMember :: StaticMap t => Key t -> t -> Bool
+notMember k = not . member k
+{-# INLINE notMember #-}
+
 ----------------------------------------------------------------------------
 -- Dynamic Map
 ----------------------------------------------------------------------------
@@ -126,13 +133,45 @@ infixl 9 !?
 -}
 class StaticMap t => DynamicMap t where
     -- insertions
-    insert :: Key t -> Val t -> t -> t
+    insert     :: Key t -> Val t -> t -> t
     insertWith :: (Val t -> Val t -> Val t) -> Key t -> Val t -> t -> t
-    insertWithKey :: (Key t -> Val t -> Val t -> Val t) -> Key t -> Val t -> t -> t
 
     -- deletions
     delete :: Key t -> t -> t
     alter :: (Maybe (Val t) -> Maybe (Val t)) -> Key t -> t -> t
+
+instance Ord k => DynamicMap (Map k v) where
+    insert     = M.insert
+    insertWith = M.insertWith
+    delete     = M.delete
+    alter      = M.alter
+
+    {-# INLINE insert #-}
+    {-# INLINE insertWith #-}
+    {-# INLINE delete #-}
+    {-# INLINE alter #-}
+
+instance (Eq k, Hashable k) => DynamicMap (HashMap k v) where
+    insert     = HM.insert
+    insertWith = HM.insertWith
+    delete     = HM.delete
+    alter      = HM.alter
+
+    {-# INLINE insert #-}
+    {-# INLINE insertWith #-}
+    {-# INLINE delete #-}
+    {-# INLINE alter #-}
+
+instance DynamicMap (IntMap v) where
+    insert     = IM.insert
+    insertWith = IM.insertWith
+    delete     = IM.delete
+    alter      = IM.alter
+
+    {-# INLINE insert #-}
+    {-# INLINE insertWith #-}
+    {-# INLINE delete #-}
+    {-# INLINE alter #-}
 
 ----------------------------------------------------------------------------
 -- ToPairs
