@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP  #-}
 {-# LANGUAGE Safe #-}
 
 -- | Lifted versions of functions working with files and common IO.

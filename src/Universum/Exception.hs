@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP                   #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Safe                  #-}
@@ -16,26 +15,23 @@ License: MIT
 
 module Universum.Exception
        ( module Control.Exception
-#if ( __GLASGOW_HASKELL__ >= 800 )
+
        , Bug (..)
        , bug
        , pattern Exc
-#endif
+
        , note
        ) where
 
 import Control.Exception (Exception (..), SomeException (..))
-
 import Control.Monad.Except (MonadError, throwError)
-import Universum.Applicative (Applicative (pure))
-import Universum.Monad (Maybe (..), maybe)
-
-#if ( __GLASGOW_HASKELL__ >= 800 )
 import Data.List ((++))
 import GHC.Show (Show)
 import GHC.Stack (CallStack, HasCallStack, callStack, prettyCallStack)
 
+import Universum.Applicative (Applicative (pure))
 import Universum.Function ((.))
+import Universum.Monad (Maybe (..), maybe)
 
 import qualified Control.Exception as E (displayException, throw, toException)
 
@@ -56,21 +52,12 @@ impureThrow = E.throw . E.toException
 -- throw the exception wrapped into 'Bug' data type.
 bug :: (HasCallStack, Exception e) => e -> a
 bug e = impureThrow (Bug (E.toException e) callStack)
-#endif
 
--- To suppress redundant applicative constraint warning on GHC 8.0
 -- | Throws error for 'Maybe' if 'Data.Maybe.Nothing' is given.
 -- Operates over 'MonadError'.
-#if ( __GLASGOW_HASKELL__ >= 800 )
 note :: (MonadError e m) => e -> Maybe a -> m a
 note err = maybe (throwError err) pure
-#else
-note :: (MonadError e m, Applicative m) => e -> Maybe a -> m a
-note err = maybe (throwError err) pure
-#endif
 
-
-#if ( __GLASGOW_HASKELL__ >= 800 )
 {- | Pattern synonym to easy pattern matching on exceptions. So intead of
 writing something like this:
 
@@ -96,4 +83,3 @@ pattern Exc :: Exception e => e -> SomeException
 pattern Exc e <- (fromException -> Just e)
   where
     Exc e = toException e
-#endif

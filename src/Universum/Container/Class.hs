@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP                     #-}
 {-# LANGUAGE ConstrainedClassMethods #-}
 {-# LANGUAGE ConstraintKinds         #-}
 {-# LANGUAGE DataKinds               #-}
@@ -38,9 +37,7 @@ import Prelude hiding (print)
 import Universum.Base (Word8)
 import Universum.Container.Reexport (HashMap, HashSet, Hashable, IntMap, IntSet, Map, Set, Vector)
 
-#if ( __GLASGOW_HASKELL__ >= 800 )
 import qualified Data.List.NonEmpty as NE
-#endif
 
 import qualified Data.Sequence as SEQ
 
@@ -171,12 +168,10 @@ instance One [a] where
     one = (:[])
     {-# INLINE one #-}
 
-#if ( __GLASGOW_HASKELL__ >= 800 )
 instance One (NE.NonEmpty a) where
     type OneItem (NE.NonEmpty a) = a
     one = (NE.:|[])
     {-# INLINE one #-}
-#endif
 
 instance One (SEQ.Seq a) where
     type OneItem (SEQ.Seq a) = a

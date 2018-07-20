@@ -1,22 +1,22 @@
-{-# LANGUAGE CPP #-}
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
 
 -- | This module reexports functions to work with monoids plus adds extra useful functions.
 
 module Universum.Monoid
        ( module Data.Monoid
-#if ( __GLASGOW_HASKELL__ >= 800 )
        , module Data.Semigroup
-#endif
        , maybeToMonoid
        ) where
 
 import Data.Monoid (All (..), Alt (..), Any (..), Dual (..), Endo (..), First (..), Last (..),
                     Monoid (..), Product (..), Sum (..))
-
-#if ( __GLASGOW_HASKELL__ >= 800 )
 import Data.Semigroup (Option (..), Semigroup (sconcat, stimes, (<>)), WrappedMonoid, cycle1,
                        mtimesDefault, stimesIdempotent, stimesIdempotentMonoid, stimesMonoid)
-#endif
 
 import Universum.Monad.Reexport (Maybe, fromMaybe)
 
