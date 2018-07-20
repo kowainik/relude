@@ -1,5 +1,7 @@
 {-# LANGUAGE Safe #-}
 
+{-# OPTIONS_GHC -fno-warn-orphans #-}
+
 -- | Utilites to work with @Either@ data type.
 
 module Universum.Monad.Either
@@ -25,10 +27,15 @@ import Data.Function (const)
 import Data.Maybe (Maybe (..), maybe)
 
 import Universum.Applicative (pure)
-import Universum.Monad.Reexport (Either (..), either)
+import Universum.Function ((.))
+import Universum.Monad.Reexport (Either (..), MonadFail (..), either)
+import Universum.String (IsString, fromString)
 
 -- $setup
 -- >>> import Universum.Bool (Bool (..))
+
+instance IsString str => MonadFail (Either str) where
+    fail = Left . fromString
 
 -- | Extracts value from 'Left' or return given default value.
 --
