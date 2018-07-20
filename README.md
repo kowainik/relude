@@ -264,8 +264,8 @@ This section describes what you need to change to make your code compile with `u
      + `fromLeft   :: a -> Either a b -> a`
      + `fromRight  :: b -> Either a b -> b`
      + `either     :: (a -> c) -> (b -> c) -> Either a b -> c`
-     + `whenRight  :: Applicative f => Either l r -> (r -> f ()) -> f ()`
-     + `whenRightM :: Monad m => m (Either l r) -> (r -> m ()) -> m ()`
+     + `whenRight_  :: Applicative f => Either l r -> (r -> f ()) -> f ()`
+     + `whenRightM_ :: Monad m => m (Either l r) -> (r -> m ()) -> m ()`
 
 5. Forget about `String` type.
    + Replace `putStr` and `putStrLn` with `putText` and `putTextLn`.

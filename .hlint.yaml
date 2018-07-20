@@ -208,69 +208,69 @@
 - warn: {lhs: (m >>= maybe x (const (return ()))), rhs: Universum.whenNothingM_ m x}
 - warn: {lhs: (m >>= maybe x (const (pass)     )), rhs: Universum.whenNothingM_ m x}
 
-- warn: {lhs: (case m of Left x -> f x; Right _ -> pure ()  ), rhs: Universum.whenLeft m f}
-- warn: {lhs: (case m of Left x -> f x; Right _ -> return ()), rhs: Universum.whenLeft m f}
-- warn: {lhs: (case m of Left x -> f x; Right _ -> pass     ), rhs: Universum.whenLeft m f}
-- warn: {lhs: (case m of Right _ -> pure ()  ; Left x -> f x), rhs: Universum.whenLeft m f}
-- warn: {lhs: (case m of Right _ -> return (); Left x -> f x), rhs: Universum.whenLeft m f}
-- warn: {lhs: (case m of Right _ -> pass     ; Left x -> f x), rhs: Universum.whenLeft m f}
-- warn: {lhs: (either f (\_ -> pure ()    ) m), rhs: Universum.whenLeft m f}
-- warn: {lhs: (either f (\_ -> return ()  ) m), rhs: Universum.whenLeft m f}
-- warn: {lhs: (either f (\_ -> pass       ) m), rhs: Universum.whenLeft m f}
-- warn: {lhs: (either f (const (pure ()  )) m), rhs: Universum.whenLeft m f}
-- warn: {lhs: (either f (const (return ())) m), rhs: Universum.whenLeft m f}
-- warn: {lhs: (either f (const (pass     )) m), rhs: Universum.whenLeft m f}
+- warn: {lhs: (case m of Left x -> f x; Right _ -> pure ()  ), rhs: Universum.whenLeft_ m f}
+- warn: {lhs: (case m of Left x -> f x; Right _ -> return ()), rhs: Universum.whenLeft_ m f}
+- warn: {lhs: (case m of Left x -> f x; Right _ -> pass     ), rhs: Universum.whenLeft_ m f}
+- warn: {lhs: (case m of Right _ -> pure ()  ; Left x -> f x), rhs: Universum.whenLeft_ m f}
+- warn: {lhs: (case m of Right _ -> return (); Left x -> f x), rhs: Universum.whenLeft_ m f}
+- warn: {lhs: (case m of Right _ -> pass     ; Left x -> f x), rhs: Universum.whenLeft_ m f}
+- warn: {lhs: (either f (\_ -> pure ()    ) m), rhs: Universum.whenLeft_ m f}
+- warn: {lhs: (either f (\_ -> return ()  ) m), rhs: Universum.whenLeft_ m f}
+- warn: {lhs: (either f (\_ -> pass       ) m), rhs: Universum.whenLeft_ m f}
+- warn: {lhs: (either f (const (pure ()  )) m), rhs: Universum.whenLeft_ m f}
+- warn: {lhs: (either f (const (return ())) m), rhs: Universum.whenLeft_ m f}
+- warn: {lhs: (either f (const (pass     )) m), rhs: Universum.whenLeft_ m f}
 
-- warn: {lhs: (m >>= \case Left x -> f x; Right _ -> pure ()  ), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (m >>= \case Left x -> f x; Right _ -> return ()), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (m >>= \case Left x -> f x; Right _ -> pass     ), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (m >>= \case Right _ -> pure ()  ; Left x -> f x), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (m >>= \case Right _ -> return (); Left x -> f x), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (m >>= \case Right _ -> pass     ; Left x -> f x), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (either f (\_ -> pure ()    ) =<< m), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (either f (\_ -> return ()  ) =<< m), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (either f (\_ -> pass       ) =<< m), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (either f (const (pure ()  )) =<< m), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (either f (const (return ())) =<< m), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (either f (const (pass     )) =<< m), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (m >>= either f (\_ -> pure ())    ), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (m >>= either f (\_ -> return ())  ), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (m >>= either f (\_ -> pass)       ), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (m >>= either f (const (pure ())  )), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (m >>= either f (const (return ()))), rhs: Universum.whenLeftM m f}
-- warn: {lhs: (m >>= either f (const (pass)     )), rhs: Universum.whenLeftM m f}
+- warn: {lhs: (m >>= \case Left x -> f x; Right _ -> pure ()  ), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (m >>= \case Left x -> f x; Right _ -> return ()), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (m >>= \case Left x -> f x; Right _ -> pass     ), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (m >>= \case Right _ -> pure ()  ; Left x -> f x), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (m >>= \case Right _ -> return (); Left x -> f x), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (m >>= \case Right _ -> pass     ; Left x -> f x), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (either f (\_ -> pure ()    ) =<< m), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (either f (\_ -> return ()  ) =<< m), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (either f (\_ -> pass       ) =<< m), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (either f (const (pure ()  )) =<< m), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (either f (const (return ())) =<< m), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (either f (const (pass     )) =<< m), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (m >>= either f (\_ -> pure ())    ), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (m >>= either f (\_ -> return ())  ), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (m >>= either f (\_ -> pass)       ), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (m >>= either f (const (pure ())  )), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (m >>= either f (const (return ()))), rhs: Universum.whenLeftM_ m f}
+- warn: {lhs: (m >>= either f (const (pass)     )), rhs: Universum.whenLeftM_ m f}
 
-- warn: {lhs: (case m of Right x -> f x; Left _ -> pure ()  ), rhs: Universum.whenRight m f}
-- warn: {lhs: (case m of Right x -> f x; Left _ -> return ()), rhs: Universum.whenRight m f}
-- warn: {lhs: (case m of Right x -> f x; Left _ -> pass     ), rhs: Universum.whenRight m f}
-- warn: {lhs: (case m of Left _ -> pure ()  ; Right x -> f x), rhs: Universum.whenRight m f}
-- warn: {lhs: (case m of Left _ -> return (); Right x -> f x), rhs: Universum.whenRight m f}
-- warn: {lhs: (case m of Left _ -> pass     ; Right x -> f x), rhs: Universum.whenRight m f}
-- warn: {lhs: (either (\_ -> pure ()    ) f m), rhs: Universum.whenRight m f}
-- warn: {lhs: (either (\_ -> return ()  ) f m), rhs: Universum.whenRight m f}
-- warn: {lhs: (either (\_ -> pass       ) f m), rhs: Universum.whenRight m f}
-- warn: {lhs: (either (const (pure ()  )) f m), rhs: Universum.whenRight m f}
-- warn: {lhs: (either (const (return ())) f m), rhs: Universum.whenRight m f}
-- warn: {lhs: (either (const (pass     )) f m), rhs: Universum.whenRight m f}
+- warn: {lhs: (case m of Right x -> f x; Left _ -> pure ()  ), rhs: Universum.whenRight_ m f}
+- warn: {lhs: (case m of Right x -> f x; Left _ -> return ()), rhs: Universum.whenRight_ m f}
+- warn: {lhs: (case m of Right x -> f x; Left _ -> pass     ), rhs: Universum.whenRight_ m f}
+- warn: {lhs: (case m of Left _ -> pure ()  ; Right x -> f x), rhs: Universum.whenRight_ m f}
+- warn: {lhs: (case m of Left _ -> return (); Right x -> f x), rhs: Universum.whenRight_ m f}
+- warn: {lhs: (case m of Left _ -> pass     ; Right x -> f x), rhs: Universum.whenRight_ m f}
+- warn: {lhs: (either (\_ -> pure ()    ) f m), rhs: Universum.whenRight_ m f}
+- warn: {lhs: (either (\_ -> return ()  ) f m), rhs: Universum.whenRight_ m f}
+- warn: {lhs: (either (\_ -> pass       ) f m), rhs: Universum.whenRight_ m f}
+- warn: {lhs: (either (const (pure ()  )) f m), rhs: Universum.whenRight_ m f}
+- warn: {lhs: (either (const (return ())) f m), rhs: Universum.whenRight_ m f}
+- warn: {lhs: (either (const (pass     )) f m), rhs: Universum.whenRight_ m f}
 
-- warn: {lhs: (m >>= \case Right x -> f x; Left _ -> pure ()  ), rhs: Universum.whenRightM m f}
-- warn: {lhs: (m >>= \case Right x -> f x; Left _ -> return ()), rhs: Universum.whenRightM m f}
-- warn: {lhs: (m >>= \case Right x -> f x; Left _ -> pass     ), rhs: Universum.whenRightM m f}
-- warn: {lhs: (m >>= \case Left _ -> pure ()  ; Right x -> f x), rhs: Universum.whenRightM m f}
-- warn: {lhs: (m >>= \case Left _ -> return (); Right x -> f x), rhs: Universum.whenRightM m f}
-- warn: {lhs: (m >>= \case Left _ -> pass     ; Right x -> f x), rhs: Universum.whenRightM m f}
-- warn: {lhs: (either (\_ -> pure ()    ) f =<< m), rhs: Universum.whenRightM m f}
-- warn: {lhs: (either (\_ -> return ()  ) f =<< m), rhs: Universum.whenRightM m f}
-- warn: {lhs: (either (\_ -> pass       ) f =<< m), rhs: Universum.whenRightM m f}
-- warn: {lhs: (either (const (pure ()  )) f =<< m), rhs: Universum.whenRightM m f}
-- warn: {lhs: (either (const (return ())) f =<< m), rhs: Universum.whenRightM m f}
-- warn: {lhs: (either (const (pass     )) f =<< m), rhs: Universum.whenRightM m f}
-- warn: {lhs: (m >>= either (\_ -> pure ())     f), rhs: Universum.whenRightM m f}
-- warn: {lhs: (m >>= either (\_ -> return ())   f), rhs: Universum.whenRightM m f}
-- warn: {lhs: (m >>= either (\_ -> pass)        f), rhs: Universum.whenRightM m f}
-- warn: {lhs: (m >>= either (const (pure ())  ) f), rhs: Universum.whenRightM m f}
-- warn: {lhs: (m >>= either (const (return ())) f), rhs: Universum.whenRightM m f}
-- warn: {lhs: (m >>= either (const (pass)     ) f), rhs: Universum.whenRightM m f}
+- warn: {lhs: (m >>= \case Right x -> f x; Left _ -> pure ()  ), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (m >>= \case Right x -> f x; Left _ -> return ()), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (m >>= \case Right x -> f x; Left _ -> pass     ), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (m >>= \case Left _ -> pure ()  ; Right x -> f x), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (m >>= \case Left _ -> return (); Right x -> f x), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (m >>= \case Left _ -> pass     ; Right x -> f x), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (either (\_ -> pure ()    ) f =<< m), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (either (\_ -> return ()  ) f =<< m), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (either (\_ -> pass       ) f =<< m), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (either (const (pure ()  )) f =<< m), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (either (const (return ())) f =<< m), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (either (const (pass     )) f =<< m), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (m >>= either (\_ -> pure ())     f), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (m >>= either (\_ -> return ())   f), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (m >>= either (\_ -> pass)        f), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (m >>= either (const (pure ())  ) f), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (m >>= either (const (return ())) f), rhs: Universum.whenRightM_ m f}
+- warn: {lhs: (m >>= either (const (pass)     ) f), rhs: Universum.whenRightM_ m f}
 
 - warn: {lhs: "(case m of [] -> return (); (x:xs) -> f (x :| xs))", rhs: Universum.whenNotNull m f}
 - warn: {lhs: "(case m of [] -> pure ()  ; (x:xs) -> f (x :| xs))", rhs: Universum.whenNotNull m f}

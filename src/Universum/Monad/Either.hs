@@ -88,19 +88,19 @@ maybeToLeft r = maybe (Right r) Left
 
 -- | Applies given action to 'Either' content if 'Left' is given and returns
 -- the result. In case of 'Right' the default value will be returned.
-whenLeft :: Applicative f => Either l r -> a -> (l -> f a) -> f a
-whenLeft (Left  l) _ f = f l
-whenLeft (Right _) a _ = pure a
+whenLeft :: Applicative f => a -> Either l r -> (l -> f a) -> f a
+whenLeft _ (Left  l) f = f l
+whenLeft a (Right _) _ = pure a
 {-# INLINE whenLeft #-}
 
 -- | Applies given action to 'Either' content if 'Left' is given.
 whenLeft_ :: Applicative f => Either l r -> (l -> f ()) -> f ()
-whenLeft_ e = whenLeft e ()
+whenLeft_ = whenLeft ()
 {-# INLINE whenLeft_ #-}
 
 -- | Monadic version of 'whenLeft'.
-whenLeftM :: Monad m => m (Either l r) -> a -> (l -> m a) -> m a
-whenLeftM me a f = me >>= \e -> whenLeft e a f
+whenLeftM :: Monad m => a -> m (Either l r) -> (l -> m a) -> m a
+whenLeftM a me f = me >>= \e -> whenLeft a e f
 {-# INLINE whenLeftM #-}
 
 -- | Monadic version of 'whenLeft_'.
@@ -110,19 +110,19 @@ whenLeftM_ me f = me >>= \e -> whenLeft_ e f
 
 -- | Applies given action to 'Either' content if 'Right' is given and returns
 -- the result. In case of 'Left' the default value will be returned.
-whenRight :: Applicative f => Either l r -> a -> (r -> f a) -> f a
-whenRight (Left  _) a _ = pure a
-whenRight (Right r) _ f = f r
+whenRight :: Applicative f => a -> Either l r -> (r -> f a) -> f a
+whenRight a (Left  _) _ = pure a
+whenRight _ (Right r) f = f r
 {-# INLINE whenRight #-}
 
 -- | Applies given action to 'Either' content if 'Right' is given.
 whenRight_ :: Applicative f => Either l r -> (r -> f ()) -> f ()
-whenRight_ e = whenRight e ()
+whenRight_ = whenRight ()
 {-# INLINE whenRight_ #-}
 
 -- | Monadic version of 'whenRight'.
-whenRightM :: Monad m => m (Either l r) -> a -> (r -> m a) -> m a
-whenRightM me a f = me >>= \e -> whenRight e a f
+whenRightM :: Monad m => a -> m (Either l r) -> (r -> m a) -> m a
+whenRightM a me f = me >>= \e -> whenRight a e f
 {-# INLINE whenRightM #-}
 
 -- | Monadic version of 'whenRight_'.
