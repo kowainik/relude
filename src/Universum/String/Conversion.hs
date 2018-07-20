@@ -1,8 +1,9 @@
-{-# LANGUAGE CPP                   #-}
-{-# LANGUAGE ExplicitForAll        #-}
-{-# LANGUAGE FlexibleInstances     #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE TypeSynonymInstances  #-}
+{-# LANGUAGE CPP                    #-}
+{-# LANGUAGE ExplicitForAll         #-}
+{-# LANGUAGE FlexibleInstances      #-}
+{-# LANGUAGE FunctionalDependencies #-}
+{-# LANGUAGE MultiParamTypeClasses  #-}
+{-# LANGUAGE TypeSynonymInstances   #-}
 
 {-
 Copyright: (c) 2016 Stephen Diehl
@@ -27,6 +28,9 @@ module Universum.String.Conversion
        , ToString (..)
        , ToLText (..)
        , ToText (..)
+       , LazyStrict (..)
+       , fromLazy
+       , fromStrict
 
          -- * Show and read functions
        , readEither
@@ -183,3 +187,33 @@ show x = fromString (Show.show x)
 {-# SPECIALIZE show :: Show.Show  a => a -> ByteString  #-}
 {-# SPECIALIZE show :: Show.Show  a => a -> LByteString  #-}
 {-# SPECIALIZE show :: Show.Show  a => a -> String  #-}
+
+
+-- | Type class for lazy-strict conversions.
+class LazyStrict l s | l -> s, s -> l where
+    toLazy :: s -> l
+    toStrict :: l -> s
+
+fromLazy :: LazyStrict l s => l -> s
+fromLazy = toStrict
+{-# INLINE fromLazy #-}
+{-# SPECIALIZE fromLazy :: LByteString -> ByteString  #-}
+{-# SPECIALIZE fromLazy :: LText -> Text  #-}
+
+fromStrict :: LazyStrict l s => s -> l
+fromStrict = toLazy
+{-# INLINE fromStrict #-}
+{-# SPECIALIZE fromStrict :: ByteString -> LByteString  #-}
+{-# SPECIALIZE fromStrict :: Text -> LText  #-}
+
+instance LazyStrict LByteString ByteString where
+    toLazy = LB.fromStrict
+    {-# INLINE toLazy #-}
+    toStrict = LB.toStrict
+    {-# INLINE toStrict #-}
+
+instance LazyStrict LText Text where
+    toLazy = LT.fromStrict
+    {-# INLINE toLazy #-}
+    toStrict = LT.toStrict
+    {-# INLINE toStrict #-}

@@ -26,6 +26,9 @@ Change log
   `whenLeft_` and `whenRight_`, `whenLeftM_` and `whenRightM_`.
   Add `whenLeft`, `whenRight`, `whenLeftM`, `whenRightM` which return
   the value.
+* [#18](https://github.com/kowainik/universum/issues/18):
+  Add `LazyStrict` type class for conversions.
+* `map` is not `fmap` anymore. Reexport `map` from `Data.List`
 
 
 `universum` uses [PVP Versioning][1].
