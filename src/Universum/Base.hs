@@ -27,15 +27,15 @@ module Universum.Base
          -- * System IO
        , module System.IO
 
-         -- * Base GHC types
+         -- * Types for type-level computation
        , module Data.Coerce
+       , module Data.Kind
        , module Data.Proxy
        , module Data.Typeable
        , module Data.Void
 
        , module GHC.Base
        , module GHC.Enum
-       , module GHC.Exts
        , module GHC.Float
        , module GHC.Generics
        , module GHC.Num
@@ -48,14 +48,9 @@ module Universum.Base
        , module GHC.TypeLits
 #endif
 
-#if ( __GLASGOW_HASKELL__ >= 800 )
        , module GHC.OverloadedLabels
        , module GHC.ExecutionStack
        , module GHC.Stack
-
-         -- * Data.Kind
-       , Type
-#endif
 
        , ($!)
        ) where
@@ -74,37 +69,31 @@ import System.IO (FilePath, Handle, IO, IOMode (..), stderr, stdin, stdout, with
 import Data.Eq (Eq (..))
 import Data.Ord (Down (..), Ord (..), Ordering (..), comparing)
 
--- Base GHC types
+-- Types for type-level computation
 import Data.Coerce (Coercible, coerce)
+import Data.Kind (Constraint, Type)
 import Data.Proxy (Proxy (..))
 import Data.Typeable (Typeable)
 import Data.Void (Void, absurd, vacuous)
 
 import GHC.Base (String, asTypeOf, maxInt, minInt, ord, seq)
 import GHC.Enum (Bounded (..), Enum (..), boundedEnumFrom, boundedEnumFromThen)
-import GHC.Exts (Constraint, FunPtr, Ptr)
 import GHC.Float (Double (..), Float (..), Floating (acos, acosh, asin, asinh, atan, atanh, cos, cosh, exp, logBase, pi, sin, sinh, sqrt, tan, tanh, (**)))
 import GHC.Generics (Generic)
 import GHC.Num (Integer, Num (..), subtract)
 import GHC.Real hiding (showSigned, (%))
 import GHC.Show (Show)
+
 #if MIN_VERSION_base(4,10,0)
 import GHC.TypeNats (CmpNat, KnownNat, Nat, SomeNat (..), natVal, someNatVal)
 #else
 import GHC.TypeLits (CmpNat, KnownNat, Nat, SomeNat (..), natVal, someNatVal)
 #endif
 
-#if ( __GLASGOW_HASKELL__ >= 800 )
 import GHC.ExecutionStack (getStackTrace, showStackTrace)
 import GHC.OverloadedLabels (IsLabel (..))
 import GHC.Stack (CallStack, HasCallStack, callStack, currentCallStack, getCallStack,
                   prettyCallStack, prettySrcLoc, withFrozenCallStack)
-#endif
-
-#if ( __GLASGOW_HASKELL__ >= 800 )
--- TODO: move Constraint here later
-import Data.Kind (Type)
-#endif
 
 -- $setup
 -- >>> import Universum.Function (const, ($))

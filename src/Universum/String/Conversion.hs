@@ -1,8 +1,14 @@
-{-# LANGUAGE CPP                   #-}
 {-# LANGUAGE ExplicitForAll        #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE TypeSynonymInstances  #-}
+
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
 
 -- | This module implements type class which allow to have conversion to and
 -- from 'Text', 'String' and 'ByteString' types (including both strict and lazy

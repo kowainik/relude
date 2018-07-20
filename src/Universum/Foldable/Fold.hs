@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP                  #-}
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE ExplicitForAll       #-}
 {-# LANGUAGE PolyKinds            #-}
@@ -16,10 +15,8 @@ module Universum.Foldable.Fold
        , sum
        , product
 
-#if __GLASGOW_HASKELL__ >= 800
        , elem
        , notElem
-#endif
 
        , allM
        , anyM
@@ -27,8 +24,10 @@ module Universum.Foldable.Fold
        , orM
        ) where
 
+import GHC.TypeLits (ErrorMessage (..), TypeError)
+
 import Universum.Applicative (pure)
-import Universum.Base (IO, Num (..))
+import Universum.Base (Constraint, Eq, IO, Num (..), Type)
 import Universum.Bool (Bool (..))
 import Universum.Container.Reexport (HashSet, Set)
 import Universum.Foldable.Reexport (Foldable (..))
@@ -36,11 +35,6 @@ import Universum.Function (flip, (.))
 import Universum.Monad.Reexport (Maybe (..), Monad (..))
 
 import qualified Data.Foldable as F
-
-#if ( __GLASGOW_HASKELL__ >= 800 )
-import GHC.TypeLits (ErrorMessage (..), TypeError)
-import Universum.Base (Constraint, Eq, Type)
-#endif
 
 -- $setup
 -- :set -XOverloadedStrings
@@ -83,7 +77,6 @@ product :: forall a f . (Foldable f, Num a) => f a -> a
 product = foldl' (*) 1
 {-# INLINE product #-}
 
-#if __GLASGOW_HASKELL__ >= 800
 {- | Like 'F.elem' but doesn't work on 'Set' and 'HashSet' for performance reasons.
 
 >>> elem 'x' ("abc" :: String)
@@ -129,7 +122,6 @@ True
 notElem :: (Foldable f, DisallowElem f, Eq a) => a -> f a -> Bool
 notElem = F.notElem
 {-# INLINE notElem #-}
-#endif
 
 {- | Monadic version of 'F.and'.
 
@@ -214,7 +206,6 @@ anyM p = go . toList
 -- Type level tricks
 ----------------------------------------------------------------------------
 
-#if __GLASGOW_HASKELL__ >= 800
 type family DisallowElem (f :: Type -> Type) :: Constraint where
     DisallowElem     Set = TypeError (ElemErrorMessage Set)
     DisallowElem HashSet = TypeError (ElemErrorMessage HashSet)
@@ -234,4 +225,3 @@ type family ElemErrorMessage (t :: k) :: ErrorMessage where
         :$$: Text "    use"
         :$$: Text "        notMember :: ??? -- TODO"
         :$$: Text ""
-#endif
