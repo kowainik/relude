@@ -10,9 +10,13 @@ module Universum.Monad.Either
        , leftToMaybe
        , rightToMaybe
        , whenLeft
+       , whenLeft_
        , whenLeftM
+       , whenLeftM_
        , whenRight
+       , whenRight_
        , whenRightM
+       , whenRightM_
        ) where
 
 import Control.Applicative (Applicative)
@@ -20,7 +24,7 @@ import Control.Monad (Monad (..))
 import Data.Function (const)
 import Data.Maybe (Maybe (..), maybe)
 
-import Universum.Applicative (pass)
+import Universum.Applicative (pure)
 import Universum.Monad.Reexport (Either (..), either)
 
 -- $setup
@@ -82,24 +86,46 @@ maybeToRight l = maybe (Left l) Right
 maybeToLeft :: r -> Maybe l -> Either l r
 maybeToLeft r = maybe (Right r) Left
 
--- | Applies given action to 'Either' content if 'Left' is given.
-whenLeft :: Applicative f => Either l r -> (l -> f ()) -> f ()
-whenLeft (Left  l) f = f l
-whenLeft (Right _) _ = pass
+-- | Applies given action to 'Either' content if 'Left' is given and returns
+-- the result. In case of 'Right' the default value will be returned.
+whenLeft :: Applicative f => a -> Either l r -> (l -> f a) -> f a
+whenLeft _ (Left  l) f = f l
+whenLeft a (Right _) _ = pure a
 {-# INLINE whenLeft #-}
 
+-- | Applies given action to 'Either' content if 'Left' is given.
+whenLeft_ :: Applicative f => Either l r -> (l -> f ()) -> f ()
+whenLeft_ = whenLeft ()
+{-# INLINE whenLeft_ #-}
+
 -- | Monadic version of 'whenLeft'.
-whenLeftM :: Monad m => m (Either l r) -> (l -> m ()) -> m ()
-whenLeftM me f = me >>= \e -> whenLeft e f
+whenLeftM :: Monad m => a -> m (Either l r) -> (l -> m a) -> m a
+whenLeftM a me f = me >>= \e -> whenLeft a e f
 {-# INLINE whenLeftM #-}
 
--- | Applies given action to 'Either' content if 'Right' is given.
-whenRight :: Applicative f => Either l r -> (r -> f ()) -> f ()
-whenRight (Left  _) _ = pass
-whenRight (Right r) f = f r
+-- | Monadic version of 'whenLeft_'.
+whenLeftM_ :: Monad m => m (Either l r) -> (l -> m ()) -> m ()
+whenLeftM_ me f = me >>= \e -> whenLeft_ e f
+{-# INLINE whenLeftM_ #-}
+
+-- | Applies given action to 'Either' content if 'Right' is given and returns
+-- the result. In case of 'Left' the default value will be returned.
+whenRight :: Applicative f => a -> Either l r -> (r -> f a) -> f a
+whenRight a (Left  _) _ = pure a
+whenRight _ (Right r) f = f r
 {-# INLINE whenRight #-}
 
+-- | Applies given action to 'Either' content if 'Right' is given.
+whenRight_ :: Applicative f => Either l r -> (r -> f ()) -> f ()
+whenRight_ = whenRight ()
+{-# INLINE whenRight_ #-}
+
 -- | Monadic version of 'whenRight'.
-whenRightM :: Monad m => m (Either l r) -> (r -> m ()) -> m ()
-whenRightM me f = me >>= \e -> whenRight e f
+whenRightM :: Monad m => a -> m (Either l r) -> (r -> m a) -> m a
+whenRightM a me f = me >>= \e -> whenRight a e f
 {-# INLINE whenRightM #-}
+
+-- | Monadic version of 'whenRight_'.
+whenRightM_ :: Monad m => m (Either l r) -> (r -> m ()) -> m ()
+whenRightM_ me f = me >>= \e -> whenRight_ e f
+{-# INLINE whenRightM_ #-}
