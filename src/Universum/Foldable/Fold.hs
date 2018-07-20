@@ -11,6 +11,8 @@
 
 module Universum.Foldable.Fold
        ( flipfoldl'
+       , foldMapA
+       , foldMapM
        , safeHead
        , sum
        , product
@@ -26,13 +28,15 @@ module Universum.Foldable.Fold
 
 import GHC.TypeLits (ErrorMessage (..), TypeError)
 
-import Universum.Applicative (pure)
-import Universum.Base (Constraint, Eq, IO, Num (..), Type)
+import Universum.Applicative (Applicative (..), pure)
+import Universum.Base (Constraint, Eq, IO, Num (..), Type, ($!))
 import Universum.Bool (Bool (..))
 import Universum.Container.Reexport (HashSet, Set)
 import Universum.Foldable.Reexport (Foldable (..))
 import Universum.Function (flip, (.))
+import Universum.Functor ((<$>))
 import Universum.Monad.Reexport (Maybe (..), Monad (..))
+import Universum.Monoid (Monoid (..))
 
 import qualified Data.Foldable as F
 
@@ -58,6 +62,18 @@ safeHead = foldr (\x _ -> Just x) Nothing
 flipfoldl' :: Foldable f => (a -> b -> b) -> b -> f a -> b
 flipfoldl' f = foldl' (flip f)
 {-# INLINE flipfoldl' #-}
+
+foldMapA :: (Monoid b, Applicative m, Foldable f) => (a -> m b) -> f a -> m b
+foldMapA f = foldr step (pure mempty)
+  where
+    step a mb = mappend <$> f a <*> mb
+{-# INLINE foldMapA #-}
+
+foldMapM :: (Monoid b, Monad m, Foldable f) => (a -> m b) -> f a -> m b
+foldMapM f xs = foldr step return xs mempty
+  where
+    step x r z = f x >>= \y -> r $! z `mappend` y
+{-# INLINE foldMapM #-}
 
 {- | Stricter version of 'F.sum'.
 

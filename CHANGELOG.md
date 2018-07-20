@@ -32,6 +32,8 @@ Change log
 * [#18](https://github.com/kowainik/universum/issues/18):
   Add `LazyStrict` type class for conversions.
 * `map` is not `fmap` anymore. Reexport `map` from `Data.List`
+* [#17](https://github.com/kowainik/universum/issues/17):
+  Add `foldMapA` and `foldMapM` functions.
 
 
 `universum` uses [PVP Versioning][1].
