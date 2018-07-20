@@ -15,6 +15,8 @@ Change log
   `SomeException` from `Control.Exception` instead.
 * [#7](https://github.com/kowainik/universum/issues/7):
   Remove `Universum.Container.Class.Container`. Export `Foldable`.
+* [#11](https://github.com/kowainik/universum/issues/11):
+  Remove `TypeOps` module and `type-operators` dependency.
 
 
 `universum` uses [PVP Versioning][1].

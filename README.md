@@ -221,30 +221,6 @@ Finally, we can move to part describing the new cool features we bring with `uni
   ```
 
 * `andM`, `allM`, `anyM`, `orM` are monadic version of corresponding functions from `base`.
-* Type operator `$` for writing types like `Maybe $ Either String $ Maybe Int`.
-* `Each` type family. So this:
-
-  ```haskell
-  f :: Each [Show, Read] [a, b] => a -> b -> String
-  ```
-
-  translates into this:
-
-  ```haskell
-  f :: (Show a, Show b, Read a, Read b) => a -> b -> String
-  ```
-
-* `With` type operator. So this:
-
-  ```haskell
-  a :: With [Show, Read] a => a -> a
-  ```
-
-  translates into this:
-
-  ```haskell
-  a :: (Show a, Read a) => a -> a
-  ```
 
 * Conversions between `Either` and `Maybe` like `rightToMaybe` and `maybeToLeft`
   with clear semantic.
