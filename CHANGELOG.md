@@ -4,6 +4,9 @@ Change log
 0.1.0
 =====
 
+* [#8](https://github.com/kowainik/universum/issues/8):
+  Introduce `StaticMap` and `DynamicMap` type classes as universal interface for
+  Map-like structures.
 * [#2](https://github.com/kowainik/universum/issues/2):
   Remove `microlens` from dependencies.
 * [#12](https://github.com/kowainik/universum/issues/12):
