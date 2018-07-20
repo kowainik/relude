@@ -41,7 +41,7 @@ import Universum.Monoid (Monoid (..))
 import qualified Data.Foldable as F
 
 -- $setup
--- :set -XOverloadedStrings
+-- >>> :set -XOverloadedStrings
 -- >>> import Universum.Base (String, Rational, even, (/))
 -- >>> import Universum.Bool (when)
 -- >>> import Universum.Monad (Maybe (..), (>=>))

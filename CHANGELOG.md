@@ -39,6 +39,8 @@ Change log
   Add `foldMapA` and `foldMapM` functions.
 * [#20](https://github.com/kowainik/universum/issues/20):
   Add `viaNonEmpty` function.
+* [#21](https://github.com/kowainik/universum/issues/21):
+  Add `MonadFail` instance for `Either`.
 
 
 `universum` uses [PVP Versioning][1].
