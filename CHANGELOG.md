@@ -15,12 +15,12 @@ Change log
 * [#12](https://github.com/kowainik/relude/issues/12):
   Remove `liquid-haskell` support.
 * [#10](https://github.com/kowainik/relude/issues/10):
-  Remove `Universum.VarArg` module.
+  Remove `VarArg` module.
 * [#9](https://github.com/kowainik/relude/issues/9):
   Remove `safe-exceptions` from dependencies. Reexport `Exception` and
   `SomeException` from `Control.Exception` instead.
 * [#7](https://github.com/kowainik/relude/issues/7):
-  Remove `Universum.Container.Class.Container`. Export `Foldable`.
+  Remove `Container.Class.Container`. Export `Foldable`.
 * [#11](https://github.com/kowainik/relude/issues/11):
   Remove `TypeOps` module and `type-operators` dependency.
 * [#13](https://github.com/kowainik/relude/issues/13):
@@ -42,7 +42,7 @@ Change log
 * [#21](https://github.com/kowainik/relude/issues/21):
   Add `MonadFail` instance for `Either`.
 * [#4](https://github.com/kowainik/relude/issues/4):
-  Rename `Universum` to `Relude`.
+  Rename package to `Relude`.
 
 `relude` uses [PVP Versioning][1].
 The change log is available [on GitHub][2].
