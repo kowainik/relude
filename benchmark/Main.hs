@@ -10,15 +10,12 @@ module Main where
 import Universum hiding (show)
 
 import Data.List (nub)
-import Gauge (Benchmark, bench, bgroup, nf, whnf)
+import Gauge (Benchmark, bench, bgroup, nf)
 import Gauge.Main (defaultMain)
 import Prelude (show)
 
-import qualified Data.Foldable as Foldable (elem)
-import qualified Data.HashSet as HashSet (fromList, insert)
+import qualified Data.HashSet as HashSet (insert)
 import qualified Data.List.NonEmpty as NonEmpty (group, head)
-import qualified Data.Set as Set (fromList)
-import qualified Universum.Container as Container (elem)
 import qualified Universum.Unsafe as Unsafe
 
 main :: IO ()
@@ -27,8 +24,6 @@ main = defaultMain
   , bgroupList listOfBig      "big"
   , bgroupList (nStrings 'z') "small str"
   , bgroupList (nStrings 'c') "big str"
-  , bgroupConcatMap
-  , bgroupMember
   , bgroupFold
   ]
 
@@ -89,38 +84,6 @@ allStrings ch =  [ c : s | s <- "" : allStrings ch, c <- ['a'..ch] ]
 
 nStrings :: Char -> Int -> [Text]
 nStrings ch n = take n $ map toText $ allStrings ch
-
-bgroupConcatMap :: Benchmark
-bgroupConcatMap = bgroup "concat"
-  [ concatGroup 10
-  , concatGroup 100
-  , concatGroup 1000
-  ]
- where
-  concatGroup :: Int -> Benchmark
-  concatGroup n = bgroup (show n)
-    [ bench "simple"   $ nf concatSimple n
-    , bench "identity" $ nf concatIdentity n
-    ]
-
-  concatSimple :: Int -> [()]
-  concatSimple n = concatMap pure $ replicate n ()
-
-  concatIdentity :: Int -> Identity [()]
-  concatIdentity n = concatMapM (Identity . pure) $ replicate n ()
-
--- | Checks that 'member' is implemented efficiently for 'Set' and 'HashSet'.
-bgroupMember :: Benchmark
-bgroupMember = do
-    let testList    = [1..100000] :: [Int]
-    let sample      = 50000
-    let listSet     = Set.fromList     testList
-    let listHashSet = HashSet.fromList testList
-    bgroup "member" [ bench "Set/foldable"     $ whnf (Foldable.elem  sample) listSet
-                    , bench "Set/elem"         $ whnf (Container.elem sample) listSet
-                    , bench "HashSet/Foldable" $ whnf (Foldable.elem  sample) listHashSet
-                    , bench "HashSet/elem"     $ whnf (Container.elem sample) listHashSet
-                    ]
 
 -- | Checks that 'foldl'' is implemented efficiently for 'Universum.List'
 bgroupFold :: Benchmark

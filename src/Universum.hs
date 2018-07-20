@@ -37,8 +37,6 @@ Below is a short description of what you can find under different modules:
 * __"Universum.Base"__: different general types and type classes from @base@
   package ('Int', 'Num', 'Generic', etc.) not exported by other modules.
 * __"Universum.Bool"__: 'Bool' data type with different predicates and combinators.
-* __"Universum.Container"__: 'Foldable' replacement, types from @containers@
-   and @unordered-containers@ and @vector@ packages.
 * __"Universum.Debug"__: @trace@-like debugging functions with compile-time
   warnings (so you don't forget to remove them)
 * __"Universum.DeepSeq"__: reexports from "Control.DeepSeq" module and
@@ -46,6 +44,7 @@ Below is a short description of what you can find under different modules:
 * __"Universum.Exception"__: reexports "Control.Exception.Safe" from
   @safe-exceptions@ package, 'bug' as better 'error', 'Exc' pattern synonym for
   convenient pattern-matching on exceptions.
+* __"Universum.Foldable"__: reexports functions for 'Foldable' and 'Traversable'.
 * __"Universum.Function"__: almost everything from "Data.Function" module.
 * __"Universum.Functor"__: reexports from "Data.Functor", "Data.Bifunctor",
   other useful 'Functor' combinators.
@@ -72,6 +71,7 @@ module Universum
        , module Universum.Debug
        , module Universum.DeepSeq
        , module Universum.Exception
+       , module Universum.Foldable
        , module Universum.Function
        , module Universum.Functor
        , module Universum.Lifted
@@ -90,6 +90,7 @@ import Universum.Container
 import Universum.Debug
 import Universum.DeepSeq
 import Universum.Exception
+import Universum.Foldable
 import Universum.Function
 import Universum.Functor
 import Universum.Lifted
