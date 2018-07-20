@@ -10,46 +10,33 @@ License: MIT
 -- | This module contains safe functions to work with list type (mostly with 'NonEmpty').
 
 module Universum.List.Safe
-       ( list
-       , uncons
+       ( uncons
        , whenNotNull
        , whenNotNullM
        ) where
 
 import Universum.Applicative (Applicative, pass)
-import Universum.Functor (fmap)
 import Universum.List.Reexport (NonEmpty (..))
-import Universum.Monad (Monad (..))
-import Universum.Monad (Maybe (..))
+import Universum.Monad (Maybe (..), Monad (..))
 
 -- $setup
 -- >>> import Universum.Applicative (pure)
--- >>> import Universum.Base ((==), even)
+-- >>> import Universum.Base ((==))
 -- >>> import Universum.Bool (Bool (..), not)
 -- >>> import Universum.Foldable (length)
 -- >>> import Universum.Function (($))
 -- >>> import Universum.Print (print)
 
--- | Returns default list if given list is empty.
--- Otherwise applies given function to every element.
---
--- >>> list [True] even []
--- [True]
--- >>> list [True] even [1..5]
--- [False,True,False,True,False]
-list :: [b] -> (a -> b) -> [a] -> [b]
-list def f xs = case xs of
-    [] -> def
-    _  -> fmap f xs
+{- | Destructuring list into its head and tail if possible. This function is total.
 
--- | Destructuring list into its head and tail if possible. This function is total.
---
--- >>> uncons []
--- Nothing
--- >>> uncons [1..5]
--- Just (1,[2,3,4,5])
--- >>> uncons (5 : [1..5]) >>= \(f, l) -> pure $ f == length l
--- Just True
+>>> uncons []
+Nothing
+>>> uncons [1..5]
+Just (1,[2,3,4,5])
+>>> uncons (5 : [1..5]) >>= \(f, l) -> pure $ f == length l
+Just True
+
+-}
 uncons :: [a] -> Maybe (a, [a])
 uncons []     = Nothing
 uncons (x:xs) = Just (x, xs)
