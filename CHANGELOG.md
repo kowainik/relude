@@ -7,6 +7,9 @@ Change log
 * [#8](https://github.com/kowainik/universum/issues/8):
   Introduce `StaticMap` and `DynamicMap` type classes as universal interface for
   Map-like structures.
+* [#14](https://github.com/kowainik/universum/issues/14):
+  Add `.Extra` modules which are not exported by default but have useful
+  functions.
 * [#2](https://github.com/kowainik/universum/issues/2):
   Remove `microlens` from dependencies.
 * [#12](https://github.com/kowainik/universum/issues/12):
