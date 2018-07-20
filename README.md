@@ -125,7 +125,6 @@ Gotchas [↑](#structure-of-this-tutorial)
 * `head`, `tail`, `last`, `init` work with `NonEmpty a` instead of `[a]`.
 * Safe analogue for `head` function: `safeHead :: [a] -> Maybe a`.
 * `undefined` triggers a compiler warning, which is probably not what you want. Either use `throwIO`, `Except`, `error` or `bug`.
-* `map` is `fmap` now.
 * Multiple sorting functions are available without imports:
   + `sortBy :: (a -> a -> Ordering) -> [a] -> [a]`: sorts list using given custom comparator.
   + `sortWith :: Ord b => (a -> b) -> [a] -> [a]`: sorts a list based on some property of its elements.
