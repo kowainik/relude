@@ -120,8 +120,8 @@ the following steps:
    you want to hide something from `Universum` module. Or maybe you want to add
    something from `Universum.Extra.*` modules!
 
-This is a very convenient way to add custom prelude to your project because you
-don't need to import module manually inside every file and enable
+This is a very convenient way to add a custom prelude to your project because
+you don't need to import module manually inside each file and enable the
 `NoImplicitPrelude` extension.
 
 ### Per-file configuration
