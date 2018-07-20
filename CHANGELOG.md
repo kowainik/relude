@@ -17,10 +17,15 @@ Change log
   Remove `Universum.Container.Class.Container`. Export `Foldable`.
 * [#11](https://github.com/kowainik/universum/issues/11):
   Remove `TypeOps` module and `type-operators` dependency.
-* [#11](https://github.com/kowainik/universum/issues/11):
+* [#13](https://github.com/kowainik/universum/issues/13):
   Remove `list`, `getContents`, `interact`, `getArgs`, `note` functions.
   Remove `Lifted.ST` module.
   Rename `Lifted.Env` to `Lifted.Exit`.
+* [#16](https://github.com/kowainik/universum/issues/16):
+  Rename `whenLeft`, `whenRight`, `whenLeftM`, `whenRightM` to
+  `whenLeft_` and `whenRight_`, `whenLeftM_` and `whenRightM_`.
+  Add `whenLeft`, `whenRight`, `whenLeftM`, `whenRightM` which return
+  the value.
 
 
 `universum` uses [PVP Versioning][1].
