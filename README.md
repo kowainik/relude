@@ -136,7 +136,7 @@ Gotchas [↑](#structure-of-this-tutorial)
   type to infer for the string. Use `putTextLn` in this case.
 * Since `show` doesn't come from `Show` anymore, you can't write `Show` instances easily.
 * You can't call `elem` and `notElem` functions over `Set` and `HashSet`. These
-  functions were forbidden for these two types because of performance reasons.
+  functions are forbidden for these two types because of performance reasons.
 * `error` takes `Text`.
 
 
@@ -248,13 +248,9 @@ This section describes what you need to change to make your code compile with `u
        + `tail` is `drop 1`. It's almost never a good idea to use `tail` from `Prelude`.
    3. Add `import qualified Universum.Unsafe as Unsafe` and replace function with qualified usage.
 3. If you use `fromJust` or `!!` you should use them from `import qualified Universum.Unsafe as Unsafe`.
-4. Derive or implement `Container` instances for your data types which implement
-   `Foldable` instances. This can be done in a single line because `Container`
-   type class automatically derives from `Foldable`.
-5. `Container` type class from `universum` replaces `Foldable` and doesn't have
-   instances for `Maybe a`, `(a, b)`, `Identity a` and `Either a b`. If you use
-   `foldr` or `forM_` or similar for something like `Maybe a` you should replace
-   usages of such function with monomorhpic alternatives:
+4. If you use `foldr` or `forM_` or similar for something like `Maybe a` or
+   `Either a b` it's recommended to replace usages of such function with
+   monomorhpic alternatives:
    * `Maybe`
      + `(?:)          :: Maybe a -> a -> a`
      + `fromMaybe     :: a -> Maybe a -> a`
@@ -271,13 +267,10 @@ This section describes what you need to change to make your code compile with `u
      + `whenRight  :: Applicative f => Either l r -> (r -> f ()) -> f ()`
      + `whenRightM :: Monad m => m (Either l r) -> (r -> m ()) -> m ()`
 
-6. If you have types like `foo :: Foldable f => f a -> a -> a` you should chose one of the following:
-   + `Right`: Modify types for `Container` like `foo :: (Container t, Element t ~ a) => t -> a -> a`.
-   + `Left`: Import `Data.Foldable` module `qualified` and use everything `Foldable`-related qualified.
-7. Forget about `String` type.
+5. Forget about `String` type.
    + Replace `putStr` and `putStrLn` with `putText` and `putTextLn`.
    + Replace `(++)` with `(<>)` for `String`-like types.
    + Try to use [`fmt`](http://hackage.haskell.org/package/fmt) library if you need to construct messages.
    + Use `toText/toLText/toString` functions to convert to `Text/LazyText/String` types.
    + Use `encodeUtf8/decodeUtf8` to convert to/from `ByteString`.
-8. Run `hlint` using `.hlint.yaml` file from `universum` package to cleanup code and imports.
+6. Run `hlint` using `.hlint.yaml` file from `universum` package to cleanup code and imports.

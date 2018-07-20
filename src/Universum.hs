@@ -37,8 +37,6 @@ Below is a short description of what you can find under different modules:
 * __"Universum.Base"__: different general types and type classes from @base@
   package ('Int', 'Num', 'Generic', etc.) not exported by other modules.
 * __"Universum.Bool"__: 'Bool' data type with different predicates and combinators.
-* __"Universum.Container"__: 'Foldable' replacement, types from @containers@
-   and @unordered-containers@ and @vector@ packages.
 * __"Universum.Debug"__: @trace@-like debugging functions with compile-time
   warnings (so you don't forget to remove them)
 * __"Universum.DeepSeq"__: reexports from "Control.DeepSeq" module and

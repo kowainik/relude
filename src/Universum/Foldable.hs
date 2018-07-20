@@ -1,4 +1,4 @@
--- | This module exports all 'Foldable'-related and 'Traversable'-related stuff.
+-- | This module exports all 'Foldable' and 'Traversable' related stuff.
 
 module Universum.Foldable
        ( module Universum.Foldable.Fold
