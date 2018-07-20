@@ -65,7 +65,6 @@ library
                            Universum.String
                                Universum.String.Conversion
                                Universum.String.Reexport
-                           Universum.TypeOps
                            Universum.Unsafe
 
   ghc-options:         -Wall -fwarn-implicit-prelude
@@ -80,7 +79,6 @@ library
                      , stm
                      , text
                      , transformers
-                     , type-operators
                      , unordered-containers
                      , utf8-string
                      , vector

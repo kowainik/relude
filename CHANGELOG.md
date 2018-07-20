@@ -13,6 +13,8 @@ Change log
 * [#9](https://github.com/kowainik/universum/issues/9):
   Remove `safe-exceptions` from dependencies. Reexport `Exception` and
   `SomeException` from `Control.Exception` instead.
+* [#11](https://github.com/kowainik/universum/issues/11):
+  Remove `TypeOps` module and `type-operators` dependency.
 
 
 `universum` uses [PVP Versioning][1].
