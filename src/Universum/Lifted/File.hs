@@ -1,13 +1,18 @@
 {-# LANGUAGE Safe #-}
 
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
+
 -- | Lifted versions of functions working with files and common IO.
 -- All functions are specialized to 'Data.Text.Text'.
 
 module Universum.Lifted.File
        ( appendFile
-       , getContents
        , getLine
-       , interact
        , openFile
        , readFile
        , writeFile
@@ -19,8 +24,6 @@ import Prelude (FilePath)
 import System.IO (Handle, IOMode)
 
 import qualified Data.Text.IO as XIO
-import qualified Data.Text.Lazy as L (Text)
-import qualified Data.Text.Lazy.IO as LIO (getContents, interact)
 import qualified System.IO as XIO (openFile)
 
 ----------------------------------------------------------------------------
@@ -32,20 +35,10 @@ appendFile :: MonadIO m => FilePath -> Text -> m ()
 appendFile a b = liftIO (XIO.appendFile a b)
 {-# INLINE appendFile #-}
 
--- | Lifted version of 'Data.Text.getContents'.
-getContents :: MonadIO m => m L.Text
-getContents = liftIO LIO.getContents
-{-# INLINE getContents #-}
-
 -- | Lifted version of 'Data.Text.getLine'.
 getLine :: MonadIO m => m Text
 getLine = liftIO XIO.getLine
 {-# INLINE getLine #-}
-
--- | Lifted version of 'Data.Text.interact'.
-interact :: MonadIO m => (L.Text -> L.Text) -> m ()
-interact a = liftIO (LIO.interact a)
-{-# INLINE interact #-}
 
 -- | Lifted version of 'Data.Text.readFile'.
 readFile :: MonadIO m => FilePath -> m Text

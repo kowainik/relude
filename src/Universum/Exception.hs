@@ -19,19 +19,15 @@ module Universum.Exception
        , Bug (..)
        , bug
        , pattern Exc
-
-       , note
        ) where
 
 import Control.Exception (Exception (..), SomeException (..))
-import Control.Monad.Except (MonadError, throwError)
 import Data.List ((++))
 import GHC.Show (Show)
 import GHC.Stack (CallStack, HasCallStack, callStack, prettyCallStack)
 
-import Universum.Applicative (Applicative (pure))
 import Universum.Function ((.))
-import Universum.Monad (Maybe (..), maybe)
+import Universum.Monad (Maybe (..))
 
 import qualified Control.Exception as E (displayException, throw, toException)
 
@@ -52,11 +48,6 @@ impureThrow = E.throw . E.toException
 -- throw the exception wrapped into 'Bug' data type.
 bug :: (HasCallStack, Exception e) => e -> a
 bug e = impureThrow (Bug (E.toException e) callStack)
-
--- | Throws error for 'Maybe' if 'Data.Maybe.Nothing' is given.
--- Operates over 'MonadError'.
-note :: (MonadError e m) => e -> Maybe a -> m a
-note err = maybe (throwError err) pure
 
 {- | Pattern synonym to easy pattern matching on exceptions. So intead of
 writing something like this:

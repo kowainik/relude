@@ -1,10 +1,16 @@
 {-# LANGUAGE Safe #-}
 
--- | Lifted versions of functions that work with environment.
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
 
-module Universum.Lifted.Env
-       ( getArgs
-       , exitWith
+-- | Lifted versions of functions that work with exit processes.
+
+module Universum.Lifted.Exit
+       ( exitWith
        , exitFailure
        , exitSuccess
        , die
@@ -16,14 +22,8 @@ import Prelude ((>>))
 import System.Exit (ExitCode)
 import System.IO (stderr)
 
-import qualified System.Environment as XIO
 import qualified System.Exit as XIO
 import qualified System.IO (hPutStrLn)
-
--- | Lifted version of 'System.Environment.getArgs'.
-getArgs :: MonadIO m => m [String]
-getArgs = liftIO (XIO.getArgs)
-{-# INLINE getArgs #-}
 
 -- | Lifted version of 'System.Exit.exitWith'.
 exitWith :: MonadIO m => ExitCode -> m a
