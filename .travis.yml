@@ -50,7 +50,7 @@ matrix:
         - cabal-install-head
 
   - ghc: 8.4.3
-    env: STACK_YAML="$HOME/build/kowainik/relude/stack.yaml"
+    env: STACK_YAML="$TRAVIS_BUILD_DIR/stack.yaml"
     os: linux
     addons:
       apt:

@@ -1,3 +1,10 @@
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
+
 {-# LANGUAGE Safe #-}
 
 -- | Utility functions to work with lists.

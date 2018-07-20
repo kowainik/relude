@@ -1,5 +1,12 @@
 {-# LANGUAGE Safe #-}
 
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
+
 -- | Lifted reexports from 'Data.IORef' module.
 
 module Relude.Lifted.IORef

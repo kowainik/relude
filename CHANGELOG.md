@@ -8,19 +8,19 @@ Change log
   Introduce `StaticMap` and `DynamicMap` type classes as universal interface for
   Map-like structures.
 * [#14](https://github.com/kowainik/relude/issues/14):
-  Add `.Extra` modules which are not exported by default but have useful
+  Add `Relude.Extra.*` modules which are not exported by default but have useful
   functions.
 * [#2](https://github.com/kowainik/relude/issues/2):
   Remove `microlens` from dependencies.
 * [#12](https://github.com/kowainik/relude/issues/12):
   Remove `liquid-haskell` support.
 * [#10](https://github.com/kowainik/relude/issues/10):
-  Remove `Relude.VarArg` module.
+  Remove `Universum.VarArg` module.
 * [#9](https://github.com/kowainik/relude/issues/9):
   Remove `safe-exceptions` from dependencies. Reexport `Exception` and
   `SomeException` from `Control.Exception` instead.
 * [#7](https://github.com/kowainik/relude/issues/7):
-  Remove `Relude.Container.Class.Container`. Export `Foldable`.
+  Remove `Universum.Container.Class.Container`. Export `Foldable`.
 * [#11](https://github.com/kowainik/relude/issues/11):
   Remove `TypeOps` module and `type-operators` dependency.
 * [#13](https://github.com/kowainik/relude/issues/13):
@@ -41,7 +41,8 @@ Change log
   Add `viaNonEmpty` function.
 * [#21](https://github.com/kowainik/relude/issues/21):
   Add `MonadFail` instance for `Either`.
-
+* [#4](https://github.com/kowainik/relude/issues/4):
+  Rename `Universum` to `Relude`.
 
 `relude` uses [PVP Versioning][1].
 The change log is available [on GitHub][2].

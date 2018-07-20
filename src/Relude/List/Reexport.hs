@@ -1,5 +1,12 @@
 {-# LANGUAGE Trustworthy #-}
 
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
+
 -- | This module reexports functinons to work with list, 'NonEmpty' and String types.
 
 module Relude.List.Reexport

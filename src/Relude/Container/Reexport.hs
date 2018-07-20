@@ -1,3 +1,10 @@
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
+
 -- | This module reexports all container related stuff from 'Prelude'.
 
 module Relude.Container.Reexport

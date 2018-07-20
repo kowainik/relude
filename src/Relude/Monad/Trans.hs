@@ -1,5 +1,12 @@
 {-# LANGUAGE Safe #-}
 
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
+
 -- | Monad transformers utilities.
 
 module Relude.Monad.Trans
@@ -20,7 +27,7 @@ import Prelude (flip, fst, snd)
 
 import Relude.Functor (Functor, (<$>))
 import Relude.Monad.Reexport (Reader, ReaderT, State, StateT, runReader, runReaderT, runState,
-                                 runStateT)
+                              runStateT)
 
 -- | Shorter and more readable alias for @flip runReaderT@.
 usingReaderT :: r -> ReaderT r m a -> m a
