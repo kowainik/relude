@@ -96,6 +96,36 @@ How to use Universum [↑](#structure-of-this-tutorial)
 Okay, enough philosophy. If you want to just start using `universum` and
 explore it with the help of compiler, set everything up according to the instructions below.
 
+If you want to get familiar with `universum` internal structure, you can just
+read top-level documentation for
+[`Universum`](http://hackage.haskell.org/package/universum/docs/Universum.html)
+module.
+
+### `base-noprelude`
+
+This is the recommended way to use custom prelude. It requires you to perform
+the following steps:
+
+1. Replace `base` dependency with corresponding version of `base-noprelude` in
+   your `.cabal` file.
+2. Add the following `Prelude` module to your project (both file and `exposed-modules`):
+   ```haskel
+   module Prelude
+          ( module Universum
+          ) where
+
+   import Universum
+   ```
+3. Optionally modify your `Prelude` to include more or less functions. Probably
+   you want to hide something from `Universum` module. Or maybe you want to add
+   something from `Universum.Extra.*` modules!
+
+This is a very convenient way to add a custom prelude to your project because
+you don't need to import module manually inside each file and enable the
+`NoImplicitPrelude` extension.
+
+### Per-file configuration
+
 Disable the built-in prelude at the top of your file:
 
 ```haskell
@@ -113,11 +143,6 @@ Then add the following import to your modules:
 ```haskell
 import Universum
 ```
-
-If you want to get familiar with `universum` internal structure, you can just
-read top-level documentation for
-[`Universum`](http://hackage.haskell.org/package/universum/docs/Universum.html)
-module.
 
 Gotchas [↑](#structure-of-this-tutorial)
 -------
