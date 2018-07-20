@@ -10,7 +10,7 @@ module Universum.Container.Reexport
        , module Data.Sequence
        , module Data.Set
        , module Data.Tuple
-       , module Data.Vector
+       , module GHC.Exts
        ) where
 
 import Data.Hashable (Hashable (hashWithSalt))
@@ -22,4 +22,4 @@ import Data.Map.Strict (Map)
 import Data.Sequence (Seq)
 import Data.Set (Set)
 import Data.Tuple (curry, fst, snd, swap, uncurry)
-import Data.Vector (Vector)
+import GHC.Exts (IsList (fromList, fromListN))

@@ -34,7 +34,8 @@ library
                                Universum.Bool.Guard
                                Universum.Bool.Reexport
                            Universum.Container
-                               Universum.Container.Class
+                               Universum.Container.Map
+                               Universum.Container.One
                                Universum.Container.Reexport
                            Universum.Debug
                            Universum.DeepSeq
@@ -81,7 +82,6 @@ library
                      , transformers
                      , unordered-containers
                      , utf8-string
-                     , vector
 
   default-language:    Haskell2010
   default-extensions:  NoImplicitPrelude
