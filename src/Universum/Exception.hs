@@ -4,11 +4,18 @@
 {-# LANGUAGE Safe                  #-}
 {-# LANGUAGE ViewPatterns          #-}
 
+{-
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License: MIT
+-}
+
 -- | Re-exports most useful functionality from 'safe-exceptions'. Also
 -- provides some functions to work with exceptions over 'MonadError'.
 
 module Universum.Exception
-       ( module Control.Exception.Safe
+       ( module Control.Exception
 #if ( __GLASGOW_HASKELL__ >= 800 )
        , Bug (..)
        , bug
@@ -17,11 +24,7 @@ module Universum.Exception
        , note
        ) where
 
--- exceptions from safe-exceptions
-import Control.Exception.Safe (Exception (..), MonadCatch, MonadMask (..), MonadThrow,
-                               SomeException (..), bracket, bracketOnError, bracket_, catch,
-                               catchAny, displayException, finally, handleAny, mask_, onException,
-                               throwM, try, tryAny)
+import Control.Exception (Exception (..), SomeException (..))
 
 import Control.Monad.Except (MonadError, throwError)
 import Universum.Applicative (Applicative (pure))
@@ -32,7 +35,9 @@ import Data.List ((++))
 import GHC.Show (Show)
 import GHC.Stack (CallStack, HasCallStack, callStack, prettyCallStack)
 
-import qualified Control.Exception.Safe as Safe (displayException, impureThrow, toException)
+import Universum.Function ((.))
+
+import qualified Control.Exception as E (displayException, throw, toException)
 
 -- | Type that represents exceptions used in cases when a particular codepath
 -- is not meant to be ever executed, but happens to be executed anyway.
@@ -40,13 +45,17 @@ data Bug = Bug SomeException CallStack
     deriving (Show)
 
 instance Exception Bug where
-    displayException (Bug e cStack) = Safe.displayException e ++ "\n"
+    displayException (Bug e cStack) = E.displayException e ++ "\n"
                                    ++ prettyCallStack cStack
+
+-- | Generate a pure value which, when forced, will throw the given exception
+impureThrow :: Exception e => e -> a
+impureThrow = E.throw . E.toException
 
 -- | Generate a pure value which, when forced, will synchronously
 -- throw the exception wrapped into 'Bug' data type.
 bug :: (HasCallStack, Exception e) => e -> a
-bug e = Safe.impureThrow (Bug (Safe.toException e) callStack)
+bug e = impureThrow (Bug (E.toException e) callStack)
 #endif
 
 -- To suppress redundant applicative constraint warning on GHC 8.0
