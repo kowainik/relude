@@ -24,7 +24,7 @@ import Universum.Base (Eq, Int, Ord, Type)
 import Universum.Bool (Bool, guard, not)
 import Universum.Container.Reexport (HashMap, HashSet, Hashable, IntMap, IntSet, Map, Set, fst, snd)
 import Universum.Function ((.))
-import Universum.Functor (map)
+import Universum.List (map)
 import Universum.Monad.Reexport (Maybe (..), fromMaybe)
 
 import qualified Data.HashMap.Strict as HM
