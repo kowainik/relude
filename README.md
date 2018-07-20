@@ -1,26 +1,26 @@
-Universum
+Relude
 =========
 
-[![Build Status](https://travis-ci.org/kowainik/universum.svg?branch=master)](https://travis-ci.org/kowainik/universum)
-[![Hackage](https://img.shields.io/hackage/v/universum.svg)](https://hackage.haskell.org/package/universum)
-[![Stackage LTS](http://stackage.org/package/universum/badge/lts)](http://stackage.org/lts/package/universum)
-[![Stackage Nightly](http://stackage.org/package/universum/badge/nightly)](http://stackage.org/nightly/package/universum)
+[![Build Status](https://travis-ci.org/kowainik/relude.svg?branch=master)](https://travis-ci.org/kowainik/relude)
+[![Hackage](https://img.shields.io/hackage/v/relude.svg)](https://hackage.haskell.org/package/relude)
+[![Stackage LTS](http://stackage.org/package/relude/badge/lts)](http://stackage.org/lts/package/relude)
+[![Stackage Nightly](http://stackage.org/package/relude/badge/nightly)](http://stackage.org/nightly/package/relude)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-`universum` is a custom prelude that has:
+`relude` is a custom prelude that has:
 
 1. **Excellent documentation**: tutorial, migration guide from `Prelude`,
    Haddock with examples for (almost) every function,
    all examples are tested with [`doctest`](http://hackage.haskell.org/package/doctest),
    documenation regarding internal module structure.
-2. `universum`-specific [HLint](http://hackage.haskell.org/package/hlint) rules:
-   [`.hlint.yaml`](https://github.com/kowainik/universum/blob/master/.hlint.yaml)
+2. `relude`-specific [HLint](http://hackage.haskell.org/package/hlint) rules:
+   [`.hlint.yaml`](https://github.com/kowainik/relude/blob/master/.hlint.yaml)
 3. Focus on safety, convenience and efficiency.
 
 What is this file about?
 ------------------------
 
-This README contains introduction to `Universum` and a tutorial on how to use it.
+This README contains introduction to `Relude` and a tutorial on how to use it.
 
 Structure of this tutorial
 --------------------------
@@ -28,15 +28,15 @@ Structure of this tutorial
 This tutorial has several parts:
 
 1. [Philosophy and motivation.](#why-another-custom-prelude-)
-2. [How to use `universum`.](#how-to-use-universum-)
+2. [How to use `relude`.](#how-to-use-relude-)
 3. [Changes in `Prelude` (some gotchas).](#gotchas-)
 4. [Already known things that weren't in `Prelude` brought into scope.](#things-that-you-were-already-using-but-now-you-dont-have-to-import-them-explicitly-)
 5. [New things added.](#whats-new-)
 6. [Migration guide from `Prelude`.](#migration-guide-from-prelude-)
 
-This is neither a tutorial on _Haskell_ nor tutorial on each function contained in Universum. For detailed
+This is neither a tutorial on _Haskell_ nor tutorial on each function contained in Relude. For detailed
 documentation of every function together with examples and usage, see
-[_Haddock documentation_](http://hackage.haskell.org/package/universum).
+[_Haddock documentation_](http://hackage.haskell.org/package/relude).
 
 Why another custom Prelude? [↑](#structure-of-this-tutorial)
 ---------------------------
@@ -58,7 +58,7 @@ After some long, hot discussions, our team decided to base our custom prelude on
 you can read [a tutorial about `protolude`](http://www.stephendiehl.com/posts/protolude.html).
 
 The next section explains why we've made this choice and what we are willing to do.
-This tutorial doesn't cover the differences from `protolude`. Instead, it explains how Universum is different from regular `Prelude`.
+This tutorial doesn't cover the differences from `protolude`. Instead, it explains how Relude is different from regular `Prelude`.
 
 ### Main goals
 
@@ -66,7 +66,7 @@ While creating and maintaining a custom prelude, we are pursuing the following g
 
 1. Avoid all [partial functions](https://www.reddit.com/r/haskell/comments/5n51u3/why_are_partial_functions_as_in_head_tail_bad/).
    We like [total](http://mathworld.wolfram.com/TotalFunction.html) and exception-free functions.
-   You can still use some unsafe functions from `Universum.Unsafe` module,
+   You can still use some unsafe functions from `Relude.Unsafe` module,
    but they are not exported by default.
 2. Use more efficient [string representations](https://www.reddit.com/r/haskell/comments/29jw0s/whats_wrong_with_string/).
    `String` type is crushingly inefficient. All our functions either try to be polymorphic over string
@@ -88,17 +88,17 @@ Unlike `protolude`, we are:
    [`GHC.Generics`](https://github.com/sdiehl/protolude/blob/41710698eedc66fb0bfc5623d3c3a672421fbab5/src/Protolude.hs#L365)).
 2. Not trying to maintain every version of `ghc` compiler (only the latest 3)
 3. Trying to make writing production code easier (see
-   [enhancements and fixes](https://github.com/kowainik/universum/issues)).
+   [enhancements and fixes](https://github.com/kowainik/relude/issues)).
 
-How to use Universum [↑](#structure-of-this-tutorial)
+How to use Relude [↑](#structure-of-this-tutorial)
 --------------------
 
-Okay, enough philosophy. If you want to just start using `universum` and
+Okay, enough philosophy. If you want to just start using `relude` and
 explore it with the help of compiler, set everything up according to the instructions below.
 
-If you want to get familiar with `universum` internal structure, you can just
+If you want to get familiar with `relude` internal structure, you can just
 read top-level documentation for
-[`Universum`](http://hackage.haskell.org/package/universum/docs/Universum.html)
+[`Relude`](http://hackage.haskell.org/package/relude/docs/Relude.html)
 module.
 
 ### `base-noprelude`
@@ -111,14 +111,14 @@ the following steps:
 2. Add the following `Prelude` module to your project (both file and `exposed-modules`):
    ```haskel
    module Prelude
-          ( module Universum
+          ( module Relude
           ) where
 
-   import Universum
+   import Relude
    ```
 3. Optionally modify your `Prelude` to include more or less functions. Probably
-   you want to hide something from `Universum` module. Or maybe you want to add
-   something from `Universum.Extra.*` modules!
+   you want to hide something from `Relude` module. Or maybe you want to add
+   something from `Relude.Extra.*` modules!
 
 This is a very convenient way to add a custom prelude to your project because
 you don't need to import module manually inside each file and enable the
@@ -141,7 +141,7 @@ default-extensions: NoImplicitPrelude
 Then add the following import to your modules:
 
 ```haskell
-import Universum
+import Relude
 ```
 
 Gotchas [↑](#structure-of-this-tutorial)
@@ -172,7 +172,7 @@ Things that you were already using, but now you don't have to import them explic
 
 First of all, we reexport some generally useful modules: `Control.Applicative`,
 `Data.Traversable`, `Data.Monoid`, `Control.DeepSeq`, `Data.List`, and lots of others.
-Just remove unneeded imports after importing `Universum` (GHC should tell you which ones).
+Just remove unneeded imports after importing `Relude` (GHC should tell you which ones).
 
 Then, some commonly used types: `Map/HashMap/IntMap`, `Set/HashSet/IntSet`, `Seq`, `Text` and `ByteString`
 (as well as synonyms `LText` and `LByteString` for lazy versions).
@@ -211,7 +211,7 @@ TODO: write about reexports, `Bug` and `Exc` pattern.
 What's new? [↑](#structure-of-this-tutorial)
 -----------
 
-Finally, we can move to part describing the new cool features we bring with `universum`.
+Finally, we can move to part describing the new cool features we bring with `relude`.
 
 * `uncons` splits a list at the first element.
 * `ordNub` and `sortNub` are _O(n log n)_ versions of `nub` (which is quadratic)
@@ -250,7 +250,7 @@ Finally, we can move to part describing the new cool features we bring with `uni
 * Conversions between `Either` and `Maybe` like `rightToMaybe` and `maybeToLeft`
   with clear semantic.
 * `using(Reader|State)[T]` functions as aliases for `flip run(Reader|State)[T]`.
-* [`One` type class](https://github.com/kowainik/universum/blob/master/src/Containers.hs#L473)
+* [`One` type class](https://github.com/kowainik/relude/blob/master/src/Containers.hs#L473)
   for creating singleton containers. Even monomorhpic ones like `Text`.
 * `evaluateWHNF` and `evaluateNF` functions as clearer and lifted aliases for
   `evaluate` and `evaluate . force`.
@@ -259,10 +259,10 @@ Finally, we can move to part describing the new cool features we bring with `uni
 Migration guide from Prelude [↑](#structure-of-this-tutorial)
 ----------------------------
 
-In order to replace default `Prelude` with `universum` you should start with instructions given in
-[how to use universum](https://github.com/kowainik/universum#how-to-use-universum-) section.
+In order to replace default `Prelude` with `relude` you should start with instructions given in
+[how to use relude](https://github.com/kowainik/relude#how-to-use-relude-) section.
 
-This section describes what you need to change to make your code compile with `universum`.
+This section describes what you need to change to make your code compile with `relude`.
 
 1. Enable `-XOverloadedStrings` and `-XTypeFamilies` extension by default for your project.
 2. Since `head`, `tail`, `last` and `init` work for `NonEmpty` you should
@@ -272,8 +272,8 @@ This section describes what you need to change to make your code compile with `u
       And you can use it like `viaNonEmpty last l`.
        + `viaNonEmpty head l` is `safeHead l`
        + `tail` is `drop 1`. It's almost never a good idea to use `tail` from `Prelude`.
-   3. Add `import qualified Universum.Unsafe as Unsafe` and replace function with qualified usage.
-3. If you use `fromJust` or `!!` you should use them from `import qualified Universum.Unsafe as Unsafe`.
+   3. Add `import qualified Relude.Unsafe as Unsafe` and replace function with qualified usage.
+3. If you use `fromJust` or `!!` you should use them from `import qualified Relude.Unsafe as Unsafe`.
 4. If you use `foldr` or `forM_` or similar for something like `Maybe a` or
    `Either a b` it's recommended to replace usages of such function with
    monomorhpic alternatives:
@@ -299,4 +299,4 @@ This section describes what you need to change to make your code compile with `u
    + Try to use [`fmt`](http://hackage.haskell.org/package/fmt) library if you need to construct messages.
    + Use `toText/toLText/toString` functions to convert to `Text/LazyText/String` types.
    + Use `encodeUtf8/decodeUtf8` to convert to/from `ByteString`.
-6. Run `hlint` using `.hlint.yaml` file from `universum` package to cleanup code and imports.
+6. Run `hlint` using `.hlint.yaml` file from `relude` package to cleanup code and imports.

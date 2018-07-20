@@ -7,7 +7,7 @@ License: MIT
 
 module Main where
 
-import Universum hiding (show)
+import Relude hiding (show)
 
 import Data.List (nub)
 import Gauge (Benchmark, bench, bgroup, nf)
@@ -16,7 +16,7 @@ import Prelude (show)
 
 import qualified Data.HashSet as HashSet (insert)
 import qualified Data.List.NonEmpty as NonEmpty (group, head)
-import qualified Universum.Unsafe as Unsafe
+import qualified Relude.Unsafe as Unsafe
 
 main :: IO ()
 main = defaultMain
@@ -85,7 +85,7 @@ allStrings ch =  [ c : s | s <- "" : allStrings ch, c <- ['a'..ch] ]
 nStrings :: Char -> Int -> [Text]
 nStrings ch n = take n $ map toText $ allStrings ch
 
--- | Checks that 'foldl'' is implemented efficiently for 'Universum.List'
+-- | Checks that 'foldl'' is implemented efficiently for 'Relude.List'
 bgroupFold :: Benchmark
 bgroupFold = do
     let testList   = [1..100000] :: [Int]

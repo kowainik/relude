@@ -2,7 +2,7 @@ module Main where
 
 import Test.Tasty (defaultMain)
 
-import Test.Universum.Property (hedgehogTestTree)
+import Test.Relude.Property (hedgehogTestTree)
 
 main :: IO ()
 main = do
