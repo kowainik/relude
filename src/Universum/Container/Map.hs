@@ -9,6 +9,7 @@ module Universum.Container.Map
        , DynamicMap (..)
        , (!?)
        , notMember
+       , lookupDefault
 
          -- * To pairs
        , toPairs
@@ -24,7 +25,7 @@ import Universum.Bool (Bool, guard, not)
 import Universum.Container.Reexport (HashMap, HashSet, Hashable, IntMap, IntSet, Map, Set, fst, snd)
 import Universum.Function ((.))
 import Universum.Functor (map)
-import Universum.Monad.Reexport (Maybe (..))
+import Universum.Monad.Reexport (Maybe (..), fromMaybe)
 
 import qualified Data.HashMap.Strict as HM
 import qualified Data.HashSet as HS
@@ -124,6 +125,17 @@ infixl 9 !?
 notMember :: StaticMap t => Key t -> t -> Bool
 notMember k = not . member k
 {-# INLINE notMember #-}
+
+{- | Return the value to which the specified key is mapped, or the default value
+if this map contains no mapping for the key.
+-}
+lookupDefault :: StaticMap t
+              => Val t -- ^ Default value to return.
+              -> Key t -- ^ Key to search
+              -> t     -- ^ Container to search
+              -> Val t
+lookupDefault def k = fromMaybe def . lookup k
+{-# INLINE lookupDefault #-}
 
 ----------------------------------------------------------------------------
 -- Dynamic Map
