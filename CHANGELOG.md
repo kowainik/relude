@@ -37,6 +37,8 @@ Change log
 * `map` is not `fmap` anymore. Reexport `map` from `Data.List`
 * [#17](https://github.com/kowainik/universum/issues/17):
   Add `foldMapA` and `foldMapM` functions.
+* [#20](https://github.com/kowainik/universum/issues/20):
+  Add `viaNonEmpty` function.
 
 
 `universum` uses [PVP Versioning][1].

@@ -123,7 +123,8 @@ Gotchas [↑](#structure-of-this-tutorial)
 -------
 
 * `head`, `tail`, `last`, `init` work with `NonEmpty a` instead of `[a]`.
-* Safe analogue for `head` function: `safeHead :: [a] -> Maybe a`.
+* Safe analogue for `head` function: `safeHead :: [a] -> Maybe a` or you can
+  use our `viaNonEmpty` function to get `Maybe a`: `viaNonEmpty head :: [a] -> Maybe a`.
 * `undefined` triggers a compiler warning, which is probably not what you want. Either use `throwIO`, `Except`, `error` or `bug`.
 * Multiple sorting functions are available without imports:
   + `sortBy :: (a -> a -> Ordering) -> [a] -> [a]`: sorts list using given custom comparator.
@@ -242,8 +243,9 @@ This section describes what you need to change to make your code compile with `u
 2. Since `head`, `tail`, `last` and `init` work for `NonEmpty` you should
    refactor your code in one of the multiple ways described below:
    1. Change `[a]` to `NonEmpty a` where it makes sense.
-   2. Use functions which return `Maybe`. They can be implemented using `nonEmpty` function. Like `head <$> nonEmpty l`.
-       + `head <$> nonEmpty l` is `safeHead l`
+   2. Use functions which return `Maybe`. There is the `viaNonEmpty` function for this.
+      And you can use it like `viaNonEmpty last l`.
+       + `viaNonEmpty head l` is `safeHead l`
        + `tail` is `drop 1`. It's almost never a good idea to use `tail` from `Prelude`.
    3. Add `import qualified Universum.Unsafe as Unsafe` and replace function with qualified usage.
 3. If you use `fromJust` or `!!` you should use them from `import qualified Universum.Unsafe as Unsafe`.
