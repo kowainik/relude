@@ -34,7 +34,6 @@ library
                                Relude.Bool.Guard
                                Relude.Bool.Reexport
                            Relude.Container
-                               Relude.Container.Map
                                Relude.Container.One
                                Relude.Container.Reexport
                            Relude.Debug
@@ -71,6 +70,7 @@ library
                            Relude.Extra.Bifunctor
                            Relude.Extra.Enum
                            Relude.Extra.Group
+                           Relude.Extra.Map
                            Relude.Unsafe
 
 
@@ -111,6 +111,7 @@ test-suite relude-test
 
   ghc-options:         -Wall -threaded
   default-language:    Haskell2010
+  default-extensions:  NoImplicitPrelude
 
 test-suite relude-doctest
   type:                exitcode-stdio-1.0

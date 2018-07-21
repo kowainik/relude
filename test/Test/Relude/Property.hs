@@ -18,7 +18,6 @@ import Test.Tasty.Hedgehog
 
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Lazy as LB
-import qualified Data.List as List
 import qualified Data.Text as T
 import qualified Data.Text.Lazy as LT
 import qualified Hedgehog.Gen as Gen
@@ -38,8 +37,7 @@ utfProps = testGroup "utf8 conversion property tests"
 unicode' :: MonadGen m => m U.Char
 unicode' = do
     a <- Gen.unicode
-    -- TODO: cleanup after dropping ghc-7.10.3 support
-    if List.elem a ['\65534', '\65535']
+    if elem a ['\65534', '\65535']
     then unicode'
     else return a
 

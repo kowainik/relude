@@ -1,7 +1,6 @@
 sudo: true
 language: haskell
 
-
 git:
   depth: 5
 
@@ -13,7 +12,6 @@ cache:
   - "$TRAVIS_BUILD_DIR/.stack-work"
 
 matrix:
-
   include:
 
   - ghc: 8.0.2

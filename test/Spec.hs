@@ -7,6 +7,8 @@ License: MIT
 
 module Main where
 
+import Relude
+
 import Test.Tasty (defaultMain)
 
 import Test.Relude.Property (hedgehogTestTree)

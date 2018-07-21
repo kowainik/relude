@@ -7,18 +7,43 @@ Relude
 [![Stackage Nightly](http://stackage.org/package/relude/badge/nightly)](http://stackage.org/nightly/package/relude)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-`relude` is a custom prelude that has:
+`relude` is a custom prelude based on `universum`. `relude` tries to achieve the following goals:
 
-1. **Excellent documentation**: tutorial, migration guide from `Prelude`,
-   Haddock with examples for (almost) every function,
-   all examples are tested with [`doctest`](http://hackage.haskell.org/package/doctest),
-   documenation regarding internal module structure.
-2. `relude`-specific [HLint](http://hackage.haskell.org/package/hlint) rules:
-   [`.hlint.yaml`](https://github.com/kowainik/relude/blob/master/.hlint.yaml)
-3. Focus on safety, convenience and efficiency.
-
-What is this file about?
-------------------------
+1. **Avoid all** [**partial functions**](https://www.reddit.com/r/haskell/comments/5n51u3/why_are_partial_functions_as_in_head_tail_bad/)
+   (like `head :: [a] -> a`). The types of partial functions lie about their
+   behavior and usage of such functions can lead to the unexpected bugs. Though
+   you can still use some unsafe functions from `Relude.Unsafe` module, but they
+   are not exported by default.
+2. **Type-safety**. We like to make invalid states unrepresantable. And if it's
+   possible to express this concept through the types then we will do it.
+  _Example:_
+  ```haskell
+  whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f ()
+  ```
+  instead of
+  ```haskell
+  whenNotNull :: Applicative f => [a] -> ([a] -> f ()) -> f ()
+  ```
+3. **Performance.** Prefer `Text` over [`String`](https://www.reddit.com/r/haskell/comments/29jw0s/whats_wrong_with_string/),
+   use spaceleak-free functions (like our custom `sum` and `product`), introduce
+   `{-# INLINE #-}` and `{-# SPECIALIZE #-}` pragmas where appropriate.
+4. **Minimalism** (low number of dependencies). We don't force users of `relude` to
+   stick to some specific lens or text formatting or logging library.
+5. **Convenience** (like lifted to `MonadIO` functions, more reexports). But we
+   want to bring common types and functions (like `containers` and `bytestrng`)
+   into scope because they are used in almost every application anyways.
+6. **Provide excellent documentation.**
+   * Tutorial
+   * Migration guide from `Prelude`
+   * Haddock with examples for (almost) every function
+     (all examples are tested with [`doctest`](http://hackage.haskell.org/package/doctest))
+   * Documentation regarding [internal module structure]((http://hackage.haskell.org/package/relude/docs/Relude.html))
+   * `relude`-specific [HLint](http://hackage.haskell.org/package/hlint) rules:
+     [`.hlint.yaml`](.hlint.yaml)
+7. **User-friendliness.** Ability to quickly migrate to `relude` if you're familiar
+   with the common libraries like `text` and `containers`.
+8. **Exploration.** Experiment with new ideas and proposals without introducing
+   breaking changes.
 
 This README contains introduction to `Relude` and a tutorial on how to use it.
 
@@ -27,79 +52,44 @@ Structure of this tutorial
 
 This tutorial has several parts:
 
-1. [Philosophy and motivation.](#why-another-custom-prelude-)
-2. [How to use `relude`.](#how-to-use-relude-)
-3. [Changes in `Prelude` (some gotchas).](#gotchas-)
-4. [Already known things that weren't in `Prelude` brought into scope.](#things-that-you-were-already-using-but-now-you-dont-have-to-import-them-explicitly-)
-5. [New things added.](#whats-new-)
-6. [Migration guide from `Prelude`.](#migration-guide-from-prelude-)
+1. [Motivation.](#motivation-)
+2. [Get started.](#get-started-)
+3. [Difference from `Prelude`.](#difference-from-prelude-)
+4. [Reexports.](#reexports-)
+5. [What's new?](#whats-new-)
+6. [Migration guide.](#migration-guide-)
 
-This is neither a tutorial on _Haskell_ nor tutorial on each function contained in Relude. For detailed
-documentation of every function together with examples and usage, see
-[_Haddock documentation_](http://hackage.haskell.org/package/relude).
+This is neither a tutorial on _Haskell_ nor tutorial on each function contained
+in `Relude`. For detailed documentation of every function together with examples
+and usage, see [_Haddock documentation_](http://hackage.haskell.org/package/relude).
 
-Why another custom Prelude? [↑](#structure-of-this-tutorial)
----------------------------
+Motivation [↑](#structure-of-this-tutorial)
+------------------------------------------
 
-### Motivation
+We decided to base `relude` on `universum` due to the following reasons:
 
-We strive to be as productive as possible. That's why we are using [_Haskell_](https://haskell-lang.org/). This choice of language implies
-that we're restricted to use [`Prelude`](http://hackage.haskell.org/package/base-4.9.1.0/docs/Prelude.html):
-implicit import of basic functions, type classes and data types. Unfortunately, the default `Prelude`
-[is considered to be not so good](https://news.ycombinator.com/item?id=8002749)
-due to some historical reasons.
+1. `universum` helps to achieve our goals more than any other custom prelude.
+2. We worked on `universum` a lot (just check contributors statistics) and we
+   know its internal structure.
 
-This is why we decided to use a better tool. Luckily, _Haskell_ provides us with the ability
-to replace default `Prelude` with an alternative. All we had to do is to implement a
-new basic set of defaults. There already were plenty of [preludes](https://guide.aelve.com/haskell/alternative-preludes-zr69k1hc),
-so we didn't plan to implement everything from scratch.
-After some long, hot discussions, our team decided to base our custom prelude on
-[`protolude`](https://github.com/sdiehl/protolude). If you're not familiar with it,
-you can read [a tutorial about `protolude`](http://www.stephendiehl.com/posts/protolude.html).
+The motivation to create another alternative prelude instead of modifying
+existing one is that it's hard to change preludes in any way. `relude`
+uses approach with `Extra.*` modules which are not exported by default so it's
+quite easy to bring something new (that satisfies `relude` goals) and let users
+decide to use it or not.
 
-The next section explains why we've made this choice and what we are willing to do.
-This tutorial doesn't cover the differences from `protolude`. Instead, it explains how Relude is different from regular `Prelude`.
+Unlike `universum`, we are:
 
-### Main goals
+1. Not trying to replace `Foldable` with custom `Container` type class. We only
+   forbid `elem` and `notElem` functions for sets due to performance reasons.
+2. Have less dependencies: no `vector`, no `microlens`, no `safe-exceptions`, no `type-operators`.
+3. Have a lot of other different improvements.
 
-While creating and maintaining a custom prelude, we are pursuing the following goals:
+Get started [↑](#structure-of-this-tutorial)
+--------------------------------------------
 
-1. Avoid all [partial functions](https://www.reddit.com/r/haskell/comments/5n51u3/why_are_partial_functions_as_in_head_tail_bad/).
-   We like [total](http://mathworld.wolfram.com/TotalFunction.html) and exception-free functions.
-   You can still use some unsafe functions from `Relude.Unsafe` module,
-   but they are not exported by default.
-2. Use more efficient [string representations](https://www.reddit.com/r/haskell/comments/29jw0s/whats_wrong_with_string/).
-   `String` type is crushingly inefficient. All our functions either try to be polymorphic over string
-   type or use [`Text`](http://hackage.haskell.org/package/text-1.2.2.1/docs/Data-Text.html)
-   as the default string type. Because the community is evolving slowly, some libraries still use `String` type, so `String` type alias is still reexported. We recommend to avoid `String` as much as you can!
-3. Try to not reinvent the wheel. We're not trying to rebuild whole type hierarchy from scratch,
-   as it's done in [`classy-prelude`](https://github.com/snoyberg/mono-traversable).
-   Instead, we reexport common and well-known things from `base` and some other
-   libraries that are used in everyday production programming in _Haskell_.
-4. Export more useful and commonly used functions. [Hello, my name is Dmitry. I was
-   coding _Haskell_ for 3 years but still hoogling which module `liftIO` comes from.](https://twitter.com/magnars/status/834683466130345984)
-   Things like `liftIO`, `ReaderT` type, `MVar`-related functions have unambiguous names,
-   are used in almost every non-trivial project, and it's really tedious to import them
-   manually every time.
-
-Unlike `protolude`, we are:
-
-1. Not trying to be as general as possible (thus we don't export much from
-   [`GHC.Generics`](https://github.com/sdiehl/protolude/blob/41710698eedc66fb0bfc5623d3c3a672421fbab5/src/Protolude.hs#L365)).
-2. Not trying to maintain every version of `ghc` compiler (only the latest 3)
-3. Trying to make writing production code easier (see
-   [enhancements and fixes](https://github.com/kowainik/relude/issues)).
-
-How to use Relude [↑](#structure-of-this-tutorial)
---------------------
-
-Okay, enough philosophy. If you want to just start using `relude` and
-explore it with the help of compiler, set everything up according to the instructions below.
-
-If you want to get familiar with `relude` internal structure, you can just
-read top-level documentation for
-[`Relude`](http://hackage.haskell.org/package/relude/docs/Relude.html)
-module.
+If you want to start using `relude` in your project and explore it with the help
+of compiler, set everything up according to the instructions below.
 
 ### `base-noprelude`
 
@@ -108,8 +98,8 @@ the following steps:
 
 1. Replace `base` dependency with corresponding version of `base-noprelude` in
    your `.cabal` file.
-2. Add the following `Prelude` module to your project (both file and `exposed-modules`):
-   ```haskel
+2. Add the following `Prelude` module to your project (both to filesystem and to `exposed-modules`):
+   ```haskell
    module Prelude
           ( module Relude
           ) where
@@ -144,43 +134,51 @@ Then add the following import to your modules:
 import Relude
 ```
 
-Gotchas [↑](#structure-of-this-tutorial)
--------
+Difference from Prelude [↑](#structure-of-this-tutorial)
+--------------------------------------------------------
 
 * `head`, `tail`, `last`, `init` work with `NonEmpty a` instead of `[a]`.
-* Safe analogue for `head` function: `safeHead :: [a] -> Maybe a` or you can
-  use our `viaNonEmpty` function to get `Maybe a`: `viaNonEmpty head :: [a] -> Maybe a`.
-* `undefined` triggers a compiler warning, which is probably not what you want. Either use `throwIO`, `Except`, `error` or `bug`.
+* `undefined` triggers a compiler warning, because you probably don't want to
+  leave `undefined` in your code. Either use `throwIO`, `Except`, `error` or
+  `bug`.
 * Multiple sorting functions are available without imports:
   + `sortBy :: (a -> a -> Ordering) -> [a] -> [a]`: sorts list using given custom comparator.
   + `sortWith :: Ord b => (a -> b) -> [a] -> [a]`: sorts a list based on some property of its elements.
-  + `sortOn :: Ord b => (a -> b) -> [a] -> [a]`: just like `sortWith`, but more time-efficient if function is calculated slowly (though less space-efficient). So you should write `sortOn length` (would sort elements by length) but `sortWith fst` (would sort list of pairs by first element).
+  + `sortOn :: Ord b => (a -> b) -> [a] -> [a]`: just like `sortWith`, but more
+    time-efficient if function is calculated slowly (though less
+    space-efficient). So you should write `sortOn length` (would sort elements
+    by length) but `sortWith fst` (would sort list of pairs by first element).
 * Functions `sum` and `product` are strict now, which makes them more efficient.
 * If you try to do something like `putStrLn "hi"`, you'll get an error message if
   `OverloadedStrings` is enabled – it happens because the compiler doesn't know what
   type to infer for the string. Use `putTextLn` in this case.
-* Since `show` doesn't come from `Show` anymore, you can't write `Show` instances easily.
+* Since `show` doesn't come from `Show` anymore, you need to export `Show` from
+  `Text.Show` module if you want to implement `Show` instance manually.
 * You can't call `elem` and `notElem` functions over `Set` and `HashSet`. These
-  functions are forbidden for these two types because of performance reasons.
+  functions are forbidden for these two types because of the performance reasons.
 * `error` takes `Text`.
+* `lookup` doesn't work on list of pairs.
 
-
-Things that you were already using, but now you don't have to import them explicitly [↑](#structure-of-this-tutorial)
-------------------------------------------------------------------------------------
+Reexports [↑](#structure-of-this-tutorial)
+------------------------------------------
 
 ### Commonly used libraries
 
 First of all, we reexport some generally useful modules: `Control.Applicative`,
-`Data.Traversable`, `Data.Monoid`, `Control.DeepSeq`, `Data.List`, and lots of others.
-Just remove unneeded imports after importing `Relude` (GHC should tell you which ones).
+`Data.Traversable`, `Data.Monoid`, `Control.DeepSeq`, `Data.List`, and lots of
+others. Just remove unneeded imports after importing `Relude` (you can use
+`.hlint.yaml` file for this).
 
-Then, some commonly used types: `Map/HashMap/IntMap`, `Set/HashSet/IntSet`, `Seq`, `Text` and `ByteString`
-(as well as synonyms `LText` and `LByteString` for lazy versions).
+Then, some commonly used types: `Map/HashMap/IntMap`, `Set/HashSet/IntSet`,
+`Seq`, `Text` and `ByteString` (as well as synonyms `LText` and `LByteString`
+for lazy versions).
 
-`liftIO` and `MonadIO` are exported by default. A lot of `IO` functions are generalized to `MonadIO`.
+`liftIO` and `MonadIO` are exported by default. A lot of `IO` functions are
+generalized to `MonadIO`.
 
-`deepseq` is exported. For instance, if you want to force deep evaluation of some value (in IO),
-you can write `evaluateNF a`. WHNF evaluation is possible with `evaluateWHNF a`.
+`deepseq` is exported. For instance, if you want to force deep evaluation of
+some value (in IO), you can write `evaluateNF a`. WHNF evaluation is possible
+with `evaluateWHNF a`.
 
 We also reexport big chunks of these libraries: `mtl`, `stm`.
 
@@ -195,7 +193,9 @@ type class with useful instances is exported.
 We export `Text` and `LText`, and some functions work with `Text` instead of `String` –
 specifically, IO functions (`readFile`, `putStrLn`, etc) and `show`. In fact, `show`
 is polymorphic and can produce strict or lazy `Text`, `String`, or `ByteString`.
-Also, `toText/toLText/toString` can convert `Text|LText|String` types to `Text/LText/String`. If you want to convert to and from `ByteString` use `encodeUtf8/decodeUtf8` functions.
+Also, `toText/toLText/toString` can convert `Text|LText|String` types to
+`Text/LText/String`. If you want to convert to and from `ByteString` use
+`encodeUtf8/decodeUtf8` functions.
 
 ### Debugging and `undefined`s
 
@@ -209,17 +209,23 @@ We also have `data Undefined = Undefined` (which, too, comes with warnings).
 TODO: write about reexports, `Bug` and `Exc` pattern.
 
 What's new? [↑](#structure-of-this-tutorial)
------------
+--------------------------------------------
 
 Finally, we can move to part describing the new cool features we bring with `relude`.
 
+* Safe analogue for `head` function: `safeHead :: [a] -> Maybe a` or you can
+  use our `viaNonEmpty` function to get `Maybe a`: `viaNonEmpty head :: [a] -> Maybe a`.
 * `uncons` splits a list at the first element.
 * `ordNub` and `sortNub` are _O(n log n)_ versions of `nub` (which is quadratic)
   and `hashNub` and `unstableNub` are almost _O(n)_ versions of `nub`.
 * `(&)` – reverse application. `x & f & g` instead of `g $ f $ x` is useful sometimes.
 * `whenM`, `unlessM`, `ifM`, `guardM` are available and do what you expect
   them to do (e.g. `whenM (doesFileExist "foo")`).
-* Very generalized version of `concatMapM`, too, is available and does what expected.
+* General fold functions:
+  ```haskell
+  foldMapA :: (Monoid b, Applicative m, Foldable f) => (a -> m b) -> f a -> m b
+  foldMapM :: (Monoid b, Monad m, Foldable f) => (a -> m b) -> f a -> m b
+  ```
 * `readMaybe` and `readEither` are like `read` but total and give either
   `Maybe` or `Either` with parse error.
 * `when(Just|Nothing|Left|Right|NotEmpty)[M][_]`
@@ -228,14 +234,14 @@ Finally, we can move to part describing the new cool features we bring with `rel
   ```haskell
   case mbX of
       Nothing -> return ()
-      Just x  -> ... x ...
+      Just x  -> f x
   ```
 
   After:
 
   ```haskell
   whenJust mbX $ \x ->
-      ... x ...
+      f x
   ```
 
 * `for_` for loops. There's also `forM_` but `for_` looks a bit nicer.
@@ -250,21 +256,23 @@ Finally, we can move to part describing the new cool features we bring with `rel
 * Conversions between `Either` and `Maybe` like `rightToMaybe` and `maybeToLeft`
   with clear semantic.
 * `using(Reader|State)[T]` functions as aliases for `flip run(Reader|State)[T]`.
-* [`One` type class](https://github.com/kowainik/relude/blob/master/src/Containers.hs#L473)
+* [`One` type class](src/Relude/Container/One.hs)
   for creating singleton containers. Even monomorhpic ones like `Text`.
+* [`StaticMap` and `DynamicMap`type classes](src/Relude/Container/Map.hs) as a
+  general interface for `Map`-like data structures.
 * `evaluateWHNF` and `evaluateNF` functions as clearer and lifted aliases for
   `evaluate` and `evaluate . force`.
-* `ToPairs` type class for data types that can be converted to list of pairs (like `Map` or `HashMap` or `IntMap`).
+* `MonadFail` instance for `Either`.
 
-Migration guide from Prelude [↑](#structure-of-this-tutorial)
-----------------------------
+Migration guide [↑](#structure-of-this-tutorial)
+------------------------------------------------
 
 In order to replace default `Prelude` with `relude` you should start with instructions given in
-[how to use relude](https://github.com/kowainik/relude#how-to-use-relude-) section.
+[_get started_](#get-started-) section.
 
 This section describes what you need to change to make your code compile with `relude`.
 
-1. Enable `-XOverloadedStrings` and `-XTypeFamilies` extension by default for your project.
+1. Enable `-XOverloadedStrings` extension by default for your project.
 2. Since `head`, `tail`, `last` and `init` work for `NonEmpty` you should
    refactor your code in one of the multiple ways described below:
    1. Change `[a]` to `NonEmpty a` where it makes sense.

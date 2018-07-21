@@ -103,14 +103,6 @@
 
 - hint: {lhs: fmap (fmap f) x, rhs: f <<$>> x}
 
-- warn: {lhs: fmap concat (mapM f s), rhs: Relude.concatMapM f s}
-- warn: {lhs: concat <$> mapM f s, rhs: Relude.concatMapM f s}
-
-- warn: {lhs: fmap concat (forM f s), rhs: Relude.concatForM s f}
-- warn: {lhs: fmap concat (for f s), rhs: Relude.concatForM s f}
-- warn: {lhs: concat <$> forM f s, rhs: Relude.concatForM s f}
-- warn: {lhs: concat <$> for f s, rhs: Relude.concatForM s f}
-
 - hint: { lhs: fmap and (sequence s), rhs: Relude.andM s
         , note: "Applying this hint would mean that some actions\n that were being executed previously would no longer be executed." }
 - hint: { lhs: and <$> sequence s, rhs: Relude.andM s
@@ -389,10 +381,6 @@
 - warn: { name: "Use 'comparing' from Relude"
         , lhs: Data.Ord.comparing, rhs: Relude.comparing }
 
-- warn: { name: "Use 'fmapDefault' from Relude"
-        , lhs: Data.Traversable.fmapDefault, rhs: Relude.fmapDefault }
-- warn: { name: "Use 'foldMapDefault' from Relude"
-        , lhs: Data.Traversable.foldMapDefault, rhs: Relude.foldMapDefault }
 - warn: { name: "Use 'forM' from Relude"
         , lhs: Data.Traversable.forM, rhs: Relude.forM }
 - warn: { name: "Use 'mapAccumL' from Relude"
@@ -468,6 +456,8 @@
 
 - warn: { name: "Use 'Coercible' from Relude"
         , lhs: GHC.Types.Coercible, rhs: Relude.Coercible }
+- warn: { name: "Use 'coerce' from Relude"
+        , lhs: Data.Coerce.coerce, rhs: Relude.coerce }
 
 - warn: { name: "Use 'getStackTrace' from Relude"
         , lhs: GHC.ExecutionStack.getStackTrace, rhs: Relude.getStackTrace }
