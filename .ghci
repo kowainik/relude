@@ -1,3 +1,4 @@
 :set -XNoImplicitPrelude
 :set -XOverloadedStrings
+:set -XTypeApplications
 import Relude

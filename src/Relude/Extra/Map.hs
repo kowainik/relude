@@ -4,7 +4,7 @@
 and 'Map'.
 -}
 
-module Relude.Container.Map
+module Relude.Extra.Map
        ( StaticMap (..)
        , DynamicMap (..)
        , (!?)

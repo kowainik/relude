@@ -13,6 +13,7 @@ module Relude.Extra.Group
        ) where
 
 import Relude
+import Relude.Extra.Map
 
 import Data.List.NonEmpty ((<|))
 
