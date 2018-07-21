@@ -16,14 +16,15 @@ Relude
    are not exported by default.
 2. **Type-safety**. We like to make invalid states unrepresantable. And if it's
    possible to express this concept through the types then we will do it.
-  _Example:_
-  ```haskell
-  whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f ()
-  ```
-  instead of
-  ```haskell
-  whenNotNull :: Applicative f => [a] -> ([a] -> f ()) -> f ()
-  ```
+    
+    _Example:_
+    ```haskell
+    whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f ()
+    ```
+    instead of
+    ```haskell
+    whenNotNull :: Applicative f => [a] -> ([a] -> f ()) -> f ()
+    ```
 3. **Performance.** Prefer `Text` over [`String`](https://www.reddit.com/r/haskell/comments/29jw0s/whats_wrong_with_string/),
    use spaceleak-free functions (like our custom `sum` and `product`), introduce
    `{-# INLINE #-}` and `{-# SPECIALIZE #-}` pragmas where appropriate.
@@ -258,7 +259,7 @@ Finally, we can move to part describing the new cool features we bring with `rel
 * `using(Reader|State)[T]` functions as aliases for `flip run(Reader|State)[T]`.
 * [`One` type class](src/Relude/Container/One.hs)
   for creating singleton containers. Even monomorhpic ones like `Text`.
-* [`StaticMap` and `DynamicMap`type classes](src/Relude/Container/Map.hs) as a
+* [`StaticMap` and `DynamicMap`type classes](src/Relude/Extra/Map.hs) as a
   general interface for `Map`-like data structures.
 * `evaluateWHNF` and `evaluateNF` functions as clearer and lifted aliases for
   `evaluate` and `evaluate . force`.
