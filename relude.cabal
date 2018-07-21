@@ -1,7 +1,48 @@
 name:                relude
 version:             0.1.0
 synopsis:            Custom prelude from Kowainik
-description:         See README.md file for more details.
+description:
+    == Goals
+    .
+    * __Avoid all [partial functions](https://www.reddit.com/r/haskell/comments/5n51u3/why_are_partial_functions_as_in_head_tail_bad/)__
+      (like @head :: [a] -> a@). The types of partial functions lie about their
+      behavior and usage of such functions can lead to the unexpected bugs. Though
+      you can still use some unsafe functions from @Relude.Unsafe@ module, but they
+      are not exported by default.
+    .
+    * __Type-safety__. We like to make invalid states unrepresantable. And if it's
+      possible to express this concept through the types then we will do it.
+      /Example:/ @ whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f () @
+    .
+    * __Performance.__ Prefer @Text@ over @[String](https://www.reddit.com/r/haskell/comments/29jw0s/whats_wrong_with_string/)@,
+      use spaceleak-free functions (like our custom @sum@ and @product@).
+    .
+    * __Minimalism__ (low number of dependencies). We don't force users of @relude@ to
+      stick to some specific lens or text formatting or logging library.
+    .
+    * __Convenience__ (like lifted to @MonadIO@ functions, more reexports). But we
+      want to bring common types and functions (like @containers@ and @bytestrng@)
+      into scope because they are used in almost every application anyways.
+    .
+    * __Provide excellent documentation.__
+      .
+      1. Tutorial
+      .
+      2. Migration guide from @Prelude@
+      .
+      3. Haddock with examples for (almost) every function
+        (all examples are tested with [`doctest`](http://hackage.haskell.org/package/doctest))
+      .
+      4. Documentation regarding [internal module structure]((http://hackage.haskell.org/package/relude/docs/Relude.html))
+      .
+      5. @relude@-specific [HLint](http://hackage.haskell.org/package/hlint) rules: @[.hlint.yaml](https://github.com/kowainik/relude/blob/master/.hlint.yaml)@
+    .
+    * __User-friendliness.__ Ability to quickly migrate to @relude@ if you're familiar
+      with the common libraries like @text@ and @containers@.
+    .
+    * __Exploration.__ Experiment with new ideas and proposals without introducing
+      breaking changes.
+
 homepage:            https://github.com/kowainik/relude
 bug-reports:         https://github.com/kowainik/relude/issues
 license:             MIT
@@ -12,7 +53,7 @@ copyright:           2016 Stephen Diehl, 2016-2018 Serokell, 2018 Kowainik
 category:            Prelude
 stability:           stable
 build-type:          Simple
-cabal-version:       >=1.18
+cabal-version:       1.24
 tested-with:         GHC == 8.0.2
                    , GHC == 8.2.2
                    , GHC == 8.4.3
