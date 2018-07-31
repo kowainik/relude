@@ -3,11 +3,14 @@
 
 module Relude.Extra.Enum
        ( universe
+       , makeParser
        , next
        , safeToEnum
        ) where
 
 import Relude
+
+import qualified Data.HashMap.Strict as Map
 
 -- $setup
 -- >>> :set -XTypeApplications
@@ -22,6 +25,21 @@ import Relude
 -}
 universe :: (Bounded a, Enum a) => [a]
 universe = [minBound .. maxBound]
+
+{- | Create a function that parses values of type @a@
+
+>>> data Color = Red | Green | Blue deriving (Show, Enum, Bounded)
+>>> parse = makeParser :: String -> Maybe Color
+>>> parse "Red"
+Just Red
+>>> parse "Black"
+Nothing
+-}
+makeParser :: forall a. (Bounded a, Enum a, Show a) => String -> Maybe a
+makeParser = \x -> Map.lookup x dict
+    where
+        dict = Map.fromList $ zip (map show univ) univ
+        univ = universe
 
 {- | Like 'succ', but doesn't fail on 'maxBound'. Instead it returns 'minBound'.
 
