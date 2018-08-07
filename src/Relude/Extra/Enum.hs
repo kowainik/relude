@@ -3,11 +3,14 @@
 
 module Relude.Extra.Enum
        ( universe
+       , inverseMap
        , next
        , safeToEnum
        ) where
 
 import Relude
+
+import qualified Data.Map.Strict as M
 
 -- $setup
 -- >>> :set -XTypeApplications
@@ -22,6 +25,27 @@ import Relude
 -}
 universe :: (Bounded a, Enum a) => [a]
 universe = [minBound .. maxBound]
+
+{- | Creates a function that is the inverse of a given function @f@.
+
+>>> data Color = Red | Green | Blue deriving (Show, Enum, Bounded)
+>>> parse = inverseMap show :: String -> Maybe Color
+>>> parse "Red"
+Just Red
+>>> parse "Black"
+Nothing
+-}
+inverseMap :: forall a k. (Bounded a, Enum a, Ord k)
+           => (a -> k)
+           -> k
+           -> Maybe a
+inverseMap f = \x -> M.lookup x dict
+    where
+        dict :: M.Map k a
+        dict = M.fromList $ zip (map f univ) univ
+
+        univ :: [a]
+        univ = universe
 
 {- | Like 'succ', but doesn't fail on 'maxBound'. Instead it returns 'minBound'.
 
