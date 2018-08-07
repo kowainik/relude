@@ -10,7 +10,7 @@ module Relude.Extra.Enum
 
 import Relude
 
-import qualified Data.HashMap.Strict as HM
+import qualified Data.Map.Strict as M
 
 -- $setup
 -- >>> :set -XTypeApplications
@@ -26,23 +26,23 @@ import qualified Data.HashMap.Strict as HM
 universe :: (Bounded a, Enum a) => [a]
 universe = [minBound .. maxBound]
 
-{- | Create a function that parses values of type @a@
+{- | Creates a function that is the inverse of a given function @f@.
 
 >>> data Color = Red | Green | Blue deriving (Show, Enum, Bounded)
->>> parse = inverseMap :: (Color -> String) -> String -> Maybe Color
->>> parse show "Red"
+>>> parse = inverseMap show :: String -> Maybe Color
+>>> parse "Red"
 Just Red
->>> parse show "Black"
+>>> parse "Black"
 Nothing
 -}
-inverseMap :: forall a k. (Bounded a, Enum a, Eq k, Hashable k)
+inverseMap :: forall a k. (Bounded a, Enum a, Ord k)
            => (a -> k)
            -> k
            -> Maybe a
-inverseMap f x = HM.lookup x dict
+inverseMap f = \x -> M.lookup x dict
     where
-        dict :: HM.HashMap k a
-        dict = HM.fromList $ zip (map f univ) univ
+        dict :: M.Map k a
+        dict = M.fromList $ zip (map f univ) univ
 
         univ :: [a]
         univ = universe

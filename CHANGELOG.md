@@ -1,6 +1,12 @@
 Change log
 ==========
 
+0.1.1
+=====
+
+* [#44](https://github.com/kowainik/relude/issues/44)
+  Implement parser deriviation from pretty-printers
+
 0.1.0
 =====
 
