@@ -1,5 +1,4 @@
-Relude
-=========
+# Relude
 
 [![Build Status](https://travis-ci.org/kowainik/relude.svg?branch=master)](https://travis-ci.org/kowainik/relude)
 [![Hackage](https://img.shields.io/hackage/v/relude.svg)](https://hackage.haskell.org/package/relude)
