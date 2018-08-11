@@ -1,5 +1,5 @@
 name:                relude
-version:             0.1.1
+version:             0.2.0
 synopsis:            Custom prelude from Kowainik
 description:
     == Goals
@@ -109,6 +109,7 @@ library
 
                            -- not exported by default
                            Relude.Extra.Bifunctor
+                           Relude.Extra.CallStack
                            Relude.Extra.Enum
                            Relude.Extra.Group
                            Relude.Extra.Map

@@ -1,11 +1,17 @@
 Change log
 ==========
 
+0.2.0
+=====
+
+* [#46](https://github.com/kowainik/relude/issues/46):
+  Add a function that returns its own name.
+
 0.1.1
 =====
 
-* [#44](https://github.com/kowainik/relude/issues/44)
-  Implement parser deriviation from pretty-printers
+* [#44](https://github.com/kowainik/relude/issues/44):
+  Implement parser deriviation from pretty-printers.
 
 0.1.0
 =====
