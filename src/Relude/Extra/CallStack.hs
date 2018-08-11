@@ -10,7 +10,7 @@ import Relude
 import GHC.Stack (HasCallStack, callStack, getCallStack)
 
 -- TODO: better name?
-{- | This function returns the name of its caller function, but its requires
+{- | This function returns the name of its caller function, but it requires
 that the caller function has 'HasCallStack' constraint. Otherwise, it returns
 @"ownName"@.
 
