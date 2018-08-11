@@ -6,6 +6,8 @@ Change log
 
 * [#46](https://github.com/kowainik/relude/issues/46):
   Add a function that returns its own name.
+* [#43](https://github.com/kowainik/relude/issues/43):
+  Implement `Relude.Extra.Newtype` module.
 
 0.1.1
 =====

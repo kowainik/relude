@@ -1,3 +1,4 @@
+cabal-version:       1.24
 name:                relude
 version:             0.2.0
 synopsis:            Custom prelude from Kowainik
@@ -53,7 +54,6 @@ copyright:           2016 Stephen Diehl, 2016-2018 Serokell, 2018 Kowainik
 category:            Prelude
 stability:           stable
 build-type:          Simple
-cabal-version:       1.24
 tested-with:         GHC == 8.0.2
                    , GHC == 8.2.2
                    , GHC == 8.4.3
@@ -113,6 +113,7 @@ library
                            Relude.Extra.Enum
                            Relude.Extra.Group
                            Relude.Extra.Map
+                           Relude.Extra.Newtype
                            Relude.Unsafe
 
 
