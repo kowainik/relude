@@ -4,7 +4,7 @@ Change log
 0.2.0
 =====
 
-* [#46](https://github.com/kowainik/relude/issues/44):
+* [#46](https://github.com/kowainik/relude/issues/46):
   Add a function that returns its own name.
 
 0.1.1
