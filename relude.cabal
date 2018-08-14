@@ -122,7 +122,6 @@ library
                        -Widentities
                        -Wincomplete-uni-patterns
                        -Wincomplete-record-updates
-                       -fhide-source-paths
                        -fwarn-implicit-prelude
 
   build-depends:       base >= 4.8 && < 5
@@ -165,7 +164,6 @@ test-suite relude-test
                        -Wcompat
                        -Widentities
                        -Wredundant-constraints
-                       -fhide-source-paths
 
   default-language:    Haskell2010
   default-extensions:  NoImplicitPrelude
@@ -202,7 +200,6 @@ benchmark relude-benchmark
                        -Wcompat
                        -Widentities
                        -Wredundant-constraints
-                       -fhide-source-paths
 
   default-language:    Haskell2010
   default-extensions:  NoImplicitPrelude
