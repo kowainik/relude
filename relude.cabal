@@ -148,12 +148,12 @@ test-suite relude-test
 
   other-modules:       Test.Relude.Property
 
-  build-depends:       base             >= 4.8 && < 5
+  build-depends:       base >= 4.8 && < 5
                      , relude
                      , bytestring
                      , text
                      , utf8-string
-                     , hedgehog
+                     , hedgehog >= 0.6
                      , tasty
                      , tasty-hedgehog
 
@@ -167,6 +167,7 @@ test-suite relude-test
 
   default-language:    Haskell2010
   default-extensions:  NoImplicitPrelude
+                       TypeApplications
 
 test-suite relude-doctest
   type:                exitcode-stdio-1.0

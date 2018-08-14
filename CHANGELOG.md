@@ -8,6 +8,8 @@ Change log
   Add a function that returns its own name.
 * [#43](https://github.com/kowainik/relude/issues/43):
   Implement `Relude.Extra.Newtype` module.
+* [#49](https://github.com/kowainik/relude/issues/49):
+  Speed up and refactor property tests.
 
 0.1.1
 =====
