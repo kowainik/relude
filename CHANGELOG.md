@@ -4,10 +4,13 @@ Change log
 0.2.0
 =====
 
-* [#46](https://github.com/kowainik/relude/issues/46):
-  Add a function that returns its own name.
 * [#43](https://github.com/kowainik/relude/issues/43):
   Implement `Relude.Extra.Newtype` module.
+* [#46](https://github.com/kowainik/relude/issues/46):
+  Add a function that returns its own name.
+* [#48](https://github.com/kowainik/relude/issues/48):
+  Export `<&>` from `base`.
+  Also reexport `fromLeft` and `fromRight` from `base` where possible.
 * [#49](https://github.com/kowainik/relude/issues/49):
   Speed up and refactor property tests.
 

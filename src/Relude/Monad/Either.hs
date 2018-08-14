@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP  #-}
 {-# LANGUAGE Safe #-}
 
 {-# OPTIONS_GHC -fno-warn-orphans #-}
@@ -38,12 +39,9 @@ import Relude.Function ((.))
 import Relude.Monad.Reexport (Either (..), MonadFail (..), either)
 import Relude.String (IsString, fromString)
 
--- $setup
--- >>> import Relude.Bool (Bool (..))
-
-instance IsString str => MonadFail (Either str) where
-    fail = Left . fromString
-
+#if MIN_VERSION_base(4,10,0)
+import Data.Either (fromLeft, fromRight)
+#else
 -- | Extracts value from 'Left' or return given default value.
 --
 -- >>> fromLeft 0 (Left 3)
@@ -63,6 +61,13 @@ fromLeft a (Right _) = a
 fromRight :: b -> Either a b -> b
 fromRight b (Left _)  = b
 fromRight _ (Right b) = b
+#endif
+
+-- $setup
+-- >>> import Relude.Bool (Bool (..))
+
+instance IsString str => MonadFail (Either str) where
+    fail = Left . fromString
 
 -- | Maps left part of 'Either' to 'Maybe'.
 --
