@@ -21,8 +21,7 @@ module Relude.Monad.Maybe
        ) where
 
 import Relude.Applicative (Applicative, pass, pure)
-import Relude.Monad.Reexport (fromMaybe)
-import Relude.Monad.Reexport (Maybe (..), Monad (..))
+import Relude.Monad.Reexport (Maybe (..), Monad (..), fromMaybe)
 
 -- $setup
 -- >>> import Relude.Bool (Bool (..), not)
