@@ -1,5 +1,6 @@
 # Relude
 
+![Relude: cyclone logo](https://user-images.githubusercontent.com/4276606/44077619-d2abb39a-9fd6-11e8-9d9f-cc57a9d03fa0.png)
 [![Build Status](https://travis-ci.org/kowainik/relude.svg?branch=master)](https://travis-ci.org/kowainik/relude)
 [![Hackage](https://img.shields.io/hackage/v/relude.svg)](https://hackage.haskell.org/package/relude)
 [![Stackage LTS](http://stackage.org/package/relude/badge/lts)](http://stackage.org/lts/package/relude)
@@ -335,3 +336,7 @@ This section describes what you need to change to make your code compile with `r
    + Use `toText/toLText/toString` functions to convert to `Text/LazyText/String` types.
    + Use `encodeUtf8/decodeUtf8` to convert to/from `ByteString`.
 6. Run `hlint` using `.hlint.yaml` file from `relude` package to cleanup code and imports.
+
+### Acknowledgement
+
+Icons made by [Freepik](http://www.freepik.com) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/).
