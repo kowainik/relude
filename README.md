@@ -6,7 +6,8 @@
 [![Stackage Nightly](http://stackage.org/package/relude/badge/nightly)](http://stackage.org/nightly/package/relude)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-`relude` is a custom prelude based on `universum`. `relude` tries to achieve the following goals:
+`relude` is a custom prelude, an alternative to default `Prelude`.
+`relude` tries to achieve the following goals:
 
 1. **Avoid all** [**partial functions**](https://www.reddit.com/r/haskell/comments/5n51u3/why_are_partial_functions_as_in_head_tail_bad/)
    (like `head :: [a] -> a`). The types of partial functions lie about their
@@ -15,7 +16,7 @@
    are not exported by default.
 2. **Type-safety**. We like to make invalid states unrepresantable. And if it's
    possible to express this concept through the types then we will do it.
-    
+
     _Example:_
     ```haskell
     whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f ()
@@ -213,6 +214,8 @@ What's new? [↑](#structure-of-this-tutorial)
 
 Finally, we can move to part describing the new cool features we bring with `relude`.
 
+### Available by default
+
 * Safe analogue for `head` function: `safeHead :: [a] -> Maybe a` or you can
   use our `viaNonEmpty` function to get `Maybe a`: `viaNonEmpty head :: [a] -> Maybe a`.
 * `uncons` splits a list at the first element.
@@ -263,6 +266,30 @@ Finally, we can move to part describing the new cool features we bring with `rel
 * `evaluateWHNF` and `evaluateNF` functions as clearer and lifted aliases for
   `evaluate` and `evaluate . force`.
 * `MonadFail` instance for `Either`.
+
+### Need to import explicitly
+
+* Convenient functions to work with `(Bounded a, Enum a)` types:
+  1. `universe :: (Bounded a, Enum a) => [a`: get all values of the type.
+  2. `inverseMap :: (Bounded a, Enum a, Ord k) => (a -> k) -> k -> Maybe a`: convert functions like `show` to parsers.
+* Nice helpers to deal with `newtype`s in a more pleasant way:
+
+  ```haskell
+  ghci> newtype Foo = Foo Bool deriving Show
+  ghci> under not (Foo True)
+  Foo False
+  ```
+
+* Functions to operate with `CallStack`:
+
+  ```haskell
+  >>> foo :: HasCallStack => String; foo = ownName
+  >>> foo
+  "foo"
+  ```
+
+* A lot of other cool things:
+  + Explore `Extra` modules: [`Relude.Extra`](src/Relude/Extra/)
 
 Migration guide [↑](#structure-of-this-tutorial)
 ------------------------------------------------

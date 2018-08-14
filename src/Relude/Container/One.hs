@@ -42,9 +42,7 @@ import qualified Data.Set as Set
 -- >>> import Relude.String (Text)
 -- >>> import qualified Data.HashMap.Strict as HashMap
 
-{- | Type class for types that can be created from one element. @singleton@
-is lone name for this function. Constructions of different type differ:
-@:[]@ for lists, two arguments for Maps. Also some data types are monomorphic.
+{- | Typeclass for data types that can be created from one element.
 
 >>> one True :: [Bool]
 [True]
@@ -54,6 +52,7 @@ is lone name for this function. Constructions of different type differ:
 fromList [(3,"hello")]
 -}
 class One x where
+    -- | Type of single element of the structure.
     type OneItem x
     -- | Create a list, map, 'Text', etc from a single element.
     one :: OneItem x -> x
