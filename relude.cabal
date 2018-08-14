@@ -117,7 +117,13 @@ library
                            Relude.Unsafe
 
 
-  ghc-options:         -Wall -fwarn-implicit-prelude
+  ghc-options:         -Wall
+                       -Wcompat
+                       -Widentities
+                       -Wincomplete-uni-patterns
+                       -Wincomplete-record-updates
+                       -fhide-source-paths
+                       -fwarn-implicit-prelude
 
   build-depends:       base >= 4.8 && < 5
                      , bytestring
@@ -152,7 +158,15 @@ test-suite relude-test
                      , tasty
                      , tasty-hedgehog
 
-  ghc-options:         -Wall -threaded
+  ghc-options:         -Wall
+                       -threaded
+                       -Wincomplete-uni-patterns
+                       -Wincomplete-record-updates
+                       -Wcompat
+                       -Widentities
+                       -Wredundant-constraints
+                       -fhide-source-paths
+
   default-language:    Haskell2010
   default-extensions:  NoImplicitPrelude
 
@@ -170,17 +184,26 @@ test-suite relude-doctest
 
 benchmark relude-benchmark
   type:                exitcode-stdio-1.0
-  default-language:    Haskell2010
-  ghc-options:         -Wall -threaded -rtsopts -with-rtsopts=-N
   hs-source-dirs:      benchmark
   main-is:             Main.hs
-  build-depends:       base < 5
+
+  build-depends:       base >= 4.8 && < 5
                      , relude
                      , containers
                      , gauge
                      , unordered-containers
-  if impl(ghc == 7.10.3)
-     build-depends:   semigroups >= 0.18
 
+  ghc-options:         -Wall
+                       -threaded
+                       -rtsopts
+                       -with-rtsopts=-N
+                       -Wincomplete-uni-patterns
+                       -Wincomplete-record-updates
+                       -Wcompat
+                       -Widentities
+                       -Wredundant-constraints
+                       -fhide-source-paths
+
+  default-language:    Haskell2010
   default-extensions:  NoImplicitPrelude
                        ScopedTypeVariables

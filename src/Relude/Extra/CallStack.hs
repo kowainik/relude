@@ -7,7 +7,7 @@ module Relude.Extra.CallStack
 
 import Relude
 
-import GHC.Stack (HasCallStack, callStack, getCallStack)
+import GHC.Stack (getCallStack)
 
 -- TODO: better name?
 {- | This function returns the name of its caller function, but it requires
