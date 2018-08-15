@@ -5,7 +5,7 @@ Copyright: (c) 2016 Stephen Diehl
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-This module reexports functions to work with 'Text' and 'ByteString' types.
+Reexports functions to work with 'Text' and 'ByteString' types.
 -}
 
 module Relude.String.Reexport

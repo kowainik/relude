@@ -5,7 +5,7 @@ Copyright: (c) 2016 Stephen Diehl
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-This module contains monadic boolean combinators.
+Monadic boolean combinators.
 -}
 
 module Relude.Bool.Guard

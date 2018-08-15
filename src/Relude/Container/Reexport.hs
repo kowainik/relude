@@ -5,7 +5,7 @@ Copyright: (c) 2016 Stephen Diehl
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-This module reexports all container-related stuff from @base@, @containers@ and
+Reexports all container-related stuff from @base@, @containers@ and
 @unordered-containers@ packages.
 -}
 

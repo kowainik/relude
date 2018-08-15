@@ -17,7 +17,7 @@ Copyright: (c) 2016 Stephen Diehl
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Functions for debugging. If you left these functions in your code then warning
+Functions for debugging. If you left these functions in your code then a warning
 is generated to remind you about left usages. Also some functions (and data
 types) are convenient for prototyping.
 -}

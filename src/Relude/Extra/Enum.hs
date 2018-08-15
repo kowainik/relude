@@ -36,9 +36,11 @@ universe :: (Bounded a, Enum a) => [a]
 universe = [minBound .. maxBound]
 
 {- | @inverseMap f@ creates a function that is the inverse of a given function
-@f@. It does so by constructing 'M.Map' for every value @f a@. Implementation
-makes sure that the 'M.Map' is constructed only once and then shared for every
-call.
+@f@. It does so by constructing 'M.Map' for every value @f a@. The
+implementation makes sure that the 'M.Map' is constructed only once and then
+shared for every call.
+
+The complexity of reversed mapping though is \(\mathcal{O}(\log n)\).
 
 Usually you want to use 'inverseMap' to inverse 'show' function.
 

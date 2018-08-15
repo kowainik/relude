@@ -7,10 +7,9 @@ Copyright: (c) 2016 Stephen Diehl
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Unsafe functions to work with lists and 'Maybe'.
-Sometimes unavoidable but better don't use them. This module
-is intended to be imported qualified and it's not even included
-in default prelude exports.
+Unsafe functions to work with lists and 'Maybe'. Sometimes unavoidable but it's
+better not to use them. This module is intended to be imported qualified and
+it's not even included in default prelude exports.
 
 @
 import qualified Relude.Unsafe as Unsafe
@@ -18,17 +17,12 @@ import qualified Relude.Unsafe as Unsafe
 foo :: [a] -> a
 foo = Unsafe.head
 @
-
 -}
 
 module Relude.Unsafe
-       ( head
-       , tail
-       , init
-       , last
+       ( module Data.List
+       , module Data.Maybe
        , at
-       , (!!)
-       , fromJust
        ) where
 
 import Data.List (head, init, last, tail, (!!))

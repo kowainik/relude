@@ -3,7 +3,7 @@ Copyright:  (c) 2018 Kowainik
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Reexports from "Data.Foldable" and "Data.Traversable".
+Reexports "Data.Foldable" and "Data.Traversable".
 -}
 
 module Relude.Foldable.Reexport

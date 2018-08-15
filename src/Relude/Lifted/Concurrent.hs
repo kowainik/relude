@@ -7,7 +7,7 @@ Copyright: (c) 2016 Stephen Diehl
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Concurrency useful and common functions.
+Lifted 'MVar' and 'STM' functions.
 -}
 
 module Relude.Lifted.Concurrent

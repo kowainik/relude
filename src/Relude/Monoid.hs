@@ -5,7 +5,7 @@ Copyright: (c) 2016 Stephen Diehl
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-This module reexports functions to work with monoids plus adds extra useful functions.
+Reexports functions to work with monoids plus adds extra useful functions.
 -}
 
 module Relude.Monoid

@@ -7,9 +7,9 @@ Copyright: (c) 2016 Stephen Diehl
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Main module that reexports all functionality allowed to use without importing
-any other modules. If you want to use @relude@ per-module basis then just add
-next lines to your module to replace default 'Prelude':
+The main module that reexports all functionality. It's allowed to use it without
+importing any other modules. If you want to use @relude@ per-module basis then
+just add next lines to your module to replace default 'Prelude':
 
 @
 \{\-\# LANGUAGE NoImplicitPrelude \#\-\}
@@ -20,22 +20,22 @@ __import__ "Relude"
 Alternatively, you can replace @base@ package in your dependencies with
 @[base-noprelude](http://hackage.haskell.org/package/base-noprelude)@ and add
 the following 'Prelude' module to your package to use @relude@ by default in
-every module istead of 'Prelude':
+every module instead of 'Prelude':
 
 @
 __module__ Prelude (__module__ "Relude") __where__
 __import__ "Relude"
 @
 
-This documentation section contains description of internal module structure to
+This documentation section contains the description of internal module structure to
 help navigate between modules, search for interesting functionalities and
 understand where you need to put your new changes (if you're a contributor).
 
 Functions and types are distributed across multiple modules and grouped by
 meaning or __category__. Name of the module should give you hints regarding what
-this module contains. Some /categories/ contain a great amount of both reexported
-functions and functions of our own. To make it easier to understand these huge
-chunks of functions, all reexported stuff is moved into separate module with
+this module contains. Some /categories/ contain a significant amount of both reexported
+functions and functions of our own. To make it easier to understand these enormous
+chunks of functions, all reexported stuff is moved into the separate module with
 name @Relude.SomeCategory.Reexport@ and our own functions and types are in
 @Relude.SomeCategory.SomeName@. For example, see modules
 "Relude.Foldable.Fold" and "Relude.Foldable.Reexport".

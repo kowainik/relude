@@ -83,7 +83,7 @@ foldMapA f = foldr step (pure mempty)
 
 {- | Polymorphic version of @concatMapM@ function.
 
->>> foldMapA @[Int] (Just . replicate 3) [1..3]
+>>> foldMapM @[Int] (Just . replicate 3) [1..3]
 Just [1,1,1,2,2,2,3,3,3]
 -}
 foldMapM :: forall b m f a . (Monoid b, Monad m, Foldable f) => (a -> m b) -> f a -> m b

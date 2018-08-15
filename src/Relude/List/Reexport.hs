@@ -7,7 +7,7 @@ Copyright: (c) 2016 Stephen Diehl
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-This module reexports functinons to work with list and 'NonEmpty'.
+Reexports most of the "Data.List" and "Data.List.NonEmpty".
 -}
 
 module Relude.List.Reexport
@@ -22,5 +22,4 @@ import Data.List (break, cycle, drop, dropWhile, filter, genericDrop, genericLen
                   scanl, scanr, sort, sortBy, sortOn, splitAt, subsequences, tails, take, takeWhile,
                   transpose, unfoldr, unzip, unzip3, zip, zip3, zipWith, (++))
 import Data.List.NonEmpty (NonEmpty (..), head, init, last, nonEmpty, tail)
-
 import GHC.Exts (sortWith)

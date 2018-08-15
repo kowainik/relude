@@ -79,8 +79,8 @@ import GHC.Enum (Bounded (..), Enum (..), boundedEnumFrom, boundedEnumFromThen)
 import GHC.Float (Double (..), Float (..), Floating (acos, acosh, asin, asinh, atan, atanh, cos, cosh, exp, logBase, pi, sin, sinh, sqrt, tan, tanh, (**)))
 import GHC.Generics (Generic)
 import GHC.Num (Integer, Num (..), subtract)
-import GHC.Real (Fractional (..), Integral (..), Ratio, Rational, Real (..), RealFrac (..), even,
-                 fromIntegral, gcd, lcm, odd, realToFrac, (^), (^^))
+import GHC.Real (Fractional (..), Integral (..), Ratio, Rational, Real (..), RealFrac (..),
+                 denominator, even, fromIntegral, gcd, lcm, numerator, odd, realToFrac, (^), (^^))
 import GHC.Show (Show)
 
 #if MIN_VERSION_base(4,10,0)

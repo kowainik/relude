@@ -5,9 +5,7 @@ Copyright:  (c) 2018 Kowainik
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Polymorphic grouping functions.
-
-Contains implememtation of polymorhic type classes for things like 'Set' and
+Contains implementation of polymorhic type classes for data types 'Set' and
 'Map'.
 -}
 
@@ -45,7 +43,7 @@ import qualified Data.Set as S
 -- Static Map
 ----------------------------------------------------------------------------
 
-{- | Read-only map or set. Contains polymorhic functions which work for both
+{- | Read-only map or set. Contains polymorphic functions which work for both
 sets and maps.
 -}
 class StaticMap t where

@@ -54,7 +54,7 @@ bug e = impureThrow (Bug (E.toException e) callStack)
 writing something like this:
 
 @
-isNonCriticalExc :: Exception e => e -> Bool
+isNonCriticalExc :: SomeException -> Bool
 isNonCriticalExc e
     | Just (_ :: NodeAttackedError) <- fromException e = True
     | Just DialogUnexpected{} <- fromException e = True
@@ -64,7 +64,7 @@ isNonCriticalExc e
 you can use 'Exc' pattern synonym:
 
 @
-isNonCriticalExc :: Exception e => e -> Bool
+isNonCriticalExc :: SomeException -> Bool
 isNonCriticalExc = \case
     Exc (_ :: NodeAttackedError) -> True  -- matching all exceptions of type 'NodeAttackedError'
     Exc DialogUnexpected{} -> True

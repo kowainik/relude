@@ -30,7 +30,7 @@ ownName = case getCallStack callStack of
     _          -> "<unknown>"
 
 {- | This function returns the name of its caller of the caller function, but it
-requires that the caller function and caller of the caller function has
+requires that the caller function and caller of the caller function have
 'HasCallStack' constraint. Otherwise, it returns @"<unkown>"@. It's useful for
 logging:
 
