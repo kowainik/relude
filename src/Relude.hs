@@ -1,15 +1,15 @@
 {-# LANGUAGE Trustworthy #-}
 
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-{- | Main module that reexports all functionality allowed to use
-without importing any other modules. Just add next lines to your
-module to replace default 'Prelude' with better one.
+Main module that reexports all functionality allowed to use without importing
+any other modules. If you want to use @relude@ per-module basis then just add
+next lines to your module to replace default 'Prelude':
 
 @
 \{\-\# LANGUAGE NoImplicitPrelude \#\-\}
@@ -17,33 +17,47 @@ module to replace default 'Prelude' with better one.
 __import__ "Relude"
 @
 
+Alternatively, you can replace @base@ package in your dependencies with
+@[base-noprelude](http://hackage.haskell.org/package/base-noprelude)@ and add
+the following 'Prelude' module to your package to use @relude@ by default in
+every module istead of 'Prelude':
+
+@
+__module__ Prelude (__module__ "Relude") __where__
+__import__ "Relude"
+@
+
 This documentation section contains description of internal module structure to
 help navigate between modules, search for interesting functionalities and
-understand where you need to put your new changes.
+understand where you need to put your new changes (if you're a contributor).
 
 Functions and types are distributed across multiple modules and grouped by
-meaning or __theme__. Name of the module should give you hints regarding what
-this module contains. Some /themes/ contain a great amount of both reexported
+meaning or __category__. Name of the module should give you hints regarding what
+this module contains. Some /categories/ contain a great amount of both reexported
 functions and functions of our own. To make it easier to understand these huge
 chunks of functions, all reexported stuff is moved into separate module with
-name @Relude.SomeTheme.Reexport@ and our own functions and types are in
-@Relude.SomeTheme.SomeName@. For example, see modules
-"Relude.Container.Class" and "Relude.Container.Reexport".
+name @Relude.SomeCategory.Reexport@ and our own functions and types are in
+@Relude.SomeCategory.SomeName@. For example, see modules
+"Relude.Foldable.Fold" and "Relude.Foldable.Reexport".
 
-Below is a short description of what you can find under different modules:
+Below is a short description of what you can find under different modules,
+imported by default from "Relude":
 
 * __"Relude.Applicative"__: reexports from "Control.Applicative" and some
   general-purpose applicative combinators.
 * __"Relude.Base"__: different general types and type classes from @base@
   package ('Int', 'Num', 'Generic', etc.) not exported by other modules.
 * __"Relude.Bool"__: 'Bool' data type with different predicates and combinators.
+* __"Relude.Container"__: 'One' typeclass for creating data structures from
+  singleton lement and reexports of types from packages @containers@ and
+  @unordered-containers@.
 * __"Relude.Debug"__: @trace@-like debugging functions with compile-time
-  warnings (so you don't forget to remove them)
+  warnings (so you don't forget to remove them).
 * __"Relude.DeepSeq"__: reexports from "Control.DeepSeq" module and
   functions to evaluate expressions to weak-head normal form or normal form.
-* __"Relude.Exception"__: reexports "Control.Exception.Safe" from
-  @safe-exceptions@ package, 'bug' as better 'error', 'Exc' pattern synonym for
-  convenient pattern-matching on exceptions.
+* __"Relude.Exception"__: reexports "Control.Exception", introduces 'bug'
+  function as better 'error' and 'Exc' pattern synonym for convenient
+  pattern-matching on exceptions.
 * __"Relude.Foldable"__: reexports functions for 'Foldable' and 'Traversable'.
 * __"Relude.Function"__: almost everything from "Data.Function" module.
 * __"Relude.Functor"__: reexports from "Data.Functor", "Data.Bifunctor",
@@ -52,14 +66,28 @@ Below is a short description of what you can find under different modules:
   files, 'IORef's, 'MVar's, etc.
 * __"Relude.List"__: big chunk of "Data.List", 'NonEmpty' type and
   functions for this type ('head', 'tail', 'last', 'init').
-* __"Relude.Monad"__: monad transormers, combinators for 'Maybe' and 'Either'.
+* __"Relude.Monad"__: reexports from "Data.Maybe" and "Data.Either" modules,
+  monad transormers, various combinators.
 * __"Relude.Monoid"__: reexports from "Data.Monoid" and "Data.Semigroup".
 * __"Relude.Nub"__: better versions of @nub@ function for list.
 * __"Relude.Print"__: polymorphic 'putStrLn' function and functions to print 'Text'.
 * __"Relude.String"__: reexports from @text@ and @bytestring@ packages with
     conversion functions between different textual types.
-* __"Relude.Unsafe"__: unsafe functions (produce 'error').
-  Not exported by "Relude" module by default.
+
+And these modules are not exported by default, but you can easily bring them to
+every module in your package by modifying your "Prelude" file:
+
+* __"Relude.Extra.Bifunctor"__: additional combinators for 'Bifunctor'.
+* __"Relude.Extra.CallStack"__: useful functions to extract information from
+  'CallStack'.
+* __"Relude.Extra.Enum"__: extra utilities for types that implement 'Bounded'
+  and 'Enum' constraints.
+* __"Relude.Extra.Group"__: grouping functions, polymorphic on return @Map@ type.
+* __"Relude.Extra.Map"__: typeclass for @Map@-like data structures.
+* __"Relude.Extra.Newtype"__: generic functions that automatically work for any
+  @newtype@.
+* __"Relude.Unsafe"__: unsafe partial functions (produce 'error') for lists and
+  'Maybe'.
 -}
 
 module Relude

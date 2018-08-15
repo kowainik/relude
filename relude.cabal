@@ -93,8 +93,8 @@ library
                                Relude.Lifted.File
                                Relude.Lifted.IORef
                            Relude.List
+                               Relude.List.NonEmpty
                                Relude.List.Reexport
-                               Relude.List.Safe
                            Relude.Monad
                                Relude.Monad.Either
                                Relude.Monad.Maybe
@@ -115,7 +115,6 @@ library
                            Relude.Extra.Map
                            Relude.Extra.Newtype
                            Relude.Unsafe
-
 
   ghc-options:         -Wall
                        -Wcompat

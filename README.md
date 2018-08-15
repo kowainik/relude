@@ -208,7 +208,11 @@ We also have `data Undefined = Undefined` (which, too, comes with warnings).
 
 ### Exceptions
 
-TODO: write about reexports, `Bug` and `Exc` pattern.
+`relude` reexports `Exception` type from `base` package and introduces `bug`
+function as an alternative to `error`. There's also very convenient `Exc`
+pattern-synonym to handle exceptions of different types.
+
+See [`Relude.Exception`](src/Relude/Exception.hs) module for details.
 
 What's new? [↑](#structure-of-this-tutorial)
 --------------------------------------------

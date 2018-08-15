@@ -1,4 +1,10 @@
--- | This module exports all 'Foldable' and 'Traversable' related stuff.
+{- |
+Copyright:  (c) 2018 Kowainik
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
+
+This module exports all 'Foldable' and 'Traversable' related stuff.
+-}
 
 module Relude.Foldable
        ( module Relude.Foldable.Fold

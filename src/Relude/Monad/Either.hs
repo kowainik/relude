@@ -3,14 +3,15 @@
 
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
--- | Utilites to work with @Either@ data type.
+Utilites to work with @Either@ data type.
+-}
 
 module Relude.Monad.Either
        ( fromLeft

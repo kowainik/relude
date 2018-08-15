@@ -1,13 +1,13 @@
 {-# LANGUAGE Unsafe #-}
 
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-{- | Unsafe functions to work with lists and 'Maybe'.
+Unsafe functions to work with lists and 'Maybe'.
 Sometimes unavoidable but better don't use them. This module
 is intended to be imported qualified and it's not even included
 in default prelude exports.

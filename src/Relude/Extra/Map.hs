@@ -1,7 +1,14 @@
 {-# LANGUAGE TypeFamilies #-}
 
-{- | Contains implememtation of polymorhic type classes for things like 'Set'
-and 'Map'.
+{- |
+Copyright:  (c) 2018 Kowainik
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
+
+Polymorphic grouping functions.
+
+Contains implememtation of polymorhic type classes for things like 'Set' and
+'Map'.
 -}
 
 module Relude.Extra.Map

@@ -1,11 +1,12 @@
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
--- | This module reexports very basic and primitive functions and function combinators.
+This module reexports very basic and primitive functions and function combinators.
+-}
 
 module Relude.Function
        ( module Data.Function

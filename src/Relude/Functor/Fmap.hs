@@ -1,14 +1,15 @@
 {-# LANGUAGE CPP  #-}
 {-# LANGUAGE Safe #-}
 
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
--- | This module contains useful functions to work with 'Functor' type class.
+This module contains useful functions to work with 'Functor' type class.
+-}
 
 module Relude.Functor.Fmap
        ( (<<$>>)

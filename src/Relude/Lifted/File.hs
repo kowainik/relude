@@ -1,14 +1,15 @@
 {-# LANGUAGE Safe #-}
 
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
--- | Lifted versions of functions working with files and common IO.
--- All functions are specialized to 'Data.Text.Text'.
+Lifted versions of functions working with files and common IO.
+All functions are specialized to 'Data.Text.Text'.
+-}
 
 module Relude.Lifted.File
        ( appendFile

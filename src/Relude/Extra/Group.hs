@@ -1,10 +1,12 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeFamilies        #-}
 
-{-
-Copyright: (c) 2017-2018 Serokelll
-           (c) 2018 Kowainik
-License: MIT
+{- |
+Copyright:  (c) 2018 Kowainik
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
+
+Polymorphic grouping functions.
 -}
 
 module Relude.Extra.Group
