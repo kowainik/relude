@@ -1,6 +1,11 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 
-{- | Functions to ease work with newtypes.
+{- |
+Copyright:  (c) 2018 Kowainik
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
+
+Functions to ease work with newtypes.
 -}
 
 module Relude.Extra.Newtype

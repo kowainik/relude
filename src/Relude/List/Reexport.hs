@@ -1,13 +1,14 @@
 {-# LANGUAGE Trustworthy #-}
 
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
--- | This module reexports functinons to work with list, 'NonEmpty' and String types.
+Reexports most of the "Data.List" and "Data.List.NonEmpty".
+-}
 
 module Relude.List.Reexport
        ( module Data.List
@@ -21,5 +22,4 @@ import Data.List (break, cycle, drop, dropWhile, filter, genericDrop, genericLen
                   scanl, scanr, sort, sortBy, sortOn, splitAt, subsequences, tails, take, takeWhile,
                   transpose, unfoldr, unzip, unzip3, zip, zip3, zipWith, (++))
 import Data.List.NonEmpty (NonEmpty (..), head, init, last, nonEmpty, tail)
-
 import GHC.Exts (sortWith)

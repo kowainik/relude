@@ -7,13 +7,20 @@
 
 {-# OPTIONS_GHC -fno-warn-unticked-promoted-constructors #-}
 
--- | Fixes and additions to 'Foldable'.
+{- |
+Copyright: (c) 2016 Stephen Diehl
+           (c) 20016-2018 Serokell
+           (c) 2018 Kowainik
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
+
+Fixes and additions to 'Foldable'.
+-}
 
 module Relude.Foldable.Fold
        ( flipfoldl'
        , foldMapA
        , foldMapM
-       , safeHead
        , sum
        , product
 
@@ -24,6 +31,10 @@ module Relude.Foldable.Fold
        , anyM
        , andM
        , orM
+
+         -- * Internals
+       , DisallowElem
+       , ElemErrorMessage
        ) where
 
 import GHC.TypeLits (ErrorMessage (..), TypeError)
@@ -35,41 +46,47 @@ import Relude.Container.Reexport (HashSet, Set)
 import Relude.Foldable.Reexport (Foldable (..))
 import Relude.Function (flip, (.))
 import Relude.Functor ((<$>))
-import Relude.Monad.Reexport (Maybe (..), Monad (..))
+import Relude.Monad.Reexport (Monad (..))
 import Relude.Monoid (Monoid (..))
 
 import qualified Data.Foldable as F
 
 -- $setup
 -- >>> :set -XOverloadedStrings
--- >>> import Relude.Base (String, Rational, even, (/))
+-- >>> import Relude.Base (Int, String, Rational, even, (/))
 -- >>> import Relude.Bool (when)
+-- >>> import Relude.List (replicate)
 -- >>> import Relude.Monad (Maybe (..), (>=>))
 -- >>> import Relude.Print (print, putTextLn)
 -- >>> import Relude.String (Text, readMaybe)
 -- >>> import qualified Data.HashMap.Strict as HashMap
 
-safeHead :: Foldable f => f a -> Maybe a
-safeHead = foldr (\x _ -> Just x) Nothing
-{-# INLINE safeHead #-}
-
 {- | Similar to 'foldl'' but takes a function with its arguments flipped.
 
 >>> flipfoldl' (/) 5 [2,3] :: Rational
 15 % 2
-
 -}
 flipfoldl' :: Foldable f => (a -> b -> b) -> b -> f a -> b
 flipfoldl' f = foldl' (flip f)
 {-# INLINE flipfoldl' #-}
 
-foldMapA :: (Monoid b, Applicative m, Foldable f) => (a -> m b) -> f a -> m b
+{- | Polymorphic version of @concatMapA@ function.
+
+>>> foldMapA @[Int] (Just . replicate 3) [1..3]
+Just [1,1,1,2,2,2,3,3,3]
+-}
+foldMapA :: forall b m f a . (Monoid b, Applicative m, Foldable f) => (a -> m b) -> f a -> m b
 foldMapA f = foldr step (pure mempty)
   where
     step a mb = mappend <$> f a <*> mb
 {-# INLINE foldMapA #-}
 
-foldMapM :: (Monoid b, Monad m, Foldable f) => (a -> m b) -> f a -> m b
+{- | Polymorphic version of @concatMapM@ function.
+
+>>> foldMapM @[Int] (Just . replicate 3) [1..3]
+Just [1,1,1,2,2,2,3,3,3]
+-}
+foldMapM :: forall b m f a . (Monoid b, Monad m, Foldable f) => (a -> m b) -> f a -> m b
 foldMapM f xs = foldr step return xs mempty
   where
     step x r z = f x >>= \y -> r $! z `mappend` y

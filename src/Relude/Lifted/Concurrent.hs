@@ -1,13 +1,14 @@
 {-# LANGUAGE Safe #-}
 
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
--- | Concurrency useful and common functions.
+Lifted 'MVar' and 'STM' functions.
+-}
 
 module Relude.Lifted.Concurrent
        ( -- * MVar

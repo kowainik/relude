@@ -1,18 +1,21 @@
-{- | Contains useful functions to work with GHC callstack.
+{- |
+Copyright:  (c) 2018 Kowainik
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
+
+Contains useful functions to work with GHC callstack.
 -}
 
 module Relude.Extra.CallStack
        ( ownName
+       , callerName
        ) where
 
 import Relude
 
-import GHC.Stack (getCallStack)
-
--- TODO: better name?
 {- | This function returns the name of its caller function, but it requires
 that the caller function has 'HasCallStack' constraint. Otherwise, it returns
-@"ownName"@.
+@"<unknown>"@.
 
 >>> foo :: HasCallStack => String; foo = ownName
 >>> foo
@@ -24,4 +27,21 @@ that the caller function has 'HasCallStack' constraint. Otherwise, it returns
 ownName :: HasCallStack => String
 ownName = case getCallStack callStack of
     _:caller:_ -> fst caller
-    _          -> "ownName"
+    _          -> "<unknown>"
+
+{- | This function returns the name of its caller of the caller function, but it
+requires that the caller function and caller of the caller function have
+'HasCallStack' constraint. Otherwise, it returns @"<unkown>"@. It's useful for
+logging:
+
+>>> log :: HasCallStack => String -> IO (); log s = putStrLn $ callerName ++ ":" ++ s
+>>> greeting :: HasCallStack => IO (); greeting = log "Starting..." >> putStrLn "Hello!" >> log "Ending..."
+>>> greeting
+greeting:Starting...
+Hello!
+greeting:Ending...
+-}
+callerName :: HasCallStack => String
+callerName = case getCallStack callStack of
+    _:_:caller:_ -> fst caller
+    _            -> "<unknown>"

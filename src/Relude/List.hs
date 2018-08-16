@@ -1,18 +1,19 @@
-{-
+{-# LANGUAGE Safe #-}
+
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
+
+Utility functions to work with lists.
 -}
 
-{-# LANGUAGE Safe #-}
-
--- | Utility functions to work with lists.
-
 module Relude.List
-       ( module Relude.List.Reexport
-       , module Relude.List.Safe
+       ( module Relude.List.NonEmpty
+       , module Relude.List.Reexport
        ) where
 
+import Relude.List.NonEmpty
 import Relude.List.Reexport
-import Relude.List.Safe

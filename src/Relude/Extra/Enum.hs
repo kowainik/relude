@@ -1,10 +1,19 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications    #-}
 
+{- |
+Copyright:  (c) 2018 Kowainik
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
+
+Mini @bounded-enum@ framework inside @relude@.
+-}
+
 module Relude.Extra.Enum
        ( universe
        , inverseMap
        , next
+       , prec
        , safeToEnum
        ) where
 
@@ -26,7 +35,14 @@ import qualified Data.Map.Strict as M
 universe :: (Bounded a, Enum a) => [a]
 universe = [minBound .. maxBound]
 
-{- | Creates a function that is the inverse of a given function @f@.
+{- | @inverseMap f@ creates a function that is the inverse of a given function
+@f@. It does so by constructing 'M.Map' for every value @f a@. The
+implementation makes sure that the 'M.Map' is constructed only once and then
+shared for every call.
+
+The complexity of reversed mapping though is \(\mathcal{O}(\log n)\).
+
+Usually you want to use 'inverseMap' to inverse 'show' function.
 
 >>> data Color = Red | Green | Blue deriving (Show, Enum, Bounded)
 >>> parse = inverseMap show :: String -> Maybe Color
@@ -35,17 +51,15 @@ Just Red
 >>> parse "Black"
 Nothing
 -}
-inverseMap :: forall a k. (Bounded a, Enum a, Ord k)
-           => (a -> k)
-           -> k
-           -> Maybe a
-inverseMap f = \x -> M.lookup x dict
-    where
-        dict :: M.Map k a
-        dict = M.fromList $ zip (map f univ) univ
+inverseMap :: forall a k . (Bounded a, Enum a, Ord k)
+           => (a -> k) -> (k -> Maybe a)
+inverseMap f = \k -> M.lookup k dict
+  where
+    dict :: M.Map k a
+    dict = M.fromList $ zip (map f univ) univ
 
-        univ :: [a]
-        univ = universe
+    univ :: [a]
+    univ = universe
 
 {- | Like 'succ', but doesn't fail on 'maxBound'. Instead it returns 'minBound'.
 
@@ -55,12 +69,25 @@ True
 False
 >>> succ True
 *** Exception: Prelude.Enum.Bool.succ: bad argument
-
 -}
 next  :: (Eq a, Bounded a, Enum a) => a -> a
 next e
     | e == maxBound = minBound
     | otherwise     = succ e
+
+{- | Like 'pred', but doesn't fail on 'minBound'. Instead it returns 'maxBound'.
+
+>>> prec False
+True
+>>> prec True
+False
+>>> pred False
+*** Exception: Prelude.Enum.Bool.pred: bad argument
+-}
+prec  :: (Eq a, Bounded a, Enum a) => a -> a
+prec e
+    | e == minBound = maxBound
+    | otherwise     = pred e
 
 {- | Returns 'Nothing' if given 'Int' outside range.
 

@@ -1,11 +1,12 @@
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
--- | This module reexports functions to work with 'Bool' type.
+Reexports functions to work with 'Bool' type.
+-}
 
 module Relude.Bool.Reexport
        ( module Control.Monad

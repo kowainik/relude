@@ -13,6 +13,12 @@ Change log
   Also reexport `fromLeft` and `fromRight` from `base` where possible.
 * [#49](https://github.com/kowainik/relude/issues/49):
   Speed up and refactor property tests.
+* [#54](https://github.com/kowainik/relude/issues/54):
+  Improve documentation.
+  Add more examples to documentation and more tests.
+  Reexport `withReader` and `withReaderT`.
+  Remove `safeHead`.
+  Rename `Relude.List.Safe` to `Relude.List.NonEmpty`.
 
 0.1.1
 =====

@@ -1,16 +1,16 @@
-{-# LANGUAGE BangPatterns #-}
-{-# LANGUAGE CPP          #-}
-{-# LANGUAGE Unsafe       #-}
+{-# LANGUAGE CPP    #-}
+{-# LANGUAGE Unsafe #-}
 
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
--- | Reexports from @GHC.*@ modules of <https://www.stackage.org/lts-8.9/package/base-4.9.1.0 base>
--- package.
+Reexports from @Data.*@ and @GHC.*@ modules of
+<https://www.stackage.org/lts-8.9/package/base-4.9.1.0 base> package.
+-}
 
 module Relude.Base
        ( -- * Base types
@@ -51,8 +51,6 @@ module Relude.Base
        , module GHC.OverloadedLabels
        , module GHC.ExecutionStack
        , module GHC.Stack
-
-       , ($!)
        ) where
 
 -- Base types
@@ -76,12 +74,13 @@ import Data.Proxy (Proxy (..))
 import Data.Typeable (Typeable)
 import Data.Void (Void, absurd, vacuous)
 
-import GHC.Base (String, asTypeOf, maxInt, minInt, ord, seq)
+import GHC.Base (String, asTypeOf, maxInt, minInt, ord, seq, ($!))
 import GHC.Enum (Bounded (..), Enum (..), boundedEnumFrom, boundedEnumFromThen)
 import GHC.Float (Double (..), Float (..), Floating (acos, acosh, asin, asinh, atan, atanh, cos, cosh, exp, logBase, pi, sin, sinh, sqrt, tan, tanh, (**)))
 import GHC.Generics (Generic)
 import GHC.Num (Integer, Num (..), subtract)
-import GHC.Real hiding (showSigned, (%))
+import GHC.Real (Fractional (..), Integral (..), Ratio, Rational, Real (..), RealFrac (..),
+                 denominator, even, fromIntegral, gcd, lcm, numerator, odd, realToFrac, (^), (^^))
 import GHC.Show (Show)
 
 #if MIN_VERSION_base(4,10,0)
@@ -94,20 +93,3 @@ import GHC.ExecutionStack (getStackTrace, showStackTrace)
 import GHC.OverloadedLabels (IsLabel (..))
 import GHC.Stack (CallStack, HasCallStack, callStack, currentCallStack, getCallStack,
                   prettyCallStack, prettySrcLoc, withFrozenCallStack)
-
--- $setup
--- >>> import Relude.Function (const, ($))
-
--- | Stricter version of 'Data.Function.$' operator.
--- Default Prelude defines this at the toplevel module, so we do as well.
---
--- >>> const 3 $ Prelude.undefined
--- 3
--- >>> const 3 $! Prelude.undefined
--- *** Exception: Prelude.undefined
--- CallStack (from HasCallStack):
---   error, called at libraries/base/GHC/Err.hs:79:14 in base:GHC.Err
--- ...
-($!) :: (a -> b) -> a -> b
-f $! x = let !vx = x in f vx
-infixr 0 $!

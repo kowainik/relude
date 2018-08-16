@@ -1,15 +1,16 @@
 {-# LANGUAGE Safe #-}
 
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
--- | Convenient utils to work with 'Applicative'. There were more functions in this module
--- (see <https://www.stackage.org/haddock/lts-8.9/protolude-0.1.10/Applicative.html protolude version>)
--- but only convenient ans most used are left.
+Convenient utils to work with 'Applicative'. There were more functions in this module
+(see <https://www.stackage.org/haddock/lts-8.9/protolude-0.1.10/Applicative.html protolude version>)
+but only convenient ans most used are left.
+-}
 
 module Relude.Applicative
        ( module Control.Applicative

@@ -1,15 +1,16 @@
 {-# LANGUAGE Safe #-}
 
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
+
+This module contains safe functions to work with list type in terms of 'NonEmpty'.
 -}
 
--- | This module contains safe functions to work with list type (mostly with 'NonEmpty').
-
-module Relude.List.Safe
+module Relude.List.NonEmpty
        ( viaNonEmpty
        , uncons
        , whenNotNull
@@ -37,7 +38,6 @@ import Relude.Monad (Maybe (..), Monad (..))
 Just 1
 >>> viaNonEmpty head []
 Nothing
-
 -}
 viaNonEmpty :: (NonEmpty a -> b) -> [a] -> Maybe b
 viaNonEmpty f = fmap f . nonEmpty

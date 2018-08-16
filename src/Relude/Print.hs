@@ -3,14 +3,15 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE Trustworthy       #-}
 
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
--- | Generalization of 'Prelude.putStr' and 'Prelude.putStrLn' functions.
+Generalization of 'Prelude.putStr' and 'Prelude.putStrLn' functions.
+-}
 
 module Relude.Print
        ( Print (..)

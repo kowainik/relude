@@ -10,16 +10,17 @@
 {-# LANGUAGE TypeInType         #-}
 #endif
 
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
--- | Functions for debugging. If you left these functions in your code
--- then warning is generated to remind you about left usages. Also some
--- functions (and data types) are convenient for prototyping.
+Functions for debugging. If you left these functions in your code then a warning
+is generated to remind you about left usages. Also some functions (and data
+types) are convenient for prototyping.
+-}
 
 module Relude.Debug
        ( Undefined (..)
@@ -33,18 +34,15 @@ module Relude.Debug
        , undefined
        ) where
 
-import Control.Monad (Monad, return)
 import Data.Data (Data)
-import Data.Text (Text, unpack)
-import Data.Typeable (Typeable)
 import GHC.Exts (RuntimeRep, TYPE)
-import GHC.Generics (Generic)
 import System.IO.Unsafe (unsafePerformIO)
 
-import Relude.Base (HasCallStack)
-
 import Relude.Applicative (pass)
+import Relude.Base (Generic, HasCallStack, Typeable)
+import Relude.Monad.Reexport (Monad (..))
 import Relude.Print (Print, putStrLn)
+import Relude.String (Text, toString)
 
 import qualified Prelude as P
 
@@ -58,7 +56,7 @@ trace string expr = unsafePerformIO (do
 -- | 'P.error' that takes 'Text' as an argument.
 error :: forall (r :: RuntimeRep) . forall (a :: TYPE r) . HasCallStack
       => Text -> a
-error s = P.error (unpack s)
+error s = P.error (toString s)
 
 -- | Version of 'Debug.Trace.traceShow' that leaves warning.
 {-# WARNING traceShow "'traceShow' remains in code" #-}
@@ -78,7 +76,7 @@ traceShowM a = trace (P.show a) pass
 -- | Version of 'Debug.Trace.traceM' that leaves warning and takes 'Text'.
 {-# WARNING traceM "'traceM' remains in code" #-}
 traceM :: (Monad m) => Text -> m ()
-traceM s = trace (unpack s) pass
+traceM s = trace (toString s) pass
 
 -- | Version of 'Debug.Trace.traceId' that leaves warning and takes 'Text'.
 {-# WARNING traceId "'traceId' remains in code" #-}

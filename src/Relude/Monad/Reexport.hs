@@ -1,13 +1,14 @@
 {-# LANGUAGE Safe #-}
 
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
--- | This module reexports functions to work with monads.
+Reexports functions to work with monads.
+-}
 
 module Relude.Monad.Reexport
        ( -- * Reexport transformers
@@ -31,7 +32,8 @@ module Relude.Monad.Reexport
 
 -- Monad transformers
 import Control.Monad.Except (ExceptT (..), runExceptT)
-import Control.Monad.Reader (MonadReader, Reader, ReaderT (..), ask, asks, local, reader, runReader)
+import Control.Monad.Reader (MonadReader, Reader, ReaderT (..), ask, asks, local, reader, runReader,
+                             withReader, withReaderT)
 import Control.Monad.State.Strict (MonadState, State, StateT (..), evalState, evalStateT, execState,
                                    execStateT, get, gets, modify, modify', put, runState, state,
                                    withState)

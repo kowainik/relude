@@ -1,11 +1,13 @@
-{-
+{- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
            (c) 2018 Kowainik
-License: MIT
--}
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
 
--- | This module reexports all container related stuff from 'Prelude'.
+Reexports all container-related stuff from @base@, @containers@ and
+@unordered-containers@ packages.
+-}
 
 module Relude.Container.Reexport
        ( module Data.Hashable
