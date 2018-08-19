@@ -45,7 +45,7 @@
 7. **User-friendliness.** Ability to quickly migrate to `relude` if you're familiar
    with the common libraries like `text` and `containers`.
 8. **Exploration.** Experiment with new ideas and proposals without introducing
-   breaking changes. `relude` uses approach with `Extra.*` modules which are not
+   breaking changes. `relude` uses the approach with `Extra.*` modules which are not
    exported by default so it's quite easy to bring something new and let users
    decide to use it or not.
 
@@ -62,7 +62,7 @@ This tutorial has several parts:
 6. [Migration guide.](#migration-guide-)
 
 This is neither a tutorial on _Haskell_ nor tutorial on each function contained
-5n `Relude`. For detailed documentation of every function together with examples
+in `Relude`. For detailed documentation of every function together with examples
 and usage, see [_Haddock documentation_](http://hackage.haskell.org/package/relude).
 
 ## Get started [↑](#structure-of-this-tutorial)
@@ -181,7 +181,7 @@ We also have `data Undefined = Undefined` (which, too, comes with warnings).
 
 See [`Relude.Exception`](src/Relude/Exception.hs) module for details on exceptions.
 
-### containers and unordered-containers
+### containers & unordered-containers
 
 The following types from these two packages are exported:
 Then, some commonly used types:
@@ -190,7 +190,7 @@ Then, some commonly used types:
 * Sets: `Set`, `HashSet`, `IntSet`.
 * Sequences: `Seq`.
 
-### text and bytestring
+### text & bytestring
 
 `relude` exports `Text` and `ByteString` (as well as synonyms `LText` and `LByteString`
 for lazy versions) and some functions work with `Text` instead of `String` –
@@ -200,7 +200,7 @@ Also, `toText/toLText/toString` can convert `Text|LText|String` types to
 `Text/LText/String`. If you want to convert to and from `ByteString` use
 `encodeUtf8/decodeUtf8` functions.
 
-### transforms and mtl
+### transforms & mtl
 
 The following parts of these two libraries are exported:
 
