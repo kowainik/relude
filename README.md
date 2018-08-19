@@ -45,55 +45,32 @@
 7. **User-friendliness.** Ability to quickly migrate to `relude` if you're familiar
    with the common libraries like `text` and `containers`.
 8. **Exploration.** Experiment with new ideas and proposals without introducing
-   breaking changes.
+   breaking changes. `relude` uses approach with `Extra.*` modules which are not
+   exported by default so it's quite easy to bring something new and let users
+   decide to use it or not.
 
 This README contains introduction to `Relude` and a tutorial on how to use it.
 
-Structure of this tutorial
---------------------------
+## Structure of this tutorial
 
 This tutorial has several parts:
 
-1. [Motivation.](#motivation-)
-2. [Get started.](#get-started-)
-3. [Difference from `Prelude`.](#difference-from-prelude-)
-4. [Reexports.](#reexports-)
-5. [What's new?](#whats-new-)
+1. [Get started.](#get-started-)
+2. [Difference from `Prelude`.](#difference-from-prelude-)
+3. [Reexports.](#reexports-)
+4. [What's new?](#whats-new-)
 6. [Migration guide.](#migration-guide-)
 
 This is neither a tutorial on _Haskell_ nor tutorial on each function contained
-in `Relude`. For detailed documentation of every function together with examples
+5n `Relude`. For detailed documentation of every function together with examples
 and usage, see [_Haddock documentation_](http://hackage.haskell.org/package/relude).
 
-Motivation [↑](#structure-of-this-tutorial)
-------------------------------------------
-
-We decided to base `relude` on `universum` due to the following reasons:
-
-1. `universum` helps to achieve our goals more than any other custom prelude.
-2. We worked on `universum` a lot (just check contributors statistics) and we
-   know its internal structure.
-
-The motivation to create another alternative prelude instead of modifying
-existing one is that it's hard to change preludes in any way. `relude`
-uses approach with `Extra.*` modules which are not exported by default so it's
-quite easy to bring something new (that satisfies `relude` goals) and let users
-decide to use it or not.
-
-Unlike `universum`, we are:
-
-1. Not trying to replace `Foldable` with custom `Container` type class. We only
-   forbid `elem` and `notElem` functions for sets due to performance reasons.
-2. Have less dependencies: no `vector`, no `microlens`, no `safe-exceptions`, no `type-operators`.
-3. Have a lot of other different improvements.
-
-Get started [↑](#structure-of-this-tutorial)
---------------------------------------------
+## Get started [↑](#structure-of-this-tutorial)
 
 If you want to start using `relude` in your project and explore it with the help
 of compiler, set everything up according to the instructions below.
 
-### `base-noprelude`
+### base-noprelude
 
 This is the recommended way to use custom prelude. It requires you to perform
 the following steps:
@@ -108,6 +85,8 @@ the following steps:
 
    import Relude
    ```
+   > **NOTE:** if you use [`summoner`](https://github.com/kowainik/summoner) to generate Haskell project,
+   > this tool can automatically create such structure for you when you specify custom prelude.
 3. Optionally modify your `Prelude` to include more or less functions. Probably
    you want to hide something from `Relude` module. Or maybe you want to add
    something from `Relude.Extra.*` modules!
@@ -136,8 +115,7 @@ Then add the following import to your modules:
 import Relude
 ```
 
-Difference from Prelude [↑](#structure-of-this-tutorial)
---------------------------------------------------------
+## Difference from Prelude [↑](#structure-of-this-tutorial)
 
 * `head`, `tail`, `last`, `init` work with `NonEmpty a` instead of `[a]`.
 * `undefined` triggers a compiler warning, because you probably don't want to
@@ -159,30 +137,32 @@ Difference from Prelude [↑](#structure-of-this-tutorial)
 * You can't call `elem` and `notElem` functions over `Set` and `HashSet`. These
   functions are forbidden for these two types because of the performance reasons.
 * `error` takes `Text`.
-* `lookup` doesn't work on list of pairs.
+* `lookup` for lists is not exported.
 
-Reexports [↑](#structure-of-this-tutorial)
-------------------------------------------
+## Reexports [↑](#structure-of-this-tutorial)
 
-### Commonly used libraries
+`relude` reexports some parts of the following libraries:
 
-First of all, we reexport some generally useful modules: `Control.Applicative`,
-`Data.Traversable`, `Data.Monoid`, `Control.DeepSeq`, `Data.List`, and lots of
-others. Just remove unneeded imports after importing `Relude` (you can use
-`.hlint.yaml` file for this).
+* `base`
+* `containers`
+* `unordered-containers`
+* `text`
+* `bytestring`
+* `transformers`
+* `mtl`
+* `deepseq`
+* `stm`
 
-Then, some commonly used types: `Map/HashMap/IntMap`, `Set/HashSet/IntSet`,
-`Seq`, `Text` and `ByteString` (as well as synonyms `LText` and `LByteString`
-for lazy versions).
+If you want to clean up imports after switching to `relude`, you can use
+`relude`-specific [`.hlint.yaml`](.hlint.yaml) configuration for this task.
+
+### base
+
+Some generally useful modules from `base` package, like: `Control.Applicative`,
+`Data.Traversable`, `Data.Monoid`, `Data.List`, and lots of others.
 
 `liftIO` and `MonadIO` are exported by default. A lot of `IO` functions are
 generalized to `MonadIO`.
-
-`deepseq` is exported. For instance, if you want to force deep evaluation of
-some value (in IO), you can write `evaluateNF a`. WHNF evaluation is possible
-with `evaluateWHNF a`.
-
-We also reexport big chunks of these libraries: `mtl`, `stm`.
 
 [`Bifunctor`](http://hackage.haskell.org/package/base-4.9.1.0/docs/Data-Bifunctor.html)
 type class with useful instances is exported.
@@ -190,39 +170,57 @@ type class with useful instances is exported.
 * `first` and `second` functions apply a function to first/second part of a tuple (for tuples).
 * `bimap` takes two functions and applies them to first and second parts respectively.
 
-### Text
+`trace`, `traceM`, `traceShow`, etc. are available by default. GHC will warn you
+if you accidentally leave them in code, however (same for `undefined`).
 
-We export `Text` and `LText`, and some functions work with `Text` instead of `String` –
+We also have `data Undefined = Undefined` (which, too, comes with warnings).
+
+`relude` reexports `Exception` type from the `base` package and introduces the
+`bug` function as an alternative to `error`. There's also a very convenient
+`Exc` pattern-synonym to handle exceptions of different types.
+
+See [`Relude.Exception`](src/Relude/Exception.hs) module for details on exceptions.
+
+### containers and unordered-containers
+
+The following types from these two packages are exported:
+Then, some commonly used types:
+
+* Maps: strict versions of `Map`, `HashMap`, `IntMap`.
+* Sets: `Set`, `HashSet`, `IntSet`.
+* Sequences: `Seq`.
+
+### text and bytestring
+
+`relude` exports `Text` and `ByteString` (as well as synonyms `LText` and `LByteString`
+for lazy versions) and some functions work with `Text` instead of `String` –
 specifically, IO functions (`readFile`, `putStrLn`, etc) and `show`. In fact, `show`
 is polymorphic and can produce strict or lazy `Text`, `String`, or `ByteString`.
 Also, `toText/toLText/toString` can convert `Text|LText|String` types to
 `Text/LText/String`. If you want to convert to and from `ByteString` use
 `encodeUtf8/decodeUtf8` functions.
 
-### Debugging and `undefined`s
+### transforms and mtl
 
-`trace`, `traceM`, `traceShow`, etc. are available by default. GHC will warn you
-if you accidentally leave them in code, however (same for `undefined`).
+The following parts of these two libraries are exported:
 
-We also have `data Undefined = Undefined` (which, too, comes with warnings).
+* Transformers: `State[T]`, `Reader[T]`, `ExceptT`, `MaybeT`.
+* Classes: `MonadReader`, `MonadState`, `MonadError`.
 
-### Exceptions
+### Deepseq
 
-`relude` reexports `Exception` type from the `base` package and introduces the
-`bug` function as an alternative to `error`. There's also a very convenient
-`Exc` pattern-synonym to handle exceptions of different types.
+`deepseq` is exported. For instance, if you want to force deep evaluation of
+some value (in `IO`), you can write `evaluateNF a`. WHNF evaluation is possible
+with `evaluateWHNF a`.
 
-See [`Relude.Exception`](src/Relude/Exception.hs) module for details.
-
-What's new? [↑](#structure-of-this-tutorial)
---------------------------------------------
+## What's new? [↑](#structure-of-this-tutorial)
 
 Finally, we can move to part describing the new cool features we bring with `relude`.
 
 ### Available by default
 
-* Safe analogue for `head` function: `safeHead :: [a] -> Maybe a` or you can
-  use our `viaNonEmpty` function to get `Maybe a`: `viaNonEmpty head :: [a] -> Maybe a`.
+* Safe analogue for list functions: use `viaNonEmpty` function to get `Maybe a`.
+  + `viaNonEmpty head :: [a] -> Maybe a`
 * `uncons` splits a list at the first element.
 * `ordNub` and `sortNub` are _O(n log n)_ versions of `nub` (which is quadratic)
   and `hashNub` and `unstableNub` are almost _O(n)_ versions of `nub`.
@@ -296,8 +294,7 @@ Finally, we can move to part describing the new cool features we bring with `rel
 * A lot of other cool things:
   + Explore `Extra` modules: [`Relude.Extra`](src/Relude/Extra/)
 
-Migration guide [↑](#structure-of-this-tutorial)
-------------------------------------------------
+## Migration guide [↑](#structure-of-this-tutorial)
 
 In order to replace default `Prelude` with `relude` you should start with instructions given in
 [_get started_](#get-started-) section.
@@ -310,7 +307,6 @@ This section describes what you need to change to make your code compile with `r
    1. Change `[a]` to `NonEmpty a` where it makes sense.
    2. Use functions which return `Maybe`. There is the `viaNonEmpty` function for this.
       And you can use it like `viaNonEmpty last l`.
-       + `viaNonEmpty head l` is `safeHead l`
        + `tail` is `drop 1`. It's almost never a good idea to use `tail` from `Prelude`.
    3. Add `import qualified Relude.Unsafe as Unsafe` and replace function with qualified usage.
 3. If you use `fromJust` or `!!` you should use them from `import qualified Relude.Unsafe as Unsafe`.
