@@ -123,7 +123,7 @@ library
                        -Wincomplete-record-updates
                        -fwarn-implicit-prelude
 
-  build-depends:       base >= 4.8 && < 5
+  build-depends:       base >= 4.9 && < 5
                      , bytestring
                      , containers
                      , deepseq
@@ -147,7 +147,7 @@ test-suite relude-test
 
   other-modules:       Test.Relude.Property
 
-  build-depends:       base >= 4.8 && < 5
+  build-depends:       base >= 4.9 && < 5
                      , relude
                      , bytestring
                      , text
@@ -173,7 +173,7 @@ test-suite relude-doctest
   hs-source-dirs:      test
   main-is:             Doctest.hs
 
-  build-depends:       base >= 4.8 && < 5
+  build-depends:       base >= 4.9 && < 5
                      , doctest
                      , Glob
 
@@ -185,7 +185,7 @@ benchmark relude-benchmark
   hs-source-dirs:      benchmark
   main-is:             Main.hs
 
-  build-depends:       base >= 4.8 && < 5
+  build-depends:       base >= 4.9 && < 5
                      , relude
                      , containers
                      , gauge
