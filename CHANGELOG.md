@@ -1,6 +1,12 @@
 Change log
 ==========
 
+0.2.1
+=====
+
+* [#41](https://github.com/kowainik/relude/issues/41):
+  Add 'Foldable1'.
+
 0.2.0
 =====
 

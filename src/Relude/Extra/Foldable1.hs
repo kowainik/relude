@@ -1,10 +1,13 @@
-{-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE InstanceSigs     #-}
+{-# LANGUAGE TypeApplications #-}
 
 module Relude.Extra.Foldable1
     ( Foldable1 (..)
     ) where
 
 import Relude hiding (Product (..), Sum (..))
+
+import Relude.Extra.Newtype (( #. ))
 
 import Data.Functor.Product (Product (..))
 import Data.Functor.Sum (Sum (..))
@@ -13,6 +16,8 @@ import qualified Data.Semigroup as SG
 -- | The class of foldable data structures that cannot be empty.
 
 class Foldable t => Foldable1 t where
+    {-# MINIMAL foldMap1 #-}
+
     {- | Map each element of the non-empty structure to a semigroup, and combine the results.
 
     >>> foldMap1 SG.Sum (1 :| [2, 3, 4])
@@ -22,6 +27,8 @@ class Foldable t => Foldable1 t where
 
     {- | Combine the elements of a non-empty structure using a semigroup.
 
+    >>> fold1 (1 :| [2, 3, 4 :: SG.Sum Int])
+    Sum {getSum = 10}
     >>> fold1 (4 :| [5, 10 :: SG.Product Int])
     Product {getProduct = 200}
     -}
@@ -86,6 +93,12 @@ instance Foldable1 Identity where
     foldMap1 :: Semigroup m => (a -> m) -> Identity a -> m
     foldMap1 f = f . coerce
 
+    fold1 :: Semigroup m => Identity m -> m
+    fold1 = coerce
+
+    toNonEmpty :: Identity a -> NonEmpty a
+    toNonEmpty = (:|[]) . coerce
+
     head1 :: Identity a -> a
     head1 = coerce
 
@@ -98,9 +111,37 @@ instance Foldable1 Identity where
     minimum1 :: Ord a => Identity a -> a
     minimum1 = coerce
 
+instance Foldable1 ((,) c) where
+    foldMap1 :: Semigroup m => (a -> m) -> (c, a) -> m
+    foldMap1 f (_, y) = f y
+
+    fold1 :: Semigroup m => (c, m) -> m
+    fold1 (_, y) = y
+
+    toNonEmpty :: (c, a) -> NonEmpty a
+    toNonEmpty (_, y) = (y :|[])
+
+    head1 :: (c, a) -> a
+    head1 (_, y) = y
+
+    last1 :: (c, a) -> a
+    last1 (_, y) = y
+
+    maximum1 :: Ord a => (c, a) -> a
+    maximum1 (_, y) = y
+
+    minimum1 :: Ord a => (c, a) -> a
+    minimum1 (_, y) = y
+
 instance (Foldable1 f, Foldable1 g) => Foldable1 (Compose f g) where
     foldMap1 :: Semigroup m => (a -> m) -> Compose f g a -> m
     foldMap1 f = foldMap1 (foldMap1 f) . getCompose
+
+    head1 :: Compose f g a -> a
+    head1 = head1 . head1 . getCompose
+
+    last1 :: Compose f g a -> a
+    last1 = last1 . last1 . getCompose
 
 instance (Foldable1 f, Foldable1 g) => Foldable1 (Product f g) where
     foldMap1 :: Semigroup m => (a -> m) -> Product f g a -> m
@@ -111,6 +152,3 @@ instance (Foldable1 f, Foldable1 g) => Foldable1 (Sum f g) where
     foldMap1 f (InL x) = foldMap1 f x
     foldMap1 f (InR y) = foldMap1 f y
 
-(#.) :: Coercible b c => (b -> c) -> (a -> b) -> (a -> c)
-(#.) _f = coerce
-{-# INLINE (#.) #-}
