@@ -1,13 +1,20 @@
 {-# LANGUAGE InstanceSigs     #-}
 {-# LANGUAGE TypeApplications #-}
 
+{- |
+Copyright: (c) 2011-2015 Edward Kmett
+           (c) 2018 Kowainik
+License:    MIT
+Maintainer: Kowainik <xrom.xkov@gmail.com>
+-}
+
 module Relude.Extra.Foldable1
     ( Foldable1 (..)
     ) where
 
 import Relude hiding (Product (..), Sum (..))
 
-import Relude.Extra.Newtype (( #. ))
+import Relude.Extra.Newtype ((#.))
 
 import Data.Functor.Product (Product (..))
 import Data.Functor.Sum (Sum (..))
@@ -121,17 +128,13 @@ instance Foldable1 ((,) c) where
     toNonEmpty :: (c, a) -> NonEmpty a
     toNonEmpty (_, y) = (y :|[])
 
-    head1 :: (c, a) -> a
-    head1 (_, y) = y
+    head1, last1 :: (c, a) -> a
+    head1 = snd
+    last1 = snd
 
-    last1 :: (c, a) -> a
-    last1 (_, y) = y
-
-    maximum1 :: Ord a => (c, a) -> a
-    maximum1 (_, y) = y
-
-    minimum1 :: Ord a => (c, a) -> a
-    minimum1 (_, y) = y
+    maximum1, minimum1 :: Ord a => (c, a) -> a
+    maximum1 = snd
+    minimum1 = snd
 
 instance (Foldable1 f, Foldable1 g) => Foldable1 (Compose f g) where
     foldMap1 :: Semigroup m => (a -> m) -> Compose f g a -> m
