@@ -41,16 +41,16 @@ import System.IO.Unsafe (unsafePerformIO)
 import Relude.Applicative (pass)
 import Relude.Base (Generic, HasCallStack, Typeable)
 import Relude.Monad.Reexport (Monad (..))
-import Relude.Print (Print, putStrLn)
-import Relude.String (Text, toString)
+import Relude.Print (putTextLn)
+import Relude.String (Text, show, toString)
 
 import qualified Prelude as P
 
 -- | Generalized over string version of 'Debug.Trace.trace' that leaves warnings.
 {-# WARNING trace "'trace' remains in code" #-}
-trace :: Print b => b -> a -> a
-trace string expr = unsafePerformIO (do
-    putStrLn string
+trace :: Text -> a -> a
+trace text expr = unsafePerformIO (do
+    putTextLn text
     return expr)
 
 -- | 'P.error' that takes 'Text' as an argument.
@@ -61,22 +61,22 @@ error s = P.error (toString s)
 -- | Version of 'Debug.Trace.traceShow' that leaves warning.
 {-# WARNING traceShow "'traceShow' remains in code" #-}
 traceShow :: P.Show a => a -> b -> b
-traceShow a b = trace (P.show a) b
+traceShow a b = trace (show a) b
 
 -- | Version of 'Debug.Trace.traceShow' that leaves warning.
 {-# WARNING traceShowId "'traceShowId' remains in code" #-}
 traceShowId :: P.Show a => a -> a
-traceShowId a = trace (P.show a) a
+traceShowId a = trace (show a) a
 
 -- | Version of 'Debug.Trace.traceShowM' that leaves warning.
 {-# WARNING traceShowM "'traceShowM' remains in code" #-}
 traceShowM :: (P.Show a, Monad m) => a -> m ()
-traceShowM a = trace (P.show a) pass
+traceShowM a = trace (show a) pass
 
 -- | Version of 'Debug.Trace.traceM' that leaves warning and takes 'Text'.
 {-# WARNING traceM "'traceM' remains in code" #-}
 traceM :: (Monad m) => Text -> m ()
-traceM s = trace (toString s) pass
+traceM s = trace s pass
 
 -- | Version of 'Debug.Trace.traceId' that leaves warning and takes 'Text'.
 {-# WARNING traceId "'traceId' remains in code" #-}

@@ -63,7 +63,7 @@ import qualified GHC.Show as Show (Show (show))
 -- >>> :set -XTypeApplications -XOverloadedStrings
 -- >>> import Relude.Base (Int)
 -- >>> import Relude.Function (($))
--- >>> import Relude.Print (putStrLn)
+-- >>> import Relude.Print (putStrLn, putTextLn)
 
 -- | Type synonym for 'Data.Text.Lazy.Text'.
 type LText = LT.Text
@@ -84,7 +84,7 @@ class ConvertUtf8 a b where
     --
     -- >>> decodeUtf8 @Text @ByteString "\208\191\208\176\209\130\208\176\208\186"
     -- "\1087\1072\1090\1072\1082"
-    -- >>> putStrLn $ decodeUtf8 @Text @ByteString "\208\191\208\176\209\130\208\176\208\186"
+    -- >>> putTextLn $ decodeUtf8 @Text @ByteString "\208\191\208\176\209\130\208\176\208\186"
     -- патак
     decodeUtf8 :: b -> a
 

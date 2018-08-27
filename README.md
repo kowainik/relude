@@ -129,9 +129,6 @@ import Relude
     space-efficient). So you should write `sortOn length` (would sort elements
     by length) but `sortWith fst` (would sort list of pairs by first element).
 * Functions `sum` and `product` are strict now, which makes them more efficient.
-* If you try to do something like `putStrLn "hi"`, you'll get an error message if
-  `OverloadedStrings` is enabled – it happens because the compiler doesn't know what
-  type to infer for the string. Use `putTextLn` in this case.
 * Since `show` doesn't come from `Show` anymore, you need to export `Show` from
   `Text.Show` module if you want to implement `Show` instance manually.
 * You can't call `elem` and `notElem` functions over `Set` and `HashSet`. These
@@ -330,7 +327,6 @@ This section describes what you need to change to make your code compile with `r
      + `whenRightM_ :: Monad m => m (Either l r) -> (r -> m ()) -> m ()`
 
 5. Forget about `String` type.
-   + Replace `putStr` and `putStrLn` with `putText` and `putTextLn`.
    + Replace `(++)` with `(<>)` for `String`-like types.
    + Try to use [`fmt`](http://hackage.haskell.org/package/fmt) library if you need to construct messages.
    + Use `toText/toLText/toString` functions to convert to `Text/LazyText/String` types.

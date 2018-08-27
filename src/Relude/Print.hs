@@ -14,76 +14,108 @@ Generalization of 'Prelude.putStr' and 'Prelude.putStrLn' functions.
 -}
 
 module Relude.Print
-       ( Print (..)
-       , print
+       ( -- * 'String'
+         print
+       , putStr
+       , putStrLn
+
+         -- * 'Text' & 'LText'
        , putText
        , putTextLn
        , putLText
        , putLTextLn
+
+         -- * 'ByteString' & 'LByteString'
+       , putBS
+       , putBSLn
+       , putLBS
+       , putLBSLn
        ) where
 
-import Data.Function ((.))
-
-import Relude.Monad.Reexport (MonadIO, liftIO)
-
-import qualified Prelude (print, putStr, putStrLn)
+-- Internal usage
+import Relude.Function ((.))
+import Relude.Monad.Reexport (MonadIO (..))
+import Relude.String (ByteString, LByteString, LText, Text)
 
 import qualified Data.ByteString.Char8 as BS
-import qualified Data.ByteString.Lazy.Char8 as BL
-
-import qualified Data.Text as T
+import qualified Data.ByteString.Lazy.Char8 as LBS
 import qualified Data.Text.IO as T
-
-import qualified Data.Text.Lazy as TL
 import qualified Data.Text.Lazy.IO as TL
-
 import qualified Relude.Base as Base
+import qualified System.IO as IO (print, putStr, putStrLn)
 
--- | Polymorfic over string and lifted to 'MonadIO' printing functions.
-class Print a where
-  putStr :: MonadIO m => a -> m ()
-  putStrLn :: MonadIO m => a -> m ()
-
-instance Print T.Text where
-  putStr = liftIO . T.putStr
-  putStrLn = liftIO . T.putStrLn
-
-instance Print TL.Text where
-  putStr = liftIO . TL.putStr
-  putStrLn = liftIO . TL.putStrLn
-
-instance Print BS.ByteString where
-  putStr = liftIO . BS.putStr
-  putStrLn = liftIO . BS.putStrLn
-
-instance Print BL.ByteString where
-  putStr = liftIO . BL.putStr
-  putStrLn = liftIO . BL.putStrLn
-
-instance Print [Base.Char] where
-  putStr = liftIO . Prelude.putStr
-  putStrLn = liftIO . Prelude.putStrLn
+----------------------------------------------------------------------------
+-- String
+----------------------------------------------------------------------------
 
 -- | Lifted version of 'Prelude.print'.
 print :: forall a m . (MonadIO m, Base.Show a) => a -> m ()
-print = liftIO . Prelude.print
+print = liftIO . IO.print
 
--- | Specialized to 'T.Text' version of 'putStr' or forcing type inference.
-putText :: MonadIO m => T.Text -> m ()
-putText = putStr
-{-# SPECIALIZE putText :: T.Text -> Base.IO () #-}
+-- | Lifted version of 'IO.putStr'.
+putStr :: MonadIO m => Base.String -> m ()
+putStr = liftIO . IO.putStr
+{-# SPECIALIZE putStr :: Base.String -> Base.IO () #-}
+{-# INLINE putStr #-}
 
--- | Specialized to 'T.Text' version of 'putStrLn' or forcing type inference.
-putTextLn :: MonadIO m => T.Text -> m ()
-putTextLn = putStrLn
-{-# SPECIALIZE putTextLn :: T.Text -> Base.IO () #-}
+-- | Lifted version of 'IO.putStrLn'.
+putStrLn :: MonadIO m => Base.String -> m ()
+putStrLn = liftIO . IO.putStrLn
+{-# SPECIALIZE putStrLn :: Base.String -> Base.IO () #-}
+{-# INLINE putStrLn #-}
 
--- | Specialized to 'TL.Text' version of 'putStr' or forcing type inference.
-putLText :: MonadIO m => TL.Text -> m ()
-putLText = putStr
-{-# SPECIALIZE putLText :: TL.Text -> Base.IO () #-}
+----------------------------------------------------------------------------
+-- Text
+----------------------------------------------------------------------------
 
--- | Specialized to 'TL.Text' version of 'putStrLn' or forcing type inference.
-putLTextLn :: MonadIO m => TL.Text -> m ()
-putLTextLn = putStrLn
-{-# SPECIALIZE putLTextLn :: TL.Text -> Base.IO () #-}
+-- | Lifted version of 'T.putStr'.
+putText :: MonadIO m => Text -> m ()
+putText = liftIO . T.putStr
+{-# SPECIALIZE putText :: Text -> Base.IO () #-}
+{-# INLINE putText #-}
+
+-- | Lifted version of 'T.putStrLn'.
+putTextLn :: MonadIO m => Text -> m ()
+putTextLn = liftIO . T.putStrLn
+{-# SPECIALIZE putTextLn :: Text -> Base.IO () #-}
+{-# INLINE putTextLn #-}
+
+-- | Lifted version of 'TL.putStr'.
+putLText :: MonadIO m => LText -> m ()
+putLText = liftIO . TL.putStr
+{-# SPECIALIZE putLText :: LText -> Base.IO () #-}
+{-# INLINE putLText #-}
+
+-- | Lifted version of 'TL.putStrLn'.
+putLTextLn :: MonadIO m => LText -> m ()
+putLTextLn = liftIO . TL.putStrLn
+{-# SPECIALIZE putLTextLn :: LText -> Base.IO () #-}
+{-# INLINE putLTextLn #-}
+
+----------------------------------------------------------------------------
+-- ByteString
+----------------------------------------------------------------------------
+
+-- | Lifted version of 'BS.putStr'.
+putBS :: MonadIO m => ByteString -> m ()
+putBS = liftIO . BS.putStr
+{-# SPECIALIZE putBS :: ByteString -> Base.IO () #-}
+{-# INLINE putBS #-}
+
+-- | Lifted version of 'BS.putStrLn'.
+putBSLn :: MonadIO m => ByteString -> m ()
+putBSLn = liftIO . BS.putStrLn
+{-# SPECIALIZE putBSLn :: ByteString -> Base.IO () #-}
+{-# INLINE putBSLn #-}
+
+-- | Lifted version of 'LBS.putStr'.
+putLBS :: MonadIO m => LByteString -> m ()
+putLBS = liftIO . LBS.putStr
+{-# SPECIALIZE putLBS :: LByteString -> Base.IO () #-}
+{-# INLINE putLBS #-}
+
+-- | Lifted version of 'LBS.putStrLn'.
+putLBSLn :: MonadIO m => LByteString -> m ()
+putLBSLn = liftIO . LBS.putStrLn
+{-# SPECIALIZE putLBSLn :: LByteString -> Base.IO () #-}
+{-# INLINE putLBSLn #-}

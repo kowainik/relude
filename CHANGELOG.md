@@ -1,11 +1,18 @@
-Change log
-==========
+# Change log
 
-0.2.1
+0.3.0
 =====
 
 * [#41](https://github.com/kowainik/relude/issues/41):
-  Add 'Foldable1'.
+  Add `Foldable1`.
+* [#64](https://github.com/kowainik/relude/issues/64):
+  Remove `Print` typeclass.
+  Add `put[L]BS[Ln]` functions.
+  `trace` function now takes `Text` as argument.
+
+  **Important:** this is a breaking change. If you used polymorphic `putStrLn`
+  you need to remove type application or switch to one of the monomorphic
+  functions. Also, you can't abstract over `Print` typeclass anymore.
 
 0.2.0
 =====
