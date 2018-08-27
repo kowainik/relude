@@ -12,6 +12,7 @@ module Relude.Extra.Newtype
        ( un
        , wrap
        , under
+       , (#.)
        ) where
 
 import Relude
@@ -52,3 +53,9 @@ Bar "aaaa"
 -}
 under :: forall b a . Coercible a b => (b -> b) -> a -> a
 under = coerce
+
+{- | Coercible composition
+-}
+(#.) :: Coercible b c => (b -> c) -> (a -> b) -> (a -> c)
+(#.) _f = coerce
+{-# INLINE (#.) #-}
