@@ -8,7 +8,7 @@
 * [#64](https://github.com/kowainik/relude/issues/64):
   Remove `Print` typeclass.
   Add `put[L]BS[Ln]` functions.
-  `trace` function now takes `Text` as argument.
+  `trace` functions now take `String` as argument instead of `Text`.
 
   **Important:** this is a breaking change. If you used polymorphic `putStrLn`
   you need to remove type application or switch to one of the monomorphic
