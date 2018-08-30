@@ -98,4 +98,4 @@ data Undefined = Undefined
 -- | 'Prelude.undefined' that leaves warning in code on every usage.
 undefined :: forall (r :: RuntimeRep) . forall (a :: TYPE r) . HasCallStack => a
 undefined = Prelude.undefined
-{-# WARNING undefined "'undefined' function remains in code (or use 'error')" #-}
+{-# WARNING undefined "'undefined' function remains in code" #-}
