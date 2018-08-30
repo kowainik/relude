@@ -23,72 +23,79 @@ types) are convenient for prototyping.
 -}
 
 module Relude.Debug
-       ( Undefined (..)
-       , error
-       , trace
+       ( -- * Tracing
+         trace
        , traceM
        , traceId
        , traceShow
        , traceShowId
        , traceShowM
+
+         -- * Imprecise error
+       , error
+       , Undefined (..)
        , undefined
        ) where
 
 import Data.Data (Data)
 import GHC.Exts (RuntimeRep, TYPE)
-import System.IO.Unsafe (unsafePerformIO)
 
-import Relude.Applicative (pass)
-import Relude.Base (Generic, HasCallStack, Typeable)
-import Relude.Monad.Reexport (Monad (..))
-import Relude.Print (Print, putStrLn)
-import Relude.String (Text, toString)
+import Relude.Applicative (Applicative)
+import Relude.Base (Bounded, Enum, Eq, Generic, HasCallStack, Ord, Show, String, Typeable)
+import Relude.String (Read, Text, toString)
 
-import qualified Prelude as P
+import qualified Debug.Trace as Debug
+import qualified Prelude
 
--- | Generalized over string version of 'Debug.Trace.trace' that leaves warnings.
+----------------------------------------------------------------------------
+-- trace
+----------------------------------------------------------------------------
+
+-- | Version of 'Debug.Trace.trace' that leaves warning.
+trace :: String -> a -> a
+trace = Debug.trace
 {-# WARNING trace "'trace' remains in code" #-}
-trace :: Print b => b -> a -> a
-trace string expr = unsafePerformIO (do
-    putStrLn string
-    return expr)
-
--- | 'P.error' that takes 'Text' as an argument.
-error :: forall (r :: RuntimeRep) . forall (a :: TYPE r) . HasCallStack
-      => Text -> a
-error s = P.error (toString s)
 
 -- | Version of 'Debug.Trace.traceShow' that leaves warning.
+traceShow :: Show a => a -> b -> b
+traceShow = Debug.traceShow
 {-# WARNING traceShow "'traceShow' remains in code" #-}
-traceShow :: P.Show a => a -> b -> b
-traceShow a b = trace (P.show a) b
 
--- | Version of 'Debug.Trace.traceShow' that leaves warning.
+-- | Version of 'Debug.Trace.traceShowId' that leaves warning.
+traceShowId :: Show a => a -> a
+traceShowId = Debug.traceShowId
 {-# WARNING traceShowId "'traceShowId' remains in code" #-}
-traceShowId :: P.Show a => a -> a
-traceShowId a = trace (P.show a) a
 
 -- | Version of 'Debug.Trace.traceShowM' that leaves warning.
+traceShowM :: (Show a, Applicative f) => a -> f ()
+traceShowM = Debug.traceShowM
 {-# WARNING traceShowM "'traceShowM' remains in code" #-}
-traceShowM :: (P.Show a, Monad m) => a -> m ()
-traceShowM a = trace (P.show a) pass
 
--- | Version of 'Debug.Trace.traceM' that leaves warning and takes 'Text'.
+-- | Version of 'Debug.Trace.traceM' that leaves warning.
+traceM :: (Applicative f) => String -> f ()
+traceM = Debug.traceM
 {-# WARNING traceM "'traceM' remains in code" #-}
-traceM :: (Monad m) => Text -> m ()
-traceM s = trace (toString s) pass
 
--- | Version of 'Debug.Trace.traceId' that leaves warning and takes 'Text'.
+-- | Version of 'Debug.Trace.traceId' that leaves warning.
+traceId :: String -> String
+traceId = Debug.traceId
 {-# WARNING traceId "'traceId' remains in code" #-}
-traceId :: Text -> Text
-traceId s = trace s s
+
+----------------------------------------------------------------------------
+-- error and undefined
+----------------------------------------------------------------------------
+
+-- | 'Prelude.error' that takes 'Text' as an argument.
+error :: forall (r :: RuntimeRep) . forall (a :: TYPE r) . HasCallStack
+      => Text -> a
+error e = Prelude.error (toString e)
 
 -- | Similar to 'undefined' but data type.
-{-# WARNING Undefined "'Undefined' type remains in code" #-}
 data Undefined = Undefined
-    deriving (P.Eq, P.Ord, P.Show, P.Read, P.Enum, P.Bounded, Data, Typeable, Generic)
+    deriving (Eq, Ord, Show, Read, Enum, Bounded, Data, Typeable, Generic)
+{-# WARNING Undefined "'Undefined' type remains in code" #-}
 
--- | 'P.undefined' that leaves warning in code on every usage.
-{-# WARNING undefined "'undefined' function remains in code (or use 'error')" #-}
+-- | 'Prelude.undefined' that leaves warning in code on every usage.
 undefined :: forall (r :: RuntimeRep) . forall (a :: TYPE r) . HasCallStack => a
-undefined = P.undefined
+undefined = Prelude.undefined
+{-# WARNING undefined "'undefined' function remains in code" #-}
