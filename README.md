@@ -5,6 +5,7 @@
 [![Hackage](https://img.shields.io/hackage/v/relude.svg)](https://hackage.haskell.org/package/relude)
 [![Stackage LTS](http://stackage.org/package/relude/badge/lts)](http://stackage.org/lts/package/relude)
 [![Stackage Nightly](http://stackage.org/package/relude/badge/nightly)](http://stackage.org/nightly/package/relude)
+[![Hackage-Deps](https://img.shields.io/hackage-deps/v/relude.svg)](http://packdeps.haskellers.com/reverse/relude)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 `relude` is a custom prelude, an alternative to default `Prelude`.
