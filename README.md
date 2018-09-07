@@ -289,8 +289,10 @@ Finally, we can move to part describing the new cool features we bring with `rel
   "foo"
   ```
 
-* A lot of other cool things:
-  + Explore `Extra` modules: [`Relude.Extra`](src/Relude/Extra/)
+* `Foldable1` typeclass that contains generalized interface for folding
+  non-empty structures like `NonEmpty`.
+
+Explore `Extra` modules: [`Relude.Extra`](src/Relude/Extra/)
 
 ## Migration guide [↑](#structure-of-this-tutorial)
 
