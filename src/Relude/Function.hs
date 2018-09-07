@@ -9,10 +9,12 @@ This module reexports very basic and primitive functions and function combinator
 -}
 
 module Relude.Function
-       ( module Data.Function
+       ( module Control.Category
+       , module Data.Function
        , identity
        ) where
 
+import Control.Category ((<<<), (>>>))
 import Data.Function (const, fix, flip, id, on, ($), (&), (.))
 
 -- | Renamed version of 'Prelude.id'.

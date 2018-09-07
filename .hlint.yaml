@@ -290,7 +290,7 @@
 - warn: { name: "Use 'empty' from Relude"
         , lhs: Control.Applicative.empty, rhs: Relude.empty }
 - warn: { name: "Use '(<|>)' from Relude"
-        , lhs: Control.Applicative.(<|>), rhs: Relude.(<|>) }
+        , lhs: (Control.Applicative.<|>), rhs: (Relude.<|>) }
 - warn: { name: "Use 'some' from Relude"
         , lhs: Control.Applicative.some, rhs: Relude.some }
 - warn: { name: "Use 'many' from Relude"
@@ -310,7 +310,7 @@
 - warn: { name: "Use 'optional' from Relude"
         , lhs: Control.Applicative.optional, rhs: Relude.optional }
 - warn: { name: "Use '(<**>)' from Relude"
-        , lhs: Control.Applicative.(<**>), rhs: Relude.(<**>) }
+        , lhs: (Control.Applicative.<**>), rhs: (Relude.<**>) }
 
 ## Base
 - warn: { name: "Use 'xor' from Relude"
@@ -534,7 +534,7 @@
 - warn: { name: "Use 'force' from Relude"
         , lhs: Control.DeepSeq.force, rhs: Relude.force }
 - warn: { name: "Use '($!!)' from Relude"
-        , lhs: "Control.DeepSeq.($!!)", rhs: "Relude.($!!)" }
+        , lhs: (Control.DeepSeq.$!!), rhs: (Relude.$!!) }
 
 ## Exception
 - warn: { name: "Use 'Exception' from Relude"
@@ -594,10 +594,14 @@
         , lhs: Data.Function.fix, rhs: Relude.fix }
 - warn: { name: "Use 'on' from Relude"
         , lhs: Data.Function.on, rhs: Relude.on }
+- warn: { name: "Use '(>>>)' from Relude"
+        , lhs: (Control.Category.>>>), rhs: (Relude.>>>) }
+- warn: { name: "Use '(<<<)' from Relude"
+        , lhs: (Control.Category.<<<), rhs: (Relude.<<<) }
 
 ## Functor
 - warn: { name: "Use '(&&&)' from Relude"
-        , lhs: Control.Arrow.(&&&), rhs: Relude.(&&&) }
+        , lhs: (Control.Arrow.&&&), rhs: (Relude.&&&) }
 - warn: { name: "Use 'Bifunctor' from Relude"
         , lhs: Data.Bifunctor.Bifunctor, rhs: Relude.Bifunctor }
 - warn: { name: "Use 'bimap' from Relude"
@@ -609,7 +613,7 @@
 - warn: { name: "Use 'void' from Relude"
         , lhs: Data.Functor.void, rhs: Relude.void }
 - warn: { name: "Use '($>)' from Relude"
-        , lhs: Data.Functor.($>), rhs: Relude.($>) }
+        , lhs: (Data.Functor.$>), rhs: (Relude.$>) }
 - warn: { name: "Use 'Compose' from Relude"
         , lhs: Data.Functor.Compose.Compose, rhs: Relude.Compose }
 - warn: { name: "Use 'getCompose' from Relude"
@@ -676,9 +680,9 @@
 
 ## Monad
 - warn: { name: "Use '(>=>)' from Relude"
-        , lhs: Control.Monad.(>=>), rhs: Relude.(>=>) }
+        , lhs: (Control.Monad.>=>), rhs: (Relude.>=>) }
 - warn: { name: "Use '(<=<)' from Relude"
-        , lhs: Control.Monad.(<=<), rhs: Relude.(<=<) }
+        , lhs: (Control.Monad.<=<), rhs: (Relude.<=<) }
 - warn: { name: "Use 'forever' from Relude"
         , lhs: Control.Monad.forever, rhs: Relude.forever }
 - warn: { name: "Use 'join' from Relude"
@@ -712,7 +716,7 @@
 - warn: { name: "Use 'ap' from Relude"
         , lhs: Control.Monad.ap, rhs: Relude.ap }
 - warn: { name: "Use '(<$!>)' from Relude"
-        , lhs: Control.Monad.(<$!>), rhs: Relude.(<$!>) }
+        , lhs: (Control.Monad.<$!>), rhs: (Relude.<$!>) }
 
 - warn: { name: "Use 'ExceptT' from Relude"
         , lhs: Control.Monad.Except.ExceptT, rhs: Relude.ExceptT }
@@ -879,7 +883,7 @@
 - warn: { name: "Use 'stimes' from Relude"
         , lhs: Data.Semigroup.stimes, rhs: Relude.stimes }
 - warn: { name: "Use '(<>)' from Relude"
-        , lhs: Data.Semigroup.(<>), rhs: Relude.(<>) }
+        , lhs: (Data.Semigroup.<>), rhs: (Relude.<>) }
 - warn: { name: "Use 'WrappedMonoid' from Relude"
         , lhs: Data.Semigroup.WrappedMonoid, rhs: Relude.WrappedMonoid }
 - warn: { name: "Use 'cycle1' from Relude"
@@ -970,7 +974,7 @@
         , lhs: Data.List.last, rhs: Relude.Unsafe.last
         , note: "Use 'import qualified Relude.Unsafe as Unsafe (last)'" }
 - warn: { name: "Use '(!!)' from Relude.Unsafe"
-        , lhs: "Data.List.(!!)", rhs: "Relude.Unsafe.(!!)"
+        , lhs: (Data.List.!!), rhs: (Relude.Unsafe.!!)
         , note: "Use 'import qualified Relude.Unsafe as Unsafe ((!!))'" }
 - warn: { name: "Use 'fromJust' from Relude.Unsafe"
         , lhs: "Data.Maybe.fromJust", rhs: "Relude.Unsafe.fromJust"

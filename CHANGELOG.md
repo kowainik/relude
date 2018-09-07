@@ -13,6 +13,8 @@
   **Important:** this is a breaking change. If you used polymorphic `putStrLn`
   you need to remove type application or switch to one of the monomorphic
   functions. Also, you can't abstract over `Print` typeclass anymore.
+* [#66](https://github.com/kowainik/relude/issues/66):
+  Export `(>>>)` and `(<<<)` from `Control.Category`.
 
 0.2.0
 =====
