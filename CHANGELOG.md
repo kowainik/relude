@@ -15,6 +15,8 @@
   functions. Also, you can't abstract over `Print` typeclass anymore.
 * [#66](https://github.com/kowainik/relude/issues/66):
   Export `(>>>)` and `(<<<)` from `Control.Category`.
+* [#59](https://github.com/kowainik/relude/issues/59):
+  Introduce `flap` function and its operator version `??`.
 
 0.2.0
 =====
