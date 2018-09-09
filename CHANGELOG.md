@@ -29,6 +29,8 @@
   Add HLint rules for `put*` functions.
 * [#61](https://github.com/kowainik/relude/issues/61):
   Add `under2` and `underF2` functions to `Relude.Extra.Newtype`.
+* [#60](https://github.com/kowainik/relude/issues/60):
+  Add `hoistMaybe` and `hoistEither` functions.
 
 0.2.0
 =====
