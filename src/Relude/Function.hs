@@ -9,11 +9,13 @@ This module reexports very basic and primitive functions and function combinator
 -}
 
 module Relude.Function
-       ( module Control.Category
+       ( module Control.Arrow
+       , module Control.Category
        , module Data.Function
        , identity
        ) where
 
+import Control.Arrow ((&&&))
 import Control.Category ((<<<), (>>>))
 import Data.Function (const, fix, flip, id, on, ($), (&), (.))
 
