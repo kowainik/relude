@@ -323,9 +323,9 @@ This section describes what you need to change to make your code compile with `r
      + `whenJustM     :: Monad m => m (Maybe a) -> (a -> m ()) -> m ()`
 
    * `Either`
-     + `fromLeft   :: a -> Either a b -> a`
-     + `fromRight  :: b -> Either a b -> b`
-     + `either     :: (a -> c) -> (b -> c) -> Either a b -> c`
+     + `fromLeft    :: a -> Either a b -> a`
+     + `fromRight   :: b -> Either a b -> b`
+     + `either      :: (a -> c) -> (b -> c) -> Either a b -> c`
      + `whenRight_  :: Applicative f => Either l r -> (r -> f ()) -> f ()`
      + `whenRightM_ :: Monad m => m (Either l r) -> (r -> m ()) -> m ()`
 
@@ -334,6 +334,7 @@ This section describes what you need to change to make your code compile with `r
    + Try to use [`fmt`](http://hackage.haskell.org/package/fmt) library if you need to construct messages.
    + Use `toText/toLText/toString` functions to convert to `Text/LazyText/String` types.
    + Use `encodeUtf8/decodeUtf8` to convert to/from `ByteString`.
+   + Use `(putStr[Ln]|readFile|writeFile|appendFile)[Text|LText|BS|LBS]` functions.
 6. Run `hlint` using `.hlint.yaml` file from `relude` package to cleanup code and imports.
 
 ### For Developers

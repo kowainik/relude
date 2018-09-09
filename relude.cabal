@@ -80,6 +80,7 @@ library
                            Relude.Debug
                            Relude.DeepSeq
                            Relude.Exception
+                           Relude.File
                            Relude.Foldable
                                Relude.Foldable.Fold
                                Relude.Foldable.Reexport

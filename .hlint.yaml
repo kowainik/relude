@@ -41,6 +41,42 @@
     lhs: (Control.Exception.throw)
     note: Use 'impureThrow'
     rhs: impureThrow
+- warn:
+    lhs: Data.Text.IO.readFile
+    rhs: readFileText
+- warn:
+    lhs: Data.Text.IO.writeFile
+    rhs: writeFileText
+- warn:
+    lhs: Data.Text.IO.appendFile
+    rhs: appendFileText
+- warn:
+    lhs: Data.Text.Lazy.IO.readFile
+    rhs: readFileLText
+- warn:
+    lhs: Data.Text.Lazy.IO.writeFile
+    rhs: writeFileLText
+- warn:
+    lhs: Data.Text.Lazy.IO.appendFile
+    rhs: appendFileLText
+- warn:
+    lhs: Data.ByteString.readFile
+    rhs: readFileBS
+- warn:
+    lhs: Data.ByteString.writeFile
+    rhs: writeFileBS
+- warn:
+    lhs: Data.ByteString.appendFile
+    rhs: appendFileBS
+- warn:
+    lhs: Data.ByteString.Lazy.readFile
+    rhs: readFileLBS
+- warn:
+    lhs: Data.ByteString.Lazy.writeFile
+    rhs: writeFileLBS
+- warn:
+    lhs: Data.ByteString.Lazy.appendFile
+    rhs: appendFileLBS
 - hint:
     lhs: (foldl' (flip f))
     note: Use 'flipfoldl''
@@ -1595,25 +1631,15 @@
     name: Use 'writeTVar' from Relude
     rhs: writeTVar
 - warn:
-    lhs: Data.Text.IO.appendFile
-    note: ! '''appendFile'' is already exported from Relude'
-    name: Use 'appendFile' from Relude
-    rhs: appendFile
-- warn:
-    lhs: Data.Text.IO.readFile
-    note: ! '''readFile'' is already exported from Relude'
-    name: Use 'readFile' from Relude
-    rhs: readFile
-- warn:
-    lhs: Data.Text.IO.writeFile
-    note: ! '''writeFile'' is already exported from Relude'
-    name: Use 'writeFile' from Relude
-    rhs: writeFile
-- warn:
     lhs: System.IO.openFile
     note: ! '''openFile'' is already exported from Relude'
     name: Use 'openFile' from Relude
     rhs: openFile
+- warn:
+    lhs: System.IO.hClose
+    note: ! '''hClose'' is already exported from Relude'
+    name: Use 'hClose' from Relude
+    rhs: hClose
 - warn:
     lhs: Data.IORef.IORef
     note: ! '''IORef'' is already exported from Relude'
@@ -2450,16 +2476,6 @@
     name: ! '''liftIO'' is not needed'
     rhs: die
 - warn:
-    lhs: (liftIO (appendFile x y))
-    note: If you import 'appendFile' from Relude, it's already lifted
-    name: ! '''liftIO'' is not needed'
-    rhs: appendFile
-- warn:
-    lhs: (liftIO (openFile x y))
-    note: If you import 'openFile' from Relude, it's already lifted
-    name: ! '''liftIO'' is not needed'
-    rhs: openFile
-- warn:
     lhs: (liftIO (readFile x))
     note: If you import 'readFile' from Relude, it's already lifted
     name: ! '''liftIO'' is not needed'
@@ -2469,6 +2485,71 @@
     note: If you import 'writeFile' from Relude, it's already lifted
     name: ! '''liftIO'' is not needed'
     rhs: writeFile
+- warn:
+    lhs: (liftIO (appendFile x y))
+    note: If you import 'appendFile' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: appendFile
+- warn:
+    lhs: (liftIO (readFileText x))
+    note: If you import 'readFileText' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: readFileText
+- warn:
+    lhs: (liftIO (writeFileText x y))
+    note: If you import 'writeFileText' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: writeFileText
+- warn:
+    lhs: (liftIO (appendFileText x y))
+    note: If you import 'appendFileText' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: appendFileText
+- warn:
+    lhs: (liftIO (readFileLText x))
+    note: If you import 'readFileLText' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: readFileLText
+- warn:
+    lhs: (liftIO (writeFileLText x y))
+    note: If you import 'writeFileLText' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: writeFileLText
+- warn:
+    lhs: (liftIO (appendFileLText x y))
+    note: If you import 'appendFileLText' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: appendFileLText
+- warn:
+    lhs: (liftIO (readFileBS x))
+    note: If you import 'readFileBS' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: readFileBS
+- warn:
+    lhs: (liftIO (writeFileBS x y))
+    note: If you import 'writeFileBS' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: writeFileBS
+- warn:
+    lhs: (liftIO (appendFileBS x y))
+    note: If you import 'appendFileBS' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: appendFileBS
+- warn:
+    lhs: (liftIO (readFileLBS x))
+    note: If you import 'readFileLBS' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: readFileLBS
+- warn:
+    lhs: (liftIO (writeFileLBS x y))
+    note: If you import 'writeFileLBS' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: writeFileLBS
+- warn:
+    lhs: (liftIO (appendFileLBS x y))
+    note: If you import 'appendFileLBS' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: appendFileLBS
 - warn:
     lhs: (liftIO (newIORef x))
     note: If you import 'newIORef' from Relude, it's already lifted

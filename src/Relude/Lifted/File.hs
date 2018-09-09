@@ -1,5 +1,3 @@
-{-# LANGUAGE Safe #-}
-
 {- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 20016-2018 Serokell
@@ -8,46 +6,49 @@ License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Lifted versions of functions working with files and common IO.
-All functions are specialized to 'Data.Text.Text'.
 -}
 
 module Relude.Lifted.File
-       ( appendFile
-       , openFile
-       , readFile
+       ( readFile
        , writeFile
+       , appendFile
+       , openFile
+       , hClose
        ) where
 
-import Prelude (FilePath)
+import Relude.Base (FilePath, Handle, IO, IOMode, String)
+import Relude.Function ((.))
 import Relude.Monad.Reexport (MonadIO (..))
-import Relude.String.Reexport (Text)
-import System.IO (Handle, IOMode)
 
-import qualified Data.Text.IO as XIO
-import qualified System.IO as XIO (openFile)
+import qualified System.IO as IO
 
-----------------------------------------------------------------------------
--- Text
-----------------------------------------------------------------------------
 
--- | Lifted version of 'Data.Text.appendFile'.
-appendFile :: MonadIO m => FilePath -> Text -> m ()
-appendFile a b = liftIO (XIO.appendFile a b)
-{-# INLINE appendFile #-}
-
--- | Lifted version of 'Data.Text.readFile'.
-readFile :: MonadIO m => FilePath -> m Text
-readFile a = liftIO (XIO.readFile a)
+-- | Lifted version of 'IO.readFile'.
+readFile :: MonadIO m => FilePath -> m String
+readFile = liftIO . IO.readFile
+{-# SPECIALIZE readFile :: FilePath -> IO String #-}
 {-# INLINE readFile #-}
 
--- | Lifted version of 'Data.Text.writeFile'.
-writeFile :: MonadIO m => FilePath -> Text -> m ()
-writeFile a b = liftIO (XIO.writeFile a b)
+-- | Lifted version of 'IO.writeFile'.
+writeFile :: MonadIO m => FilePath -> String -> m ()
+writeFile p= liftIO . IO.writeFile p
+{-# SPECIALIZE writeFile :: FilePath -> String -> IO () #-}
 {-# INLINE writeFile #-}
 
--- | Lifted version of 'System.IO.openFile'.
+-- | Lifted version of 'IO.appendFile'.
+appendFile :: MonadIO m => FilePath -> String -> m ()
+appendFile p = liftIO . IO.appendFile p
+{-# SPECIALIZE appendFile :: FilePath -> String -> IO () #-}
+{-# INLINE appendFile #-}
+
+-- | Lifted version of 'IO.openFile'.
 openFile :: MonadIO m => FilePath -> IOMode -> m Handle
-openFile a b = liftIO (XIO.openFile a b)
+openFile p = liftIO . IO.openFile p
+{-# SPECIALIZE openFile :: FilePath -> IOMode -> IO Handle #-}
 {-# INLINE openFile #-}
 
--- 'withFile' can't be lifted into 'MonadIO', as it uses 'bracket'
+-- | Lifted version of 'IO.hClose'.
+hClose :: MonadIO m => Handle -> m ()
+hClose = liftIO . hClose
+{-# SPECIALIZE hClose :: Handle -> IO () #-}
+{-# INLINE hClose #-}

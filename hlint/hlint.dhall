@@ -45,6 +45,20 @@ in [ rule.Arguments { arguments =
    -- Exception
    , hintNote "Control.Exception.throw" "impureThrow" "Use 'impureThrow'"
 
+   -- File
+   , warnSimple "Data.Text.IO.readFile" "readFileText"
+   , warnSimple "Data.Text.IO.writeFile" "writeFileText"
+   , warnSimple "Data.Text.IO.appendFile" "appendFileText"
+   , warnSimple "Data.Text.Lazy.IO.readFile" "readFileLText"
+   , warnSimple "Data.Text.Lazy.IO.writeFile" "writeFileLText"
+   , warnSimple "Data.Text.Lazy.IO.appendFile" "appendFileLText"
+   , warnSimple "Data.ByteString.readFile" "readFileBS"
+   , warnSimple "Data.ByteString.writeFile" "writeFileBS"
+   , warnSimple "Data.ByteString.appendFile" "appendFileBS"
+   , warnSimple "Data.ByteString.Lazy.readFile" "readFileLBS"
+   , warnSimple "Data.ByteString.Lazy.writeFile" "writeFileLBS"
+   , warnSimple "Data.ByteString.Lazy.appendFile" "appendFileLBS"
+
    -- Foldable
    , hintNote "foldl' (flip f)" "flipfoldl' f" "Use 'flipfoldl''"
 
@@ -516,11 +530,12 @@ in [ rule.Arguments { arguments =
    , warnReexport "newTVar" "Control.Concurrent.STM.TVar"
    , warnReexport "readTVar" "Control.Concurrent.STM.TVar"
    , warnReexport "writeTVar" "Control.Concurrent.STM.TVar"
+
    -- Lifted File
-   , warnReexport "appendFile" "Data.Text.IO"
-   , warnReexport "readFile"   "Data.Text.IO"
-   , warnReexport "writeFile"  "Data.Text.IO"
    , warnReexport "openFile" "System.IO"
+   , warnReexport "hClose"   "System.IO"
+
+
    -- Lifted IORef
    , warnReexport "IORef" "Data.IORef"
    , warnReexport "atomicModifyIORef" "Data.IORef"
@@ -706,10 +721,23 @@ in [ rule.Arguments { arguments =
    , warnLifted "exitSuccess" ""
    , warnLifted "die" "x"
    -- File
-   , warnLifted "appendFile" "x y"
    , warnLifted "openFile" "x y"
+   , warnLifted "hClose" "x"
    , warnLifted "readFile" "x"
    , warnLifted "writeFile" "x y"
+   , warnLifted "appendFile" "x y"
+   , warnLifted "readFileText" "x"
+   , warnLifted "writeFileText" "x y"
+   , warnLifted "appendFileText" "x y"
+   , warnLifted "readFileLText" "x"
+   , warnLifted "writeFileLText" "x y"
+   , warnLifted "appendFileLText" "x y"
+   , warnLifted "readFileBS" "x"
+   , warnLifted "writeFileBS" "x y"
+   , warnLifted "appendFileBS" "x y"
+   , warnLifted "readFileLBS" "x"
+   , warnLifted "writeFileLBS" "x y"
+   , warnLifted "appendFileLBS" "x y"
    -- IORef
    , warnLifted "newIORef" "x"
    , warnLifted "readIORef" "x"
