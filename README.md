@@ -336,6 +336,26 @@ This section describes what you need to change to make your code compile with `r
    + Use `encodeUtf8/decodeUtf8` to convert to/from `ByteString`.
 6. Run `hlint` using `.hlint.yaml` file from `relude` package to cleanup code and imports.
 
+### For Developers
+
+#### Generating .hlint.yaml
+
+Note, that we are using custom `hlint` setting which are `Relude` specific. To
+keep it up to date don't forget to reflect your changes in this file. We are
+using `Dhall` to maintain the configurations. To use it follow the steps below.
+
+First time:
+
+```shell
+$ cabal new-install dhall-json
+```
+
+To generate `hlint` file:
+
+```shell
+$ dhall-to-yaml --omitNull <<< './hlint/hlint.dhall' > .hlint.yaml
+```
+
 ### Acknowledgement
 
 Icons made by [Freepik](http://www.freepik.com) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/).

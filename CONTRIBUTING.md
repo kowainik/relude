@@ -19,8 +19,8 @@ We love receiving pull requests from everyone. But, please, don't create a PR
 without a corresponding issue. It's always better to discuss your future
 work first. Even if such an issue exists it's still better to express your willing
 to do that issue under comment section. Thus you will show that you're doing
-that issue, and nobody else will accidentally do it in parallel with you. Furthermore you
-also can discuss the best way to implement that issue!
+that issue, and nobody else will accidentally do it in parallel with you. Furthermore,
+you also can discuss the best way to implement that issue!
 
 To get started with this you should first fork, then clone the repo:
 
@@ -33,11 +33,14 @@ Make your changes and consider the following check list to go through before sub
 - [ ] Project compiles
 - [ ] New/fixed features work as expected
 - [ ] Old features do not break after the change
-- [ ] `stylish-haskell` with config in this repo root was used to format code
+- [ ] All new and existing tests pass
+- [ ] [`stylish-haskell`](https://github.com/kowainik/org/blob/master/.stylish-haskell.yaml)
+      with config in this repo root was used to format code
 - [ ] _Recommended:_ Commit messages are in the proper format. If the commit
   addresses an issue start the first line of the commit with the issue number in
   square parentheses.
   + **_Example:_** `[#42] Short commit description`
+- [ ] All changes are reflected in `.hlint.yaml` (Use `hlint/hlint.dhall` to make changes).
 
 If you fix bugs or add new features, please add tests.
 
