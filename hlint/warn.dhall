@@ -29,7 +29,7 @@ in let warnReexport
             { name = ["Use '${f}' from Relude"] : Optional Text
             , lhs = "${mod}.${f}"
             , rhs = "${f}"
-            , note = ["Function '${f}' is already exported from Relude"] : Optional Text
+            , note = ["'${f}' is already exported from Relude"] : Optional Text
             }
         }
 

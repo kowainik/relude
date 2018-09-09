@@ -742,12 +742,12 @@
     rhs: toStrict
 - warn:
     lhs: Control.Applicative.Alternative
-    note: Function 'Alternative' is already exported from Relude
+    note: ! '''Alternative'' is already exported from Relude'
     name: Use 'Alternative' from Relude
     rhs: Alternative
 - warn:
     lhs: Control.Applicative.empty
-    note: Function 'empty' is already exported from Relude
+    note: ! '''empty'' is already exported from Relude'
     name: Use 'empty' from Relude
     rhs: empty
 - warn:
@@ -757,47 +757,47 @@
     rhs: (<|>)
 - warn:
     lhs: Control.Applicative.some
-    note: Function 'some' is already exported from Relude
+    note: ! '''some'' is already exported from Relude'
     name: Use 'some' from Relude
     rhs: some
 - warn:
     lhs: Control.Applicative.many
-    note: Function 'many' is already exported from Relude
+    note: ! '''many'' is already exported from Relude'
     name: Use 'many' from Relude
     rhs: many
 - warn:
     lhs: Control.Applicative.Const
-    note: Function 'Const' is already exported from Relude
+    note: ! '''Const'' is already exported from Relude'
     name: Use 'Const' from Relude
     rhs: Const
 - warn:
     lhs: Control.Applicative.getConst
-    note: Function 'getConst' is already exported from Relude
+    note: ! '''getConst'' is already exported from Relude'
     name: Use 'getConst' from Relude
     rhs: getConst
 - warn:
     lhs: Control.Applicative.ZipList
-    note: Function 'ZipList' is already exported from Relude
+    note: ! '''ZipList'' is already exported from Relude'
     name: Use 'ZipList' from Relude
     rhs: ZipList
 - warn:
     lhs: Control.Applicative.getZipList
-    note: Function 'getZipList' is already exported from Relude
+    note: ! '''getZipList'' is already exported from Relude'
     name: Use 'getZipList' from Relude
     rhs: getZipList
 - warn:
     lhs: Control.Applicative.liftA2
-    note: Function 'liftA2' is already exported from Relude
+    note: ! '''liftA2'' is already exported from Relude'
     name: Use 'liftA2' from Relude
     rhs: liftA2
 - warn:
     lhs: Control.Applicative.liftA3
-    note: Function 'liftA3' is already exported from Relude
+    note: ! '''liftA3'' is already exported from Relude'
     name: Use 'liftA3' from Relude
     rhs: liftA3
 - warn:
     lhs: Control.Applicative.optional
-    note: Function 'optional' is already exported from Relude
+    note: ! '''optional'' is already exported from Relude'
     name: Use 'optional' from Relude
     rhs: optional
 - warn:
@@ -807,492 +807,492 @@
     rhs: (<**>)
 - warn:
     lhs: Data.Bits.xor
-    note: Function 'xor' is already exported from Relude
+    note: ! '''xor'' is already exported from Relude'
     name: Use 'xor' from Relude
     rhs: xor
 - warn:
     lhs: Data.Char.chr
-    note: Function 'chr' is already exported from Relude
+    note: ! '''chr'' is already exported from Relude'
     name: Use 'chr' from Relude
     rhs: chr
 - warn:
     lhs: Data.Int.Int8
-    note: Function 'Int8' is already exported from Relude
+    note: ! '''Int8'' is already exported from Relude'
     name: Use 'Int8' from Relude
     rhs: Int8
 - warn:
     lhs: Data.Int.Int16
-    note: Function 'Int16' is already exported from Relude
+    note: ! '''Int16'' is already exported from Relude'
     name: Use 'Int16' from Relude
     rhs: Int16
 - warn:
     lhs: Data.Int.Int32
-    note: Function 'Int32' is already exported from Relude
+    note: ! '''Int32'' is already exported from Relude'
     name: Use 'Int32' from Relude
     rhs: Int32
 - warn:
     lhs: Data.Int.Int64
-    note: Function 'Int64' is already exported from Relude
+    note: ! '''Int64'' is already exported from Relude'
     name: Use 'Int64' from Relude
     rhs: Int64
 - warn:
     lhs: Data.Word.Word8
-    note: Function 'Word8' is already exported from Relude
+    note: ! '''Word8'' is already exported from Relude'
     name: Use 'Word8' from Relude
     rhs: Word8
 - warn:
     lhs: Data.Word.Word16
-    note: Function 'Word16' is already exported from Relude
+    note: ! '''Word16'' is already exported from Relude'
     name: Use 'Word16' from Relude
     rhs: Word16
 - warn:
     lhs: Data.Word.Word32
-    note: Function 'Word32' is already exported from Relude
+    note: ! '''Word32'' is already exported from Relude'
     name: Use 'Word32' from Relude
     rhs: Word32
 - warn:
     lhs: Data.Word.Word64
-    note: Function 'Word64' is already exported from Relude
+    note: ! '''Word64'' is already exported from Relude'
     name: Use 'Word64' from Relude
     rhs: Word64
 - warn:
     lhs: Data.Word.byteSwap16
-    note: Function 'byteSwap16' is already exported from Relude
+    note: ! '''byteSwap16'' is already exported from Relude'
     name: Use 'byteSwap16' from Relude
     rhs: byteSwap16
 - warn:
     lhs: Data.Word.byteSwap32
-    note: Function 'byteSwap32' is already exported from Relude
+    note: ! '''byteSwap32'' is already exported from Relude'
     name: Use 'byteSwap32' from Relude
     rhs: byteSwap32
 - warn:
     lhs: Data.Word.byteSwap64
-    note: Function 'byteSwap64' is already exported from Relude
+    note: ! '''byteSwap64'' is already exported from Relude'
     name: Use 'byteSwap64' from Relude
     rhs: byteSwap64
 - warn:
     lhs: Numeric.Natural.Natural
-    note: Function 'Natural' is already exported from Relude
+    note: ! '''Natural'' is already exported from Relude'
     name: Use 'Natural' from Relude
     rhs: Natural
 - warn:
     lhs: System.IO.Handle
-    note: Function 'Handle' is already exported from Relude
+    note: ! '''Handle'' is already exported from Relude'
     name: Use 'Handle' from Relude
     rhs: Handle
 - warn:
     lhs: System.IO.IOMode
-    note: Function 'IOMode' is already exported from Relude
+    note: ! '''IOMode'' is already exported from Relude'
     name: Use 'IOMode' from Relude
     rhs: IOMode
 - warn:
     lhs: System.IO.ReadMode
-    note: Function 'ReadMode' is already exported from Relude
+    note: ! '''ReadMode'' is already exported from Relude'
     name: Use 'ReadMode' from Relude
     rhs: ReadMode
 - warn:
     lhs: System.IO.WriteMode
-    note: Function 'WriteMode' is already exported from Relude
+    note: ! '''WriteMode'' is already exported from Relude'
     name: Use 'WriteMode' from Relude
     rhs: WriteMode
 - warn:
     lhs: System.IO.AppendMode
-    note: Function 'AppendMode' is already exported from Relude
+    note: ! '''AppendMode'' is already exported from Relude'
     name: Use 'AppendMode' from Relude
     rhs: AppendMode
 - warn:
     lhs: System.IO.ReadWriteMode
-    note: Function 'ReadWriteMode' is already exported from Relude
+    note: ! '''ReadWriteMode'' is already exported from Relude'
     name: Use 'ReadWriteMode' from Relude
     rhs: ReadWriteMode
 - warn:
     lhs: System.IO.stderr
-    note: Function 'stderr' is already exported from Relude
+    note: ! '''stderr'' is already exported from Relude'
     name: Use 'stderr' from Relude
     rhs: stderr
 - warn:
     lhs: System.IO.stdin
-    note: Function 'stdin' is already exported from Relude
+    note: ! '''stdin'' is already exported from Relude'
     name: Use 'stdin' from Relude
     rhs: stdin
 - warn:
     lhs: System.IO.stdout
-    note: Function 'stdout' is already exported from Relude
+    note: ! '''stdout'' is already exported from Relude'
     name: Use 'stdout' from Relude
     rhs: stdout
 - warn:
     lhs: System.IO.withFile
-    note: Function 'withFile' is already exported from Relude
+    note: ! '''withFile'' is already exported from Relude'
     name: Use 'withFile' from Relude
     rhs: withFile
 - warn:
     lhs: Data.Ord.Down
-    note: Function 'Down' is already exported from Relude
+    note: ! '''Down'' is already exported from Relude'
     name: Use 'Down' from Relude
     rhs: Down
 - warn:
     lhs: Data.Ord.comparing
-    note: Function 'comparing' is already exported from Relude
+    note: ! '''comparing'' is already exported from Relude'
     name: Use 'comparing' from Relude
     rhs: comparing
 - warn:
     lhs: Data.Coerce.Coercible
-    note: Function 'Coercible' is already exported from Relude
+    note: ! '''Coercible'' is already exported from Relude'
     name: Use 'Coercible' from Relude
     rhs: Coercible
 - warn:
     lhs: Data.Coerce.coerce
-    note: Function 'coerce' is already exported from Relude
+    note: ! '''coerce'' is already exported from Relude'
     name: Use 'coerce' from Relude
     rhs: coerce
 - warn:
     lhs: Data.Kind.Constraint
-    note: Function 'Constraint' is already exported from Relude
+    note: ! '''Constraint'' is already exported from Relude'
     name: Use 'Constraint' from Relude
     rhs: Constraint
 - warn:
     lhs: Data.Kind.Type
-    note: Function 'Type' is already exported from Relude
+    note: ! '''Type'' is already exported from Relude'
     name: Use 'Type' from Relude
     rhs: Type
 - warn:
     lhs: Data.Typeable.Typeable
-    note: Function 'Typeable' is already exported from Relude
+    note: ! '''Typeable'' is already exported from Relude'
     name: Use 'Typeable' from Relude
     rhs: Typeable
 - warn:
     lhs: Data.Proxy.Proxy
-    note: Function 'Proxy' is already exported from Relude
+    note: ! '''Proxy'' is already exported from Relude'
     name: Use 'Proxy' from Relude
     rhs: Proxy
 - warn:
     lhs: Data.Typeable.Typeable
-    note: Function 'Typeable' is already exported from Relude
+    note: ! '''Typeable'' is already exported from Relude'
     name: Use 'Typeable' from Relude
     rhs: Typeable
 - warn:
     lhs: Data.Void.Void
-    note: Function 'Void' is already exported from Relude
+    note: ! '''Void'' is already exported from Relude'
     name: Use 'Void' from Relude
     rhs: Void
 - warn:
     lhs: Data.Void.absurd
-    note: Function 'absurd' is already exported from Relude
+    note: ! '''absurd'' is already exported from Relude'
     name: Use 'absurd' from Relude
     rhs: absurd
 - warn:
     lhs: Data.Void.vacuous
-    note: Function 'vacuous' is already exported from Relude
+    note: ! '''vacuous'' is already exported from Relude'
     name: Use 'vacuous' from Relude
     rhs: vacuous
 - warn:
     lhs: Data.Base.maxInt
-    note: Function 'maxInt' is already exported from Relude
+    note: ! '''maxInt'' is already exported from Relude'
     name: Use 'maxInt' from Relude
     rhs: maxInt
 - warn:
     lhs: Data.Base.minInt
-    note: Function 'minInt' is already exported from Relude
+    note: ! '''minInt'' is already exported from Relude'
     name: Use 'minInt' from Relude
     rhs: minInt
 - warn:
     lhs: Data.Base.ord
-    note: Function 'ord' is already exported from Relude
+    note: ! '''ord'' is already exported from Relude'
     name: Use 'ord' from Relude
     rhs: ord
 - warn:
     lhs: GHC.Enum.boundedEnumFrom
-    note: Function 'boundedEnumFrom' is already exported from Relude
+    note: ! '''boundedEnumFrom'' is already exported from Relude'
     name: Use 'boundedEnumFrom' from Relude
     rhs: boundedEnumFrom
 - warn:
     lhs: GHC.Enum.boundedEnumFromThen
-    note: Function 'boundedEnumFromThen' is already exported from Relude
+    note: ! '''boundedEnumFromThen'' is already exported from Relude'
     name: Use 'boundedEnumFromThen' from Relude
     rhs: boundedEnumFromThen
 - warn:
     lhs: GHC.Generics.Generic
-    note: Function 'Generic' is already exported from Relude
+    note: ! '''Generic'' is already exported from Relude'
     name: Use 'Generic' from Relude
     rhs: Generic
 - warn:
     lhs: GHC.Real.Ratio
-    note: Function 'Ratio' is already exported from Relude
+    note: ! '''Ratio'' is already exported from Relude'
     name: Use 'Ratio' from Relude
     rhs: Ratio
 - warn:
     lhs: GHC.Real.Rational
-    note: Function 'Rational' is already exported from Relude
+    note: ! '''Rational'' is already exported from Relude'
     name: Use 'Rational' from Relude
     rhs: Rational
 - warn:
     lhs: GHC.Real.denominator
-    note: Function 'denominator' is already exported from Relude
+    note: ! '''denominator'' is already exported from Relude'
     name: Use 'denominator' from Relude
     rhs: denominator
 - warn:
     lhs: GHC.Real.numerator
-    note: Function 'numerator' is already exported from Relude
+    note: ! '''numerator'' is already exported from Relude'
     name: Use 'numerator' from Relude
     rhs: numerator
 - warn:
     lhs: GHC.TypeNats.CmpNat
-    note: Function 'CmpNat' is already exported from Relude
+    note: ! '''CmpNat'' is already exported from Relude'
     name: Use 'CmpNat' from Relude
     rhs: CmpNat
 - warn:
     lhs: GHC.TypeNats.KnownNat
-    note: Function 'KnownNat' is already exported from Relude
+    note: ! '''KnownNat'' is already exported from Relude'
     name: Use 'KnownNat' from Relude
     rhs: KnownNat
 - warn:
     lhs: GHC.TypeNats.Nat
-    note: Function 'Nat' is already exported from Relude
+    note: ! '''Nat'' is already exported from Relude'
     name: Use 'Nat' from Relude
     rhs: Nat
 - warn:
     lhs: GHC.TypeNats.SomeNat
-    note: Function 'SomeNat' is already exported from Relude
+    note: ! '''SomeNat'' is already exported from Relude'
     name: Use 'SomeNat' from Relude
     rhs: SomeNat
 - warn:
     lhs: GHC.TypeNats.natVal
-    note: Function 'natVal' is already exported from Relude
+    note: ! '''natVal'' is already exported from Relude'
     name: Use 'natVal' from Relude
     rhs: natVal
 - warn:
     lhs: GHC.TypeNats.someNatVal
-    note: Function 'someNatVal' is already exported from Relude
+    note: ! '''someNatVal'' is already exported from Relude'
     name: Use 'someNatVal' from Relude
     rhs: someNatVal
 - warn:
     lhs: GHC.TypeLits.CmpNat
-    note: Function 'CmpNat' is already exported from Relude
+    note: ! '''CmpNat'' is already exported from Relude'
     name: Use 'CmpNat' from Relude
     rhs: CmpNat
 - warn:
     lhs: GHC.TypeLits.KnownNat
-    note: Function 'KnownNat' is already exported from Relude
+    note: ! '''KnownNat'' is already exported from Relude'
     name: Use 'KnownNat' from Relude
     rhs: KnownNat
 - warn:
     lhs: GHC.TypeLits.Nat
-    note: Function 'Nat' is already exported from Relude
+    note: ! '''Nat'' is already exported from Relude'
     name: Use 'Nat' from Relude
     rhs: Nat
 - warn:
     lhs: GHC.TypeLits.SomeNat
-    note: Function 'SomeNat' is already exported from Relude
+    note: ! '''SomeNat'' is already exported from Relude'
     name: Use 'SomeNat' from Relude
     rhs: SomeNat
 - warn:
     lhs: GHC.TypeLits.natVal
-    note: Function 'natVal' is already exported from Relude
+    note: ! '''natVal'' is already exported from Relude'
     name: Use 'natVal' from Relude
     rhs: natVal
 - warn:
     lhs: GHC.TypeLits.someNatVal
-    note: Function 'someNatVal' is already exported from Relude
+    note: ! '''someNatVal'' is already exported from Relude'
     name: Use 'someNatVal' from Relude
     rhs: someNatVal
 - warn:
     lhs: GHC.ExecutionStack.getStackTrace
-    note: Function 'getStackTrace' is already exported from Relude
+    note: ! '''getStackTrace'' is already exported from Relude'
     name: Use 'getStackTrace' from Relude
     rhs: getStackTrace
 - warn:
     lhs: GHC.ExecutionStack.showStackTrace
-    note: Function 'showStackTrace' is already exported from Relude
+    note: ! '''showStackTrace'' is already exported from Relude'
     name: Use 'showStackTrace' from Relude
     rhs: showStackTrace
 - warn:
     lhs: GHC.OverloadedLabels.IsLabel
-    note: Function 'IsLabel' is already exported from Relude
+    note: ! '''IsLabel'' is already exported from Relude'
     name: Use 'IsLabel' from Relude
     rhs: IsLabel
 - warn:
     lhs: GHC.OverloadedLabels.fromLabel
-    note: Function 'fromLabel' is already exported from Relude
+    note: ! '''fromLabel'' is already exported from Relude'
     name: Use 'fromLabel' from Relude
     rhs: fromLabel
 - warn:
     lhs: GHC.Stack.CallStack
-    note: Function 'CallStack' is already exported from Relude
+    note: ! '''CallStack'' is already exported from Relude'
     name: Use 'CallStack' from Relude
     rhs: CallStack
 - warn:
     lhs: GHC.Stack.HasCallStack
-    note: Function 'HasCallStack' is already exported from Relude
+    note: ! '''HasCallStack'' is already exported from Relude'
     name: Use 'HasCallStack' from Relude
     rhs: HasCallStack
 - warn:
     lhs: GHC.Stack.callStack
-    note: Function 'callStack' is already exported from Relude
+    note: ! '''callStack'' is already exported from Relude'
     name: Use 'callStack' from Relude
     rhs: callStack
 - warn:
     lhs: GHC.Stack.currentCallStack
-    note: Function 'currentCallStack' is already exported from Relude
+    note: ! '''currentCallStack'' is already exported from Relude'
     name: Use 'currentCallStack' from Relude
     rhs: currentCallStack
 - warn:
     lhs: GHC.Stack.getCallStack
-    note: Function 'getCallStack' is already exported from Relude
+    note: ! '''getCallStack'' is already exported from Relude'
     name: Use 'getCallStack' from Relude
     rhs: getCallStack
 - warn:
     lhs: GHC.Stack.prettyCallStack
-    note: Function 'prettyCallStack' is already exported from Relude
+    note: ! '''prettyCallStack'' is already exported from Relude'
     name: Use 'prettyCallStack' from Relude
     rhs: prettyCallStack
 - warn:
     lhs: GHC.Stack.prettySrcLoc
-    note: Function 'prettySrcLoc' is already exported from Relude
+    note: ! '''prettySrcLoc'' is already exported from Relude'
     name: Use 'prettySrcLoc' from Relude
     rhs: prettySrcLoc
 - warn:
     lhs: GHC.Stack.withFrozenCallStack
-    note: Function 'withFrozenCallStack' is already exported from Relude
+    note: ! '''withFrozenCallStack'' is already exported from Relude'
     name: Use 'withFrozenCallStack' from Relude
     rhs: withFrozenCallStack
 - warn:
     lhs: Control.Monad.guard
-    note: Function 'guard' is already exported from Relude
+    note: ! '''guard'' is already exported from Relude'
     name: Use 'guard' from Relude
     rhs: guard
 - warn:
     lhs: Control.Monad.unless
-    note: Function 'unless' is already exported from Relude
+    note: ! '''unless'' is already exported from Relude'
     name: Use 'unless' from Relude
     rhs: unless
 - warn:
     lhs: Control.Monad.when
-    note: Function 'when' is already exported from Relude
+    note: ! '''when'' is already exported from Relude'
     name: Use 'when' from Relude
     rhs: when
 - warn:
     lhs: Data.Bool.bool
-    note: Function 'bool' is already exported from Relude
+    note: ! '''bool'' is already exported from Relude'
     name: Use 'bool' from Relude
     rhs: bool
 - warn:
     lhs: Data.Hashable.Hashable
-    note: Function 'Hashable' is already exported from Relude
+    note: ! '''Hashable'' is already exported from Relude'
     name: Use 'Hashable' from Relude
     rhs: Hashable
 - warn:
     lhs: Data.Hashable.hashWithSalt
-    note: Function 'hashWithSalt' is already exported from Relude
+    note: ! '''hashWithSalt'' is already exported from Relude'
     name: Use 'hashWithSalt' from Relude
     rhs: hashWithSalt
 - warn:
     lhs: Data.HashMap.Strict.HashMap
-    note: Function 'HashMap' is already exported from Relude
+    note: ! '''HashMap'' is already exported from Relude'
     name: Use 'HashMap' from Relude
     rhs: HashMap
 - warn:
     lhs: Data.HashSet.HashSet
-    note: Function 'HashSet' is already exported from Relude
+    note: ! '''HashSet'' is already exported from Relude'
     name: Use 'HashSet' from Relude
     rhs: HashSet
 - warn:
     lhs: Data.IntMap.Strict.IntMap
-    note: Function 'IntMap' is already exported from Relude
+    note: ! '''IntMap'' is already exported from Relude'
     name: Use 'IntMap' from Relude
     rhs: IntMap
 - warn:
     lhs: Data.IntSet.IntSet
-    note: Function 'IntSet' is already exported from Relude
+    note: ! '''IntSet'' is already exported from Relude'
     name: Use 'IntSet' from Relude
     rhs: IntSet
 - warn:
     lhs: Data.Map.Strict.Map
-    note: Function 'Map' is already exported from Relude
+    note: ! '''Map'' is already exported from Relude'
     name: Use 'Map' from Relude
     rhs: Map
 - warn:
     lhs: Data.Sequence.Sequence
-    note: Function 'Sequence' is already exported from Relude
+    note: ! '''Sequence'' is already exported from Relude'
     name: Use 'Sequence' from Relude
     rhs: Sequence
 - warn:
     lhs: Data.Set.Set
-    note: Function 'Set' is already exported from Relude
+    note: ! '''Set'' is already exported from Relude'
     name: Use 'Set' from Relude
     rhs: Set
 - warn:
     lhs: Data.Tuple.swap
-    note: Function 'swap' is already exported from Relude
+    note: ! '''swap'' is already exported from Relude'
     name: Use 'swap' from Relude
     rhs: swap
 - warn:
     lhs: Data.Vector.Vector
-    note: Function 'Vector' is already exported from Relude
+    note: ! '''Vector'' is already exported from Relude'
     name: Use 'Vector' from Relude
     rhs: Vector
 - warn:
     lhs: GHC.Exts.IsList
-    note: Function 'IsList' is already exported from Relude
+    note: ! '''IsList'' is already exported from Relude'
     name: Use 'IsList' from Relude
     rhs: IsList
 - warn:
     lhs: GHC.Exts.fromList
-    note: Function 'fromList' is already exported from Relude
+    note: ! '''fromList'' is already exported from Relude'
     name: Use 'fromList' from Relude
     rhs: fromList
 - warn:
     lhs: GHC.Exts.fromListN
-    note: Function 'fromListN' is already exported from Relude
+    note: ! '''fromListN'' is already exported from Relude'
     name: Use 'fromListN' from Relude
     rhs: fromListN
 - warn:
     lhs: Debug.Trace.trace
-    note: Function 'trace' is already exported from Relude
+    note: ! '''trace'' is already exported from Relude'
     name: Use 'trace' from Relude
     rhs: trace
 - warn:
     lhs: Debug.Trace.traceShow
-    note: Function 'traceShow' is already exported from Relude
+    note: ! '''traceShow'' is already exported from Relude'
     name: Use 'traceShow' from Relude
     rhs: traceShow
 - warn:
     lhs: Debug.Trace.traceShowId
-    note: Function 'traceShowId' is already exported from Relude
+    note: ! '''traceShowId'' is already exported from Relude'
     name: Use 'traceShowId' from Relude
     rhs: traceShowId
 - warn:
     lhs: Debug.Trace.traceShowM
-    note: Function 'traceShowM' is already exported from Relude
+    note: ! '''traceShowM'' is already exported from Relude'
     name: Use 'traceShowM' from Relude
     rhs: traceShowM
 - warn:
     lhs: Debug.Trace.traceM
-    note: Function 'traceM' is already exported from Relude
+    note: ! '''traceM'' is already exported from Relude'
     name: Use 'traceM' from Relude
     rhs: traceM
 - warn:
     lhs: Debug.Trace.traceId
-    note: Function 'traceId' is already exported from Relude
+    note: ! '''traceId'' is already exported from Relude'
     name: Use 'traceId' from Relude
     rhs: traceId
 - warn:
     lhs: Control.DeepSeq.NFData
-    note: Function 'NFData' is already exported from Relude
+    note: ! '''NFData'' is already exported from Relude'
     name: Use 'NFData' from Relude
     rhs: NFData
 - warn:
     lhs: Control.DeepSeq.rnf
-    note: Function 'rnf' is already exported from Relude
+    note: ! '''rnf'' is already exported from Relude'
     name: Use 'rnf' from Relude
     rhs: rnf
 - warn:
     lhs: Control.DeepSeq.deepseq
-    note: Function 'deepseq' is already exported from Relude
+    note: ! '''deepseq'' is already exported from Relude'
     name: Use 'deepseq' from Relude
     rhs: deepseq
 - warn:
     lhs: Control.DeepSeq.force
-    note: Function 'force' is already exported from Relude
+    note: ! '''force'' is already exported from Relude'
     name: Use 'force' from Relude
     rhs: force
 - warn:
@@ -1302,97 +1302,97 @@
     rhs: ($!!)
 - warn:
     lhs: Control.Exception.Exception
-    note: Function 'Exception' is already exported from Relude
+    note: ! '''Exception'' is already exported from Relude'
     name: Use 'Exception' from Relude
     rhs: Exception
 - warn:
     lhs: Control.Exception.SomeException
-    note: Function 'SomeException' is already exported from Relude
+    note: ! '''SomeException'' is already exported from Relude'
     name: Use 'SomeException' from Relude
     rhs: SomeException
 - warn:
     lhs: Control.Exception.toException
-    note: Function 'toException' is already exported from Relude
+    note: ! '''toException'' is already exported from Relude'
     name: Use 'toException' from Relude
     rhs: toException
 - warn:
     lhs: Control.Exception.fromException
-    note: Function 'fromException' is already exported from Relude
+    note: ! '''fromException'' is already exported from Relude'
     name: Use 'fromException' from Relude
     rhs: fromException
 - warn:
     lhs: Control.Exception.displayException
-    note: Function 'displayException' is already exported from Relude
+    note: ! '''displayException'' is already exported from Relude'
     name: Use 'displayException' from Relude
     rhs: displayException
 - warn:
     lhs: Data.Foldable.asum
-    note: Function 'asum' is already exported from Relude
+    note: ! '''asum'' is already exported from Relude'
     name: Use 'asum' from Relude
     rhs: asum
 - warn:
     lhs: Data.Foldable.find
-    note: Function 'find' is already exported from Relude
+    note: ! '''find'' is already exported from Relude'
     name: Use 'find' from Relude
     rhs: find
 - warn:
     lhs: Data.Foldable.find
-    note: Function 'find' is already exported from Relude
+    note: ! '''find'' is already exported from Relude'
     name: Use 'find' from Relude
     rhs: find
 - warn:
     lhs: Data.Foldable.fold
-    note: Function 'fold' is already exported from Relude
+    note: ! '''fold'' is already exported from Relude'
     name: Use 'fold' from Relude
     rhs: fold
 - warn:
     lhs: Data.Foldable.foldl'
-    note: Function 'foldl'' is already exported from Relude
+    note: ! '''foldl'''' is already exported from Relude'
     name: Use 'foldl'' from Relude
     rhs: foldl'
 - warn:
     lhs: Data.Foldable.foldrM
-    note: Function 'foldrM' is already exported from Relude
+    note: ! '''foldrM'' is already exported from Relude'
     name: Use 'foldrM' from Relude
     rhs: foldrM
 - warn:
     lhs: Data.Foldable.forM_
-    note: Function 'forM_' is already exported from Relude
+    note: ! '''forM_'' is already exported from Relude'
     name: Use 'forM_' from Relude
     rhs: forM_
 - warn:
     lhs: Data.Foldable.for_
-    note: Function 'for_' is already exported from Relude
+    note: ! '''for_'' is already exported from Relude'
     name: Use 'for_' from Relude
     rhs: for_
 - warn:
     lhs: Data.Foldable.sequenceA_
-    note: Function 'sequenceA_' is already exported from Relude
+    note: ! '''sequenceA_'' is already exported from Relude'
     name: Use 'sequenceA_' from Relude
     rhs: sequenceA_
 - warn:
     lhs: Data.Foldable.toList
-    note: Function 'toList' is already exported from Relude
+    note: ! '''toList'' is already exported from Relude'
     name: Use 'toList' from Relude
     rhs: toList
 - warn:
     lhs: Data.Foldable.traverse_
-    note: Function 'traverse_' is already exported from Relude
+    note: ! '''traverse_'' is already exported from Relude'
     name: Use 'traverse_' from Relude
     rhs: traverse_
 - warn:
     lhs: Data.Traversable.forM
-    note: Function 'forM' is already exported from Relude
+    note: ! '''forM'' is already exported from Relude'
     name: Use 'forM' from Relude
     rhs: forM
 - warn:
     lhs: Data.Traversable.mapAccumL
-    note: Function 'mapAccumL' is already exported from Relude
+    note: ! '''mapAccumL'' is already exported from Relude'
     name: Use 'mapAccumL' from Relude
     rhs: mapAccumL
 - warn:
     lhs: Data.Traversable.mapAccumR
-    note: Function 'mapAccumR' is already exported from Relude
+    note: ! '''mapAccumR'' is already exported from Relude'
     name: Use 'mapAccumR' from Relude
     rhs: mapAccumR
 - warn:
@@ -1407,12 +1407,12 @@
     rhs: (<<<)
 - warn:
     lhs: Data.Function.fix
-    note: Function 'fix' is already exported from Relude
+    note: ! '''fix'' is already exported from Relude'
     name: Use 'fix' from Relude
     rhs: fix
 - warn:
     lhs: Data.Function.on
-    note: Function 'on' is already exported from Relude
+    note: ! '''on'' is already exported from Relude'
     name: Use 'on' from Relude
     rhs: 'on'
 - warn:
@@ -1422,27 +1422,27 @@
     rhs: (&&&)
 - warn:
     lhs: Data.Bifunctor.Bifunctor
-    note: Function 'Bifunctor' is already exported from Relude
+    note: ! '''Bifunctor'' is already exported from Relude'
     name: Use 'Bifunctor' from Relude
     rhs: Bifunctor
 - warn:
     lhs: Data.Bifunctor.bimap
-    note: Function 'bimap' is already exported from Relude
+    note: ! '''bimap'' is already exported from Relude'
     name: Use 'bimap' from Relude
     rhs: bimap
 - warn:
     lhs: Data.Bifunctor.first
-    note: Function 'first' is already exported from Relude
+    note: ! '''first'' is already exported from Relude'
     name: Use 'first' from Relude
     rhs: first
 - warn:
     lhs: Data.Bifunctor.second
-    note: Function 'second' is already exported from Relude
+    note: ! '''second'' is already exported from Relude'
     name: Use 'second' from Relude
     rhs: second
 - warn:
     lhs: Data.Functor.void
-    note: Function 'void' is already exported from Relude
+    note: ! '''void'' is already exported from Relude'
     name: Use 'void' from Relude
     rhs: void
 - warn:
@@ -1457,287 +1457,287 @@
     rhs: (<&>)
 - warn:
     lhs: Data.Functor.Compose.Compose
-    note: Function 'Compose' is already exported from Relude
+    note: ! '''Compose'' is already exported from Relude'
     name: Use 'Compose' from Relude
     rhs: Compose
 - warn:
     lhs: Data.Functor.Compose.getCompose
-    note: Function 'getCompose' is already exported from Relude
+    note: ! '''getCompose'' is already exported from Relude'
     name: Use 'getCompose' from Relude
     rhs: getCompose
 - warn:
     lhs: Data.Functor.Identity.Identity
-    note: Function 'Identity' is already exported from Relude
+    note: ! '''Identity'' is already exported from Relude'
     name: Use 'Identity' from Relude
     rhs: Identity
 - warn:
     lhs: Data.Functor.Identity.runIdentity
-    note: Function 'runIdentity' is already exported from Relude
+    note: ! '''runIdentity'' is already exported from Relude'
     name: Use 'runIdentity' from Relude
     rhs: runIdentity
 - warn:
     lhs: Control.Concurrent.MVar.MVar
-    note: Function 'MVar' is already exported from Relude
+    note: ! '''MVar'' is already exported from Relude'
     name: Use 'MVar' from Relude
     rhs: MVar
 - warn:
     lhs: Control.Concurrent.MVar.newEmptyMVar
-    note: Function 'newEmptyMVar' is already exported from Relude
+    note: ! '''newEmptyMVar'' is already exported from Relude'
     name: Use 'newEmptyMVar' from Relude
     rhs: newEmptyMVar
 - warn:
     lhs: Control.Concurrent.MVar.newMVar
-    note: Function 'newMVar' is already exported from Relude
+    note: ! '''newMVar'' is already exported from Relude'
     name: Use 'newMVar' from Relude
     rhs: newMVar
 - warn:
     lhs: Control.Concurrent.MVar.putMVar
-    note: Function 'putMVar' is already exported from Relude
+    note: ! '''putMVar'' is already exported from Relude'
     name: Use 'putMVar' from Relude
     rhs: putMVar
 - warn:
     lhs: Control.Concurrent.MVar.readMVar
-    note: Function 'readMVar' is already exported from Relude
+    note: ! '''readMVar'' is already exported from Relude'
     name: Use 'readMVar' from Relude
     rhs: readMVar
 - warn:
     lhs: Control.Concurrent.MVar.swapMVar
-    note: Function 'swapMVar' is already exported from Relude
+    note: ! '''swapMVar'' is already exported from Relude'
     name: Use 'swapMVar' from Relude
     rhs: swapMVar
 - warn:
     lhs: Control.Concurrent.MVar.takeMVar
-    note: Function 'takeMVar' is already exported from Relude
+    note: ! '''takeMVar'' is already exported from Relude'
     name: Use 'takeMVar' from Relude
     rhs: takeMVar
 - warn:
     lhs: Control.Concurrent.MVar.tryPutMVar
-    note: Function 'tryPutMVar' is already exported from Relude
+    note: ! '''tryPutMVar'' is already exported from Relude'
     name: Use 'tryPutMVar' from Relude
     rhs: tryPutMVar
 - warn:
     lhs: Control.Concurrent.MVar.tryReadMVar
-    note: Function 'tryReadMVar' is already exported from Relude
+    note: ! '''tryReadMVar'' is already exported from Relude'
     name: Use 'tryReadMVar' from Relude
     rhs: tryReadMVar
 - warn:
     lhs: Control.Concurrent.MVar.tryTakeMVar
-    note: Function 'tryTakeMVar' is already exported from Relude
+    note: ! '''tryTakeMVar'' is already exported from Relude'
     name: Use 'tryTakeMVar' from Relude
     rhs: tryTakeMVar
 - warn:
     lhs: Control.Monad.STM.STM
-    note: Function 'STM' is already exported from Relude
+    note: ! '''STM'' is already exported from Relude'
     name: Use 'STM' from Relude
     rhs: STM
 - warn:
     lhs: Control.Monad.STM.atomically
-    note: Function 'atomically' is already exported from Relude
+    note: ! '''atomically'' is already exported from Relude'
     name: Use 'atomically' from Relude
     rhs: atomically
 - warn:
     lhs: Control.Concurrent.STM.TVar.TVar
-    note: Function 'TVar' is already exported from Relude
+    note: ! '''TVar'' is already exported from Relude'
     name: Use 'TVar' from Relude
     rhs: TVar
 - warn:
     lhs: Control.Concurrent.STM.TVar.newTVarIO
-    note: Function 'newTVarIO' is already exported from Relude
+    note: ! '''newTVarIO'' is already exported from Relude'
     name: Use 'newTVarIO' from Relude
     rhs: newTVarIO
 - warn:
     lhs: Control.Concurrent.STM.TVar.readTVarIO
-    note: Function 'readTVarIO' is already exported from Relude
+    note: ! '''readTVarIO'' is already exported from Relude'
     name: Use 'readTVarIO' from Relude
     rhs: readTVarIO
 - warn:
     lhs: Control.Concurrent.STM.TVar.modifyTVar'
-    note: Function 'modifyTVar'' is already exported from Relude
+    note: ! '''modifyTVar'''' is already exported from Relude'
     name: Use 'modifyTVar'' from Relude
     rhs: modifyTVar'
 - warn:
     lhs: Control.Concurrent.STM.TVar.newTVar
-    note: Function 'newTVar' is already exported from Relude
+    note: ! '''newTVar'' is already exported from Relude'
     name: Use 'newTVar' from Relude
     rhs: newTVar
 - warn:
     lhs: Control.Concurrent.STM.TVar.readTVar
-    note: Function 'readTVar' is already exported from Relude
+    note: ! '''readTVar'' is already exported from Relude'
     name: Use 'readTVar' from Relude
     rhs: readTVar
 - warn:
     lhs: Control.Concurrent.STM.TVar.writeTVar
-    note: Function 'writeTVar' is already exported from Relude
+    note: ! '''writeTVar'' is already exported from Relude'
     name: Use 'writeTVar' from Relude
     rhs: writeTVar
 - warn:
     lhs: Data.Text.IO.appendFile
-    note: Function 'appendFile' is already exported from Relude
+    note: ! '''appendFile'' is already exported from Relude'
     name: Use 'appendFile' from Relude
     rhs: appendFile
 - warn:
     lhs: Data.Text.IO.getLine
-    note: Function 'getLine' is already exported from Relude
+    note: ! '''getLine'' is already exported from Relude'
     name: Use 'getLine' from Relude
     rhs: getLine
 - warn:
     lhs: Data.Text.IO.readFile
-    note: Function 'readFile' is already exported from Relude
+    note: ! '''readFile'' is already exported from Relude'
     name: Use 'readFile' from Relude
     rhs: readFile
 - warn:
     lhs: Data.Text.IO.writeFile
-    note: Function 'writeFile' is already exported from Relude
+    note: ! '''writeFile'' is already exported from Relude'
     name: Use 'writeFile' from Relude
     rhs: writeFile
 - warn:
     lhs: System.IO.openFile
-    note: Function 'openFile' is already exported from Relude
+    note: ! '''openFile'' is already exported from Relude'
     name: Use 'openFile' from Relude
     rhs: openFile
 - warn:
     lhs: Data.IORef.IORef
-    note: Function 'IORef' is already exported from Relude
+    note: ! '''IORef'' is already exported from Relude'
     name: Use 'IORef' from Relude
     rhs: IORef
 - warn:
     lhs: Data.IORef.atomicModifyIORef
-    note: Function 'atomicModifyIORef' is already exported from Relude
+    note: ! '''atomicModifyIORef'' is already exported from Relude'
     name: Use 'atomicModifyIORef' from Relude
     rhs: atomicModifyIORef
 - warn:
     lhs: Data.IORef.atomicModifyIORef'
-    note: Function 'atomicModifyIORef'' is already exported from Relude
+    note: ! '''atomicModifyIORef'''' is already exported from Relude'
     name: Use 'atomicModifyIORef'' from Relude
     rhs: atomicModifyIORef'
 - warn:
     lhs: Data.IORef.atomicWriteIORef
-    note: Function 'atomicWriteIORef' is already exported from Relude
+    note: ! '''atomicWriteIORef'' is already exported from Relude'
     name: Use 'atomicWriteIORef' from Relude
     rhs: atomicWriteIORef
 - warn:
     lhs: Data.IORef.modifyIORef
-    note: Function 'modifyIORef' is already exported from Relude
+    note: ! '''modifyIORef'' is already exported from Relude'
     name: Use 'modifyIORef' from Relude
     rhs: modifyIORef
 - warn:
     lhs: Data.IORef.modifyIORef'
-    note: Function 'modifyIORef'' is already exported from Relude
+    note: ! '''modifyIORef'''' is already exported from Relude'
     name: Use 'modifyIORef'' from Relude
     rhs: modifyIORef'
 - warn:
     lhs: Data.IORef.newIORef
-    note: Function 'newIORef' is already exported from Relude
+    note: ! '''newIORef'' is already exported from Relude'
     name: Use 'newIORef' from Relude
     rhs: newIORef
 - warn:
     lhs: Data.IORef.readIORef
-    note: Function 'readIORef' is already exported from Relude
+    note: ! '''readIORef'' is already exported from Relude'
     name: Use 'readIORef' from Relude
     rhs: readIORef
 - warn:
     lhs: Data.IORef.writeIORef
-    note: Function 'writeIORef' is already exported from Relude
+    note: ! '''writeIORef'' is already exported from Relude'
     name: Use 'writeIORef' from Relude
     rhs: writeIORef
 - warn:
     lhs: Data.List.genericDrop
-    note: Function 'genericDrop' is already exported from Relude
+    note: ! '''genericDrop'' is already exported from Relude'
     name: Use 'genericDrop' from Relude
     rhs: genericDrop
 - warn:
     lhs: Data.List.genericLength
-    note: Function 'genericLength' is already exported from Relude
+    note: ! '''genericLength'' is already exported from Relude'
     name: Use 'genericLength' from Relude
     rhs: genericLength
 - warn:
     lhs: Data.List.genericReplicate
-    note: Function 'genericReplicate' is already exported from Relude
+    note: ! '''genericReplicate'' is already exported from Relude'
     name: Use 'genericReplicate' from Relude
     rhs: genericReplicate
 - warn:
     lhs: Data.List.genericSplitAt
-    note: Function 'genericSplitAt' is already exported from Relude
+    note: ! '''genericSplitAt'' is already exported from Relude'
     name: Use 'genericSplitAt' from Relude
     rhs: genericSplitAt
 - warn:
     lhs: Data.List.genericTake
-    note: Function 'genericTake' is already exported from Relude
+    note: ! '''genericTake'' is already exported from Relude'
     name: Use 'genericTake' from Relude
     rhs: genericTake
 - warn:
     lhs: Data.List.group
-    note: Function 'group' is already exported from Relude
+    note: ! '''group'' is already exported from Relude'
     name: Use 'group' from Relude
     rhs: group
 - warn:
     lhs: Data.List.inits
-    note: Function 'inits' is already exported from Relude
+    note: ! '''inits'' is already exported from Relude'
     name: Use 'inits' from Relude
     rhs: inits
 - warn:
     lhs: Data.List.intercalate
-    note: Function 'intercalate' is already exported from Relude
+    note: ! '''intercalate'' is already exported from Relude'
     name: Use 'intercalate' from Relude
     rhs: intercalate
 - warn:
     lhs: Data.List.intersperse
-    note: Function 'intersperse' is already exported from Relude
+    note: ! '''intersperse'' is already exported from Relude'
     name: Use 'intersperse' from Relude
     rhs: intersperse
 - warn:
     lhs: Data.List.isPrefixOf
-    note: Function 'isPrefixOf' is already exported from Relude
+    note: ! '''isPrefixOf'' is already exported from Relude'
     name: Use 'isPrefixOf' from Relude
     rhs: isPrefixOf
 - warn:
     lhs: Data.List.permutations
-    note: Function 'permutations' is already exported from Relude
+    note: ! '''permutations'' is already exported from Relude'
     name: Use 'permutations' from Relude
     rhs: permutations
 - warn:
     lhs: Data.List.sort
-    note: Function 'sort' is already exported from Relude
+    note: ! '''sort'' is already exported from Relude'
     name: Use 'sort' from Relude
     rhs: sort
 - warn:
     lhs: Data.List.sortBy
-    note: Function 'sortBy' is already exported from Relude
+    note: ! '''sortBy'' is already exported from Relude'
     name: Use 'sortBy' from Relude
     rhs: sortBy
 - warn:
     lhs: Data.List.sortOn
-    note: Function 'sortOn' is already exported from Relude
+    note: ! '''sortOn'' is already exported from Relude'
     name: Use 'sortOn' from Relude
     rhs: sortOn
 - warn:
     lhs: Data.List.subsequences
-    note: Function 'subsequences' is already exported from Relude
+    note: ! '''subsequences'' is already exported from Relude'
     name: Use 'subsequences' from Relude
     rhs: subsequences
 - warn:
     lhs: Data.List.tails
-    note: Function 'tails' is already exported from Relude
+    note: ! '''tails'' is already exported from Relude'
     name: Use 'tails' from Relude
     rhs: tails
 - warn:
     lhs: Data.List.transpose
-    note: Function 'transpose' is already exported from Relude
+    note: ! '''transpose'' is already exported from Relude'
     name: Use 'transpose' from Relude
     rhs: transpose
 - warn:
     lhs: Data.List.uncons
-    note: Function 'uncons' is already exported from Relude
+    note: ! '''uncons'' is already exported from Relude'
     name: Use 'uncons' from Relude
     rhs: uncons
 - warn:
     lhs: Data.List.unfoldr
-    note: Function 'unfoldr' is already exported from Relude
+    note: ! '''unfoldr'' is already exported from Relude'
     name: Use 'unfoldr' from Relude
     rhs: unfoldr
 - warn:
     lhs: Data.NonEmpty.NonEmpty
-    note: Function 'NonEmpty' is already exported from Relude
+    note: ! '''NonEmpty'' is already exported from Relude'
     name: Use 'NonEmpty' from Relude
     rhs: NonEmpty
 - warn:
@@ -1747,282 +1747,282 @@
     rhs: (:|)
 - warn:
     lhs: Data.NonEmpty.nonEmpty
-    note: Function 'nonEmpty' is already exported from Relude
+    note: ! '''nonEmpty'' is already exported from Relude'
     name: Use 'nonEmpty' from Relude
     rhs: nonEmpty
 - warn:
     lhs: Data.NonEmpty.head
-    note: Function 'head' is already exported from Relude
+    note: ! '''head'' is already exported from Relude'
     name: Use 'head' from Relude
     rhs: head
 - warn:
     lhs: Data.NonEmpty.init
-    note: Function 'init' is already exported from Relude
+    note: ! '''init'' is already exported from Relude'
     name: Use 'init' from Relude
     rhs: init
 - warn:
     lhs: Data.NonEmpty.last
-    note: Function 'last' is already exported from Relude
+    note: ! '''last'' is already exported from Relude'
     name: Use 'last' from Relude
     rhs: last
 - warn:
     lhs: Data.NonEmpty.tail
-    note: Function 'tail' is already exported from Relude
+    note: ! '''tail'' is already exported from Relude'
     name: Use 'tail' from Relude
     rhs: tail
 - warn:
     lhs: GHC.Exts.sortWith
-    note: Function 'sortWith' is already exported from Relude
+    note: ! '''sortWith'' is already exported from Relude'
     name: Use 'sortWith' from Relude
     rhs: sortWith
 - warn:
     lhs: Control.Monad.Except.ExceptT
-    note: Function 'ExceptT' is already exported from Relude
+    note: ! '''ExceptT'' is already exported from Relude'
     name: Use 'ExceptT' from Relude
     rhs: ExceptT
 - warn:
     lhs: Control.Monad.Except.runExceptT
-    note: Function 'runExceptT' is already exported from Relude
+    note: ! '''runExceptT'' is already exported from Relude'
     name: Use 'runExceptT' from Relude
     rhs: runExceptT
 - warn:
     lhs: Control.Monad.Reader.MonadReader
-    note: Function 'MonadReader' is already exported from Relude
+    note: ! '''MonadReader'' is already exported from Relude'
     name: Use 'MonadReader' from Relude
     rhs: MonadReader
 - warn:
     lhs: Control.Monad.Reader.Reader
-    note: Function 'Reader' is already exported from Relude
+    note: ! '''Reader'' is already exported from Relude'
     name: Use 'Reader' from Relude
     rhs: Reader
 - warn:
     lhs: Control.Monad.Reader.ReaderT
-    note: Function 'ReaderT' is already exported from Relude
+    note: ! '''ReaderT'' is already exported from Relude'
     name: Use 'ReaderT' from Relude
     rhs: ReaderT
 - warn:
     lhs: Control.Monad.Reader.runReaderT
-    note: Function 'runReaderT' is already exported from Relude
+    note: ! '''runReaderT'' is already exported from Relude'
     name: Use 'runReaderT' from Relude
     rhs: runReaderT
 - warn:
     lhs: Control.Monad.Reader.ask
-    note: Function 'ask' is already exported from Relude
+    note: ! '''ask'' is already exported from Relude'
     name: Use 'ask' from Relude
     rhs: ask
 - warn:
     lhs: Control.Monad.Reader.asks
-    note: Function 'asks' is already exported from Relude
+    note: ! '''asks'' is already exported from Relude'
     name: Use 'asks' from Relude
     rhs: asks
 - warn:
     lhs: Control.Monad.Reader.local
-    note: Function 'local' is already exported from Relude
+    note: ! '''local'' is already exported from Relude'
     name: Use 'local' from Relude
     rhs: local
 - warn:
     lhs: Control.Monad.Reader.reader
-    note: Function 'reader' is already exported from Relude
+    note: ! '''reader'' is already exported from Relude'
     name: Use 'reader' from Relude
     rhs: reader
 - warn:
     lhs: Control.Monad.Reader.runReader
-    note: Function 'runReader' is already exported from Relude
+    note: ! '''runReader'' is already exported from Relude'
     name: Use 'runReader' from Relude
     rhs: runReader
 - warn:
     lhs: Control.Monad.Reader.withReader
-    note: Function 'withReader' is already exported from Relude
+    note: ! '''withReader'' is already exported from Relude'
     name: Use 'withReader' from Relude
     rhs: withReader
 - warn:
     lhs: Control.Monad.Reader.withReaderT
-    note: Function 'withReaderT' is already exported from Relude
+    note: ! '''withReaderT'' is already exported from Relude'
     name: Use 'withReaderT' from Relude
     rhs: withReaderT
 - warn:
     lhs: Control.Monad.State.Strict.MonadState
-    note: Function 'MonadState' is already exported from Relude
+    note: ! '''MonadState'' is already exported from Relude'
     name: Use 'MonadState' from Relude
     rhs: MonadState
 - warn:
     lhs: Control.Monad.State.Strict.State
-    note: Function 'State' is already exported from Relude
+    note: ! '''State'' is already exported from Relude'
     name: Use 'State' from Relude
     rhs: State
 - warn:
     lhs: Control.Monad.State.Strict.StateT
-    note: Function 'StateT' is already exported from Relude
+    note: ! '''StateT'' is already exported from Relude'
     name: Use 'StateT' from Relude
     rhs: StateT
 - warn:
     lhs: Control.Monad.State.Strict.runStateT
-    note: Function 'runStateT' is already exported from Relude
+    note: ! '''runStateT'' is already exported from Relude'
     name: Use 'runStateT' from Relude
     rhs: runStateT
 - warn:
     lhs: Control.Monad.State.Strict.evalState
-    note: Function 'evalState' is already exported from Relude
+    note: ! '''evalState'' is already exported from Relude'
     name: Use 'evalState' from Relude
     rhs: evalState
 - warn:
     lhs: Control.Monad.State.Strict.evalStateT
-    note: Function 'evalStateT' is already exported from Relude
+    note: ! '''evalStateT'' is already exported from Relude'
     name: Use 'evalStateT' from Relude
     rhs: evalStateT
 - warn:
     lhs: Control.Monad.State.Strict.execState
-    note: Function 'execState' is already exported from Relude
+    note: ! '''execState'' is already exported from Relude'
     name: Use 'execState' from Relude
     rhs: execState
 - warn:
     lhs: Control.Monad.State.Strict.execStateT
-    note: Function 'execStateT' is already exported from Relude
+    note: ! '''execStateT'' is already exported from Relude'
     name: Use 'execStateT' from Relude
     rhs: execStateT
 - warn:
     lhs: Control.Monad.State.Strict.get
-    note: Function 'get' is already exported from Relude
+    note: ! '''get'' is already exported from Relude'
     name: Use 'get' from Relude
     rhs: get
 - warn:
     lhs: Control.Monad.State.Strict.gets
-    note: Function 'gets' is already exported from Relude
+    note: ! '''gets'' is already exported from Relude'
     name: Use 'gets' from Relude
     rhs: gets
 - warn:
     lhs: Control.Monad.State.Strict.modify
-    note: Function 'modify' is already exported from Relude
+    note: ! '''modify'' is already exported from Relude'
     name: Use 'modify' from Relude
     rhs: modify
 - warn:
     lhs: Control.Monad.State.Strict.modify'
-    note: Function 'modify'' is already exported from Relude
+    note: ! '''modify'''' is already exported from Relude'
     name: Use 'modify'' from Relude
     rhs: modify'
 - warn:
     lhs: Control.Monad.State.Strict.put
-    note: Function 'put' is already exported from Relude
+    note: ! '''put'' is already exported from Relude'
     name: Use 'put' from Relude
     rhs: put
 - warn:
     lhs: Control.Monad.State.Strict.runState
-    note: Function 'runState' is already exported from Relude
+    note: ! '''runState'' is already exported from Relude'
     name: Use 'runState' from Relude
     rhs: runState
 - warn:
     lhs: Control.Monad.State.Strict.state
-    note: Function 'state' is already exported from Relude
+    note: ! '''state'' is already exported from Relude'
     name: Use 'state' from Relude
     rhs: state
 - warn:
     lhs: Control.Monad.State.Strict.withState
-    note: Function 'withState' is already exported from Relude
+    note: ! '''withState'' is already exported from Relude'
     name: Use 'withState' from Relude
     rhs: withState
 - warn:
     lhs: Control.Monad.Trans.MonadIO
-    note: Function 'MonadIO' is already exported from Relude
+    note: ! '''MonadIO'' is already exported from Relude'
     name: Use 'MonadIO' from Relude
     rhs: MonadIO
 - warn:
     lhs: Control.Monad.Trans.MonadTrans
-    note: Function 'MonadTrans' is already exported from Relude
+    note: ! '''MonadTrans'' is already exported from Relude'
     name: Use 'MonadTrans' from Relude
     rhs: MonadTrans
 - warn:
     lhs: Control.Monad.Trans.lift
-    note: Function 'lift' is already exported from Relude
+    note: ! '''lift'' is already exported from Relude'
     name: Use 'lift' from Relude
     rhs: lift
 - warn:
     lhs: Control.Monad.Trans.liftIO
-    note: Function 'liftIO' is already exported from Relude
+    note: ! '''liftIO'' is already exported from Relude'
     name: Use 'liftIO' from Relude
     rhs: liftIO
 - warn:
     lhs: Control.Monad.Trans.Identity.IdentityT
-    note: Function 'IdentityT' is already exported from Relude
+    note: ! '''IdentityT'' is already exported from Relude'
     name: Use 'IdentityT' from Relude
     rhs: IdentityT
 - warn:
     lhs: Control.Monad.Trans.Identity.runIdentityT
-    note: Function 'runIdentityT' is already exported from Relude
+    note: ! '''runIdentityT'' is already exported from Relude'
     name: Use 'runIdentityT' from Relude
     rhs: runIdentityT
 - warn:
     lhs: Control.Monad.Trans.Maybe.MaybeT
-    note: Function 'MaybeT' is already exported from Relude
+    note: ! '''MaybeT'' is already exported from Relude'
     name: Use 'MaybeT' from Relude
     rhs: MaybeT
 - warn:
     lhs: Control.Monad.Trans.Maybe.maybeToExceptT
-    note: Function 'maybeToExceptT' is already exported from Relude
+    note: ! '''maybeToExceptT'' is already exported from Relude'
     name: Use 'maybeToExceptT' from Relude
     rhs: maybeToExceptT
 - warn:
     lhs: Control.Monad.Trans.Maybe.exceptToMaybeT
-    note: Function 'exceptToMaybeT' is already exported from Relude
+    note: ! '''exceptToMaybeT'' is already exported from Relude'
     name: Use 'exceptToMaybeT' from Relude
     rhs: exceptToMaybeT
 - warn:
     lhs: Control.Monad.MonadPlus
-    note: Function 'MonadPlus' is already exported from Relude
+    note: ! '''MonadPlus'' is already exported from Relude'
     name: Use 'MonadPlus' from Relude
     rhs: MonadPlus
 - warn:
     lhs: Control.Monad.mzero
-    note: Function 'mzero' is already exported from Relude
+    note: ! '''mzero'' is already exported from Relude'
     name: Use 'mzero' from Relude
     rhs: mzero
 - warn:
     lhs: Control.Monad.mplus
-    note: Function 'mplus' is already exported from Relude
+    note: ! '''mplus'' is already exported from Relude'
     name: Use 'mplus' from Relude
     rhs: mplus
 - warn:
     lhs: Control.Monad.filterM
-    note: Function 'filterM' is already exported from Relude
+    note: ! '''filterM'' is already exported from Relude'
     name: Use 'filterM' from Relude
     rhs: filterM
 - warn:
     lhs: Control.Monad.forever
-    note: Function 'forever' is already exported from Relude
+    note: ! '''forever'' is already exported from Relude'
     name: Use 'forever' from Relude
     rhs: forever
 - warn:
     lhs: Control.Monad.join
-    note: Function 'join' is already exported from Relude
+    note: ! '''join'' is already exported from Relude'
     name: Use 'join' from Relude
     rhs: join
 - warn:
     lhs: Control.Monad.mapAndUnzipM
-    note: Function 'mapAndUnzipM' is already exported from Relude
+    note: ! '''mapAndUnzipM'' is already exported from Relude'
     name: Use 'mapAndUnzipM' from Relude
     rhs: mapAndUnzipM
 - warn:
     lhs: Control.Monad.mfilter
-    note: Function 'mfilter' is already exported from Relude
+    note: ! '''mfilter'' is already exported from Relude'
     name: Use 'mfilter' from Relude
     rhs: mfilter
 - warn:
     lhs: Control.Monad.replicateM
-    note: Function 'replicateM' is already exported from Relude
+    note: ! '''replicateM'' is already exported from Relude'
     name: Use 'replicateM' from Relude
     rhs: replicateM
 - warn:
     lhs: Control.Monad.replicateM_
-    note: Function 'replicateM_' is already exported from Relude
+    note: ! '''replicateM_'' is already exported from Relude'
     name: Use 'replicateM_' from Relude
     rhs: replicateM_
 - warn:
     lhs: Control.Monad.zipWithM
-    note: Function 'zipWithM' is already exported from Relude
+    note: ! '''zipWithM'' is already exported from Relude'
     name: Use 'zipWithM' from Relude
     rhs: zipWithM
 - warn:
     lhs: Control.Monad.zipWithM_
-    note: Function 'zipWithM_' is already exported from Relude
+    note: ! '''zipWithM_'' is already exported from Relude'
     name: Use 'zipWithM_' from Relude
     rhs: zipWithM_
 - warn:
@@ -2047,182 +2047,182 @@
     rhs: (>=>)
 - warn:
     lhs: Control.Monad.Fail.MonadFail
-    note: Function 'MonadFail' is already exported from Relude
+    note: ! '''MonadFail'' is already exported from Relude'
     name: Use 'MonadFail' from Relude
     rhs: MonadFail
 - warn:
     lhs: Data.Maybe.catMaybes
-    note: Function 'catMaybes' is already exported from Relude
+    note: ! '''catMaybes'' is already exported from Relude'
     name: Use 'catMaybes' from Relude
     rhs: catMaybes
 - warn:
     lhs: Data.Maybe.fromMaybe
-    note: Function 'fromMaybe' is already exported from Relude
+    note: ! '''fromMaybe'' is already exported from Relude'
     name: Use 'fromMaybe' from Relude
     rhs: fromMaybe
 - warn:
     lhs: Data.Maybe.isJust
-    note: Function 'isJust' is already exported from Relude
+    note: ! '''isJust'' is already exported from Relude'
     name: Use 'isJust' from Relude
     rhs: isJust
 - warn:
     lhs: Data.Maybe.isNothing
-    note: Function 'isNothing' is already exported from Relude
+    note: ! '''isNothing'' is already exported from Relude'
     name: Use 'isNothing' from Relude
     rhs: isNothing
 - warn:
     lhs: Data.Maybe.listToMaybe
-    note: Function 'listToMaybe' is already exported from Relude
+    note: ! '''listToMaybe'' is already exported from Relude'
     name: Use 'listToMaybe' from Relude
     rhs: listToMaybe
 - warn:
     lhs: Data.Maybe.mapMaybe
-    note: Function 'mapMaybe' is already exported from Relude
+    note: ! '''mapMaybe'' is already exported from Relude'
     name: Use 'mapMaybe' from Relude
     rhs: mapMaybe
 - warn:
     lhs: Data.Maybe.maybeToList
-    note: Function 'maybeToList' is already exported from Relude
+    note: ! '''maybeToList'' is already exported from Relude'
     name: Use 'maybeToList' from Relude
     rhs: maybeToList
 - warn:
     lhs: Data.Either.isLeft
-    note: Function 'isLeft' is already exported from Relude
+    note: ! '''isLeft'' is already exported from Relude'
     name: Use 'isLeft' from Relude
     rhs: isLeft
 - warn:
     lhs: Data.Either.isRight
-    note: Function 'isRight' is already exported from Relude
+    note: ! '''isRight'' is already exported from Relude'
     name: Use 'isRight' from Relude
     rhs: isRight
 - warn:
     lhs: Data.Either.lefts
-    note: Function 'lefts' is already exported from Relude
+    note: ! '''lefts'' is already exported from Relude'
     name: Use 'lefts' from Relude
     rhs: lefts
 - warn:
     lhs: Data.Either.partitionEithers
-    note: Function 'partitionEithers' is already exported from Relude
+    note: ! '''partitionEithers'' is already exported from Relude'
     name: Use 'partitionEithers' from Relude
     rhs: partitionEithers
 - warn:
     lhs: Data.Either.rights
-    note: Function 'rights' is already exported from Relude
+    note: ! '''rights'' is already exported from Relude'
     name: Use 'rights' from Relude
     rhs: rights
 - warn:
     lhs: Data.Monoid.All
-    note: Function 'All' is already exported from Relude
+    note: ! '''All'' is already exported from Relude'
     name: Use 'All' from Relude
     rhs: All
 - warn:
     lhs: Data.Monoid.getAll
-    note: Function 'getAll' is already exported from Relude
+    note: ! '''getAll'' is already exported from Relude'
     name: Use 'getAll' from Relude
     rhs: getAll
 - warn:
     lhs: Data.Monoid.Alt
-    note: Function 'Alt' is already exported from Relude
+    note: ! '''Alt'' is already exported from Relude'
     name: Use 'Alt' from Relude
     rhs: Alt
 - warn:
     lhs: Data.Monoid.getAlt
-    note: Function 'getAlt' is already exported from Relude
+    note: ! '''getAlt'' is already exported from Relude'
     name: Use 'getAlt' from Relude
     rhs: getAlt
 - warn:
     lhs: Data.Monoid.Any
-    note: Function 'Any' is already exported from Relude
+    note: ! '''Any'' is already exported from Relude'
     name: Use 'Any' from Relude
     rhs: Any
 - warn:
     lhs: Data.Monoid.getAny
-    note: Function 'getAny' is already exported from Relude
+    note: ! '''getAny'' is already exported from Relude'
     name: Use 'getAny' from Relude
     rhs: getAny
 - warn:
     lhs: Data.Monoid.Dual
-    note: Function 'Dual' is already exported from Relude
+    note: ! '''Dual'' is already exported from Relude'
     name: Use 'Dual' from Relude
     rhs: Dual
 - warn:
     lhs: Data.Monoid.getDual
-    note: Function 'getDual' is already exported from Relude
+    note: ! '''getDual'' is already exported from Relude'
     name: Use 'getDual' from Relude
     rhs: getDual
 - warn:
     lhs: Data.Monoid.Endo
-    note: Function 'Endo' is already exported from Relude
+    note: ! '''Endo'' is already exported from Relude'
     name: Use 'Endo' from Relude
     rhs: Endo
 - warn:
     lhs: Data.Monoid.appEndo
-    note: Function 'appEndo' is already exported from Relude
+    note: ! '''appEndo'' is already exported from Relude'
     name: Use 'appEndo' from Relude
     rhs: appEndo
 - warn:
     lhs: Data.Monoid.First
-    note: Function 'First' is already exported from Relude
+    note: ! '''First'' is already exported from Relude'
     name: Use 'First' from Relude
     rhs: First
 - warn:
     lhs: Data.Monoid.getFirst
-    note: Function 'getFirst' is already exported from Relude
+    note: ! '''getFirst'' is already exported from Relude'
     name: Use 'getFirst' from Relude
     rhs: getFirst
 - warn:
     lhs: Data.Monoid.Last
-    note: Function 'Last' is already exported from Relude
+    note: ! '''Last'' is already exported from Relude'
     name: Use 'Last' from Relude
     rhs: Last
 - warn:
     lhs: Data.Monoid.getLast
-    note: Function 'getLast' is already exported from Relude
+    note: ! '''getLast'' is already exported from Relude'
     name: Use 'getLast' from Relude
     rhs: getLast
 - warn:
     lhs: Data.Monoid.Product
-    note: Function 'Product' is already exported from Relude
+    note: ! '''Product'' is already exported from Relude'
     name: Use 'Product' from Relude
     rhs: Product
 - warn:
     lhs: Data.Monoid.getProduct
-    note: Function 'getProduct' is already exported from Relude
+    note: ! '''getProduct'' is already exported from Relude'
     name: Use 'getProduct' from Relude
     rhs: getProduct
 - warn:
     lhs: Data.Monoid.Sum
-    note: Function 'Sum' is already exported from Relude
+    note: ! '''Sum'' is already exported from Relude'
     name: Use 'Sum' from Relude
     rhs: Sum
 - warn:
     lhs: Data.Monoid.getSum
-    note: Function 'getSum' is already exported from Relude
+    note: ! '''getSum'' is already exported from Relude'
     name: Use 'getSum' from Relude
     rhs: getSum
 - warn:
     lhs: Data.Semigroup.Option
-    note: Function 'Option' is already exported from Relude
+    note: ! '''Option'' is already exported from Relude'
     name: Use 'Option' from Relude
     rhs: Option
 - warn:
     lhs: Data.Semigroup.getOption
-    note: Function 'getOption' is already exported from Relude
+    note: ! '''getOption'' is already exported from Relude'
     name: Use 'getOption' from Relude
     rhs: getOption
 - warn:
     lhs: Data.Semigroup.Semigroup
-    note: Function 'Semigroup' is already exported from Relude
+    note: ! '''Semigroup'' is already exported from Relude'
     name: Use 'Semigroup' from Relude
     rhs: Semigroup
 - warn:
     lhs: Data.Semigroup.sconcat
-    note: Function 'sconcat' is already exported from Relude
+    note: ! '''sconcat'' is already exported from Relude'
     name: Use 'sconcat' from Relude
     rhs: sconcat
 - warn:
     lhs: Data.Semigroup.stimes
-    note: Function 'stimes' is already exported from Relude
+    note: ! '''stimes'' is already exported from Relude'
     name: Use 'stimes' from Relude
     rhs: stimes
 - warn:
@@ -2232,117 +2232,117 @@
     rhs: (<>)
 - warn:
     lhs: Data.Semigroup.WrappedMonoid
-    note: Function 'WrappedMonoid' is already exported from Relude
+    note: ! '''WrappedMonoid'' is already exported from Relude'
     name: Use 'WrappedMonoid' from Relude
     rhs: WrappedMonoid
 - warn:
     lhs: Data.Semigroup.cycle1
-    note: Function 'cycle1' is already exported from Relude
+    note: ! '''cycle1'' is already exported from Relude'
     name: Use 'cycle1' from Relude
     rhs: cycle1
 - warn:
     lhs: Data.Semigroup.mtimesDefault
-    note: Function 'mtimesDefault' is already exported from Relude
+    note: ! '''mtimesDefault'' is already exported from Relude'
     name: Use 'mtimesDefault' from Relude
     rhs: mtimesDefault
 - warn:
     lhs: Data.Semigroup.stimesIdempotent
-    note: Function 'stimesIdempotent' is already exported from Relude
+    note: ! '''stimesIdempotent'' is already exported from Relude'
     name: Use 'stimesIdempotent' from Relude
     rhs: stimesIdempotent
 - warn:
     lhs: Data.Semigroup.stimesIdempotentMonoid
-    note: Function 'stimesIdempotentMonoid' is already exported from Relude
+    note: ! '''stimesIdempotentMonoid'' is already exported from Relude'
     name: Use 'stimesIdempotentMonoid' from Relude
     rhs: stimesIdempotentMonoid
 - warn:
     lhs: Data.Semigroup.stimesMonoid
-    note: Function 'stimesMonoid' is already exported from Relude
+    note: ! '''stimesMonoid'' is already exported from Relude'
     name: Use 'stimesMonoid' from Relude
     rhs: stimesMonoid
 - warn:
     lhs: Data.ByteString.ByteString
-    note: Function 'ByteString' is already exported from Relude
+    note: ! '''ByteString'' is already exported from Relude'
     name: Use 'ByteString' from Relude
     rhs: ByteString
 - warn:
     lhs: Data.String.IsString
-    note: Function 'IsString' is already exported from Relude
+    note: ! '''IsString'' is already exported from Relude'
     name: Use 'IsString' from Relude
     rhs: IsString
 - warn:
     lhs: Data.String.fromString
-    note: Function 'fromString' is already exported from Relude
+    note: ! '''fromString'' is already exported from Relude'
     name: Use 'fromString' from Relude
     rhs: fromString
 - warn:
     lhs: Data.Text.Text
-    note: Function 'Text' is already exported from Relude
+    note: ! '''Text'' is already exported from Relude'
     name: Use 'Text' from Relude
     rhs: Text
 - warn:
     lhs: Data.Text.lines
-    note: Function 'lines' is already exported from Relude
+    note: ! '''lines'' is already exported from Relude'
     name: Use 'lines' from Relude
     rhs: lines
 - warn:
     lhs: Data.Text.unlines
-    note: Function 'unlines' is already exported from Relude
+    note: ! '''unlines'' is already exported from Relude'
     name: Use 'unlines' from Relude
     rhs: unlines
 - warn:
     lhs: Data.Text.words
-    note: Function 'words' is already exported from Relude
+    note: ! '''words'' is already exported from Relude'
     name: Use 'words' from Relude
     rhs: words
 - warn:
     lhs: Data.Text.unwords
-    note: Function 'unwords' is already exported from Relude
+    note: ! '''unwords'' is already exported from Relude'
     name: Use 'unwords' from Relude
     rhs: unwords
 - warn:
     lhs: Data.Text.Encoding.decodeUtf8'
-    note: Function 'decodeUtf8'' is already exported from Relude
+    note: ! '''decodeUtf8'''' is already exported from Relude'
     name: Use 'decodeUtf8'' from Relude
     rhs: decodeUtf8'
 - warn:
     lhs: Data.Text.Encoding.decodeUtf8With
-    note: Function 'decodeUtf8With' is already exported from Relude
+    note: ! '''decodeUtf8With'' is already exported from Relude'
     name: Use 'decodeUtf8With' from Relude
     rhs: decodeUtf8With
 - warn:
     lhs: Data.Text.Encoding.Error.OnDecodeError
-    note: Function 'OnDecodeError' is already exported from Relude
+    note: ! '''OnDecodeError'' is already exported from Relude'
     name: Use 'OnDecodeError' from Relude
     rhs: OnDecodeError
 - warn:
     lhs: Data.Text.Encoding.Error.OnError
-    note: Function 'OnError' is already exported from Relude
+    note: ! '''OnError'' is already exported from Relude'
     name: Use 'OnError' from Relude
     rhs: OnError
 - warn:
     lhs: Data.Text.Encoding.Error.UnicodeException
-    note: Function 'UnicodeException' is already exported from Relude
+    note: ! '''UnicodeException'' is already exported from Relude'
     name: Use 'UnicodeException' from Relude
     rhs: UnicodeException
 - warn:
     lhs: Data.Text.Encoding.Error.lenientDecode
-    note: Function 'lenientDecode' is already exported from Relude
+    note: ! '''lenientDecode'' is already exported from Relude'
     name: Use 'lenientDecode' from Relude
     rhs: lenientDecode
 - warn:
     lhs: Data.Text.Encoding.Error.strictDecode
-    note: Function 'strictDecode' is already exported from Relude
+    note: ! '''strictDecode'' is already exported from Relude'
     name: Use 'strictDecode' from Relude
     rhs: strictDecode
 - warn:
     lhs: Text.Read.Read
-    note: Function 'Read' is already exported from Relude
+    note: ! '''Read'' is already exported from Relude'
     name: Use 'Read' from Relude
     rhs: Read
 - warn:
     lhs: Text.Read.readMaybe
-    note: Function 'readMaybe' is already exported from Relude
+    note: ! '''readMaybe'' is already exported from Relude'
     name: Use 'readMaybe' from Relude
     rhs: readMaybe
 - warn:
