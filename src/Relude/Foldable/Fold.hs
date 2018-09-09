@@ -53,12 +53,7 @@ import qualified Data.Foldable as F
 
 -- $setup
 -- >>> :set -XOverloadedStrings
--- >>> import Relude.Base (Int, String, Rational, even, (/))
--- >>> import Relude.Bool (when)
--- >>> import Relude.List (replicate)
--- >>> import Relude.Monad (Maybe (..), (>=>))
--- >>> import Relude.Print (print, putTextLn)
--- >>> import Relude.String (Text, readMaybe)
+-- >>> import Relude
 -- >>> import qualified Data.HashMap.Strict as HashMap
 
 {- | Similar to 'foldl'' but takes a function with its arguments flipped.

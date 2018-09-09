@@ -61,9 +61,7 @@ import qualified GHC.Show as Show (Show (show))
 
 -- $setup
 -- >>> :set -XTypeApplications -XOverloadedStrings
--- >>> import Relude.Base (Int)
--- >>> import Relude.Function (($))
--- >>> import Relude.Print (putStrLn, putTextLn)
+-- >>> import Relude
 
 -- | Type synonym for 'Data.Text.Lazy.Text'.
 type LText = LT.Text

@@ -23,13 +23,7 @@ import Relude.List.Reexport (NonEmpty (..), nonEmpty)
 import Relude.Monad (Maybe (..), Monad (..))
 
 -- $setup
--- >>> import Relude.Applicative (pure)
--- >>> import Relude.Base ((==))
--- >>> import Relude.Bool (Bool (..), not)
--- >>> import Relude.Foldable (length)
--- >>> import Relude.Function (($))
--- >>> import Relude.List.Reexport (head)
--- >>> import Relude.Print (print)
+-- >>> import Relude
 
 {- | For safe work with lists using functinons for 'NonEmpty'.
 
