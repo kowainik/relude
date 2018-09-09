@@ -27,6 +27,8 @@
 * Move `stdin`- and `stdout`-related functions to new module `Relude.Lifted.Terminal`.
 * [#67](https://github.com/kowainik/relude/issues/67):
   Add HLint rules for `put*` functions.
+* [#61](https://github.com/kowainik/relude/issues/61):
+  Add `under2` and `underF2` functions to `Relude.Extra.Newtype`.
 
 0.2.0
 =====

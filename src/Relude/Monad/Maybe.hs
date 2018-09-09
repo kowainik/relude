@@ -24,10 +24,7 @@ import Relude.Applicative (Applicative, pass, pure)
 import Relude.Monad.Reexport (Maybe (..), Monad (..), fromMaybe)
 
 -- $setup
--- >>> import Relude.Bool (Bool (..), not)
--- >>> import Relude.Function (($))
--- >>> import Relude.Print (putTextLn, print)
--- >>> import Relude.String (readMaybe)
+-- >>> import Relude
 
 {- | Similar to 'fromMaybe' but with flipped arguments.
 
