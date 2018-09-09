@@ -627,6 +627,30 @@
     note: ! '''sortWith'' will be faster here because it doesn''t do caching'
     rhs: sortWith (Down . snd)
 - warn:
+    lhs: Data.Text.IO.putStr
+    rhs: putText
+- warn:
+    lhs: Data.Text.IO.putStrLn
+    rhs: putTextLn
+- warn:
+    lhs: Data.Text.Lazy.IO.putStr
+    rhs: putLText
+- warn:
+    lhs: Data.Text.Lazy.IO.putStrLn
+    rhs: putLTextLn
+- warn:
+    lhs: Data.ByteString.Char8.putStr
+    rhs: putBS
+- warn:
+    lhs: Data.ByteString.Char8.putStrLn
+    rhs: putBSLn
+- warn:
+    lhs: Data.ByteString.Lazy.Char8.putStr
+    rhs: putLBS
+- warn:
+    lhs: Data.ByteString.Lazy.Char8.putStrLn
+    rhs: putLBSLn
+- warn:
     lhs: Data.Text.Lazy.Text
     rhs: LText
 - warn:
@@ -2407,11 +2431,6 @@
     name: ! '''liftIO'' is not needed'
     rhs: appendFile
 - warn:
-    lhs: (liftIO (getLine ))
-    note: If you import 'getLine' from Relude, it's already lifted
-    name: ! '''liftIO'' is not needed'
-    rhs: getLine
-- warn:
     lhs: (liftIO (openFile x y))
     note: If you import 'openFile' from Relude, it's already lifted
     name: ! '''liftIO'' is not needed'
@@ -2466,3 +2485,63 @@
     note: If you import 'atomicWriteIORef' from Relude, it's already lifted
     name: ! '''liftIO'' is not needed'
     rhs: atomicWriteIORef
+- warn:
+    lhs: (liftIO (getLine ))
+    note: If you import 'getLine' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: getLine
+- warn:
+    lhs: (liftIO (print x))
+    note: If you import 'print' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: print
+- warn:
+    lhs: (liftIO (putStr x))
+    note: If you import 'putStr' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: putStr
+- warn:
+    lhs: (liftIO (putStrLn x))
+    note: If you import 'putStrLn' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: putStrLn
+- warn:
+    lhs: (liftIO (putText x))
+    note: If you import 'putText' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: putText
+- warn:
+    lhs: (liftIO (putTextLn x))
+    note: If you import 'putTextLn' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: putTextLn
+- warn:
+    lhs: (liftIO (putLText x))
+    note: If you import 'putLText' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: putLText
+- warn:
+    lhs: (liftIO (putLTextLn x))
+    note: If you import 'putLTextLn' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: putLTextLn
+- warn:
+    lhs: (liftIO (putBS x))
+    note: If you import 'putBS' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: putBS
+- warn:
+    lhs: (liftIO (putBSLn x))
+    note: If you import 'putBSLn' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: putBSLn
+- warn:
+    lhs: (liftIO (putLBS x))
+    note: If you import 'putLBS' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: putLBS
+- warn:
+    lhs: (liftIO (putLBSLn x))
+    note: If you import 'putLBSLn' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: putLBSLn

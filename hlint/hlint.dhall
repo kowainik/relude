@@ -270,6 +270,16 @@ in [ rule.Arguments { arguments =
    , warnNote "sortOn (Down . fst)" "sortWith (Down . fst)" "'sortWith' will be faster here because it doesn't do caching"
    , warnNote "sortOn (Down . snd)" "sortWith (Down . snd)" "'sortWith' will be faster here because it doesn't do caching"
 
+   -- Print
+   , warnSimple "Data.Text.IO.putStr" "putText"
+   , warnSimple "Data.Text.IO.putStrLn" "putTextLn"
+   , warnSimple "Data.Text.Lazy.IO.putStr" "putLText"
+   , warnSimple "Data.Text.Lazy.IO.putStrLn" "putLTextLn"
+   , warnSimple "Data.ByteString.Char8.putStr" "putBS"
+   , warnSimple "Data.ByteString.Char8.putStrLn" "putBSLn"
+   , warnSimple "Data.ByteString.Lazy.Char8.putStr" "putLBS"
+   , warnSimple "Data.ByteString.Lazy.Char8.putStrLn" "putLBSLn"
+
    -- String
    , warnSimple "Data.Text.Lazy.Text" "LText"
    , warnSimple "Data.ByteString.Lazy.ByteString" "LByteString"
@@ -673,7 +683,6 @@ in [ rule.Arguments { arguments =
    , warnLifted "die" "x"
    -- File
    , warnLifted "appendFile" "x y"
-   , warnLifted "getLine" ""
    , warnLifted "openFile" "x y"
    , warnLifted "readFile" "x"
    , warnLifted "writeFile" "x y"
@@ -686,4 +695,17 @@ in [ rule.Arguments { arguments =
    , warnLifted "atomicModifyIORef" "x y"
    , warnLifted "atomicModifyIORef'" "x y"
    , warnLifted "atomicWriteIORef" "x y"
+   -- Terminal
+   , warnLifted "getLine" ""
+   , warnLifted "print" "x"
+   , warnLifted "putStr" "x"
+   , warnLifted "putStrLn" "x"
+   , warnLifted "putText" "x"
+   , warnLifted "putTextLn" "x"
+   , warnLifted "putLText" "x"
+   , warnLifted "putLTextLn" "x"
+   , warnLifted "putBS" "x"
+   , warnLifted "putBSLn" "x"
+   , warnLifted "putLBS" "x"
+   , warnLifted "putLBSLn" "x"
    ]

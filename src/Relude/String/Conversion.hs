@@ -195,12 +195,14 @@ class LazyStrict l s | l -> s, s -> l where
     toLazy :: s -> l
     toStrict :: l -> s
 
+-- | Alias for 'toStrict' function.
 fromLazy :: LazyStrict l s => l -> s
 fromLazy = toStrict
 {-# INLINE fromLazy #-}
 {-# SPECIALIZE fromLazy :: LByteString -> ByteString  #-}
 {-# SPECIALIZE fromLazy :: LText -> Text  #-}
 
+-- | Alias for 'toLazy' function.
 fromStrict :: LazyStrict l s => s -> l
 fromStrict = toLazy
 {-# INLINE fromStrict #-}

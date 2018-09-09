@@ -13,15 +13,14 @@ All functions are specialized to 'Data.Text.Text'.
 
 module Relude.Lifted.File
        ( appendFile
-       , getLine
        , openFile
        , readFile
        , writeFile
        ) where
 
-import Control.Monad.Trans (MonadIO, liftIO)
-import Data.Text (Text)
 import Prelude (FilePath)
+import Relude.Monad.Reexport (MonadIO (..))
+import Relude.String.Reexport (Text)
 import System.IO (Handle, IOMode)
 
 import qualified Data.Text.IO as XIO
@@ -35,11 +34,6 @@ import qualified System.IO as XIO (openFile)
 appendFile :: MonadIO m => FilePath -> Text -> m ()
 appendFile a b = liftIO (XIO.appendFile a b)
 {-# INLINE appendFile #-}
-
--- | Lifted version of 'Data.Text.getLine'.
-getLine :: MonadIO m => m Text
-getLine = liftIO XIO.getLine
-{-# INLINE getLine #-}
 
 -- | Lifted version of 'Data.Text.readFile'.
 readFile :: MonadIO m => FilePath -> m Text

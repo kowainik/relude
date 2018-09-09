@@ -92,6 +92,7 @@ library
                                Relude.Lifted.Exit
                                Relude.Lifted.File
                                Relude.Lifted.IORef
+                               Relude.Lifted.Terminal
                            Relude.List
                                Relude.List.NonEmpty
                                Relude.List.Reexport

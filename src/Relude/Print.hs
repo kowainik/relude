@@ -10,17 +10,13 @@ Copyright: (c) 2016 Stephen Diehl
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Generalization of 'Prelude.putStr' and 'Prelude.putStrLn' functions.
+Functions like 'Prelude.putStr' and 'Prelude.putStrLn' but for 'Text', 'LText',
+'ByteString' and 'LByteString'.
 -}
 
 module Relude.Print
-       ( -- * 'String'
-         print
-       , putStr
-       , putStrLn
-
-         -- * 'Text' & 'LText'
-       , putText
+       ( -- * 'Text' & 'LText'
+         putText
        , putTextLn
        , putLText
        , putLTextLn
@@ -32,7 +28,6 @@ module Relude.Print
        , putLBSLn
        ) where
 
--- Internal usage
 import Relude.Function ((.))
 import Relude.Monad.Reexport (MonadIO (..))
 import Relude.String (ByteString, LByteString, LText, Text)
@@ -42,27 +37,6 @@ import qualified Data.ByteString.Lazy.Char8 as LBS
 import qualified Data.Text.IO as T
 import qualified Data.Text.Lazy.IO as TL
 import qualified Relude.Base as Base
-import qualified System.IO as IO (print, putStr, putStrLn)
-
-----------------------------------------------------------------------------
--- String
-----------------------------------------------------------------------------
-
--- | Lifted version of 'Prelude.print'.
-print :: forall a m . (MonadIO m, Base.Show a) => a -> m ()
-print = liftIO . IO.print
-
--- | Lifted version of 'IO.putStr'.
-putStr :: MonadIO m => Base.String -> m ()
-putStr = liftIO . IO.putStr
-{-# SPECIALIZE putStr :: Base.String -> Base.IO () #-}
-{-# INLINE putStr #-}
-
--- | Lifted version of 'IO.putStrLn'.
-putStrLn :: MonadIO m => Base.String -> m ()
-putStrLn = liftIO . IO.putStrLn
-{-# SPECIALIZE putStrLn :: Base.String -> Base.IO () #-}
-{-# INLINE putStrLn #-}
 
 ----------------------------------------------------------------------------
 -- Text
