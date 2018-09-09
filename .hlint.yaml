@@ -1396,6 +1396,11 @@
     name: Use 'mapAccumR' from Relude
     rhs: mapAccumR
 - warn:
+    lhs: (Control.Arrow.&&&)
+    note: Operator '(&&&)' is already exported from Relude
+    name: Use '&&&' from Relude
+    rhs: (&&&)
+- warn:
     lhs: (Control.Category.>>>)
     note: Operator '(>>>)' is already exported from Relude
     name: Use '>>>' from Relude
@@ -1415,11 +1420,6 @@
     note: ! '''on'' is already exported from Relude'
     name: Use 'on' from Relude
     rhs: 'on'
-- warn:
-    lhs: (Control.Arrow.&&&)
-    note: Operator '(&&&)' is already exported from Relude
-    name: Use '&&&' from Relude
-    rhs: (&&&)
 - warn:
     lhs: Data.Bifunctor.Bifunctor
     note: ! '''Bifunctor'' is already exported from Relude'
@@ -1576,11 +1576,6 @@
     name: Use 'appendFile' from Relude
     rhs: appendFile
 - warn:
-    lhs: Data.Text.IO.getLine
-    note: ! '''getLine'' is already exported from Relude'
-    name: Use 'getLine' from Relude
-    rhs: getLine
-- warn:
     lhs: Data.Text.IO.readFile
     note: ! '''readFile'' is already exported from Relude'
     name: Use 'readFile' from Relude
@@ -1640,6 +1635,11 @@
     note: ! '''writeIORef'' is already exported from Relude'
     name: Use 'writeIORef' from Relude
     rhs: writeIORef
+- warn:
+    lhs: Data.Text.IO.getLine
+    note: ! '''getLine'' is already exported from Relude'
+    name: Use 'getLine' from Relude
+    rhs: getLine
 - warn:
     lhs: Data.List.genericDrop
     note: ! '''genericDrop'' is already exported from Relude'
