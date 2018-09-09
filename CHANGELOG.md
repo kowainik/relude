@@ -17,6 +17,9 @@
   Export `(>>>)` and `(<<<)` from `Control.Category`.
 * [#59](https://github.com/kowainik/relude/issues/59):
   Introduce `flap` function and its operator version `??`.
+* [#64](https://github.com/kowainik/relude/issues/64):
+  Improve performance of functions from `Foldable1`.
+  Add `foldl1'` function.
 
 0.2.0
 =====
