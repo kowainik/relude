@@ -2476,6 +2476,16 @@
     name: ! '''liftIO'' is not needed'
     rhs: die
 - warn:
+    lhs: (liftIO (openFile x y))
+    note: If you import 'openFile' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: openFile
+- warn:
+    lhs: (liftIO (hClose x))
+    note: If you import 'hClose' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: hClose
+- warn:
     lhs: (liftIO (readFile x))
     note: If you import 'readFile' from Relude, it's already lifted
     name: ! '''liftIO'' is not needed'
