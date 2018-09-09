@@ -27,6 +27,10 @@
 * Move `stdin`- and `stdout`-related functions to new module `Relude.Lifted.Terminal`.
 * [#67](https://github.com/kowainik/relude/issues/67):
   Add HLint rules for `put*` functions.
+* [#22](https://github.com/kowainik/relude/issues/22):
+  `readFile`, `writeFile` and `appendFile` now work with `String`.
+  Add lifted version of `hClose`.
+  Add `readFile`, `writeFile` and `appendFile` alternatives for `Text` and `ByteString`.
 * [#61](https://github.com/kowainik/relude/issues/61):
   Add `under2` and `underF2` functions to `Relude.Extra.Newtype`.
 * [#60](https://github.com/kowainik/relude/issues/60):

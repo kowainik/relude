@@ -58,6 +58,7 @@ imported by default from "Relude":
 * __"Relude.Exception"__: reexports "Control.Exception", introduces 'bug'
   function as better 'error' and 'Exc' pattern synonym for convenient
   pattern-matching on exceptions.
+* __"Relude.File"__: functions to work with file content as 'Text' or 'ByteString'.
 * __"Relude.Foldable"__: reexports functions for 'Foldable' and 'Traversable'.
 * __"Relude.Function"__: almost everything from "Data.Function" module.
 * __"Relude.Functor"__: reexports from "Data.Functor", "Data.Bifunctor",
@@ -70,7 +71,7 @@ imported by default from "Relude":
   monad transormers, various combinators.
 * __"Relude.Monoid"__: reexports from "Data.Monoid" and "Data.Semigroup".
 * __"Relude.Nub"__: better versions of @nub@ function for list.
-* __"Relude.Print"__: polymorphic 'putStrLn' function and functions to print 'Text'.
+* __"Relude.Print"__: printing to terminal functions for 'Text' and 'ByteString'.
 * __"Relude.String"__: reexports from @text@ and @bytestring@ packages with
     conversion functions between different textual types.
 
@@ -99,6 +100,7 @@ module Relude
        , module Relude.Debug
        , module Relude.DeepSeq
        , module Relude.Exception
+       , module Relude.File
        , module Relude.Foldable
        , module Relude.Function
        , module Relude.Functor
@@ -118,6 +120,7 @@ import Relude.Container
 import Relude.Debug
 import Relude.DeepSeq
 import Relude.Exception
+import Relude.File
 import Relude.Foldable
 import Relude.Function
 import Relude.Functor
