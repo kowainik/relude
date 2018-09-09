@@ -1,1062 +1,2147 @@
 - arguments:
-  - -XTypeApplications # TypeApplications are disabled by default in HLint,
-                       # although the documentation says otherwise
-
-# There's no 'head' in Relude
-- ignore: {name: "Use head"}
-
-# We have 'whenJust' for this
-- ignore: {name: "Use Foldable.forM_"}
-
-############################################################################
-## Relude
-############################################################################
-
-- warn: {lhs: Data.Text.pack, rhs: Relude.toText}
-- warn: {lhs: Data.Text.unpack, rhs: Relude.toString}
-
-- warn: {lhs: Data.Text.Lazy.pack, rhs: Relude.toLText}
-- warn: {lhs: Data.Text.Lazy.unpack, rhs: Relude.toString}
-- warn: {lhs: Data.Text.Lazy.toStrict, rhs: Relude.toText}
-- warn: {lhs: Data.Text.Lazy.fromStrict, rhs: Relude.toLText}
-
-- warn: {lhs: Data.Text.pack (show x), rhs: Relude.show x}
-- warn: {lhs: Data.Text.Lazy.pack (show x), rhs: Relude.show x}
-
-- warn: {lhs: Control.Exception.evaluate, rhs: evaluateWHNF}
-- warn: {lhs: Control.Exception.evaluate (force x), rhs: evaluateNF x}
-- warn: {lhs: Control.Exception.evaluate (x `deepseq` ()), rhs: evaluateNF_ x}
-- warn: {lhs: void (evaluateWHNF x), rhs: evaluateWHNF_ x}
-- warn: {lhs: void (evaluateNF x), rhs: evaluateNF_ x}
-
-## Monad.Trans
-
-- warn: {lhs: flip runReaderT , rhs: usingReaderT }
-- warn: {lhs: flip runReader  , rhs: usingReader }
-- warn: {lhs: flip runStateT  , rhs: usingStateT }
-- warn: {lhs: flip runState   , rhs: usingState }
-- hint: {lhs: fst <$> usingStateT s st, rhs: evaluatingStateT s st}
-- hint: {lhs: fst (usingState s st), rhs: evaluatingState s st}
-- hint: {lhs: snd <$> usingStateT s st, rhs: executingStateT s st}
-- hint: {lhs: snd (usingState s st), rhs: executingState s st}
-
-## Containers
-- hint: {lhs: Data.HashMap.Lazy.keys, rhs: Relude.keys}
-- hint: {lhs: Data.HashMap.Strict.keys, rhs: Relude.keys}
-- hint: {lhs: Data.Map.Lazy.keys, rhs: Relude.keys}
-- hint: {lhs: Data.Map.Strict.keys, rhs: Relude.keys}
-- hint: {lhs: Data.IntMap.Lazy.keys, rhs: Relude.keys}
-- hint: {lhs: Data.IntMap.Strict.keys, rhs: Relude.keys}
-
-- hint: {lhs: Data.HashMap.Lazy.elems, rhs: Relude.elems}
-- hint: {lhs: Data.HashMap.Strict.elems, rhs: Relude.elems}
-- hint: {lhs: Data.Map.Lazy.elems, rhs: Relude.elems}
-- hint: {lhs: Data.Map.Strict.elems, rhs: Relude.elems}
-- hint: {lhs: Data.IntMap.Lazy.elems, rhs: Relude.elems}
-- hint: {lhs: Data.IntMap.Strict.elems, rhs: Relude.elems}
-
-- hint: {lhs: Data.HashMap.Lazy.toList, rhs: Relude.toPairs}
-- hint: {lhs: Data.HashMap.Strict.toList, rhs: Relude.toPairs}
-- hint: {lhs: Data.Map.Lazy.toList, rhs: Relude.toPairs}
-- hint: {lhs: Data.Map.Lazy.assocs, rhs: Relude.toPairs}
-- hint: {lhs: Data.Map.Strict.toList, rhs: Relude.toPairs}
-- hint: {lhs: Data.Map.Strict.assocs, rhs: Relude.toPairs}
-- hint: {lhs: Data.IntMap.Lazy.toList, rhs: Relude.toPairs}
-- hint: {lhs: Data.IntMap.Lazy.assocs, rhs: Relude.toPairs}
-- hint: {lhs: Data.IntMap.Strict.toList, rhs: Relude.toPairs}
-- hint: {lhs: Data.IntMap.Strict.assocs, rhs: Relude.toPairs}
-
-- warn: { lhs: Data.Map.toAscList (Data.Map.fromList x)
-        , rhs: Relude.sortWith fst x
-        }
-- warn: { lhs: Data.Map.toDescList (Data.Map.fromList x)
-        , rhs: Relude.sortWith (Down . fst) x
-        }
-
-- warn: {lhs: Data.Set.toList (Data.Set.fromList l), rhs: Relude.sortNub l}
-- warn: {lhs: Data.Set.assocs (Data.Set.fromList l), rhs: Relude.sortNub l}
-- warn: {lhs: Data.Set.toAscList (Data.Set.fromList l), rhs: Relude.sortNub l}
-
-- warn: {lhs: Data.HashSet.toList (Data.HashSet.fromList l), rhs: Relude.unstableNub}
-
-- hint: { lhs: nub, rhs: Relude.ordNub
-        , note: "'nub' is O(n^2), 'ordNub' is O(n log n)" }
-
-- warn: { lhs: sortBy (comparing f), rhs: Relude.sortWith f
-        , note: "If the function you are using for 'comparing' is slow, use 'sortOn' instead of 'sortWith', because 'sortOn' caches applications the function and 'sortWith' doesn't." }
-
-- warn: { lhs: sortOn fst, rhs: Relude.sortWith fst
-        , note: "'sortWith' will be faster here because it doesn't do caching" }
-- warn: { lhs: sortOn snd, rhs: Relude.sortWith snd
-        , note: "'sortWith' will be faster here because it doesn't do caching" }
-- warn: { lhs: sortOn (Down . fst), rhs: Relude.sortWith (Down . fst)
-        , note: "'sortWith' will be faster here because it doesn't do caching" }
-- warn: { lhs: sortOn (Down . snd), rhs: Relude.sortWith (Down . snd)
-        , note: "'sortWith' will be faster here because it doesn't do caching" }
-
-- warn: {lhs: map fst &&& map snd, rhs: unzip}
-
-- hint: {lhs: "foldl' (flip f)", rhs: "flipfoldl' f"}
-
-- warn: {lhs: f >>= guard, rhs: guardM}
-- warn: {lhs: guard =<< f, rhs: guardM}
-
-- hint: {lhs: fmap (fmap f) x, rhs: f <<$>> x}
-
-- hint: { lhs: fmap and (sequence s), rhs: Relude.andM s
-        , note: "Applying this hint would mean that some actions\n that were being executed previously would no longer be executed." }
-- hint: { lhs: and <$> sequence s, rhs: Relude.andM s
-        , note: "Applying this hint would mean that some actions\n that were being executed previously would no longer be executed." }
-
-- hint: { lhs: fmap or (sequence s), rhs: Relude.orM s
-        , note: "Applying this hint would mean that some actions\n that were being executed previously would no longer be executed." }
-- hint: { lhs: or <$> sequence s, rhs: Relude.orM s
-        , note: "Applying this hint would mean that some actions\n that were being executed previously would no longer be executed." }
-
-- hint: { lhs: fmap and (mapM f s), rhs: Relude.allM f s
-        , note: "Applying this hint would mean that some actions\n that were being executed previously would no longer be executed." }
-- hint: { lhs: and <$> mapM f s, rhs: Relude.allM f s
-        , note: "Applying this hint would mean that some actions\n that were being executed previously would no longer be executed." }
-- hint: { lhs: fmap or (mapM f s), rhs: Relude.anyM f s
-        , note: "Applying this hint would mean that some actions\n that were being executed previously would no longer be executed." }
-- hint: { lhs: or <$> mapM f s, rhs: Relude.anyM f s
-        , note: "Applying this hint would mean that some actions\n that were being executed previously would no longer be executed." }
-
-- warn: {lhs: whenM (not <$> x), rhs: unlessM x}
-- warn: {lhs: unlessM (not <$> x), rhs: whenM x}
-
-- warn: {lhs: either (const True) (const False), rhs: isLeft}
-- warn: {lhs: either (const False) (const True), rhs: isRight}
-
-- warn: {lhs: either id (const a), rhs: fromLeft a}
-- warn: {lhs: either (const b) id, rhs: fromRight b}
-
-- warn: {lhs: either Just (const Nothing), rhs: leftToMaybe}
-- warn: {lhs: either (const Nothing) Just, rhs: rightToMaybe}
-- warn: {lhs: maybe (Left l) Right, rhs: maybeToRight}
-- warn: {lhs: maybe (Right r) Left, rhs: maybeToLeft}
-
-- warn: {lhs: fromMaybe mempty, rhs: maybeToMonoid}
-- warn: {lhs: "m ?: mempty", rhs: maybeToMonoid m}
-
-
-- hint: {lhs: pure (), rhs: pass}
-- hint: {lhs: return (), rhs: pass}
-
-# Probably will be reduced when function equality is done:
-# https://github.com/ndmitchell/hlint/issues/434
-- warn: {lhs: (case m of Just x -> f x; Nothing -> pure ()  ), rhs: Relude.whenJust m f}
-- warn: {lhs: (case m of Just x -> f x; Nothing -> return ()), rhs: Relude.whenJust m f}
-- warn: {lhs: (case m of Just x -> f x; Nothing -> pass     ), rhs: Relude.whenJust m f}
-- warn: {lhs: (case m of Nothing -> pure ()  ; Just x -> f x), rhs: Relude.whenJust m f}
-- warn: {lhs: (case m of Nothing -> return (); Just x -> f x), rhs: Relude.whenJust m f}
-- warn: {lhs: (case m of Nothing -> pass     ; Just x -> f x), rhs: Relude.whenJust m f}
-- warn: {lhs: (maybe (pure ())   f m), rhs: Relude.whenJust m f}
-- warn: {lhs: (maybe (return ()) f m), rhs: Relude.whenJust m f}
-- warn: {lhs: (maybe pass        f m), rhs: Relude.whenJust m f}
-
-- warn: {lhs: (m >>= \case Just x -> f x; Nothing -> pure ()  ), rhs: Relude.whenJustM m f}
-- warn: {lhs: (m >>= \case Just x -> f x; Nothing -> return ()), rhs: Relude.whenJustM m f}
-- warn: {lhs: (m >>= \case Just x -> f x; Nothing -> pass     ), rhs: Relude.whenJustM m f}
-- warn: {lhs: (m >>= \case Nothing -> pure ()  ; Just x -> f x), rhs: Relude.whenJustM m f}
-- warn: {lhs: (m >>= \case Nothing -> return (); Just x -> f x), rhs: Relude.whenJustM m f}
-- warn: {lhs: (m >>= \case Nothing -> pass     ; Just x -> f x), rhs: Relude.whenJustM m f}
-- warn: {lhs: (maybe (pure ())   f =<< m), rhs: Relude.whenJustM m f}
-- warn: {lhs: (maybe (return ()) f =<< m), rhs: Relude.whenJustM m f}
-- warn: {lhs: (maybe pass        f =<< m), rhs: Relude.whenJustM m f}
-- warn: {lhs: (m >>= maybe (pure ())   f), rhs: Relude.whenJustM m f}
-- warn: {lhs: (m >>= maybe (return ()) f), rhs: Relude.whenJustM m f}
-- warn: {lhs: (m >>= maybe pass        f), rhs: Relude.whenJustM m f}
-
-- warn: {lhs: (case m of Just _ -> pure ()  ; Nothing -> x), rhs: Relude.whenNothing_ m x}
-- warn: {lhs: (case m of Just _ -> return (); Nothing -> x), rhs: Relude.whenNothing_ m x}
-- warn: {lhs: (case m of Just _ -> pass     ; Nothing -> x), rhs: Relude.whenNothing_ m x}
-- warn: {lhs: (case m of Nothing -> x; Just _ -> pure ()  ), rhs: Relude.whenNothing_ m x}
-- warn: {lhs: (case m of Nothing -> x; Just _ -> return ()), rhs: Relude.whenNothing_ m x}
-- warn: {lhs: (case m of Nothing -> x; Just _ -> pass     ), rhs: Relude.whenNothing_ m x}
-- warn: {lhs: (maybe x (\_ -> pure ()    ) m), rhs: Relude.whenNothing_ m x}
-- warn: {lhs: (maybe x (\_ -> return ()  ) m), rhs: Relude.whenNothing_ m x}
-- warn: {lhs: (maybe x (\_ -> pass       ) m), rhs: Relude.whenNothing_ m x}
-- warn: {lhs: (maybe x (const (pure ()  )) m), rhs: Relude.whenNothing_ m x}
-- warn: {lhs: (maybe x (const (return ())) m), rhs: Relude.whenNothing_ m x}
-- warn: {lhs: (maybe x (const (pass     )) m), rhs: Relude.whenNothing_ m x}
-
-- warn: {lhs: (m >>= \case Just _ -> pure ()  ; Nothing -> x), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (m >>= \case Just _ -> return (); Nothing -> x), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (m >>= \case Just _ -> pass     ; Nothing -> x), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (m >>= \case Nothing -> x; Just _ -> pure ()  ), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (m >>= \case Nothing -> x; Just _ -> return ()), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (m >>= \case Nothing -> x; Just _ -> pass     ), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (maybe x (\_ -> pure ()    ) =<< m), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (maybe x (\_ -> return ()  ) =<< m), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (maybe x (\_ -> pass       ) =<< m), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (maybe x (const (pure ()  )) =<< m), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (maybe x (const (return ())) =<< m), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (maybe x (const (pass     )) =<< m), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (m >>= maybe x (\_ -> pure ())    ), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (m >>= maybe x (\_ -> return ())  ), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (m >>= maybe x (\_ -> pass)       ), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (m >>= maybe x (const (pure ())  )), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (m >>= maybe x (const (return ()))), rhs: Relude.whenNothingM_ m x}
-- warn: {lhs: (m >>= maybe x (const (pass)     )), rhs: Relude.whenNothingM_ m x}
-
-- warn: {lhs: (case m of Left x -> f x; Right _ -> pure ()  ), rhs: Relude.whenLeft_ m f}
-- warn: {lhs: (case m of Left x -> f x; Right _ -> return ()), rhs: Relude.whenLeft_ m f}
-- warn: {lhs: (case m of Left x -> f x; Right _ -> pass     ), rhs: Relude.whenLeft_ m f}
-- warn: {lhs: (case m of Right _ -> pure ()  ; Left x -> f x), rhs: Relude.whenLeft_ m f}
-- warn: {lhs: (case m of Right _ -> return (); Left x -> f x), rhs: Relude.whenLeft_ m f}
-- warn: {lhs: (case m of Right _ -> pass     ; Left x -> f x), rhs: Relude.whenLeft_ m f}
-- warn: {lhs: (either f (\_ -> pure ()    ) m), rhs: Relude.whenLeft_ m f}
-- warn: {lhs: (either f (\_ -> return ()  ) m), rhs: Relude.whenLeft_ m f}
-- warn: {lhs: (either f (\_ -> pass       ) m), rhs: Relude.whenLeft_ m f}
-- warn: {lhs: (either f (const (pure ()  )) m), rhs: Relude.whenLeft_ m f}
-- warn: {lhs: (either f (const (return ())) m), rhs: Relude.whenLeft_ m f}
-- warn: {lhs: (either f (const (pass     )) m), rhs: Relude.whenLeft_ m f}
-
-- warn: {lhs: (m >>= \case Left x -> f x; Right _ -> pure ()  ), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (m >>= \case Left x -> f x; Right _ -> return ()), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (m >>= \case Left x -> f x; Right _ -> pass     ), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (m >>= \case Right _ -> pure ()  ; Left x -> f x), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (m >>= \case Right _ -> return (); Left x -> f x), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (m >>= \case Right _ -> pass     ; Left x -> f x), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (either f (\_ -> pure ()    ) =<< m), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (either f (\_ -> return ()  ) =<< m), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (either f (\_ -> pass       ) =<< m), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (either f (const (pure ()  )) =<< m), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (either f (const (return ())) =<< m), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (either f (const (pass     )) =<< m), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (m >>= either f (\_ -> pure ())    ), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (m >>= either f (\_ -> return ())  ), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (m >>= either f (\_ -> pass)       ), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (m >>= either f (const (pure ())  )), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (m >>= either f (const (return ()))), rhs: Relude.whenLeftM_ m f}
-- warn: {lhs: (m >>= either f (const (pass)     )), rhs: Relude.whenLeftM_ m f}
-
-- warn: {lhs: (case m of Right x -> f x; Left _ -> pure ()  ), rhs: Relude.whenRight_ m f}
-- warn: {lhs: (case m of Right x -> f x; Left _ -> return ()), rhs: Relude.whenRight_ m f}
-- warn: {lhs: (case m of Right x -> f x; Left _ -> pass     ), rhs: Relude.whenRight_ m f}
-- warn: {lhs: (case m of Left _ -> pure ()  ; Right x -> f x), rhs: Relude.whenRight_ m f}
-- warn: {lhs: (case m of Left _ -> return (); Right x -> f x), rhs: Relude.whenRight_ m f}
-- warn: {lhs: (case m of Left _ -> pass     ; Right x -> f x), rhs: Relude.whenRight_ m f}
-- warn: {lhs: (either (\_ -> pure ()    ) f m), rhs: Relude.whenRight_ m f}
-- warn: {lhs: (either (\_ -> return ()  ) f m), rhs: Relude.whenRight_ m f}
-- warn: {lhs: (either (\_ -> pass       ) f m), rhs: Relude.whenRight_ m f}
-- warn: {lhs: (either (const (pure ()  )) f m), rhs: Relude.whenRight_ m f}
-- warn: {lhs: (either (const (return ())) f m), rhs: Relude.whenRight_ m f}
-- warn: {lhs: (either (const (pass     )) f m), rhs: Relude.whenRight_ m f}
-
-- warn: {lhs: (m >>= \case Right x -> f x; Left _ -> pure ()  ), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (m >>= \case Right x -> f x; Left _ -> return ()), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (m >>= \case Right x -> f x; Left _ -> pass     ), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (m >>= \case Left _ -> pure ()  ; Right x -> f x), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (m >>= \case Left _ -> return (); Right x -> f x), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (m >>= \case Left _ -> pass     ; Right x -> f x), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (either (\_ -> pure ()    ) f =<< m), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (either (\_ -> return ()  ) f =<< m), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (either (\_ -> pass       ) f =<< m), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (either (const (pure ()  )) f =<< m), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (either (const (return ())) f =<< m), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (either (const (pass     )) f =<< m), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (m >>= either (\_ -> pure ())     f), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (m >>= either (\_ -> return ())   f), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (m >>= either (\_ -> pass)        f), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (m >>= either (const (pure ())  ) f), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (m >>= either (const (return ())) f), rhs: Relude.whenRightM_ m f}
-- warn: {lhs: (m >>= either (const (pass)     ) f), rhs: Relude.whenRightM_ m f}
-
-- warn: {lhs: "(case m of [] -> return (); (x:xs) -> f (x :| xs))", rhs: Relude.whenNotNull m f}
-- warn: {lhs: "(case m of [] -> pure ()  ; (x:xs) -> f (x :| xs))", rhs: Relude.whenNotNull m f}
-- warn: {lhs: "(case m of [] -> pass     ; (x:xs) -> f (x :| xs))", rhs: Relude.whenNotNull m f}
-- warn: {lhs: "(case m of (x:xs) -> f (x :| xs); [] -> return ())", rhs: Relude.whenNotNull m f}
-- warn: {lhs: "(case m of (x:xs) -> f (x :| xs); [] -> pure ()  )", rhs: Relude.whenNotNull m f}
-- warn: {lhs: "(case m of (x:xs) -> f (x :| xs); [] -> pass     )", rhs: Relude.whenNotNull m f}
-- warn: {lhs: "(m >>= \\case [] -> pass     ; (x:xs) -> f (x :| xs))", rhs: Relude.whenNotNullM m f}
-- warn: {lhs: "(m >>= \\case [] -> pure ()  ; (x:xs) -> f (x :| xs))", rhs: Relude.whenNotNullM m f}
-- warn: {lhs: "(m >>= \\case [] -> return (); (x:xs) -> f (x :| xs))", rhs: Relude.whenNotNullM m f}
-- warn: {lhs: "(m >>= \\case (x:xs) -> f (x :| xs); [] -> pass     )", rhs: Relude.whenNotNullM m f}
-- warn: {lhs: "(m >>= \\case (x:xs) -> f (x :| xs); [] -> pure ()  )", rhs: Relude.whenNotNullM m f}
-- warn: {lhs: "(m >>= \\case (x:xs) -> f (x :| xs); [] -> return ())", rhs: Relude.whenNotNullM m f}
-
-- warn: {lhs: mapMaybe leftToMaybe, rhs: lefts}
-- warn: {lhs: mapMaybe rightToMaybe, rhs: rights}
-
-############################################################################
-## Reexports
-############################################################################
-
-## Applicative
-- warn: { name: "Use 'Alternative' from Relude"
-        , lhs: Control.Applicative.Alternative, rhs: Relude.Alternative }
-- warn: { name: "Use 'empty' from Relude"
-        , lhs: Control.Applicative.empty, rhs: Relude.empty }
-- warn: { name: "Use '(<|>)' from Relude"
-        , lhs: (Control.Applicative.<|>), rhs: (Relude.<|>) }
-- warn: { name: "Use 'some' from Relude"
-        , lhs: Control.Applicative.some, rhs: Relude.some }
-- warn: { name: "Use 'many' from Relude"
-        , lhs: Control.Applicative.many, rhs: Relude.many }
-- warn: { name: "Use 'Const' from Relude"
-        , lhs: Control.Applicative.Const, rhs: Relude.Const }
-- warn: { name: "Use 'getConst' from Relude"
-        , lhs: Control.Applicative.getConst, rhs: Relude.getConst }
-- warn: { name: "Use 'ZipList' from Relude"
-        , lhs: Control.Applicative.ZipList, rhs: Relude.ZipList }
-- warn: { name: "Use 'getZipList' from Relude"
-        , lhs: Control.Applicative.getZipList, rhs: Relude.getZipList }
-- warn: { name: "Use 'liftA2' from Relude"
-        , lhs: Control.Applicative.liftA2, rhs: Relude.liftA2 }
-- warn: { name: "Use 'liftA3' from Relude"
-        , lhs: Control.Applicative.liftA3, rhs: Relude.liftA3 }
-- warn: { name: "Use 'optional' from Relude"
-        , lhs: Control.Applicative.optional, rhs: Relude.optional }
-- warn: { name: "Use '(<**>)' from Relude"
-        , lhs: (Control.Applicative.<**>), rhs: (Relude.<**>) }
-
-## Base
-- warn: { name: "Use 'xor' from Relude"
-        , lhs: Data.Bits.xor, rhs: Relude.xor }
-
-- warn: { name: "Use 'chr' from Relude"
-        , lhs: Data.Char.chr, rhs: Relude.chr }
-
-- warn: { name: "Use 'Int16' from Relude"
-        , lhs: Data.Int.Int16, rhs: Relude.Int16 }
-- warn: { name: "Use 'Int32' from Relude"
-        , lhs: Data.Int.Int32, rhs: Relude.Int32 }
-- warn: { name: "Use 'Int64' from Relude"
-        , lhs: Data.Int.Int64, rhs: Relude.Int64 }
-- warn: { name: "Use 'Int8' from Relude"
-        , lhs: Data.Int.Int8, rhs: Relude.Int8 }
-
-- warn: { name: "Use 'Word16' from Relude"
-        , lhs: Data.Word.Word16, rhs: Relude.Word16 }
-- warn: { name: "Use 'Word32' from Relude"
-        , lhs: Data.Word.Word32, rhs: Relude.Word32 }
-- warn: { name: "Use 'Word64' from Relude"
-        , lhs: Data.Word.Word64, rhs: Relude.Word64 }
-- warn: { name: "Use 'Word8' from Relude"
-        , lhs: Data.Word.Word8, rhs: Relude.Word8 }
-- warn: { name: "Use 'byteSwap16' from Relude"
-        , lhs: Data.Word.byteSwap16, rhs: Relude.byteSwap16 }
-- warn: { name: "Use 'byteSwap32' from Relude"
-        , lhs: Data.Word.byteSwap32, rhs: Relude.byteSwap32 }
-- warn: { name: "Use 'byteSwap64' from Relude"
-        , lhs: Data.Word.byteSwap64, rhs: Relude.byteSwap64 }
-
-- warn: { name: "Use 'Natural' from Relude"
-        , lhs: Numeric.Natural.Natural, rhs: Relude.Natural }
-
-- warn: { name: "Use 'Handle' from Relude"
-        , lhs: System.IO.Handle, rhs: Relude.Handle }
-- warn: { name: "Use 'IOMode' from Relude"
-        , lhs: System.IO.IOMode, rhs: Relude.IOMode }
-- warn: { name: "Use 'ReadMode' from Relude"
-        , lhs: System.IO.ReadMode, rhs: Relude.ReadMode }
-- warn: { name: "Use 'WriteMode' from Relude"
-        , lhs: System.IO.WriteMode, rhs: Relude.WriteMode }
-- warn: { name: "Use 'AppendMode' from Relude"
-        , lhs: System.IO.AppendMode, rhs: Relude.AppendMode }
-- warn: { name: "Use 'ReadWriteMode' from Relude"
-        , lhs: System.IO.ReadWriteMode, rhs: Relude.ReadWriteMode }
-- warn: { name: "Use 'stderr' from Relude"
-        , lhs: System.IO.stderr, rhs: Relude.stderr }
-- warn: { name: "Use 'stdin' from Relude"
-        , lhs: System.IO.stdin, rhs: Relude.stdin }
-- warn: { name: "Use 'stdout' from Relude"
-        , lhs: System.IO.stdout, rhs: Relude.stdout }
-- warn: { name: "Use 'withFile' from Relude"
-        , lhs: System.IO.withFile, rhs: Relude.withFile }
-
-- warn: { name: "Use 'foldlM' from Relude"
-        , lhs: Data.Foldable.foldlM, rhs: Relude.foldlM }
-- warn: { name: "Use 'foldrM' from Relude"
-        , lhs: Data.Foldable.foldrM, rhs: Relude.foldrM }
-- warn: { name: "Use 'maximumBy' from Relude"
-        , lhs: Data.Foldable.maximumBy, rhs: Relude.maximumBy }
-- warn: { name: "Use 'minimumBy' from Relude"
-        , lhs: Data.Foldable.minimumBy, rhs: Relude.minimumBy }
-
-- warn: { name: "Use 'Down' from Relude"
-        , lhs: Data.Ord.Down, rhs: Relude.Down }
-- warn: { name: "Use 'comparing' from Relude"
-        , lhs: Data.Ord.comparing, rhs: Relude.comparing }
-
-- warn: { name: "Use 'forM' from Relude"
-        , lhs: Data.Traversable.forM, rhs: Relude.forM }
-- warn: { name: "Use 'mapAccumL' from Relude"
-        , lhs: Data.Traversable.mapAccumL, rhs: Relude.mapAccumL }
-- warn: { name: "Use 'mapAccumR' from Relude"
-        , lhs: Data.Traversable.mapAccumR, rhs: Relude.mapAccumR }
-
-- warn: { name: "Use 'Proxy' from Relude"
-        , lhs: Data.Proxy.Proxy, rhs: Relude.Proxy }
-
-- warn: { name: "Use 'Typeable' from Relude"
-        , lhs: Data.Typeable.Typeable, rhs: Relude.Typeable }
-
-- warn: { name: "Use 'Void' from Relude"
-        , lhs: Data.Void.Void, rhs: Relude.Void }
-- warn: { name: "Use 'absurd' from Relude"
-        , lhs: Data.Void.absurd, rhs: Relude.absurd }
-- warn: { name: "Use 'vacuous' from Relude"
-        , lhs: Data.Void.vacuous, rhs: Relude.vacuous }
-
-- warn: { name: "Use 'maxInt' from Relude"
-        , lhs: Data.Base.maxInt, rhs: Relude.maxInt }
-- warn: { name: "Use 'minInt' from Relude"
-        , lhs: Data.Base.minInt, rhs: Relude.minInt }
-- warn: { name: "Use 'ord' from Relude"
-        , lhs: Data.Base.ord, rhs: Relude.ord }
-
-- warn: { name: "Use 'boundedEnumFrom' from Relude"
-        , lhs: GHC.Enum.boundedEnumFrom, rhs: Relude.boundedEnumFrom }
-- warn: { name: "Use 'boundedEnumFromThen' from Relude"
-        , lhs: GHC.Enum.boundedEnumFromThen, rhs: Relude.boundedEnumFromThen }
-
-- warn: { name: "Use 'Constraint' from Relude"
-        , lhs: GHC.Exts.Constraint, rhs: Relude.Constraint }
-- warn: { name: "Use 'FunPtr' from Relude"
-        , lhs: GHC.Exts.FunPtr, rhs: Relude.FunPtr }
-- warn: { name: "Use 'Ptr' from Relude"
-        , lhs: GHC.Exts.Ptr, rhs: Relude.Ptr }
-
-- warn: { name: "Use 'Generic' from Relude"
-        , lhs: GHC.Generics.Generic, rhs: Relude.Generic }
-
-- warn: { name: "Use 'Ratio' from Relude"
-        , lhs: GHC.Real.Ratio, rhs: Relude.Ratio }
-- warn: { name: "Use 'Rational' from Relude"
-        , lhs: GHC.Real.Rational, rhs: Relude.Rational }
-
-- warn: { name: "Use 'CmpNat' from Relude"
-        , lhs: GHC.TypeNats.CmpNat, rhs: Relude.CmpNat }
-- warn: { name: "Use 'KnownNat' from Relude"
-        , lhs: GHC.TypeNats.KnownNat, rhs: Relude.KnownNat }
-- warn: { name: "Use 'Nat' from Relude"
-        , lhs: GHC.TypeNats.Nat, rhs: Relude.Nat }
-- warn: { name: "Use 'SomeNat' from Relude"
-        , lhs: GHC.TypeNats.SomeNat, rhs: Relude.SomeNat }
-- warn: { name: "Use 'natVal' from Relude"
-        , lhs: GHC.TypeNats.natVal, rhs: Relude.natVal }
-- warn: { name: "Use 'someNatVal' from Relude"
-        , lhs: GHC.TypeNats.someNatVal, rhs: Relude.someNatVal }
-
-- warn: { name: "Use 'CmpNat' from Relude"
-        , lhs: GHC.TypeLits.CmpNat, rhs: Relude.CmpNat }
-- warn: { name: "Use 'KnownNat' from Relude"
-        , lhs: GHC.TypeLits.KnownNat, rhs: Relude.KnownNat }
-- warn: { name: "Use 'Nat' from Relude"
-        , lhs: GHC.TypeLits.Nat, rhs: Relude.Nat }
-- warn: { name: "Use 'SomeNat' from Relude"
-        , lhs: GHC.TypeLits.SomeNat, rhs: Relude.SomeNat }
-- warn: { name: "Use 'natVal' from Relude"
-        , lhs: GHC.TypeLits.natVal, rhs: Relude.natVal }
-- warn: { name: "Use 'someNatVal' from Relude"
-        , lhs: GHC.TypeLits.someNatVal, rhs: Relude.someNatVal }
-
-- warn: { name: "Use 'Coercible' from Relude"
-        , lhs: GHC.Types.Coercible, rhs: Relude.Coercible }
-- warn: { name: "Use 'coerce' from Relude"
-        , lhs: Data.Coerce.coerce, rhs: Relude.coerce }
-
-- warn: { name: "Use 'getStackTrace' from Relude"
-        , lhs: GHC.ExecutionStack.getStackTrace, rhs: Relude.getStackTrace }
-- warn: { name: "Use 'showStackTrace' from Relude"
-        , lhs: GHC.ExecutionStack.showStackTrace, rhs: Relude.showStackTrace }
-
-- warn: { name: "Use 'IsLabel' from Relude"
-        , lhs: GHC.OverloadedLabels.IsLabel, rhs: Relude.IsLabel }
-- warn: { name: "Use 'fromLabel' from Relude"
-        , lhs: GHC.OverloadedLabels.fromLabel, rhs: Relude.fromLabel }
-
-- warn: { name: "Use 'CallStack' from Relude"
-        , lhs: GHC.Stack.CallStack, rhs: Relude.CallStack }
-- warn: { name: "Use 'HasCallStack' from Relude"
-        , lhs: GHC.Stack.HasCallStack, rhs: Relude.HasCallStack }
-- warn: { name: "Use 'callStack' from Relude"
-        , lhs: GHC.Stack.callStack, rhs: Relude.callStack }
-- warn: { name: "Use 'currentCallStack' from Relude"
-        , lhs: GHC.Stack.currentCallStack, rhs: Relude.currentCallStack }
-- warn: { name: "Use 'getCallStack' from Relude"
-        , lhs: GHC.Stack.getCallStack, rhs: Relude.getCallStack }
-- warn: { name: "Use 'prettyCallStack' from Relude"
-        , lhs: GHC.Stack.prettyCallStack, rhs: Relude.prettyCallStack }
-- warn: { name: "Use 'prettySrcLoc' from Relude"
-        , lhs: GHC.Stack.prettySrcLoc, rhs: Relude.prettySrcLoc }
-- warn: { name: "Use 'withFrozenCallStack' from Relude"
-        , lhs: GHC.Stack.withFrozenCallStack, rhs: Relude.withFrozenCallStack }
-
-- warn: { name: "Use 'Type' from Relude"
-        , lhs: Data.Kind.Type, rhs: Relude.Type }
-
-## Bool
-
-- warn: { name: "Use 'guard' from Relude"
-        , lhs: Control.Monad.guard, rhs: Relude.guard }
-- warn: { name: "Use 'unless' from Relude"
-        , lhs: Control.Monad.unless, rhs: Relude.unless }
-- warn: { name: "Use 'when' from Relude"
-        , lhs: Control.Monad.when, rhs: Relude.when }
-- warn: { name: "Use 'bool' from Relude"
-        , lhs: Data.Bool.bool, rhs: Relude.bool }
-
-## Container
-- warn: { name: "Use 'Hashable' from Relude"
-        , lhs: Data.Hashable.Hashable, rhs: Relude.Hashable }
-- warn: { name: "Use 'hashWithSalt' from Relude"
-        , lhs: Data.Hashable.hashWithSalt, rhs: Relude.hashWithSalt }
-- warn: { name: "Use 'HashMap' from Relude"
-        , lhs: Data.HashMap.Strict.HashMap, rhs: Relude.HashMap }
-- warn: { name: "Use 'HashSet' from Relude"
-        , lhs: Data.HashSet.HashSet, rhs: Relude.HashSet }
-- warn: { name: "Use 'IntMap' from Relude"
-        , lhs: Data.IntMap.Strict.IntMap, rhs: Relude.IntMap }
-- warn: { name: "Use 'IntSet' from Relude"
-        , lhs: Data.IntSet.IntSet, rhs: Relude.IntSet }
-- warn: { name: "Use 'Map' from Relude"
-        , lhs: Data.Map.Strict.Map, rhs: Relude.Map }
-- warn: { name: "Use 'Sequence' from Relude"
-        , lhs: Data.Sequence.Sequence, rhs: Relude.Sequence }
-- warn: { name: "Use 'Set' from Relude"
-        , lhs: Data.Set.Set, rhs: Relude.Set }
-- warn: { name: "Use 'swap' from Relude"
-        , lhs: Data.Tuple.swap, rhs: Relude.swap }
-- warn: { name: "Use 'Vector' from Relude"
-        , lhs: Data.Vector.Vector, rhs: Relude.Vector }
-
-## Deepseq
-- warn: { name: "Use 'NFData' from Relude"
-        , lhs: Control.DeepSeq.NFData, rhs: Relude.NFData }
-- warn: { name: "Use 'rnf' from Relude"
-        , lhs: Control.DeepSeq.rnf, rhs: Relude.rnf }
-- warn: { name: "Use 'deepseq' from Relude"
-        , lhs: Control.DeepSeq.deepseq, rhs: Relude.deepseq }
-- warn: { name: "Use 'force' from Relude"
-        , lhs: Control.DeepSeq.force, rhs: Relude.force }
-- warn: { name: "Use '($!!)' from Relude"
-        , lhs: (Control.DeepSeq.$!!), rhs: (Relude.$!!) }
-
-## Exception
-- warn: { name: "Use 'Exception' from Relude"
-        , lhs: Control.Exception.Exception, rhs: Relude.Exception }
-- warn: { name: "Use 'toException' from Relude"
-        , lhs: Control.Exception.toException, rhs: Relude.toException }
-- warn: { name: "Use 'fromException' from Relude"
-        , lhs: Control.Exception.fromException, rhs: Relude.fromException }
-
-- warn: { name: "Use 'Exception' from Relude"
-        , lhs: Control.Exception.Safe.Exception, rhs: Relude.Exception }
-- warn: { name: "Use 'toException' from Relude"
-        , lhs: Control.Exception.Safe.toException, rhs: Relude.toException }
-- warn: { name: "Use 'fromException' from Relude"
-        , lhs: Control.Exception.Safe.fromException, rhs: Relude.fromException }
-- warn: { name: "Use 'displayException' from Relude"
-        , lhs: Control.Exception.Safe.displayException, rhs: Relude.displayException }
-- warn: { name: "Use 'MonadCatch' from Relude"
-        , lhs: Control.Exception.Safe.MonadCatch, rhs: Relude.MonadCatch }
-- warn: { name: "Use 'MonadMask' from Relude"
-        , lhs: Control.Exception.Safe.MonadMask, rhs: Relude.MonadMask }
-- warn: { name: "Use 'mask' from Relude"
-        , lhs: Control.Exception.Safe.mask, rhs: Relude.mask }
-- warn: { name: "Use 'uninterruptibleMask' from Relude"
-        , lhs: Control.Exception.Safe.uninterruptibleMask, rhs: Relude.uninterruptibleMask }
-- warn: { name: "Use 'MonadThrow' from Relude"
-        , lhs: Control.Exception.Safe.MonadThrow, rhs: Relude.MonadThrow }
-- warn: { name: "Use 'SomeException' from Relude"
-        , lhs: Control.Exception.Safe.SomeException, rhs: Relude.SomeException }
-- warn: { name: "Use 'bracket' from Relude"
-        , lhs: Control.Exception.Safe.bracket, rhs: Relude.bracket }
-- warn: { name: "Use 'bracketOnError' from Relude"
-        , lhs: Control.Exception.Safe.bracketOnError, rhs: Relude.bracketOnError }
-- warn: { name: "Use 'bracket_' from Relude"
-        , lhs: Control.Exception.Safe.bracket_, rhs: Relude.bracket_ }
-- warn: { name: "Use 'catch' from Relude"
-        , lhs: Control.Exception.Safe.catch, rhs: Relude.catch }
-- warn: { name: "Use 'catchAny' from Relude"
-        , lhs: Control.Exception.Safe.catchAny, rhs: Relude.catchAny }
-- warn: { name: "Use 'finally' from Relude"
-        , lhs: Control.Exception.Safe.finally, rhs: Relude.finally }
-- warn: { name: "Use 'handleAny' from Relude"
-        , lhs: Control.Exception.Safe.handleAny, rhs: Relude.handleAny }
-- warn: { name: "Use 'mask_' from Relude"
-        , lhs: Control.Exception.Safe.mask_, rhs: Relude.mask_ }
-- warn: { name: "Use 'onException' from Relude"
-        , lhs: Control.Exception.Safe.onException, rhs: Relude.onException }
-- warn: { name: "Use 'throwM' from Relude"
-        , lhs: Control.Exception.Safe.throwM, rhs: Relude.throwM }
-- warn: { name: "Use 'try' from Relude"
-        , lhs: Control.Exception.Safe.try, rhs: Relude.try }
-- warn: { name: "Use 'tryAny' from Relude"
-        , lhs: Control.Exception.Safe.tryAny, rhs: Relude.tryAny }
-
-## Function
-- warn: { name: "Use 'fix' from Relude"
-        , lhs: Data.Function.fix, rhs: Relude.fix }
-- warn: { name: "Use 'on' from Relude"
-        , lhs: Data.Function.on, rhs: Relude.on }
-- warn: { name: "Use '(>>>)' from Relude"
-        , lhs: (Control.Category.>>>), rhs: (Relude.>>>) }
-- warn: { name: "Use '(<<<)' from Relude"
-        , lhs: (Control.Category.<<<), rhs: (Relude.<<<) }
-
-## Functor
-- warn: { name: "Use '(&&&)' from Relude"
-        , lhs: (Control.Arrow.&&&), rhs: (Relude.&&&) }
-- warn: { name: "Use 'Bifunctor' from Relude"
-        , lhs: Data.Bifunctor.Bifunctor, rhs: Relude.Bifunctor }
-- warn: { name: "Use 'bimap' from Relude"
-        , lhs: Data.Bifunctor.bimap, rhs: Relude.bimap }
-- warn: { name: "Use 'first' from Relude"
-        , lhs: Data.Bifunctor.first, rhs: Relude.first }
-- warn: { name: "Use 'second' from Relude"
-        , lhs: Data.Bifunctor.second, rhs: Relude.second }
-- warn: { name: "Use 'void' from Relude"
-        , lhs: Data.Functor.void, rhs: Relude.void }
-- warn: { name: "Use '($>)' from Relude"
-        , lhs: (Data.Functor.$>), rhs: (Relude.$>) }
-- warn: { name: "Use 'Compose' from Relude"
-        , lhs: Data.Functor.Compose.Compose, rhs: Relude.Compose }
-- warn: { name: "Use 'getCompose' from Relude"
-        , lhs: Data.Functor.Compose.getCompose, rhs: Relude.getCompose }
-- warn: { name: "Use 'Identity' from Relude"
-        , lhs: Data.Functor.Identity.Identity, rhs: Relude.Identity }
-- warn: { name: "Use 'runIdentity' from Relude"
-        , lhs: Data.Functor.Identity.runIdentity, rhs: Relude.runIdentity }
-
-## List
-- warn: { name: "Use 'genericDrop' from Relude"
-        , lhs: Data.List.genericDrop, rhs: Relude.genericDrop }
-- warn: { name: "Use 'genericLength' from Relude"
-        , lhs: Data.List.genericLength, rhs: Relude.genericLength }
-- warn: { name: "Use 'genericReplicate' from Relude"
-        , lhs: Data.List.genericReplicate, rhs: Relude.genericReplicate }
-- warn: { name: "Use 'genericSplitAt' from Relude"
-        , lhs: Data.List.genericSplitAt, rhs: Relude.genericSplitAt }
-- warn: { name: "Use 'genericTake' from Relude"
-        , lhs: Data.List.genericTake, rhs: Relude.genericTake }
-- warn: { name: "Use 'group' from Relude"
-        , lhs: Data.List.group, rhs: Relude.group }
-- warn: { name: "Use 'inits' from Relude"
-        , lhs: Data.List.inits, rhs: Relude.inits }
-- warn: { name: "Use 'intercalate' from Relude"
-        , lhs: Data.List.intercalate, rhs: Relude.intercalate }
-- warn: { name: "Use 'intersperse' from Relude"
-        , lhs: Data.List.intersperse, rhs: Relude.intersperse }
-- warn: { name: "Use 'isPrefixOf' from Relude"
-        , lhs: Data.List.isPrefixOf, rhs: Relude.isPrefixOf }
-- warn: { name: "Use 'permutations' from Relude"
-        , lhs: Data.List.permutations, rhs: Relude.permutations }
-- warn: { name: "Use 'sort' from Relude"
-        , lhs: Data.List.sort, rhs: Relude.sort }
-- warn: { name: "Use 'sortBy' from Relude"
-        , lhs: Data.List.sortBy, rhs: Relude.sortBy }
-- warn: { name: "Use 'sortOn' from Relude"
-        , lhs: Data.List.sortOn, rhs: Relude.sortOn }
-- warn: { name: "Use 'subsequences' from Relude"
-        , lhs: Data.List.subsequences, rhs: Relude.subsequences }
-- warn: { name: "Use 'tails' from Relude"
-        , lhs: Data.List.tails, rhs: Relude.tails }
-- warn: { name: "Use 'transpose' from Relude"
-        , lhs: Data.List.transpose, rhs: Relude.transpose }
-- warn: { name: "Use 'unfoldr' from Relude"
-        , lhs: Data.List.unfoldr, rhs: Relude.unfoldr }
-
-- warn: { name: "Use 'NonEmpty' from Relude"
-        , lhs: Data.List.NonEmpty.NonEmpty, rhs: Relude.NonEmpty }
-- warn: { name: "Use '(:|)' from Relude"
-        , lhs: "Data.List.NonEmpty.(:|)", rhs: "Relude.(:|)"}
-- warn: { name: "Use 'nonEmpty' from Relude"
-        , lhs: Data.List.NonEmpty.nonEmpty, rhs: Relude.nonEmpty}
-- warn: { name: "Use 'head' from Relude"
-        , lhs: Data.List.NonEmpty.head, rhs: Relude.head }
-- warn: { name: "Use 'init' from Relude"
-        , lhs: Data.List.NonEmpty.init, rhs: Relude.init }
-- warn: { name: "Use 'last' from Relude"
-        , lhs: Data.List.NonEmpty.last, rhs: Relude.last }
-- warn: { name: "Use 'tail' from Relude"
-        , lhs: Data.List.NonEmpty.tail, rhs: Relude.tail }
-- warn: { name: "Use 'sortWith' from Relude"
-        , lhs: GHC.Exts.sortWith, rhs: Relude.sortWith }
-
-## Monad
-- warn: { name: "Use '(>=>)' from Relude"
-        , lhs: (Control.Monad.>=>), rhs: (Relude.>=>) }
-- warn: { name: "Use '(<=<)' from Relude"
-        , lhs: (Control.Monad.<=<), rhs: (Relude.<=<) }
-- warn: { name: "Use 'forever' from Relude"
-        , lhs: Control.Monad.forever, rhs: Relude.forever }
-- warn: { name: "Use 'join' from Relude"
-        , lhs: Control.Monad.join, rhs: Relude.join }
-- warn: { name: "Use 'mfilter' from Relude"
-        , lhs: Control.Monad.mfilter, rhs: Relude.mfilter }
-- warn: { name: "Use 'filterM' from Relude"
-        , lhs: Control.Monad.filterM, rhs: Relude.filterM }
-- warn: { name: "Use 'mapAndUnzipM' from Relude"
-        , lhs: Control.Monad.mapAndUnzipM, rhs: Relude.mapAndUnzipM }
-- warn: { name: "Use 'zipWithM' from Relude"
-        , lhs: Control.Monad.zipWithM, rhs: Relude.zipWithM }
-- warn: { name: "Use 'zipWithM_' from Relude"
-        , lhs: Control.Monad.zipWithM_, rhs: Relude.zipWithM_ }
-- warn: { name: "Use 'foldM' from Relude"
-        , lhs: Control.Monad.foldM, rhs: Relude.foldM }
-- warn: { name: "Use 'foldM_' from Relude"
-        , lhs: Control.Monad.foldM_, rhs: Relude.foldM_ }
-- warn: { name: "Use 'replicateM' from Relude"
-        , lhs: Control.Monad.replicateM, rhs: Relude.replicateM }
-- warn: { name: "Use 'replicateM_' from Relude"
-        , lhs: Control.Monad.replicateM_, rhs: Relude.replicateM_ }
-- warn: { name: "Use 'liftM2' from Relude"
-        , lhs: Control.Monad.liftM2, rhs: Relude.liftM2 }
-- warn: { name: "Use 'liftM3' from Relude"
-        , lhs: Control.Monad.liftM3, rhs: Relude.liftM3 }
-- warn: { name: "Use 'liftM4' from Relude"
-        , lhs: Control.Monad.liftM4, rhs: Relude.liftM4 }
-- warn: { name: "Use 'liftM5' from Relude"
-        , lhs: Control.Monad.liftM5, rhs: Relude.liftM5 }
-- warn: { name: "Use 'ap' from Relude"
-        , lhs: Control.Monad.ap, rhs: Relude.ap }
-- warn: { name: "Use '(<$!>)' from Relude"
-        , lhs: (Control.Monad.<$!>), rhs: (Relude.<$!>) }
-
-- warn: { name: "Use 'ExceptT' from Relude"
-        , lhs: Control.Monad.Except.ExceptT, rhs: Relude.ExceptT }
-- warn: { name: "Use 'runExceptT' from Relude"
-        , lhs: Control.Monad.Except.runExceptT, rhs: Relude.runExceptT }
-
-- warn: { name: "Use 'MonadReader' from Relude"
-        , lhs: Control.Monad.Reader.MonadReader, rhs: Relude.MonadReader }
-- warn: { name: "Use 'Reader' from Relude"
-        , lhs: Control.Monad.Reader.Reader, rhs: Relude.Reader }
-- warn: { name: "Use 'ReaderT' from Relude"
-        , lhs: Control.Monad.Reader.ReaderT, rhs: Relude.ReaderT }
-- warn: { name: "Use 'runReaderT' from Relude"
-        , lhs: Control.Monad.Reader.runReaderT, rhs: Relude.runReaderT }
-- warn: { name: "Use 'ask' from Relude"
-        , lhs: Control.Monad.Reader.ask, rhs: Relude.ask }
-- warn: { name: "Use 'local' from Relude"
-        , lhs: Control.Monad.Reader.local, rhs: Relude.local }
-- warn: { name: "Use 'reader' from Relude"
-        , lhs: Control.Monad.Reader.reader, rhs: Relude.reader }
-- warn: { name: "Use 'runReader' from Relude"
-        , lhs: Control.Monad.Reader.runReader, rhs: Relude.runReader }
-
-- warn: { name: "Use 'MonadState' from Relude"
-        , lhs: Control.Monad.State.Strict.MonadState, rhs: Relude.MonadState }
-- warn: { name: "Use 'State' from Relude"
-        , lhs: Control.Monad.State.Strict.State, rhs: Relude.State }
-- warn: { name: "Use 'StateT' from Relude"
-        , lhs: Control.Monad.State.Strict.StateT, rhs: Relude.StateT }
-- warn: { name: "Use 'runStateT' from Relude"
-        , lhs: Control.Monad.State.Strict.runStateT, rhs: Relude.runStateT }
-- warn: { name: "Use 'evalState' from Relude"
-        , lhs: Control.Monad.State.Strict.evalState, rhs: Relude.evalState }
-- warn: { name: "Use 'evalStateT' from Relude"
-        , lhs: Control.Monad.State.Strict.evalStateT, rhs: Relude.evalStateT }
-- warn: { name: "Use 'execState' from Relude"
-        , lhs: Control.Monad.State.Strict.execState, rhs: Relude.execState }
-- warn: { name: "Use 'execStateT' from Relude"
-        , lhs: Control.Monad.State.Strict.execStateT, rhs: Relude.execStateT }
-- warn: { name: "Use 'get' from Relude"
-        , lhs: Control.Monad.State.Strict.get, rhs: Relude.get }
-- warn: { name: "Use 'gets' from Relude"
-        , lhs: Control.Monad.State.Strict.gets, rhs: Relude.gets }
-- warn: { name: "Use 'modify' from Relude"
-        , lhs: Control.Monad.State.Strict.modify, rhs: Relude.modify }
-- warn: { name: "Use 'modify'' from Relude"
-        , lhs: "Control.Monad.State.Strict.modify'", rhs: "Relude.modify'" }
-- warn: { name: "Use 'put' from Relude"
-        , lhs: Control.Monad.State.Strict.put, rhs: Relude.put }
-- warn: { name: "Use 'runState' from Relude"
-        , lhs: Control.Monad.State.Strict.runState, rhs: Relude.runState }
-- warn: { name: "Use 'state' from Relude"
-        , lhs: Control.Monad.State.Strict.state, rhs: Relude.state }
-- warn: { name: "Use 'withState' from Relude"
-        , lhs: Control.Monad.State.Strict.withState, rhs: Relude.withState }
-
-- warn: { name: "Use 'MonadFail' from Relude"
-        , lhs: Control.Monad.Fail.MonadFail, rhs: Relude.MonadFail }
-
-
-- warn: { name: "Use 'MonadIO' from Relude"
-        , lhs: Control.Monad.Trans.MonadIO, rhs: Relude.MonadIO }
-- warn: { name: "Use 'MonadTrans' from Relude"
-        , lhs: Control.Monad.Trans.MonadTrans, rhs: Relude.MonadTrans }
-- warn: { name: "Use 'lift' from Relude"
-        , lhs: Control.Monad.Trans.lift, rhs: Relude.lift }
-- warn: { name: "Use 'liftIO' from Relude"
-        , lhs: Control.Monad.Trans.liftIO, rhs: Relude.liftIO }
-
-- warn: { name: "Use 'IdentityT' from Relude"
-        , lhs: Control.Monad.Trans.Identity.IdentityT, rhs: Relude.IdentityT }
-- warn: { name: "Use 'runIdentityT' from Relude"
-        , lhs: Control.Monad.Trans.Identity.runIdentityT, rhs: Relude.runIdentityT }
-
-- warn: { name: "Use 'MaybeT' from Relude"
-        , lhs: Control.Monad.Trans.Maybe.MaybeT, rhs: Relude.MaybeT }
-- warn: { name: "Use 'maybeToExceptT' from Relude"
-        , lhs: Control.Monad.Trans.Maybe.maybeToExceptT, rhs: Relude.maybeToExceptT }
-- warn: { name: "Use 'exceptToMaybeT' from Relude"
-        , lhs: Control.Monad.Trans.Maybe.exceptToMaybeT, rhs: Relude.exceptToMaybeT }
-
-- warn: { name: "Use 'catMaybes' from Relude"
-        , lhs: Data.Maybe.catMaybes, rhs: Relude.catMaybes }
-- warn: { name: "Use 'fromMaybe' from Relude"
-        , lhs: Data.Maybe.fromMaybe, rhs: Relude.fromMaybe }
-- warn: { name: "Use 'isJust' from Relude"
-        , lhs: Data.Maybe.isJust, rhs: Relude.isJust }
-- warn: { name: "Use 'isNothing' from Relude"
-        , lhs: Data.Maybe.isNothing, rhs: Relude.isNothing }
-- warn: { name: "Use 'listToMaybe' from Relude"
-        , lhs: Data.Maybe.listToMaybe, rhs: Relude.listToMaybe }
-- warn: { name: "Use 'mapMaybe' from Relude"
-        , lhs: Data.Maybe.mapMaybe, rhs: Relude.mapMaybe }
-- warn: { name: "Use 'maybeToList' from Relude"
-        , lhs: Data.Maybe.maybeToList, rhs: Relude.maybeToList }
-
-- warn: { name: "Use 'isLeft' from Relude"
-        , lhs: Data.Either.isLeft, rhs: Relude.isLeft }
-- warn: { name: "Use 'isRight' from Relude"
-        , lhs: Data.Either.isRight, rhs: Relude.isRight }
-- warn: { name: "Use 'lefts' from Relude"
-        , lhs: Data.Either.lefts, rhs: Relude.lefts }
-- warn: { name: "Use 'partitionEithers' from Relude"
-        , lhs: Data.Either.partitionEithers, rhs: Relude.partitionEithers }
-- warn: { name: "Use 'rights' from Relude"
-        , lhs: Data.Either.rights, rhs: Relude.rights }
-
-- warn: { name: "Use 'newTVar' from Relude"
-        , lhs: Control.Concurrent.STM.TVar.newTVar, rhs: Relude.newTVar }
-- warn: { name: "Use 'readTVar' from Relude"
-        , lhs: Control.Concurrent.STM.TVar.readTVar, rhs: Relude.readTVar }
-- warn: { name: "Use 'writeTVar' from Relude"
-        , lhs: Control.Concurrent.STM.TVar.writeTVar, rhs: Relude.writeTVar }
-- warn: { name: "Use 'modifyTVar'' from Relude"
-        , lhs: "Control.Concurrent.STM.TVar.modifyTVar'", rhs: "Relude.modifyTVar'" }
-- warn: { name: "Use 'newTVarIO' from Relude"
-        , lhs: Control.Concurrent.STM.TVar.newTVarIO, rhs: Relude.newTVarIO }
-- warn: { name: "Use 'readTVarIO' from Relude"
-        , lhs: Control.Concurrent.STM.TVar.readTVarIO, rhs: Relude.readTVarIO }
-
-- warn: { name: "Use 'newIORef' from Relude"
-        , lhs: Data.IORef.newIORef, rhs: Relude.newIORef }
-- warn: { name: "Use 'readIORef' from Relude"
-        , lhs: Data.IORef.readIORef, rhs: Relude.readIORef }
-- warn: { name: "Use 'writeIORef' from Relude"
-        , lhs: Data.IORef.writeIORef, rhs: Relude.writeIORef }
-- warn: { name: "Use 'modifyIORef' from Relude"
-        , lhs: Data.IORef.modifyIORef, rhs: Relude.modifyIORef }
-- warn: { name: "Use 'modifyIORef'' from Relude"
-        , lhs: "Data.IORef.modifyIORef'", rhs: "Relude.modifyIORef'" }
-- warn: { name: "Use 'atomicModifyIORef' from Relude"
-        , lhs: Data.IORef.atomicModifyIORef, rhs: Relude.atomicModifyIORef }
-- warn: { name: "Use 'atomicModifyIORef'' from Relude"
-        , lhs: "Data.IORef.atomicModifyIORef'", rhs: "Relude.atomicModifyIORef'" }
-- warn: { name: "Use 'atomicWriteIORef' from Relude"
-        , lhs: Data.IORef.atomicWriteIORef, rhs: Relude.atomicWriteIORef }
-
-## Monoid
-- warn: { name: "Use 'All' from Relude"
-        , lhs: Data.Monoid.All, rhs: Relude.All }
-- warn: { name: "Use 'Alt' from Relude"
-        , lhs: Data.Monoid.Alt, rhs: Relude.Alt }
-- warn: { name: "Use 'Any' from Relude"
-        , lhs: Data.Monoid.Any, rhs: Relude.Any }
-- warn: { name: "Use 'Dual' from Relude"
-        , lhs: Data.Monoid.Dual, rhs: Relude.Dual }
-- warn: { name: "Use 'Endo' from Relude"
-        , lhs: Data.Monoid.Endo, rhs: Relude.Endo }
-- warn: { name: "Use 'First' from Relude"
-        , lhs: Data.Monoid.First, rhs: Relude.First }
-- warn: { name: "Use 'Last' from Relude"
-        , lhs: Data.Monoid.Last, rhs: Relude.Last }
-- warn: { name: "Use 'Product' from Relude"
-        , lhs: Data.Monoid.Product, rhs: Relude.Product }
-- warn: { name: "Use 'Sum' from Relude"
-        , lhs: Data.Monoid.Sum, rhs: Relude.Sum }
-
-- warn: { name: "Use 'Option' from Relude"
-        , lhs: Data.Semigroup.Option, rhs: Relude.Option }
-- warn: { name: "Use 'Semigroup' from Relude"
-        , lhs: Data.Semigroup.Semigroup, rhs: Relude.Semigroup }
-- warn: { name: "Use 'sconcat' from Relude"
-        , lhs: Data.Semigroup.sconcat, rhs: Relude.sconcat }
-- warn: { name: "Use 'stimes' from Relude"
-        , lhs: Data.Semigroup.stimes, rhs: Relude.stimes }
-- warn: { name: "Use '(<>)' from Relude"
-        , lhs: (Data.Semigroup.<>), rhs: (Relude.<>) }
-- warn: { name: "Use 'WrappedMonoid' from Relude"
-        , lhs: Data.Semigroup.WrappedMonoid, rhs: Relude.WrappedMonoid }
-- warn: { name: "Use 'cycle1' from Relude"
-        , lhs: Data.Semigroup.cycle1, rhs: Relude.cycle1 }
-- warn: { name: "Use 'mtimesDefault' from Relude"
-        , lhs: Data.Semigroup.mtimesDefault, rhs: Relude.mtimesDefault }
-- warn: { name: "Use 'stimesIdempotent' from Relude"
-        , lhs: Data.Semigroup.stimesIdempotent, rhs: Relude.stimesIdempotent }
-- warn: { name: "Use 'stimesIdempotentMonoid' from Relude"
-        , lhs: Data.Semigroup.stimesIdempotentMonoid, rhs: Relude.stimesIdempotentMonoid }
-- warn: { name: "Use 'stimesMonoid' from Relude"
-        , lhs: Data.Semigroup.stimesMonoid, rhs: Relude.stimesMonoid }
-
-## String
-- warn: { name: "Use 'ByteString' from Relude"
-        , lhs: Data.ByteString.ByteString, rhs: Relude.ByteString }
-- warn: { name: "Use 'IsString' from Relude"
-        , lhs: Data.String.IsString, rhs: Relude.IsString }
-
-- warn: { name: "Use 'Text' from Relude"
-        , lhs: Data.Text.Text, rhs: Relude.Text }
-- warn: { name: "Use 'lines' from Relude"
-        , lhs: Data.Text.lines, rhs: Relude.lines }
-- warn: { name: "Use 'unlines' from Relude"
-        , lhs: Data.Text.unlines, rhs: Relude.unlines }
-- warn: { name: "Use 'words' from Relude"
-        , lhs: Data.Text.words, rhs: Relude.words }
-- warn: { name: "Use 'unwords' from Relude"
-        , lhs: Data.Text.unwords, rhs: Relude.unwords }
-
-- warn: { name: "Use 'LText' from Relude"
-        , lhs: Data.Text.Lazy.Text, rhs: Relude.LText }
-- warn: { name: "Use 'LByteString' from Relude"
-        , lhs: Data.ByteString.Lazy.LByteString, rhs: Relude.LByteString }
-
-- warn: { name: "Use 'Buildable' from Relude"
-        , lhs: Data.Text.Buildable, rhs: Relude.Buildable }
-- warn: { name: "Use 'decodeUtf8'' from Relude"
-        , lhs: "Data.Text.Encoding.decodeUtf8'", rhs: "Relude.decodeUtf8'" }
-- warn: { name: "Use 'decodeUtf8With' from Relude"
-        , lhs: Data.Text.Encoding.decodeUtf8With, rhs: Relude.decodeUtf8With }
-
-- warn: { name: "Use 'OnDecodeError' from Relude"
-        , lhs: Data.Text.Encoding.Error.OnDecodeError, rhs: Relude.OnDecodeError }
-- warn: { name: "Use 'OnDecodeError' from Relude"
-        , lhs: Data.Text.Encoding.Error.OnDecodeError, rhs: Relude.OnDecodeError }
-- warn: { name: "Use 'OnError' from Relude"
-        , lhs: Data.Text.Encoding.Error.OnError, rhs: Relude.OnError }
-- warn: { name: "Use 'UnicodeException' from Relude"
-        , lhs: Data.Text.Encoding.Error.UnicodeException, rhs: Relude.UnicodeException }
-- warn: { name: "Use 'lenientDecode' from Relude"
-        , lhs: Data.Text.Encoding.Error.lenientDecode, rhs: Relude.lenientDecode }
-- warn: { name: "Use 'strictDecode' from Relude"
-        , lhs: Data.Text.Encoding.Error.strictDecode, rhs: Relude.strictDecode }
-
-- warn: { name: "Use 'fromStrict' from Relude"
-        , lhs: Data.Text.Lazy.fromStrict, rhs: Relude.fromStrict }
-- warn: { name: "Use 'toStrict' from Relude"
-        , lhs: Data.Text.Lazy.toStrict, rhs: Relude.toStrict }
-
-- warn: { name: "Use 'readMaybe' from Relude"
-        , lhs: Text.Read.readMaybe, rhs: Relude.readMaybe }
-
-- warn: { name: "Use 'getLine' from Relude"
-        , lhs: Data.Text.IO.getLine, rhs: Relude.getLine }
-- warn: { name: "Use 'readFile' from Relude"
-        , lhs: Data.Text.IO.readFile, rhs: Relude.readFile }
-- warn: { name: "Use 'writeFile' from Relude"
-        , lhs: Data.Text.IO.writeFile, rhs: Relude.writeFile }
-- warn: { name: "Use 'appendFile' from Relude"
-        , lhs: Data.Text.IO.appendFile, rhs: Relude.appendFile }
-- warn: { name: "Use 'interact' from Relude"
-        , lhs: Data.Text.Lazy.IO.interact, rhs: Relude.interact }
-- warn: { name: "Use 'getContents' from Relude"
-        , lhs: Data.Text.Lazy.IO.getContents, rhs: Relude.getContents }
-
-## Unsafe
-- warn: { name: "Use 'head' from Relude.Unsafe"
-        , lhs: Data.List.head, rhs: Relude.Unsafe.head
-        , note: "Use 'import qualified Relude.Unsafe as Unsafe (head)'" }
-- warn: { name: "Use 'tail' from Relude.Unsafe"
-        , lhs: Data.List.tail, rhs: Relude.Unsafe.tail
-        , note: "Use 'import qualified Relude.Unsafe as Unsafe (tail)'" }
-- warn: { name: "Use 'init' from Relude.Unsafe"
-        , lhs: Data.List.init, rhs: Relude.Unsafe.init
-        , note: "Use 'import qualified Relude.Unsafe as Unsafe (init)'" }
-- warn: { name: "Use 'last' from Relude.Unsafe"
-        , lhs: Data.List.last, rhs: Relude.Unsafe.last
-        , note: "Use 'import qualified Relude.Unsafe as Unsafe (last)'" }
-- warn: { name: "Use '(!!)' from Relude.Unsafe"
-        , lhs: (Data.List.!!), rhs: (Relude.Unsafe.!!)
-        , note: "Use 'import qualified Relude.Unsafe as Unsafe ((!!))'" }
-- warn: { name: "Use 'fromJust' from Relude.Unsafe"
-        , lhs: "Data.Maybe.fromJust", rhs: "Relude.Unsafe.fromJust"
-        , note: "Use 'import qualified Relude.Unsafe as Unsafe (fromJust)'" }
-
-############################################################################
-## Lifted functions in Relude
-############################################################################
-
-## concurrency
-
-- warn: { name: "liftIO is not needed", lhs: liftIO newEmptyMVar, rhs: Relude.newEmptyMVar
-        , note: "If you import 'newEmptyMVar' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (newMVar x), rhs: Relude.newMVar x
-        , note: "If you import 'newMVar' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (putMVar x y), rhs: Relude.putMVar x y
-        , note: "If you import 'putMVar' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (readMVar x), rhs: Relude.readMVar x
-        , note: "If you import 'readMVar' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (swapMVar x y), rhs: Relude.swapMVar x y
-        , note: "If you import 'swapMVar' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (takeMVar x), rhs: Relude.takeMVar x
-        , note: "If you import 'takeMVar' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (tryPutMVar x y), rhs: Relude.tryPutMVar x y
-        , note: "If you import 'tryPutMVar' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (tryReadMVar x), rhs: Relude.tryReadMVar x
-        , note: "If you import 'tryReadMVar' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (tryTakeMVar x), rhs: Relude.tryTakeMVar x
-        , note: "If you import 'tryTakeMVar' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (atomically x), rhs: Relude.atomically x
-        , note: "If you import 'atomically' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (newTVarIO x), rhs: Relude.newTVarIO x
-        , note: "If you import 'newTVarIO' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (readTVarIO x), rhs: Relude.readTVarIO x
-        , note: "If you import 'readTVarIO' from Relude, it's already lifted" }
-
-## IORef
-
-- warn: { name: "liftIO is not needed", lhs: liftIO (newIORef x), rhs: Relude.newIORef x
-        , note: "If you import 'newIORef' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (readIORef x), rhs: Relude.readIORef x
-        , note: "If you import 'readIORef' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (writeIORef x y), rhs: Relude.writeIORef x y
-        , note: "If you import 'writeIORef' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (modifyIORef x y), rhs: Relude.modifyIORef x y
-        , note: "If you import 'modifyIORef' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: "liftIO (modifyIORef' x y)", rhs: "Relude.modifyIORef' x y"
-        , note: "If you import 'modifyIORef'' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (atomicModifyIORef x y), rhs: Relude.atomicModifyIORef x y
-        , note: "If you import 'atomicModifyIORef' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: "liftIO (atomicModifyIORef' x y)", rhs: "Relude.atomicModifyIORef' x y"
-        , note: "If you import 'atomicModifyIORef'' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (atomicWriteIORef x y), rhs: Relude.atomicWriteIORef x y
-        , note: "If you import 'atomicWriteIORef' from Relude, it's already lifted" }
-
-## others
-
-- warn: { name: "liftIO is not needed", lhs: liftIO Relude.getContents, rhs: Relude.getContents
-        , note: "If you import 'getContents' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO Relude.getLine, rhs: Relude.getLine
-        , note: "If you import 'getLine' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (Relude.interact x), rhs: Relude.interact x
-        , note: "If you import 'interact' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (Relude.interact x), rhs: Relude.interact x
-        , note: "If you import 'interact' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (Relude.readFile x), rhs: Relude.readFile x
-        , note: "If you import 'readFile' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (Relude.writeFile x y), rhs: Relude.writeFile x y
-        , note: "If you import 'writeFile' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (Relude.appendFile x y), rhs: Relude.appendFile x y
-        , note: "If you import 'appendFile' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (Relude.openFile x y), rhs: Relude.openFile x y
-        , note: "If you import 'openFile' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO getArgs, rhs: Relude.getArgs
-        , note: "If you import 'getArgs' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (exitWith x), rhs: Relude.exitWith x
-        , note: "If you import 'exitWith' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO exitFailure, rhs: Relude.exitFailure
-        , note: "If you import 'exitFailure' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO exitSuccess, rhs: Relude.exitSuccess
-        , note: "If you import 'exitSuccess' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (die x), rhs: Relude.die x
-        , note: "If you import 'die' from Relude, it's already lifted" }
-- warn: { name: "liftIO is not needed", lhs: liftIO (stToIO x), rhs: Relude.stToIO x
-        , note: "If you import 'stToIO' from Relude, it's already lifted" }
+  - -XConstraintKinds
+  - -XDeriveGeneric
+  - -XGeneralizedNewtypeDeriving
+  - -XLambdaCase
+  - -XOverloadedStrings
+  - -XRecordWildCards
+  - -XScopedTypeVariables
+  - -XStandaloneDeriving
+  - -XTupleSections
+  - -XTypeApplications
+  - -XViewPatterns
+- ignore:
+    name: Use head
+- ignore:
+    name: Use Foldable.forM_
+- hint:
+    lhs: (pure ())
+    note: Use 'pass'
+    rhs: pass
+- hint:
+    lhs: (return ())
+    note: Use 'pass'
+    rhs: pass
+- warn:
+    lhs: Control.Exception.evaluate
+    rhs: evaluateWHNF
+- warn:
+    lhs: Control.Exception.evaluate (force x)
+    rhs: evaluateNF x
+- warn:
+    lhs: Control.Exception.evaluate (x `deepseq` ())
+    rhs: evaluateNF_ x
+- warn:
+    lhs: void (evaluateWHNF x)
+    rhs: evaluateWHNF_ x
+- warn:
+    lhs: void (evaluateNF x)
+    rhs: evaluateNF_ x
+- hint:
+    lhs: (Control.Exception.throw)
+    note: Use 'impureThrow'
+    rhs: impureThrow
+- hint:
+    lhs: (foldl' (flip f))
+    note: Use 'flipfoldl''
+    rhs: flipfoldl' f
+- warn:
+    lhs: foldl' (+) 0
+    rhs: sum
+- warn:
+    lhs: foldl' (*) 1
+    rhs: product
+- hint:
+    lhs: (fmap and (sequence s))
+    note: Applying this hint would mean that some actions that were being executed
+      previously would no longer be executed.
+    rhs: andM s
+- hint:
+    lhs: (and <$> sequence s)
+    note: Applying this hint would mean that some actions that were being executed
+      previously would no longer be executed.
+    rhs: andM s
+- hint:
+    lhs: (fmap or (sequence s))
+    note: Applying this hint would mean that some actions that were being executed
+      previously would no longer be executed.
+    rhs: orM s
+- hint:
+    lhs: (or <$> sequence s)
+    note: Applying this hint would mean that some actions that were being executed
+      previously would no longer be executed.
+    rhs: orM s
+- hint:
+    lhs: (fmap and (mapM f s))
+    note: Applying this hint would mean that some actions that were being executed
+      previously would no longer be executed.
+    rhs: allM f s
+- hint:
+    lhs: (and <$> mapM f s)
+    note: Applying this hint would mean that some actions that were being executed
+      previously would no longer be executed.
+    rhs: allM f s
+- hint:
+    lhs: (fmap or (mapM f s))
+    note: Applying this hint would mean that some actions that were being executed
+      previously would no longer be executed.
+    rhs: anyM f s
+- hint:
+    lhs: (or <$> mapM f s)
+    note: Applying this hint would mean that some actions that were being executed
+      previously would no longer be executed.
+    rhs: anyM f s
+- warn:
+    lhs: map fst &&& map snd
+    rhs: unzip
+- hint:
+    lhs: (fmap (fmap f) x)
+    note: Use '(<<$>>)'
+    rhs: f <<$>> x
+- hint:
+    lhs: ((\f -> f x) <$> ff)
+    note: Use flap operator
+    rhs: ff ?? x
+- hint:
+    lhs: (fmap (\f -> f x) ff)
+    note: Use flap operator
+    rhs: ff ?? x
+- hint:
+    lhs: (fmap ($ x) ff)
+    note: Use flap operator
+    rhs: ff ?? x
+- hint:
+    lhs: (($ x) <$> ff)
+    note: Use flap operator
+    rhs: ff ?? x
+- warn:
+    lhs: fmap f (nonEmpty x)
+    rhs: viaNonEmpty f x
+- warn:
+    lhs: fmap f . nonEmpty
+    rhs: viaNonEmpty f
+- warn:
+    lhs: f <$> nonEmpty x
+    rhs: viaNonEmpty f x
+- warn:
+    lhs: f >>= guard
+    rhs: guardM f
+- warn:
+    lhs: guard =<< f
+    rhs: guardM f
+- warn:
+    lhs: whenM (not <$> x)
+    rhs: unlessM x
+- warn:
+    lhs: unlessM (not <$> x)
+    rhs: whenM x
+- warn:
+    lhs: either (const True) (const False)
+    rhs: isLeft
+- warn:
+    lhs: either (const False) (const True)
+    rhs: isRight
+- warn:
+    lhs: either id (const a)
+    rhs: fromLeft a
+- warn:
+    lhs: either (const b) id
+    rhs: fromRight b
+- warn:
+    lhs: either Just (const Nothing)
+    rhs: leftToMaybe
+- warn:
+    lhs: either (const Nothing) Just
+    rhs: rightToMaybe
+- warn:
+    lhs: maybe (Left l) Right
+    rhs: maybeToRight l
+- warn:
+    lhs: maybe (Right r) Left
+    rhs: maybeToLeft r
+- warn:
+    lhs: (case m of Just x -> f x; Nothing -> pure ()  )
+    rhs: whenJust m f
+- warn:
+    lhs: (case m of Just x -> f x; Nothing -> return ())
+    rhs: whenJust m f
+- warn:
+    lhs: (case m of Just x -> f x; Nothing -> pass     )
+    rhs: whenJust m f
+- warn:
+    lhs: (case m of Nothing -> pure ()  ; Just x -> f x)
+    rhs: whenJust m f
+- warn:
+    lhs: (case m of Nothing -> return (); Just x -> f x)
+    rhs: whenJust m f
+- warn:
+    lhs: (case m of Nothing -> pass     ; Just x -> f x)
+    rhs: whenJust m f
+- warn:
+    lhs: (maybe (pure ())   f m)
+    rhs: whenJust m f
+- warn:
+    lhs: (maybe (return ()) f m)
+    rhs: whenJust m f
+- warn:
+    lhs: (maybe pass        f m)
+    rhs: whenJust m f
+- warn:
+    lhs: (m >>= \a -> whenJust a f)
+    rhs: whenJustM m f
+- warn:
+    lhs: (m >>= \case Just x -> f x; Nothing -> pure ()  )
+    rhs: whenJustM m f
+- warn:
+    lhs: (m >>= \case Just x -> f x; Nothing -> return ())
+    rhs: whenJustM m f
+- warn:
+    lhs: (m >>= \case Just x -> f x; Nothing -> pass     )
+    rhs: whenJustM m f
+- warn:
+    lhs: (m >>= \case Nothing -> pure ()  ; Just x -> f x)
+    rhs: whenJustM m f
+- warn:
+    lhs: (m >>= \case Nothing -> return (); Just x -> f x)
+    rhs: whenJustM m f
+- warn:
+    lhs: (m >>= \case Nothing -> pass     ; Just x -> f x)
+    rhs: whenJustM m f
+- warn:
+    lhs: (maybe (pure ())   f =<< m)
+    rhs: whenJustM m f
+- warn:
+    lhs: (maybe (return ()) f =<< m)
+    rhs: whenJustM m f
+- warn:
+    lhs: (maybe pass        f =<< m)
+    rhs: whenJustM m f
+- warn:
+    lhs: (m >>= maybe (pure ())   f)
+    rhs: whenJustM m f
+- warn:
+    lhs: (m >>= maybe (return ()) f)
+    rhs: whenJustM m f
+- warn:
+    lhs: (m >>= maybe pass        f)
+    rhs: whenJustM m f
+- warn:
+    lhs: (case m of Just _ -> pure ()  ; Nothing -> x)
+    rhs: whenNothing_ m x
+- warn:
+    lhs: (case m of Just _ -> return (); Nothing -> x)
+    rhs: whenNothing_ m x
+- warn:
+    lhs: (case m of Just _ -> pass     ; Nothing -> x)
+    rhs: whenNothing_ m x
+- warn:
+    lhs: (case m of Nothing -> x; Just _ -> pure ()  )
+    rhs: whenNothing_ m x
+- warn:
+    lhs: (case m of Nothing -> x; Just _ -> return ())
+    rhs: whenNothing_ m x
+- warn:
+    lhs: (case m of Nothing -> x; Just _ -> pass     )
+    rhs: whenNothing_ m x
+- warn:
+    lhs: (maybe x (\_ -> pure ()    ) m)
+    rhs: whenNothing_ m x
+- warn:
+    lhs: (maybe x (\_ -> return ()  ) m)
+    rhs: whenNothing_ m x
+- warn:
+    lhs: (maybe x (\_ -> pass       ) m)
+    rhs: whenNothing_ m x
+- warn:
+    lhs: (maybe x (const (pure ()  )) m)
+    rhs: whenNothing_ m x
+- warn:
+    lhs: (maybe x (const (return ())) m)
+    rhs: whenNothing_ m x
+- warn:
+    lhs: (maybe x (const (pass     )) m)
+    rhs: whenNothing_ m x
+- warn:
+    lhs: (m >>= \a -> whenNothing_ a x)
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (m >>= \case Just _ -> pure ()  ; Nothing -> x)
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (m >>= \case Just _ -> return (); Nothing -> x)
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (m >>= \case Just _ -> pass     ; Nothing -> x)
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (m >>= \case Nothing -> x; Just _ -> pure ()  )
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (m >>= \case Nothing -> x; Just _ -> return ())
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (m >>= \case Nothing -> x; Just _ -> pass     )
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (maybe x (\_ -> pure ()    ) =<< m)
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (maybe x (\_ -> return ()  ) =<< m)
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (maybe x (\_ -> pass       ) =<< m)
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (maybe x (const (pure ()  )) =<< m)
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (maybe x (const (return ())) =<< m)
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (maybe x (const (pass     )) =<< m)
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (m >>= maybe x (\_ -> pure ())    )
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (m >>= maybe x (\_ -> return ())  )
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (m >>= maybe x (\_ -> pass)       )
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (m >>= maybe x (const (pure ())  ))
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (m >>= maybe x (const (return ())))
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (m >>= maybe x (const (pass)     ))
+    rhs: whenNothingM_ m x
+- warn:
+    lhs: (whenLeft ())
+    rhs: whenLeft_
+- warn:
+    lhs: (case m of Left x -> f x; Right _ -> pure ()  )
+    rhs: whenLeft_ m f
+- warn:
+    lhs: (case m of Left x -> f x; Right _ -> return ())
+    rhs: whenLeft_ m f
+- warn:
+    lhs: (case m of Left x -> f x; Right _ -> pass     )
+    rhs: whenLeft_ m f
+- warn:
+    lhs: (case m of Right _ -> pure ()  ; Left x -> f x)
+    rhs: whenLeft_ m f
+- warn:
+    lhs: (case m of Right _ -> return (); Left x -> f x)
+    rhs: whenLeft_ m f
+- warn:
+    lhs: (case m of Right _ -> pass     ; Left x -> f x)
+    rhs: whenLeft_ m f
+- warn:
+    lhs: (either f (\_ -> pure ()    ) m)
+    rhs: whenLeft_ m f
+- warn:
+    lhs: (either f (\_ -> return ()  ) m)
+    rhs: whenLeft_ m f
+- warn:
+    lhs: (either f (\_ -> pass       ) m)
+    rhs: whenLeft_ m f
+- warn:
+    lhs: (either f (const (pure ()  )) m)
+    rhs: whenLeft_ m f
+- warn:
+    lhs: (either f (const (return ())) m)
+    rhs: whenLeft_ m f
+- warn:
+    lhs: (either f (const (pass     )) m)
+    rhs: whenLeft_ m f
+- warn:
+    lhs: (m >>= \a -> whenLeft_ a f)
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (m >>= \case Left x -> f x; Right _ -> pure ()  )
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (m >>= \case Left x -> f x; Right _ -> return ())
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (m >>= \case Left x -> f x; Right _ -> pass     )
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (m >>= \case Right _ -> pure ()  ; Left x -> f x)
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (m >>= \case Right _ -> return (); Left x -> f x)
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (m >>= \case Right _ -> pass     ; Left x -> f x)
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (either f (\_ -> pure ()    ) =<< m)
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (either f (\_ -> return ()  ) =<< m)
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (either f (\_ -> pass       ) =<< m)
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (either f (const (pure ()  )) =<< m)
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (either f (const (return ())) =<< m)
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (either f (const (pass     )) =<< m)
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (m >>= either f (\_ -> pure ())    )
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (m >>= either f (\_ -> return ())  )
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (m >>= either f (\_ -> pass)       )
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (m >>= either f (const (pure ())  ))
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (m >>= either f (const (return ())))
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (m >>= either f (const (pass)     ))
+    rhs: whenLeftM_ m f
+- warn:
+    lhs: (whenRight ())
+    rhs: whenRight_
+- warn:
+    lhs: (case m of Right x -> f x; Left _ -> pure ()  )
+    rhs: whenRight_ m f
+- warn:
+    lhs: (case m of Right x -> f x; Left _ -> return ())
+    rhs: whenRight_ m f
+- warn:
+    lhs: (case m of Right x -> f x; Left _ -> pass     )
+    rhs: whenRight_ m f
+- warn:
+    lhs: (case m of Left _ -> pure ()  ; Right x -> f x)
+    rhs: whenRight_ m f
+- warn:
+    lhs: (case m of Left _ -> return (); Right x -> f x)
+    rhs: whenRight_ m f
+- warn:
+    lhs: (case m of Left _ -> pass     ; Right x -> f x)
+    rhs: whenRight_ m f
+- warn:
+    lhs: (either (\_ -> pure ()    ) f m)
+    rhs: whenRight_ m f
+- warn:
+    lhs: (either (\_ -> return ()  ) f m)
+    rhs: whenRight_ m f
+- warn:
+    lhs: (either (\_ -> pass       ) f m)
+    rhs: whenRight_ m f
+- warn:
+    lhs: (either (const (pure ()  )) f m)
+    rhs: whenRight_ m f
+- warn:
+    lhs: (either (const (return ())) f m)
+    rhs: whenRight_ m f
+- warn:
+    lhs: (either (const (pass     )) f m)
+    rhs: whenRight_ m f
+- warn:
+    lhs: (m >>= \a -> whenRight_ a f)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (m >>= \case Right x -> f x; Left _ -> pure ()  )
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (m >>= \case Right x -> f x; Left _ -> return ())
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (m >>= \case Right x -> f x; Left _ -> pass     )
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (m >>= \case Left _ -> pure ()  ; Right x -> f x)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (m >>= \case Left _ -> return (); Right x -> f x)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (m >>= \case Left _ -> pass     ; Right x -> f x)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (either (\_ -> pure ()    ) f =<< m)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (either (\_ -> return ()  ) f =<< m)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (either (\_ -> pass       ) f =<< m)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (either (const (pure ()  )) f =<< m)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (either (const (return ())) f =<< m)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (either (const (pass     )) f =<< m)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (m >>= either (\_ -> pure ())     f)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (m >>= either (\_ -> return ())   f)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (m >>= either (\_ -> pass)        f)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (m >>= either (const (pure ())  ) f)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (m >>= either (const (return ())) f)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (m >>= either (const (pass)     ) f)
+    rhs: whenRightM_ m f
+- warn:
+    lhs: (case m of [] -> return (); (x:xs) -> f (x :| xs))
+    rhs: whenNotNull m f
+- warn:
+    lhs: (case m of [] -> pure ()  ; (x:xs) -> f (x :| xs))
+    rhs: whenNotNull m f
+- warn:
+    lhs: (case m of [] -> pass     ; (x:xs) -> f (x :| xs))
+    rhs: whenNotNull m f
+- warn:
+    lhs: (case m of (x:xs) -> f (x :| xs); [] -> return ())
+    rhs: whenNotNull m f
+- warn:
+    lhs: (case m of (x:xs) -> f (x :| xs); [] -> pure ()  )
+    rhs: whenNotNull m f
+- warn:
+    lhs: (case m of (x:xs) -> f (x :| xs); [] -> pass     )
+    rhs: whenNotNull m f
+- warn:
+    lhs: (m >>= \case [] -> pass     ; (x:xs) -> f (x :| xs))
+    rhs: whenNotNullM m f
+- warn:
+    lhs: (m >>= \case [] -> pure ()  ; (x:xs) -> f (x :| xs))
+    rhs: whenNotNullM m f
+- warn:
+    lhs: (m >>= \case [] -> return (); (x:xs) -> f (x :| xs))
+    rhs: whenNotNullM m f
+- warn:
+    lhs: (m >>= \case (x:xs) -> f (x :| xs); [] -> pass     )
+    rhs: whenNotNullM m f
+- warn:
+    lhs: (m >>= \case (x:xs) -> f (x :| xs); [] -> pure ()  )
+    rhs: whenNotNullM m f
+- warn:
+    lhs: (m >>= \case (x:xs) -> f (x :| xs); [] -> return ())
+    rhs: whenNotNullM m f
+- warn:
+    lhs: mapMaybe leftToMaybe
+    rhs: lefts
+- warn:
+    lhs: mapMaybe rightToMaybe
+    rhs: rights
+- warn:
+    lhs: flip runReaderT
+    rhs: usingReaderT
+- warn:
+    lhs: flip runReader
+    rhs: usingReader
+- warn:
+    lhs: flip runStateT
+    rhs: usingStateT
+- warn:
+    lhs: flip runState
+    rhs: usingState
+- warn:
+    lhs: fst <$> usingStateT s st
+    rhs: evaluatingStateT s st
+- warn:
+    lhs: fst (usingState s st)
+    rhs: evaluatingState s st
+- warn:
+    lhs: snd <$> usingStateT s st
+    rhs: executingStateT s st
+- warn:
+    lhs: snd (usingState s st)
+    rhs: executingState s st
+- warn:
+    lhs: fromMaybe mempty
+    rhs: maybeToMonoid
+- warn:
+    lhs: ! 'm ?: mempty'
+    rhs: maybeToMonoid m
+- warn:
+    lhs: Data.Map.toAscList (Data.Map.fromList x)
+    rhs: sortWith fst x
+- warn:
+    lhs: Data.Map.toDescList (Data.Map.fromList x)
+    rhs: sortWith (Down . fst) x
+- warn:
+    lhs: Data.Set.toList (Data.Set.fromList l)
+    rhs: sortNub l
+- warn:
+    lhs: Data.Set.assocs (Data.Set.fromList l)
+    rhs: sortNub l
+- warn:
+    lhs: Data.Set.toAscList (Data.Set.fromList l)
+    rhs: sortNub l
+- warn:
+    lhs: Data.HashSet.toList (Data.HashSet.fromList l)
+    rhs: unstableNub l
+- warn:
+    lhs: nub
+    note: ! '''nub'' is O(n^2), ''ordNub'' is O(n log n)'
+    rhs: ordNub
+- warn:
+    lhs: sortBy (comparing f)
+    note: If the function you are using for 'comparing' is slow, use 'sortOn' instead
+      of 'sortWith', because 'sortOn' caches applications the function and 'sortWith'
+      doesn't.
+    rhs: sortWith f
+- warn:
+    lhs: sortOn fst
+    note: ! '''sortWith'' will be faster here because it doesn''t do caching'
+    rhs: sortWith fst
+- warn:
+    lhs: sortOn snd
+    note: ! '''sortWith'' will be faster here because it doesn''t do caching'
+    rhs: sortWith snd
+- warn:
+    lhs: sortOn (Down . fst)
+    note: ! '''sortWith'' will be faster here because it doesn''t do caching'
+    rhs: sortWith (Down . fst)
+- warn:
+    lhs: sortOn (Down . snd)
+    note: ! '''sortWith'' will be faster here because it doesn''t do caching'
+    rhs: sortWith (Down . snd)
+- warn:
+    lhs: Data.Text.Lazy.Text
+    rhs: LText
+- warn:
+    lhs: Data.ByteString.Lazy.ByteString
+    rhs: LByteString
+- warn:
+    lhs: Data.ByteString.UTF8.fromString
+    rhs: encodeUtf8
+- warn:
+    lhs: Data.ByteString.UTF8.toString
+    rhs: decodeUtf8
+- warn:
+    lhs: Data.Text.Encoding.encodeUtf8
+    rhs: encodeUtf8
+- warn:
+    lhs: Data.Text.Encoding.decodeUtf8
+    rhs: decodeUtf8
+- warn:
+    lhs: Data.ByteString.Lazy.toStrict (encodeUtf8 x)
+    rhs: encodeUtf8 x
+- warn:
+    lhs: toStrict (encodeUtf8 x)
+    rhs: encodeUtf8 x
+- warn:
+    lhs: decodeUtf8 (Data.ByteString.Lazy.fromStrict x)
+    rhs: decodeUtf8 x
+- warn:
+    lhs: decodeUtf8 (fromStrict x)
+    rhs: decodeUtf8 x
+- warn:
+    lhs: Data.ByteString.Lazy.UTF8.fromString
+    rhs: encodeUtf8
+- warn:
+    lhs: Data.ByteString.Lazy.UTF8.toString
+    rhs: decodeUtf8
+- warn:
+    lhs: Data.ByteString.Lazy.fromStrict (Data.Text.Encoding.encodeUtf8 x)
+    rhs: encodeUtf8 x
+- warn:
+    lhs: Data.ByteString.Lazy.fromStrict (encodeUtf8 x)
+    rhs: encodeUtf8 x
+- warn:
+    lhs: Data.Text.Encoding.decodeUtf8 (Data.ByteString.Lazy.toStrict x)
+    rhs: decodeUtf8 x
+- warn:
+    lhs: Data.Text.Encoding.decodeUtf8 (toStrict x)
+    rhs: decodeUtf8 x
+- warn:
+    lhs: decodeUtf8 (Data.ByteString.Lazy.toStrict x)
+    rhs: decodeUtf8 x
+- warn:
+    lhs: decodeUtf8 (toStrict x)
+    rhs: decodeUtf8 x
+- warn:
+    lhs: Data.Text.pack
+    rhs: toText
+- warn:
+    lhs: Data.Text.unpack
+    rhs: toString
+- warn:
+    lhs: Data.Text.Lazy.pack
+    rhs: toLText
+- warn:
+    lhs: Data.Text.Lazy.unpack
+    rhs: toString
+- warn:
+    lhs: Data.Text.Lazy.toStrict
+    rhs: toText
+- warn:
+    lhs: Data.Text.Lazy.fromStrict
+    rhs: toLText
+- warn:
+    lhs: Data.Text.pack (show x)
+    rhs: show x
+- warn:
+    lhs: Data.Text.Lazy.pack (show x)
+    rhs: show x
+- warn:
+    lhs: Data.ByteString.Lazy.fromStrict
+    rhs: fromStrict
+- warn:
+    lhs: Data.ByteString.Lazy.toStrict
+    rhs: toStrict
+- warn:
+    lhs: Data.Text.Lazy.fromStrict
+    rhs: fromStrict
+- warn:
+    lhs: Data.Text.Lazy.toStrict
+    rhs: toStrict
+- warn:
+    lhs: Control.Applicative.Alternative
+    name: Use 'Alternative' from Relude
+    rhs: Alternative
+- warn:
+    lhs: Control.Applicative.empty
+    name: Use 'empty' from Relude
+    rhs: empty
+- warn:
+    lhs: (Control.Applicative.<|>)
+    name: Use '<|>' from Relude
+    rhs: (<|>)
+- warn:
+    lhs: Control.Applicative.some
+    name: Use 'some' from Relude
+    rhs: some
+- warn:
+    lhs: Control.Applicative.many
+    name: Use 'many' from Relude
+    rhs: many
+- warn:
+    lhs: Control.Applicative.Const
+    name: Use 'Const' from Relude
+    rhs: Const
+- warn:
+    lhs: Control.Applicative.getConst
+    name: Use 'getConst' from Relude
+    rhs: getConst
+- warn:
+    lhs: Control.Applicative.ZipList
+    name: Use 'ZipList' from Relude
+    rhs: ZipList
+- warn:
+    lhs: Control.Applicative.getZipList
+    name: Use 'getZipList' from Relude
+    rhs: getZipList
+- warn:
+    lhs: Control.Applicative.liftA2
+    name: Use 'liftA2' from Relude
+    rhs: liftA2
+- warn:
+    lhs: Control.Applicative.liftA3
+    name: Use 'liftA3' from Relude
+    rhs: liftA3
+- warn:
+    lhs: Control.Applicative.optional
+    name: Use 'optional' from Relude
+    rhs: optional
+- warn:
+    lhs: (Control.Applicative.<**>)
+    name: Use '<**>' from Relude
+    rhs: (<**>)
+- warn:
+    lhs: Data.Bits.xor
+    name: Use 'xor' from Relude
+    rhs: xor
+- warn:
+    lhs: Data.Char.chr
+    name: Use 'chr' from Relude
+    rhs: chr
+- warn:
+    lhs: Data.Int.Int8
+    name: Use 'Int8' from Relude
+    rhs: Int8
+- warn:
+    lhs: Data.Int.Int16
+    name: Use 'Int16' from Relude
+    rhs: Int16
+- warn:
+    lhs: Data.Int.Int32
+    name: Use 'Int32' from Relude
+    rhs: Int32
+- warn:
+    lhs: Data.Int.Int64
+    name: Use 'Int64' from Relude
+    rhs: Int64
+- warn:
+    lhs: Data.Word.Word8
+    name: Use 'Word8' from Relude
+    rhs: Word8
+- warn:
+    lhs: Data.Word.Word16
+    name: Use 'Word16' from Relude
+    rhs: Word16
+- warn:
+    lhs: Data.Word.Word32
+    name: Use 'Word32' from Relude
+    rhs: Word32
+- warn:
+    lhs: Data.Word.Word64
+    name: Use 'Word64' from Relude
+    rhs: Word64
+- warn:
+    lhs: Data.Word.byteSwap16
+    name: Use 'byteSwap16' from Relude
+    rhs: byteSwap16
+- warn:
+    lhs: Data.Word.byteSwap32
+    name: Use 'byteSwap32' from Relude
+    rhs: byteSwap32
+- warn:
+    lhs: Data.Word.byteSwap64
+    name: Use 'byteSwap64' from Relude
+    rhs: byteSwap64
+- warn:
+    lhs: Numeric.Natural.Natural
+    name: Use 'Natural' from Relude
+    rhs: Natural
+- warn:
+    lhs: System.IO.Handle
+    name: Use 'Handle' from Relude
+    rhs: Handle
+- warn:
+    lhs: System.IO.IOMode
+    name: Use 'IOMode' from Relude
+    rhs: IOMode
+- warn:
+    lhs: System.IO.ReadMode
+    name: Use 'ReadMode' from Relude
+    rhs: ReadMode
+- warn:
+    lhs: System.IO.WriteMode
+    name: Use 'WriteMode' from Relude
+    rhs: WriteMode
+- warn:
+    lhs: System.IO.AppendMode
+    name: Use 'AppendMode' from Relude
+    rhs: AppendMode
+- warn:
+    lhs: System.IO.ReadWriteMode
+    name: Use 'ReadWriteMode' from Relude
+    rhs: ReadWriteMode
+- warn:
+    lhs: System.IO.stderr
+    name: Use 'stderr' from Relude
+    rhs: stderr
+- warn:
+    lhs: System.IO.stdin
+    name: Use 'stdin' from Relude
+    rhs: stdin
+- warn:
+    lhs: System.IO.stdout
+    name: Use 'stdout' from Relude
+    rhs: stdout
+- warn:
+    lhs: System.IO.withFile
+    name: Use 'withFile' from Relude
+    rhs: withFile
+- warn:
+    lhs: Data.Ord.Down
+    name: Use 'Down' from Relude
+    rhs: Down
+- warn:
+    lhs: Data.Ord.comparing
+    name: Use 'comparing' from Relude
+    rhs: comparing
+- warn:
+    lhs: Data.Coerce.Coercible
+    name: Use 'Coercible' from Relude
+    rhs: Coercible
+- warn:
+    lhs: Data.Coerce.coerce
+    name: Use 'coerce' from Relude
+    rhs: coerce
+- warn:
+    lhs: Data.Kind.Constraint
+    name: Use 'Constraint' from Relude
+    rhs: Constraint
+- warn:
+    lhs: Data.Kind.Type
+    name: Use 'Type' from Relude
+    rhs: Type
+- warn:
+    lhs: Data.Typeable.Typeable
+    name: Use 'Typeable' from Relude
+    rhs: Typeable
+- warn:
+    lhs: Data.Proxy.Proxy
+    name: Use 'Proxy' from Relude
+    rhs: Proxy
+- warn:
+    lhs: Data.Typeable.Typeable
+    name: Use 'Typeable' from Relude
+    rhs: Typeable
+- warn:
+    lhs: Data.Void.Void
+    name: Use 'Void' from Relude
+    rhs: Void
+- warn:
+    lhs: Data.Void.absurd
+    name: Use 'absurd' from Relude
+    rhs: absurd
+- warn:
+    lhs: Data.Void.vacuous
+    name: Use 'vacuous' from Relude
+    rhs: vacuous
+- warn:
+    lhs: Data.Base.maxInt
+    name: Use 'maxInt' from Relude
+    rhs: maxInt
+- warn:
+    lhs: Data.Base.minInt
+    name: Use 'minInt' from Relude
+    rhs: minInt
+- warn:
+    lhs: Data.Base.ord
+    name: Use 'ord' from Relude
+    rhs: ord
+- warn:
+    lhs: GHC.Enum.boundedEnumFrom
+    name: Use 'boundedEnumFrom' from Relude
+    rhs: boundedEnumFrom
+- warn:
+    lhs: GHC.Enum.boundedEnumFromThen
+    name: Use 'boundedEnumFromThen' from Relude
+    rhs: boundedEnumFromThen
+- warn:
+    lhs: GHC.Generics.Generic
+    name: Use 'Generic' from Relude
+    rhs: Generic
+- warn:
+    lhs: GHC.Real.Ratio
+    name: Use 'Ratio' from Relude
+    rhs: Ratio
+- warn:
+    lhs: GHC.Real.Rational
+    name: Use 'Rational' from Relude
+    rhs: Rational
+- warn:
+    lhs: GHC.Real.denominator
+    name: Use 'denominator' from Relude
+    rhs: denominator
+- warn:
+    lhs: GHC.Real.numerator
+    name: Use 'numerator' from Relude
+    rhs: numerator
+- warn:
+    lhs: GHC.TypeNats.CmpNat
+    name: Use 'CmpNat' from Relude
+    rhs: CmpNat
+- warn:
+    lhs: GHC.TypeNats.KnownNat
+    name: Use 'KnownNat' from Relude
+    rhs: KnownNat
+- warn:
+    lhs: GHC.TypeNats.Nat
+    name: Use 'Nat' from Relude
+    rhs: Nat
+- warn:
+    lhs: GHC.TypeNats.SomeNat
+    name: Use 'SomeNat' from Relude
+    rhs: SomeNat
+- warn:
+    lhs: GHC.TypeNats.natVal
+    name: Use 'natVal' from Relude
+    rhs: natVal
+- warn:
+    lhs: GHC.TypeNats.someNatVal
+    name: Use 'someNatVal' from Relude
+    rhs: someNatVal
+- warn:
+    lhs: GHC.TypeLits.CmpNat
+    name: Use 'CmpNat' from Relude
+    rhs: CmpNat
+- warn:
+    lhs: GHC.TypeLits.KnownNat
+    name: Use 'KnownNat' from Relude
+    rhs: KnownNat
+- warn:
+    lhs: GHC.TypeLits.Nat
+    name: Use 'Nat' from Relude
+    rhs: Nat
+- warn:
+    lhs: GHC.TypeLits.SomeNat
+    name: Use 'SomeNat' from Relude
+    rhs: SomeNat
+- warn:
+    lhs: GHC.TypeLits.natVal
+    name: Use 'natVal' from Relude
+    rhs: natVal
+- warn:
+    lhs: GHC.TypeLits.someNatVal
+    name: Use 'someNatVal' from Relude
+    rhs: someNatVal
+- warn:
+    lhs: GHC.ExecutionStack.getStackTrace
+    name: Use 'getStackTrace' from Relude
+    rhs: getStackTrace
+- warn:
+    lhs: GHC.ExecutionStack.showStackTrace
+    name: Use 'showStackTrace' from Relude
+    rhs: showStackTrace
+- warn:
+    lhs: GHC.OverloadedLabels.IsLabel
+    name: Use 'IsLabel' from Relude
+    rhs: IsLabel
+- warn:
+    lhs: GHC.OverloadedLabels.fromLabel
+    name: Use 'fromLabel' from Relude
+    rhs: fromLabel
+- warn:
+    lhs: GHC.Stack.CallStack
+    name: Use 'CallStack' from Relude
+    rhs: CallStack
+- warn:
+    lhs: GHC.Stack.HasCallStack
+    name: Use 'HasCallStack' from Relude
+    rhs: HasCallStack
+- warn:
+    lhs: GHC.Stack.callStack
+    name: Use 'callStack' from Relude
+    rhs: callStack
+- warn:
+    lhs: GHC.Stack.currentCallStack
+    name: Use 'currentCallStack' from Relude
+    rhs: currentCallStack
+- warn:
+    lhs: GHC.Stack.getCallStack
+    name: Use 'getCallStack' from Relude
+    rhs: getCallStack
+- warn:
+    lhs: GHC.Stack.prettyCallStack
+    name: Use 'prettyCallStack' from Relude
+    rhs: prettyCallStack
+- warn:
+    lhs: GHC.Stack.prettySrcLoc
+    name: Use 'prettySrcLoc' from Relude
+    rhs: prettySrcLoc
+- warn:
+    lhs: GHC.Stack.withFrozenCallStack
+    name: Use 'withFrozenCallStack' from Relude
+    rhs: withFrozenCallStack
+- warn:
+    lhs: Control.Monad.guard
+    name: Use 'guard' from Relude
+    rhs: guard
+- warn:
+    lhs: Control.Monad.unless
+    name: Use 'unless' from Relude
+    rhs: unless
+- warn:
+    lhs: Control.Monad.when
+    name: Use 'when' from Relude
+    rhs: when
+- warn:
+    lhs: Data.Bool.bool
+    name: Use 'bool' from Relude
+    rhs: bool
+- warn:
+    lhs: Data.Hashable.Hashable
+    name: Use 'Hashable' from Relude
+    rhs: Hashable
+- warn:
+    lhs: Data.Hashable.hashWithSalt
+    name: Use 'hashWithSalt' from Relude
+    rhs: hashWithSalt
+- warn:
+    lhs: Data.HashMap.Strict.HashMap
+    name: Use 'HashMap' from Relude
+    rhs: HashMap
+- warn:
+    lhs: Data.HashSet.HashSet
+    name: Use 'HashSet' from Relude
+    rhs: HashSet
+- warn:
+    lhs: Data.IntMap.Strict.IntMap
+    name: Use 'IntMap' from Relude
+    rhs: IntMap
+- warn:
+    lhs: Data.IntSet.IntSet
+    name: Use 'IntSet' from Relude
+    rhs: IntSet
+- warn:
+    lhs: Data.Map.Strict.Map
+    name: Use 'Map' from Relude
+    rhs: Map
+- warn:
+    lhs: Data.Sequence.Sequence
+    name: Use 'Sequence' from Relude
+    rhs: Sequence
+- warn:
+    lhs: Data.Set.Set
+    name: Use 'Set' from Relude
+    rhs: Set
+- warn:
+    lhs: Data.Tuple.swap
+    name: Use 'swap' from Relude
+    rhs: swap
+- warn:
+    lhs: Data.Vector.Vector
+    name: Use 'Vector' from Relude
+    rhs: Vector
+- warn:
+    lhs: GHC.Exts.IsList
+    name: Use 'IsList' from Relude
+    rhs: IsList
+- warn:
+    lhs: GHC.Exts.fromList
+    name: Use 'fromList' from Relude
+    rhs: fromList
+- warn:
+    lhs: GHC.Exts.fromListN
+    name: Use 'fromListN' from Relude
+    rhs: fromListN
+- warn:
+    lhs: Debug.Trace.trace
+    name: Use 'trace' from Relude
+    rhs: trace
+- warn:
+    lhs: Debug.Trace.traceShow
+    name: Use 'traceShow' from Relude
+    rhs: traceShow
+- warn:
+    lhs: Debug.Trace.traceShowId
+    name: Use 'traceShowId' from Relude
+    rhs: traceShowId
+- warn:
+    lhs: Debug.Trace.traceShowM
+    name: Use 'traceShowM' from Relude
+    rhs: traceShowM
+- warn:
+    lhs: Debug.Trace.traceM
+    name: Use 'traceM' from Relude
+    rhs: traceM
+- warn:
+    lhs: Debug.Trace.traceId
+    name: Use 'traceId' from Relude
+    rhs: traceId
+- warn:
+    lhs: Control.DeepSeq.NFData
+    name: Use 'NFData' from Relude
+    rhs: NFData
+- warn:
+    lhs: Control.DeepSeq.rnf
+    name: Use 'rnf' from Relude
+    rhs: rnf
+- warn:
+    lhs: Control.DeepSeq.deepseq
+    name: Use 'deepseq' from Relude
+    rhs: deepseq
+- warn:
+    lhs: Control.DeepSeq.force
+    name: Use 'force' from Relude
+    rhs: force
+- warn:
+    lhs: (Control.DeepSeq.$!!)
+    name: Use '$!!' from Relude
+    rhs: ($!!)
+- warn:
+    lhs: Control.Exception.Exception
+    name: Use 'Exception' from Relude
+    rhs: Exception
+- warn:
+    lhs: Control.Exception.SomeException
+    name: Use 'SomeException' from Relude
+    rhs: SomeException
+- warn:
+    lhs: Control.Exception.toException
+    name: Use 'toException' from Relude
+    rhs: toException
+- warn:
+    lhs: Control.Exception.fromException
+    name: Use 'fromException' from Relude
+    rhs: fromException
+- warn:
+    lhs: Control.Exception.displayException
+    name: Use 'displayException' from Relude
+    rhs: displayException
+- warn:
+    lhs: Data.Foldable.asum
+    name: Use 'asum' from Relude
+    rhs: asum
+- warn:
+    lhs: Data.Foldable.find
+    name: Use 'find' from Relude
+    rhs: find
+- warn:
+    lhs: Data.Foldable.find
+    name: Use 'find' from Relude
+    rhs: find
+- warn:
+    lhs: Data.Foldable.fold
+    name: Use 'fold' from Relude
+    rhs: fold
+- warn:
+    lhs: Data.Foldable.foldl'
+    name: Use 'foldl'' from Relude
+    rhs: foldl'
+- warn:
+    lhs: Data.Foldable.foldrM
+    name: Use 'foldrM' from Relude
+    rhs: foldrM
+- warn:
+    lhs: Data.Foldable.forM_
+    name: Use 'forM_' from Relude
+    rhs: forM_
+- warn:
+    lhs: Data.Foldable.for_
+    name: Use 'for_' from Relude
+    rhs: for_
+- warn:
+    lhs: Data.Foldable.sequenceA_
+    name: Use 'sequenceA_' from Relude
+    rhs: sequenceA_
+- warn:
+    lhs: Data.Foldable.toList
+    name: Use 'toList' from Relude
+    rhs: toList
+- warn:
+    lhs: Data.Foldable.traverse_
+    name: Use 'traverse_' from Relude
+    rhs: traverse_
+- warn:
+    lhs: Data.Traversable.forM
+    name: Use 'forM' from Relude
+    rhs: forM
+- warn:
+    lhs: Data.Traversable.mapAccumL
+    name: Use 'mapAccumL' from Relude
+    rhs: mapAccumL
+- warn:
+    lhs: Data.Traversable.mapAccumR
+    name: Use 'mapAccumR' from Relude
+    rhs: mapAccumR
+- warn:
+    lhs: (Control.Category.>>>)
+    name: Use '>>>' from Relude
+    rhs: (>>>)
+- warn:
+    lhs: (Control.Category.<<<)
+    name: Use '<<<' from Relude
+    rhs: (<<<)
+- warn:
+    lhs: Data.Function.fix
+    name: Use 'fix' from Relude
+    rhs: fix
+- warn:
+    lhs: Data.Function.on
+    name: Use 'on' from Relude
+    rhs: 'on'
+- warn:
+    lhs: (Control.Arrow.&&&)
+    name: Use '&&&' from Relude
+    rhs: (&&&)
+- warn:
+    lhs: Data.Bifunctor.Bifunctor
+    name: Use 'Bifunctor' from Relude
+    rhs: Bifunctor
+- warn:
+    lhs: Data.Bifunctor.bimap
+    name: Use 'bimap' from Relude
+    rhs: bimap
+- warn:
+    lhs: Data.Bifunctor.first
+    name: Use 'first' from Relude
+    rhs: first
+- warn:
+    lhs: Data.Bifunctor.second
+    name: Use 'second' from Relude
+    rhs: second
+- warn:
+    lhs: Data.Functor.void
+    name: Use 'void' from Relude
+    rhs: void
+- warn:
+    lhs: (Data.Functor.$>)
+    name: Use '$>' from Relude
+    rhs: ($>)
+- warn:
+    lhs: (Data.Functor.<&>)
+    name: Use '<&>' from Relude
+    rhs: (<&>)
+- warn:
+    lhs: Data.Functor.Compose.Compose
+    name: Use 'Compose' from Relude
+    rhs: Compose
+- warn:
+    lhs: Data.Functor.Compose.getCompose
+    name: Use 'getCompose' from Relude
+    rhs: getCompose
+- warn:
+    lhs: Data.Functor.Identity.Identity
+    name: Use 'Identity' from Relude
+    rhs: Identity
+- warn:
+    lhs: Data.Functor.Identity.runIdentity
+    name: Use 'runIdentity' from Relude
+    rhs: runIdentity
+- warn:
+    lhs: Control.Concurrent.MVar.MVar
+    name: Use 'MVar' from Relude
+    rhs: MVar
+- warn:
+    lhs: Control.Concurrent.MVar.newEmptyMVar
+    name: Use 'newEmptyMVar' from Relude
+    rhs: newEmptyMVar
+- warn:
+    lhs: Control.Concurrent.MVar.newMVar
+    name: Use 'newMVar' from Relude
+    rhs: newMVar
+- warn:
+    lhs: Control.Concurrent.MVar.putMVar
+    name: Use 'putMVar' from Relude
+    rhs: putMVar
+- warn:
+    lhs: Control.Concurrent.MVar.readMVar
+    name: Use 'readMVar' from Relude
+    rhs: readMVar
+- warn:
+    lhs: Control.Concurrent.MVar.swapMVar
+    name: Use 'swapMVar' from Relude
+    rhs: swapMVar
+- warn:
+    lhs: Control.Concurrent.MVar.takeMVar
+    name: Use 'takeMVar' from Relude
+    rhs: takeMVar
+- warn:
+    lhs: Control.Concurrent.MVar.tryPutMVar
+    name: Use 'tryPutMVar' from Relude
+    rhs: tryPutMVar
+- warn:
+    lhs: Control.Concurrent.MVar.tryReadMVar
+    name: Use 'tryReadMVar' from Relude
+    rhs: tryReadMVar
+- warn:
+    lhs: Control.Concurrent.MVar.tryTakeMVar
+    name: Use 'tryTakeMVar' from Relude
+    rhs: tryTakeMVar
+- warn:
+    lhs: Control.Monad.STM.STM
+    name: Use 'STM' from Relude
+    rhs: STM
+- warn:
+    lhs: Control.Monad.STM.atomically
+    name: Use 'atomically' from Relude
+    rhs: atomically
+- warn:
+    lhs: Control.Concurrent.STM.TVar.TVar
+    name: Use 'TVar' from Relude
+    rhs: TVar
+- warn:
+    lhs: Control.Concurrent.STM.TVar.newTVarIO
+    name: Use 'newTVarIO' from Relude
+    rhs: newTVarIO
+- warn:
+    lhs: Control.Concurrent.STM.TVar.readTVarIO
+    name: Use 'readTVarIO' from Relude
+    rhs: readTVarIO
+- warn:
+    lhs: Control.Concurrent.STM.TVar.modifyTVar'
+    name: Use 'modifyTVar'' from Relude
+    rhs: modifyTVar'
+- warn:
+    lhs: Control.Concurrent.STM.TVar.newTVar
+    name: Use 'newTVar' from Relude
+    rhs: newTVar
+- warn:
+    lhs: Control.Concurrent.STM.TVar.readTVar
+    name: Use 'readTVar' from Relude
+    rhs: readTVar
+- warn:
+    lhs: Control.Concurrent.STM.TVar.writeTVar
+    name: Use 'writeTVar' from Relude
+    rhs: writeTVar
+- warn:
+    lhs: Data.Text.IO.appendFile
+    name: Use 'appendFile' from Relude
+    rhs: appendFile
+- warn:
+    lhs: Data.Text.IO.getLine
+    name: Use 'getLine' from Relude
+    rhs: getLine
+- warn:
+    lhs: Data.Text.IO.readFile
+    name: Use 'readFile' from Relude
+    rhs: readFile
+- warn:
+    lhs: Data.Text.IO.writeFile
+    name: Use 'writeFile' from Relude
+    rhs: writeFile
+- warn:
+    lhs: System.IO.openFile
+    name: Use 'openFile' from Relude
+    rhs: openFile
+- warn:
+    lhs: Data.IORef.IORef
+    name: Use 'IORef' from Relude
+    rhs: IORef
+- warn:
+    lhs: Data.IORef.atomicModifyIORef
+    name: Use 'atomicModifyIORef' from Relude
+    rhs: atomicModifyIORef
+- warn:
+    lhs: Data.IORef.atomicModifyIORef'
+    name: Use 'atomicModifyIORef'' from Relude
+    rhs: atomicModifyIORef'
+- warn:
+    lhs: Data.IORef.atomicWriteIORef
+    name: Use 'atomicWriteIORef' from Relude
+    rhs: atomicWriteIORef
+- warn:
+    lhs: Data.IORef.modifyIORef
+    name: Use 'modifyIORef' from Relude
+    rhs: modifyIORef
+- warn:
+    lhs: Data.IORef.modifyIORef'
+    name: Use 'modifyIORef'' from Relude
+    rhs: modifyIORef'
+- warn:
+    lhs: Data.IORef.newIORef
+    name: Use 'newIORef' from Relude
+    rhs: newIORef
+- warn:
+    lhs: Data.IORef.readIORef
+    name: Use 'readIORef' from Relude
+    rhs: readIORef
+- warn:
+    lhs: Data.IORef.writeIORef
+    name: Use 'writeIORef' from Relude
+    rhs: writeIORef
+- warn:
+    lhs: Data.List.genericDrop
+    name: Use 'genericDrop' from Relude
+    rhs: genericDrop
+- warn:
+    lhs: Data.List.genericLength
+    name: Use 'genericLength' from Relude
+    rhs: genericLength
+- warn:
+    lhs: Data.List.genericReplicate
+    name: Use 'genericReplicate' from Relude
+    rhs: genericReplicate
+- warn:
+    lhs: Data.List.genericSplitAt
+    name: Use 'genericSplitAt' from Relude
+    rhs: genericSplitAt
+- warn:
+    lhs: Data.List.genericTake
+    name: Use 'genericTake' from Relude
+    rhs: genericTake
+- warn:
+    lhs: Data.List.group
+    name: Use 'group' from Relude
+    rhs: group
+- warn:
+    lhs: Data.List.inits
+    name: Use 'inits' from Relude
+    rhs: inits
+- warn:
+    lhs: Data.List.intercalate
+    name: Use 'intercalate' from Relude
+    rhs: intercalate
+- warn:
+    lhs: Data.List.intersperse
+    name: Use 'intersperse' from Relude
+    rhs: intersperse
+- warn:
+    lhs: Data.List.isPrefixOf
+    name: Use 'isPrefixOf' from Relude
+    rhs: isPrefixOf
+- warn:
+    lhs: Data.List.permutations
+    name: Use 'permutations' from Relude
+    rhs: permutations
+- warn:
+    lhs: Data.List.sort
+    name: Use 'sort' from Relude
+    rhs: sort
+- warn:
+    lhs: Data.List.sortBy
+    name: Use 'sortBy' from Relude
+    rhs: sortBy
+- warn:
+    lhs: Data.List.sortOn
+    name: Use 'sortOn' from Relude
+    rhs: sortOn
+- warn:
+    lhs: Data.List.subsequences
+    name: Use 'subsequences' from Relude
+    rhs: subsequences
+- warn:
+    lhs: Data.List.tails
+    name: Use 'tails' from Relude
+    rhs: tails
+- warn:
+    lhs: Data.List.transpose
+    name: Use 'transpose' from Relude
+    rhs: transpose
+- warn:
+    lhs: Data.List.uncons
+    name: Use 'uncons' from Relude
+    rhs: uncons
+- warn:
+    lhs: Data.List.unfoldr
+    name: Use 'unfoldr' from Relude
+    rhs: unfoldr
+- warn:
+    lhs: Data.NonEmpty.NonEmpty
+    name: Use 'NonEmpty' from Relude
+    rhs: NonEmpty
+- warn:
+    lhs: (Data.NonEmpty.:|)
+    name: Use ':|' from Relude
+    rhs: (:|)
+- warn:
+    lhs: Data.NonEmpty.nonEmpty
+    name: Use 'nonEmpty' from Relude
+    rhs: nonEmpty
+- warn:
+    lhs: Data.NonEmpty.head
+    name: Use 'head' from Relude
+    rhs: head
+- warn:
+    lhs: Data.NonEmpty.init
+    name: Use 'init' from Relude
+    rhs: init
+- warn:
+    lhs: Data.NonEmpty.last
+    name: Use 'last' from Relude
+    rhs: last
+- warn:
+    lhs: Data.NonEmpty.tail
+    name: Use 'tail' from Relude
+    rhs: tail
+- warn:
+    lhs: GHC.Exts.sortWith
+    name: Use 'sortWith' from Relude
+    rhs: sortWith
+- warn:
+    lhs: Control.Monad.Except.ExceptT
+    name: Use 'ExceptT' from Relude
+    rhs: ExceptT
+- warn:
+    lhs: Control.Monad.Except.runExceptT
+    name: Use 'runExceptT' from Relude
+    rhs: runExceptT
+- warn:
+    lhs: Control.Monad.Reader.MonadReader
+    name: Use 'MonadReader' from Relude
+    rhs: MonadReader
+- warn:
+    lhs: Control.Monad.Reader.Reader
+    name: Use 'Reader' from Relude
+    rhs: Reader
+- warn:
+    lhs: Control.Monad.Reader.ReaderT
+    name: Use 'ReaderT' from Relude
+    rhs: ReaderT
+- warn:
+    lhs: Control.Monad.Reader.runReaderT
+    name: Use 'runReaderT' from Relude
+    rhs: runReaderT
+- warn:
+    lhs: Control.Monad.Reader.ask
+    name: Use 'ask' from Relude
+    rhs: ask
+- warn:
+    lhs: Control.Monad.Reader.asks
+    name: Use 'asks' from Relude
+    rhs: asks
+- warn:
+    lhs: Control.Monad.Reader.local
+    name: Use 'local' from Relude
+    rhs: local
+- warn:
+    lhs: Control.Monad.Reader.reader
+    name: Use 'reader' from Relude
+    rhs: reader
+- warn:
+    lhs: Control.Monad.Reader.runReader
+    name: Use 'runReader' from Relude
+    rhs: runReader
+- warn:
+    lhs: Control.Monad.Reader.withReader
+    name: Use 'withReader' from Relude
+    rhs: withReader
+- warn:
+    lhs: Control.Monad.Reader.withReaderT
+    name: Use 'withReaderT' from Relude
+    rhs: withReaderT
+- warn:
+    lhs: Control.Monad.State.Strict.MonadState
+    name: Use 'MonadState' from Relude
+    rhs: MonadState
+- warn:
+    lhs: Control.Monad.State.Strict.State
+    name: Use 'State' from Relude
+    rhs: State
+- warn:
+    lhs: Control.Monad.State.Strict.StateT
+    name: Use 'StateT' from Relude
+    rhs: StateT
+- warn:
+    lhs: Control.Monad.State.Strict.runStateT
+    name: Use 'runStateT' from Relude
+    rhs: runStateT
+- warn:
+    lhs: Control.Monad.State.Strict.evalState
+    name: Use 'evalState' from Relude
+    rhs: evalState
+- warn:
+    lhs: Control.Monad.State.Strict.evalStateT
+    name: Use 'evalStateT' from Relude
+    rhs: evalStateT
+- warn:
+    lhs: Control.Monad.State.Strict.execState
+    name: Use 'execState' from Relude
+    rhs: execState
+- warn:
+    lhs: Control.Monad.State.Strict.execStateT
+    name: Use 'execStateT' from Relude
+    rhs: execStateT
+- warn:
+    lhs: Control.Monad.State.Strict.get
+    name: Use 'get' from Relude
+    rhs: get
+- warn:
+    lhs: Control.Monad.State.Strict.gets
+    name: Use 'gets' from Relude
+    rhs: gets
+- warn:
+    lhs: Control.Monad.State.Strict.modify
+    name: Use 'modify' from Relude
+    rhs: modify
+- warn:
+    lhs: Control.Monad.State.Strict.modify'
+    name: Use 'modify'' from Relude
+    rhs: modify'
+- warn:
+    lhs: Control.Monad.State.Strict.put
+    name: Use 'put' from Relude
+    rhs: put
+- warn:
+    lhs: Control.Monad.State.Strict.runState
+    name: Use 'runState' from Relude
+    rhs: runState
+- warn:
+    lhs: Control.Monad.State.Strict.state
+    name: Use 'state' from Relude
+    rhs: state
+- warn:
+    lhs: Control.Monad.State.Strict.withState
+    name: Use 'withState' from Relude
+    rhs: withState
+- warn:
+    lhs: Control.Monad.Trans.MonadIO
+    name: Use 'MonadIO' from Relude
+    rhs: MonadIO
+- warn:
+    lhs: Control.Monad.Trans.MonadTrans
+    name: Use 'MonadTrans' from Relude
+    rhs: MonadTrans
+- warn:
+    lhs: Control.Monad.Trans.lift
+    name: Use 'lift' from Relude
+    rhs: lift
+- warn:
+    lhs: Control.Monad.Trans.liftIO
+    name: Use 'liftIO' from Relude
+    rhs: liftIO
+- warn:
+    lhs: Control.Monad.Trans.Identity.IdentityT
+    name: Use 'IdentityT' from Relude
+    rhs: IdentityT
+- warn:
+    lhs: Control.Monad.Trans.Identity.runIdentityT
+    name: Use 'runIdentityT' from Relude
+    rhs: runIdentityT
+- warn:
+    lhs: Control.Monad.Trans.Maybe.MaybeT
+    name: Use 'MaybeT' from Relude
+    rhs: MaybeT
+- warn:
+    lhs: Control.Monad.Trans.Maybe.maybeToExceptT
+    name: Use 'maybeToExceptT' from Relude
+    rhs: maybeToExceptT
+- warn:
+    lhs: Control.Monad.Trans.Maybe.exceptToMaybeT
+    name: Use 'exceptToMaybeT' from Relude
+    rhs: exceptToMaybeT
+- warn:
+    lhs: Control.Monad.MonadPlus
+    name: Use 'MonadPlus' from Relude
+    rhs: MonadPlus
+- warn:
+    lhs: Control.Monad.mzero
+    name: Use 'mzero' from Relude
+    rhs: mzero
+- warn:
+    lhs: Control.Monad.mplus
+    name: Use 'mplus' from Relude
+    rhs: mplus
+- warn:
+    lhs: Control.Monad.filterM
+    name: Use 'filterM' from Relude
+    rhs: filterM
+- warn:
+    lhs: Control.Monad.forever
+    name: Use 'forever' from Relude
+    rhs: forever
+- warn:
+    lhs: Control.Monad.join
+    name: Use 'join' from Relude
+    rhs: join
+- warn:
+    lhs: Control.Monad.mapAndUnzipM
+    name: Use 'mapAndUnzipM' from Relude
+    rhs: mapAndUnzipM
+- warn:
+    lhs: Control.Monad.mfilter
+    name: Use 'mfilter' from Relude
+    rhs: mfilter
+- warn:
+    lhs: Control.Monad.replicateM
+    name: Use 'replicateM' from Relude
+    rhs: replicateM
+- warn:
+    lhs: Control.Monad.replicateM_
+    name: Use 'replicateM_' from Relude
+    rhs: replicateM_
+- warn:
+    lhs: Control.Monad.zipWithM
+    name: Use 'zipWithM' from Relude
+    rhs: zipWithM
+- warn:
+    lhs: Control.Monad.zipWithM_
+    name: Use 'zipWithM_' from Relude
+    rhs: zipWithM_
+- warn:
+    lhs: (Control.Monad.<$!>)
+    name: Use '<$!>' from Relude
+    rhs: (<$!>)
+- warn:
+    lhs: (Control.Monad.<=<)
+    name: Use '<=<' from Relude
+    rhs: (<=<)
+- warn:
+    lhs: (Control.Monad.=<<)
+    name: Use '=<<' from Relude
+    rhs: (=<<)
+- warn:
+    lhs: (Control.Monad.>=>)
+    name: Use '>=>' from Relude
+    rhs: (>=>)
+- warn:
+    lhs: Control.Monad.Fail.MonadFail
+    name: Use 'MonadFail' from Relude
+    rhs: MonadFail
+- warn:
+    lhs: Data.Maybe.catMaybes
+    name: Use 'catMaybes' from Relude
+    rhs: catMaybes
+- warn:
+    lhs: Data.Maybe.fromMaybe
+    name: Use 'fromMaybe' from Relude
+    rhs: fromMaybe
+- warn:
+    lhs: Data.Maybe.isJust
+    name: Use 'isJust' from Relude
+    rhs: isJust
+- warn:
+    lhs: Data.Maybe.isNothing
+    name: Use 'isNothing' from Relude
+    rhs: isNothing
+- warn:
+    lhs: Data.Maybe.listToMaybe
+    name: Use 'listToMaybe' from Relude
+    rhs: listToMaybe
+- warn:
+    lhs: Data.Maybe.mapMaybe
+    name: Use 'mapMaybe' from Relude
+    rhs: mapMaybe
+- warn:
+    lhs: Data.Maybe.maybeToList
+    name: Use 'maybeToList' from Relude
+    rhs: maybeToList
+- warn:
+    lhs: Data.Either.isLeft
+    name: Use 'isLeft' from Relude
+    rhs: isLeft
+- warn:
+    lhs: Data.Either.isRight
+    name: Use 'isRight' from Relude
+    rhs: isRight
+- warn:
+    lhs: Data.Either.lefts
+    name: Use 'lefts' from Relude
+    rhs: lefts
+- warn:
+    lhs: Data.Either.partitionEithers
+    name: Use 'partitionEithers' from Relude
+    rhs: partitionEithers
+- warn:
+    lhs: Data.Either.rights
+    name: Use 'rights' from Relude
+    rhs: rights
+- warn:
+    lhs: Data.Monoid.All
+    name: Use 'All' from Relude
+    rhs: All
+- warn:
+    lhs: Data.Monoid.getAll
+    name: Use 'getAll' from Relude
+    rhs: getAll
+- warn:
+    lhs: Data.Monoid.Alt
+    name: Use 'Alt' from Relude
+    rhs: Alt
+- warn:
+    lhs: Data.Monoid.getAlt
+    name: Use 'getAlt' from Relude
+    rhs: getAlt
+- warn:
+    lhs: Data.Monoid.Any
+    name: Use 'Any' from Relude
+    rhs: Any
+- warn:
+    lhs: Data.Monoid.getAny
+    name: Use 'getAny' from Relude
+    rhs: getAny
+- warn:
+    lhs: Data.Monoid.Dual
+    name: Use 'Dual' from Relude
+    rhs: Dual
+- warn:
+    lhs: Data.Monoid.getDual
+    name: Use 'getDual' from Relude
+    rhs: getDual
+- warn:
+    lhs: Data.Monoid.Endo
+    name: Use 'Endo' from Relude
+    rhs: Endo
+- warn:
+    lhs: Data.Monoid.appEndo
+    name: Use 'appEndo' from Relude
+    rhs: appEndo
+- warn:
+    lhs: Data.Monoid.First
+    name: Use 'First' from Relude
+    rhs: First
+- warn:
+    lhs: Data.Monoid.getFirst
+    name: Use 'getFirst' from Relude
+    rhs: getFirst
+- warn:
+    lhs: Data.Monoid.Last
+    name: Use 'Last' from Relude
+    rhs: Last
+- warn:
+    lhs: Data.Monoid.getLast
+    name: Use 'getLast' from Relude
+    rhs: getLast
+- warn:
+    lhs: Data.Monoid.Product
+    name: Use 'Product' from Relude
+    rhs: Product
+- warn:
+    lhs: Data.Monoid.getProduct
+    name: Use 'getProduct' from Relude
+    rhs: getProduct
+- warn:
+    lhs: Data.Monoid.Sum
+    name: Use 'Sum' from Relude
+    rhs: Sum
+- warn:
+    lhs: Data.Monoid.getSum
+    name: Use 'getSum' from Relude
+    rhs: getSum
+- warn:
+    lhs: Data.Semigroup.Option
+    name: Use 'Option' from Relude
+    rhs: Option
+- warn:
+    lhs: Data.Semigroup.getOption
+    name: Use 'getOption' from Relude
+    rhs: getOption
+- warn:
+    lhs: Data.Semigroup.Semigroup
+    name: Use 'Semigroup' from Relude
+    rhs: Semigroup
+- warn:
+    lhs: Data.Semigroup.sconcat
+    name: Use 'sconcat' from Relude
+    rhs: sconcat
+- warn:
+    lhs: Data.Semigroup.stimes
+    name: Use 'stimes' from Relude
+    rhs: stimes
+- warn:
+    lhs: (Data.Semigroup.<>)
+    name: Use '<>' from Relude
+    rhs: (<>)
+- warn:
+    lhs: Data.Semigroup.WrappedMonoid
+    name: Use 'WrappedMonoid' from Relude
+    rhs: WrappedMonoid
+- warn:
+    lhs: Data.Semigroup.cycle1
+    name: Use 'cycle1' from Relude
+    rhs: cycle1
+- warn:
+    lhs: Data.Semigroup.mtimesDefault
+    name: Use 'mtimesDefault' from Relude
+    rhs: mtimesDefault
+- warn:
+    lhs: Data.Semigroup.stimesIdempotent
+    name: Use 'stimesIdempotent' from Relude
+    rhs: stimesIdempotent
+- warn:
+    lhs: Data.Semigroup.stimesIdempotentMonoid
+    name: Use 'stimesIdempotentMonoid' from Relude
+    rhs: stimesIdempotentMonoid
+- warn:
+    lhs: Data.Semigroup.stimesMonoid
+    name: Use 'stimesMonoid' from Relude
+    rhs: stimesMonoid
+- warn:
+    lhs: Data.ByteString.ByteString
+    name: Use 'ByteString' from Relude
+    rhs: ByteString
+- warn:
+    lhs: Data.String.IsString
+    name: Use 'IsString' from Relude
+    rhs: IsString
+- warn:
+    lhs: Data.String.fromString
+    name: Use 'fromString' from Relude
+    rhs: fromString
+- warn:
+    lhs: Data.Text.Text
+    name: Use 'Text' from Relude
+    rhs: Text
+- warn:
+    lhs: Data.Text.lines
+    name: Use 'lines' from Relude
+    rhs: lines
+- warn:
+    lhs: Data.Text.unlines
+    name: Use 'unlines' from Relude
+    rhs: unlines
+- warn:
+    lhs: Data.Text.words
+    name: Use 'words' from Relude
+    rhs: words
+- warn:
+    lhs: Data.Text.unwords
+    name: Use 'unwords' from Relude
+    rhs: unwords
+- warn:
+    lhs: Data.Text.Encoding.decodeUtf8'
+    name: Use 'decodeUtf8'' from Relude
+    rhs: decodeUtf8'
+- warn:
+    lhs: Data.Text.Encoding.decodeUtf8With
+    name: Use 'decodeUtf8With' from Relude
+    rhs: decodeUtf8With
+- warn:
+    lhs: Data.Text.Encoding.Error.OnDecodeError
+    name: Use 'OnDecodeError' from Relude
+    rhs: OnDecodeError
+- warn:
+    lhs: Data.Text.Encoding.Error.OnError
+    name: Use 'OnError' from Relude
+    rhs: OnError
+- warn:
+    lhs: Data.Text.Encoding.Error.UnicodeException
+    name: Use 'UnicodeException' from Relude
+    rhs: UnicodeException
+- warn:
+    lhs: Data.Text.Encoding.Error.lenientDecode
+    name: Use 'lenientDecode' from Relude
+    rhs: lenientDecode
+- warn:
+    lhs: Data.Text.Encoding.Error.strictDecode
+    name: Use 'strictDecode' from Relude
+    rhs: strictDecode
+- warn:
+    lhs: Text.Read.Read
+    name: Use 'Read' from Relude
+    rhs: Read
+- warn:
+    lhs: Text.Read.readMaybe
+    name: Use 'readMaybe' from Relude
+    rhs: readMaybe
+- warn:
+    lhs: (liftIO (newEmptyMVar ))
+    note: If you import 'newEmptyMVar' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.newEmptyMVar
+- warn:
+    lhs: (liftIO (newMVar x))
+    note: If you import 'newMVar' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.newMVar
+- warn:
+    lhs: (liftIO (putMVar x y))
+    note: If you import 'putMVar' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.putMVar
+- warn:
+    lhs: (liftIO (readMVar x))
+    note: If you import 'readMVar' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.readMVar
+- warn:
+    lhs: (liftIO (swapMVar x y))
+    note: If you import 'swapMVar' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.swapMVar
+- warn:
+    lhs: (liftIO (takeMVar x))
+    note: If you import 'takeMVar' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.takeMVar
+- warn:
+    lhs: (liftIO (tryPutMVar x y))
+    note: If you import 'tryPutMVar' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.tryPutMVar
+- warn:
+    lhs: (liftIO (tryReadMVar x))
+    note: If you import 'tryReadMVar' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.tryReadMVar
+- warn:
+    lhs: (liftIO (tryTakeMVar x))
+    note: If you import 'tryTakeMVar' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.tryTakeMVar
+- warn:
+    lhs: (liftIO (atomically x))
+    note: If you import 'atomically' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.atomically
+- warn:
+    lhs: (liftIO (newTVarIO x))
+    note: If you import 'newTVarIO' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.newTVarIO
+- warn:
+    lhs: (liftIO (readTVarIO x))
+    note: If you import 'readTVarIO' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.readTVarIO
+- warn:
+    lhs: (liftIO (exitWith x))
+    note: If you import 'exitWith' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.exitWith
+- warn:
+    lhs: (liftIO (exitFailure ))
+    note: If you import 'exitFailure' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.exitFailure
+- warn:
+    lhs: (liftIO (exitSuccess ))
+    note: If you import 'exitSuccess' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.exitSuccess
+- warn:
+    lhs: (liftIO (die x))
+    note: If you import 'die' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.die
+- warn:
+    lhs: (liftIO (appendFile x y))
+    note: If you import 'appendFile' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.appendFile
+- warn:
+    lhs: (liftIO (getLine ))
+    note: If you import 'getLine' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.getLine
+- warn:
+    lhs: (liftIO (openFile x y))
+    note: If you import 'openFile' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.openFile
+- warn:
+    lhs: (liftIO (readFile x))
+    note: If you import 'readFile' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.readFile
+- warn:
+    lhs: (liftIO (writeFile x y))
+    note: If you import 'writeFile' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.writeFile
+- warn:
+    lhs: (liftIO (newIORef x))
+    note: If you import 'newIORef' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.newIORef
+- warn:
+    lhs: (liftIO (readIORef x))
+    note: If you import 'readIORef' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.readIORef
+- warn:
+    lhs: (liftIO (writeIORef x y))
+    note: If you import 'writeIORef' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.writeIORef
+- warn:
+    lhs: (liftIO (modifyIORef x y))
+    note: If you import 'modifyIORef' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.modifyIORef
+- warn:
+    lhs: (liftIO (modifyIORef' x y))
+    note: If you import 'modifyIORef'' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.modifyIORef'
+- warn:
+    lhs: (liftIO (atomicModifyIORef x y))
+    note: If you import 'atomicModifyIORef' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.atomicModifyIORef
+- warn:
+    lhs: (liftIO (atomicModifyIORef' x y))
+    note: If you import 'atomicModifyIORef'' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.atomicModifyIORef'
+- warn:
+    lhs: (liftIO (atomicWriteIORef x y))
+    note: If you import 'atomicWriteIORef' from Relude, it's already lifted
+    name: ! '''liftIO'' is not needed'
+    rhs: Relude.atomicWriteIORef

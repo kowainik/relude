@@ -12,7 +12,6 @@ This module contains safe functions to work with list type in terms of 'NonEmpty
 
 module Relude.List.NonEmpty
        ( viaNonEmpty
-       , uncons
        , whenNotNull
        , whenNotNullM
        ) where
@@ -42,20 +41,6 @@ Nothing
 viaNonEmpty :: (NonEmpty a -> b) -> [a] -> Maybe b
 viaNonEmpty f = fmap f . nonEmpty
 {-# INLINE viaNonEmpty #-}
-
-{- | Destructuring list into its head and tail if possible. This function is total.
-
->>> uncons []
-Nothing
->>> uncons [1..5]
-Just (1,[2,3,4,5])
->>> uncons (5 : [1..5]) >>= \(f, l) -> pure $ f == length l
-Just True
-
--}
-uncons :: [a] -> Maybe (a, [a])
-uncons []     = Nothing
-uncons (x:xs) = Just (x, xs)
 
 {- | Performs given action over 'NonEmpty' list if given list is non empty.
 

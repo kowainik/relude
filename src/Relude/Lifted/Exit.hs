@@ -19,12 +19,9 @@ module Relude.Lifted.Exit
 
 import Control.Monad.Trans (MonadIO, liftIO)
 import Data.String (String)
-import Prelude ((>>))
 import System.Exit (ExitCode)
-import System.IO (stderr)
 
 import qualified System.Exit as XIO
-import qualified System.IO (hPutStrLn)
 
 -- | Lifted version of 'System.Exit.exitWith'.
 exitWith :: MonadIO m => ExitCode -> m a
@@ -42,8 +39,6 @@ exitSuccess = liftIO XIO.exitSuccess
 {-# INLINE exitSuccess #-}
 
 -- | Lifted version of 'System.Exit.die'.
--- 'XIO.die' is available since base-4.8, but it's more convenient to
--- redefine it instead of using CPP.
 die :: MonadIO m => String -> m ()
-die err = liftIO (System.IO.hPutStrLn stderr err) >> exitFailure
+die err = liftIO (XIO.die err)
 {-# INLINE die #-}

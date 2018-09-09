@@ -20,6 +20,10 @@
 * [#64](https://github.com/kowainik/relude/issues/64):
   Improve performance of functions from `Foldable1`.
   Add `foldl1'` function.
+* Reexport `uncons` from `base`.
+* Rewrite `die` implementation to use `die` from `base`.
+* [#19](https://github.com/kowainik/relude/issues/19):
+  Rewrite `.hlint.yaml` to Dhall.
 
 0.2.0
 =====
