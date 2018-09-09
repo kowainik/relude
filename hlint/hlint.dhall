@@ -62,8 +62,10 @@ in [ rule.Arguments { arguments =
    , hintNote "fmap or (mapM f s)" "anyM f s" "Applying this hint would mean that some actions that were being executed previously would no longer be executed."
    , hintNote "or <$> mapM f s" "anyM f s" "Applying this hint would mean that some actions that were being executed previously would no longer be executed."
 
-   -- Functor
+   -- Function
    , warnSimple "map fst &&& map snd" "unzip"
+
+   -- Functor
    , hintNote "fmap (fmap f) x" "f <<$>> x" "Use '(<<$>>)'"
    , hintNote "(\\f -> f x) <$> ff"  "ff ?? x" "Use flap operator"
    , hintNote "fmap (\\f -> f x) ff" "ff ?? x" "Use flap operator"
@@ -270,6 +272,16 @@ in [ rule.Arguments { arguments =
    , warnNote "sortOn (Down . fst)" "sortWith (Down . fst)" "'sortWith' will be faster here because it doesn't do caching"
    , warnNote "sortOn (Down . snd)" "sortWith (Down . snd)" "'sortWith' will be faster here because it doesn't do caching"
 
+   -- Print
+   , warnSimple "Data.Text.IO.putStr" "putText"
+   , warnSimple "Data.Text.IO.putStrLn" "putTextLn"
+   , warnSimple "Data.Text.Lazy.IO.putStr" "putLText"
+   , warnSimple "Data.Text.Lazy.IO.putStrLn" "putLTextLn"
+   , warnSimple "Data.ByteString.Char8.putStr" "putBS"
+   , warnSimple "Data.ByteString.Char8.putStrLn" "putBSLn"
+   , warnSimple "Data.ByteString.Lazy.Char8.putStr" "putLBS"
+   , warnSimple "Data.ByteString.Lazy.Char8.putStrLn" "putLBSLn"
+
    -- String
    , warnSimple "Data.Text.Lazy.Text" "LText"
    , warnSimple "Data.ByteString.Lazy.ByteString" "LByteString"
@@ -395,11 +407,13 @@ in [ rule.Arguments { arguments =
    , warnReexport "prettyCallStack"     "GHC.Stack"
    , warnReexport "prettySrcLoc"        "GHC.Stack"
    , warnReexport "withFrozenCallStack" "GHC.Stack"
+
    -- Bool
    , warnReexport "guard" "Control.Monad"
    , warnReexport "unless" "Control.Monad"
    , warnReexport "when" "Control.Monad"
    , warnReexport "bool" "Data.Bool"
+
    -- Container
    , warnReexport "Hashable"     "Data.Hashable"
    , warnReexport "hashWithSalt" "Data.Hashable"
@@ -415,6 +429,7 @@ in [ rule.Arguments { arguments =
    , warnReexport "IsList"    "GHC.Exts"
    , warnReexport "fromList"  "GHC.Exts"
    , warnReexport "fromListN" "GHC.Exts"
+
    -- Debug
    , warnReexport "trace"       "Debug.Trace"
    , warnReexport "traceShow"   "Debug.Trace"
@@ -422,18 +437,21 @@ in [ rule.Arguments { arguments =
    , warnReexport "traceShowM"  "Debug.Trace"
    , warnReexport "traceM"      "Debug.Trace"
    , warnReexport "traceId"     "Debug.Trace"
+
    -- Deepseq
    , warnReexport "NFData"  "Control.DeepSeq"
    , warnReexport "rnf"     "Control.DeepSeq"
    , warnReexport "deepseq" "Control.DeepSeq"
    , warnReexport "force"   "Control.DeepSeq"
    , warnReexportOp "$!!"   "Control.DeepSeq"
+
    -- Exception
    , warnReexport "Exception"        "Control.Exception"
    , warnReexport "SomeException"    "Control.Exception"
    , warnReexport "toException"      "Control.Exception"
    , warnReexport "fromException"    "Control.Exception"
    , warnReexport "displayException" "Control.Exception"
+
    -- Foldable
    , warnReexport "asum"       "Data.Foldable"
    , warnReexport "find"       "Data.Foldable"
@@ -449,13 +467,15 @@ in [ rule.Arguments { arguments =
    , warnReexport "forM"      "Data.Traversable"
    , warnReexport "mapAccumL" "Data.Traversable"
    , warnReexport "mapAccumR" "Data.Traversable"
+
    -- Function
+   , warnReexportOp "&&&" "Control.Arrow"
    , warnReexportOp ">>>" "Control.Category"
    , warnReexportOp "<<<" "Control.Category"
    , warnReexport "fix" "Data.Function"
    , warnReexport "on"  "Data.Function"
+
    -- Functor
-   , warnReexportOp "&&&" "Control.Arrow"
    , warnReexport "Bifunctor" "Data.Bifunctor"
    , warnReexport "bimap"     "Data.Bifunctor"
    , warnReexport "first"     "Data.Bifunctor"
@@ -467,6 +487,7 @@ in [ rule.Arguments { arguments =
    , warnReexport "getCompose" "Data.Functor.Compose"
    , warnReexport "Identity"    "Data.Functor.Identity"
    , warnReexport "runIdentity" "Data.Functor.Identity"
+
    -- Lifted Concurrent
    , warnReexport "MVar"         "Control.Concurrent.MVar"
    , warnReexport "newEmptyMVar" "Control.Concurrent.MVar"
@@ -489,7 +510,6 @@ in [ rule.Arguments { arguments =
    , warnReexport "writeTVar" "Control.Concurrent.STM.TVar"
    -- Lifted File
    , warnReexport "appendFile" "Data.Text.IO"
-   , warnReexport "getLine"    "Data.Text.IO"
    , warnReexport "readFile"   "Data.Text.IO"
    , warnReexport "writeFile"  "Data.Text.IO"
    , warnReexport "openFile" "System.IO"
@@ -503,6 +523,9 @@ in [ rule.Arguments { arguments =
    , warnReexport "newIORef" "Data.IORef"
    , warnReexport "readIORef" "Data.IORef"
    , warnReexport "writeIORef" "Data.IORef"
+   -- Lifted Terminal
+   , warnReexport "getLine"    "Data.Text.IO"
+
    -- List
    , warnReexport "genericDrop"      "Data.List"
    , warnReexport "genericLength"    "Data.List"
@@ -531,6 +554,7 @@ in [ rule.Arguments { arguments =
    , warnReexport "last"     "Data.NonEmpty"
    , warnReexport "tail"     "Data.NonEmpty"
    , warnReexport "sortWith" "GHC.Exts"
+
    -- Monad
    , warnReexport "ExceptT"    "Control.Monad.Except"
    , warnReexport "runExceptT" "Control.Monad.Except"
@@ -599,6 +623,7 @@ in [ rule.Arguments { arguments =
    , warnReexport "lefts"            "Data.Either"
    , warnReexport "partitionEithers" "Data.Either"
    , warnReexport "rights"           "Data.Either"
+
    -- Monoid
    , warnReexport "All"        "Data.Monoid"
    , warnReexport "getAll"     "Data.Monoid"
@@ -630,6 +655,7 @@ in [ rule.Arguments { arguments =
    , warnReexport "stimesIdempotent"       "Data.Semigroup"
    , warnReexport "stimesIdempotentMonoid" "Data.Semigroup"
    , warnReexport "stimesMonoid"           "Data.Semigroup"
+
    -- String
    , warnReexport "ByteString" "Data.ByteString"
    , warnReexport "IsString"   "Data.String"
@@ -673,7 +699,6 @@ in [ rule.Arguments { arguments =
    , warnLifted "die" "x"
    -- File
    , warnLifted "appendFile" "x y"
-   , warnLifted "getLine" ""
    , warnLifted "openFile" "x y"
    , warnLifted "readFile" "x"
    , warnLifted "writeFile" "x y"
@@ -686,4 +711,17 @@ in [ rule.Arguments { arguments =
    , warnLifted "atomicModifyIORef" "x y"
    , warnLifted "atomicModifyIORef'" "x y"
    , warnLifted "atomicWriteIORef" "x y"
+   -- Terminal
+   , warnLifted "getLine" ""
+   , warnLifted "print" "x"
+   , warnLifted "putStr" "x"
+   , warnLifted "putStrLn" "x"
+   , warnLifted "putText" "x"
+   , warnLifted "putTextLn" "x"
+   , warnLifted "putLText" "x"
+   , warnLifted "putLTextLn" "x"
+   , warnLifted "putBS" "x"
+   , warnLifted "putBSLn" "x"
+   , warnLifted "putLBS" "x"
+   , warnLifted "putLBSLn" "x"
    ]

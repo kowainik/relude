@@ -356,6 +356,12 @@ To generate `hlint` file:
 $ dhall-to-yaml --omitNull <<< './hlint/hlint.dhall' > .hlint.yaml
 ```
 
+Check that you have generated valid `.hlint.yaml` file without parse errors:
+
+```shell
+$ hlint test/Spec.hs
+```
+
 ### Acknowledgement
 
 Icons made by [Freepik](http://www.freepik.com) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/).

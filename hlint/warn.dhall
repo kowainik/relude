@@ -1,6 +1,6 @@
 let Rule = ./Rule.dhall
 in let rule = constructors Rule
-in let simple
+in let warnSimple
     : Text -> Text -> Rule
     = \(lhsTxt : Text) -> \(rhsTxt : Text) ->
         rule.Warn {warn =
@@ -11,7 +11,7 @@ in let simple
             }
         }
 
-in let noteWarn
+in let warnNote
     : Text -> Text -> Text -> Rule
     = \(lhsTxt : Text) -> \(rhsTxt : Text) -> \(n : Text) ->
         rule.Warn {warn =
@@ -22,39 +22,39 @@ in let noteWarn
             }
         }
 
-in let reexportWarn
+in let warnReexport
     : Text -> Text -> Rule
     = \(f : Text) -> \(mod : Text) ->
         rule.Warn {warn =
             { name = ["Use '${f}' from Relude"] : Optional Text
             , lhs = "${mod}.${f}"
             , rhs = "${f}"
-            , note = [] : Optional Text
+            , note = ["'${f}' is already exported from Relude"] : Optional Text
             }
         }
 
-in let reexportWarnOp : Text -> Text -> Rule
+in let warnReexportOp : Text -> Text -> Rule
     = \(f : Text) -> \(mod : Text) ->
         rule.Warn {warn =
             { name = ["Use '${f}' from Relude"] : Optional Text
             , lhs = "(${mod}.${f})"
             , rhs = "(${f})"
-            , note = [] : Optional Text
+            , note = ["Operator '(${f})' is already exported from Relude"] : Optional Text
             }
         }
 
-in let liftWarn
+in let warnLifted
     : Text -> Text -> Rule
     =  \(f : Text) -> \(args : Text) ->
         rule.Warn { warn =
             { name = ["'liftIO' is not needed"] : Optional Text
             , lhs = "(liftIO (${f} ${args}))"
-            , rhs = "Relude.${f}"
+            , rhs = "${f}"
             , note = ["If you import '${f}' from Relude, it's already lifted"] : Optional Text
             }
         }
 
-in let noteHint
+in let hintNote
     : Text -> Text -> Text -> Rule
     = \(lhsTxt : Text) -> \(rhsTxt : Text) -> \(n : Text) ->
         rule.Hint { hint =
@@ -64,10 +64,10 @@ in let noteHint
             }
         }
 
-in { warnSimple     = simple
-   , warnNote       = noteWarn
-   , warnReexport   = reexportWarn
-   , warnReexportOp = reexportWarnOp
-   , warnLifted     = liftWarn
-   , hintNote       = noteHint
+in { warnSimple     = warnSimple
+   , warnNote       = warnNote
+   , warnReexport   = warnReexport
+   , warnReexportOp = warnReexportOp
+   , warnLifted     = warnLifted
+   , hintNote       = hintNote
    }
