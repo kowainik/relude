@@ -251,6 +251,14 @@ in [ rule.Arguments { arguments =
    , warnSimple "fst (usingState s st)" "evaluatingState s st"
    , warnSimple "snd <$> usingStateT s st" "executingStateT s st"
    , warnSimple "snd (usingState s st)" "executingState s st"
+   , warnSimple "MaybeT (pure m)"   "hoistMaybe m"
+   , warnSimple "MaybeT (return m)" "hoistMaybe m"
+   , warnSimple "MaybeT . pure"     "hoistMaybe"
+   , warnSimple "MaybeT . return"   "hoistMaybe"
+   , warnSimple "ExceptT (pure m)"   "hoistEither m"
+   , warnSimple "ExceptT (return m)" "hoistEither m"
+   , warnSimple "ExceptT . pure"     "hoistEither"
+   , warnSimple "ExceptT . return"   "hoistEither"
 
    -- Monoid
    , warnSimple "fromMaybe mempty" "maybeToMonoid"

@@ -22,13 +22,17 @@ module Relude.Monad.Trans
        , executingStateT
        , usingState
        , usingStateT
+         -- * Lifted to Transformers
+       , hoistMaybe
+       , hoistEither
        ) where
 
 import Prelude (flip, fst, snd)
 
+import Relude.Applicative (Applicative (pure))
 import Relude.Functor (Functor, (<$>))
-import Relude.Monad.Reexport (Reader, ReaderT, State, StateT, runReader, runReaderT, runState,
-                              runStateT)
+import Relude.Monad.Reexport (Either, ExceptT (..), Maybe, MaybeT (..), Reader, ReaderT, State,
+                              StateT, runReader, runReaderT, runState, runStateT)
 
 -- | Shorter and more readable alias for @flip runReaderT@.
 usingReaderT :: r -> ReaderT r m a -> m a
@@ -73,3 +77,14 @@ executingStateT s st = snd <$> usingStateT s st
 executingState :: s -> State s a -> s
 executingState s st = snd (usingState s st)
 {-# INLINE executingState #-}
+
+
+-- | Lift a 'Maybe' to the 'MaybeT' monad
+hoistMaybe  :: Applicative m => Maybe a -> MaybeT m a
+hoistMaybe m = MaybeT (pure m)
+{-# INLINE hoistMaybe #-}
+
+-- | Lift a 'Either' to the 'ExceptT' monad
+hoistEither :: Applicative m => Either e a -> ExceptT e m a
+hoistEither e = ExceptT (pure e)
+{-# INLINE hoistEither #-}
