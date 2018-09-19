@@ -33,14 +33,21 @@ module Relude.Nub
        , ordNub
        , sortNub
        , unstableNub
+       , foldNub
+       , hashFoldNub
+       , slowFoldNub
+       , foldNub'
+       , hashFoldNub'
+       , slowFoldNub'
        ) where
 
 import Data.Eq (Eq)
+import Data.Foldable (Foldable, foldr, foldl', elem)
 import Data.Hashable (Hashable)
-import Data.HashSet as HashSet
 import Data.Ord (Ord)
-import Prelude ((.))
+import Prelude ((.), flip)
 
+import qualified Data.HashSet as HashSet
 import qualified Data.Set as Set
 
 {- | Like 'Prelude.nub' but runs in @O(n * log n)@ time and requires 'Ord'.
@@ -90,3 +97,27 @@ sortNub = Set.toList . Set.fromList
 -}
 unstableNub :: (Eq a, Hashable a) => [a] -> [a]
 unstableNub = HashSet.toList . HashSet.fromList
+
+{- | A generalized nub for any 'Foldable'. Not necessarily order preserving. -}
+foldNub :: (Foldable t, Ord a) => t a -> Set.Set a
+foldNub = foldr Set.insert Set.empty
+
+{- | A strict variant of 'foldNub' using 'foldl'' instead of 'foldr'-}
+foldNub' :: (Foldable t, Ord a) => t a -> Set.Set a
+foldNub' = foldl' (flip Set.insert) Set.empty
+
+{- | A generalized nub for any 'Foldable' containing 'Hashable' -}
+hashFoldNub :: (Foldable t, Eq a, Hashable a) => t a -> HashSet.HashSet a
+hashFoldNub = foldr HashSet.insert HashSet.empty
+
+{- | A strict variant of 'hashFoldNub' using 'foldl'' instead of 'foldr'-}
+hashFoldNub' :: (Foldable t, Eq a, Hashable a) => t a -> HashSet.HashSet a
+hashFoldNub' = foldl' (flip HashSet.insert) HashSet.empty
+
+{- | A slow @O(n^2)@ nub, with minimal constraints -}
+slowFoldNub :: (Foldable t, Eq a) => t a -> [a]
+slowFoldNub = foldr (\a xs->  if a `elem` xs then xs else a:xs) []
+
+{- | A strict variant of 'slowFoldNub' using 'foldl'' instead of 'foldr' -}
+slowFoldNub' :: (Foldable t, Eq a) => t a -> [a]
+slowFoldNub' = foldl' (\xs a->  if a `elem` xs then xs else a:xs) []
