@@ -20,6 +20,7 @@ Fixes and additions to 'Foldable'.
 module Relude.Foldable.Fold
        ( flipfoldl'
        , foldMapA
+       , asumMap
        , foldMapM
        , sum
        , product
@@ -39,7 +40,7 @@ module Relude.Foldable.Fold
 
 import GHC.TypeLits (ErrorMessage (..), TypeError)
 
-import Relude.Applicative (Applicative (..), pure)
+import Relude.Applicative (Alternative, Applicative (..), pure)
 import Relude.Base (Constraint, Eq, IO, Num (..), Type, ($!))
 import Relude.Bool (Bool (..))
 import Relude.Container.Reexport (HashSet, Set)
@@ -47,7 +48,7 @@ import Relude.Foldable.Reexport (Foldable (..))
 import Relude.Function (flip, (.))
 import Relude.Functor ((<$>))
 import Relude.Monad.Reexport (Monad (..))
-import Relude.Monoid (Monoid (..))
+import Relude.Monoid (Alt(..), Monoid (..))
 
 import qualified Data.Foldable as F
 
@@ -75,6 +76,13 @@ foldMapA f = foldr step (pure mempty)
   where
     step a mb = mappend <$> f a <*> mb
 {-# INLINE foldMapA #-}
+
+{- | Alternative version of @asum@
+>>> asumMap (\x -> if x > 2 then Just x else Nothing) [1..3]
+Just 3
+-}
+asumMap :: (Foldable f, Alternative m) => (a -> m b) -> f a -> m b
+asumMap f = getAlt . foldMap (\a -> Alt (f a))
 
 {- | Polymorphic version of @concatMapM@ function.
 
