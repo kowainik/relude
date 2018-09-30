@@ -35,6 +35,8 @@
   Add `under2` and `underF2` functions to `Relude.Extra.Newtype`.
 * [#60](https://github.com/kowainik/relude/issues/60):
   Add `hoistMaybe` and `hoistEither` functions.
+* [#81](https://github.com/kowainik/relude/issues/81):
+  Add `asumMap` to `Foldable` functions.
 
 0.2.0
 =====
