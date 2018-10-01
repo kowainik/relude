@@ -41,7 +41,6 @@
 * [#60](https://github.com/kowainik/relude/issues/60):
   Add `hoistMaybe` and `hoistEither` functions.
 
-
 0.2.0
 =====
 
