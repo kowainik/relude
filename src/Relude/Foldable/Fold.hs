@@ -82,7 +82,8 @@ foldMapA f = foldr step (pure mempty)
 Just 3
 -}
 asumMap :: (Foldable f, Alternative m) => (a -> m b) -> f a -> m b
-asumMap f = getAlt . foldMap (\a -> Alt (f a))
+asumMap f = getAlt . foldMap (Alt . f)
+{-# INLINE asumMap #-}
 
 {- | Polymorphic version of @concatMapM@ function.
 
