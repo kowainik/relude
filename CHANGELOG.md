@@ -1,5 +1,10 @@
 # Change log
 
+0.3.1
+=====
+* [#81](https://github.com/kowainik/relude/issues/81):
+  Add `asumMap` to `Foldable` functions.
+
 0.3.0
 =====
 
