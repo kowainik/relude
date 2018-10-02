@@ -77,8 +77,8 @@ in [ rule.Arguments { arguments =
    , hintNote "or <$> mapM f s" "anyM f s" "Applying this hint would mean that some actions that were being executed previously would no longer be executed."
 
    , warnSimple "getAlt . foldMap (Alt . f)" "asumMap"
-   , hintNote "foldr (\x acc -> f x <|> acc) empty" "Use 'asumMap f'"
-   , hintNote "asum (map f xs)" "Use 'asumMap f xs'"
+   , hintNote "foldr (\\x acc -> f x <|> acc) empty" "asumMap f" "Use 'asumMap'"
+   , hintNote "asum (map f xs)" "asumMap f xs" "Use 'asumMap'"
 
    -- Function
    , warnSimple "map fst &&& map snd" "unzip"

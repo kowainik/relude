@@ -128,6 +128,17 @@
       previously would no longer be executed.
     rhs: anyM f s
 - warn:
+    lhs: getAlt . foldMap (Alt . f)
+    rhs: asumMap
+- hint:
+    lhs: (foldr (\x acc -> f x <|> acc) empty)
+    note: Use 'asumMap'
+    rhs: asumMap f
+- hint:
+    lhs: (asum (map f xs))
+    note: Use 'asumMap'
+    rhs: asumMap f xs
+- warn:
     lhs: map fst &&& map snd
     rhs: unzip
 - hint:
