@@ -43,7 +43,7 @@ import Prelude ((.))
 
 import qualified Data.Set as Set
 
-{- | Like 'Prelude.nub' but runs in @O(n * log n)@ time and requires 'Ord'.
+{- | Like 'Prelude.nub' but runs in \( O(n \log n) \)  time and requires 'Ord'.
 
 >>> ordNub [3, 3, 3, 2, 2, -1, 1]
 [3,2,-1,1]
@@ -58,7 +58,7 @@ ordNub = go Set.empty
       then go s xs
       else x : go (Set.insert x s) xs
 
-{- | Like 'Prelude.nub' but runs in @O(n * log_16(n))@ time and requires 'Hashable'.
+{- | Like 'Prelude.nub' but runs in \( O(n \log_{16} n) \)  time and requires 'Hashable'.
 
 >>> hashNub [3, 3, 3, 2, 2, -1, 1]
 [3,2,-1,1]
