@@ -16,6 +16,7 @@ module Relude.Extra.Type
        ) where
 
 import Relude
+
 import Type.Reflection (Typeable, typeRep)
 
 {- | Gets a string representation of a type.
