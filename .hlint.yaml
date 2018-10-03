@@ -128,7 +128,7 @@
       previously would no longer be executed.
     rhs: anyM f s
 - warn:
-    lhs: getAlt (foldMap (Alt . f)) xs
+    lhs: getAlt (foldMap (Alt . f) xs)
     rhs: asumMap xs
 - warn:
     lhs: getAlt . foldMap (Alt . f)
