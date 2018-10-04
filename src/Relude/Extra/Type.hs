@@ -1,5 +1,5 @@
 {-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE ExplicitForAll      #-}
+{-# LANGUAGE CPP                 #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications    #-}
 
@@ -17,7 +17,11 @@ module Relude.Extra.Type
 
 import Relude
 
+#if ( __GLASGOW_HASKELL__ >= 822 )
 import Type.Reflection (Typeable, typeRep)
+#else
+import Data.Typeable (Typeable, typeRep)
+#endif
 
 {- | Gets a string representation of a type.
 
@@ -29,6 +33,13 @@ Note: This must be used with -XTypeApplications
 "Int"
 >>> typeName @String
 "[Char]"
+>>> typeName @[Maybe Int]
+"[Maybe Int]"
 -}
 typeName :: forall a. Typeable a => Text
+#if ( __GLASGOW_HASKELL__ >= 822 )
 typeName = show (typeRep @a)
+#else
+typeName = show (typeRep (Proxy @a))
+#endif
+{-# INLINE typeName #-}
