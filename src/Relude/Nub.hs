@@ -43,7 +43,7 @@ import Prelude ((.))
 
 import qualified Data.Set as Set
 
-{- | Like 'Prelude.nub' but runs in @O(n * log n)@ time and requires 'Ord'.
+{- | Like 'Prelude.nub' but runs in \( O(n \log n) \)  time and requires 'Ord'.
 
 >>> ordNub [3, 3, 3, 2, 2, -1, 1]
 [3,2,-1,1]
@@ -58,7 +58,7 @@ ordNub = go Set.empty
       then go s xs
       else x : go (Set.insert x s) xs
 
-{- | Like 'Prelude.nub' but runs in @O(n * log_16(n))@ time and requires 'Hashable'.
+{- | Like 'Prelude.nub' but runs in \( O(n \log_{16} n) \)  time and requires 'Hashable'.
 
 >>> hashNub [3, 3, 3, 2, 2, -1, 1]
 [3,2,-1,1]
@@ -73,7 +73,7 @@ hashNub = go HashSet.empty
       then go s xs
       else x : go (HashSet.insert x s) xs
 
-{- | Like 'ordNub' but also sorts a list.
+{- | Like 'ordNub' runs in \( O(n \log n) \)  but also sorts a list.
 
 >>> sortNub [3, 3, 3, 2, 2, -1, 1]
 [-1,1,2,3]
@@ -82,7 +82,7 @@ hashNub = go HashSet.empty
 sortNub :: (Ord a) => [a] -> [a]
 sortNub = Set.toList . Set.fromList
 
-{- | Like 'hashNub' but has better performance and also doesn't save the order.
+{- | Like 'hashNub' runs in \( O(n \log_{16} n) \) but has better performance; it doesn't save the order.
 
 >>> unstableNub [3, 3, 3, 2, 2, -1, 1]
 [1,2,3,-1]
