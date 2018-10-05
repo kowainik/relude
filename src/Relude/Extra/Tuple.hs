@@ -10,9 +10,10 @@ module Relude.Extra.Tuple
        ( dupe
        , mapToFst
        , mapToSnd
+       , mapBoth
        ) where
 
-import Relude
+import Relude -- necessary import for doctests
 
 
 {- | Creates a tuple by pairing something with itself.
@@ -37,6 +38,7 @@ A dual to 'mapToSnd'
 -}
 mapToFst :: (a -> b) -> a -> (b, a)
 mapToFst f a = (f a, a)
+{-# INLINE mapToFst #-}
 
 {- | Apply a function, with the result in the second slot,
 and the value in the other.
@@ -48,6 +50,7 @@ A dual to 'mapToFst'.
 -}
 mapToSnd :: (a -> b) -> a -> (a, b)
 mapToSnd f a = (a, f a)
+{-# INLINE mapToSnd #-}
 
 {- | Maps a function over both elements of a tuple.
 
@@ -56,3 +59,4 @@ mapToSnd f a = (a, f a)
 -}
 mapBoth :: (a -> b) -> (a, a) -> (b, b)
 mapBoth f (a1, a2) = (f a1, f a2)
+{-# INLINE mapBoth #-}
