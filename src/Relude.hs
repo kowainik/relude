@@ -87,6 +87,7 @@ every module in your package by modifying your "Prelude" file:
 * __"Relude.Extra.Map"__: typeclass for @Map@-like data structures.
 * __"Relude.Extra.Newtype"__: generic functions that automatically work for any
   @newtype@.
+* __"Relude.Extra.Type"__: functions for inspecting and working with types.
 * __"Relude.Unsafe"__: unsafe partial functions (produce 'error') for lists and
   'Maybe'.
 -}

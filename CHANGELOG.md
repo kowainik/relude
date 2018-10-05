@@ -4,6 +4,8 @@
 =====
 * [#81](https://github.com/kowainik/relude/issues/81):
   Add `asumMap` to `Foldable` functions.
+* [#89](https://github.com/kowainik/relude/issues/81):
+  Add `Relude.Extra.Type` module containing a `typeName` function.
 
 0.3.0
 =====
