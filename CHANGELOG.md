@@ -6,6 +6,9 @@
   Add `asumMap` to `Foldable` functions.
 * [#89](https://github.com/kowainik/relude/issues/81):
   Add `Relude.Extra.Type` module containing a `typeName` function.
+* [#92](https://github.com/kowainik/relude/issues/92)
+  Add `Relude.Extra.Tuple` module, containing
+  `dupe`, `mapToFst`, `mapToSnd`, and `mapBoth` functions.
 
 0.3.0
 =====
