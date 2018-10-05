@@ -561,6 +561,198 @@
     lhs: (m >>= either (const (pass)     ) f)
     rhs: whenRightM_ m f
 - warn:
+    lhs: (whenLeft ())
+    rhs: whenLeft
+- warn:
+    lhs: (case m of Left x -> f x; Right _ -> pure ()  )
+    rhs: whenLeft m f
+- warn:
+    lhs: (case m of Left x -> f x; Right _ -> return ())
+    rhs: whenLeft m f
+- warn:
+    lhs: (case m of Left x -> f x; Right _ -> pass     )
+    rhs: whenLeft m f
+- warn:
+    lhs: (case m of Right _ -> pure ()  ; Left x -> f x)
+    rhs: whenLeft m f
+- warn:
+    lhs: (case m of Right _ -> return (); Left x -> f x)
+    rhs: whenLeft m f
+- warn:
+    lhs: (case m of Right _ -> pass     ; Left x -> f x)
+    rhs: whenLeft m f
+- warn:
+    lhs: (either f (\_ -> pure ()    ) m)
+    rhs: whenLeft m f
+- warn:
+    lhs: (either f (\_ -> return ()  ) m)
+    rhs: whenLeft m f
+- warn:
+    lhs: (either f (\_ -> pass       ) m)
+    rhs: whenLeft m f
+- warn:
+    lhs: (either f (const (pure ()  )) m)
+    rhs: whenLeft m f
+- warn:
+    lhs: (either f (const (return ())) m)
+    rhs: whenLeft m f
+- warn:
+    lhs: (either f (const (pass     )) m)
+    rhs: whenLeft m f
+- warn:
+    lhs: (m >>= \a -> whenLeft a f)
+    rhs: whenLeftM m f
+- warn:
+    lhs: (m >>= \case Left x -> f x; Right _ -> pure ()  )
+    rhs: whenLeftM m f
+- warn:
+    lhs: (m >>= \case Left x -> f x; Right _ -> return ())
+    rhs: whenLeftM m f
+- warn:
+    lhs: (m >>= \case Left x -> f x; Right _ -> pass     )
+    rhs: whenLeftM m f
+- warn:
+    lhs: (m >>= \case Right _ -> pure ()  ; Left x -> f x)
+    rhs: whenLeftM m f
+- warn:
+    lhs: (m >>= \case Right _ -> return (); Left x -> f x)
+    rhs: whenLeftM m f
+- warn:
+    lhs: (m >>= \case Right _ -> pass     ; Left x -> f x)
+    rhs: whenLeftM m f
+- warn:
+    lhs: (either f (\_ -> pure ()    ) =<< m)
+    rhs: whenLeftM m f
+- warn:
+    lhs: (either f (\_ -> return ()  ) =<< m)
+    rhs: whenLeftM m f
+- warn:
+    lhs: (either f (\_ -> pass       ) =<< m)
+    rhs: whenLeftM m f
+- warn:
+    lhs: (either f (const (pure ()  )) =<< m)
+    rhs: whenLeftM m f
+- warn:
+    lhs: (either f (const (return ())) =<< m)
+    rhs: whenLeftM m f
+- warn:
+    lhs: (either f (const (pass     )) =<< m)
+    rhs: whenLeftM m f
+- warn:
+    lhs: (m >>= either f (\_ -> pure ())    )
+    rhs: whenLeftM m f
+- warn:
+    lhs: (m >>= either f (\_ -> return ())  )
+    rhs: whenLeftM m f
+- warn:
+    lhs: (m >>= either f (\_ -> pass)       )
+    rhs: whenLeftM m f
+- warn:
+    lhs: (m >>= either f (const (pure ())  ))
+    rhs: whenLeftM m f
+- warn:
+    lhs: (m >>= either f (const (return ())))
+    rhs: whenLeftM m f
+- warn:
+    lhs: (m >>= either f (const (pass)     ))
+    rhs: whenLeftM m f
+- warn:
+    lhs: (whenRight ())
+    rhs: whenRight
+- warn:
+    lhs: (case m of Right x -> f x; Left _ -> pure ()  )
+    rhs: whenRight m f
+- warn:
+    lhs: (case m of Right x -> f x; Left _ -> return ())
+    rhs: whenRight m f
+- warn:
+    lhs: (case m of Right x -> f x; Left _ -> pass     )
+    rhs: whenRight m f
+- warn:
+    lhs: (case m of Left _ -> pure ()  ; Right x -> f x)
+    rhs: whenRight m f
+- warn:
+    lhs: (case m of Left _ -> return (); Right x -> f x)
+    rhs: whenRight m f
+- warn:
+    lhs: (case m of Left _ -> pass     ; Right x -> f x)
+    rhs: whenRight m f
+- warn:
+    lhs: (either (\_ -> pure ()    ) f m)
+    rhs: whenRight m f
+- warn:
+    lhs: (either (\_ -> return ()  ) f m)
+    rhs: whenRight m f
+- warn:
+    lhs: (either (\_ -> pass       ) f m)
+    rhs: whenRight m f
+- warn:
+    lhs: (either (const (pure ()  )) f m)
+    rhs: whenRight m f
+- warn:
+    lhs: (either (const (return ())) f m)
+    rhs: whenRight m f
+- warn:
+    lhs: (either (const (pass     )) f m)
+    rhs: whenRight m f
+- warn:
+    lhs: (m >>= \a -> whenRight a f)
+    rhs: whenRightM m f
+- warn:
+    lhs: (m >>= \case Right x -> f x; Left _ -> pure ()  )
+    rhs: whenRightM m f
+- warn:
+    lhs: (m >>= \case Right x -> f x; Left _ -> return ())
+    rhs: whenRightM m f
+- warn:
+    lhs: (m >>= \case Right x -> f x; Left _ -> pass     )
+    rhs: whenRightM m f
+- warn:
+    lhs: (m >>= \case Left _ -> pure ()  ; Right x -> f x)
+    rhs: whenRightM m f
+- warn:
+    lhs: (m >>= \case Left _ -> return (); Right x -> f x)
+    rhs: whenRightM m f
+- warn:
+    lhs: (m >>= \case Left _ -> pass     ; Right x -> f x)
+    rhs: whenRightM m f
+- warn:
+    lhs: (either (\_ -> pure ()    ) f =<< m)
+    rhs: whenRightM m f
+- warn:
+    lhs: (either (\_ -> return ()  ) f =<< m)
+    rhs: whenRightM m f
+- warn:
+    lhs: (either (\_ -> pass       ) f =<< m)
+    rhs: whenRightM m f
+- warn:
+    lhs: (either (const (pure ()  )) f =<< m)
+    rhs: whenRightM m f
+- warn:
+    lhs: (either (const (return ())) f =<< m)
+    rhs: whenRightM m f
+- warn:
+    lhs: (either (const (pass     )) f =<< m)
+    rhs: whenRightM m f
+- warn:
+    lhs: (m >>= either (\_ -> pure ())     f)
+    rhs: whenRightM m f
+- warn:
+    lhs: (m >>= either (\_ -> return ())   f)
+    rhs: whenRightM m f
+- warn:
+    lhs: (m >>= either (\_ -> pass)        f)
+    rhs: whenRightM m f
+- warn:
+    lhs: (m >>= either (const (pure ())  ) f)
+    rhs: whenRightM m f
+- warn:
+    lhs: (m >>= either (const (return ())) f)
+    rhs: whenRightM m f
+- warn:
+    lhs: (m >>= either (const (pass)     ) f)
+    rhs: whenRightM m f
+- warn:
     lhs: (case m of [] -> return (); (x:xs) -> f (x :| xs))
     rhs: whenNotNull m f
 - warn:
