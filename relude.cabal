@@ -118,6 +118,7 @@ library
                            Relude.Extra.Group
                            Relude.Extra.Map
                            Relude.Extra.Newtype
+                           Relude.Extra.Tuple
                            Relude.Extra.Type
                            Relude.Unsafe
 
