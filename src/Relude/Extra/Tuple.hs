@@ -12,7 +12,7 @@ module Relude.Extra.Tuple
        , mapToSnd
        ) where
 
-import Relude -- necessary import for doctests
+import Relude
 
 
 {- | Creates a tuple by pairing something with itself.
@@ -48,3 +48,11 @@ A dual to 'mapToFst'.
 -}
 mapToSnd :: (a -> b) -> a -> (a, b)
 mapToSnd f a = (a, f a)
+
+{- | Maps a function over both elements of a tuple.
+
+>>> mapBoth ("Hello " <>) ("Alice", "Bob")
+("Hello Alice","Hello Bob")
+-}
+mapBoth :: (a -> b) -> (a, a) -> (b, b)
+mapBoth f (a1, a2) = (f a1, f a2)
