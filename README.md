@@ -61,6 +61,7 @@ This tutorial has several parts:
 3. [Reexports.](#reexports-)
 4. [What's new?](#whats-new-)
 6. [Migration guide.](#migration-guide-)
+7. [For developers.](#for-developers-)
 
 This is neither a tutorial on _Haskell_ nor tutorial on each function contained
 in `Relude`. For detailed documentation of every function together with examples
@@ -337,9 +338,9 @@ This section describes what you need to change to make your code compile with `r
    + Use `(putStr[Ln]|readFile|writeFile|appendFile)[Text|LText|BS|LBS]` functions.
 6. Run `hlint` using `.hlint.yaml` file from `relude` package to cleanup code and imports.
 
-### For Developers
+## For Developers [↑](#structure-of-this-tutorial)
 
-#### Generating .hlint.yaml
+### Generating .hlint.yaml
 
 Note, that we are using custom `hlint` setting which are `Relude` specific. To
 keep it up to date don't forget to reflect your changes in this file. We are
@@ -363,6 +364,6 @@ Check that you have generated valid `.hlint.yaml` file without parse errors:
 $ hlint test/Spec.hs
 ```
 
-### Acknowledgement
+## Acknowledgement
 
 Icons made by [Freepik](http://www.freepik.com) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/).
