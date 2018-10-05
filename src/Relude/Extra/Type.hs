@@ -33,7 +33,7 @@ Note: This must be used with -XTypeApplications
 "Int"
 >>> typeName @String
 "[Char]"
->>> typeName @Maybe Int
+>>> typeName @(Maybe Int)
 "Maybe Int"
 -}
 typeName :: forall a. Typeable a => Text
