@@ -22,6 +22,70 @@
     lhs: (return ())
     note: Use 'pass'
     rhs: pass
+- hint:
+    lhs: (:[])
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (:|[])
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.Sequence.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.Text.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.Text.Lazy.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.ByteString.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.ByteString.Lazy.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.Map.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.Map.Strict.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.HashMap.Strict.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.HashMap.Lazy.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.IntMap.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.IntMap.Strict.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.Set.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.HashSet.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.IntSet.singleton)
+    note: Use `one`
+    rhs: one
 - warn:
     lhs: Control.Exception.evaluate
     rhs: evaluateWHNF
