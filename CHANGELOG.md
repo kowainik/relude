@@ -1,6 +1,6 @@
 # Change log
 
-0.3.1
+0.4.0
 =====
 * [#81](https://github.com/kowainik/relude/issues/81):
   Add `asumMap` to `Foldable` functions.
@@ -9,6 +9,7 @@
 * [#92](https://github.com/kowainik/relude/issues/92)
   Add `Relude.Extra.Tuple` module, containing
   `dupe`, `mapToFst`, `mapToSnd`, and `mapBoth` functions.
+* Remove `openFile` and `hClose`.
 
 0.3.0
 =====

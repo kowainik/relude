@@ -13,8 +13,8 @@ module Relude.Extra.Tuple
        , mapBoth
        ) where
 
-import Relude -- necessary import for doctests
-
+-- $setup
+-- >>> import Relude
 
 {- | Creates a tuple by pairing something with itself.
 

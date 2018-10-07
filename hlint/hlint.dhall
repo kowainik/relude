@@ -554,11 +554,6 @@ in [ rule.Arguments { arguments =
    , warnReexport "readTVar" "Control.Concurrent.STM.TVar"
    , warnReexport "writeTVar" "Control.Concurrent.STM.TVar"
 
-   -- Lifted File
-   , warnReexport "openFile" "System.IO"
-   , warnReexport "hClose"   "System.IO"
-
-
    -- Lifted IORef
    , warnReexport "IORef" "Data.IORef"
    , warnReexport "atomicModifyIORef" "Data.IORef"
@@ -744,8 +739,6 @@ in [ rule.Arguments { arguments =
    , warnLifted "exitSuccess" ""
    , warnLifted "die" "x"
    -- File
-   , warnLifted "openFile" "x y"
-   , warnLifted "hClose" "x"
    , warnLifted "readFile" "x"
    , warnLifted "writeFile" "x y"
    , warnLifted "appendFile" "x y"
