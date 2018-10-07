@@ -12,11 +12,9 @@ module Relude.Lifted.File
        ( readFile
        , writeFile
        , appendFile
-       , openFile
-       , hClose
        ) where
 
-import Relude.Base (FilePath, Handle, IO, IOMode, String)
+import Relude.Base (FilePath, IO, String)
 import Relude.Function ((.))
 import Relude.Monad.Reexport (MonadIO (..))
 
@@ -40,15 +38,3 @@ appendFile :: MonadIO m => FilePath -> String -> m ()
 appendFile p = liftIO . IO.appendFile p
 {-# SPECIALIZE appendFile :: FilePath -> String -> IO () #-}
 {-# INLINE appendFile #-}
-
--- | Lifted version of 'IO.openFile'.
-openFile :: MonadIO m => FilePath -> IOMode -> m Handle
-openFile p = liftIO . IO.openFile p
-{-# SPECIALIZE openFile :: FilePath -> IOMode -> IO Handle #-}
-{-# INLINE openFile #-}
-
--- | Lifted version of 'IO.hClose'.
-hClose :: MonadIO m => Handle -> m ()
-hClose = liftIO . hClose
-{-# SPECIALIZE hClose :: Handle -> IO () #-}
-{-# INLINE hClose #-}
