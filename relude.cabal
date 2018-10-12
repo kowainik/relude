@@ -72,6 +72,8 @@ library
                        Relude
                            Relude.Applicative
                            Relude.Base
+                           Relude.Bifoldable
+                           Relude.Bitraversable
                            Relude.Bool
                                Relude.Bool.Guard
                                Relude.Bool.Reexport
@@ -111,7 +113,7 @@ library
                                Relude.String.Reexport
 
                            -- not exported by default
-                           Relude.Extra.Bifunctor
+                           Relude.Extra.Bifunctor                          
                            Relude.Extra.CallStack
                            Relude.Extra.Enum
                            Relude.Extra.Foldable1

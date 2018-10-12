@@ -97,6 +97,8 @@ module Relude
        ( -- * Reexports from base and from modules in this repo
          module Relude.Applicative
        , module Relude.Base
+       , module Relude.Bifoldable
+       , module Relude.Bitraversable
        , module Relude.Bool
        , module Relude.Container
        , module Relude.Debug
@@ -117,6 +119,8 @@ module Relude
 
 import Relude.Applicative
 import Relude.Base
+import Relude.Bifoldable
+import Relude.Bitraversable
 import Relude.Bool
 import Relude.Container
 import Relude.Debug
