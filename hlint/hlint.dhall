@@ -172,6 +172,21 @@ in [ rule.Arguments { arguments =
    , warnSimple "(m >>= maybe x (const (return ())))"              "whenNothingM_ m x"
    , warnSimple "(m >>= maybe x (const (pass)     ))"              "whenNothingM_ m x"
 
+-- case:whenLeft
+   , warnSimple "(whenLeft ())"                                   "whenLeft"
+   , warnSimple "(case m of Left x -> f x; Right _ -> pure ()  )" "whenLeft m f"
+   , warnSimple "(case m of Left x -> f x; Right _ -> return ())" "whenLeft m f"
+   , warnSimple "(case m of Left x -> f x; Right _ -> pass     )" "whenLeft m f"
+   , warnSimple "(case m of Right _ -> pure ()  ; Left x -> f x)" "whenLeft m f"
+   , warnSimple "(case m of Right _ -> return (); Left x -> f x)" "whenLeft m f"
+   , warnSimple "(case m of Right _ -> pass     ; Left x -> f x)" "whenLeft m f"
+   , warnSimple "(either f (\\_ -> pure ()    ) m)"               "whenLeft m f"
+   , warnSimple "(either f (\\_ -> return ()  ) m)"               "whenLeft m f"
+   , warnSimple "(either f (\\_ -> pass       ) m)"               "whenLeft m f"
+   , warnSimple "(either f (const (pure ()  )) m)"                "whenLeft m f"
+   , warnSimple "(either f (const (return ())) m)"                "whenLeft m f"
+   , warnSimple "(either f (const (pass     )) m)"                "whenLeft m f"
+
    -- case:whenLeft_
    , warnSimple "(whenLeft ())"                                   "whenLeft_"
    , warnSimple "(case m of Left x -> f x; Right _ -> pure ()  )" "whenLeft_ m f"
@@ -207,6 +222,21 @@ in [ rule.Arguments { arguments =
    , warnSimple "(m >>= either f (const (pure ())  ))"               "whenLeftM_ m f"
    , warnSimple "(m >>= either f (const (return ())))"               "whenLeftM_ m f"
    , warnSimple "(m >>= either f (const (pass)     ))"               "whenLeftM_ m f"
+
+   -- case:whenRight
+   , warnSimple "(whenRight ())"                                  "whenRight"
+   , warnSimple "(case m of Right x -> f x; Left _ -> pure ()  )" "whenRight m f"
+   , warnSimple "(case m of Right x -> f x; Left _ -> return ())" "whenRight m f"
+   , warnSimple "(case m of Right x -> f x; Left _ -> pass     )" "whenRight m f"
+   , warnSimple "(case m of Left _ -> pure ()  ; Right x -> f x)" "whenRight m f"
+   , warnSimple "(case m of Left _ -> return (); Right x -> f x)" "whenRight m f"
+   , warnSimple "(case m of Left _ -> pass     ; Right x -> f x)" "whenRight m f"
+   , warnSimple "(either (\\_ -> pure ()    ) f m)"               "whenRight m f"
+   , warnSimple "(either (\\_ -> return ()  ) f m)"               "whenRight m f"
+   , warnSimple "(either (\\_ -> pass       ) f m)"               "whenRight m f"
+   , warnSimple "(either (const (pure ()  )) f m)"                "whenRight m f"
+   , warnSimple "(either (const (return ())) f m)"                "whenRight m f"
+   , warnSimple "(either (const (pass     )) f m)"                "whenRight m f"
 
    -- case:whenRight_
    , warnSimple "(whenRight ())"                                  "whenRight_"
