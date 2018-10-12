@@ -13,11 +13,13 @@ module Relude.Bool.Guard
        , ifM
        , unlessM
        , whenM
+       , (&&^)
+       , (||^)
        ) where
 
-import Relude.Bool.Reexport (Bool, guard, unless, when)
+import Relude.Bool.Reexport (Bool (..), guard, unless, when)
 import Relude.Function (flip)
-import Relude.Monad (Monad, MonadPlus, (>>=))
+import Relude.Monad (Monad, return, MonadPlus, (>>=))
 
 -- $setup
 -- >>> import Relude.Applicative (pure)
@@ -73,3 +75,19 @@ ifM p x y = p >>= \b -> if b then x else y
 guardM :: MonadPlus m => m Bool -> m ()
 guardM f = f >>= guard
 {-# INLINE guardM #-}
+
+-- | Monadic version of 'Data.Bool.(&&)' operator.
+--
+-- >>> Just False &&^ undefined
+-- Just False
+(&&^) :: Monad m => m Bool -> m Bool -> m Bool
+(&&^) e1 e2 = ifM e1 e2 (return False)
+{-# INLINE (&&^) #-}
+
+-- | Monadic version of 'Data.Bool.(||)' operator.
+--
+-- >>> Just True ||^ undefined
+-- Just True
+(||^) :: Monad m => m Bool -> m Bool -> m Bool
+(||^) e1 e2 = ifM e1 (return True) e2
+{-# INLINE (||^) #-}
