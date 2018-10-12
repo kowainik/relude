@@ -120,6 +120,7 @@ library
                            Relude.Extra.Newtype
                            Relude.Extra.Tuple
                            Relude.Extra.Type
+                           Relude.Extra.Validation
                            Relude.Unsafe
 
   ghc-options:         -Wall

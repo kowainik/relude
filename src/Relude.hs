@@ -89,6 +89,7 @@ every module in your package by modifying your "Prelude" file:
   @newtype@.
 * __"Relude.Extra.Tuple"__: functions for working with tuples.
 * __"Relude.Extra.Type"__: functions for inspecting and working with types.
+* __"Relude.Extra.Validation"__: 'Validation' data type.
 * __"Relude.Unsafe"__: unsafe partial functions (produce 'error') for lists and
   'Maybe'.
 -}
