@@ -22,6 +22,70 @@
     lhs: (return ())
     note: Use 'pass'
     rhs: pass
+- hint:
+    lhs: (:[])
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (:|[])
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.Sequence.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.Text.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.Text.Lazy.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.ByteString.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.ByteString.Lazy.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.Map.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.Map.Strict.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.HashMap.Strict.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.HashMap.Lazy.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.IntMap.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.IntMap.Strict.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.Set.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.HashSet.singleton)
+    note: Use `one`
+    rhs: one
+- hint:
+    lhs: (Data.IntSet.singleton)
+    note: Use `one`
+    rhs: one
 - warn:
     lhs: Control.Exception.evaluate
     rhs: evaluateWHNF
@@ -1723,16 +1787,6 @@
     name: Use 'writeTVar' from Relude
     rhs: writeTVar
 - warn:
-    lhs: System.IO.openFile
-    note: ! '''openFile'' is already exported from Relude'
-    name: Use 'openFile' from Relude
-    rhs: openFile
-- warn:
-    lhs: System.IO.hClose
-    note: ! '''hClose'' is already exported from Relude'
-    name: Use 'hClose' from Relude
-    rhs: hClose
-- warn:
     lhs: Data.IORef.IORef
     note: ! '''IORef'' is already exported from Relude'
     name: Use 'IORef' from Relude
@@ -2567,16 +2621,6 @@
     note: If you import 'die' from Relude, it's already lifted
     name: ! '''liftIO'' is not needed'
     rhs: die
-- warn:
-    lhs: (liftIO (openFile x y))
-    note: If you import 'openFile' from Relude, it's already lifted
-    name: ! '''liftIO'' is not needed'
-    rhs: openFile
-- warn:
-    lhs: (liftIO (hClose x))
-    note: If you import 'hClose' from Relude, it's already lifted
-    name: ! '''liftIO'' is not needed'
-    rhs: hClose
 - warn:
     lhs: (liftIO (readFile x))
     note: If you import 'readFile' from Relude, it's already lifted

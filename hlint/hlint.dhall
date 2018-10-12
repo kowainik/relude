@@ -35,6 +35,24 @@ in [ rule.Arguments { arguments =
    , hintNote "pure ()" "pass" "Use 'pass'"
    , hintNote "return ()" "pass" "Use 'pass'"
 
+   -- One
+   , hintNote ":[]" "one" "Use `one`"
+   , hintNote ":|[]" "one" "Use `one`"
+   , hintNote "Data.Sequence.singleton" "one" "Use `one`"
+   , hintNote "Data.Text.singleton" "one" "Use `one`"
+   , hintNote "Data.Text.Lazy.singleton" "one" "Use `one`"
+   , hintNote "Data.ByteString.singleton" "one" "Use `one`"
+   , hintNote "Data.ByteString.Lazy.singleton" "one" "Use `one`"
+   , hintNote "Data.Map.singleton" "one" "Use `one`"
+   , hintNote "Data.Map.Strict.singleton" "one" "Use `one`"
+   , hintNote "Data.HashMap.Strict.singleton" "one" "Use `one`"
+   , hintNote "Data.HashMap.Lazy.singleton" "one" "Use `one`"
+   , hintNote "Data.IntMap.singleton" "one" "Use `one`"
+   , hintNote "Data.IntMap.Strict.singleton" "one" "Use `one`"
+   , hintNote "Data.Set.singleton" "one" "Use `one`"
+   , hintNote "Data.HashSet.singleton" "one" "Use `one`"
+   , hintNote "Data.IntSet.singleton" "one" "Use `one`"
+
    -- Deepseq
    , warnSimple "Control.Exception.evaluate" "evaluateWHNF"
    , warnSimple "Control.Exception.evaluate (force x)" "evaluateNF x"
@@ -566,11 +584,6 @@ in [ rule.Arguments { arguments =
    , warnReexport "readTVar" "Control.Concurrent.STM.TVar"
    , warnReexport "writeTVar" "Control.Concurrent.STM.TVar"
 
-   -- Lifted File
-   , warnReexport "openFile" "System.IO"
-   , warnReexport "hClose"   "System.IO"
-
-
    -- Lifted IORef
    , warnReexport "IORef" "Data.IORef"
    , warnReexport "atomicModifyIORef" "Data.IORef"
@@ -756,8 +769,6 @@ in [ rule.Arguments { arguments =
    , warnLifted "exitSuccess" ""
    , warnLifted "die" "x"
    -- File
-   , warnLifted "openFile" "x y"
-   , warnLifted "hClose" "x"
    , warnLifted "readFile" "x"
    , warnLifted "writeFile" "x y"
    , warnLifted "appendFile" "x y"

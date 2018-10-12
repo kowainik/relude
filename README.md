@@ -371,6 +371,11 @@ Check that you have generated valid `.hlint.yaml` file without parse errors:
 $ hlint test/Spec.hs
 ```
 
+See our blog post where we describe the details of the implementation for this solution:
+
+* [Dhall To HLint](https://kowainik.github.io/posts/2018-09-09-dhall-to-hlint)
+
+
 ## Acknowledgement
 
 Icons made by [Freepik](http://www.freepik.com) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/).
