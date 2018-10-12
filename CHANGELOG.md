@@ -10,6 +10,8 @@
   Add `Relude.Extra.Tuple` module, containing
   `dupe`, `mapToFst`, `mapToSnd`, and `mapBoth` functions.
 * Remove `openFile` and `hClose`.
+* [#97](https://github.com/kowainik/relude/issues/97):
+  Add `(&&^)` and `(||^)` operators.
 
 0.3.0
 =====
