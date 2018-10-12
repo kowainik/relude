@@ -346,7 +346,14 @@ Note, that we are using custom `hlint` setting which are `Relude` specific. To
 keep it up to date don't forget to reflect your changes in this file. We are
 using `Dhall` to maintain the configurations. To use it follow the steps below.
 
-First time:
+#### First time:
+
+Ensure you have the following tools installed:
+
+1. [cabal](https://www.haskell.org/cabal/download.html) (already included in the Haskell Platform)
+1. [dhall-to-yaml](https://github.com/dhall-lang/dhall-lang/wiki/Getting-started:-Generate-JSON-or-YAML)
+1. [hlint](http://hackage.haskell.org/package/hlint)
+
 
 ```shell
 $ cabal new-install dhall-json
