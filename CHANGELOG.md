@@ -18,6 +18,8 @@
   Add `(&&^)` and `(||^)` operators.
 * [#100](https://github.com/kowainik/relude/issues/100):
   Add `Validation` data type to Extra modules.
+* [#103](https://github.com/kowainik/relude/pull/104):
+  Drop utf8-string dependency.
 
 0.3.0
 =====

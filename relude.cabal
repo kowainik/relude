@@ -141,7 +141,6 @@ library
                      , text ^>= 1.2
                      , transformers ^>= 0.5
                      , unordered-containers >= 0.2.7 && < 0.3
-                     , utf8-string ^>= 1.0
 
   default-language:    Haskell2010
   default-extensions:  NoImplicitPrelude
@@ -158,7 +157,6 @@ test-suite relude-test
                      , relude
                      , bytestring
                      , text
-                     , utf8-string
                      , hedgehog >= 0.6
                      , tasty
                      , tasty-hedgehog
