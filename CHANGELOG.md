@@ -10,6 +10,10 @@
   Add `Relude.Extra.Tuple` module, containing
   `dupe`, `mapToFst`, `mapToSnd`, and `mapBoth` functions.
 * Remove `openFile` and `hClose`.
+* [#98](https://github.com/kowainik/relude/issues/98):
+  Reexport `Bifoldable` related stuff from `base`.
+* [#99](https://github.com/kowainik/relude/issues/99):
+  Reexport `Bitraversable` related stuff from `base`.
 * [#97](https://github.com/kowainik/relude/issues/97):
   Add `(&&^)` and `(||^)` operators.
 

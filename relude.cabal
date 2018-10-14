@@ -111,7 +111,7 @@ library
                                Relude.String.Reexport
 
                            -- not exported by default
-                           Relude.Extra.Bifunctor
+                           Relude.Extra.Bifunctor                          
                            Relude.Extra.CallStack
                            Relude.Extra.Enum
                            Relude.Extra.Foldable1

@@ -1294,6 +1294,146 @@
     name: Use 'withFrozenCallStack' from Relude
     rhs: withFrozenCallStack
 - warn:
+    lhs: Data.Bifoldable.Bifoldable
+    note: ! '''Bifoldable'' is already exported from Relude'
+    name: Use 'Bifoldable' from Relude
+    rhs: Bifoldable
+- warn:
+    lhs: Data.Bifoldable.bifold
+    note: ! '''bifold'' is already exported from Relude'
+    name: Use 'bifold' from Relude
+    rhs: bifold
+- warn:
+    lhs: Data.Bifoldable.bifoldMap
+    note: ! '''bifoldMap'' is already exported from Relude'
+    name: Use 'bifoldMap' from Relude
+    rhs: bifoldMap
+- warn:
+    lhs: Data.Bifoldable.bifoldr
+    note: ! '''bifoldr'' is already exported from Relude'
+    name: Use 'bifoldr' from Relude
+    rhs: bifoldr
+- warn:
+    lhs: Data.Bifoldable.bifoldl
+    note: ! '''bifoldl'' is already exported from Relude'
+    name: Use 'bifoldl' from Relude
+    rhs: bifoldl
+- warn:
+    lhs: Data.Bifoldable.bifoldl'
+    note: ! '''bifoldl'''' is already exported from Relude'
+    name: Use 'bifoldl'' from Relude
+    rhs: bifoldl'
+- warn:
+    lhs: Data.Bifoldable.bifoldlM
+    note: ! '''bifoldlM'' is already exported from Relude'
+    name: Use 'bifoldlM' from Relude
+    rhs: bifoldlM
+- warn:
+    lhs: Data.Bifoldable.bifoldr'
+    note: ! '''bifoldr'''' is already exported from Relude'
+    name: Use 'bifoldr'' from Relude
+    rhs: bifoldr'
+- warn:
+    lhs: Data.Bifoldable.bifoldrM
+    note: ! '''bifoldrM'' is already exported from Relude'
+    name: Use 'bifoldrM' from Relude
+    rhs: bifoldrM
+- warn:
+    lhs: Data.Bifoldable.bitraverse_
+    note: ! '''bitraverse_'' is already exported from Relude'
+    name: Use 'bitraverse_' from Relude
+    rhs: bitraverse_
+- warn:
+    lhs: Data.Bifoldable.bifor_
+    note: ! '''bifor_'' is already exported from Relude'
+    name: Use 'bifor_' from Relude
+    rhs: bifor_
+- warn:
+    lhs: Data.Bifoldable.biasum
+    note: ! '''biasum'' is already exported from Relude'
+    name: Use 'biasum' from Relude
+    rhs: biasum
+- warn:
+    lhs: Data.Bifoldable.bisequence_
+    note: ! '''bisequence_'' is already exported from Relude'
+    name: Use 'bisequence_' from Relude
+    rhs: bisequence_
+- warn:
+    lhs: Data.Bifoldable.biList
+    note: ! '''biList'' is already exported from Relude'
+    name: Use 'biList' from Relude
+    rhs: biList
+- warn:
+    lhs: Data.Bifoldable.binull
+    note: ! '''binull'' is already exported from Relude'
+    name: Use 'binull' from Relude
+    rhs: binull
+- warn:
+    lhs: Data.Bifoldable.bilength
+    note: ! '''bilength'' is already exported from Relude'
+    name: Use 'bilength' from Relude
+    rhs: bilength
+- warn:
+    lhs: Data.Bifoldable.bielem
+    note: ! '''bielem'' is already exported from Relude'
+    name: Use 'bielem' from Relude
+    rhs: bielem
+- warn:
+    lhs: Data.Bifoldable.biand
+    note: ! '''biand'' is already exported from Relude'
+    name: Use 'biand' from Relude
+    rhs: biand
+- warn:
+    lhs: Data.Bifoldable.bior
+    note: ! '''bior'' is already exported from Relude'
+    name: Use 'bior' from Relude
+    rhs: bior
+- warn:
+    lhs: Data.Bifoldable.biany
+    note: ! '''biany'' is already exported from Relude'
+    name: Use 'biany' from Relude
+    rhs: biany
+- warn:
+    lhs: Data.Bifoldable.biall
+    note: ! '''biall'' is already exported from Relude'
+    name: Use 'biall' from Relude
+    rhs: biall
+- warn:
+    lhs: Data.Bifoldable.bifind
+    note: ! '''bifind'' is already exported from Relude'
+    name: Use 'bifind' from Relude
+    rhs: bifind
+- warn:
+    lhs: Data.Bitraversable.Bitraversable
+    note: ! '''Bitraversable'' is already exported from Relude'
+    name: Use 'Bitraversable' from Relude
+    rhs: Bitraversable
+- warn:
+    lhs: Data.Bitraversable.bitraverse
+    note: ! '''bitraverse'' is already exported from Relude'
+    name: Use 'bitraverse' from Relude
+    rhs: bitraverse
+- warn:
+    lhs: Data.Bitraversable.bisequence
+    note: ! '''bisequence'' is already exported from Relude'
+    name: Use 'bisequence' from Relude
+    rhs: bisequence
+- warn:
+    lhs: Data.Bitraversable.bifor
+    note: ! '''bifor'' is already exported from Relude'
+    name: Use 'bifor' from Relude
+    rhs: bifor
+- warn:
+    lhs: Data.Bitraversable.bimapDefault
+    note: ! '''bimapDefault'' is already exported from Relude'
+    name: Use 'bimapDefault' from Relude
+    rhs: bimapDefault
+- warn:
+    lhs: Data.Bitraversable.bifoldMapDefault
+    note: ! '''bifoldMapDefault'' is already exported from Relude'
+    name: Use 'bifoldMapDefault' from Relude
+    rhs: bifoldMapDefault
+- warn:
     lhs: Control.Monad.guard
     note: ! '''guard'' is already exported from Relude'
     name: Use 'guard' from Relude

@@ -453,6 +453,38 @@ in [ rule.Arguments { arguments =
    , warnReexport "prettySrcLoc"        "GHC.Stack"
    , warnReexport "withFrozenCallStack" "GHC.Stack"
 
+   -- Bifoldable
+   , warnReexport "Bifoldable"  "Data.Bifoldable"
+   , warnReexport "bifold"      "Data.Bifoldable"
+   , warnReexport "bifoldMap"   "Data.Bifoldable"
+   , warnReexport "bifoldr"     "Data.Bifoldable"
+   , warnReexport "bifoldl"     "Data.Bifoldable"
+   , warnReexport "bifoldl'"    "Data.Bifoldable"
+   , warnReexport "bifoldlM"    "Data.Bifoldable"
+   , warnReexport "bifoldr'"    "Data.Bifoldable"
+   , warnReexport "bifoldrM"    "Data.Bifoldable"
+   , warnReexport "bitraverse_" "Data.Bifoldable"
+   , warnReexport "bifor_"      "Data.Bifoldable"
+   , warnReexport "biasum"      "Data.Bifoldable"
+   , warnReexport "bisequence_" "Data.Bifoldable"
+   , warnReexport "biList"      "Data.Bifoldable"
+   , warnReexport "binull"      "Data.Bifoldable"
+   , warnReexport "bilength"    "Data.Bifoldable"
+   , warnReexport "bielem"      "Data.Bifoldable"
+   , warnReexport "biand"       "Data.Bifoldable"
+   , warnReexport "bior"        "Data.Bifoldable"
+   , warnReexport "biany"       "Data.Bifoldable"
+   , warnReexport "biall"       "Data.Bifoldable"
+   , warnReexport "bifind"      "Data.Bifoldable"
+
+   -- Bitraversable
+   , warnReexport "Bitraversable"    "Data.Bitraversable"
+   , warnReexport "bitraverse"       "Data.Bitraversable"
+   , warnReexport "bisequence"       "Data.Bitraversable"
+   , warnReexport "bifor"            "Data.Bitraversable"
+   , warnReexport "bimapDefault"     "Data.Bitraversable"
+   , warnReexport "bifoldMapDefault" "Data.Bitraversable"
+
    -- Bool
    , warnReexport "guard" "Control.Monad"
    , warnReexport "unless" "Control.Monad"
