@@ -72,8 +72,6 @@ library
                        Relude
                            Relude.Applicative
                            Relude.Base
-                           Relude.Bifoldable
-                           Relude.Bitraversable
                            Relude.Bool
                                Relude.Bool.Guard
                                Relude.Bool.Reexport

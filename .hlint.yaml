@@ -1324,11 +1324,6 @@
     name: Use 'bifoldl'' from Relude
     rhs: bifoldl'
 - warn:
-    lhs: Data.Bifoldable.bifoldl1
-    note: ! '''bifoldl1'' is already exported from Relude'
-    name: Use 'bifoldl1' from Relude
-    rhs: bifoldl1
-- warn:
     lhs: Data.Bifoldable.bifoldlM
     note: ! '''bifoldlM'' is already exported from Relude'
     name: Use 'bifoldlM' from Relude
@@ -1338,11 +1333,6 @@
     note: ! '''bifoldr'''' is already exported from Relude'
     name: Use 'bifoldr'' from Relude
     rhs: bifoldr'
-- warn:
-    lhs: Data.Bifoldable.bifoldr1
-    note: ! '''bifoldr1'' is already exported from Relude'
-    name: Use 'bifoldr1' from Relude
-    rhs: bifoldr1
 - warn:
     lhs: Data.Bifoldable.bifoldrM
     note: ! '''bifoldrM'' is already exported from Relude'
