@@ -24,6 +24,7 @@ import Relude.Monad (Monad, return, MonadPlus, (>>=))
 -- $setup
 -- >>> import Relude.Applicative (pure)
 -- >>> import Relude.Bool.Reexport (Bool (..))
+-- >>> import Relude.Debug (undefined)
 -- >>> import Relude.Function (($))
 -- >>> import Relude.Monad (Maybe (..))
 -- >>> import Relude.Print (putTextLn)
@@ -78,6 +79,7 @@ guardM f = f >>= guard
 
 -- | Monadic version of 'Data.Bool.(&&)' operator.
 --
+-- >>> :set -Wno-deprecations
 -- >>> Just False &&^ undefined
 -- Just False
 (&&^) :: Monad m => m Bool -> m Bool -> m Bool
@@ -86,6 +88,7 @@ guardM f = f >>= guard
 
 -- | Monadic version of 'Data.Bool.(||)' operator.
 --
+-- >>> :set -Wno-deprecations
 -- >>> Just True ||^ undefined
 -- Just True
 (||^) :: Monad m => m Bool -> m Bool -> m Bool
