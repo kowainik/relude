@@ -18,7 +18,7 @@ module Relude.Functor.Reexport
        , module Data.Functor.Identity
 #if MIN_VERSION_base(4,12,0)
         , module Data.Functor.Contravariant
- #endif
+#endif
        ) where
 
 import Data.Bifunctor (Bifunctor (..))
