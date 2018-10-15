@@ -564,6 +564,28 @@ in [ rule.Arguments { arguments =
    , warnReexport "getCompose" "Data.Functor.Compose"
    , warnReexport "Identity"    "Data.Functor.Identity"
    , warnReexport "runIdentity" "Data.Functor.Identity"
+   , warnReexport "Contravariant"          "Data.Functor.Contravariant"
+   , warnReexport "contramap"              "Data.Functor.Contravariant"
+   , warnReexportOp ">$"                   "Data.Functor.Contravariant"
+   , warnReexport "phantom"                "Data.Functor.Contravariant"
+   , warnReexportOp ">$<"                  "Data.Functor.Contravariant"
+   , warnReexportOp ">$$<"                 "Data.Functor.Contravariant"
+   , warnReexportOp "$<"                   "Data.Functor.Contravariant"
+   , warnReexport "Predicate"              "Data.Functor.Contravariant"
+   , warnReexport "getPredicate"           "Data.Functor.Contravariant"
+   , warnReexport "Comparison"             "Data.Functor.Contravariant"
+   , warnReexport "getComparison"          "Data.Functor.Contravariant"
+   , warnReexport "defaultComparison"      "Data.Functor.Contravariant"
+   , warnReexport "Equivalence"            "Data.Functor.Contravariant"
+   , warnReexport "getEquivalence"         "Data.Functor.Contravariant"
+   , warnReexport "defaultEquivalence"     "Data.Functor.Contravariant"
+   , warnReexport "comparisonEquivalence"  "Data.Functor.Contravariant"
+   , warnReexport "Op"                     "Data.Functor.Contravariant"
+   , warnReexport "getOp"                  "Data.Functor.Contravariant"
+   
+
+   
+
 
    -- Lifted Concurrent
    , warnReexport "MVar"         "Control.Concurrent.MVar"

@@ -20,6 +20,8 @@
   Add `Validation` data type to Extra modules.
 * [#103](https://github.com/kowainik/relude/pull/104):
   Drop utf8-string dependency.
+* [#70](https://github.com/kowainik/relude/issues/70):
+  Reexport `Contravariant` for GHC >= 8.6.1
 
 0.3.0
 =====
