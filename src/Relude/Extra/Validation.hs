@@ -1,8 +1,10 @@
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE LambdaCase #-}
 
 {- |
 Copyright: (c) 2014 Chris Allen, Edward Kmett
-           (c) 2018 Kowainic
+           (c) 2018 Kowainik
 License:   MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -15,8 +17,10 @@ module Relude.Extra.Validation
        , eitherToValidation
        ) where
 
-import Data.Function (const)
 import Relude
+
+-- $setup
+-- >>> :set -XTypeApplications -XOverloadedStrings
 
 -- | 'Validation' is 'Either' with a Left that is a 'Monoid'
 data Validation e a
@@ -36,15 +40,39 @@ instance Functor (Validation e) where
     {-# INLINE fmap #-}
     {-# INLINE (<$) #-}
 
+-- | Examples:
+--
+-- >>> let fa = Success (*3) :: Validation Text (Int -> Int)
+-- >>> let ga = Success (*4) :: Validation Text (Int -> Int)
+-- >>> let a = Success 1 :: Validation Text Int
+-- >>> let b = Success 7 :: Validation Text Int
+-- >>> let c = Failure "Not correct " :: Validation Text Int
+-- >>> let d = Failure "Not correct either" :: Validation Text Int
+--
+-- >>> fa <*> b
+-- Success 21
+--
+-- >>> fa <*> c
+-- Failure "Not correct "
+--
+-- >>> c *> d *> b
+-- Failure "Not correct Not correct either"
+--
+-- >>> liftA2 (+) a b
+-- Success 8
+--
+-- >>> liftA2 (+) a c
+-- Failure "Not correct "
+
 instance Semigroup e => Applicative (Validation e) where
     pure :: a -> Validation e a
     pure = Success
 
     liftA2 :: (a -> b -> c) -> Validation e a -> Validation e b -> Validation e c
-    liftA2 _ (Failure e) (Failure e') = Failure (e <> e')
+    liftA2 _ (Failure el) (Failure er) = Failure (el <> er)
     liftA2 _ (Failure e) (Success _) = Failure e
     liftA2 _ (Success _) (Failure e) = Failure e
-    liftA2 f (Success a) (Success a') = Success (f a a')
+    liftA2 f (Success a) (Success b) = Success (f a b)
 
     (<*>) :: Validation e (a -> b) -> Validation e a -> Validation e b
     Failure e <*> b = Failure $ case b of
@@ -118,6 +146,7 @@ instance Bifunctor Validation where
     {-# INLINE first #-}
     {-# INLINE second #-}
 
+#if MIN_VERSION_base(4,10,0)
 instance Bifoldable Validation where
     bifoldMap :: Monoid m => (e -> m) -> (a -> m) -> Validation e a -> m
     bifoldMap f _ (Failure e) = f e
@@ -132,19 +161,20 @@ instance Bitraversable Validation where
     bitraverse _ g (Success a) = Success <$> g a
 
     {-# INLINE bitraverse #-}
+#endif
 
 -- | Transform a 'Validation' into an 'Either'.
 validationToEither :: Validation e a -> Either e a
-validationToEither x = case x of
-                         Failure e -> Left e
-                         Success a -> Right a
+validationToEither = \case
+    Failure e -> Left e
+    Success a -> Right a
 
 {-# INLINE validationToEither #-}
 
 -- | Transform an 'Either' into a 'Validation'.
 eitherToValidation :: Either e a -> Validation e a
-eitherToValidation x = case x of
-                         Left e  -> Failure e
-                         Right a -> Success a
+eitherToValidation = \case
+    Left e  -> Failure e
+    Right a -> Success a
 
 {-# INLINE eitherToValidation #-}
