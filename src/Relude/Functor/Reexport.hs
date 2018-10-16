@@ -27,5 +27,5 @@ import Data.Functor.Compose (Compose (..))
 import Data.Functor.Identity (Identity (..))
 
 #if MIN_VERSION_base(4,12,0)
-import Data.Functor.Contravariant
+import Data.Functor.Contravariant (Contravariant (..), phantom, (>$<), (>$$<), ($<), Predicate (..), Comparison (..), Equivalence (..), Op (..))
 #endif
