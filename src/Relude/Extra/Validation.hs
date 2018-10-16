@@ -74,6 +74,8 @@ instance Semigroup e => Applicative (Validation e) where
     liftA2 _ (Failure e)  (Success _)  = Failure e
     liftA2 _ (Success _)  (Failure e)  = Failure e
     liftA2 f (Success a)  (Success b)  = Success (f a b)
+
+    {-# INLINE liftA2 #-}
 #endif
 
     (<*>) :: Validation e (a -> b) -> Validation e a -> Validation e b
@@ -96,7 +98,6 @@ instance Semigroup e => Applicative (Validation e) where
     Success a  <* Success _  = Success a
 
     {-# INLINE pure #-}
-    {-# INLINE liftA2 #-}
     {-# INLINE (<*>) #-}
     {-# INLINE (*>) #-}
     {-# INLINE (<*) #-}
