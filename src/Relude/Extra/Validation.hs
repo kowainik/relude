@@ -136,7 +136,11 @@ instance Traversable (Validation e) where
     traverse f (Success a) = Success <$> f a
     traverse _ (Failure e) = pure (Failure e)
 
+    sequenceA :: Applicative f => Validation e (f a) -> f (Validation e a)
+    sequenceA = traverse id
+
     {-# INLINE traverse #-}
+    {-# INLINE sequenceA #-}
 
 instance Bifunctor Validation where
     bimap :: (e -> d) -> (a -> b) -> Validation e a -> Validation d b
