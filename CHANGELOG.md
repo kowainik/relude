@@ -16,6 +16,8 @@
   Reexport `Bitraversable` related stuff from `base`.
 * [#97](https://github.com/kowainik/relude/issues/97):
   Add `(&&^)` and `(||^)` operators.
+* [#100](https://github.com/kowainik/relude/issues/100):
+  Add `Validation` data type to Extra modules.
 
 0.3.0
 =====
