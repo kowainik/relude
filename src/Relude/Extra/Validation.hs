@@ -1,6 +1,6 @@
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP          #-}
 {-# LANGUAGE InstanceSigs #-}
-{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE LambdaCase   #-}
 
 {- |
 Copyright: (c) 2014 Chris Allen, Edward Kmett
@@ -40,39 +40,41 @@ instance Functor (Validation e) where
     {-# INLINE fmap #-}
     {-# INLINE (<$) #-}
 
--- | Examples:
---
--- >>> let fa = Success (*3) :: Validation Text (Int -> Int)
--- >>> let ga = Success (*4) :: Validation Text (Int -> Int)
--- >>> let a = Success 1 :: Validation Text Int
--- >>> let b = Success 7 :: Validation Text Int
--- >>> let c = Failure "Not correct " :: Validation Text Int
--- >>> let d = Failure "Not correct either" :: Validation Text Int
---
--- >>> fa <*> b
--- Success 21
---
--- >>> fa <*> c
--- Failure "Not correct "
---
--- >>> c *> d *> b
--- Failure "Not correct Not correct either"
---
--- >>> liftA2 (+) a b
--- Success 8
---
--- >>> liftA2 (+) a c
--- Failure "Not correct "
+{- | __Examples__
 
+>>> let fa = Success (*3) :: Validation [Text] (Int -> Int)
+>>> let ga = Success (*4) :: Validation [Text] (Int -> Int)
+>>> let a = Success 1 :: Validation [Text] Int
+>>> let b = Success 7 :: Validation [Text] Int
+>>> let c = Failure ["Not correct"] :: Validation [Text] Int
+>>> let d = Failure ["Not correct either"] :: Validation [Text] Int
+
+>>> fa <*> b
+Success 21
+
+>>> fa <*> c
+Failure ["Not correct"]
+
+>>> c *> d *> b
+Failure ["Not correct","Not correct either"]
+
+>>> liftA2 (+) a b
+Success 8
+
+>>> liftA2 (+) a c
+Failure ["Not correct"]
+-}
 instance Semigroup e => Applicative (Validation e) where
     pure :: a -> Validation e a
     pure = Success
 
+#if MIN_VERSION_base(4,10,0)
     liftA2 :: (a -> b -> c) -> Validation e a -> Validation e b -> Validation e c
     liftA2 _ (Failure el) (Failure er) = Failure (el <> er)
-    liftA2 _ (Failure e) (Success _) = Failure e
-    liftA2 _ (Success _) (Failure e) = Failure e
-    liftA2 f (Success a) (Success b) = Success (f a b)
+    liftA2 _ (Failure e)  (Success _)  = Failure e
+    liftA2 _ (Success _)  (Failure e)  = Failure e
+    liftA2 f (Success a)  (Success b)  = Success (f a b)
+#endif
 
     (<*>) :: Validation e (a -> b) -> Validation e a -> Validation e b
     Failure e <*> b = Failure $ case b of
@@ -81,12 +83,17 @@ instance Semigroup e => Applicative (Validation e) where
     Success _ <*> Failure e  = Failure e
     Success f <*> Success a = Success (f a)
 
-
     (*>) :: Validation e a -> Validation e b -> Validation e b
-    (*>) = liftA2 (flip const)
+    Failure el *> Failure er = Failure (el <> er)
+    Failure e  *> Success _  = Failure e
+    Success _  *> Failure e  = Failure e
+    Success _  *> Success b  = Success b
 
     (<*) :: Validation e a -> Validation e b -> Validation e a
-    (<*) = liftA2 const
+    Failure el <* Failure er = Failure (el <> er)
+    Failure e  <* Success _  = Failure e
+    Success _  <* Failure e  = Failure e
+    Success a  <* Success _  = Success a
 
     {-# INLINE pure #-}
     {-# INLINE liftA2 #-}
@@ -112,7 +119,8 @@ instance Foldable (Validation e) where
     fold (Failure _) = mempty
 
     foldMap :: Monoid m => (a -> m) -> Validation e a -> m
-    foldMap f = foldr (mappend . f) mempty
+    foldMap _ (Failure _) = mempty
+    foldMap f (Success a) = f a
 
     foldr :: (a -> b -> b) -> b -> Validation e a -> b
     foldr f x (Success a) = f a x
