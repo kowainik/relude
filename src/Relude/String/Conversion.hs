@@ -48,8 +48,6 @@ import Relude.String.Reexport (ByteString, IsString, Read, Text, fromString)
 
 import qualified Data.ByteString as B
 import qualified Data.ByteString.Lazy as LB
-import qualified Data.ByteString.Lazy.UTF8 as LBU
-import qualified Data.ByteString.UTF8 as BU
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 import qualified Data.Text.Encoding.Error as T
@@ -101,8 +99,8 @@ class ConvertUtf8 a b where
     decodeUtf8Strict :: b -> Either T.UnicodeException a
 
 instance ConvertUtf8 String B.ByteString where
-    encodeUtf8 = BU.fromString
-    decodeUtf8 = BU.toString
+    encodeUtf8 = T.encodeUtf8 . T.pack
+    decodeUtf8 = T.unpack . T.decodeUtf8
     decodeUtf8Strict = (T.unpack <$>) . decodeUtf8Strict
 
 instance ConvertUtf8 T.Text B.ByteString where
@@ -114,10 +112,11 @@ instance ConvertUtf8 LT.Text B.ByteString where
     encodeUtf8 = LB.toStrict . encodeUtf8
     decodeUtf8 = LT.decodeUtf8With T.lenientDecode . LB.fromStrict
     decodeUtf8Strict = decodeUtf8Strict . LB.fromStrict
-
+-- | Converting 'String' to 'LB.ByteString' might be a slow operation.
+-- Consider using lazy bytestring at first place.
 instance ConvertUtf8 String LB.ByteString where
-    encodeUtf8 = LBU.fromString
-    decodeUtf8 = LBU.toString
+    encodeUtf8 = LT.encodeUtf8 . LT.pack
+    decodeUtf8 = LT.unpack . LT.decodeUtf8
     decodeUtf8Strict = (T.unpack <$>) . decodeUtf8Strict
 
 instance ConvertUtf8 T.Text LB.ByteString where
