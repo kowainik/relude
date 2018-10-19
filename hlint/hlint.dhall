@@ -565,7 +565,8 @@ in [ rule.Arguments { arguments =
    , warnReexport "Identity"    "Data.Functor.Identity"
    , warnReexport "runIdentity" "Data.Functor.Identity"
 
--- Data.Functor.Contravariant   -- These rules have been commented out because they are only valid for GHC >= 8.6.1 
+-- Data.Functor.Contravariant    
+-- These rules have been commented out because they are only valid for GHC >= 8.6.1 
 -- , warnReexport "Contravariant"          "Data.Functor.Contravariant"
 -- , warnReexport "contramap"              "Data.Functor.Contravariant"
 -- , warnReexportOp ">$"                   "Data.Functor.Contravariant"
