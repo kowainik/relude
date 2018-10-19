@@ -2,6 +2,8 @@
 
 0.4.0
 =====
+* [#70](https://github.com/kowainik/relude/issues/70):
+  Reexport `Contravariant` for GHC >= 8.6.1
 * [#81](https://github.com/kowainik/relude/issues/81):
   Add `asumMap` to `Foldable` functions.
 * [#89](https://github.com/kowainik/relude/issues/81):
@@ -20,8 +22,7 @@
   Add `Validation` data type to Extra modules.
 * [#103](https://github.com/kowainik/relude/pull/104):
   Drop utf8-string dependency.
-* [#70](https://github.com/kowainik/relude/issues/70):
-  Reexport `Contravariant` for GHC >= 8.6.1
+
 
 0.3.0
 =====
