@@ -22,6 +22,8 @@
   Add `Validation` data type to Extra modules.
 * [#103](https://github.com/kowainik/relude/pull/104):
   Drop utf8-string dependency.
+* [#109](https://github.com/kowainik/relude/issues/109):
+  Use Dhall v3.0.0 for hlint file generation.
 
 
 0.3.0
