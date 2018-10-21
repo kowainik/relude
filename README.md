@@ -33,7 +33,7 @@
 4. **Minimalism** (low number of dependencies). We don't force users of `relude` to
    stick to some specific lens or text formatting or logging library.
 5. **Convenience** (like lifted to `MonadIO` functions, more reexports). But we
-   want to bring common types and functions (like `containers` and `bytestrng`)
+   want to bring common types and functions (like `containers` and `bytestring`)
    into scope because they are used in almost every application anyways.
 6. **Provide excellent documentation.**
    * Tutorial
