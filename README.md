@@ -352,6 +352,9 @@ First time:
 $ cabal new-install dhall-json
 ```
 
+Dhall 3.0.0 is required, so make sure that the previous command installed
+dhall-json >= 1.2.4.
+
 To generate `hlint` file:
 
 ```shell
