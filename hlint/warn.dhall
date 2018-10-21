@@ -4,10 +4,10 @@ in let warnSimple
     : Text -> Text -> Rule
     = \(lhsTxt : Text) -> \(rhsTxt : Text) ->
         rule.Warn {warn =
-            { name = [] : Optional Text
+            { name = None Text
             , lhs = "${lhsTxt}"
             , rhs = "${rhsTxt}"
-            , note = [] : Optional Text
+            , note = None Text
             }
         }
 
@@ -15,10 +15,10 @@ in let warnNote
     : Text -> Text -> Text -> Rule
     = \(lhsTxt : Text) -> \(rhsTxt : Text) -> \(n : Text) ->
         rule.Warn {warn =
-            { name = [] : Optional Text
+            { name = None Text
             , lhs = "${lhsTxt}"
             , rhs = "${rhsTxt}"
-            , note = ["${n}"] : Optional Text
+            , note = Some "${n}"
             }
         }
 
@@ -26,20 +26,20 @@ in let warnReexport
     : Text -> Text -> Rule
     = \(f : Text) -> \(mod : Text) ->
         rule.Warn {warn =
-            { name = ["Use '${f}' from Relude"] : Optional Text
+            { name = Some "Use '${f}' from Relude"
             , lhs = "${mod}.${f}"
             , rhs = "${f}"
-            , note = ["'${f}' is already exported from Relude"] : Optional Text
+            , note = Some "'${f}' is already exported from Relude"
             }
         }
 
 in let warnReexportOp : Text -> Text -> Rule
     = \(f : Text) -> \(mod : Text) ->
         rule.Warn {warn =
-            { name = ["Use '${f}' from Relude"] : Optional Text
+            { name = Some "Use '${f}' from Relude"
             , lhs = "(${mod}.${f})"
             , rhs = "(${f})"
-            , note = ["Operator '(${f})' is already exported from Relude"] : Optional Text
+            , note = Some "Operator '(${f})' is already exported from Relude"
             }
         }
 
@@ -47,10 +47,10 @@ in let warnLifted
     : Text -> Text -> Rule
     =  \(f : Text) -> \(args : Text) ->
         rule.Warn { warn =
-            { name = ["'liftIO' is not needed"] : Optional Text
+            { name = Some "'liftIO' is not needed"
             , lhs = "(liftIO (${f} ${args}))"
             , rhs = "${f}"
-            , note = ["If you import '${f}' from Relude, it's already lifted"] : Optional Text
+            , note = Some "If you import '${f}' from Relude, it's already lifted"
             }
         }
 
@@ -60,7 +60,7 @@ in let hintNote
         rule.Hint { hint =
             { lhs = "(${lhsTxt})"
             , rhs = "${rhsTxt}"
-            , note = ["${n}"] : Optional Text
+            , note = Some "${n}"
             }
         }
 
