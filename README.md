@@ -79,7 +79,8 @@ the following steps:
 
 1. Replace `base` dependency with corresponding version of `base-noprelude` in
    your `.cabal` file.
-2. Add the following `Prelude` module to your project (both to filesystem and to `exposed-modules`):
+2. Add a `relude` dependency to your `.cabal` file.
+3. Add the following `Prelude` module to your project (both to filesystem and to `exposed-modules`):
    ```haskell
    module Prelude
           ( module Relude
@@ -89,7 +90,7 @@ the following steps:
    ```
    > **NOTE:** if you use [`summoner`](https://github.com/kowainik/summoner) to generate Haskell project,
    > this tool can automatically create such structure for you when you specify custom prelude.
-3. Optionally modify your `Prelude` to include more or less functions. Probably
+4. Optionally modify your `Prelude` to include more or less functions. Probably
    you want to hide something from `Relude` module. Or maybe you want to add
    something from `Relude.Extra.*` modules!
 
