@@ -5,6 +5,7 @@ in let warnLifted     = warn.warnLifted
 in let warnSimple     = warn.warnSimple
 in let warnNote       = warn.warnNote
 in let hintNote       = warn.hintNote
+in let hintNoteOp     = warn.hintNoteOp
 in let rule           = constructors ./Rule.dhall
 in [ rule.Arguments { arguments =
        [ "-XConstraintKinds"
@@ -36,22 +37,22 @@ in [ rule.Arguments { arguments =
    , hintNote "return ()" "pass" "Use 'pass'"
 
    -- One
-   , hintNote ":[]" "one" "Use `one`"
-   , hintNote ":|[]" "one" "Use `one`"
-   , hintNote "Data.Sequence.singleton" "one" "Use `one`"
-   , hintNote "Data.Text.singleton" "one" "Use `one`"
-   , hintNote "Data.Text.Lazy.singleton" "one" "Use `one`"
-   , hintNote "Data.ByteString.singleton" "one" "Use `one`"
+   , hintNoteOp ": []"                         "one" "Use `one`"
+   , hintNoteOp ":| []"                        "one" "Use `one`"
+   , hintNote "Data.Sequence.singleton"        "one" "Use `one`"
+   , hintNote "Data.Text.singleton"            "one" "Use `one`"
+   , hintNote "Data.Text.Lazy.singleton"       "one" "Use `one`"
+   , hintNote "Data.ByteString.singleton"      "one" "Use `one`"
    , hintNote "Data.ByteString.Lazy.singleton" "one" "Use `one`"
-   , hintNote "Data.Map.singleton" "one" "Use `one`"
-   , hintNote "Data.Map.Strict.singleton" "one" "Use `one`"
-   , hintNote "Data.HashMap.Strict.singleton" "one" "Use `one`"
-   , hintNote "Data.HashMap.Lazy.singleton" "one" "Use `one`"
-   , hintNote "Data.IntMap.singleton" "one" "Use `one`"
-   , hintNote "Data.IntMap.Strict.singleton" "one" "Use `one`"
-   , hintNote "Data.Set.singleton" "one" "Use `one`"
-   , hintNote "Data.HashSet.singleton" "one" "Use `one`"
-   , hintNote "Data.IntSet.singleton" "one" "Use `one`"
+   , hintNote "Data.Map.singleton"             "one" "Use `one`"
+   , hintNote "Data.Map.Strict.singleton"      "one" "Use `one`"
+   , hintNote "Data.HashMap.Strict.singleton"  "one" "Use `one`"
+   , hintNote "Data.HashMap.Lazy.singleton"    "one" "Use `one`"
+   , hintNote "Data.IntMap.singleton"          "one" "Use `one`"
+   , hintNote "Data.IntMap.Strict.singleton"   "one" "Use `one`"
+   , hintNote "Data.Set.singleton"             "one" "Use `one`"
+   , hintNote "Data.HashSet.singleton"         "one" "Use `one`"
+   , hintNote "Data.IntSet.singleton"          "one" "Use `one`"
 
    -- Deepseq
    , warnSimple "Control.Exception.evaluate" "evaluateWHNF"
@@ -565,8 +566,8 @@ in [ rule.Arguments { arguments =
    , warnReexport "Identity"    "Data.Functor.Identity"
    , warnReexport "runIdentity" "Data.Functor.Identity"
 
--- Data.Functor.Contravariant    
--- These rules have been commented out because they are only valid for GHC >= 8.6.1 
+-- Data.Functor.Contravariant
+-- These rules have been commented out because they are only valid for GHC >= 8.6.1
 -- , warnReexport "Contravariant"          "Data.Functor.Contravariant"
 -- , warnReexport "contramap"              "Data.Functor.Contravariant"
 -- , warnReexportOp ">$"                   "Data.Functor.Contravariant"
@@ -585,10 +586,6 @@ in [ rule.Arguments { arguments =
 -- , warnReexport "comparisonEquivalence"  "Data.Functor.Contravariant"
 -- , warnReexport "Op"                     "Data.Functor.Contravariant"
 -- , warnReexport "getOp"                  "Data.Functor.Contravariant"
-   
-
-   
-
 
    -- Lifted Concurrent
    , warnReexport "MVar"         "Control.Concurrent.MVar"

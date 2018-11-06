@@ -3,7 +3,8 @@ in let rule = constructors Rule
 in let warnSimple
     : Text -> Text -> Rule
     = \(lhsTxt : Text) -> \(rhsTxt : Text) ->
-        rule.Warn {warn =
+        rule.Warn
+        { warn =
             { name = None Text
             , lhs = "${lhsTxt}"
             , rhs = "${rhsTxt}"
@@ -25,7 +26,8 @@ in let warnNote
 in let warnReexport
     : Text -> Text -> Rule
     = \(f : Text) -> \(mod : Text) ->
-        rule.Warn {warn =
+        rule.Warn
+        { warn =
             { name = Some "Use '${f}' from Relude"
             , lhs = "${mod}.${f}"
             , rhs = "${f}"
@@ -35,7 +37,8 @@ in let warnReexport
 
 in let warnReexportOp : Text -> Text -> Rule
     = \(f : Text) -> \(mod : Text) ->
-        rule.Warn {warn =
+        rule.Warn
+        { warn =
             { name = Some "Use '${f}' from Relude"
             , lhs = "(${mod}.${f})"
             , rhs = "(${f})"
@@ -46,7 +49,8 @@ in let warnReexportOp : Text -> Text -> Rule
 in let warnLifted
     : Text -> Text -> Rule
     =  \(f : Text) -> \(args : Text) ->
-        rule.Warn { warn =
+        rule.Warn
+        { warn =
             { name = Some "'liftIO' is not needed"
             , lhs = "(liftIO (${f} ${args}))"
             , rhs = "${f}"
@@ -57,12 +61,18 @@ in let warnLifted
 in let hintNote
     : Text -> Text -> Text -> Rule
     = \(lhsTxt : Text) -> \(rhsTxt : Text) -> \(n : Text) ->
-        rule.Hint { hint =
-            { lhs = "(${lhsTxt})"
+        rule.Hint
+        { hint =
+            { lhs = "${lhsTxt}"
             , rhs = "${rhsTxt}"
             , note = Some "${n}"
             }
         }
+
+in let hintNoteOp
+    : Text -> Text -> Text -> Rule
+    = \(lhsTxt : Text) -> \(rhsTxt : Text) -> \(n : Text) ->
+        hintNote "(${lhsTxt})" rhsTxt n
 
 in { warnSimple     = warnSimple
    , warnNote       = warnNote
@@ -70,4 +80,5 @@ in { warnSimple     = warnSimple
    , warnReexportOp = warnReexportOp
    , warnLifted     = warnLifted
    , hintNote       = hintNote
+   , hintNoteOp     = hintNoteOp
    }
