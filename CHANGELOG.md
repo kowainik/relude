@@ -24,7 +24,8 @@
   Drop utf8-string dependency.
 * [#109](https://github.com/kowainik/relude/issues/109):
   Use Dhall v3.0.0 for hlint file generation.
-
+* [#80](https://github.com/kowainik/relude/issues/80):
+  Add hlint rules for `whenLeft`, `whenLeftM`, `whenRight` and `whenRightM`.
 
 0.3.0
 =====
