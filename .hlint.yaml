@@ -15,75 +15,75 @@
 - ignore:
     name: Use Foldable.forM_
 - hint:
-    lhs: (pure ())
+    lhs: pure ()
     note: Use 'pass'
     rhs: pass
 - hint:
-    lhs: (return ())
+    lhs: return ()
     note: Use 'pass'
     rhs: pass
 - hint:
-    lhs: (:[])
+    lhs: ! '(: [])'
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (:|[])
+    lhs: (:| [])
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (Data.Sequence.singleton)
+    lhs: Data.Sequence.singleton
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (Data.Text.singleton)
+    lhs: Data.Text.singleton
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (Data.Text.Lazy.singleton)
+    lhs: Data.Text.Lazy.singleton
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (Data.ByteString.singleton)
+    lhs: Data.ByteString.singleton
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (Data.ByteString.Lazy.singleton)
+    lhs: Data.ByteString.Lazy.singleton
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (Data.Map.singleton)
+    lhs: Data.Map.singleton
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (Data.Map.Strict.singleton)
+    lhs: Data.Map.Strict.singleton
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (Data.HashMap.Strict.singleton)
+    lhs: Data.HashMap.Strict.singleton
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (Data.HashMap.Lazy.singleton)
+    lhs: Data.HashMap.Lazy.singleton
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (Data.IntMap.singleton)
+    lhs: Data.IntMap.singleton
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (Data.IntMap.Strict.singleton)
+    lhs: Data.IntMap.Strict.singleton
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (Data.Set.singleton)
+    lhs: Data.Set.singleton
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (Data.HashSet.singleton)
+    lhs: Data.HashSet.singleton
     note: Use `one`
     rhs: one
 - hint:
-    lhs: (Data.IntSet.singleton)
+    lhs: Data.IntSet.singleton
     note: Use `one`
     rhs: one
 - warn:
@@ -102,7 +102,7 @@
     lhs: void (evaluateNF x)
     rhs: evaluateNF_ x
 - hint:
-    lhs: (Control.Exception.throw)
+    lhs: Control.Exception.throw
     note: Use 'impureThrow'
     rhs: impureThrow
 - warn:
@@ -142,7 +142,7 @@
     lhs: Data.ByteString.Lazy.appendFile
     rhs: appendFileLBS
 - hint:
-    lhs: (foldl' (flip f))
+    lhs: foldl' (flip f)
     note: Use 'flipfoldl''
     rhs: flipfoldl' f
 - warn:
@@ -152,42 +152,42 @@
     lhs: foldl' (*) 1
     rhs: product
 - hint:
-    lhs: (fmap and (sequence s))
+    lhs: fmap and (sequence s)
     note: Applying this hint would mean that some actions that were being executed
       previously would no longer be executed.
     rhs: andM s
 - hint:
-    lhs: (and <$> sequence s)
+    lhs: and <$> sequence s
     note: Applying this hint would mean that some actions that were being executed
       previously would no longer be executed.
     rhs: andM s
 - hint:
-    lhs: (fmap or (sequence s))
+    lhs: fmap or (sequence s)
     note: Applying this hint would mean that some actions that were being executed
       previously would no longer be executed.
     rhs: orM s
 - hint:
-    lhs: (or <$> sequence s)
+    lhs: or <$> sequence s
     note: Applying this hint would mean that some actions that were being executed
       previously would no longer be executed.
     rhs: orM s
 - hint:
-    lhs: (fmap and (mapM f s))
+    lhs: fmap and (mapM f s)
     note: Applying this hint would mean that some actions that were being executed
       previously would no longer be executed.
     rhs: allM f s
 - hint:
-    lhs: (and <$> mapM f s)
+    lhs: and <$> mapM f s
     note: Applying this hint would mean that some actions that were being executed
       previously would no longer be executed.
     rhs: allM f s
 - hint:
-    lhs: (fmap or (mapM f s))
+    lhs: fmap or (mapM f s)
     note: Applying this hint would mean that some actions that were being executed
       previously would no longer be executed.
     rhs: anyM f s
 - hint:
-    lhs: (or <$> mapM f s)
+    lhs: or <$> mapM f s
     note: Applying this hint would mean that some actions that were being executed
       previously would no longer be executed.
     rhs: anyM f s
@@ -198,34 +198,34 @@
     lhs: getAlt . foldMap (Alt . f)
     rhs: asumMap
 - hint:
-    lhs: (foldr (\x acc -> f x <|> acc) empty)
+    lhs: foldr (\x acc -> f x <|> acc) empty
     note: Use 'asumMap'
     rhs: asumMap f
 - hint:
-    lhs: (asum (map f xs))
+    lhs: asum (map f xs)
     note: Use 'asumMap'
     rhs: asumMap f xs
 - warn:
     lhs: map fst &&& map snd
     rhs: unzip
 - hint:
-    lhs: (fmap (fmap f) x)
+    lhs: fmap (fmap f) x
     note: Use '(<<$>>)'
     rhs: f <<$>> x
 - hint:
-    lhs: ((\f -> f x) <$> ff)
+    lhs: (\f -> f x) <$> ff
     note: Use flap operator
     rhs: ff ?? x
 - hint:
-    lhs: (fmap (\f -> f x) ff)
+    lhs: fmap (\f -> f x) ff
     note: Use flap operator
     rhs: ff ?? x
 - hint:
-    lhs: (fmap ($ x) ff)
+    lhs: fmap ($ x) ff
     note: Use flap operator
     rhs: ff ?? x
 - hint:
-    lhs: (($ x) <$> ff)
+    lhs: ($ x) <$> ff
     note: Use flap operator
     rhs: ff ?? x
 - warn:
