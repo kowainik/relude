@@ -1,31 +1,39 @@
 # Change log
 
-0.4.0
+Unreleased
+====
+
+0.4.0 — Nov 6, 2018
 =====
+
 * [#70](https://github.com/kowainik/relude/issues/70):
-  Reexport `Contravariant` for GHC >= 8.6.1
-* [#81](https://github.com/kowainik/relude/issues/81):
-  Add `asumMap` to `Foldable` functions.
+  Reexport `Contravariant` for GHC >= 8.6.1.
+* [#103](https://github.com/kowainik/relude/pull/104):
+  Drop `utf8-string` dependency and improve performance of conversion functions.
+* [#98](https://github.com/kowainik/relude/issues/98):
+  Reexport `Bifoldable` related stuff from `base`.
+* [#99](https://github.com/kowainik/relude/issues/99):
+  Reexport `Bitraversable` related stuff from `base`.
+* [#100](https://github.com/kowainik/relude/issues/100):
+  Add `Relude.Extra.Validation` with `Validation`data type.
 * [#89](https://github.com/kowainik/relude/issues/81):
   Add `Relude.Extra.Type` module containing a `typeName` function.
 * [#92](https://github.com/kowainik/relude/issues/92)
   Add `Relude.Extra.Tuple` module, containing
   `dupe`, `mapToFst`, `mapToSnd`, and `mapBoth` functions.
-* Remove `openFile` and `hClose`.
-* [#98](https://github.com/kowainik/relude/issues/98):
-  Reexport `Bifoldable` related stuff from `base`.
-* [#99](https://github.com/kowainik/relude/issues/99):
-  Reexport `Bitraversable` related stuff from `base`.
 * [#97](https://github.com/kowainik/relude/issues/97):
   Add `(&&^)` and `(||^)` operators.
-* [#100](https://github.com/kowainik/relude/issues/100):
-  Add `Validation` data type to Extra modules.
-* [#103](https://github.com/kowainik/relude/pull/104):
-  Drop utf8-string dependency.
-* [#109](https://github.com/kowainik/relude/issues/109):
-  Use Dhall v3.0.0 for hlint file generation.
+* [#81](https://github.com/kowainik/relude/issues/81):
+  Add `asumMap` to `Foldable` functions.
 * [#80](https://github.com/kowainik/relude/issues/80):
   Add hlint rules for `whenLeft`, `whenLeftM`, `whenRight` and `whenRightM`.
+* [#79](https://github.com/kowainik/relude/issues/79):
+  Add HLint rules for `One` typeclass.
+* Remove `openFile` and `hClose`.
+* [#83](https://github.com/kowainik/relude/pull/83):
+  Make documentation for `nub` functions prettier.
+* [#109](https://github.com/kowainik/relude/issues/109):
+  Use Dhall v3.0.0 for hlint file generation.
 
 0.3.0
 =====

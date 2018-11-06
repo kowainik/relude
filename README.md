@@ -293,6 +293,8 @@ Finally, we can move to part describing the new cool features we bring with `rel
 
 * `Foldable1` typeclass that contains generalized interface for folding
   non-empty structures like `NonEmpty`.
+* `Validation` data type as an alternative to `Either` when you want to combine
+  all errors.
 
 Explore `Extra` modules: [`Relude.Extra`](src/Relude/Extra/)
 

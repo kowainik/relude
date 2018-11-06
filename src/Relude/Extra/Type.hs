@@ -25,7 +25,7 @@ import Data.Typeable (Typeable, typeRep)
 
 {- | Gets a string representation of a type.
 
-Note: This must be used with -XTypeApplications
+__NOTE:__ This must be used with __TypeApplications__ language extension.
 
 >>> typeName @()
 "()"
