@@ -16,9 +16,7 @@ module Relude.Base
        ( -- * Base types
          module Data.Bits
        , module Data.Char
-       , module Data.Int
        , module Data.Word
-       , Natural
 
          -- * Base type classes
        , module Data.Eq
@@ -36,10 +34,7 @@ module Relude.Base
 
        , module GHC.Base
        , module GHC.Enum
-       , module GHC.Float
        , module GHC.Generics
-       , module GHC.Num
-       , module GHC.Real
        , module GHC.Show
 
 #if MIN_VERSION_base(4,10,0)
@@ -56,9 +51,7 @@ module Relude.Base
 -- Base types
 import Data.Bits (xor)
 import Data.Char (Char, chr)
-import Data.Int (Int, Int16, Int32, Int64, Int8)
 import Data.Word (Word, Word16, Word32, Word64, Word8, byteSwap16, byteSwap32, byteSwap64)
-import Numeric.Natural (Natural)
 
 -- IO
 import System.IO (FilePath, Handle, IO, IOMode (..), stderr, stdin, stdout, withFile)
@@ -76,11 +69,7 @@ import Data.Void (Void, absurd, vacuous)
 
 import GHC.Base (String, asTypeOf, maxInt, minInt, ord, seq, ($!))
 import GHC.Enum (Bounded (..), Enum (..), boundedEnumFrom, boundedEnumFromThen)
-import GHC.Float (Double (..), Float (..), Floating (acos, acosh, asin, asinh, atan, atanh, cos, cosh, exp, logBase, pi, sin, sinh, sqrt, tan, tanh, (**)))
 import GHC.Generics (Generic)
-import GHC.Num (Integer, Num (..), subtract)
-import GHC.Real (Fractional (..), Integral (..), Ratio, Rational, Real (..), RealFrac (..),
-                 denominator, even, fromIntegral, gcd, lcm, numerator, odd, realToFrac, (^), (^^))
 import GHC.Show (Show)
 
 #if MIN_VERSION_base(4,10,0)

@@ -28,8 +28,8 @@ module Relude.Unsafe
 import Data.List (head, init, last, tail, (!!))
 import Data.Maybe (fromJust)
 
-import Relude.Base (Int)
 import Relude.Function (flip)
+import Relude.Numeric (Int)
 
 -- | Similar to '!!' but with flipped arguments.
 at :: Int -> [a] -> a

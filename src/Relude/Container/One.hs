@@ -16,8 +16,9 @@ module Relude.Container.One
        ( One (..)
        ) where
 
-import Relude.Base (Char, Int, Word8)
+import Relude.Base (Char, Word8)
 import Relude.Container.Reexport (HashMap, HashSet, Hashable, IntMap, IntSet, Map, Set, uncurry)
+import Relude.Numeric (Int)
 
 import qualified Data.List.NonEmpty as NE
 
@@ -37,8 +38,9 @@ import qualified Data.Map as M
 import qualified Data.Set as Set
 
 -- $setup
--- >>> import Relude.Base (Int, String)
+-- >>> import Relude.Base (String)
 -- >>> import Relude.Bool (Bool (..))
+-- >>> import Relude.Numeric (Int)
 -- >>> import Relude.String (Text)
 -- >>> import qualified Data.HashMap.Strict as HashMap
 

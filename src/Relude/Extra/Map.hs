@@ -25,12 +25,13 @@ module Relude.Extra.Map
 import GHC.Exts (IsList (Item, toList))
 
 import Relude.Applicative (pure, (*>))
-import Relude.Base (Eq, Int, Ord, Type)
+import Relude.Base (Eq, Ord, Type)
 import Relude.Bool (Bool, guard, not)
 import Relude.Container.Reexport (HashMap, HashSet, Hashable, IntMap, IntSet, Map, Set, fst, snd)
 import Relude.Function ((.))
 import Relude.List (map)
 import Relude.Monad.Reexport (Maybe (..), fromMaybe)
+import Relude.Numeric (Int)
 
 import qualified Data.HashMap.Strict as HM
 import qualified Data.HashSet as HS

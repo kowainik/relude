@@ -105,13 +105,14 @@ library
                                Relude.Monad.Trans
                            Relude.Monoid
                            Relude.Nub
+                           Relude.Numeric
                            Relude.Print
                            Relude.String
                                Relude.String.Conversion
                                Relude.String.Reexport
 
                            -- not exported by default
-                           Relude.Extra.Bifunctor                          
+                           Relude.Extra.Bifunctor
                            Relude.Extra.CallStack
                            Relude.Extra.Enum
                            Relude.Extra.Foldable1

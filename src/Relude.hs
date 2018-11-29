@@ -114,6 +114,7 @@ module Relude
        , module Relude.Monad
        , module Relude.Monoid
        , module Relude.Nub
+       , module Relude.Numeric
        , module Relude.Print
        , module Relude.String
        ) where
@@ -134,5 +135,6 @@ import Relude.List
 import Relude.Monad
 import Relude.Monoid
 import Relude.Nub
+import Relude.Numeric
 import Relude.Print
 import Relude.String
