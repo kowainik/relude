@@ -14,9 +14,7 @@ Reexports from @Data.*@ and @GHC.*@ modules of
 
 module Relude.Base
        ( -- * Base types
-         module Data.Bits
-       , module Data.Char
-       , module Data.Word
+         module Data.Char
 
          -- * Base type classes
        , module Data.Eq
@@ -49,9 +47,7 @@ module Relude.Base
        ) where
 
 -- Base types
-import Data.Bits (xor)
 import Data.Char (Char, chr)
-import Data.Word (Word, Word16, Word32, Word64, Word8, byteSwap16, byteSwap32, byteSwap64)
 
 -- IO
 import System.IO (FilePath, Handle, IO, IOMode (..), stderr, stdin, stdout, withFile)

@@ -71,6 +71,7 @@ imported by default from "Relude":
   monad transormers, various combinators.
 * __"Relude.Monoid"__: reexports from "Data.Monoid" and "Data.Semigroup".
 * __"Relude.Nub"__: better versions of @nub@ function for list.
+* __"Relude.Numeric"__: functions and types to work with numerical data
 * __"Relude.Print"__: printing to terminal functions for 'Text' and 'ByteString'.
 * __"Relude.String"__: reexports from @text@ and @bytestring@ packages with
     conversion functions between different textual types.
