@@ -35,6 +35,7 @@ module Relude.Base
        , module GHC.Generics
        , module GHC.Show
 
+-- * GHC-specific functionality
 #if MIN_VERSION_base(4,10,0)
        , module GHC.TypeNats
 #else
@@ -63,7 +64,7 @@ import Data.Proxy (Proxy (..))
 import Data.Typeable (Typeable)
 import Data.Void (Void, absurd, vacuous)
 
-import GHC.Base (String, asTypeOf, maxInt, minInt, ord, seq, ($!))
+import GHC.Base (String, asTypeOf, ord, seq, ($!))
 import GHC.Enum (Bounded (..), Enum (..), boundedEnumFrom, boundedEnumFromThen)
 import GHC.Generics (Generic)
 import GHC.Show (Show)
