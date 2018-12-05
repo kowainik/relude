@@ -3,6 +3,14 @@
 Unreleased
 ====
 
+Unreleased: 0.5.0
+=====
+
+* [#125](https://github.com/kowainik/relude/issues/125):
+  Moved many numerical functions and types in `Relude.Numeric`.    
+  Reexport `toIntegralSized` from `Data.Bits`.    
+  Add `integerToBounded` and `integerToNatural` in `Relude.Numeric`.
+
 0.4.0 — Nov 6, 2018
 =====
 

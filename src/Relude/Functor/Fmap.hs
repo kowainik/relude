@@ -35,9 +35,9 @@ as <&> f = f <$> as
 #endif
 
 -- $setup
--- >>> import Relude.Base (negate, (*), (+))
 -- >>> import Relude.Monad (Maybe (..))
 -- >>> import Relude.List ((++))
+-- >>> import Relude.Numeric (negate, (*), (+))
 
 {- | Alias for @fmap . fmap@. Convenient to work with two nested 'Functor's.
 

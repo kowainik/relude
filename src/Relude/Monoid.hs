@@ -22,8 +22,8 @@ import Data.Semigroup (Option (..), Semigroup (sconcat, stimes, (<>)), WrappedMo
 import Relude.Monad.Reexport (Maybe, fromMaybe)
 
 -- $setup
--- >>> import Relude.Base (Int)
 -- >>> import Relude.Monad (Maybe (..))
+-- >>> import Relude.Numeric (Int)
 
 -- | Extracts 'Monoid' value from 'Maybe' returning 'mempty' if 'Nothing'.
 --

@@ -16,8 +16,9 @@ module Relude.Container.One
        ( One (..)
        ) where
 
-import Relude.Base (Char, Int, Word8)
+import Relude.Base (Char)
 import Relude.Container.Reexport (HashMap, HashSet, Hashable, IntMap, IntSet, Map, Set, uncurry)
+import Relude.Numeric (Int, Word8)
 
 import qualified Data.List.NonEmpty as NE
 
@@ -37,9 +38,7 @@ import qualified Data.Map as M
 import qualified Data.Set as Set
 
 -- $setup
--- >>> import Relude.Base (Int, String)
--- >>> import Relude.Bool (Bool (..))
--- >>> import Relude.String (Text)
+-- >>> import Relude
 -- >>> import qualified Data.HashMap.Strict as HashMap
 
 {- | Typeclass for data types that can be created from one element.

@@ -41,14 +41,15 @@ module Relude.Foldable.Fold
 import GHC.TypeLits (ErrorMessage (..), TypeError)
 
 import Relude.Applicative (Alternative, Applicative (..), pure)
-import Relude.Base (Constraint, Eq, IO, Num (..), Type, ($!))
+import Relude.Base (Constraint, Eq, IO, Type, ($!))
 import Relude.Bool (Bool (..))
 import Relude.Container.Reexport (HashSet, Set)
 import Relude.Foldable.Reexport (Foldable (..))
 import Relude.Function (flip, (.))
 import Relude.Functor ((<$>))
 import Relude.Monad.Reexport (Monad (..))
-import Relude.Monoid (Alt(..), Monoid (..))
+import Relude.Monoid (Alt (..), Monoid (..))
+import Relude.Numeric (Num (..))
 
 import qualified Data.Foldable as F
 
