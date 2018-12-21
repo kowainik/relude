@@ -27,6 +27,7 @@ import Relude.Monad.Trans
 -- >>> import Relude
 
 {- | For chaining monadic operations in forward applications using '(&)'
+Named version of '=<<'.
 
 >>> Just [ 1 :: Int ] & chainedTo (viaNonEmpty head)
 Just 1
@@ -35,3 +36,4 @@ Nothing
 -}
 chainedTo :: Monad m => (a -> m b) -> m a -> m b
 chainedTo = (=<<)
+{-# INLINE chainedTo #-}

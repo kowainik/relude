@@ -33,14 +33,18 @@ pass :: Applicative f => f ()
 pass = pure ()
 
 {- | For chaining applicative operations in forward applications using '(&)'
+Named version of the '<**>' operator, which is '<*>' but flipped
 
 >>> Just (+ 1) & appliedTo (Just 2)
+Just 3
+>>> Just (+) & appliedTo (Just 1) & appliedTo (Just 2)
 Just 3
 >>> Nothing & appliedTo (Just 2)
 Nothing
 -}
 appliedTo :: Applicative f => f a -> f (a -> b) -> f b
-appliedTo x f = f <*> x
+appliedTo = (<**>)
+{-# INLINE appliedTo #-}
 
 
 {-
