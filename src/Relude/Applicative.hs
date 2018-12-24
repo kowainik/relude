@@ -15,12 +15,14 @@ but only convenient ans most used are left.
 module Relude.Applicative
        ( module Control.Applicative
        , pass
+       , appliedTo
        ) where
 
 import Control.Applicative (Alternative (..), Applicative (..), Const (..), ZipList (..), liftA2,
                             liftA3, optional, (<**>))
 
 -- $setup
+-- >>> import Relude
 -- >>> import Relude.Monad (Maybe)
 
 -- | Shorter alias for @pure ()@.
@@ -29,6 +31,21 @@ import Control.Applicative (Alternative (..), Applicative (..), Const (..), ZipL
 -- Just ()
 pass :: Applicative f => f ()
 pass = pure ()
+
+{- | For chaining applicative operations in forward applications using '(&)'
+Named version of the '<**>' operator, which is '<*>' but flipped
+
+>>> Just (+ 1) & appliedTo (Just 2)
+Just 3
+>>> Just (+) & appliedTo (Just 1) & appliedTo (Just 2)
+Just 3
+>>> Nothing & appliedTo (Just 2)
+Nothing
+-}
+appliedTo :: Applicative f => f a -> f (a -> b) -> f b
+appliedTo = (<**>)
+{-# INLINE appliedTo #-}
+
 
 {-
 orAlt :: (Alternative f, Monoid a) => f a -> f a

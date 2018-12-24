@@ -15,9 +15,25 @@ module Relude.Monad
        , module Relude.Monad.Maybe
        , module Relude.Monad.Reexport
        , module Relude.Monad.Trans
+       , chainedTo
        ) where
 
 import Relude.Monad.Either
 import Relude.Monad.Maybe
 import Relude.Monad.Reexport
 import Relude.Monad.Trans
+
+-- $setup
+-- >>> import Relude
+
+{- | For chaining monadic operations in forward applications using '(&)'
+Named version of '=<<'.
+
+>>> Just [ 1 :: Int ] & chainedTo (viaNonEmpty head)
+Just 1
+>>> Nothing & chainedTo (viaNonEmpty head)
+Nothing
+-}
+chainedTo :: Monad m => (a -> m b) -> m a -> m b
+chainedTo = (=<<)
+{-# INLINE chainedTo #-}
