@@ -182,6 +182,7 @@ test-suite relude-doctest
   build-depends:       base >= 4.9 && < 5
                      , doctest
                      , Glob
+                     , QuickCheck
 
   ghc-options:         -threaded
   default-language:    Haskell2010

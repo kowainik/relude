@@ -1,18 +1,19 @@
 # Change log
 
-Unreleased: 0.5.0
-=====
+`relude` uses [PVP Versioning][1].
+The change log is available [on GitHub][2].
+
+## Unreleased: 0.5.0
 
 * [#125](https://github.com/kowainik/relude/issues/125):
   Moved many numerical functions and types in `Relude.Numeric`.
   Reexport `toIntegralSized` from `Data.Bits`.
   Add `integerToBounded` and `integerToNatural` in `Relude.Numeric`.
-
 * [#129](https://github.com/kowainik/relude/issues/129):
   Add `appliedTo` and `chainedTo` as named versions of operators `=<<` and `<**>`.
+* Improve documentation for `One` typeclass and add tests.
 
-0.4.0 — Nov 6, 2018
-=====
+## 0.4.0 — Nov 6, 2018
 
 * [#70](https://github.com/kowainik/relude/issues/70):
   Reexport `Contravariant` for GHC >= 8.6.1.
@@ -43,8 +44,7 @@ Unreleased: 0.5.0
 * [#109](https://github.com/kowainik/relude/issues/109):
   Use Dhall v3.0.0 for hlint file generation.
 
-0.3.0
-=====
+## 0.3.0
 
 * [#41](https://github.com/kowainik/relude/issues/41):
   Add `Foldable1`.
@@ -79,8 +79,7 @@ Unreleased: 0.5.0
 * [#60](https://github.com/kowainik/relude/issues/60):
   Add `hoistMaybe` and `hoistEither` functions.
 
-0.2.0
-=====
+## 0.2.0
 
 * [#43](https://github.com/kowainik/relude/issues/43):
   Implement `Relude.Extra.Newtype` module.
@@ -98,14 +97,12 @@ Unreleased: 0.5.0
   Remove `safeHead`.
   Rename `Relude.List.Safe` to `Relude.List.NonEmpty`.
 
-0.1.1
-=====
+## 0.1.1
 
 * [#44](https://github.com/kowainik/relude/issues/44):
   Implement parser deriviation from pretty-printers.
 
-0.1.0
-=====
+## 0.1.0
 
 * [#7](https://github.com/kowainik/relude/issues/7):
   Remove `Container.Class.Container`. Export `Foldable`.
@@ -146,9 +143,6 @@ Unreleased: 0.5.0
 * [#8](https://github.com/kowainik/relude/issues/8):
   Introduce `StaticMap` and `DynamicMap` type classes as universal interface for
   Map-like structures.
-
-`relude` uses [PVP Versioning][1].
-The change log is available [on GitHub][2].
 
 [1]: https://pvp.haskell.org
 [2]: https://github.com/kowainik/relude/releases
