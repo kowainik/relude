@@ -4,16 +4,16 @@
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
-            (c) 20016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2016-2018 Serokell
+            (c) 2018-present Kowainik
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Typeclass for creating structures from singleton element. It has two goals:
+Typeclass for creating structures from a singleton element. It has three main goals:
 
-1. Give shorter name for construction: uses 'one' instead of common @singleton@.
+1. Give a shorter name for the construction: uses 'one' instead of common @singleton@.
 2. Work with monomorphic structures like 'T.Text' or 'IntSet'.
-3. Clearer and less scary name for cases where you can use 'pure' or @(:[])@.
+3. Give a clearer and less scary name for cases where you can use 'pure' or @(:[])@.
 -}
 
 module Relude.Container.One
@@ -63,7 +63,8 @@ __Laws:__
 
 * __@single-size@__: @∀ x . size (one x) ≡ 1@
 
-(where @size@ is specific function for each container that returns size of this container)
+(where @size@ is a specific function for each container that returns the size of
+this container)
 -}
 class One x where
     -- | Type of single element of the structure.
@@ -73,7 +74,7 @@ class One x where
 
 -- Lists
 
-{- | Allows to create singleton list. You might prefer function with name 'one'
+{- | Allows to create a singleton list. You might prefer function with name 'one'
 instead of 'pure' or @(:[])@.
 
 >>> one 42 :: [Int]
