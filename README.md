@@ -370,10 +370,10 @@ alternative preludes. It's also relatively small, but:
 3. `relude` has custom HLint rules specific to it: you can use them to remove
    redundant imports or find hints how to use functions from `relude`. Moreover,
    the HLint rules are generated using Dhall and there is [a blog post about
-   used technique](https://kowainik.github.io/posts/2018-09-09-dhall-to-hlint).
+   this technique](https://kowainik.github.io/posts/2018-09-09-dhall-to-hlint).
    This allows to maintain HLint rules much easier because it's already not an
    easy task.
-4. `relude` has less dependencies and slightly lighter because of that but still
+4. `relude` has less dependencies and is slightly lighter because of that but still
    very powerful and useful.
 5. One minor difference: `head` in `protolude` returns `Maybe a` while in
    `relude` it works with `NonEmpty`.
