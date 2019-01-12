@@ -61,7 +61,9 @@ This tutorial has several parts:
 3. [Reexports.](#reexports-)
 4. [What's new?](#whats-new-)
 6. [Migration guide.](#migration-guide-)
-7. [For developers.](#for-developers-)
+7. [Comparison with other alternative preludes](#comparison-with-other-alternative-preludes-)
+    * [Relude vs Protolude](#relude-vs-protolude-)
+8. [For developers.](#for-developers-)
 
 This is neither a tutorial on _Haskell_ nor tutorial on each function contained
 in `Relude`. For detailed documentation of every function together with examples
@@ -340,6 +342,51 @@ This section describes what you need to change to make your code compile with `r
    + Use `encodeUtf8/decodeUtf8` to convert to/from `ByteString`.
    + Use `(putStr[Ln]|readFile|writeFile|appendFile)[Text|LText|BS|LBS]` functions.
 6. Run `hlint` using `.hlint.yaml` file from `relude` package to cleanup code and imports.
+
+## Comparison with other alternative preludes [↑](#structure-of-this-tutorial)
+
+There are quite a few libraries that can be used as alternative preludes in
+Haskell, let's compare Relude with some of them.
+
+### Relude vs Protolude [↑](#structure-of-this-tutorial)
+
+[Protolude](https://github.com/sdiehl/protolude) is one of the most popular
+alternative preludes. It's also relatively small, but:
+
+1. Protolude supports older GHC versions (from GHC 7.6.1) while `relude` only
+   supports from GHC 8.0.2. So if you aim ancient GHC versions, `protolude`
+   might be a better choice. But because of that it contains a lot of CPP, code
+   is ugly in some places as a consequence and it's more difficult to add,
+   remove or change things there.
+2. `relude` has much better documentation:
+    * [High-level overview of internal module structure](http://hackage.haskell.org/package/relude/docs/Relude.html)
+    * 100% Haddock coverage
+    * Almost every function has usage examples and all examples are tested with
+      `doctest` (which also sometimes hard to do because of multiple GHC
+      versions support, but we try really hard)
+    * [Tutorial + migration guide](structure-of-this-tutorial) from
+      `Prelude` and just general description of the whole package and libraries
+      it depends on.
+3. `relude` has custom HLint rules specific to it: you can use them to remove
+   redundant imports or find hints how to use functions from `relude`. Moreover,
+   the HLint rules are generated using Dhall and there is [a blog post about
+   this technique](https://kowainik.github.io/posts/2018-09-09-dhall-to-hlint).
+   This allows to maintain HLint rules much easier because it's already not an
+   easy task.
+4. `relude` has less dependencies and is slightly lighter because of that but still
+   very powerful and useful.
+5. One minor difference: `head` in `protolude` returns `Maybe a` while in
+   `relude` it works with `NonEmpty`.
+6. Minor feature: `relude` uses type-level magic to forbid `elem` and `notElem`
+   functions for `Set` and `HashSet` (because `elem` from `Foldable` run in
+   _O(n)_ time and you can accidentally use `elem` from `Foldable` but with
+   `relude` you can't).
+7. `relude` is opt-in oriented and has a notion of `Extra.*` modules that are
+   not exported by default from the `Relude` module. So we don't spoil global
+   namespace but still have a lot of useful features like polymorphic functions
+   to work with every `newtype`, `Enum/Bounded`-related useful utilities,
+   functions to take a name of any type as `Text` and much more. It's very easy
+   to make them accessible package-wide with `base-noprelude` trick!
 
 ## For Developers [↑](#structure-of-this-tutorial)
 
