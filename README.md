@@ -100,6 +100,7 @@ This is a very convenient way to add a custom prelude to your project because
 you don't need to import module manually inside each file and enable the
 `NoImplicitPrelude` extension.
 
+
 ### Per-file configuration
 
 Disable the built-in prelude at the top of your file:
@@ -118,6 +119,38 @@ Then add the following import to your modules:
 
 ```haskell
 import Relude
+```
+
+### Using mixins
+
+You can use Cabal feature `mixins` to replace the default `Prelude` with `Relude`
+without need to add extra dependencies or import `Relude` manually each time.
+See the following example:
+
+> **NOTE:** this requires Cabal version at least `2.2`
+
+```cabal
+cabal-version:       2.2
+name:                prelude-example
+version:             0.0.0.0
+
+library
+  exposed-modules:     Example
+  build-depends:       base >= 4.10 && < 4.13
+                     , relude ^>= 0.4.0
+
+  mixins:              base hiding (Prelude)
+                     , relude (Relude as Prelude)
+
+  default-language:    Haskell2010
+```
+
+If you want to be able to import `Extra.*` modules when using `mixins` approach,
+you need to list those modules under `mixins` field as well, like this:
+
+```cabal
+  mixins:              base hiding (Prelude)
+                     , relude (Relude as Prelude, Relude.Extra.Enum)
 ```
 
 ## Difference from Prelude [↑](#structure-of-this-tutorial)
