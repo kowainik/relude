@@ -56,14 +56,17 @@ This README contains introduction to `Relude` and a tutorial on how to use it.
 
 This tutorial has several parts:
 
-1. [Get started.](#get-started-)
-2. [Difference from `Prelude`.](#difference-from-prelude-)
-3. [Reexports.](#reexports-)
+1. [Get started](#get-started-)
+    * [base-noprelude](#base-noprelude-)
+    * [Mixins](#mixins-)
+    * [NoImplicitPrelude](#NoImplicitPrelude-)
+2. [Difference from Prelude](#difference-from-prelude-)
+3. [Reexports](#reexports-)
 4. [What's new?](#whats-new-)
-6. [Migration guide.](#migration-guide-)
+6. [Migration guide](#migration-guide-)
 7. [Comparison with other alternative preludes](#comparison-with-other-alternative-preludes-)
     * [Relude vs Protolude](#relude-vs-protolude-)
-8. [For developers.](#for-developers-)
+8. [For developers](#for-developers-)
 
 This is neither a tutorial on _Haskell_ nor tutorial on each function contained
 in `Relude`. For detailed documentation of every function together with examples
@@ -72,9 +75,9 @@ and usage, see [_Haddock documentation_](http://hackage.haskell.org/package/relu
 ## Get started [↑](#structure-of-this-tutorial)
 
 If you want to start using `relude` in your project and explore it with the help
-of compiler, set everything up according to the instructions below.
+of compiler, set everything up according to one of the instructions below.
 
-### base-noprelude
+### base-noprelude [↑](#structure-of-this-tutorial)
 
 This is the recommended way to use custom prelude. It requires you to perform
 the following steps:
@@ -100,34 +103,13 @@ This is a very convenient way to add a custom prelude to your project because
 you don't need to import module manually inside each file and enable the
 `NoImplicitPrelude` extension.
 
-
-### Per-file configuration
-
-Disable the built-in prelude at the top of your file:
-
-```haskell
-{-# LANGUAGE NoImplicitPrelude #-}
-```
-
-Or directly in your project `.cabal` file, if you want to use in every module by default:
-
-```haskell
-default-extensions: NoImplicitPrelude
-```
-
-Then add the following import to your modules:
-
-```haskell
-import Relude
-```
-
-### Using mixins
+### Mixins [↑](#structure-of-this-tutorial)
 
 You can use Cabal feature `mixins` to replace the default `Prelude` with `Relude`
 without need to add extra dependencies or import `Relude` manually each time.
 See the following example:
 
-> **NOTE:** this requires Cabal version at least `2.2`
+> **NOTE:** this requires Cabal version to be at least `2.2`
 
 ```cabal
 cabal-version:       2.2
@@ -151,6 +133,28 @@ you need to list those modules under `mixins` field as well, like this:
 ```cabal
   mixins:              base hiding (Prelude)
                      , relude (Relude as Prelude, Relude.Extra.Enum)
+```
+
+### NoImplicitPrelude [↑](#structure-of-this-tutorial)
+
+Disable the built-in prelude at the top of your file:
+
+```haskell
+{-# LANGUAGE NoImplicitPrelude #-}
+```
+
+Or directly in your project `.cabal` file, if you want to use in every module by
+default:
+
+```haskell
+default-extensions: NoImplicitPrelude
+```
+
+Add `relude` as a dependency of your project. Then add the following import to
+your modules:
+
+```haskell
+import Relude
 ```
 
 ## Difference from Prelude [↑](#structure-of-this-tutorial)
