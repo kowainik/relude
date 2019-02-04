@@ -3,9 +3,9 @@
 {-# LANGUAGE LambdaCase   #-}
 
 {- |
-Copyright: (c) 2014 Chris Allen, Edward Kmett
-           (c) 2018 Kowainik
-License:   MIT
+Copyright:  (c) 2014 Chris Allen, Edward Kmett
+            (c) 2018-2019 Kowainik
+License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Monoidal 'Validation' sibling to 'Either'.

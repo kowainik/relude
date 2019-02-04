@@ -1,7 +1,7 @@
 {- |
-Copyright: (c) 2016 Stephen Diehl
-           (c) 20016-2018 Serokell
-           (c) 2018 Kowainik
+Copyright:  (c) 2016 Stephen Diehl
+            (c) 2016-2018 Serokell
+            (c) 2018-2019 Kowainik
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -19,7 +19,7 @@ module Relude.Bool.Guard
 
 import Relude.Bool.Reexport (Bool (..), guard, unless, when)
 import Relude.Function (flip)
-import Relude.Monad (Monad, return, MonadPlus, (>>=))
+import Relude.Monad (Monad, MonadPlus, return, (>>=))
 
 -- $setup
 -- >>> import Relude.Applicative (pure)

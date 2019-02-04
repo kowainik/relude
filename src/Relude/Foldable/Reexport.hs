@@ -1,7 +1,7 @@
 {-# LANGUAGE CPP #-}
 
 {- |
-Copyright:  (c) 2018 Kowainik
+Copyright:  (c) 2018-2019 Kowainik
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -22,9 +22,8 @@ import Data.Foldable (Foldable (fold, foldMap, foldl', foldr, length, null, toLi
                       sequence_, traverse_)
 import Data.Traversable (Traversable (..), forM, mapAccumL, mapAccumR)
 #if MIN_VERSION_base(4,10,0)
-import Data.Bifoldable (Bifoldable (..), biList, biall, biand,
-                        biany, biasum, bielem, bifind, bifoldl', bifoldlM, bifoldr',
-                        bifoldrM, bifor_, bilength, binull, bior, bisequence_,
-                        bitraverse_)
+import Data.Bifoldable (Bifoldable (..), biList, biall, biand, biany, biasum, bielem, bifind,
+                        bifoldl', bifoldlM, bifoldr', bifoldrM, bifor_, bilength, binull, bior,
+                        bisequence_, bitraverse_)
 import Data.Bitraversable (Bitraversable (..), bifoldMapDefault, bifor, bimapDefault, bisequence)
 #endif

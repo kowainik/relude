@@ -12,6 +12,8 @@ The change log is available [on GitHub][2].
 * [#129](https://github.com/kowainik/relude/issues/129):
   Add `appliedTo` and `chainedTo` as named versions of operators `=<<` and `<**>`.
 * Improve documentation for `One` typeclass and add tests.
+* Support ghc-8.6.3 and ghc-8.4.4.
+  Drop support for ghc-8.6.1 and ghc-8.4.3.
 
 ## 0.4.0 — Nov 6, 2018
 
