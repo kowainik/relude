@@ -4,92 +4,50 @@ language: haskell
 git:
   depth: 5
 
+cabal: "2.0"
+
 cache:
   directories:
-  - "$HOME/.cabal"
-  - "$HOME/.ghc"
+  - "$HOME/.cabal/store"
   - "$HOME/.stack"
   - "$TRAVIS_BUILD_DIR/.stack-work"
 
 matrix:
   include:
 
+  # Cabal
   - ghc: 8.0.2
-    env: GHCVER='8.0.2' CABALVER='head'
-    os: linux
-    addons:
-      apt:
-        sources:
-        - hvr-ghc
-        packages:
-        - ghc-8.0.2
-        - cabal-install-head
-
   - ghc: 8.2.2
-    env: GHCVER='8.2.2' CABALVER='head'
-    os: linux
-    addons:
-      apt:
-        sources:
-        - hvr-ghc
-        packages:
-        - ghc-8.2.2
-        - cabal-install-head
+  - ghc: 8.4.4
+  - ghc: 8.6.3
 
-  - ghc: 8.4.3
-    env: GHCVER='8.4.3' CABALVER='head'
-    os: linux
-    addons:
-      apt:
-        sources:
-        - hvr-ghc
-        packages:
-        - ghc-8.4.3
-        - cabal-install-head
-
-  - ghc: 8.6.1
-    env: GHCVER='8.6.1' CABALVER='head'
-    os: linux
-    addons:
-      apt:
-        sources:
-        - hvr-ghc
-        packages:
-        - ghc-8.6.1
-        - cabal-install-head
-
-  - ghc: 8.4.3
+  # stack
+  - ghc: 8.6.3
     env: STACK_YAML="$TRAVIS_BUILD_DIR/stack.yaml"
-    os: linux
-    addons:
-      apt:
-        packages:
-        - libgmp-dev
 
 install:
   - |
     if [ -z "$STACK_YAML" ]; then
-      export PATH="/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$PATH"
-      echo $PATH
+      ghc --version
+      cabal --version
       cabal new-update
       cabal new-build --enable-tests --enable-benchmarks
     else
-      echo "$TRAVIS_BUILD_DIR"
-      mkdir -p ~/.local/bin
-      export PATH="$HOME/.local/bin:$PATH"
-      travis_retry curl -L 'https://www.stackage.org/stack/linux-x86_64' | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+      # install stack
+      curl -sSL https://get.haskellstack.org/ | sh
+
+      # build project with stack
       stack --version
-      stack setup --no-terminal
-      stack ghc -- --version
-      stack build --only-dependencies --no-terminal
+      stack build --system-ghc --test --bench --no-run-tests --no-run-benchmarks
     fi
+
 script:
   - |
     if [ -z "$STACK_YAML" ]; then
       cabal new-test
       cabal new-haddock
     else
-      stack build --test --bench --no-run-tests --no-run-benchmarks --no-terminal
+      stack test --system-ghc
     fi
 
 notifications:
