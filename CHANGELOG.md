@@ -1,7 +1,7 @@
-# Change log
+# Changelog
 
 `relude` uses [PVP Versioning][1].
-The change log is available [on GitHub][2].
+The changelog is available [on GitHub][2].
 
 ## Unreleased: 0.5.0
 
@@ -11,6 +11,8 @@ The change log is available [on GitHub][2].
   Add `integerToBounded` and `integerToNatural` in `Relude.Numeric`.
 * [#129](https://github.com/kowainik/relude/issues/129):
   Add `appliedTo` and `chainedTo` as named versions of operators `=<<` and `<**>`.
+* [#121](https://github.com/kowainik/relude/issues/121):
+  Reexport `Ap` from `Data.Monoid`. Change definition of `foldMapA` to use `Ap`.
 * Improve documentation for `One` typeclass and add tests.
 * Support ghc-8.6.3 and ghc-8.4.4.
   Drop support for ghc-8.6.1 and ghc-8.4.3.
