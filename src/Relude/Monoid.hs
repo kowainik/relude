@@ -60,7 +60,7 @@ maybeToMonoid = fromMaybe mempty
 -- | This data type witnesses the lifting of a 'Monoid' into an
 -- 'Applicative' pointwise.
 --
--- @since 4.12.0.0
+-- @since 0.5.0
 newtype Ap f a = Ap { getAp :: f a }
     deriving ( Alternative
              , Applicative
@@ -77,21 +77,21 @@ newtype Ap f a = Ap { getAp :: f a }
              , Show
              )
 
--- | @since 4.12.0.0
+-- | @since 0.5.0
 instance (Applicative f, Semigroup a) => Semigroup (Ap f a) where
         (Ap x) <> (Ap y) = Ap $ liftA2 (<>) x y
 
--- | @since 4.12.0.0
+-- | @since 0.5.0
 instance (Applicative f, Semigroup a, Monoid a) => Monoid (Ap f a) where
         mempty = Ap $ pure mempty
         mappend = (<>)
 
--- | @since 4.12.0.0
+-- | @since 0.5.0
 instance (Applicative f, Bounded a) => Bounded (Ap f a) where
   minBound = pure minBound
   maxBound = pure maxBound
 
--- | @since 4.12.0.0
+-- | @since 0.5.0
 instance (Applicative f, Num a) => Num (Ap f a) where
   (+)         = liftA2 (+)
   (*)         = liftA2 (*)
