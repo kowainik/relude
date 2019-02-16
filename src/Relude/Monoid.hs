@@ -62,19 +62,19 @@ maybeToMonoid = fromMaybe mempty
 --
 -- @since 4.12.0.0
 newtype Ap f a = Ap { getAp :: f a }
-    deriving ( Alternative -- ^ @since 4.12.0.0
-             , Applicative -- ^ @since 4.12.0.0
-             , Enum        -- ^ @since 4.12.0.0
-             , Eq          -- ^ @since 4.12.0.0
-             , Functor     -- ^ @since 4.12.0.0
-             , Generic     -- ^ @since 4.12.0.0
-             , Generic1    -- ^ @since 4.12.0.0
-             , Monad       -- ^ @since 4.12.0.0
-             , MonadFail   -- ^ @since 4.12.0.0
-             , MonadPlus   -- ^ @since 4.12.0.0
-             , Ord         -- ^ @since 4.12.0.0
-             , Read        -- ^ @since 4.12.0.0
-             , Show        -- ^ @since 4.12.0.0
+    deriving ( Alternative
+             , Applicative
+             , Enum
+             , Eq
+             , Functor
+             , Generic
+             , Generic1
+             , Monad
+             , MonadFail
+             , MonadPlus
+             , Ord
+             , Read
+             , Show
              )
 
 -- | @since 4.12.0.0
@@ -84,6 +84,7 @@ instance (Applicative f, Semigroup a) => Semigroup (Ap f a) where
 -- | @since 4.12.0.0
 instance (Applicative f, Monoid a) => Monoid (Ap f a) where
         mempty = Ap $ pure mempty
+        mappend = (<>)
 
 -- | @since 4.12.0.0
 instance (Applicative f, Bounded a) => Bounded (Ap f a) where
