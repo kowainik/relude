@@ -82,7 +82,7 @@ instance (Applicative f, Semigroup a) => Semigroup (Ap f a) where
         (Ap x) <> (Ap y) = Ap $ liftA2 (<>) x y
 
 -- | @since 4.12.0.0
-instance (Applicative f, Monoid a) => Monoid (Ap f a) where
+instance (Applicative f, Semigroup a, Monoid a) => Monoid (Ap f a) where
         mempty = Ap $ pure mempty
         mappend = (<>)
 
