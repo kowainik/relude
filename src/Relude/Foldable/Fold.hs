@@ -48,7 +48,7 @@ import Relude.Container.Reexport (HashSet, Set)
 import Relude.Foldable.Reexport (Foldable (..))
 import Relude.Function (flip, (.))
 import Relude.Monad.Reexport (Monad (..))
-import Relude.Monoid (Alt (..), Ap (..), Monoid (..))
+import Relude.Monoid (Alt (..), Ap (..), Monoid (..), Semigroup)
 import Relude.Numeric (Num (..))
 
 import qualified Data.Foldable as F
@@ -82,7 +82,7 @@ asumMap f = getAlt . foldMap (Alt . f)
 >>> foldMapA @[Int] (Just . replicate 3) [1..3]
 Just [1,1,1,2,2,2,3,3,3]
 -}
-foldMapA :: forall b m f a . (Monoid b, Applicative m, Foldable f) => (a -> m b) -> f a -> m b
+foldMapA :: forall b m f a . (Semigroup b, Monoid b, Applicative m, Foldable f) => (a -> m b) -> f a -> m b
 foldMapA f = getAp . foldMap (Ap . f)
 {-# INLINE foldMapA #-}
 
