@@ -33,7 +33,7 @@ import Relude.Monad.Reexport (Maybe, fromMaybe)
 #if !MIN_VERSION_base(4,12,0)
 import GHC.Generics (Generic1)
 
-import Relude.Applicative (Alternative, Applicative (..))
+import Relude.Applicative (Alternative, Applicative (..), liftA2)
 import Relude.Base (Bounded (..), Enum, Eq, Generic, Ord, Show)
 import Relude.Function (($), (.))
 import Relude.Functor.Reexport (Functor (..))
