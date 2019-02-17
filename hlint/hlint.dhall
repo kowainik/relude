@@ -776,6 +776,8 @@ in [ rule.Arguments { arguments =
    , warnReexport "getAlt"     "Data.Monoid"
    , warnReexport "Any"        "Data.Monoid"
    , warnReexport "getAny"     "Data.Monoid"
+   , warnReexport "Ap"         "Data.Monoid"
+   , warnReexport "getAp"      "Data.Monoid"
    , warnReexport "Dual"       "Data.Monoid"
    , warnReexport "getDual"    "Data.Monoid"
    , warnReexport "Endo"       "Data.Monoid"

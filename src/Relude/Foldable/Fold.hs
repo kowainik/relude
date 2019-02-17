@@ -1,11 +1,11 @@
+{-# OPTIONS_GHC -fno-warn-unticked-promoted-constructors #-}
+
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE ExplicitForAll       #-}
 {-# LANGUAGE PolyKinds            #-}
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
-
-{-# OPTIONS_GHC -fno-warn-unticked-promoted-constructors #-}
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
@@ -19,9 +19,10 @@ Fixes and additions to 'Foldable'.
 
 module Relude.Foldable.Fold
        ( flipfoldl'
-       , foldMapA
        , asumMap
+       , foldMapA
        , foldMapM
+
        , sum
        , product
 
@@ -46,12 +47,12 @@ import Relude.Bool (Bool (..))
 import Relude.Container.Reexport (HashSet, Set)
 import Relude.Foldable.Reexport (Foldable (..))
 import Relude.Function (flip, (.))
-import Relude.Functor ((<$>))
 import Relude.Monad.Reexport (Monad (..))
-import Relude.Monoid (Alt (..), Monoid (..))
+import Relude.Monoid (Alt (..), Ap (..), Monoid (..), Semigroup)
 import Relude.Numeric (Num (..))
 
 import qualified Data.Foldable as F
+
 
 -- $setup
 -- >>> :set -XOverloadedStrings
@@ -67,24 +68,23 @@ flipfoldl' :: Foldable f => (a -> b -> b) -> b -> f a -> b
 flipfoldl' f = foldl' (flip f)
 {-# INLINE flipfoldl' #-}
 
-{- | Polymorphic version of @concatMapA@ function.
+{- | Alternative version of @asum@.
 
->>> foldMapA @[Int] (Just . replicate 3) [1..3]
-Just [1,1,1,2,2,2,3,3,3]
--}
-foldMapA :: forall b m f a . (Monoid b, Applicative m, Foldable f) => (a -> m b) -> f a -> m b
-foldMapA f = foldr step (pure mempty)
-  where
-    step a mb = mappend <$> f a <*> mb
-{-# INLINE foldMapA #-}
-
-{- | Alternative version of @asum@
->>> asumMap (\x -> if x > 2 then Just x else Nothing) [1..3]
+>>> asumMap (\x -> if x > 2 then Just x else Nothing) [1..4]
 Just 3
 -}
 asumMap :: (Foldable f, Alternative m) => (a -> m b) -> f a -> m b
 asumMap f = getAlt . foldMap (Alt . f)
 {-# INLINE asumMap #-}
+
+{- | Polymorphic version of @concatMapA@ function.
+
+>>> foldMapA @[Int] (Just . replicate 3) [1..3]
+Just [1,1,1,2,2,2,3,3,3]
+-}
+foldMapA :: forall b m f a . (Semigroup b, Monoid b, Applicative m, Foldable f) => (a -> m b) -> f a -> m b
+foldMapA f = getAp . foldMap (Ap . f)
+{-# INLINE foldMapA #-}
 
 {- | Polymorphic version of @concatMapM@ function.
 
