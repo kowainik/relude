@@ -16,7 +16,7 @@
    behavior and usage of such functions can lead to the unexpected bugs. Though
    you can still use some unsafe functions from `Relude.Unsafe` module, but they
    are not exported by default.
-2. **Type-safety**. We like to make invalid states unrepresantable. And if it's
+2. **Type-safety**. We like to make invalid states unrepresentable. And if it's
    possible to express this concept through the types then we will do it.
 
     _Example:_
