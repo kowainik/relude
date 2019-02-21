@@ -5,6 +5,8 @@ The changelog is available [on GitHub][2].
 
 ## Unreleased: 0.5.0
 
+* [#138](https://github.com/kowainik/relude/issues/138):
+  Add `RealFloat` to `Relude.Numeric`.
 * [#125](https://github.com/kowainik/relude/issues/125):
   Moved many numerical functions and types in `Relude.Numeric`.
   Reexport `toIntegralSized` from `Data.Bits`.
