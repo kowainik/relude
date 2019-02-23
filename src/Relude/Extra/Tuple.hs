@@ -1,3 +1,5 @@
+{-# LANGUAGE TupleSections #-}
+
 {- |
 Copyright:  (c) 2018-2019 Kowainik
 License:    MIT
@@ -11,10 +13,12 @@ module Relude.Extra.Tuple
        , mapToFst
        , mapToSnd
        , mapBoth
+       , traverseToFst
+       , traverseToSnd
+       , traverseBoth
        ) where
 
--- $setup
--- >>> import Relude
+import Relude
 
 {- | Creates a tuple by pairing something with itself.
 
@@ -60,3 +64,47 @@ mapToSnd f a = (a, f a)
 mapBoth :: (a -> b) -> (a, a) -> (b, b)
 mapBoth f (a1, a2) = (f a1, f a2)
 {-# INLINE mapBoth #-}
+
+{- | Apply a function that returns a value inside of a functor,
+with the output in the first slot, the input in the second,
+and the entire tuple inside the functor.
+
+
+A dual to 'traverseToSnd'
+
+>>> traverseToFst (Just . (+1)) 10
+Just (11,10)
+>>> traverseToFst (const Nothing) 10
+Nothing
+-}
+traverseToFst :: Functor t => (a -> t b) -> a -> t (b, a)
+traverseToFst f a = (,a) <$> f a
+{-# INLINE traverseToFst #-}
+
+{- | Apply a function that returns a value inside of a functor,
+with the output in the second slot, the input in the first,
+and the entire tuple inside the functor.
+
+A dual to 'traverseToFst'.
+
+>>> traverseToSnd (Just . (+1)) 10
+Just (10,11)
+>>> traverseToSnd (const Nothing) 10
+Nothing
+-}
+traverseToSnd :: Functor t => (a -> t b) -> a -> t (a, b)
+traverseToSnd f a = (a,) <$> f a
+{-# INLINE traverseToSnd #-}
+
+{- | Maps a function that returns a value inside of
+an applicative functor over both elements of a tuple,
+with the entire tuple inside the applicative functor.
+
+>>> traverseBoth (Just . ("Hello " <>)) ("Alice", "Bob")
+Just ("Hello Alice","Hello Bob")
+>>> traverseBoth (const Nothing) ("Alice", "Bob")
+Nothing
+-}
+traverseBoth :: Applicative t => (a -> t b) -> (a, a) -> t (b, b)
+traverseBoth f (a1, a2) = (,) <$> f a1 <*> f a2
+{-# INLINE traverseBoth #-}

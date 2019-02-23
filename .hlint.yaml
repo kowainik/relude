@@ -2994,3 +2994,35 @@
     note: If you import 'putLBSLn' from Relude, it's already lifted
     name: '''liftIO'' is not needed'
     rhs: putLBSLn
+- hint:
+    lhs: fmap (,a) (f a)
+    note: Use `traverseToFst` from `Relude.Extra.Tuple`
+    rhs: traverseToFst f a
+- hint:
+    lhs: fmap (flip (,) a) (f a)
+    note: Use `traverseToFst` from `Relude.Extra.Tuple`
+    rhs: traverseToFst f a
+- hint:
+    lhs: (,a) <$> f a
+    note: Use `traverseToFst` from `Relude.Extra.Tuple`
+    rhs: traverseToFst f a
+- hint:
+    lhs: flip (,) a <$> f a
+    note: Use `traverseToFst` from `Relude.Extra.Tuple`
+    rhs: traverseToFst f a
+- hint:
+    lhs: fmap (a,) (f a)
+    note: Use `traverseToSnd` from `Relude.Extra.Tuple`
+    rhs: traverseToSnd f a
+- hint:
+    lhs: fmap ((,) a) (f a)
+    note: Use `traverseToSnd` from `Relude.Extra.Tuple`
+    rhs: traverseToSnd f a
+- hint:
+    lhs: (a,) <$> f a
+    note: Use `traverseToSnd` from `Relude.Extra.Tuple`
+    rhs: traverseToSnd f a
+- hint:
+    lhs: (,) a <$> f a
+    note: Use `traverseToSnd` from `Relude.Extra.Tuple`
+    rhs: traverseToSnd f a

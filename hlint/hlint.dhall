@@ -882,4 +882,18 @@ in [ rule.Arguments { arguments =
    , warnLifted "putBSLn" "x"
    , warnLifted "putLBS" "x"
    , warnLifted "putLBSLn" "x"
+
+   ------------
+   -- Extra
+   ------------
+
+   -- Tuple
+   , hintNote "fmap (,a) (f a)"         "traverseToFst f a" "Use `traverseToFst` from `Relude.Extra.Tuple`"
+   , hintNote "fmap (flip (,) a) (f a)" "traverseToFst f a" "Use `traverseToFst` from `Relude.Extra.Tuple`"
+   , hintNote "(,a) <$> f a"            "traverseToFst f a" "Use `traverseToFst` from `Relude.Extra.Tuple`"
+   , hintNote "flip (,) a <$> f a"      "traverseToFst f a" "Use `traverseToFst` from `Relude.Extra.Tuple`"
+   , hintNote "fmap (a,) (f a)"    "traverseToSnd f a" "Use `traverseToSnd` from `Relude.Extra.Tuple`"
+   , hintNote "fmap ((,) a) (f a)" "traverseToSnd f a" "Use `traverseToSnd` from `Relude.Extra.Tuple`"
+   , hintNote "(a,) <$> f a"       "traverseToSnd f a" "Use `traverseToSnd` from `Relude.Extra.Tuple`"
+   , hintNote "(,) a <$> f a"      "traverseToSnd f a" "Use `traverseToSnd` from `Relude.Extra.Tuple`"
    ]
