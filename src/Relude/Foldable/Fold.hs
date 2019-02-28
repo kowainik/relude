@@ -1,5 +1,3 @@
-{-# OPTIONS_GHC -fno-warn-unticked-promoted-constructors #-}
-
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE ExplicitForAll       #-}
 {-# LANGUAGE PolyKinds            #-}
@@ -39,7 +37,7 @@ module Relude.Foldable.Fold
        , ElemErrorMessage
        ) where
 
-import GHC.TypeLits (ErrorMessage (..), TypeError)
+import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 
 import Relude.Applicative (Alternative, Applicative (..), pure)
 import Relude.Base (Constraint, Eq, IO, Type, ($!))
@@ -126,12 +124,12 @@ False
           Instead of
               elem :: (Foldable t, Eq a) => a -> t a -> Bool
           use
-              member :: ??? -- TODO
+              member :: Ord a => a -> Set a -> Bool
 ...
           Instead of
               notElem :: (Foldable t, Eq a) => a -> t a -> Bool
           use
-              notMember :: ??? -- TODO
+              not . member
 ...
 -}
 elem :: (Foldable f, DisallowElem f, Eq a) => a -> f a -> Bool
@@ -149,12 +147,12 @@ True
           Instead of
               elem :: (Foldable t, Eq a) => a -> t a -> Bool
           use
-              member :: ??? -- TODO
+              member :: Ord a => a -> Set a -> Bool
 ...
           Instead of
               notElem :: (Foldable t, Eq a) => a -> t a -> Bool
           use
-              notMember :: ??? -- TODO
+              not . member
 ...
 -}
 notElem :: (Foldable f, DisallowElem f, Eq a) => a -> f a -> Bool
@@ -245,21 +243,25 @@ anyM p = go . toList
 ----------------------------------------------------------------------------
 
 type family DisallowElem (f :: Type -> Type) :: Constraint where
-    DisallowElem     Set = TypeError (ElemErrorMessage Set)
-    DisallowElem HashSet = TypeError (ElemErrorMessage HashSet)
+    DisallowElem     Set = TypeError (ElemErrorMessage Set SetMemberType)
+    DisallowElem HashSet = TypeError (ElemErrorMessage HashSet HashSetMemberType)
     DisallowElem f       = ()
 
-type family ElemErrorMessage (t :: k) :: ErrorMessage where
-    ElemErrorMessage t =
-             Text "Do not use 'elem' and 'notElem' methods from 'Foldable' on " :<>: ShowType t
-        :$$: Text "Suggestions:"
-        :$$: Text "    Instead of"
-        :$$: Text "        elem :: (Foldable t, Eq a) => a -> t a -> Bool"
-        :$$: Text "    use"
-        :$$: Text "        member :: ??? -- TODO"
-        :$$: Text ""
-        :$$: Text "    Instead of"
-        :$$: Text "        notElem :: (Foldable t, Eq a) => a -> t a -> Bool"
-        :$$: Text "    use"
-        :$$: Text "        notMember :: ??? -- TODO"
-        :$$: Text ""
+
+type family ElemErrorMessage (t :: k) (msg :: Symbol) :: ErrorMessage where
+    ElemErrorMessage t msg =
+              'Text "Do not use 'elem' and 'notElem' methods from 'Foldable' on " ':<>: 'ShowType t
+        ':$$: 'Text "Suggestions:"
+        ':$$: 'Text "    Instead of"
+        ':$$: 'Text "        elem :: (Foldable t, Eq a) => a -> t a -> Bool"
+        ':$$: 'Text "    use"
+        ':$$: 'Text "        member :: " ':<>: 'Text msg
+        ':$$: 'Text ""
+        ':$$: 'Text "    Instead of"
+        ':$$: 'Text "        notElem :: (Foldable t, Eq a) => a -> t a -> Bool"
+        ':$$: 'Text "    use"
+        ':$$: 'Text "        not . member"
+        ':$$: 'Text ""
+
+type SetMemberType = "Ord a => a -> Set a -> Bool"
+type HashSetMemberType = "(Eq a, Hashable a) => a -> HashSet a -> Bool"
