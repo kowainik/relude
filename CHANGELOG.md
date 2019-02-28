@@ -17,6 +17,8 @@ The changelog is available [on GitHub][2].
   Add `appliedTo` and `chainedTo` as named versions of operators `=<<` and `<**>`.
 * [#121](https://github.com/kowainik/relude/issues/121):
   Reexport `Ap` from `Data.Monoid`. Change definition of `foldMapA` to use `Ap`.
+* [#140](https://github.com/kowainik/relude/issues/140):
+  Improve text of custom compile-time error messages for `elem` functions.
 * Improve documentation for `One` typeclass and add tests.
 * Support ghc-8.6.3 and ghc-8.4.4.
   Drop support for ghc-8.6.1 and ghc-8.4.3.
