@@ -19,6 +19,8 @@ The changelog is available [on GitHub][2].
   Reexport `Ap` from `Data.Monoid`. Change definition of `foldMapA` to use `Ap`.
 * [#140](https://github.com/kowainik/relude/issues/140):
   Improve text of custom compile-time error messages for `elem` functions.
+* [#136](https://github.com/kowainik/relude/issues/136):
+  Cover `Relude.Extra.*` modules with custom HLint rules.
 * Improve documentation for `One` typeclass and add tests.
 * Support ghc-8.6.3 and ghc-8.4.4.
   Drop support for ghc-8.6.1 and ghc-8.4.3.

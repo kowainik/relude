@@ -887,6 +887,20 @@ in [ rule.Arguments { arguments =
    -- Extra
    ------------
 
+   -- Bifunctor
+   , hintNote "fmap (bimap f g)" "bimapF f g"   "Use `bimapF` from `Relude.Extra.Bifunctor`"
+   , hintNote "bimap f g <$> x"  "bimapF f g x" "Use `bimapF` from `Relude.Extra.Bifunctor`"
+   , hintNote "fmap (first f)" "firstF f" "Use `firstF` from `Relude.Extra.Bifunctor`"
+   , hintNote "fmap . first"   "firstF"   "Use `firstF` from `Relude.Extra.Bifunctor`"
+   , hintNote "fmap (second f)" "secondF f" "Use `secondF` from `Relude.Extra.Bifunctor`"
+   , hintNote "fmap . second"   "secondF"   "Use `secondF` from `Relude.Extra.Bifunctor`"
+
+   -- Enum
+   , hintNote "[minBound .. maxBound]" "universe" "Use `universe` from `Relude.Extra.Enum`"
+   , hintNote "succ" "next" "`succ` from `Prelude` is a pure function but it may throw exception. Consider using `next` from `Relude.Extra.Enum` instead."
+   , hintNote "pred" "prec" "`pred` from `Prelude` is a pure function but it may throw exception. Consider using `prec` from `Relude.Extra.Enum` instead."
+   , hintNote "toEnum" "safeToEnum" "`toEnum` from `Prelude` is a pure function but it may throw exception. Consider using `safeToEnum` from `Relude.Extra.Enum` instead."
+
    -- Tuple
    , hintNote "fmap (,a) (f a)"         "traverseToFst f a" "Use `traverseToFst` from `Relude.Extra.Tuple`"
    , hintNote "fmap (flip (,) a) (f a)" "traverseToFst f a" "Use `traverseToFst` from `Relude.Extra.Tuple`"

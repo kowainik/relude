@@ -2995,6 +2995,49 @@
     name: '''liftIO'' is not needed'
     rhs: putLBSLn
 - hint:
+    lhs: fmap (bimap f g)
+    note: Use `bimapF` from `Relude.Extra.Bifunctor`
+    rhs: bimapF f g
+- hint:
+    lhs: bimap f g <$> x
+    note: Use `bimapF` from `Relude.Extra.Bifunctor`
+    rhs: bimapF f g x
+- hint:
+    lhs: fmap (first f)
+    note: Use `firstF` from `Relude.Extra.Bifunctor`
+    rhs: firstF f
+- hint:
+    lhs: fmap . first
+    note: Use `firstF` from `Relude.Extra.Bifunctor`
+    rhs: firstF
+- hint:
+    lhs: fmap (second f)
+    note: Use `secondF` from `Relude.Extra.Bifunctor`
+    rhs: secondF f
+- hint:
+    lhs: fmap . second
+    note: Use `secondF` from `Relude.Extra.Bifunctor`
+    rhs: secondF
+- hint:
+    lhs: '[minBound .. maxBound]'
+    note: Use `universe` from `Relude.Extra.Enum`
+    rhs: universe
+- hint:
+    lhs: succ
+    note: '`succ` from `Prelude` is a pure function but it may throw exception. Consider
+      using `next` from `Relude.Extra.Enum` instead.'
+    rhs: next
+- hint:
+    lhs: pred
+    note: '`pred` from `Prelude` is a pure function but it may throw exception. Consider
+      using `prec` from `Relude.Extra.Enum` instead.'
+    rhs: prec
+- hint:
+    lhs: toEnum
+    note: '`toEnum` from `Prelude` is a pure function but it may throw exception.
+      Consider using `safeToEnum` from `Relude.Extra.Enum` instead.'
+    rhs: safeToEnum
+- hint:
     lhs: fmap (,a) (f a)
     note: Use `traverseToFst` from `Relude.Extra.Tuple`
     rhs: traverseToFst f a
