@@ -342,6 +342,8 @@ Explore `Extra` modules: [`Relude.Extra`](src/Relude/Extra/)
 In order to replace default `Prelude` with `relude` you should start with instructions given in
 [_get started_](#get-started-) section.
 
+### Code changes
+
 This section describes what you need to change to make your code compile with `relude`.
 
 1. Enable `-XOverloadedStrings` extension by default for your project.
@@ -379,6 +381,27 @@ This section describes what you need to change to make your code compile with `r
    + Use `encodeUtf8/decodeUtf8` to convert to/from `ByteString`.
    + Use `(putStr[Ln]|readFile|writeFile|appendFile)[Text|LText|BS|LBS]` functions.
 6. Run `hlint` using `.hlint.yaml` file from `relude` package to cleanup code and imports.
+
+### Running HLint on CI
+
+Instead of storing `relude`-specific `.hlint.yaml` file inside your repository,
+you can run HLint with this file automatically on any CI service such as
+[Travis CI](https://travis-ci.org/) or [Circle CI](https://circleci.com/).
+For this you need to:
+
+1. Find commit hash of the `relude` version you are using (can be found in [releases](https://github.com/kowainik/relude/releases)).
+2. Run command that downloads `.hlint.yaml` for that version.
+3. Run `hlint` using this file.
+
+For the latest `relude` version, this can be achieved by executing the following
+two commands on your CI:
+
+```yaml
+curl https://raw.githubusercontent.com/kowainik/relude/988bbdd3a09df1159917012933780523644880e5/.hlint.yaml -o .hlint-relude.yaml
+curl -sSL https://raw.github.com/ndmitchell/neil/master/misc/travis.sh | sh -s -- hlint -h .hlint-relude.yaml .
+```
+
+See usage example in [Summoner](https://github.com/kowainik/summoner/blob/b6c3ecb7cd9bc8d1451e2cc78cd020cd2e473564/.travis.yml#L58-L59).
 
 ## Comparison with other alternative preludes [↑](#structure-of-this-tutorial)
 
