@@ -389,7 +389,7 @@ you can run HLint with this file automatically on any CI service such as
 [Travis CI](https://travis-ci.org/) or [Circle CI](https://circleci.com/).
 For this you need to:
 
-1. Find commit hash of the `relude` version you are using (can be found in [releases](https://github.com/kowainik/relude/releases)).
+1. Find the commit hash of the `relude` version you are using (can be found in [releases](https://github.com/kowainik/relude/releases)).
 2. Run command that downloads `.hlint.yaml` for that version.
 3. Run `hlint` using this file.
 
