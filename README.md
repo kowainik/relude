@@ -401,7 +401,7 @@ curl https://raw.githubusercontent.com/kowainik/relude/988bbdd3a09df115991701293
 curl -sSL https://raw.github.com/ndmitchell/neil/master/misc/travis.sh | sh -s -- hlint -h .hlint-relude.yaml .
 ```
 
-See usage example in [Summoner](https://github.com/kowainik/summoner/blob/b6c3ecb7cd9bc8d1451e2cc78cd020cd2e473564/.travis.yml#L58-L59).
+See an example of this feature being used in [Summoner](https://github.com/kowainik/summoner/blob/b6c3ecb7cd9bc8d1451e2cc78cd020cd2e473564/.travis.yml#L58-L59).
 
 ## Comparison with other alternative preludes [↑](#structure-of-this-tutorial)
 
