@@ -384,7 +384,7 @@ This section describes what you need to change to make your code compile with `r
 
 ### Running HLint on CI
 
-Instead of storing `relude`-specific `.hlint.yaml` file inside your repository,
+Instead of storing a `relude`-specific `.hlint.yaml` file inside your repository,
 you can run HLint with this file automatically on any CI service such as
 [Travis CI](https://travis-ci.org/) or [Circle CI](https://circleci.com/).
 For this you need to:
