@@ -171,8 +171,11 @@ import Relude
     space-efficient). So you should write `sortOn length` (would sort elements
     by length) but `sortWith fst` (would sort list of pairs by first element).
 * Functions `sum` and `product` are strict now, which makes them more efficient.
-* Since `show` doesn't come from `Show` anymore, you need to export `Show` from
-  `Text.Show` module if you want to implement `Show` instance manually.
+* Since `show` doesn't come from `Show` anymore, you need to export
+  `Text.Show` module if you want to implement `Show` instance manually. This can be done like this:
+  ```haskell
+  import qualified Text.Show
+  ```
 * You can't call `elem` and `notElem` functions over `Set` and `HashSet`. These
   functions are forbidden for these two types because of the performance reasons.
 * `error` takes `Text`.
@@ -239,7 +242,7 @@ Also, `toText/toLText/toString` can convert `Text|LText|String` types to
 `Text/LText/String`. If you want to convert to and from `ByteString` use
 `encodeUtf8/decodeUtf8` functions.
 
-### transforms & mtl
+### transformers & mtl
 
 The following parts of these two libraries are exported:
 
@@ -312,7 +315,7 @@ Finally, we can move to part describing the new cool features we bring with `rel
 ### Need to import explicitly
 
 * Convenient functions to work with `(Bounded a, Enum a)` types:
-  1. `universe :: (Bounded a, Enum a) => [a`: get all values of the type.
+  1. `universe :: (Bounded a, Enum a) => [a]`: get all values of the type.
   2. `inverseMap :: (Bounded a, Enum a, Ord k) => (a -> k) -> k -> Maybe a`: convert functions like `show` to parsers.
 * Nice helpers to deal with `newtype`s in a more pleasant way:
 
@@ -376,7 +379,6 @@ This section describes what you need to change to make your code compile with `r
 
 5. Forget about `String` type.
    + Replace `(++)` with `(<>)` for `String`-like types.
-   + Try to use [`fmt`](http://hackage.haskell.org/package/fmt) library if you need to construct messages.
    + Use `toText/toLText/toString` functions to convert to `Text/LazyText/String` types.
    + Use `encodeUtf8/decodeUtf8` to convert to/from `ByteString`.
    + Use `(putStr[Ln]|readFile|writeFile|appendFile)[Text|LText|BS|LBS]` functions.

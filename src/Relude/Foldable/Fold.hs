@@ -61,6 +61,8 @@ import qualified Data.Foldable as F
 
 >>> flipfoldl' (/) 5 [2,3] :: Rational
 15 % 2
+
+This function can be useful for constructing containers from lists.
 -}
 flipfoldl' :: Foldable f => (a -> b -> b) -> b -> f a -> b
 flipfoldl' f = foldl' (flip f)

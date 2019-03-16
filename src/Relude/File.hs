@@ -3,8 +3,14 @@ Copyright:  (c) 2018-2019 Kowainik
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Functions to work with files for 'Text', 'LText', 'ByteString' and 'LByteString'
-types.
+Lifted to 'MonadIO' families of file processing functions for 'Text', 'LText',
+'ByteString' and 'LByteString' types.
+
+__NOTE:__ Functions that work with 'Text' or 'LText' types are sensitive to
+system locale. If not sure, use functions that work with 'ByteString'. See the
+following blog post for more details:
+
+* https://www.snoyman.com/blog/2016/12/beware-of-readfile
 -}
 
 module Relude.File
@@ -47,7 +53,7 @@ import qualified Data.Text.Lazy.IO as LT
 readFileText :: MonadIO m => FilePath -> m Text
 readFileText = liftIO . T.readFile
 {-# SPECIALIZE readFileText :: FilePath -> IO Text #-}
-{-# INLINE readFileText #-}
+{-# INLINE     readFileText #-}
 
 -- | Lifted version of 'T.writeFile'.
 writeFileText :: MonadIO m => FilePath -> Text -> m ()
@@ -69,7 +75,7 @@ appendFileText p = liftIO . T.appendFile p
 readFileLText :: MonadIO m => FilePath -> m LText
 readFileLText = liftIO . LT.readFile
 {-# SPECIALIZE readFileLText :: FilePath -> IO LText #-}
-{-# INLINE readFileLText #-}
+{-# INLINE     readFileLText #-}
 
 -- | Lifted version of 'LT.writeFile'.
 writeFileLText :: MonadIO m => FilePath -> LText -> m ()
@@ -91,7 +97,7 @@ appendFileLText p = liftIO . LT.appendFile p
 readFileBS :: MonadIO m => FilePath -> m ByteString
 readFileBS = liftIO . BS.readFile
 {-# SPECIALIZE readFileBS :: FilePath -> IO ByteString #-}
-{-# INLINE readFileBS #-}
+{-# INLINE     readFileBS #-}
 
 -- | Lifted version of 'BS.writeFile'.
 writeFileBS :: MonadIO m => FilePath -> ByteString -> m ()
@@ -113,7 +119,7 @@ appendFileBS p = liftIO . BS.appendFile p
 readFileLBS :: MonadIO m => FilePath -> m LByteString
 readFileLBS = liftIO . LBS.readFile
 {-# SPECIALIZE readFileLBS :: FilePath -> IO LByteString #-}
-{-# INLINE readFileLBS #-}
+{-# INLINE     readFileLBS #-}
 
 -- | Lifted version of 'LBS.writeFile'.
 writeFileLBS :: MonadIO m => FilePath -> LByteString -> m ()

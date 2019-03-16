@@ -1,4 +1,4 @@
-resolver: lts-13.6
+resolver: lts-13.13
 
 extra-deps:
   - tasty-hedgehog-0.2.0.0

@@ -21,8 +21,11 @@ The changelog is available [on GitHub][2].
   Improve text of custom compile-time error messages for `elem` functions.
 * [#136](https://github.com/kowainik/relude/issues/136):
   Cover `Relude.Extra.*` modules with custom HLint rules.
+* [#146](https://github.com/kowainik/relude/issues/146):
+  Improve documentation for `Relude.File` file: be more explicit about system
+  locale issues.
 * Improve documentation for `One` typeclass and add tests.
-* Support ghc-8.6.3 and ghc-8.4.4.
+* Support ghc-8.6.4 and ghc-8.4.4.
   Drop support for ghc-8.6.1 and ghc-8.4.3.
 
 ## 0.4.0 — Nov 6, 2018
