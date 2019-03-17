@@ -244,6 +244,9 @@ anyM p = go . toList
 -- Type level tricks
 ----------------------------------------------------------------------------
 
+{- | Type family that produces compile-time errors when 'elem' and 'notElem'
+functions are used with 'Set' and 'HashSet'.
+-}
 type family DisallowElem (f :: Type -> Type) :: Constraint where
     DisallowElem     Set = TypeError (ElemErrorMessage Set SetMemberType)
     DisallowElem HashSet = TypeError (ElemErrorMessage HashSet HashSetMemberType)

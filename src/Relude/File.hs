@@ -6,11 +6,12 @@ Maintainer: Kowainik <xrom.xkov@gmail.com>
 Lifted to 'MonadIO' families of file processing functions for 'Text', 'LText',
 'ByteString' and 'LByteString' types.
 
-__NOTE:__ Functions that work with 'Text' or 'LText' types are sensitive to
-system locale. If not sure, use functions that work with 'ByteString'. See the
-following blog post for more details:
-
-* https://www.snoyman.com/blog/2016/12/beware-of-readfile
+__NOTE:__ These functions are for working with textual data. Functions that work
+with 'Text' or 'LText' types are system and locale-sensitive (encoding,
+line-endings). If you want binary data, use 'ByteString' functions (they are
+also faster since they don't check encoding). However, you can then decode that
+data with the help of functions from the @"Relude.String.Conversion"@ module, e. g.
+'Relude.String.Conversion.decodeUtf8'.
 -}
 
 module Relude.File
