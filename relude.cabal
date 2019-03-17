@@ -117,6 +117,7 @@ library
                            Relude.Extra.Enum
                            Relude.Extra.Foldable1
                            Relude.Extra.Group
+                           Relude.Extra.Lens
                            Relude.Extra.Map
                            Relude.Extra.Newtype
                            Relude.Extra.Tuple

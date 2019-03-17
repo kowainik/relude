@@ -87,6 +87,8 @@ every module in your package by modifying your "Prelude" file:
 * __"Relude.Extra.Foldable1"__: 'Foldable1' typeclass like 'Foldable' but for
   non-empty structures.
 * __"Relude.Extra.Group"__: grouping functions, polymorphic on return @Map@ type.
+* __"Relude.Extra.Lens"__: minimal implementation of @lens@ package required
+for basic usage.
 * __"Relude.Extra.Map"__: typeclass for @Map@-like data structures.
 * __"Relude.Extra.Newtype"__: generic functions that automatically work for any
   @newtype@.
