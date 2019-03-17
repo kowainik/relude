@@ -3,24 +3,24 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
-## Unreleased: 0.5.0
+## 0.5.0 — Mar 18, 2019
 
-* [#144](https://github.com/kowainik/relude/issues/144):
-  Add `traverseToSnd` and friends to `Relude.Extra.Tuple`.
-* [#138](https://github.com/kowainik/relude/issues/138):
-  Add `RealFloat` to `Relude.Numeric`.
+* [#127](https://github.com/kowainik/relude/issues/127):
+  Implement `Relude.Extra.Lens` module.
 * [#125](https://github.com/kowainik/relude/issues/125):
   Moved many numerical functions and types in `Relude.Numeric`.
   Reexport `toIntegralSized` from `Data.Bits`.
   Add `integerToBounded` and `integerToNatural` in `Relude.Numeric`.
-* [#129](https://github.com/kowainik/relude/issues/129):
-  Add `appliedTo` and `chainedTo` as named versions of operators `=<<` and `<**>`.
 * [#121](https://github.com/kowainik/relude/issues/121):
   Reexport `Ap` from `Data.Monoid`. Change definition of `foldMapA` to use `Ap`.
+* [#129](https://github.com/kowainik/relude/issues/129):
+  Add `appliedTo` and `chainedTo` as named versions of operators `=<<` and `<**>`.
+* [#138](https://github.com/kowainik/relude/issues/138):
+  Add `RealFloat` to `Relude.Numeric`.
+* [#144](https://github.com/kowainik/relude/issues/144):
+  Add `traverseToSnd` and friends to `Relude.Extra.Tuple`.
 * [#140](https://github.com/kowainik/relude/issues/140):
   Improve text of custom compile-time error messages for `elem` functions.
-* [#127](https://github.com/kowainik/relude/issues/127):
-  Implement `Relude.Extra.Lens` module.
 * [#136](https://github.com/kowainik/relude/issues/136):
   Cover `Relude.Extra.*` modules with custom HLint rules.
 * [#146](https://github.com/kowainik/relude/issues/146):
