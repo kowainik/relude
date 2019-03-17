@@ -61,6 +61,8 @@ import qualified Data.Foldable as F
 
 >>> flipfoldl' (/) 5 [2,3] :: Rational
 15 % 2
+
+This function can be useful for constructing containers from lists.
 -}
 flipfoldl' :: Foldable f => (a -> b -> b) -> b -> f a -> b
 flipfoldl' f = foldl' (flip f)
@@ -242,6 +244,9 @@ anyM p = go . toList
 -- Type level tricks
 ----------------------------------------------------------------------------
 
+{- | Type family that produces compile-time errors when 'elem' and 'notElem'
+functions are used with 'Set' and 'HashSet'.
+-}
 type family DisallowElem (f :: Type -> Type) :: Constraint where
     DisallowElem     Set = TypeError (ElemErrorMessage Set SetMemberType)
     DisallowElem HashSet = TypeError (ElemErrorMessage HashSet HashSetMemberType)

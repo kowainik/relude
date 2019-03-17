@@ -57,7 +57,7 @@ build-type:          Simple
 tested-with:         GHC == 8.0.2
                    , GHC == 8.2.2
                    , GHC == 8.4.4
-                   , GHC == 8.6.3
+                   , GHC == 8.6.4
 extra-doc-files:     CHANGELOG.md
                    , CONTRIBUTING.md
                    , README.md
