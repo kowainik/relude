@@ -92,10 +92,12 @@ user = User
 
 To view the fields of the User data type we can use 'view' or '^.'
 
->>> view ageL user
+@
+__>>>__ 'view' ageL user
 42
->>> user ^. cityL
-"London"
+__>>>__ user '^.' cityL
+\"London\"
+@
 
 If we want to change any of the user's data, we should use 'set' or '.~'
 
