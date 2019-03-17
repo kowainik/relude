@@ -19,6 +19,8 @@ The changelog is available [on GitHub][2].
   Reexport `Ap` from `Data.Monoid`. Change definition of `foldMapA` to use `Ap`.
 * [#140](https://github.com/kowainik/relude/issues/140):
   Improve text of custom compile-time error messages for `elem` functions.
+* [#127](https://github.com/kowainik/relude/issues/127):
+  Implement `Relude.Extra.Lens` module.
 * [#136](https://github.com/kowainik/relude/issues/136):
   Cover `Relude.Extra.*` modules with custom HLint rules.
 * [#146](https://github.com/kowainik/relude/issues/146):
