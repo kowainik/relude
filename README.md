@@ -399,7 +399,7 @@ For the latest `relude` version, this can be achieved by executing the following
 two commands on your CI:
 
 ```yaml
-curl https://raw.githubusercontent.com/kowainik/relude/988bbdd3a09df1159917012933780523644880e5/.hlint.yaml -o .hlint-relude.yaml
+curl https://raw.githubusercontent.com/kowainik/relude/55968311244690f5cc8b4484a37a63d988ea2ec4/.hlint.yaml -o .hlint-relude.yaml
 curl -sSL https://raw.github.com/ndmitchell/neil/master/misc/travis.sh | sh -s -- hlint -h .hlint-relude.yaml .
 ```
 
