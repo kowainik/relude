@@ -84,6 +84,8 @@ every module in your package by modifying your "Prelude" file:
   'CallStack'.
 * __"Relude.Extra.Enum"__: extra utilities for types that implement 'Bounded'
   and 'Enum' constraints.
+* __"Relude.Extra.Foldable"__: extra folds for instances of the 'Foldable'
+  typeclass. Currently, just a short-circuitable left fold.
 * __"Relude.Extra.Foldable1"__: 'Foldable1' typeclass like 'Foldable' but for
   non-empty structures.
 * __"Relude.Extra.Group"__: grouping functions, polymorphic on return @Map@ type.

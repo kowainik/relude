@@ -3,6 +3,10 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
+## Unreleased: 0.6.0
+* [#155](https://github.com/kowainik/relude/issues/155):
+  Implement `Relude.Extra.Foldable` module.
+
 ## 0.5.0 — Mar 18, 2019
 
 * [#127](https://github.com/kowainik/relude/issues/127):
