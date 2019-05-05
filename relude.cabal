@@ -115,6 +115,7 @@ library
                            Relude.Extra.Bifunctor
                            Relude.Extra.CallStack
                            Relude.Extra.Enum
+                           Relude.Extra.Foldable
                            Relude.Extra.Foldable1
                            Relude.Extra.Group
                            Relude.Extra.Lens
