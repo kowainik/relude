@@ -1,8 +1,8 @@
 # Relude
 
 ![Relude: cyclone logo](https://user-images.githubusercontent.com/4276606/44077619-d2abb39a-9fd6-11e8-9d9f-cc57a9d03fa0.png)
-[![Build Status](https://travis-ci.org/kowainik/relude.svg?branch=master)](https://travis-ci.org/kowainik/relude)
-[![Hackage](https://img.shields.io/hackage/v/relude.svg)](https://hackage.haskell.org/package/relude)
+[![Build](https://img.shields.io/travis/kowainik/relude.svg?logo=travis)](http://travis-ci.org/kowainik/relude)
+[![Hackage](https://img.shields.io/hackage/v/relude.svg?logo=haskell)](https://hackage.haskell.org/package/relude)
 [![Stackage LTS](http://stackage.org/package/relude/badge/lts)](http://stackage.org/lts/package/relude)
 [![Stackage Nightly](http://stackage.org/package/relude/badge/nightly)](http://stackage.org/nightly/package/relude)
 [![Hackage-Deps](https://img.shields.io/hackage-deps/v/relude.svg)](http://packdeps.haskellers.com/reverse/relude)

@@ -8,6 +8,8 @@ Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 module Main (main) where
 
+import Relude
+
 import System.FilePath.Glob (glob)
 import Test.DocTest (doctest)
 
