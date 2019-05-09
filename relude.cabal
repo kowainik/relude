@@ -1,4 +1,4 @@
-cabal-version:       2.0
+cabal-version:       2.4
 name:                relude
 version:             0.5.0
 synopsis:            Custom prelude from Kowainik
@@ -48,7 +48,7 @@ homepage:            https://github.com/kowainik/relude
 bug-reports:         https://github.com/kowainik/relude/issues
 license:             MIT
 license-file:        LICENSE
-author:              Kowainik, Stephen Diehl, Serokell
+author:              Dmitrii Kovanikov, Veronika Romashkina, Stephen Diehl, Serokell
 maintainer:          Kowainik <xrom.xkov@gmail.com>
 copyright:           2016 Stephen Diehl, 2016-2018 Serokell, 2018-2019 Kowainik
 category:            Prelude
@@ -57,7 +57,7 @@ build-type:          Simple
 tested-with:         GHC == 8.0.2
                    , GHC == 8.2.2
                    , GHC == 8.4.4
-                   , GHC == 8.6.4
+                   , GHC == 8.6.5
 extra-doc-files:     CHANGELOG.md
                    , CONTRIBUTING.md
                    , README.md
@@ -66,7 +66,25 @@ source-repository head
   type:     git
   location: git@github.com:kowainik/relude.git
 
+common common-options
+  build-depends:       base >= 4.9 && < 4.13
+
+  ghc-options:         -Wall
+                       -Wcompat
+                       -Widentities
+                       -Wincomplete-uni-patterns
+                       -Wincomplete-record-updates
+                       -fwarn-implicit-prelude
+                       -fhide-source-paths
+
+  default-language:    Haskell2010
+  default-extensions:  NoImplicitPrelude
+                       OverloadedStrings
+                       ScopedTypeVariables
+                       TypeApplications
+
 library
+  import:              common-options
   hs-source-dirs:      src
   exposed-modules:
                        Relude
@@ -126,15 +144,8 @@ library
                            Relude.Extra.Validation
                            Relude.Unsafe
 
-  ghc-options:         -Wall
-                       -Wcompat
-                       -Widentities
-                       -Wincomplete-uni-patterns
-                       -Wincomplete-record-updates
-                       -fwarn-implicit-prelude
 
-  build-depends:       base >= 4.9 && < 5
-                     , bytestring ^>= 0.10
+  build-depends:       bytestring ^>= 0.10
                      , containers >= 0.5.7 && < 0.7
                      , deepseq ^>= 1.4
                      , ghc-prim >= 0.4.0.0 && < 0.6
@@ -145,71 +156,48 @@ library
                      , transformers ^>= 0.5
                      , unordered-containers >= 0.2.7 && < 0.3
 
-  default-language:    Haskell2010
-  default-extensions:  NoImplicitPrelude
-                       OverloadedStrings
 
 test-suite relude-test
+  import:              common-options
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
 
   other-modules:       Test.Relude.Property
 
-  build-depends:       base >= 4.9 && < 5
-                     , relude
+  build-depends:       relude
                      , bytestring
                      , text
                      , hedgehog >= 0.6
                      , tasty
                      , tasty-hedgehog
 
-  ghc-options:         -Wall
-                       -threaded
-                       -Wincomplete-uni-patterns
-                       -Wincomplete-record-updates
-                       -Wcompat
-                       -Widentities
-                       -Wredundant-constraints
-
-  default-language:    Haskell2010
-  default-extensions:  NoImplicitPrelude
-                       TypeApplications
+  ghc-options:         -threaded
 
 test-suite relude-doctest
+  import:              common-options
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Doctest.hs
 
-  build-depends:       base >= 4.9 && < 5
+  build-depends:       relude
                      , doctest
                      , Glob
                      , QuickCheck
 
   ghc-options:         -threaded
-  default-language:    Haskell2010
 
 benchmark relude-benchmark
+  import:              common-options
   type:                exitcode-stdio-1.0
   hs-source-dirs:      benchmark
   main-is:             Main.hs
 
-  build-depends:       base >= 4.9 && < 5
-                     , relude
+  build-depends:       relude
                      , containers
                      , gauge
                      , unordered-containers
 
-  ghc-options:         -Wall
-                       -threaded
+  ghc-options:         -threaded
                        -rtsopts
                        -with-rtsopts=-N
-                       -Wincomplete-uni-patterns
-                       -Wincomplete-record-updates
-                       -Wcompat
-                       -Widentities
-                       -Wredundant-constraints
-
-  default-language:    Haskell2010
-  default-extensions:  NoImplicitPrelude
-                       ScopedTypeVariables
