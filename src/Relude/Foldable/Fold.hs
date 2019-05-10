@@ -177,12 +177,11 @@ Nothing
 False
 -}
 andM :: (Foldable f, Monad m) => f (m Bool) -> m Bool
-andM = go . toList
+andM = foldr go (pure True)
   where
-    go []     = pure True
-    go (p:ps) = do
+    go p acc = do
         q <- p
-        if q then go ps else pure False
+        if q then acc else pure False
 
 {- | Monadic version of 'F.or'.
 
@@ -194,12 +193,11 @@ Just True
 Nothing
 -}
 orM :: (Foldable f, Monad m) => f (m Bool) -> m Bool
-orM = go . toList
+orM = foldr go (pure False)
   where
-    go []     = pure False
-    go (p:ps) = do
+    go p acc = do
         q <- p
-        if q then pure True else go ps
+        if q then pure True else acc
 
 {- | Monadic version of 'F.all'.
 
@@ -211,12 +209,11 @@ Just False
 Nothing
 -}
 allM :: (Foldable f, Monad m) => (a -> m Bool) -> f a -> m Bool
-allM p = go . toList
+allM p = foldr go (pure True)
   where
-    go []     = pure True
-    go (x:xs) = do
+    go x acc = do
         q <- p x
-        if q then go xs else pure False
+        if q then acc else pure False
 
 {- | Monadic  version of 'F.any'.
 
@@ -228,12 +225,11 @@ Just True
 Nothing
 -}
 anyM :: (Foldable f, Monad m) => (a -> m Bool) -> f a -> m Bool
-anyM p = go . toList
+anyM p = foldr go (pure False)
   where
-    go []     = pure False
-    go (x:xs) = do
+    go x acc = do
         q <- p x
-        if q then pure True else go xs
+        if q then pure True else acc
 
 {-# SPECIALIZE andM :: [IO Bool] -> IO Bool #-}
 {-# SPECIALIZE orM  :: [IO Bool] -> IO Bool #-}
