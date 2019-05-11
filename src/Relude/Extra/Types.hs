@@ -1,7 +1,7 @@
+{-# LANGUAGE DataKinds     #-}
+{-# LANGUAGE PolyKinds     #-}
 {-# LANGUAGE TypeFamilies  #-}
 {-# LANGUAGE TypeOperators #-}
-{-# LANGUAGE PolyKinds     #-}
-{-# LANGUAGE DataKinds     #-}
 
 {- |
 Copyright:  (c) 2019 TheMatten
