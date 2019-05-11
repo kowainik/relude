@@ -142,6 +142,7 @@ library
                            Relude.Extra.Newtype
                            Relude.Extra.Tuple
                            Relude.Extra.Type
+                           Relude.Extra.Types
                            Relude.Extra.Validation
                            Relude.Unsafe
 
