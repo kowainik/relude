@@ -80,5 +80,5 @@ Maybe (Snd (Int, Text)) :: *
 = Maybe Text
 -}
 type family Snd (t :: k) :: k' where
-    Fst '(_, y) = y
-    Fst  (_, y) = y
+    Snd '(_, y) = y
+    Snd  (_, y) = y
