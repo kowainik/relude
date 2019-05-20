@@ -9,7 +9,6 @@
 
 {- |
 Copyright:  (c) 2018-2019 Kowainik
-                2019 TheMatten
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
