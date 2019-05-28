@@ -426,7 +426,7 @@ alternative preludes. It's also relatively small, but:
     * Almost every function has usage examples and all examples are tested with
       `doctest` (which also sometimes hard to do because of multiple GHC
       versions support, but we try really hard)
-    * [Tutorial + migration guide](structure-of-this-tutorial) from
+    * [Tutorial + migration guide](#structure-of-this-tutorial) from
       `Prelude` and just general description of the whole package and libraries
       it depends on.
 3. `relude` has custom HLint rules specific to it: you can use them to remove
