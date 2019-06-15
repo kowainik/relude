@@ -6,6 +6,7 @@ The changelog is available [on GitHub][2].
 ## Unreleased: 0.6.0
 * [#155](https://github.com/kowainik/relude/issues/155):
   Implement `Relude.Extra.Foldable` module.
+* Re-export `GHC.Float.atan2`.
 
 ## 0.5.0 — Mar 18, 2019
 
