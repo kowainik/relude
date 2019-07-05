@@ -1,15 +1,16 @@
-# Relude
+# relude
 
 ![Relude: cyclone logo](https://user-images.githubusercontent.com/4276606/44077619-d2abb39a-9fd6-11e8-9d9f-cc57a9d03fa0.png)
 [![Build](https://img.shields.io/travis/kowainik/relude.svg?logo=travis)](http://travis-ci.org/kowainik/relude)
 [![Hackage](https://img.shields.io/hackage/v/relude.svg?logo=haskell)](https://hackage.haskell.org/package/relude)
 [![Stackage LTS](http://stackage.org/package/relude/badge/lts)](http://stackage.org/lts/package/relude)
 [![Stackage Nightly](http://stackage.org/package/relude/badge/nightly)](http://stackage.org/nightly/package/relude)
-[![Hackage-Deps](https://img.shields.io/hackage-deps/v/relude.svg)](http://packdeps.haskellers.com/reverse/relude)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-`relude` is a custom prelude, an alternative to default `Prelude`.
-`relude` tries to achieve the following goals:
+**`relude`** is an alternative prelude library. If you find the default
+`Prelude` unsatisfying, despite its advantages, consider using `relude` instead.
+
+Below you can find key design principles behind `relude`:
 
 1. **Avoid all** [**partial functions**](https://www.reddit.com/r/haskell/comments/5n51u3/why_are_partial_functions_as_in_head_tail_bad/)
    (like `head :: [a] -> a`). The types of partial functions lie about their
@@ -17,7 +18,7 @@
    you can still use some unsafe functions from `Relude.Unsafe` module, but they
    are not exported by default.
 2. **Type-safety**. We like to make invalid states unrepresentable. And if it's
-   possible to express this concept through the types then we will do it.
+   possible to express this concept through the types then we do it.
 
     _Example:_
     ```haskell
@@ -31,18 +32,18 @@
    use spaceleak-free functions (like our custom `sum` and `product`), introduce
    `{-# INLINE #-}` and `{-# SPECIALIZE #-}` pragmas where appropriate.
 4. **Minimalism** (low number of dependencies). We don't force users of `relude` to
-   stick to some specific lens or text formatting or logging library.
-5. **Convenience** (like lifted to `MonadIO` functions, more reexports). But we
+   stick to some specific lens or text formatting or logging library. If
+   possible, `relude` tries to depend only on boot libraies.
+   [Dependency graph](relude-dependency-graph.pdf) of `relude` can give you clearer picture.
+5. **Convenience** (e.g lifted to `MonadIO` functions, more reexports). Despite minimalism, we
    want to bring common types and functions (like `containers` and `bytestring`)
    into scope because they are used in almost every application anyways.
 6. **Provide excellent documentation.**
-   * Tutorial
-   * Migration guide from `Prelude`
-   * Haddock with examples for (almost) every function
-     (all examples are tested with [`doctest`](http://hackage.haskell.org/package/doctest))
-   * Documentation regarding [internal module structure]((http://hackage.haskell.org/package/relude/docs/Relude.html))
-   * `relude`-specific [HLint](http://hackage.haskell.org/package/hlint) rules:
-     [`.hlint.yaml`](.hlint.yaml)
+   + Tutorial
+   + Migration guide from `Prelude`
+   + Haddock for every function with examples tested by [`doctest`](http://hackage.haskell.org/package/doctest)
+   + Documentation on [internal module structure](http://hackage.haskell.org/package/relude/docs/Relude.html)
+   + `relude`-specific [HLint](http://hackage.haskell.org/package/hlint) rules: [`.hlint.yaml`](.hlint.yaml)
 7. **User-friendliness.** Ability to quickly migrate to `relude` if you're familiar
    with the common libraries like `text` and `containers`.
 8. **Exploration.** Experiment with new ideas and proposals without introducing
@@ -50,27 +51,61 @@
    exported by default so it's quite easy to bring something new and let users
    decide to use it or not.
 
-This README contains introduction to `Relude` and a tutorial on how to use it.
+This README contains introduction to `relude` and a tutorial on how to use it.
 
 ## Structure of this tutorial
 
 This tutorial has several parts:
 
-1. [Get started](#get-started-)
+1. [When to use an alternative prelude?](#when-to-use-an-alternative-prelude-)
+2. [Get started](#get-started-)
     * [base-noprelude](#base-noprelude-)
     * [Mixins](#mixins-)
     * [NoImplicitPrelude](#NoImplicitPrelude-)
-2. [Difference from Prelude](#difference-from-prelude-)
-3. [Reexports](#reexports-)
-4. [What's new?](#whats-new-)
+3. [Difference from Prelude](#difference-from-prelude-)
+4. [Reexports](#reexports-)
+5. [What's new?](#whats-new-)
 6. [Migration guide](#migration-guide-)
 7. [Comparison with other alternative preludes](#comparison-with-other-alternative-preludes-)
     * [Relude vs Protolude](#relude-vs-protolude-)
 8. [For developers](#for-developers-)
 
 This is neither a tutorial on _Haskell_ nor tutorial on each function contained
-in `Relude`. For detailed documentation of every function together with examples
+in `relude`. For detailed documentation of every function together with examples
 and usage, see [_Haddock documentation_](http://hackage.haskell.org/package/relude).
+
+## When to use an alternative prelude? [↑](#structure-of-this-tutorial)
+
+Module with the name `Prelude` is a module imported by default in every Haskell
+source file of your project. If you want to use some data types or functions
+which are not exposed by `Prelude`, you need to import them, adding necessary
+libraries to your project dependencies. Unlike ordinary libraries, alternative
+preludes provide different set of available by default functions and data types.
+
+Replacing default `Prelude` from `base` has the following disadvangates:
+
+1. Increased threshold entrance: you need to learn different standard library.
+    + `relude` tries to lower this threshold as much as possible: excellent
+      documentation, no custom abstractions, behavior is changed only for small
+      subset of functions.
+2. Extra dependencies: adding more libraries to dependencies increases build
+   times and maintenance burden.
+   + `relude` depends only on boot libraries (almost) which results in, follows
+     [PvP](https://pvp.haskell.org/) and cares about backwards compatibility.
+
+However, using an alternative prelude, specifically `relude`, has the following
+**advantages**:
+
+1. Increased code safety: no partial functions, no space-leak functions.
+2. Increased productivity: no need to import common functions and data types,
+   more common idioms provided.
+3. Increased performance: some functions in `relude` are faster than in default `Prelude`.
+
+Our recommendations when to use `relude`:
+
+1. When you develop application (e.g. CLI tool, web-app). In that case better
+   productivity is more important than lower number dependencies.
+2. When writing a big framework. Some of them can be bigger than applications.
 
 ## Get started [↑](#structure-of-this-tutorial)
 
@@ -159,46 +194,60 @@ import Relude
 
 ## Difference from Prelude [↑](#structure-of-this-tutorial)
 
-* `head`, `tail`, `last`, `init` work with `NonEmpty a` instead of `[a]`.
-* `undefined` triggers a compiler warning, because you probably don't want to
-  leave `undefined` in your code. Either use `throwIO`, `Except`, `error` or
-  `bug`.
-* Multiple sorting functions are available without imports:
+Main differences from `Prelude` can be grouped into the following categories:
+
+* Changed behavior of common functions
+  + `head`, `tail`, `last`, `init` work with `NonEmpty a` instead of `[a]`.
+  + `show` is polymorphic over return type.
+  + Functions `sum` and `product` are strict now, which makes them more efficient.
+  + You can't call `elem` and `notElem` functions over `Set` and `HashSet`.
+    These functions are forbidden for these two types because of the performance
+    reasons.
+  + `error` takes `Text`
+  + `undefined` triggers a compiler warning, because you probably don't want to
+    leave `undefined` in your code. Either use `throwIO`, `Except`, `error` or
+    `bug`.
+* Not reexported
+  + `read`
+  + `lookup` for lists
+  + `log`
+* Completely new functions are brougth into scope
+  + See [What's new?](#whats-new-) section for a detailed overview.
+* New reexports
+  + See [Reexports](#reexports-) section for a detailed overview.
+
+## Reexports [↑](#structure-of-this-tutorial)
+
+`relude` reexports some parts of the following libraries:
+
+* [`base`](http://hackage.haskell.org/package/base)
+* [`bytestring`](http://hackage.haskell.org/package/bytestring)
+* [`containers`](http://hackage.haskell.org/package/containers)
+* [`deepseq`](http://hackage.haskell.org/package/deepseq)
+* [`hashable`](http://hackage.haskell.org/package/hashable)
+* [`mtl`](http://hackage.haskell.org/package/mtl)
+* [`stm`](http://hackage.haskell.org/package/stm)
+* [`text`](http://hackage.haskell.org/package/text)
+* [`transformers`](http://hackage.haskell.org/package/transformers)
+* [`unordered-containers`](http://hackage.haskell.org/package/unordered-containers)
+
+If you want to clean up imports after switching to `relude`, you can use
+`relude`-specific [`.hlint.yaml`](.hlint.yaml) configuration for this task.
+
+### base
+
+Multiple sorting functions are available:
   + `sortBy :: (a -> a -> Ordering) -> [a] -> [a]`: sorts list using given custom comparator.
   + `sortWith :: Ord b => (a -> b) -> [a] -> [a]`: sorts a list based on some property of its elements.
   + `sortOn :: Ord b => (a -> b) -> [a] -> [a]`: just like `sortWith`, but more
     time-efficient if function is calculated slowly (though less
     space-efficient). So you should write `sortOn length` (would sort elements
     by length) but `sortWith fst` (would sort list of pairs by first element).
-* Functions `sum` and `product` are strict now, which makes them more efficient.
-* Since `show` doesn't come from `Show` anymore, you need to export
-  `Text.Show` module if you want to implement `Show` instance manually. This can be done like this:
-  ```haskell
-  import qualified Text.Show
-  ```
-* You can't call `elem` and `notElem` functions over `Set` and `HashSet`. These
-  functions are forbidden for these two types because of the performance reasons.
-* `error` takes `Text`.
-* `lookup` for lists is not exported.
 
-## Reexports [↑](#structure-of-this-tutorial)
+`readMaybe` and `readEither` are like `read` but total and give either `Maybe`
+or `Either` with parse error.
 
-`relude` reexports some parts of the following libraries:
-
-* `base`
-* `containers`
-* `unordered-containers`
-* `text`
-* `bytestring`
-* `transformers`
-* `mtl`
-* `deepseq`
-* `stm`
-
-If you want to clean up imports after switching to `relude`, you can use
-`relude`-specific [`.hlint.yaml`](.hlint.yaml) configuration for this task.
-
-### base
+`(&)` – reverse application. `x & f & g` instead of `g $ f $ x` is useful sometimes.
 
 Some generally useful modules from `base` package, like: `Control.Applicative`,
 `Data.Traversable`, `Data.Monoid`, `Data.List`, and lots of others.
@@ -266,7 +315,6 @@ Finally, we can move to part describing the new cool features we bring with `rel
 * `uncons` splits a list at the first element.
 * `ordNub` and `sortNub` are _O(n log n)_ versions of `nub` (which is quadratic)
   and `hashNub` and `unstableNub` are almost _O(n)_ versions of `nub`.
-* `(&)` – reverse application. `x & f & g` instead of `g $ f $ x` is useful sometimes.
 * `whenM`, `unlessM`, `ifM`, `guardM` are available and do what you expect
   them to do (e.g. `whenM (doesFileExist "foo")`).
 * General fold functions:
@@ -274,8 +322,6 @@ Finally, we can move to part describing the new cool features we bring with `rel
   foldMapA :: (Monoid b, Applicative m, Foldable f) => (a -> m b) -> f a -> m b
   foldMapM :: (Monoid b, Monad m, Foldable f) => (a -> m b) -> f a -> m b
   ```
-* `readMaybe` and `readEither` are like `read` but total and give either
-  `Maybe` or `Either` with parse error.
 * `when(Just|Nothing|Left|Right|NotEmpty)[M][_]`
   let you conditionally execute something. Before:
 
@@ -300,14 +346,11 @@ Finally, we can move to part describing the new cool features we bring with `rel
   ```
 
 * `andM`, `allM`, `anyM`, `orM` are monadic version of corresponding functions from `base`.
-
 * Conversions between `Either` and `Maybe` like `rightToMaybe` and `maybeToLeft`
   with clear semantic.
 * `using(Reader|State)[T]` functions as aliases for `flip run(Reader|State)[T]`.
 * [`One` type class](src/Relude/Container/One.hs)
   for creating singleton containers. Even monomorhpic ones like `Text`.
-* [`StaticMap` and `DynamicMap`type classes](src/Relude/Extra/Map.hs) as a
-  general interface for `Map`-like data structures.
 * `evaluateWHNF` and `evaluateNF` functions as clearer and lifted aliases for
   `evaluate` and `evaluate . force`.
 * `MonadFail` instance for `Either`.
@@ -317,6 +360,7 @@ Finally, we can move to part describing the new cool features we bring with `rel
 * Convenient functions to work with `(Bounded a, Enum a)` types:
   1. `universe :: (Bounded a, Enum a) => [a]`: get all values of the type.
   2. `inverseMap :: (Bounded a, Enum a, Ord k) => (a -> k) -> k -> Maybe a`: convert functions like `show` to parsers.
+
 * Nice helpers to deal with `newtype`s in a more pleasant way:
 
   ```haskell
@@ -337,6 +381,8 @@ Finally, we can move to part describing the new cool features we bring with `rel
   non-empty structures like `NonEmpty`.
 * `Validation` data type as an alternative to `Either` when you want to combine
   all errors.
+* [`StaticMap` and `DynamicMap` type classes](src/Relude/Extra/Map.hs) as a
+  general interface for `Map`-like data structures.
 
 Explore `Extra` modules: [`Relude.Extra`](src/Relude/Extra/)
 
@@ -382,7 +428,15 @@ This section describes what you need to change to make your code compile with `r
    + Use `toText/toLText/toString` functions to convert to `Text/LazyText/String` types.
    + Use `encodeUtf8/decodeUtf8` to convert to/from `ByteString`.
    + Use `(putStr[Ln]|readFile|writeFile|appendFile)[Text|LText|BS|LBS]` functions.
-6. Run `hlint` using `.hlint.yaml` file from `relude` package to cleanup code and imports.
+
+6. Since `show` doesn't come from `Show` anymore, you need to export
+  `Text.Show` module if you want to implement `Show` instance manually. This can be done like this:
+  ```haskell
+  import qualified Text.Show
+  ```
+
+7. Run `hlint` using `.hlint.yaml` file from `relude` package to cleanup code and imports.
+
 
 ### Running HLint on CI
 
@@ -482,7 +536,6 @@ $ hlint test/Spec.hs
 See our blog post where we describe the details of the implementation for this solution:
 
 * [Dhall To HLint](https://kowainik.github.io/posts/2018-09-09-dhall-to-hlint)
-
 
 ## Acknowledgement
 
