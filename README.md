@@ -42,7 +42,7 @@ Below you can find key design principles behind `relude`:
    + Tutorial
    + Migration guide from `Prelude`
    + Haddock for every function with examples tested by [`doctest`](http://hackage.haskell.org/package/doctest)
-   + Documentation regarding [internal module structure](http://hackage.haskell.org/package/relude/docs/Relude.html)
+   + Documentation on [internal module structure](http://hackage.haskell.org/package/relude/docs/Relude.html)
    + `relude`-specific [HLint](http://hackage.haskell.org/package/hlint) rules: [`.hlint.yaml`](.hlint.yaml)
 7. **User-friendliness.** Ability to quickly migrate to `relude` if you're familiar
    with the common libraries like `text` and `containers`.
@@ -80,7 +80,7 @@ Module with the name `Prelude` is a module imported by default in every Haskell
 source file of your project. If you want to use some data types or functions
 which are not exposed by `Prelude`, you need to import them, adding necessary
 libraries to your project dependencies. Unlike ordinary libraries, alternative
-preludes replace default functions and data types.
+preludes provide different set of available by default functions and data types.
 
 Replacing default `Prelude` from `base` has the following disadvangates:
 
@@ -220,23 +220,23 @@ Main differences from `Prelude` can be grouped into the following categories:
 
 `relude` reexports some parts of the following libraries:
 
-* `base`
-* `bytestring`
-* `containers`
-* `deepseq`
-* `hashable`
-* `mtl`
-* `stm`
-* `text`
-* `transformers`
-* `unordered-containers`
+* [`base`](http://hackage.haskell.org/package/base)
+* [`bytestring`](http://hackage.haskell.org/package/bytestring)
+* [`containers`](http://hackage.haskell.org/package/containers)
+* [`deepseq`](http://hackage.haskell.org/package/deepseq)
+* [`hashable`](http://hackage.haskell.org/package/hashable)
+* [`mtl`](http://hackage.haskell.org/package/mtl)
+* [`stm`](http://hackage.haskell.org/package/stm)
+* [`text`](http://hackage.haskell.org/package/text)
+* [`transformers`](http://hackage.haskell.org/package/transformers)
+* [`unordered-containers`](http://hackage.haskell.org/package/unordered-containers)
 
 If you want to clean up imports after switching to `relude`, you can use
 `relude`-specific [`.hlint.yaml`](.hlint.yaml) configuration for this task.
 
 ### base
 
-Multiple sorting functions are available without imports:
+Multiple sorting functions are available:
   + `sortBy :: (a -> a -> Ordering) -> [a] -> [a]`: sorts list using given custom comparator.
   + `sortWith :: Ord b => (a -> b) -> [a] -> [a]`: sorts a list based on some property of its elements.
   + `sortOn :: Ord b => (a -> b) -> [a] -> [a]`: just like `sortWith`, but more
