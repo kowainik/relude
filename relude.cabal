@@ -22,7 +22,7 @@ description:
       stick to some specific lens or text formatting or logging library.
     .
     * __Convenience__ (like lifted to @MonadIO@ functions, more reexports). But we
-      want to bring common types and functions (like @containers@ and @bytestrng@)
+      want to bring common types and functions (like @containers@ and @bytestring@)
       into scope because they are used in almost every application anyways.
     .
     * __Provide excellent documentation.__
