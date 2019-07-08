@@ -90,7 +90,7 @@ Replacing default `Prelude` from `base` has the following disadvangates:
       subset of functions.
 2. Extra dependencies: adding more libraries to dependencies increases build
    times and maintenance burden.
-   + `relude` depends only on boot libraries (almost) which results in, follows
+   + `relude` depends only on boot libraries (almost) which results in small build time, follows
      [PvP](https://pvp.haskell.org/) and cares about backwards compatibility.
 
 However, using an alternative prelude, specifically `relude`, has the following
