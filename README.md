@@ -76,17 +76,17 @@ and usage, see [_Haddock documentation_](http://hackage.haskell.org/package/relu
 
 ## When to use an alternative prelude? [↑](#structure-of-this-tutorial)
 
-Module with the name `Prelude` is a module imported by default in every Haskell
+The module with the name `Prelude` is a module imported by default in every Haskell
 source file of your project. If you want to use some data types or functions
 which are not exposed by `Prelude`, you need to import them, adding necessary
 libraries to your project dependencies. Unlike ordinary libraries, alternative
 preludes provide different set of available by default functions and data types.
 
-Replacing default `Prelude` from `base` has the following disadvangates:
+Replacing default `Prelude` from `base` has the following disadvantages:
 
-1. Increased threshold entrance: you need to learn different standard library.
+1. Increased threshold entrance: you need to learn a different standard library.
     + `relude` tries to lower this threshold as much as possible: excellent
-      documentation, no custom abstractions, behavior is changed only for small
+      documentation, no custom abstractions, behavior is changed only for a small
       subset of functions.
 2. Extra dependencies: adding more libraries to dependencies increases build
    times and maintenance burden.
@@ -103,21 +103,21 @@ However, using an alternative prelude, specifically `relude`, has the following
 
 Our recommendations when to use `relude`:
 
-1. When you develop application (e.g. CLI tool, web-app). In that case better
-   productivity is more important than lower number dependencies.
+1. When you develop an application (e.g. CLI tool, web-app). In that case greater
+   productivity is more important than a low number of dependencies.
 2. When writing a big framework. Some of them can be bigger than applications.
 
 ## Get started [↑](#structure-of-this-tutorial)
 
 If you want to start using `relude` in your project and explore it with the help
-of compiler, set everything up according to one of the instructions below.
+of the compiler, set everything up according to one of the instructions below.
 
 ### base-noprelude [↑](#structure-of-this-tutorial)
 
 This is the recommended way to use custom prelude. It requires you to perform
 the following steps:
 
-1. Replace `base` dependency with corresponding version of `base-noprelude` in
+1. Replace the `base` dependency with corresponding version of `base-noprelude` in
    your `.cabal` file.
 2. Add a `relude` dependency to your `.cabal` file.
 3. Add the following `Prelude` module to your project (both to filesystem and to `exposed-modules`):
