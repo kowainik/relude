@@ -39,6 +39,24 @@ instance Functor (Validation e) where
     _ <$ Failure e = Failure e
     {-# INLINE (<$) #-}
 
+{- | __Examples __
+>>> let a = Success "First success." :: Validation [Text] Text
+>>> let b = Success " Second success." :: Validation [Text] Text
+>>> let c = Failure ["Not correct"] :: Validation [Text] Text
+
+>>> a <> b
+Success "First success. Second success."
+
+>> a <> c
+Failure ["Not correct"]
+-}
+
+instance (Semigroup e, Semigroup a) => Semigroup (Validation e a) where
+    x <> y = (<>) <$> x <*> y
+
+instance (Semigroup e, Monoid a) => Monoid (Validation e a) where
+    mempty = Success mempty
+
 {- | __Examples__
 
 >>> let fa = Success (*3) :: Validation [Text] (Int -> Int)
@@ -57,25 +75,16 @@ Failure ["Not correct"]
 >>> c *> d *> b
 Failure ["Not correct","Not correct either"]
 
->>> liftA2 (+) a b
+>>> (+) <$> a <*> b
 Success 8
 
->>> liftA2 (+) a c
+>>> (+) <$> a <*> c
 Failure ["Not correct"]
 -}
 instance Semigroup e => Applicative (Validation e) where
     pure :: a -> Validation e a
     pure = Success
     {-# INLINE pure #-}
-
-#if MIN_VERSION_base(4,10,0)
-    liftA2 :: (a -> b -> c) -> Validation e a -> Validation e b -> Validation e c
-    liftA2 _ (Failure el) (Failure er) = Failure (el <> er)
-    liftA2 _ (Failure e)  (Success _)  = Failure e
-    liftA2 _ (Success _)  (Failure e)  = Failure e
-    liftA2 f (Success a)  (Success b)  = Success (f a b)
-    {-# INLINE liftA2 #-}
-#endif
 
     (<*>) :: Validation e (a -> b) -> Validation e a -> Validation e b
     Failure e <*> b = Failure $ case b of
