@@ -52,10 +52,14 @@ Failure ["Not correct"]
 -}
 
 instance (Semigroup e, Semigroup a) => Semigroup (Validation e a) where
-    x <> y = (<>) <$> x <*> y
+    (<>) :: Validation e a -> Validation e a -> Validation e a
+    (<>) = liftA2 (<>)
+    {-# INLINE (<>) #-}
 
 instance (Semigroup e, Monoid a) => Monoid (Validation e a) where
+    mempty :: Validation e a
     mempty = Success mempty
+    {-# INLINE mempty #-}
 
 {- | __Examples__
 
@@ -75,10 +79,10 @@ Failure ["Not correct"]
 >>> c *> d *> b
 Failure ["Not correct","Not correct either"]
 
->>> (+) <$> a <*> b
+>>> liftA2 (+) a b
 Success 8
 
->>> (+) <$> a <*> c
+>>> liftA2 (+) a c
 Failure ["Not correct"]
 -}
 instance Semigroup e => Applicative (Validation e) where
