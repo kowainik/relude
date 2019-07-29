@@ -39,7 +39,7 @@ instance Functor (Validation e) where
     _ <$ Failure e = Failure e
     {-# INLINE (<$) #-}
 
-{- | __Examples __
+{- | __Examples__
 >>> let a = Success "First success." :: Validation [Text] Text
 >>> let b = Success " Second success." :: Validation [Text] Text
 >>> let c = Failure ["Not correct"] :: Validation [Text] Text
