@@ -8,19 +8,75 @@ Copyright:  (c) 2014 Chris Allen, Edward Kmett
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Monoidal 'Validation' sibling to 'Either'.
+'Validation' is a monoidal sibling to 'Either'. Use 'Validation' on operations that
+might fail with multiple errors that you want to preserve.
 -}
 
+
 module Relude.Extra.Validation
-       ( Validation(..)
+       (
+       -- * How to use
+       -- $use
+         Validation(..)
        , validationToEither
        , eitherToValidation
        ) where
 
 import Relude
 
--- $setup
--- >>> :set -XTypeApplications -XOverloadedStrings
+{- | $setup
+>>> :set -XTypeApplications -XOverloadedStrings
+-}
+
+{- $use
+
+Take for example a type @Computer@ that needs to be validated:
+
+>>> data Computer = Computer { ram :: Int, cpus :: Int } deriving (Eq, Show)
+
+You can validate that the computer has a minimum of 16 GB of RAM:
+
+>>> :{
+validateRam :: Int -> Validation [Text] Int
+validateRam ram
+ | ram >= 16 = Success ram
+ | otherwise = Failure ["Not enough RAM"]
+:}
+
+and that the processor has at least two CPUs:
+
+>>> :{
+validateCpus :: Int -> Validation [Text] Int
+validateCpus cpus
+ | cpus >= 2 = Success cpus
+ | otherwise = Failure ["Not enough CPUs"]
+:}
+
+You can use these functions with the 'Applicative' instance of the 'Validation'
+type to construct a validated @Computer@. You will get either (pun intended) a
+valid @Computer@ or the errors that prevent it from being considered valid.
+
+Like so:
+
+>>> :{
+mkComputer :: Int -> Int -> Validation [Text] Computer
+mkComputer ram cpus = Computer <$> validateRam ram <*> validateCpus cpus
+:}
+
+Using @mkComputer@ we get a @Success Computer@ or a list with all possible errors:
+
+>>> mkComputer 16 2
+Success (Computer {ram = 16, cpus = 2})
+
+>>> mkComputer 16 1
+Failure ["Not enough CPUs"]
+
+>>> mkComputer 15 2
+Failure ["Not enough RAM"]
+
+>>> mkComputer 15 1
+Failure ["Not enough RAM","Not enough CPUs"]
+-}
 
 -- | 'Validation' is 'Either' with a Left that is a 'Monoid'
 data Validation e a
