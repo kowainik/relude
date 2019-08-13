@@ -39,6 +39,6 @@ exitSuccess = liftIO XIO.exitSuccess
 {-# INLINE exitSuccess #-}
 
 -- | Lifted version of 'System.Exit.die'.
-die :: MonadIO m => String -> m ()
+die :: MonadIO m => String -> m a
 die err = liftIO (XIO.die err)
 {-# INLINE die #-}
