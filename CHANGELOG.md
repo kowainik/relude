@@ -9,6 +9,8 @@ The changelog is available [on GitHub][2].
 * Re-export `GHC.Float.atan2`.
 * [#172](https://github.com/kowainik/relude/issues/172):
   Add `Monoid` and `Semigroup` instances for `Validation` type
+* [#178](https://github.com/kowainik/relude/issues/178):
+  Made `die` be polymorphic in its return type.
 
 ## 0.5.0 — Mar 18, 2019
 
