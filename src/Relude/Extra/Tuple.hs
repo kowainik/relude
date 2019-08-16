@@ -20,6 +20,7 @@ module Relude.Extra.Tuple
 
 import Relude
 
+
 {- | Creates a tuple by pairing something with itself.
 
 >>> dupe "foo"
@@ -33,7 +34,6 @@ dupe a = (a, a)
 
 {- | Apply a function, with the result in the fst slot,
 and the value in the other.
-
 
 A dual to 'mapToSnd'
 

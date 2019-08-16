@@ -183,6 +183,8 @@ andM = go . toList
     go (p:ps) = do
         q <- p
         if q then go ps else pure False
+{-# INLINEABLE andM #-}
+{-# SPECIALIZE andM :: [IO Bool] -> IO Bool #-}
 
 {- | Monadic version of 'F.or'.
 
@@ -200,6 +202,8 @@ orM = go . toList
     go (p:ps) = do
         q <- p
         if q then pure True else go ps
+{-# INLINEABLE orM #-}
+{-# SPECIALIZE orM  :: [IO Bool] -> IO Bool #-}
 
 {- | Monadic version of 'F.all'.
 
@@ -217,6 +221,8 @@ allM p = go . toList
     go (x:xs) = do
         q <- p x
         if q then go xs else pure False
+{-# INLINEABLE allM #-}
+{-# SPECIALIZE allM :: (a -> IO Bool) -> [a] -> IO Bool #-}
 
 {- | Monadic  version of 'F.any'.
 
@@ -234,11 +240,8 @@ anyM p = go . toList
     go (x:xs) = do
         q <- p x
         if q then pure True else go xs
-
-{-# SPECIALIZE andM :: [IO Bool] -> IO Bool #-}
-{-# SPECIALIZE orM  :: [IO Bool] -> IO Bool #-}
+{-# INLINEABLE anyM #-}
 {-# SPECIALIZE anyM :: (a -> IO Bool) -> [a] -> IO Bool #-}
-{-# SPECIALIZE allM :: (a -> IO Bool) -> [a] -> IO Bool #-}
 
 ----------------------------------------------------------------------------
 -- Type level tricks

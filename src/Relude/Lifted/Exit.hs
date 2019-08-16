@@ -23,22 +23,19 @@ import System.Exit (ExitCode)
 
 import qualified System.Exit as XIO
 
+
 -- | Lifted version of 'System.Exit.exitWith'.
 exitWith :: MonadIO m => ExitCode -> m a
 exitWith a = liftIO (XIO.exitWith a)
-{-# INLINE exitWith #-}
 
 -- | Lifted version of 'System.Exit.exitFailure'.
 exitFailure :: MonadIO m => m a
 exitFailure = liftIO XIO.exitFailure
-{-# INLINE exitFailure #-}
 
 -- | Lifted version of 'System.Exit.exitSuccess'.
 exitSuccess :: MonadIO m => m a
 exitSuccess = liftIO XIO.exitSuccess
-{-# INLINE exitSuccess #-}
 
 -- | Lifted version of 'System.Exit.die'.
 die :: MonadIO m => String -> m a
 die err = liftIO (XIO.die err)
-{-# INLINE die #-}

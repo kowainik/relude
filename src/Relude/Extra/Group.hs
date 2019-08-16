@@ -19,6 +19,7 @@ import Relude.Extra.Map
 
 import Data.List.NonEmpty ((<|))
 
+
 {- | Groups elements using results of the given function as keys.
 
 >>> groupBy even [1..6] :: HashMap Bool (NonEmpty Int)

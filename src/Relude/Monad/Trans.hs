@@ -78,7 +78,6 @@ executingState :: s -> State s a -> s
 executingState s st = snd (usingState s st)
 {-# INLINE executingState #-}
 
-
 -- | Lift a 'Maybe' to the 'MaybeT' monad
 hoistMaybe  :: Applicative m => Maybe a -> MaybeT m a
 hoistMaybe m = MaybeT (pure m)

@@ -21,6 +21,7 @@ import Relude
 
 import qualified Data.Map.Strict as M
 
+
 -- $setup
 -- >>> :set -XTypeApplications
 
@@ -34,6 +35,7 @@ import qualified Data.Map.Strict as M
 -}
 universe :: (Bounded a, Enum a) => [a]
 universe = [minBound .. maxBound]
+{-# INLINE universe #-}
 
 {- | @inverseMap f@ creates a function that is the inverse of a given function
 @f@. It does so by constructing 'M.Map' for every value @f a@. The
@@ -60,6 +62,7 @@ inverseMap f = \k -> M.lookup k dict
 
     univ :: [a]
     univ = universe
+{-# INLINE inverseMap #-}
 
 {- | Like 'succ', but doesn't fail on 'maxBound'. Instead it returns 'minBound'.
 
@@ -74,6 +77,7 @@ next  :: (Eq a, Bounded a, Enum a) => a -> a
 next e
     | e == maxBound = minBound
     | otherwise     = succ e
+{-# INLINE next #-}
 
 {- | Like 'pred', but doesn't fail on 'minBound'. Instead it returns 'maxBound'.
 
@@ -88,6 +92,7 @@ prec  :: (Eq a, Bounded a, Enum a) => a -> a
 prec e
     | e == minBound = maxBound
     | otherwise     = pred e
+{-# INLINE prec #-}
 
 {- | Returns 'Nothing' if given 'Int' outside range.
 
@@ -102,3 +107,4 @@ Nothing
 -}
 safeToEnum :: forall a . (Bounded a, Enum a) => Int -> Maybe a
 safeToEnum i = guard (fromEnum @a minBound <= i && i <= fromEnum @a maxBound) *> Just (toEnum i)
+{-# INLINE safeToEnum #-}

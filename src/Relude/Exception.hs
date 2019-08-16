@@ -32,8 +32,10 @@ import Relude.Monad (Maybe (..))
 
 import qualified Control.Exception as E (displayException, throw, toException)
 
--- | Type that represents exceptions used in cases when a particular codepath
--- is not meant to be ever executed, but happens to be executed anyway.
+
+{- | Type that represents exceptions used in cases when a particular codepath is
+not meant to be ever executed, but happens to be executed anyway.
+-}
 data Bug = Bug SomeException CallStack
     deriving (Show)
 

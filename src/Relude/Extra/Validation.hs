@@ -1,6 +1,5 @@
-{-# LANGUAGE CPP          #-}
-{-# LANGUAGE InstanceSigs #-}
-{-# LANGUAGE LambdaCase   #-}
+{-# LANGUAGE CPP        #-}
+{-# LANGUAGE LambdaCase #-}
 
 {- |
 Copyright:  (c) 2014 Chris Allen, Edward Kmett
@@ -23,6 +22,7 @@ module Relude.Extra.Validation
        ) where
 
 import Relude
+
 
 {- | $setup
 >>> :set -XTypeApplications -XOverloadedStrings

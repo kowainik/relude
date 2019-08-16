@@ -23,6 +23,7 @@ module Relude.Monad.Maybe
 import Relude.Applicative (Applicative, pass, pure)
 import Relude.Monad.Reexport (Maybe (..), Monad (..), fromMaybe)
 
+
 -- $setup
 -- >>> import Relude
 

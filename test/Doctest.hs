@@ -16,4 +16,8 @@ import Test.DocTest (doctest)
 main :: IO ()
 main = do
     sourceFiles <- glob "src/**/*.hs"
-    doctest $ "-XNoImplicitPrelude" : sourceFiles
+    doctest
+        $ "-XInstanceSigs"
+        : "-XNoImplicitPrelude"
+        : "-XScopedTypeVariables"
+        : sourceFiles
