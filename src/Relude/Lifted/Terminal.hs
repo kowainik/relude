@@ -15,13 +15,14 @@ module Relude.Lifted.Terminal
        , putStrLn
        ) where
 
-import Relude.Base (IO, Show, String)
+import Relude.Base (IO, Show)
 import Relude.Function ((.))
 import Relude.Monad.Reexport (MonadIO (..))
-import Relude.String.Reexport (Text)
+import Relude.String.Reexport (String, Text)
 
 import qualified Data.Text.IO as TIO
 import qualified System.IO as IO (print, putStr, putStrLn)
+
 
 -- | Lifted version of 'Data.Text.getLine'.
 getLine :: MonadIO m => m Text

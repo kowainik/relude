@@ -23,7 +23,7 @@ module Relude.String.Reexport
        ) where
 
 import Data.ByteString (ByteString)
-import Data.String (IsString (..))
+import Data.String (IsString (..), String)
 import Data.Text (Text, lines, unlines, unwords, words)
 import Data.Text.Encoding (decodeUtf8', decodeUtf8With)
 import Data.Text.Encoding.Error (OnDecodeError, OnError, UnicodeException, lenientDecode,

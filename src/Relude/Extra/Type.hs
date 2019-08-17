@@ -31,6 +31,7 @@ import Type.Reflection (Typeable, typeRep)
 import Data.Typeable (Typeable, typeRep)
 #endif
 
+
 -- $setup
 -- >>> :set -XDataKinds -XTypeOperators
 
@@ -55,7 +56,6 @@ typeName = show (typeRep (Proxy @a))
 #endif
 {-# INLINE typeName #-}
 
-infixr 5 ++
 {- | Concatenates type-level lists.
 
 >>> :kind! '[ 'Just 5, 'Nothing] ++ '[ 'Just 3, 'Nothing, 'Just 1]
@@ -66,6 +66,7 @@ infixr 5 ++
 '[] ++ '[ 'Just 3, 'Nothing, 'Just 1] :: [Maybe Nat]
 = '[ 'Just 3, 'Nothing, 'Just 1]
 -}
+infixr 5 ++
 type family (++) (xs :: [k]) (ys :: [k]) :: [k] where
     '[]       ++ ys = ys
     (x ': xs) ++ ys = x ': xs ++ ys

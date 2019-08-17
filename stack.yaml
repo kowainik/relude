@@ -1,7 +1,4 @@
-resolver: lts-13.20
-
-extra-deps:
-  - tasty-hedgehog-0.2.0.0
+resolver: lts-14.1
 
 nix:
   packages: [binutils, gmp]

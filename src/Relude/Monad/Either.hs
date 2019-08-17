@@ -38,7 +38,7 @@ import Data.Maybe (Maybe (..), maybe)
 import Relude.Applicative (pure)
 import Relude.Function ((.))
 import Relude.Monad.Reexport (Either (..), MonadFail (..), either)
-import Relude.String (IsString, fromString)
+import Relude.String (IsString, String, fromString)
 
 #if MIN_VERSION_base(4,10,0)
 import Data.Either (fromLeft, fromRight)
@@ -64,10 +64,12 @@ fromRight b (Left _)  = b
 fromRight _ (Right b) = b
 #endif
 
+
 -- $setup
 -- >>> import Relude.Bool (Bool (..))
 
 instance IsString str => MonadFail (Either str) where
+    fail :: String -> Either str a
     fail = Left . fromString
 
 -- | Maps left part of 'Either' to 'Maybe'.
@@ -78,6 +80,7 @@ instance IsString str => MonadFail (Either str) where
 -- Nothing
 leftToMaybe :: Either l r -> Maybe l
 leftToMaybe = either Just (const Nothing)
+{-# INLINE leftToMaybe #-}
 
 -- | Maps right part of 'Either' to 'Maybe'.
 --
@@ -87,6 +90,7 @@ leftToMaybe = either Just (const Nothing)
 -- Just "aba"
 rightToMaybe :: Either l r -> Maybe r
 rightToMaybe = either (const Nothing) Just
+{-# INLINE rightToMaybe #-}
 
 -- | Maps 'Maybe' to 'Either' wrapping default value into 'Left'.
 --
@@ -96,6 +100,7 @@ rightToMaybe = either (const Nothing) Just
 -- Left True
 maybeToRight :: l -> Maybe r -> Either l r
 maybeToRight l = maybe (Left l) Right
+{-# INLINE maybeToRight #-}
 
 -- | Maps 'Maybe' to 'Either' wrapping default value into 'Right'.
 --
@@ -105,6 +110,7 @@ maybeToRight l = maybe (Left l) Right
 -- Right True
 maybeToLeft :: r -> Maybe l -> Either l r
 maybeToLeft r = maybe (Right r) Left
+{-# INLINE maybeToLeft #-}
 
 -- | Applies given action to 'Either' content if 'Left' is given and returns
 -- the result. In case of 'Right' the default value will be returned.

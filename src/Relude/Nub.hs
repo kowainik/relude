@@ -43,20 +43,23 @@ import Prelude ((.))
 
 import qualified Data.Set as Set
 
+
 {- | Like 'Prelude.nub' but runs in \( O(n \log n) \)  time and requires 'Ord'.
 
 >>> ordNub [3, 3, 3, 2, 2, -1, 1]
 [3,2,-1,1]
 
 -}
-ordNub :: (Ord a) => [a] -> [a]
+ordNub :: forall a . (Ord a) => [a] -> [a]
 ordNub = go Set.empty
   where
+    go :: Set.Set a -> [a] -> [a]
     go _ []     = []
     go s (x:xs) =
       if x `Set.member` s
       then go s xs
       else x : go (Set.insert x s) xs
+{-# INLINEABLE ordNub #-}
 
 {- | Like 'Prelude.nub' but runs in \( O(n \log_{16} n) \)  time and requires 'Hashable'.
 
@@ -64,14 +67,16 @@ ordNub = go Set.empty
 [3,2,-1,1]
 
 -}
-hashNub :: (Eq a, Hashable a) => [a] -> [a]
+hashNub :: forall a . (Eq a, Hashable a) => [a] -> [a]
 hashNub = go HashSet.empty
   where
+    go :: HashSet.HashSet a -> [a] -> [a]
     go _ []     = []
     go s (x:xs) =
       if x `HashSet.member` s
       then go s xs
       else x : go (HashSet.insert x s) xs
+{-# INLINEABLE hashNub #-}
 
 {- | Like 'ordNub' runs in \( O(n \log n) \)  but also sorts a list.
 
@@ -81,6 +86,7 @@ hashNub = go HashSet.empty
 -}
 sortNub :: (Ord a) => [a] -> [a]
 sortNub = Set.toList . Set.fromList
+{-# INLINE sortNub #-}
 
 {- | Like 'hashNub' runs in \( O(n \log_{16} n) \) but has better performance; it doesn't save the order.
 
@@ -90,3 +96,4 @@ sortNub = Set.toList . Set.fromList
 -}
 unstableNub :: (Eq a, Hashable a) => [a] -> [a]
 unstableNub = HashSet.toList . HashSet.fromList
+{-# INLINE unstableNub #-}

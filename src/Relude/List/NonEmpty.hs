@@ -22,6 +22,7 @@ import Relude.Functor (fmap)
 import Relude.List.Reexport (NonEmpty (..), nonEmpty)
 import Relude.Monad (Maybe (..), Monad (..))
 
+
 -- $setup
 -- >>> import Relude
 
@@ -41,7 +42,6 @@ viaNonEmpty f = fmap f . nonEmpty
 >>> whenNotNull [] $ \(b :| _) -> print (not b)
 >>> whenNotNull [False,True] $ \(b :| _) -> print (not b)
 True
-
 -}
 whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f ()
 whenNotNull []     _ = pass

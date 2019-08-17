@@ -64,7 +64,7 @@ import Data.Proxy (Proxy (..))
 import Data.Typeable (Typeable)
 import Data.Void (Void, absurd, vacuous)
 
-import GHC.Base (String, asTypeOf, ord, seq, ($!))
+import GHC.Base (asTypeOf, ord, seq, ($!))
 import GHC.Enum (Bounded (..), Enum (..), boundedEnumFrom, boundedEnumFromThen)
 import GHC.Generics (Generic)
 import GHC.Show (Show)

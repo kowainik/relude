@@ -3,12 +3,15 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
-## Unreleased: 0.6.0
+## Unreleased: 0.6.0.0
+
 * [#155](https://github.com/kowainik/relude/issues/155):
   Implement `Relude.Extra.Foldable` module.
 * Re-export `GHC.Float.atan2`.
 * [#172](https://github.com/kowainik/relude/issues/172):
   Add `Monoid` and `Semigroup` instances for `Validation` type
+* [#177](https://github.com/kowainik/relude/issues/177):
+  Improve usage of performance pragmas.
 * [#178](https://github.com/kowainik/relude/issues/178):
   Made `die` be polymorphic in its return type.
 

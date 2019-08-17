@@ -55,6 +55,7 @@ import Relude.String.Reexport (Read)
 -- []
 maybeToMonoid :: Monoid m => Maybe m -> m
 maybeToMonoid = fromMaybe mempty
+{-# INLINE maybeToMonoid #-}
 
 #if !MIN_VERSION_base(4,12,0)
 -- | This data type witnesses the lifting of a 'Monoid' into an

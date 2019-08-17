@@ -46,7 +46,6 @@ import Data.String (String)
 import Relude.Functor ((<$>))
 import Relude.String.Reexport (ByteString, IsString, Read, Text, fromString)
 
-import qualified Data.ByteString as B
 import qualified Data.ByteString.Lazy as LB
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
@@ -98,75 +97,142 @@ class ConvertUtf8 a b where
     -}
     decodeUtf8Strict :: b -> Either T.UnicodeException a
 
-instance ConvertUtf8 String B.ByteString where
+instance ConvertUtf8 String ByteString where
+    encodeUtf8 :: String -> ByteString
     encodeUtf8 = T.encodeUtf8 . T.pack
+    {-# INLINE encodeUtf8 #-}
+
+    decodeUtf8 :: ByteString -> String
     decodeUtf8 = T.unpack . T.decodeUtf8
+    {-# INLINE decodeUtf8 #-}
+
+    decodeUtf8Strict :: ByteString -> Either T.UnicodeException String
     decodeUtf8Strict = (T.unpack <$>) . decodeUtf8Strict
+    {-# INLINE decodeUtf8Strict #-}
 
-instance ConvertUtf8 T.Text B.ByteString where
+instance ConvertUtf8 Text ByteString where
+    encodeUtf8 :: Text -> ByteString
     encodeUtf8 = T.encodeUtf8
-    decodeUtf8 = T.decodeUtf8With T.lenientDecode
-    decodeUtf8Strict = T.decodeUtf8'
+    {-# INLINE encodeUtf8 #-}
 
-instance ConvertUtf8 LT.Text B.ByteString where
+    decodeUtf8 :: ByteString -> Text
+    decodeUtf8 = T.decodeUtf8With T.lenientDecode
+    {-# INLINE decodeUtf8 #-}
+
+    decodeUtf8Strict :: ByteString -> Either T.UnicodeException Text
+    decodeUtf8Strict = T.decodeUtf8'
+    {-# INLINE decodeUtf8Strict #-}
+
+instance ConvertUtf8 LText ByteString where
+    encodeUtf8 :: LText -> ByteString
     encodeUtf8 = LB.toStrict . encodeUtf8
+    {-# INLINE encodeUtf8 #-}
+
+    decodeUtf8 :: ByteString -> LText
     decodeUtf8 = LT.decodeUtf8With T.lenientDecode . LB.fromStrict
+    {-# INLINE decodeUtf8 #-}
+
+    decodeUtf8Strict :: ByteString -> Either T.UnicodeException LText
     decodeUtf8Strict = decodeUtf8Strict . LB.fromStrict
+    {-# INLINE decodeUtf8Strict #-}
+
 -- | Converting 'String' to 'LB.ByteString' might be a slow operation.
 -- Consider using lazy bytestring at first place.
-instance ConvertUtf8 String LB.ByteString where
+instance ConvertUtf8 String LByteString where
+    encodeUtf8 :: String -> LByteString
     encodeUtf8 = LT.encodeUtf8 . LT.pack
+    {-# INLINE encodeUtf8 #-}
+
+    decodeUtf8 :: LByteString -> String
     decodeUtf8 = LT.unpack . LT.decodeUtf8
+    {-# INLINE decodeUtf8 #-}
+
+    decodeUtf8Strict :: LByteString -> Either T.UnicodeException String
     decodeUtf8Strict = (T.unpack <$>) . decodeUtf8Strict
+    {-# INLINE decodeUtf8Strict #-}
 
-instance ConvertUtf8 T.Text LB.ByteString where
+instance ConvertUtf8 Text LByteString where
+    encodeUtf8 :: Text -> LByteString
     encodeUtf8 = LB.fromStrict . T.encodeUtf8
-    decodeUtf8 = T.decodeUtf8With T.lenientDecode . LB.toStrict
-    decodeUtf8Strict = T.decodeUtf8' . LB.toStrict
+    {-# INLINE encodeUtf8 #-}
 
-instance ConvertUtf8 LT.Text LB.ByteString where
+    decodeUtf8 :: LByteString -> Text
+    decodeUtf8 = T.decodeUtf8With T.lenientDecode . LB.toStrict
+    {-# INLINE decodeUtf8 #-}
+
+    decodeUtf8Strict :: LByteString -> Either T.UnicodeException Text
+    decodeUtf8Strict = T.decodeUtf8' . LB.toStrict
+    {-# INLINE decodeUtf8Strict #-}
+
+instance ConvertUtf8 LText LByteString where
+    encodeUtf8 :: LText -> LByteString
     encodeUtf8 = LT.encodeUtf8
+    {-# INLINE encodeUtf8 #-}
+
+    decodeUtf8 :: LByteString -> LText
     decodeUtf8 = LT.decodeUtf8With T.lenientDecode
+    {-# INLINE decodeUtf8 #-}
+
+    decodeUtf8Strict :: LByteString -> Either T.UnicodeException LText
     decodeUtf8Strict = LT.decodeUtf8'
+    {-# INLINE decodeUtf8Strict #-}
 
 -- | Type class for converting other strings to 'T.Text'.
 class ToText a where
-    toText :: a -> T.Text
+    toText :: a -> Text
 
 instance ToText String where
+    toText :: String -> Text
     toText = T.pack
+    {-# INLINE toText #-}
 
-instance ToText T.Text where
+instance ToText Text where
+    toText :: Text -> Text
     toText = id
+    {-# INLINE toText #-}
 
-instance ToText LT.Text where
+instance ToText LText where
+    toText :: LText -> Text
     toText = LT.toStrict
+    {-# INLINE toText #-}
 
 -- | Type class for converting other strings to 'LT.Text'.
 class ToLText a where
-    toLText :: a -> LT.Text
+    toLText :: a -> LText
 
 instance ToLText String where
+    toLText :: String -> LText
     toLText = LT.pack
+    {-# INLINE toLText #-}
 
-instance ToLText T.Text where
+instance ToLText Text where
+    toLText :: Text -> LText
     toLText = LT.fromStrict
+    {-# INLINE toLText #-}
 
 instance ToLText LT.Text where
+    toLText :: LText -> LText
     toLText = id
+    {-# INLINE toLText #-}
 
 -- | Type class for converting other strings to 'String'.
 class ToString a where
     toString :: a -> String
 
 instance ToString String where
+    toString :: String -> String
     toString = id
+    {-# INLINE toString #-}
 
-instance ToString T.Text where
+instance ToString Text where
+    toString :: Text -> String
     toString = T.unpack
+    {-# INLINE toString #-}
 
-instance ToString LT.Text where
+instance ToString LText where
+    toString :: LText -> String
     toString = LT.unpack
+    {-# INLINE toString #-}
 
 -- | Polymorhpic version of 'Text.Read.readEither'.
 --
@@ -176,20 +242,21 @@ instance ToString LT.Text where
 -- Left "Prelude.read: no parse"
 readEither :: (ToString a, Read b) => a -> Either Text b
 readEither = first toText . Text.Read.readEither . toString
+{-# INLINEABLE readEither #-}
 
 -- | Generalized version of 'Prelude.show'.
 show :: forall b a . (Show.Show a, IsString b) => a -> b
 show x = fromString (Show.show x)
+{-# INLINE show #-}
 {-# SPECIALIZE show :: Show.Show  a => a -> Text  #-}
 {-# SPECIALIZE show :: Show.Show  a => a -> LText  #-}
 {-# SPECIALIZE show :: Show.Show  a => a -> ByteString  #-}
 {-# SPECIALIZE show :: Show.Show  a => a -> LByteString  #-}
 {-# SPECIALIZE show :: Show.Show  a => a -> String  #-}
 
-
 -- | Type class for lazy-strict conversions.
 class LazyStrict l s | l -> s, s -> l where
-    toLazy :: s -> l
+    toLazy   :: s -> l
     toStrict :: l -> s
 
 -- | Alias for 'toStrict' function.
@@ -207,13 +274,19 @@ fromStrict = toLazy
 {-# SPECIALIZE fromStrict :: Text -> LText  #-}
 
 instance LazyStrict LByteString ByteString where
+    toLazy :: ByteString -> LByteString
     toLazy = LB.fromStrict
     {-# INLINE toLazy #-}
+
+    toStrict :: LByteString -> ByteString
     toStrict = LB.toStrict
     {-# INLINE toStrict #-}
 
 instance LazyStrict LText Text where
+    toLazy :: Text -> LText
     toLazy = LT.fromStrict
     {-# INLINE toLazy #-}
+
+    toStrict :: LText -> Text
     toStrict = LT.toStrict
     {-# INLINE toStrict #-}

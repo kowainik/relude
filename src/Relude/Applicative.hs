@@ -31,6 +31,7 @@ import Control.Applicative (Alternative (..), Applicative (..), Const (..), ZipL
 -- Just ()
 pass :: Applicative f => f ()
 pass = pure ()
+{-# INLINE pass #-}
 
 {- | For chaining applicative operations in forward applications using '(&)'
 Named version of the '<**>' operator, which is '<*>' but flipped

@@ -14,9 +14,10 @@ module Relude.Lifted.File
        , appendFile
        ) where
 
-import Relude.Base (FilePath, IO, String)
+import Relude.Base (FilePath, IO)
 import Relude.Function ((.))
 import Relude.Monad.Reexport (MonadIO (..))
+import Relude.String (String)
 
 import qualified System.IO as IO
 

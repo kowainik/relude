@@ -69,6 +69,7 @@ this container)
 class One x where
     -- | Type of single element of the structure.
     type OneItem x
+
     -- | Create a list, map, 'Text', etc from a single element.
     one :: OneItem x -> x
 
@@ -84,6 +85,8 @@ prop> length (one @[Int] x) == 1
 -}
 instance One [a] where
     type OneItem [a] = a
+
+    one :: a -> [a]
     one = (:[])
     {-# INLINE one #-}
 
@@ -97,6 +100,8 @@ prop> length (one @(NonEmpty Int) x) == 1
 -}
 instance One (NE.NonEmpty a) where
     type OneItem (NE.NonEmpty a) = a
+
+    one :: a -> NE.NonEmpty a
     one = (NE.:|[])
     {-# INLINE one #-}
 
@@ -109,6 +114,8 @@ prop> length (one @(Seq Int) x) == 1
 -}
 instance One (SEQ.Seq a) where
     type OneItem (SEQ.Seq a) = a
+
+    one :: a -> SEQ.Seq a
     one = SEQ.singleton
     {-# INLINE one #-}
 
@@ -123,6 +130,8 @@ prop> Text.length (one x) == 1
 -}
 instance One T.Text where
     type OneItem T.Text = Char
+
+    one :: Char -> T.Text
     one = T.singleton
     {-# INLINE one #-}
 
@@ -135,6 +144,8 @@ prop> LText.length (one x) == 1
 -}
 instance One TL.Text where
     type OneItem TL.Text = Char
+
+    one :: Char -> TL.Text
     one = TL.singleton
     {-# INLINE one #-}
 
@@ -147,6 +158,8 @@ prop> ByteString.length (one x) == 1
 -}
 instance One BS.ByteString where
     type OneItem BS.ByteString = Word8
+
+    one :: Word8 -> BS.ByteString
     one = BS.singleton
     {-# INLINE one #-}
 
@@ -159,6 +172,8 @@ prop> LByteString.length (one x) == 1
 -}
 instance One BSL.ByteString where
     type OneItem BSL.ByteString = Word8
+
+    one :: Word8 -> BSL.ByteString
     one = BSL.singleton
     {-# INLINE one #-}
 
@@ -173,6 +188,8 @@ prop> length (one @(Map Int String) x) == 1
 -}
 instance One (Map k v) where
     type OneItem (Map k v) = (k, v)
+
+    one :: (k, v) -> Map k v
     one = uncurry M.singleton
     {-# INLINE one #-}
 
@@ -185,6 +202,8 @@ prop> length (one @(HashMap Int String) x) == 1
 -}
 instance Hashable k => One (HashMap k v) where
     type OneItem (HashMap k v) = (k, v)
+
+    one :: (k, v) -> HashMap k v
     one = uncurry HM.singleton
     {-# INLINE one #-}
 
@@ -197,6 +216,8 @@ prop> length (one @(IntMap String) x) == 1
 -}
 instance One (IntMap v) where
     type OneItem (IntMap v) = (Int, v)
+
+    one :: (Int, v) -> IntMap v
     one = uncurry IM.singleton
     {-# INLINE one #-}
 
@@ -209,8 +230,10 @@ fromList [42]
 
 prop> length (one @(Set Int) x) == 1
 -}
-instance One (Set v) where
-    type OneItem (Set v) = v
+instance One (Set a) where
+    type OneItem (Set a) = a
+
+    one :: a -> Set a
     one = Set.singleton
     {-# INLINE one #-}
 
@@ -221,8 +244,10 @@ fromList [42]
 
 prop> length (one @(HashSet Int) x) == 1
 -}
-instance Hashable v => One (HashSet v) where
-    type OneItem (HashSet v) = v
+instance Hashable a => One (HashSet a) where
+    type OneItem (HashSet a) = a
+
+    one :: a -> HashSet a
     one = HashSet.singleton
     {-# INLINE one #-}
 
@@ -235,5 +260,7 @@ prop> IntSet.size (one x) == 1
 -}
 instance One IntSet where
     type OneItem IntSet = Int
+
+    one :: Int -> IntSet
     one = IS.singleton
     {-# INLINE one #-}
