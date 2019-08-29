@@ -2,7 +2,6 @@
 {-# LANGUAGE CPP                 #-}
 {-# LANGUAGE DataKinds           #-}
 {-# LANGUAGE PolyKinds           #-}
-{-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications    #-}
 {-# LANGUAGE TypeFamilies        #-}
 {-# LANGUAGE TypeOperators       #-}
@@ -25,10 +24,10 @@ module Relude.Extra.Type
 
 import Relude
 
-#if ( __GLASGOW_HASKELL__ >= 822 )
-import Type.Reflection (Typeable, typeRep)
+#if ( __GLASGOW_HASKELL__ >= 802 )
+import Type.Reflection (typeRep)
 #else
-import Data.Typeable (Typeable, typeRep)
+import Data.Typeable (typeRep)
 #endif
 
 
@@ -49,7 +48,7 @@ __NOTE:__ This must be used with __TypeApplications__ language extension.
 "Maybe Int"
 -}
 typeName :: forall a. Typeable a => Text
-#if ( __GLASGOW_HASKELL__ >= 822 )
+#if ( __GLASGOW_HASKELL__ >= 802 )
 typeName = show (typeRep @a)
 #else
 typeName = show (typeRep (Proxy @a))

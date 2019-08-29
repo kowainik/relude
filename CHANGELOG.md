@@ -20,6 +20,8 @@ The changelog is available [on GitHub][2].
   Reexport `ShortByteString`, `toShort`/`fromShort` functions.
 * [#162](https://github.com/kowainik/relude/pull/162):
   Use `foldr` instead of explicit recursion and `toList`.
+* [#182](https://github.com/kowainik/relude/issues/182):
+  Support GHC-8.8.1.
 
 ## 0.5.0 — Mar 18, 2019
 
