@@ -2660,6 +2660,21 @@
     name: Use 'ByteString' from Relude
     rhs: ByteString
 - warn:
+    lhs: Data.ByteString.Short.ShortByteString
+    note: '''ShortByteString'' is already exported from Relude'
+    name: Use 'ShortByteString' from Relude
+    rhs: ShortByteString
+- warn:
+    lhs: Data.ByteString.Short.toShort
+    note: '''toShort'' is already exported from Relude'
+    name: Use 'toShort' from Relude
+    rhs: toShort
+- warn:
+    lhs: Data.ByteString.Short.fromShort
+    note: '''fromShort'' is already exported from Relude'
+    name: Use 'fromShort' from Relude
+    rhs: fromShort
+- warn:
     lhs: Data.String.IsString
     note: '''IsString'' is already exported from Relude'
     name: Use 'IsString' from Relude

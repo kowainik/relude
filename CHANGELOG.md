@@ -14,6 +14,8 @@ The changelog is available [on GitHub][2].
   Improve usage of performance pragmas.
 * [#178](https://github.com/kowainik/relude/issues/178):
   Made `die` be polymorphic in its return type.
+* [#164](https://github.com/kowainik/relude/issues/164):
+  Reexport `ShortByteString`, `toShort`/`fromShort` functions.
 
 ## 0.5.0 — Mar 18, 2019
 

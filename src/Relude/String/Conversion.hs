@@ -44,7 +44,8 @@ import Data.Function (id, (.))
 import Data.String (String)
 
 import Relude.Functor ((<$>))
-import Relude.String.Reexport (ByteString, IsString, Read, Text, fromString)
+import Relude.String.Reexport (ByteString, IsString, Read, ShortByteString, Text, fromShort,
+                               fromString, toShort)
 
 import qualified Data.ByteString.Lazy as LB
 import qualified Data.Text as T
@@ -175,6 +176,45 @@ instance ConvertUtf8 LText LByteString where
 
     decodeUtf8Strict :: LByteString -> Either T.UnicodeException LText
     decodeUtf8Strict = LT.decodeUtf8'
+    {-# INLINE decodeUtf8Strict #-}
+
+instance ConvertUtf8 String ShortByteString where
+    encodeUtf8 :: String -> ShortByteString
+    encodeUtf8 = toShort . encodeUtf8
+    {-# INLINE encodeUtf8 #-}
+
+    decodeUtf8 :: ShortByteString -> String
+    decodeUtf8 = decodeUtf8 . fromShort
+    {-# INLINE decodeUtf8 #-}
+
+    decodeUtf8Strict :: ShortByteString -> Either T.UnicodeException String
+    decodeUtf8Strict = decodeUtf8Strict . fromShort
+    {-# INLINE decodeUtf8Strict #-}
+
+instance ConvertUtf8 Text ShortByteString where
+    encodeUtf8 :: Text -> ShortByteString
+    encodeUtf8 = toShort . encodeUtf8
+    {-# INLINE encodeUtf8 #-}
+
+    decodeUtf8 :: ShortByteString -> Text
+    decodeUtf8 = decodeUtf8 . fromShort
+    {-# INLINE decodeUtf8 #-}
+
+    decodeUtf8Strict :: ShortByteString -> Either T.UnicodeException Text
+    decodeUtf8Strict = decodeUtf8Strict . fromShort
+    {-# INLINE decodeUtf8Strict #-}
+
+instance ConvertUtf8 LText ShortByteString where
+    encodeUtf8 :: LText -> ShortByteString
+    encodeUtf8 = toShort . encodeUtf8
+    {-# INLINE encodeUtf8 #-}
+
+    decodeUtf8 :: ShortByteString -> LText
+    decodeUtf8 = decodeUtf8 . fromShort
+    {-# INLINE decodeUtf8 #-}
+
+    decodeUtf8Strict :: ShortByteString -> Either T.UnicodeException LText
+    decodeUtf8Strict = decodeUtf8Strict . fromShort
     {-# INLINE decodeUtf8Strict #-}
 
 -- | Type class for converting other strings to 'T.Text'.
