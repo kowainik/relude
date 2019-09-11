@@ -91,6 +91,9 @@ underF2 = coerce
 #endif
 
 {- | Coercible composition
+
+TODO: (#.)
+
 -}
 (#.) :: Coercible b c => (b -> c) -> (a -> b) -> (a -> c)
 (#.) _f = coerce

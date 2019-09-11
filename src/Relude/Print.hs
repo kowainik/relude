@@ -42,7 +42,11 @@ import qualified Relude.Base as Base
 -- Text
 ----------------------------------------------------------------------------
 
--- | Lifted version of 'T.putStr'.
+{- | Lifted version of 'T.putStr'..
+
+TODO: putText
+
+-}
 putText :: MonadIO m => Text -> m ()
 putText = liftIO . T.putStr
 {-# SPECIALIZE putText :: Text -> Base.IO () #-}

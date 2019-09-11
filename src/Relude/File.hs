@@ -50,7 +50,20 @@ import qualified Data.Text.Lazy.IO as LT
 -- Text
 ----------------------------------------------------------------------------
 
--- | Lifted version of 'T.readFile'.
+{- | Lifted version of 'T.readFile'.
+
+TODO: readFileText
+@
+type RunEval = ExceptT Error IO
+
+convertFile :: FilePath -> RunEval ()
+convertFile fp = runEval $ do
+    rawJSON <- readFileText fp
+    processedJSON <- processRawJSON rawJSON
+    liftIO $ verifyJSON processedJSON
+@
+
+-}
 readFileText :: MonadIO m => FilePath -> m Text
 readFileText = liftIO . T.readFile
 {-# SPECIALIZE readFileText :: FilePath -> IO Text #-}
