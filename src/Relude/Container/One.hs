@@ -30,6 +30,7 @@ import qualified Data.Sequence as SEQ
 
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Lazy as BSL
+import qualified Data.ByteString.Short as SBS
 
 import qualified Data.Text as T
 import qualified Data.Text.Lazy as TL
@@ -47,6 +48,7 @@ import qualified Data.Set as Set
 -- >>> import qualified Data.HashMap.Strict as HashMap
 -- >>> import qualified Data.Text as Text
 -- >>> import qualified Data.ByteString as ByteString
+-- >>> import qualified Data.ByteString.Short as ShortByteString
 -- >>> import qualified Data.Text.Lazy as LText
 -- >>> import qualified Data.ByteString.Lazy as LByteString
 
@@ -175,6 +177,20 @@ instance One BSL.ByteString where
 
     one :: Word8 -> BSL.ByteString
     one = BSL.singleton
+    {-# INLINE one #-}
+
+{- | Create singleton 'SBS.ShortByteString'.
+
+>>> one 97 :: ShortByteString
+"a"
+
+prop> ShortByteString.length (one x) == 1
+-}
+instance One SBS.ShortByteString where
+    type OneItem SBS.ShortByteString = Word8
+
+    one :: Word8 -> SBS.ShortByteString
+    one x = SBS.pack [x]
     {-# INLINE one #-}
 
 -- Maps
