@@ -31,7 +31,7 @@ module Relude.Debug
        , traceShowId
        , traceShowM
 
-         -- * Imprevise error
+         -- * Imprecise error
        , error
        , Undefined (..)
        , undefined

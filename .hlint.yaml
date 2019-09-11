@@ -3045,8 +3045,8 @@
 - hint:
     lhs: pred
     note: '`pred` from `Prelude` is a pure function but it may throw exception. Consider
-      using `prec` from `Relude.Extra.Enum` instead.'
-    rhs: prec
+      using `prev` from `Relude.Extra.Enum` instead.'
+    rhs: prev
 - hint:
     lhs: toEnum
     note: '`toEnum` from `Prelude` is a pure function but it may throw exception.
