@@ -180,28 +180,41 @@ instance ConvertUtf8 LText LByteString where
 
 instance ConvertUtf8 String ShortByteString where
     encodeUtf8 :: String -> ShortByteString
-    encodeUtf8 = toShort . T.encodeUtf8 . T.pack
+    encodeUtf8 = toShort . encodeUtf8
     {-# INLINE encodeUtf8 #-}
 
     decodeUtf8 :: ShortByteString -> String
-    decodeUtf8 = T.unpack . T.decodeUtf8 . fromShort
+    decodeUtf8 = decodeUtf8 . fromShort
     {-# INLINE decodeUtf8 #-}
 
     decodeUtf8Strict :: ShortByteString -> Either T.UnicodeException String
-    decodeUtf8Strict = (T.unpack <$>) . decodeUtf8Strict . fromShort
+    decodeUtf8Strict = decodeUtf8Strict . fromShort
     {-# INLINE decodeUtf8Strict #-}
 
 instance ConvertUtf8 Text ShortByteString where
     encodeUtf8 :: Text -> ShortByteString
-    encodeUtf8 = toShort . T.encodeUtf8
+    encodeUtf8 = toShort . encodeUtf8
     {-# INLINE encodeUtf8 #-}
 
     decodeUtf8 :: ShortByteString -> Text
-    decodeUtf8 = T.decodeUtf8With T.lenientDecode . fromShort
+    decodeUtf8 = decodeUtf8 . fromShort
     {-# INLINE decodeUtf8 #-}
 
     decodeUtf8Strict :: ShortByteString -> Either T.UnicodeException Text
-    decodeUtf8Strict = T.decodeUtf8' . fromShort
+    decodeUtf8Strict = decodeUtf8Strict . fromShort
+    {-# INLINE decodeUtf8Strict #-}
+
+instance ConvertUtf8 LText ShortByteString where
+    encodeUtf8 :: LText -> ShortByteString
+    encodeUtf8 = toShort . encodeUtf8
+    {-# INLINE encodeUtf8 #-}
+
+    decodeUtf8 :: ShortByteString -> LText
+    decodeUtf8 = decodeUtf8 . fromShort
+    {-# INLINE decodeUtf8 #-}
+
+    decodeUtf8Strict :: ShortByteString -> Either T.UnicodeException LText
+    decodeUtf8Strict = decodeUtf8Strict . fromShort
     {-# INLINE decodeUtf8Strict #-}
 
 -- | Type class for converting other strings to 'T.Text'.
