@@ -13,7 +13,7 @@ module Relude.Extra.Enum
        ( universe
        , inverseMap
        , next
-       , prec
+       , prev
        , safeToEnum
        ) where
 
@@ -81,18 +81,18 @@ next e
 
 {- | Like 'pred', but doesn't fail on 'minBound'. Instead it returns 'maxBound'.
 
->>> prec False
+>>> prev False
 True
->>> prec True
+>>> prev True
 False
 >>> pred False
 *** Exception: Prelude.Enum.Bool.pred: bad argument
 -}
-prec  :: (Eq a, Bounded a, Enum a) => a -> a
-prec e
+prev  :: (Eq a, Bounded a, Enum a) => a -> a
+prev e
     | e == minBound = maxBound
     | otherwise     = pred e
-{-# INLINE prec #-}
+{-# INLINE prev #-}
 
 {- | Returns 'Nothing' if given 'Int' outside range.
 
