@@ -6,7 +6,7 @@ The changelog is available [on GitHub][2].
 ## Unreleased: 0.6.0.0
 
 * [#167](https://github.com/kowainik/relude/issues/167):
-  Rename functions `prec`/`prev`, `dupe`/`dup` functions.
+  Rename functions `prec`/`prev`, `dupe`/`dup`.
 * [#155](https://github.com/kowainik/relude/issues/155):
   Implement `Relude.Extra.Foldable` module.
 * Re-export `GHC.Float.atan2`.
