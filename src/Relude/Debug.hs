@@ -20,6 +20,9 @@ Maintainer: Kowainik <xrom.xkov@gmail.com>
 Functions for debugging. If you left these functions in your code then a warning
 is generated to remind you about left usages. Also some functions (and data
 types) are convenient for prototyping.
+
+Use these functions only for debugging purposes. They break referential trasparency,
+they are only useful when you want to observe intermediate values of your pure functions.
 -}
 
 module Relude.Debug
@@ -53,11 +56,14 @@ import qualified Prelude
 
 {- | Version of 'Debug.Trace.trace' that leaves warning.
 
->>> let x = 123
->>> let f = show
->>> trace ("calling f with " ++ show x) (f x)
-calling f with 123
-123
+>>> increment l = map (+1) l
+>>> increment [2, 3, 4]
+[3,4,5]
+
+>>> increment l = trace ("incrementing each value of: " ++ show l) (map (+1) l)
+>>> increment [2, 3, 4]
+incrementing each value of: [2,3,4]
+[3,4,5]
 
 -}
 trace :: String -> a -> a
@@ -90,14 +96,14 @@ traceShowId = Debug.traceShowId
 
 {- | Version of 'Debug.Trace.traceM' that leaves warning.
 
-@
+>>> :{
   do
     x <- Just 3
     traceM ("x: " ++ show x)
     y <- pure 12
     traceM ("y: " ++ show y)
     pure (x*2 + y)
-@
+:}
 
 > x: 3
 > y: 12

@@ -28,7 +28,11 @@ import qualified Control.Exception.Base (evaluate)
 
 {- | Lifted alias for 'Control.Exception.Base.evaluate' with clearer name.
 
-TODO: evaluateWHNF
+>>> :sprint list
+list = _
+>>> () <$ evaluateWHNF list
+>>> :sprint list
+list = _ : _
 
 -}
 evaluateWHNF :: MonadIO m => a -> m a

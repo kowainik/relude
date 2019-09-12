@@ -238,7 +238,11 @@ instance Bitraversable Validation where
 
 {- | Transform a 'Validation' into an 'Either'.
 
-TODO: validationToEither
+>>> validationToEither (Success "whoop")
+Right "whoop"
+
+>>> validationToEither (Failure "nahh")
+Left "nahh"
 
 -}
 validationToEither :: Validation e a -> Either e a
@@ -249,7 +253,11 @@ validationToEither = \case
 
 {- | Transform an 'Either' into a 'Validation'.
 
-TODO: eitherToValidation
+>>> eitherToValidation (Right "whoop")
+Success "whoop"
+
+>>> eitherToValidation (Left "nahh")
+Failure "nahh"
 
 -}
 eitherToValidation :: Either e a -> Validation e a
