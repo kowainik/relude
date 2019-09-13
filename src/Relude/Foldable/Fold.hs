@@ -182,6 +182,8 @@ andM = foldr go (pure True)
     go p acc = do
         q <- p
         if q then acc else pure False
+{-# INLINEABLE andM #-}
+{-# SPECIALIZE andM :: [IO Bool] -> IO Bool #-}
 
 {- | Monadic version of 'F.or'.
 
@@ -198,6 +200,8 @@ orM = foldr go (pure False)
     go p acc = do
         q <- p
         if q then pure True else acc
+{-# INLINEABLE orM #-}
+{-# SPECIALIZE orM  :: [IO Bool] -> IO Bool #-}
 
 {- | Monadic version of 'F.all'.
 
@@ -214,6 +218,8 @@ allM p = foldr go (pure True)
     go x acc = do
         q <- p x
         if q then acc else pure False
+{-# INLINEABLE allM #-}
+{-# SPECIALIZE allM :: (a -> IO Bool) -> [a] -> IO Bool #-}
 
 {- | Monadic  version of 'F.any'.
 
@@ -230,11 +236,8 @@ anyM p = foldr go (pure False)
     go x acc = do
         q <- p x
         if q then pure True else acc
-
-{-# SPECIALIZE andM :: [IO Bool] -> IO Bool #-}
-{-# SPECIALIZE orM  :: [IO Bool] -> IO Bool #-}
+{-# INLINEABLE anyM #-}
 {-# SPECIALIZE anyM :: (a -> IO Bool) -> [a] -> IO Bool #-}
-{-# SPECIALIZE allM :: (a -> IO Bool) -> [a] -> IO Bool #-}
 
 ----------------------------------------------------------------------------
 -- Type level tricks

@@ -25,7 +25,7 @@ import Data.Int (Int, Int16, Int32, Int64, Int8)
 import Data.Word (Word, Word16, Word32, Word64, Word8, byteSwap16, byteSwap32, byteSwap64)
 import GHC.Base (maxInt, minInt)
 import GHC.Float (Double (..), Float (..), Floating (acos, acosh, asin, asinh, atan, atanh, cos, cosh, exp, logBase, pi, sin, sinh, sqrt, tan, tanh, (**)),
-                  RealFloat (floatRadix, floatDigits, floatRange, decodeFloat, encodeFloat, isNaN, isInfinite, isDenormalized, isNegativeZero, isIEEE))
+                  RealFloat (atan2, decodeFloat, encodeFloat, floatDigits, floatRadix, floatRange, isDenormalized, isIEEE, isInfinite, isNaN, isNegativeZero))
 import GHC.Num (Integer, Num (..), subtract)
 import GHC.Real (Fractional (..), Integral (..), Ratio, Rational, Real (..), RealFrac (..),
                  denominator, even, fromIntegral, gcd, lcm, numerator, odd, realToFrac, (^), (^^))
@@ -54,7 +54,8 @@ integerToBounded :: forall a. (Integral a, Bounded a) => Integer -> Maybe a
 integerToBounded n
     | n < toInteger (minBound @a) = Nothing
     | n > toInteger (maxBound @a) = Nothing
-    | otherwise                    = Just (fromIntegral n)
+    | otherwise                   = Just (fromIntegral n)
+{-# INLINE integerToBounded #-}
 
 {- | Tranforms an integer number to a natural.
 Only non-negative integers are considered natural, everything else will return `Nothing`.
@@ -71,5 +72,6 @@ Just 10
 -}
 integerToNatural :: Integer -> Maybe Natural
 integerToNatural n
-    | n < 0    = Nothing
+    | n < 0     = Nothing
     | otherwise = Just $ fromIntegral n
+{-# INLINE integerToNatural #-}

@@ -6,8 +6,8 @@ in let warnSimple     = warn.warnSimple
 in let warnNote       = warn.warnNote
 in let hintNote       = warn.hintNote
 in let hintNoteOp     = warn.hintNoteOp
-in let rule           = constructors ./Rule.dhall
-in [ rule.Arguments { arguments =
+in let Rule = ./Rule.dhall
+in [ Rule.Arguments { arguments =
        [ "-XConstraintKinds"
        , "-XDeriveGeneric"
        , "-XGeneralizedNewtypeDeriving"
@@ -25,9 +25,9 @@ in [ rule.Arguments { arguments =
    -- Ignore
    -------------
    -- There's no 'head' in Relude
-   , rule.Ignore {ignore = {name = "Use head"}}
+   , Rule.Ignore {ignore = {name = "Use head"}}
    -- We have 'whenJust' for this
-   , rule.Ignore {ignore = {name = "Use Foldable.forM_"}}
+   , Rule.Ignore {ignore = {name = "Use Foldable.forM_"}}
 
    -------------
    -- Relude specific
@@ -805,6 +805,9 @@ in [ rule.Arguments { arguments =
 
    -- String
    , warnReexport "ByteString" "Data.ByteString"
+   , warnReexport "ShortByteString" "Data.ByteString.Short"
+   , warnReexport "toShort"         "Data.ByteString.Short"
+   , warnReexport "fromShort"       "Data.ByteString.Short"
    , warnReexport "IsString"   "Data.String"
    , warnReexport "fromString" "Data.String"
    , warnReexport "Text"    "Data.Text"
@@ -898,7 +901,7 @@ in [ rule.Arguments { arguments =
    -- Enum
    , hintNote "[minBound .. maxBound]" "universe" "Use `universe` from `Relude.Extra.Enum`"
    , hintNote "succ" "next" "`succ` from `Prelude` is a pure function but it may throw exception. Consider using `next` from `Relude.Extra.Enum` instead."
-   , hintNote "pred" "prec" "`pred` from `Prelude` is a pure function but it may throw exception. Consider using `prec` from `Relude.Extra.Enum` instead."
+   , hintNote "pred" "prev" "`pred` from `Prelude` is a pure function but it may throw exception. Consider using `prev` from `Relude.Extra.Enum` instead."
    , hintNote "toEnum" "safeToEnum" "`toEnum` from `Prelude` is a pure function but it may throw exception. Consider using `safeToEnum` from `Relude.Extra.Enum` instead."
 
    -- Tuple

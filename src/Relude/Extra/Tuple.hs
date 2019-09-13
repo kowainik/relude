@@ -9,7 +9,7 @@ Contains utility functions for working with tuples.
 -}
 
 module Relude.Extra.Tuple
-       ( dupe
+       ( dup
        , mapToFst
        , mapToSnd
        , mapBoth
@@ -20,20 +20,20 @@ module Relude.Extra.Tuple
 
 import Relude
 
+
 {- | Creates a tuple by pairing something with itself.
 
->>> dupe "foo"
+>>> dup "foo"
 ("foo","foo")
->>> dupe ()
+>>> dup ()
 ((),())
 -}
-dupe :: a -> (a, a)
-dupe a = (a, a)
-{-# INLINE dupe #-}
+dup :: a -> (a, a)
+dup a = (a, a)
+{-# INLINE dup #-}
 
 {- | Apply a function, with the result in the fst slot,
 and the value in the other.
-
 
 A dual to 'mapToSnd'
 

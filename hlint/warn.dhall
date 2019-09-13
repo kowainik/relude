@@ -1,9 +1,8 @@
 let Rule = ./Rule.dhall
-in let rule = constructors Rule
 in let warnSimple
     : Text -> Text -> Rule
     = \(lhsTxt : Text) -> \(rhsTxt : Text) ->
-        rule.Warn
+        Rule.Warn
         { warn =
             { name = None Text
             , lhs = "${lhsTxt}"
@@ -15,7 +14,7 @@ in let warnSimple
 in let warnNote
     : Text -> Text -> Text -> Rule
     = \(lhsTxt : Text) -> \(rhsTxt : Text) -> \(n : Text) ->
-        rule.Warn {warn =
+        Rule.Warn {warn =
             { name = None Text
             , lhs = "${lhsTxt}"
             , rhs = "${rhsTxt}"
@@ -26,7 +25,7 @@ in let warnNote
 in let warnReexport
     : Text -> Text -> Rule
     = \(f : Text) -> \(mod : Text) ->
-        rule.Warn
+        Rule.Warn
         { warn =
             { name = Some "Use '${f}' from Relude"
             , lhs = "${mod}.${f}"
@@ -37,7 +36,7 @@ in let warnReexport
 
 in let warnReexportOp : Text -> Text -> Rule
     = \(f : Text) -> \(mod : Text) ->
-        rule.Warn
+        Rule.Warn
         { warn =
             { name = Some "Use '${f}' from Relude"
             , lhs = "(${mod}.${f})"
@@ -49,7 +48,7 @@ in let warnReexportOp : Text -> Text -> Rule
 in let warnLifted
     : Text -> Text -> Rule
     =  \(f : Text) -> \(args : Text) ->
-        rule.Warn
+        Rule.Warn
         { warn =
             { name = Some "'liftIO' is not needed"
             , lhs = "(liftIO (${f} ${args}))"
@@ -61,7 +60,7 @@ in let warnLifted
 in let hintNote
     : Text -> Text -> Text -> Rule
     = \(lhsTxt : Text) -> \(rhsTxt : Text) -> \(n : Text) ->
-        rule.Hint
+        Rule.Hint
         { hint =
             { lhs = "${lhsTxt}"
             , rhs = "${rhsTxt}"

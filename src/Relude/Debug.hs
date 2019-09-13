@@ -41,8 +41,8 @@ import Data.Data (Data)
 import GHC.Exts (RuntimeRep, TYPE)
 
 import Relude.Applicative (Applicative)
-import Relude.Base (Bounded, Enum, Eq, Generic, HasCallStack, Ord, Show, String, Typeable)
-import Relude.String (Read, Text, toString)
+import Relude.Base (Bounded, Enum, Eq, Generic, HasCallStack, Ord, Show, Typeable)
+import Relude.String (Read, String, Text, toString)
 
 import qualified Debug.Trace as Debug
 import qualified Prelude

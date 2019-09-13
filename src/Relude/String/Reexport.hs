@@ -5,7 +5,8 @@ Copyright:  (c) 2016 Stephen Diehl
 License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Reexports functions to work with 'Text' and 'ByteString' types.
+Reexports functions to work with 'Text', 'ByteString'
+and 'ShortByteString' types.
 -}
 
 module Relude.String.Reexport
@@ -19,11 +20,17 @@ module Relude.String.Reexport
        , module Text.Read
 
          -- * ByteString
-       , module Data.ByteString
+       , ByteString
+
+         -- * ShortByteString
+       , ShortByteString
+       , toShort
+       , fromShort
        ) where
 
 import Data.ByteString (ByteString)
-import Data.String (IsString (..))
+import Data.ByteString.Short (ShortByteString, fromShort, toShort)
+import Data.String (IsString (..), String)
 import Data.Text (Text, lines, unlines, unwords, words)
 import Data.Text.Encoding (decodeUtf8', decodeUtf8With)
 import Data.Text.Encoding.Error (OnDecodeError, OnError, UnicodeException, lenientDecode,

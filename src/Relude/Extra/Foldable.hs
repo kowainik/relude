@@ -14,6 +14,7 @@ module Relude.Extra.Foldable
 
 import Relude
 
+
 -- $setup
 -- >>> :set -XOverloadedStrings
 
@@ -34,4 +35,3 @@ foldlSC f = flip $ foldr go id
         Left l  -> l
         Right r -> k r
 {-# INLINE foldlSC #-}
-

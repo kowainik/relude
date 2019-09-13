@@ -23,6 +23,7 @@ module Relude.Extra.Bifunctor
 
 import Relude
 
+
 {- | Fmaps functions for nested bifunctor. Short for @fmap (bimap f g)@.
 
 >>> bimapF not length $ Just (False, ['a', 'b'])
@@ -30,6 +31,7 @@ Just (True,2)
 -}
 bimapF  :: (Functor f, Bifunctor p) => (a -> c) -> (b -> d) -> f (p a b) -> f (p c d)
 bimapF f g = fmap (bimap f g)
+{-# INLINE bimapF #-}
 
 {- | Short for @fmap . first@.
 
@@ -38,6 +40,7 @@ Just (True,"ab")
 -}
 firstF  :: (Functor f, Bifunctor p) => (a -> c) -> f (p a b) -> f (p c b)
 firstF = fmap . first
+{-# INLINE firstF #-}
 
 {- | Short for @fmap . second@.
 
@@ -46,3 +49,4 @@ Just (False,2)
 -}
 secondF  :: (Functor f, Bifunctor p) => (b -> d) -> f (p a b) -> f (p a d)
 secondF = fmap . second
+{-# INLINE secondF #-}

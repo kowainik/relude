@@ -17,9 +17,10 @@ module Relude.Bool.Guard
        , (||^)
        ) where
 
+import Relude.Applicative (Applicative (..))
 import Relude.Bool.Reexport (Bool (..), guard, unless, when)
 import Relude.Function (flip)
-import Relude.Monad (Monad, MonadPlus, return, (>>=))
+import Relude.Monad (Monad, MonadPlus, (>>=))
 
 -- $setup
 -- >>> import Relude.Applicative (pure)
@@ -82,7 +83,7 @@ guardM f = f >>= guard
 -- >>> Just False &&^ error "Shouldn't be evaluated"
 -- Just False
 (&&^) :: Monad m => m Bool -> m Bool -> m Bool
-(&&^) e1 e2 = ifM e1 e2 (return False)
+(&&^) e1 e2 = ifM e1 e2 (pure False)
 {-# INLINE (&&^) #-}
 
 -- | Monadic version of 'Data.Bool.(||)' operator.
@@ -90,5 +91,5 @@ guardM f = f >>= guard
 -- >>> Just True ||^ error "Shouldn't be evaluated"
 -- Just True
 (||^) :: Monad m => m Bool -> m Bool -> m Bool
-(||^) e1 e2 = ifM e1 (return True) e2
+(||^) e1 e2 = ifM e1 (pure True) e2
 {-# INLINE (||^) #-}

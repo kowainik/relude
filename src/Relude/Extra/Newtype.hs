@@ -22,6 +22,7 @@ module Relude.Extra.Newtype
 
 import Relude
 
+
 -- $setup
 -- >>> :set -XTypeApplications
 -- >>> import Data.Semigroup (Max (..))

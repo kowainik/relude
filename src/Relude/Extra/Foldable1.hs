@@ -1,4 +1,3 @@
-{-# LANGUAGE InstanceSigs     #-}
 {-# LANGUAGE TypeApplications #-}
 
 {- |
@@ -20,6 +19,7 @@ import Data.Functor.Product (Product (..))
 import Data.Functor.Sum (Sum (..))
 
 import qualified Data.Semigroup as SG
+
 
 {- | The class of foldable data structures that cannot be empty.
 -}
@@ -93,7 +93,6 @@ instance Foldable1 NonEmpty where
     foldMap1 f (a :| b : bs) = f a <> foldMap1 f (b :| bs)
     {-# INLINE foldMap1 #-}
 
-
     toNonEmpty :: NonEmpty a -> NonEmpty a
     toNonEmpty = id
     {-# INLINE toNonEmpty #-}
@@ -109,7 +108,6 @@ instance Foldable1 NonEmpty where
     minimum1 = foldl1' min
     {-# INLINE maximum1 #-}
     {-# INLINE minimum1 #-}
-
 
 instance Foldable1 Identity where
     foldMap1 :: Semigroup m => (a -> m) -> Identity a -> m
