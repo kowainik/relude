@@ -18,6 +18,8 @@ The changelog is available [on GitHub][2].
   Made `die` be polymorphic in its return type.
 * [#164](https://github.com/kowainik/relude/issues/164):
   Reexport `ShortByteString`, `toShort`/`fromShort` functions.
+* [#162](https://github.com/kowainik/relude/pull/162):
+  Use `foldr` instead of explicit recursion and `toList`.
 
 ## 0.5.0 — Mar 18, 2019
 
