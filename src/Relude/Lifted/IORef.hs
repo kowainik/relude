@@ -8,6 +8,9 @@ License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Lifted reexports from 'Data.IORef' module.
+
+Lifted meaning that you can also use them inside various
+Monad Transformers without adding liftIO call explicitly.
 -}
 
 module Relude.Lifted.IORef
@@ -33,6 +36,12 @@ import qualified Data.IORef as Ref (atomicModifyIORef, atomicModifyIORef', atomi
 
 
 -- | Lifted version of 'Ref.newIORef'.
+{-
+
+TODO: newIORef
+not too sure how to give examples on these
+
+-}
 newIORef :: MonadIO m => a -> m (IORef a)
 newIORef = liftIO . Ref.newIORef
 {-# INLINE newIORef #-}

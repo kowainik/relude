@@ -175,11 +175,7 @@ the value inside). It has a 'Functor' constraint, and since both 'Const' and
 -}
 type Lens' s a = forall f. Functor f => (a -> f a) -> s -> f s
 
-{- | Creates 'Lens'' from the getter and setter.
-
-TODO: lens
-
--}
+-- | Creates 'Lens'' from the getter and setter.
 lens :: (s -> a) -> (s -> a -> s) -> Lens' s a
 lens getter setter = \f s -> setter s <$> f (getter s)
 {-# INLINE lens #-}

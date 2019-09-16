@@ -23,8 +23,11 @@ import Relude.String.Reexport (String, Text)
 import qualified Data.Text.IO as TIO
 import qualified System.IO as IO (print, putStr, putStrLn)
 
+{- | Lifted version of 'Data.Text.getLine'.
 
--- | Lifted version of 'Data.Text.getLine'.
+TODO: getLine
+
+-}
 getLine :: MonadIO m => m Text
 getLine = liftIO TIO.getLine
 {-# SPECIALIZE getLine :: IO Text #-}

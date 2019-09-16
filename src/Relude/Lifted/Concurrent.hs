@@ -54,7 +54,13 @@ import qualified Control.Monad.STM as STM (atomically)
 -- Lifted Control.Concurrent.MVar
 ----------------------------------------------------------------------------
 
--- | Lifted to 'MonadIO' version of 'CCM.newEmptyMVar'.
+{- | Lifted to 'MonadIO' version of 'CCM.newEmptyMVar'.
+
+TODO: newEmptyMVar
+not sure if should create a top level doc or give examples for each.
+Just the original docs are descriptive but don't give code examples.
+
+-}
 newEmptyMVar :: MonadIO m => m (MVar a)
 newEmptyMVar = liftIO CCM.newEmptyMVar
 {-# INLINE newEmptyMVar #-}

@@ -90,7 +90,11 @@ underF2 = coerce
 {-# INLINE underF2 #-}
 #endif
 
--- | Coercible composition
+{- | Coercible composition
+
+TODO: (#.)
+
+-}
 (#.) :: Coercible b c => (b -> c) -> (a -> b) -> (a -> c)
 (#.) _f = coerce
 {-# INLINE (#.) #-}

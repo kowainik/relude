@@ -34,7 +34,12 @@ import Relude.Functor (Functor, (<$>))
 import Relude.Monad.Reexport (Either, ExceptT (..), Maybe, MaybeT (..), Reader, ReaderT, State,
                               StateT, runReader, runReaderT, runState, runStateT)
 
--- | Shorter and more readable alias for @flip runReaderT@.
+{- | Shorter and more readable alias for @flip runReaderT@.
+
+TODO: usingReaderT ??
+be nice to have examples but not too sure
+
+-}
 usingReaderT :: r -> ReaderT r m a -> m a
 usingReaderT = flip runReaderT
 {-# INLINE usingReaderT #-}
