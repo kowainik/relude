@@ -1,11 +1,13 @@
-{-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE CPP                 #-}
-{-# LANGUAGE DataKinds           #-}
-{-# LANGUAGE PolyKinds           #-}
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE TypeApplications    #-}
-{-# LANGUAGE TypeFamilies        #-}
-{-# LANGUAGE TypeOperators       #-}
+{-# LANGUAGE AllowAmbiguousTypes  #-}
+{-# LANGUAGE CPP                  #-}
+{-# LANGUAGE ConstraintKinds      #-}
+{-# LANGUAGE DataKinds            #-}
+{-# LANGUAGE PolyKinds            #-}
+{-# LANGUAGE ScopedTypeVariables  #-}
+{-# LANGUAGE TypeApplications     #-}
+{-# LANGUAGE TypeFamilies         #-}
+{-# LANGUAGE TypeOperators        #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 {- |
 Copyright:  (c) 2018-2019 Kowainik
@@ -19,10 +21,12 @@ module Relude.Extra.Type
        ( typeName
        , type (++)
        , AllHave
+       , Elem
        , Fst
        , Snd
        ) where
 
+import GHC.TypeLits (ErrorMessage (..), TypeError)
 import Relude
 
 #if ( __GLASGOW_HASKELL__ >= 822 )
@@ -115,3 +119,25 @@ Maybe (Snd (Int, Text)) :: *
 type family Snd (t :: k) :: k' where
     Snd '(_, y) = y
     Snd  (_, y) = y
+
+
+{- | Check that a value is an element of a list:
+
+>>> ok (Proxy :: Proxy (Elem Bool '[Int, Bool]))
+OK
+
+>>> ok (Proxy :: Proxy (Elem String '[Int, Bool]))
+...
+... [Char]...'[Int, Bool...
+...
+-}
+type Elem e es = ElemGo e es es
+
+-- 'orig' is used to store original list for better error messages
+type family ElemGo e es orig :: Constraint where
+  ElemGo x (x ': xs) orig = ()
+  ElemGo y (x ': xs) orig = ElemGo y xs orig
+  -- Note [Custom Errors]
+  ElemGo x '[] orig       = TypeError ('ShowType x
+                                 ':<>: 'Text " expected in list "
+                                 ':<>: 'ShowType orig)
