@@ -3,46 +3,61 @@ name:                relude
 version:             0.6.0.0
 synopsis:            Custom prelude from Kowainik
 description:
-    == Goals
-    .
+    @__relude__@ is an alternative prelude library. If you find the default
+    @Prelude@ unsatisfying, despite its advantages, consider using @relude@
+    instead.
+
+    == Relude design goals
+
     * __Avoid all [partial functions](https://www.reddit.com/r/haskell/comments/5n51u3/why_are_partial_functions_as_in_head_tail_bad/)__
       (like @head :: [a] -> a@). The types of partial functions lie about their
       behavior and usage of such functions can lead to the unexpected bugs. Though
       you can still use some unsafe functions from @Relude.Unsafe@ module, but they
       are not exported by default.
-    .
+
     * __Type-safety__. We like to make invalid states unrepresantable. And if it's
       possible to express this concept through the types then we will do it.
-      /Example:/ @ whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f () @
-    .
+
+          /Example:/
+
+          @
+          whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f ()
+          @
+
     * __Performance.__ Prefer @Text@ over @[String](https://www.reddit.com/r/haskell/comments/29jw0s/whats_wrong_with_string/)@,
-      use spaceleak-free functions (like our custom @sum@ and @product@).
-    .
+      use spaceleak-free functions (like our custom @sum@ and @product@),
+      introduce @{-# INLINE #-}@ and @{-# SPECIALIZE #-}@ pragmas where
+      appropriate.
+
     * __Minimalism__ (low number of dependencies). We don't force users of @relude@ to
-      stick to some specific lens or text formatting or logging library.
-    .
-    * __Convenience__ (like lifted to @MonadIO@ functions, more reexports). But we
-      want to bring common types and functions (like @containers@ and @bytestring@)
-      into scope because they are used in almost every application anyways.
-    .
+      stick to some specific lens or text formatting or logging library. If
+      possible, @relude@ tries to depend only on boot libraies.
+
+    * __Convenience__ (like lifted to @MonadIO@ functions, more reexports).
+      Despite minimalism, we want to bring common types and functions (like
+      @containers@ and @bytestring@) into scope because they are used in almost
+      every application anyways.
+
     * __Provide excellent documentation.__
-      .
-      1. Tutorial
-      .
-      2. Migration guide from @Prelude@
-      .
-      3. Haddock with examples for (almost) every function
-        (all examples are tested with [`doctest`](http://hackage.haskell.org/package/doctest))
-      .
-      4. Documentation regarding [internal module structure]((http://hackage.haskell.org/package/relude/docs/Relude.html))
-      .
-      5. @relude@-specific [HLint](http://hackage.haskell.org/package/hlint) rules: @[.hlint.yaml](https://github.com/kowainik/relude/blob/master/.hlint.yaml)@
-    .
+
+        1. Tutorial
+
+        2. Migration guide from @Prelude@
+
+        3. Haddock for every function with examples tested by
+           [doctest](http://hackage.haskell.org/package/doctest)).
+
+        4. Documentation regarding [internal module structure](http://hackage.haskell.org/package/relude/docs/Relude.html)
+
+        5. @relude@-specific [HLint](http://hackage.haskell.org/package/hlint) rules: @[.hlint.yaml](https://github.com/kowainik/relude/blob/master/.hlint.yaml)@
+
     * __User-friendliness.__ Ability to quickly migrate to @relude@ if you're familiar
       with the common libraries like @text@ and @containers@.
-    .
-    * __Exploration.__ Experiment with new ideas and proposals without introducing
-      breaking changes.
+
+    * __Exploration.__ Experiment with new ideas and proposals without
+      introducing breaking changes. @relude@ uses the approach with @Extra.*@
+      modules which are not exported by default so it's quite easy to bring
+      something new and let users decide to use it or not.
 
 homepage:            https://github.com/kowainik/relude
 bug-reports:         https://github.com/kowainik/relude/issues
@@ -54,20 +69,22 @@ copyright:           2016 Stephen Diehl, 2016-2018 Serokell, 2018-2019 Kowainik
 category:            Prelude
 stability:           stable
 build-type:          Simple
-tested-with:         GHC == 8.0.2
-                   , GHC == 8.2.2
-                   , GHC == 8.4.4
-                   , GHC == 8.6.5
 extra-doc-files:     CHANGELOG.md
-                   , CONTRIBUTING.md
-                   , README.md
+                     CONTRIBUTING.md
+                     README.md
+tested-with:         GHC == 8.0.2
+                     GHC == 8.2.2
+                     GHC == 8.4.4
+                     GHC == 8.6.5
+                     GHC == 8.8.1
+
 
 source-repository head
   type:     git
   location: git@github.com:kowainik/relude.git
 
 common common-options
-  build-depends:       base >= 4.9 && < 4.13
+  build-depends:       base >= 4.9 && < 4.14
 
   ghc-options:         -Wall
                        -Wcompat
@@ -151,7 +168,7 @@ library
                      , containers >= 0.5.7 && < 0.7
                      , deepseq ^>= 1.4
                      , ghc-prim >= 0.4.0.0 && < 0.6
-                     , hashable ^>= 1.2
+                     , hashable >= 1.2 && < 1.4
                      , mtl ^>= 2.2
                      , stm >= 2.4 && < 2.6
                      , text ^>= 1.2
