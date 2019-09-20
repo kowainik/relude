@@ -72,7 +72,7 @@ flipfoldl' f = foldl' (flip f)
 >>> asumMap (\x -> if x > 2 then Just x else Nothing) [1..4]
 Just 3
 -}
-asumMap :: forall f m a b . (Foldable f, Alternative m) => (a -> m b) -> f a -> m b
+asumMap :: forall b m f a . (Foldable f, Alternative m) => (a -> m b) -> f a -> m b
 asumMap = coerce (foldMap :: (a -> Alt m b) -> f a -> Alt m b)
 {-# INLINE asumMap #-}
 

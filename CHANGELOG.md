@@ -7,6 +7,7 @@ The changelog is available [on GitHub][2].
 
 * [#191](https://github.com/kowainik/relude/pull/191):
   Implement `asumMap` and `foldMapA` by coercing `foldMap`.
+  BREAKING CHANGE: Reorder type parameters to `asumMap`.
 * Use `$>` instead of `*>` and `pure` where possible.
 * [#167](https://github.com/kowainik/relude/issues/167):
   Rename functions `prec`/`prev`, `dupe`/`dup`.
