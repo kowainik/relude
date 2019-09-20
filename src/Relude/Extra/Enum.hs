@@ -106,5 +106,5 @@ Nothing
 Nothing
 -}
 safeToEnum :: forall a . (Bounded a, Enum a) => Int -> Maybe a
-safeToEnum i = guard (fromEnum @a minBound <= i && i <= fromEnum @a maxBound) *> Just (toEnum i)
+safeToEnum i = guard (fromEnum @a minBound <= i && i <= fromEnum @a maxBound) $> toEnum i
 {-# INLINE safeToEnum #-}
