@@ -124,10 +124,12 @@ instance (Semigroup e, Monoid a) => Monoid (Validation e a) where
 
 >>> let fa = Success (*3) :: Validation [Text] (Int -> Int)
 >>> let ga = Success (*4) :: Validation [Text] (Int -> Int)
+>>> let ha = Failure ["Not a function"] :: Validation [Text] (Int -> Int)
 >>> let a = Success 1 :: Validation [Text] Int
 >>> let b = Success 7 :: Validation [Text] Int
 >>> let c = Failure ["Not correct"] :: Validation [Text] Int
 >>> let d = Failure ["Not correct either"] :: Validation [Text] Int
+>>> let e = error "This should not be evaluated"
 
 >>> fa <*> b
 Success 21
@@ -143,6 +145,9 @@ Success 8
 
 >>> liftA2 (+) a c
 Failure ["Not correct"]
+
+>>> [x | Success x <- [ha <*> e, c <* e, d *> e, liftA2 (+) d e]]
+[]
 -}
 instance Semigroup e => Applicative (Validation e) where
     pure :: a -> Validation e a
@@ -158,17 +163,19 @@ instance Semigroup e => Applicative (Validation e) where
     {-# INLINE (<*>) #-}
 
     (*>) :: Validation e a -> Validation e b -> Validation e b
-    Failure el *> Failure er = Failure (el <> er)
-    Failure e  *> Success _  = Failure e
-    Success _  *> Failure e  = Failure e
-    Success _  *> Success b  = Success b
+    Failure e *> b = Failure $ case b of
+                                 Failure e' -> e <> e'
+                                 Success _  -> e
+    Success _ *> Failure e  = Failure e
+    Success _ *> Success b  = Success b
     {-# INLINE (*>) #-}
 
     (<*) :: Validation e a -> Validation e b -> Validation e a
-    Failure el <* Failure er = Failure (el <> er)
-    Failure e  <* Success _  = Failure e
-    Success _  <* Failure e  = Failure e
-    Success a  <* Success _  = Success a
+    Failure e <* b = Failure $ case b of
+                                 Failure e' -> e <> e'
+                                 Success _  -> e
+    Success _ <* Failure e  = Failure e
+    Success a <* Success _  = Success a
     {-# INLINE (<*) #-}
 
 instance (Semigroup e, Monoid e) => Alternative (Validation e) where

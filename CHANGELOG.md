@@ -4,6 +4,8 @@
 The changelog is available [on GitHub][2].
 
 ## Unreleased: 0.6.0.0
+* [#190](https://github.com/kowainik/relude/pull/190):
+  Return Failure early in `<*` and `*>` too.
 * [#170](https://github.com/kowainik/relude/issues/170):
   Implement `Elem` type family!
 * [#203](https://github.com/kowainik/relude/issues/203):
