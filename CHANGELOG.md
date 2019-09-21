@@ -6,7 +6,7 @@ The changelog is available [on GitHub][2].
 ## Unreleased: 0.6.0.0
 
 * [#194](https://github.com/kowainik/relude/pull/194):
-  Use `mapToFst` instead of `zip` to improve list fusion.
+  Use `mapToFst` instead of `zip` to improve list fusion in `inverseMap`.
 * [#191](https://github.com/kowainik/relude/pull/191):
   Implement `asumMap` and `foldMapA` by coercing `foldMap`.
   BREAKING CHANGE: Reorder type parameters to `asumMap`.
