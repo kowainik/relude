@@ -1,5 +1,4 @@
 {-# LANGUAGE DataKinds            #-}
-{-# LANGUAGE ExplicitForAll       #-}
 {-# LANGUAGE PolyKinds            #-}
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
@@ -40,11 +39,11 @@ module Relude.Foldable.Fold
 import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 
 import Relude.Applicative (Alternative, Applicative (..), pure)
-import Relude.Base (Constraint, Eq, IO, Type, ($!))
+import Relude.Base (Constraint, Eq, IO, Type, coerce, ($!))
 import Relude.Bool (Bool (..), (&&^), (||^))
 import Relude.Container.Reexport (HashSet, Set)
 import Relude.Foldable.Reexport (Foldable (..))
-import Relude.Function (flip, (.))
+import Relude.Function (flip)
 import Relude.Monad.Reexport (Monad (..))
 import Relude.Monoid (Alt (..), Ap (..), Monoid (..), Semigroup)
 import Relude.Numeric (Num (..))
@@ -73,8 +72,8 @@ flipfoldl' f = foldl' (flip f)
 >>> asumMap (\x -> if x > 2 then Just x else Nothing) [1..4]
 Just 3
 -}
-asumMap :: (Foldable f, Alternative m) => (a -> m b) -> f a -> m b
-asumMap f = getAlt . foldMap (Alt . f)
+asumMap :: forall b m f a . (Foldable f, Alternative m) => (a -> m b) -> f a -> m b
+asumMap = coerce (foldMap :: (a -> Alt m b) -> f a -> Alt m b)
 {-# INLINE asumMap #-}
 
 {- | Polymorphic version of @concatMapA@ function.
@@ -83,7 +82,7 @@ asumMap f = getAlt . foldMap (Alt . f)
 Just [1,1,1,2,2,2,3,3,3]
 -}
 foldMapA :: forall b m f a . (Semigroup b, Monoid b, Applicative m, Foldable f) => (a -> m b) -> f a -> m b
-foldMapA f = getAp . foldMap (Ap . f)
+foldMapA = coerce (foldMap :: (a -> Ap m b) -> f a -> Ap m b)
 {-# INLINE foldMapA #-}
 
 {- | Polymorphic version of @concatMapM@ function.
