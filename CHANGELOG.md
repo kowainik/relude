@@ -5,6 +5,8 @@ The changelog is available [on GitHub][2].
 
 ## Unreleased: 0.6.0.0
 
+* [#193](https://github.com/kowainik/relude/pull/193):
+  Implement `andM`, `orM`, `allM`, and `anyM` in terms of `&&^` and `||^`.
 * [#191](https://github.com/kowainik/relude/pull/191):
   Implement `asumMap` and `foldMapA` by coercing `foldMap`.
   BREAKING CHANGE: Reorder type parameters to `asumMap`.
