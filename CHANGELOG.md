@@ -5,6 +5,8 @@ The changelog is available [on GitHub][2].
 
 ## Unreleased: 0.6.0.0
 
+* [#194](https://github.com/kowainik/relude/pull/194):
+  Use `mapToFst` instead of `zip` to improve list fusion.
 * Use `$>` instead of `*>` and `pure` where possible.
 * [#167](https://github.com/kowainik/relude/issues/167):
   Rename functions `prec`/`prev`, `dupe`/`dup`.
