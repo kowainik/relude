@@ -59,10 +59,7 @@ inverseMap :: forall a k . (Bounded a, Enum a, Ord k)
 inverseMap f = \k -> M.lookup k dict
   where
     dict :: M.Map k a
-    dict = M.fromList $ map (mapToFst f) univ
-
-    univ :: [a]
-    univ = universe
+    dict = M.fromList $ map (mapToFst f) (universe @a)
 {-# INLINE inverseMap #-}
 
 {- | Like 'succ', but doesn't fail on 'maxBound'. Instead it returns 'minBound'.
