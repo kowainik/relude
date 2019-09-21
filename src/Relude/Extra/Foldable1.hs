@@ -88,9 +88,11 @@ instance Foldable1 NonEmpty where
     fold1 = sconcat
     {-# INLINE fold1 #-}
 
-    foldMap1 :: Semigroup m => (a -> m) -> NonEmpty a -> m
-    foldMap1 f (a :| [])     = f a
-    foldMap1 f (a :| b : bs) = f a <> foldMap1 f (b :| bs)
+    foldMap1 :: forall m a . Semigroup m => (a -> m) -> NonEmpty a -> m
+    foldMap1 f (a :| as) = foldr go f as a
+      where
+        go :: a -> (a -> m) -> a -> m
+        go b g x = f x <> g b
     {-# INLINE foldMap1 #-}
 
     toNonEmpty :: NonEmpty a -> NonEmpty a
