@@ -40,10 +40,10 @@ import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 
 import Relude.Applicative (Alternative, Applicative (..), pure)
 import Relude.Base (Constraint, Eq, IO, Type, coerce, ($!))
-import Relude.Bool (Bool (..))
+import Relude.Bool (Bool (..), (&&^), (||^))
 import Relude.Container.Reexport (HashSet, Set)
 import Relude.Foldable.Reexport (Foldable (..))
-import Relude.Function (flip)
+import Relude.Function (flip, (.))
 import Relude.Monad.Reexport (Monad (..))
 import Relude.Monoid (Alt (..), Ap (..), Monoid (..), Semigroup)
 import Relude.Numeric (Num (..))
@@ -176,12 +176,8 @@ Nothing
 False
 -}
 andM :: (Foldable f, Monad m) => f (m Bool) -> m Bool
-andM = foldr go (pure True)
-  where
-    go p acc = do
-        q <- p
-        if q then acc else pure False
-{-# INLINEABLE andM #-}
+andM = foldr (&&^) (pure True)
+{-# INLINE andM #-}
 {-# SPECIALIZE andM :: [IO Bool] -> IO Bool #-}
 
 {- | Monadic version of 'F.or'.
@@ -194,12 +190,8 @@ Just True
 Nothing
 -}
 orM :: (Foldable f, Monad m) => f (m Bool) -> m Bool
-orM = foldr go (pure False)
-  where
-    go p acc = do
-        q <- p
-        if q then pure True else acc
-{-# INLINEABLE orM #-}
+orM = foldr (||^) (pure False)
+{-# INLINE orM #-}
 {-# SPECIALIZE orM  :: [IO Bool] -> IO Bool #-}
 
 {- | Monadic version of 'F.all'.
@@ -212,12 +204,8 @@ Just False
 Nothing
 -}
 allM :: (Foldable f, Monad m) => (a -> m Bool) -> f a -> m Bool
-allM p = foldr go (pure True)
-  where
-    go x acc = do
-        q <- p x
-        if q then acc else pure False
-{-# INLINEABLE allM #-}
+allM p = foldr ((&&^) . p) (pure True)
+{-# INLINE allM #-}
 {-# SPECIALIZE allM :: (a -> IO Bool) -> [a] -> IO Bool #-}
 
 {- | Monadic  version of 'F.any'.
@@ -230,12 +218,8 @@ Just True
 Nothing
 -}
 anyM :: (Foldable f, Monad m) => (a -> m Bool) -> f a -> m Bool
-anyM p = foldr go (pure False)
-  where
-    go x acc = do
-        q <- p x
-        if q then pure True else acc
-{-# INLINEABLE anyM #-}
+anyM p = foldr ((||^) . p) (pure False)
+{-# INLINE anyM #-}
 {-# SPECIALIZE anyM :: (a -> IO Bool) -> [a] -> IO Bool #-}
 
 ----------------------------------------------------------------------------
