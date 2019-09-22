@@ -30,6 +30,8 @@ class Foldable f => Foldable1 f where
 
     >>> foldMap1 SG.Sum (1 :| [2, 3, 4])
     Sum {getSum = 10}
+    >>> foldMap1 show (123 :| [456, 789, 0])
+    "1234567890"
     -}
     foldMap1 :: Semigroup m => (a -> m) -> f a -> m
 
