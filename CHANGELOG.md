@@ -5,6 +5,8 @@ The changelog is available [on GitHub][2].
 
 ## Unreleased: 0.6.0.0
 
+* [#195](https://github.com/kowainik/relude/pull/195):
+  Implement `foldMap1` for `NonEmpty` in terms of `foldr`.
 * [#194](https://github.com/kowainik/relude/pull/194):
   Use `mapToFst` instead of `zip` to improve list fusion in `inverseMap`.
 * [#193](https://github.com/kowainik/relude/pull/193):
