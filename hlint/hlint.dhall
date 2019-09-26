@@ -901,7 +901,7 @@ in [ Rule.Arguments { arguments =
    -- Enum
    , hintNote "[minBound .. maxBound]" "universe" "Use `universe` from `Relude.Extra.Enum`"
    , hintNote "succ" "next" "`succ` from `Prelude` is a pure function but it may throw exception. Consider using `next` from `Relude.Extra.Enum` instead."
-   , hintNote "pred" "prec" "`pred` from `Prelude` is a pure function but it may throw exception. Consider using `prec` from `Relude.Extra.Enum` instead."
+   , hintNote "pred" "prev" "`pred` from `Prelude` is a pure function but it may throw exception. Consider using `prev` from `Relude.Extra.Enum` instead."
    , hintNote "toEnum" "safeToEnum" "`toEnum` from `Prelude` is a pure function but it may throw exception. Consider using `safeToEnum` from `Relude.Extra.Enum` instead."
 
    -- Tuple

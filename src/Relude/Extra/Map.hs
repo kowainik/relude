@@ -24,11 +24,11 @@ module Relude.Extra.Map
 
 import GHC.Exts (IsList (Item, toList))
 
-import Relude.Applicative (pure, (*>))
 import Relude.Base (Eq, Ord, Type)
 import Relude.Bool (Bool, guard, not)
 import Relude.Container.Reexport (HashMap, HashSet, Hashable, IntMap, IntSet, Map, Set, fst, snd)
 import Relude.Function ((.))
+import Relude.Functor.Reexport (($>))
 import Relude.List (map)
 import Relude.Monad.Reexport (Maybe (..), fromMaybe)
 import Relude.Numeric (Int)
@@ -94,7 +94,7 @@ instance Ord a => StaticMap (Set a) where
 
     size   = S.size
     member = S.member
-    lookup k m = guard (member k m) *> pure k
+    lookup k m = guard (member k m) $> k
     {-# INLINE size #-}
     {-# INLINE lookup #-}
     {-# INLINE member #-}
@@ -105,7 +105,7 @@ instance (Eq a, Hashable a) => StaticMap (HashSet a) where
 
     size   = HS.size
     member = HS.member
-    lookup k m = guard (member k m) *> pure k
+    lookup k m = guard (member k m) $> k
     {-# INLINE size #-}
     {-# INLINE lookup #-}
     {-# INLINE member #-}
@@ -116,7 +116,7 @@ instance StaticMap IntSet where
 
     size   = IS.size
     member = IS.member
-    lookup k m = guard (member k m) *> pure k
+    lookup k m = guard (member k m) $> k
     {-# INLINE size #-}
     {-# INLINE lookup #-}
     {-# INLINE member #-}

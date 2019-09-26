@@ -13,11 +13,12 @@ module Relude.Extra.Enum
        ( universe
        , inverseMap
        , next
-       , prec
+       , prev
        , safeToEnum
        ) where
 
 import Relude
+import Relude.Extra.Tuple (mapToFst)
 
 import qualified Data.Map.Strict as M
 
@@ -58,10 +59,7 @@ inverseMap :: forall a k . (Bounded a, Enum a, Ord k)
 inverseMap f = \k -> M.lookup k dict
   where
     dict :: M.Map k a
-    dict = M.fromList $ zip (map f univ) univ
-
-    univ :: [a]
-    univ = universe
+    dict = M.fromList $ map (mapToFst f) (universe @a)
 {-# INLINE inverseMap #-}
 
 {- | Like 'succ', but doesn't fail on 'maxBound'. Instead it returns 'minBound'.
@@ -81,18 +79,18 @@ next e
 
 {- | Like 'pred', but doesn't fail on 'minBound'. Instead it returns 'maxBound'.
 
->>> prec False
+>>> prev False
 True
->>> prec True
+>>> prev True
 False
 >>> pred False
 *** Exception: Prelude.Enum.Bool.pred: bad argument
 -}
-prec  :: (Eq a, Bounded a, Enum a) => a -> a
-prec e
+prev  :: (Eq a, Bounded a, Enum a) => a -> a
+prev e
     | e == minBound = maxBound
     | otherwise     = pred e
-{-# INLINE prec #-}
+{-# INLINE prev #-}
 
 {- | Returns 'Nothing' if given 'Int' outside range.
 
@@ -106,5 +104,5 @@ Nothing
 Nothing
 -}
 safeToEnum :: forall a . (Bounded a, Enum a) => Int -> Maybe a
-safeToEnum i = guard (fromEnum @a minBound <= i && i <= fromEnum @a maxBound) *> Just (toEnum i)
+safeToEnum i = guard (fromEnum @a minBound <= i && i <= fromEnum @a maxBound) $> toEnum i
 {-# INLINE safeToEnum #-}

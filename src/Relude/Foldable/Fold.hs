@@ -1,5 +1,4 @@
 {-# LANGUAGE DataKinds            #-}
-{-# LANGUAGE ExplicitForAll       #-}
 {-# LANGUAGE PolyKinds            #-}
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
@@ -40,8 +39,8 @@ module Relude.Foldable.Fold
 import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 
 import Relude.Applicative (Alternative, Applicative (..), pure)
-import Relude.Base (Constraint, Eq, IO, Type, ($!))
-import Relude.Bool (Bool (..))
+import Relude.Base (Constraint, Eq, IO, Type, coerce, ($!))
+import Relude.Bool (Bool (..), (&&^), (||^))
 import Relude.Container.Reexport (HashSet, Set)
 import Relude.Foldable.Reexport (Foldable (..))
 import Relude.Function (flip, (.))
@@ -73,8 +72,8 @@ flipfoldl' f = foldl' (flip f)
 >>> asumMap (\x -> if x > 2 then Just x else Nothing) [1..4]
 Just 3
 -}
-asumMap :: (Foldable f, Alternative m) => (a -> m b) -> f a -> m b
-asumMap f = getAlt . foldMap (Alt . f)
+asumMap :: forall b m f a . (Foldable f, Alternative m) => (a -> m b) -> f a -> m b
+asumMap = coerce (foldMap :: (a -> Alt m b) -> f a -> Alt m b)
 {-# INLINE asumMap #-}
 
 {- | Polymorphic version of @concatMapA@ function.
@@ -83,7 +82,7 @@ asumMap f = getAlt . foldMap (Alt . f)
 Just [1,1,1,2,2,2,3,3,3]
 -}
 foldMapA :: forall b m f a . (Semigroup b, Monoid b, Applicative m, Foldable f) => (a -> m b) -> f a -> m b
-foldMapA f = getAp . foldMap (Ap . f)
+foldMapA = coerce (foldMap :: (a -> Ap m b) -> f a -> Ap m b)
 {-# INLINE foldMapA #-}
 
 {- | Polymorphic version of @concatMapM@ function.
@@ -177,13 +176,8 @@ Nothing
 False
 -}
 andM :: (Foldable f, Monad m) => f (m Bool) -> m Bool
-andM = go . toList
-  where
-    go []     = pure True
-    go (p:ps) = do
-        q <- p
-        if q then go ps else pure False
-{-# INLINEABLE andM #-}
+andM = foldr (&&^) (pure True)
+{-# INLINE andM #-}
 {-# SPECIALIZE andM :: [IO Bool] -> IO Bool #-}
 
 {- | Monadic version of 'F.or'.
@@ -196,13 +190,8 @@ Just True
 Nothing
 -}
 orM :: (Foldable f, Monad m) => f (m Bool) -> m Bool
-orM = go . toList
-  where
-    go []     = pure False
-    go (p:ps) = do
-        q <- p
-        if q then pure True else go ps
-{-# INLINEABLE orM #-}
+orM = foldr (||^) (pure False)
+{-# INLINE orM #-}
 {-# SPECIALIZE orM  :: [IO Bool] -> IO Bool #-}
 
 {- | Monadic version of 'F.all'.
@@ -215,13 +204,8 @@ Just False
 Nothing
 -}
 allM :: (Foldable f, Monad m) => (a -> m Bool) -> f a -> m Bool
-allM p = go . toList
-  where
-    go []     = pure True
-    go (x:xs) = do
-        q <- p x
-        if q then go xs else pure False
-{-# INLINEABLE allM #-}
+allM p = foldr ((&&^) . p) (pure True)
+{-# INLINE allM #-}
 {-# SPECIALIZE allM :: (a -> IO Bool) -> [a] -> IO Bool #-}
 
 {- | Monadic  version of 'F.any'.
@@ -234,13 +218,8 @@ Just True
 Nothing
 -}
 anyM :: (Foldable f, Monad m) => (a -> m Bool) -> f a -> m Bool
-anyM p = go . toList
-  where
-    go []     = pure False
-    go (x:xs) = do
-        q <- p x
-        if q then pure True else go xs
-{-# INLINEABLE anyM #-}
+anyM p = foldr ((||^) . p) (pure False)
+{-# INLINE anyM #-}
 {-# SPECIALIZE anyM :: (a -> IO Bool) -> [a] -> IO Bool #-}
 
 ----------------------------------------------------------------------------

@@ -5,6 +5,18 @@ The changelog is available [on GitHub][2].
 
 ## Unreleased: 0.6.0.0
 
+* [#195](https://github.com/kowainik/relude/pull/195):
+  Implement `foldMap1` for `NonEmpty` in terms of `foldr`.
+* [#194](https://github.com/kowainik/relude/pull/194):
+  Use `mapToFst` instead of `zip` to improve list fusion in `inverseMap`.
+* [#193](https://github.com/kowainik/relude/pull/193):
+  Implement `andM`, `orM`, `allM`, and `anyM` in terms of `&&^` and `||^`.
+* [#191](https://github.com/kowainik/relude/pull/191):
+  Implement `asumMap` and `foldMapA` by coercing `foldMap`.
+  BREAKING CHANGE: Reorder type parameters to `asumMap`.
+* Use `$>` instead of `*>` and `pure` where possible.
+* [#167](https://github.com/kowainik/relude/issues/167):
+  Rename functions `prec`/`prev`, `dupe`/`dup`.
 * [#155](https://github.com/kowainik/relude/issues/155):
   Implement `Relude.Extra.Foldable` module.
 * Re-export `GHC.Float.atan2`.
@@ -16,6 +28,10 @@ The changelog is available [on GitHub][2].
   Made `die` be polymorphic in its return type.
 * [#164](https://github.com/kowainik/relude/issues/164):
   Reexport `ShortByteString`, `toShort`/`fromShort` functions.
+* [#162](https://github.com/kowainik/relude/pull/162):
+  Use `foldr` instead of explicit recursion and `toList`.
+* [#182](https://github.com/kowainik/relude/issues/182):
+  Support GHC-8.8.1.
 
 ## 0.5.0 — Mar 18, 2019
 
