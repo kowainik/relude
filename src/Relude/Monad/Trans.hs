@@ -36,20 +36,29 @@ import Relude.Monad.Reexport (Either, ExceptT (..), Maybe, MaybeT (..), Reader, 
 
 {- | Shorter and more readable alias for @flip runReaderT@.
 
-TODO: usingReaderT ??
-be nice to have examples but not too sure
+>>> usingReaderT 42 $ asks (+5)
+47
 
 -}
 usingReaderT :: r -> ReaderT r m a -> m a
 usingReaderT = flip runReaderT
 {-# INLINE usingReaderT #-}
 
--- | Shorter and more readable alias for @flip runReader@.
+{- | Shorter and more readable alias for @flip runReader@.
+
+>>> usingReader 42 $ asks (+5)
+47
+
+-}
 usingReader :: r -> Reader r a -> a
 usingReader = flip runReader
 {-# INLINE usingReader #-}
 
--- | Shorter and more readable alias for @flip runStateT@.
+{- | Shorter and more readable alias for @flip runStateT@.
+
+TODO: I can't get these to run in ghci to experiment
+
+-}
 usingStateT :: s -> StateT s m a -> m (a, s)
 usingStateT = flip runStateT
 {-# INLINE usingStateT #-}

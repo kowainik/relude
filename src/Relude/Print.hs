@@ -65,7 +65,7 @@ putTextLn = liftIO . T.putStrLn
 {-# SPECIALIZE putTextLn :: Text -> Base.IO () #-}
 {-# INLINE putTextLn #-}
 
-{- | Lifted version of 'T.putLText'.
+{- | Lifted version of 'TL.putStr'.
 
 >>> putLText "Hello, world!"
 Hello, world!
@@ -76,7 +76,7 @@ putLText = liftIO . TL.putStr
 {-# SPECIALIZE putLText :: LText -> Base.IO () #-}
 {-# INLINE putLText #-}
 
-{- | Lifted version of 'T.putStrLn'.
+{- | Lifted version of 'TL.putStrLn'.
 
 >>> putStrLn "Hello, world!"
 Hello, world!

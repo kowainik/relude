@@ -113,12 +113,12 @@ maybeToLeft r = maybe (Right r) Left
 {-# INLINE maybeToLeft #-}
 
 {- | Applies given action to 'Either' content if 'Left' is given and returns
--- the result. In case of 'Right' the default value will be returned.
+the result. In case of 'Right' the default value will be returned.
 
 >>> whenLeft "bar" (Left "foo") (\a -> [a])
 ["foo"]
 
->>> whenLeft "bar" (Right "foo") (\a -> [a])
+>>> whenLeft "bar" (Right 42) (\a -> [a])
 ["bar"]
 
 -}

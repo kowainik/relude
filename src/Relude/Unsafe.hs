@@ -38,7 +38,7 @@ get element from list using index value starting from `0`.
 "c"
 
 it is also usefull when used in a partially applied position like:
->>> fmap (at 1) [["a","b","c"],["a","b","c"],["a","b","c"]]
+>>> map (at 1) [["a","b","c"],["a","b","c"],["a","b","c"]]
 ["b","b","b"]
 
 -}
