@@ -72,11 +72,14 @@ trace = Debug.trace
 
 {- | Version of 'Debug.Trace.traceShow' that leaves warning.
 
->>> let x = 123
->>> let f = show
->>> trace x (f (x + x))
-123
-246
+>>> increment l = map (+1) l
+>>> increment [2, 3, 4]
+[3,4,5]
+
+>>> increment l = traceShow l (map (+1) l)
+>>> increment [2, 3, 4]
+[2,3,4]
+[3,4,5]
 
 -}
 traceShow :: Show a => a -> b -> b
@@ -105,9 +108,9 @@ traceShowId = Debug.traceShowId
     pure (x*2 + y)
 :}
 
-> x: 3
-> y: 12
-> Just 18
+x: 3
+y: 12
+Just 18
 
 -}
 traceM :: (Applicative f) => String -> f ()

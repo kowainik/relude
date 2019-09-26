@@ -155,7 +155,7 @@ whenLeftM_ me f = me >>= \e -> whenLeft_ e f
 {-# INLINE whenLeftM_ #-}
 
 {- | Applies given action to 'Either' content if 'Right' is given and returns
--- the result. In case of 'Left' the default value will be returned.
+the result. In case of 'Left' the default value will be returned.
 
 >>> whenRight "bar" (Right "foo") (\a -> [a])
 ["foo"]

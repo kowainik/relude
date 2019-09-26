@@ -42,7 +42,11 @@ evaluateWHNF = liftIO . Control.Exception.Base.evaluate
 
 {- | Like 'evaluateWNHF' but discards value.
 
-TODO: evaluateWHNF_
+>>> :sprint list
+list = _
+>>> evaluateWHNF_ list
+>>> :sprint list
+list = _ : _
 
 -}
 evaluateWHNF_ :: MonadIO m => a -> m ()
@@ -52,7 +56,11 @@ evaluateWHNF_ what = (`seq` ()) <$!> evaluateWHNF what
 
 {- | Alias for @evaluateWHNF . force@ with clearer name.
 
-TODO: evaluateNF
+>>> :sprint list
+list = _
+>>> () <$ evaluateNF list
+>>> :sprint list
+list = ??? unsure which list we're using in example
 
 -}
 evaluateNF :: (NFData a, MonadIO m) => a -> m a
@@ -62,7 +70,13 @@ evaluateNF = evaluateWHNF . force
 
 {- | Alias for @evaluateWHNF . rnf@. Similar to 'evaluateNF'
 -- but discards resulting value.
-TODO: evaluateNF_
+
+>>> :sprint list
+list = _
+>>> evaluateNF_ list
+>>> :sprint list
+list = ???
+
 -}
 evaluateNF_ :: (NFData a, MonadIO m) => a -> m ()
 evaluateNF_ = evaluateWHNF . rnf

@@ -7,7 +7,7 @@ Lifted to 'MonadIO' families of file processing functions for 'Text', 'LText',
 'ByteString' and 'LByteString' types.
 
 These functions are lifted which means that you can also use them inside
-various Monad Transformers without adding liftIO call explicitly.
+various Monad Transformers without adding 'liftIO' call explicitly.
 
 __NOTE:__ These functions are for working with textual data. Functions that work
 with 'Text' or 'LText' types are system and locale-sensitive (encoding,

@@ -37,7 +37,7 @@ False
 -}
 un :: forall a n . Coercible a n => n -> a
 un = coerce
-{-# INLINE un #-}
+  {-# INLINE un #-}
 
 {- | Wraps value to @newtype@. Behaves exactly as 'un' but has more meaningnful
 name in case you need to convert some value to @newtype@.
