@@ -6,6 +6,10 @@ License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Lifted versions of base functions.
+
+These functions are lifted in a sense that you can use them inside various
+monad transformers without adding 'liftIO' calls explicitly. However, you still
+can use all these functions inside plain 'IO' monad as usual.
 -}
 
 module Relude.Lifted

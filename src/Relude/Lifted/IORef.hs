@@ -8,9 +8,6 @@ License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Lifted reexports from 'Data.IORef' module.
-
-Lifted meaning that you can also use them inside various
-Monad Transformers without adding 'liftIO' call explicitly.
 -}
 
 module Relude.Lifted.IORef

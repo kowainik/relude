@@ -59,67 +59,67 @@ instance Ord k => StaticMap (Map k v) where
     type Key (Map k v) = k
     type Val (Map k v) = v
 
-    size   = M.size
-    lookup = M.lookup
-    member = M.member
+    size = M.size
     {-# INLINE size #-}
+    lookup = M.lookup
     {-# INLINE lookup #-}
+    member = M.member
     {-# INLINE member #-}
 
 instance (Eq k, Hashable k) => StaticMap (HashMap k v) where
     type Key (HashMap k v) = k
     type Val (HashMap k v) = v
 
-    size   = HM.size
-    lookup = HM.lookup
-    member = HM.member
+    size = HM.size
     {-# INLINE size #-}
+    lookup = HM.lookup
     {-# INLINE lookup #-}
+    member = HM.member
     {-# INLINE member #-}
 
 instance StaticMap (IntMap v) where
     type Key (IntMap v) = Int
     type Val (IntMap v) = v
 
-    size   = IM.size
-    lookup = IM.lookup
-    member = IM.member
+    size = IM.size
     {-# INLINE size #-}
+    lookup = IM.lookup
     {-# INLINE lookup #-}
+    member = IM.member
     {-# INLINE member #-}
 
 instance Ord a => StaticMap (Set a) where
     type Key (Set a) = a
     type Val (Set a) = a
 
-    size   = S.size
-    member = S.member
-    lookup k m = guard (member k m) $> k
+    size = S.size
     {-# INLINE size #-}
-    {-# INLINE lookup #-}
+    member = S.member
     {-# INLINE member #-}
+    lookup k m = guard (member k m) $> k
+    {-# INLINE lookup #-}
 
 instance (Eq a, Hashable a) => StaticMap (HashSet a) where
     type Key (HashSet a) = a
     type Val (HashSet a) = a
 
-    size   = HS.size
-    member = HS.member
-    lookup k m = guard (member k m) $> k
+    size = HS.size
     {-# INLINE size #-}
-    {-# INLINE lookup #-}
+    member = HS.member
     {-# INLINE member #-}
+    lookup k m = guard (member k m) $> k
+    {-# INLINE lookup #-}
 
 instance StaticMap IntSet where
     type Key IntSet = Int
     type Val IntSet = Int
 
-    size   = IS.size
-    member = IS.member
-    lookup k m = guard (member k m) $> k
+    size = IS.size
     {-# INLINE size #-}
-    {-# INLINE lookup #-}
+    member = IS.member
     {-# INLINE member #-}
+    lookup k m = guard (member k m) $> k
+    {-# INLINE lookup #-}
 
 {- | Operator version of 'lookup' function.
 
