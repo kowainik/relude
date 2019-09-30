@@ -121,19 +121,45 @@ instance StaticMap IntSet where
     {-# INLINE lookup #-}
     {-# INLINE member #-}
 
--- | Operator version of 'lookup' function.
+{- | Operator version of 'lookup' function.
+
+>>> let myHashMap = HashMap.fromList [('a', "xxx"), ('b', "yyy")]
+>>> myHashMap !? 'b'
+Just "yyy"
+
+>>> myHashMap !? 'd'
+Nothing
+
+-}
 infixl 9 !?
 (!?) :: StaticMap t => t -> Key t -> Maybe (Val t)
 (!?) m k = lookup k m
 {-# INLINE (!?) #-}
 
--- | Inverse of 'member' function.
+{- | Inverse of 'member' function.
+
+>>> let myHashMap = HashMap.fromList [('a', "xxx"), ('b', "yyy")]
+>>> notMember 'b' myHashMap
+False
+
+>>> notMember 'c' myHashMap
+True
+
+-}
 notMember :: StaticMap t => Key t -> t -> Bool
 notMember k = not . member k
 {-# INLINE notMember #-}
 
 {- | Return the value to which the specified key is mapped, or the default value
 if this map contains no mapping for the key.
+
+>>> let myHashMap = HashMap.fromList [('a', "xxx"), ('b', "yyy")]
+>>> lookupDefault "zzz" 'b' myHashMap
+"yyy"
+
+>>> lookupDefault "zzz" 'c' myHashMap
+"zzz"
+
 -}
 lookupDefault :: StaticMap t
               => Val t -- ^ Default value to return.

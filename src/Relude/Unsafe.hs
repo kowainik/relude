@@ -31,6 +31,16 @@ import Data.Maybe (fromJust)
 import Relude.Function (flip)
 import Relude.Numeric (Int)
 
--- | Similar to '!!' but with flipped arguments.
+{- | Similar to '!!' but with flipped arguments.
+get element from list using index value starting from `0`.
+
+>>> at 2 ["a","b,"c"]
+"c"
+
+it is also usefull when used in a partially applied position like:
+>>> map (at 1) [["a","b","c"],["a","b","c"],["a","b","c"]]
+["b","b","b"]
+
+-}
 at :: Int -> [a] -> a
 at = flip (!!)

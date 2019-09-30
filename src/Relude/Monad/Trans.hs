@@ -34,17 +34,32 @@ import Relude.Functor (Functor, (<$>))
 import Relude.Monad.Reexport (Either, ExceptT (..), Maybe, MaybeT (..), Reader, ReaderT, State,
                               StateT, runReader, runReaderT, runState, runStateT)
 
--- | Shorter and more readable alias for @flip runReaderT@.
+{- | Shorter and more readable alias for @flip runReaderT@.
+
+>>> usingReaderT 42 $ asks (+5)
+47
+
+-}
 usingReaderT :: r -> ReaderT r m a -> m a
 usingReaderT = flip runReaderT
 {-# INLINE usingReaderT #-}
 
--- | Shorter and more readable alias for @flip runReader@.
+{- | Shorter and more readable alias for @flip runReader@.
+
+>>> usingReader 42 $ asks (+5)
+47
+
+-}
 usingReader :: r -> Reader r a -> a
 usingReader = flip runReader
 {-# INLINE usingReader #-}
 
--- | Shorter and more readable alias for @flip runStateT@.
+{- | Shorter and more readable alias for @flip runStateT@.
+
+>>> usingStateT 0 $ put 42 >> pure False
+(False,42)
+
+-}
 usingStateT :: s -> StateT s m a -> m (a, s)
 usingStateT = flip runStateT
 {-# INLINE usingStateT #-}

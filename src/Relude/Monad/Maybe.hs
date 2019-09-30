@@ -55,7 +55,11 @@ whenJust (Just x) f = f x
 whenJust Nothing _  = pass
 {-# INLINE whenJust #-}
 
--- | Monadic version of 'whenJust'.
+{- | Monadic version of 'whenJust'.
+
+TODO: whenJustM ??
+
+-}
 whenJustM :: Monad m => m (Maybe a) -> (a -> m ()) -> m ()
 whenJustM mm f = mm >>= \m -> whenJust m f
 {-# INLINE whenJustM #-}
@@ -83,12 +87,20 @@ whenNothing_ Nothing m = m
 whenNothing_ _       _ = pass
 {-# INLINE whenNothing_ #-}
 
--- | Monadic version of 'whenNothing'.
+{- | Monadic version of 'whenNothingM'.
+
+TODO: whenNothingM ??
+
+-}
 whenNothingM :: Monad m => m (Maybe a) -> m a -> m a
 whenNothingM mm action = mm >>= \m -> whenNothing m action
 {-# INLINE whenNothingM #-}
 
--- | Monadic version of 'whenNothingM_'.
+{- | Monadic version of 'whenNothingM_'.
+
+TODO: whenNothingM_ ??
+
+-}
 whenNothingM_ :: Monad m => m (Maybe a) -> m () -> m ()
 whenNothingM_ mm action = mm >>= \m -> whenNothing_ m action
 {-# INLINE whenNothingM_ #-}

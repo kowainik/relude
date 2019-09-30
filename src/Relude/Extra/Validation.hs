@@ -236,14 +236,30 @@ instance Bitraversable Validation where
     {-# INLINE bitraverse #-}
 #endif
 
--- | Transform a 'Validation' into an 'Either'.
+{- | Transform a 'Validation' into an 'Either'.
+
+>>> validationToEither (Success "whoop")
+Right "whoop"
+
+>>> validationToEither (Failure "nahh")
+Left "nahh"
+
+-}
 validationToEither :: Validation e a -> Either e a
 validationToEither = \case
     Failure e -> Left e
     Success a -> Right a
 {-# INLINE validationToEither #-}
 
--- | Transform an 'Either' into a 'Validation'.
+{- | Transform an 'Either' into a 'Validation'.
+
+>>> eitherToValidation (Right "whoop")
+Success "whoop"
+
+>>> eitherToValidation (Left "nahh")
+Failure "nahh"
+
+-}
 eitherToValidation :: Either e a -> Validation e a
 eitherToValidation = \case
     Left e  -> Failure e

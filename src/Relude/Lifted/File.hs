@@ -6,6 +6,9 @@ License:    MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Lifted versions of functions working with files and common IO.
+
+These functions are lifted that means that you can also use them inside various
+Monad Transformers without adding 'liftIO' call explicitly.
 -}
 
 module Relude.Lifted.File

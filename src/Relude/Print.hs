@@ -42,25 +42,46 @@ import qualified Relude.Base as Base
 -- Text
 ----------------------------------------------------------------------------
 
--- | Lifted version of 'T.putStr'.
+{- | Lifted version of 'T.putStr'.
+
+>>> putText "Hello, world!"
+Hello, world!
+
+-}
 putText :: MonadIO m => Text -> m ()
 putText = liftIO . T.putStr
 {-# SPECIALIZE putText :: Text -> Base.IO () #-}
 {-# INLINE putText #-}
 
--- | Lifted version of 'T.putStrLn'.
+
+{- | Lifted version of 'T.putStrLn'.
+
+>>> putStrLn "Hello, world!"
+Hello, world!
+
+-}
 putTextLn :: MonadIO m => Text -> m ()
 putTextLn = liftIO . T.putStrLn
 {-# SPECIALIZE putTextLn :: Text -> Base.IO () #-}
 {-# INLINE putTextLn #-}
 
--- | Lifted version of 'TL.putStr'.
+{- | Lifted version of 'TL.putStr'.
+
+>>> putLText "Hello, world!"
+Hello, world!
+
+-}
 putLText :: MonadIO m => LText -> m ()
 putLText = liftIO . TL.putStr
 {-# SPECIALIZE putLText :: LText -> Base.IO () #-}
 {-# INLINE putLText #-}
 
--- | Lifted version of 'TL.putStrLn'.
+{- | Lifted version of 'TL.putStrLn'.
+
+>>> putStrLn "Hello, world!"
+Hello, world!
+
+-}
 putLTextLn :: MonadIO m => LText -> m ()
 putLTextLn = liftIO . TL.putStrLn
 {-# SPECIALIZE putLTextLn :: LText -> Base.IO () #-}
@@ -70,25 +91,46 @@ putLTextLn = liftIO . TL.putStrLn
 -- ByteString
 ----------------------------------------------------------------------------
 
--- | Lifted version of 'BS.putStr'.
+{- | Lifted version of 'BS.putStr'.
+
+>>> putBS ("Hello, world!" :: ByteString)
+Hello, world!
+
+-}
 putBS :: MonadIO m => ByteString -> m ()
 putBS = liftIO . BS.putStr
 {-# SPECIALIZE putBS :: ByteString -> Base.IO () #-}
 {-# INLINE putBS #-}
 
--- | Lifted version of 'BS.putStrLn'.
+
+{- | Lifted version of 'BS.putStrLn'.
+
+>>> putBSLn ("Hello, world!" :: ByteString)
+Hello, world!
+
+-}
 putBSLn :: MonadIO m => ByteString -> m ()
 putBSLn = liftIO . BS.putStrLn
 {-# SPECIALIZE putBSLn :: ByteString -> Base.IO () #-}
 {-# INLINE putBSLn #-}
 
--- | Lifted version of 'LBS.putStr'.
+{- | Lifted version of 'LBS.putStr'.
+
+>>> putLBS ("Hello, world!" :: LByteString)
+Hello, world!
+
+-}
 putLBS :: MonadIO m => LByteString -> m ()
 putLBS = liftIO . LBS.putStr
 {-# SPECIALIZE putLBS :: LByteString -> Base.IO () #-}
 {-# INLINE putLBS #-}
 
--- | Lifted version of 'LBS.putStrLn'.
+{- | Lifted version of 'LBS.putStrLn'.
+
+>>> putLBSLn ("Hello, world!" :: LByteString)
+Hello, world!
+
+-}
 putLBSLn :: MonadIO m => LByteString -> m ()
 putLBSLn = liftIO . LBS.putStrLn
 {-# SPECIALIZE putLBSLn :: LByteString -> Base.IO () #-}
