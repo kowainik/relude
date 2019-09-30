@@ -56,7 +56,8 @@ usingReader = flip runReader
 
 {- | Shorter and more readable alias for @flip runStateT@.
 
-TODO: I can't get these to run in ghci to experiment
+>>> usingStateT 0 $ put 42 >> pure False
+(False,42)
 
 -}
 usingStateT :: s -> StateT s m a -> m (a, s)

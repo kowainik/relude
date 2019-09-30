@@ -28,6 +28,7 @@ import qualified Control.Exception.Base (evaluate)
 
 {- | Lifted alias for 'Control.Exception.Base.evaluate' with clearer name.
 
+>>> list = [2, 1, 3] :: [Int]
 >>> :sprint list
 list = _
 >>> () <$ evaluateWHNF list
@@ -42,6 +43,7 @@ evaluateWHNF = liftIO . Control.Exception.Base.evaluate
 
 {- | Like 'evaluateWNHF' but discards value.
 
+>>> list = [2, 1, 3] :: [Int]
 >>> :sprint list
 list = _
 >>> evaluateWHNF_ list
@@ -56,11 +58,12 @@ evaluateWHNF_ what = (`seq` ()) <$!> evaluateWHNF what
 
 {- | Alias for @evaluateWHNF . force@ with clearer name.
 
+>>> list = [2, 1, 3] :: [Int]
 >>> :sprint list
 list = _
 >>> () <$ evaluateNF list
 >>> :sprint list
-list = ??? unsure which list we're using in example
+list = [2,1,3]
 
 -}
 evaluateNF :: (NFData a, MonadIO m) => a -> m a
@@ -71,11 +74,12 @@ evaluateNF = evaluateWHNF . force
 {- | Alias for @evaluateWHNF . rnf@. Similar to 'evaluateNF'
 -- but discards resulting value.
 
+>>> list = [2, 1, 3] :: [Int]
 >>> :sprint list
 list = _
 >>> evaluateNF_ list
 >>> :sprint list
-list = ???
+list = [2,1,3]
 
 -}
 evaluateNF_ :: (NFData a, MonadIO m) => a -> m ()

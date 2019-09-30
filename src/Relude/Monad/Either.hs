@@ -129,7 +129,9 @@ whenLeft a (Right _) _ = pure a
 
 {- | Applies given action to 'Either' content if 'Left' is given.
 
-TODO: whenLeft_
+>>> whenLeft_ (Right 42) putTextLn
+>>> whenLeft_ (Left "foo") putTextLn
+foo
 
 -}
 whenLeft_ :: Applicative f => Either l r -> (l -> f ()) -> f ()
@@ -138,7 +140,11 @@ whenLeft_ = whenLeft ()
 
 {- | Monadic version of 'whenLeft'.
 
-TODO: whenLeftM
+>>> whenLeft "bar" (pure $ Left "foo") (\a -> [a])
+["foo"]
+
+>>> whenLeft "bar" (pure $ Right 42) (\a -> [a])
+["bar"]
 
 -}
 whenLeftM :: Monad m => a -> m (Either l r) -> (l -> m a) -> m a
@@ -147,7 +153,10 @@ whenLeftM a me f = me >>= \e -> whenLeft a e f
 
 {- | Monadic version of 'whenLeft_'.
 
-TODO: whenLeftM_
+>>> whenLeftM_ (pure $ Right 42) putTextLn
+>>> whenLeftM_ (pure $ Left "foo") putTextLn
+foo
+
 
 -}
 whenLeftM_ :: Monad m => m (Either l r) -> (l -> m ()) -> m ()
@@ -171,7 +180,9 @@ whenRight _ (Right r) f = f r
 
 {- | Applies given action to 'Either' content if 'Right' is given.
 
-TODO: whenRight_
+>>> whenRight_ (Left "foo") putTextLn
+>>> whenRight_ (Right 42) putTextLn
+42
 
 -}
 whenRight_ :: Applicative f => Either l r -> (r -> f ()) -> f ()
@@ -180,7 +191,11 @@ whenRight_ = whenRight ()
 
 {- | Monadic version of 'whenRight'.
 
-TODO: whenRightM
+>>> whenRight "bar" (pure $ Left "foo") (\a -> [a])
+["bar"]
+
+>>> whenRight "bar" (pure $ Right 42) (\a -> [a])
+[42]
 
 -}
 whenRightM :: Monad m => a -> m (Either l r) -> (r -> m a) -> m a
@@ -189,7 +204,9 @@ whenRightM a me f = me >>= \e -> whenRight a e f
 
 {- | Monadic version of 'whenRight_'.
 
-TODO: whenRightM_
+>>> whenRight_ (pure $ Left "foo") putTextLn
+>>> whenRight_ (pure $ Right 42) putTextLn
+42
 
 -}
 whenRightM_ :: Monad m => m (Either l r) -> (r -> m ()) -> m ()

@@ -120,18 +120,18 @@ traceM = Debug.traceM
 {-|
 Like 'traceM', but uses 'show' on the argument to convert it to a 'String'.
 
-@
+>>> :{
   do
     x <- Just 3
     traceShowM x
     y <- pure 12
     traceShowM y
     pure (x*2 + y)
-@
+:}
 
-> 3
-> 12
-> Just 18
+3
+12
+Just 18
 
 -}
 traceShowM :: (Show a, Applicative f) => a -> f ()
