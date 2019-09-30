@@ -23,6 +23,10 @@ import System.Exit (ExitCode)
 
 import qualified System.Exit as XIO
 
+-- $setup
+-- >>> import Relude
+-- >>> import System.Exit (ExitCode (..))
+
 
 {- | Lifted version of 'System.Exit.exitWith'.
 
@@ -31,7 +35,6 @@ import qualified System.Exit as XIO
 
 >>> exitWith ExitSuccess
 *** Exception: ExitSuccess
-
 -}
 exitWith :: MonadIO m => ExitCode -> m a
 exitWith a = liftIO (XIO.exitWith a)
@@ -40,7 +43,6 @@ exitWith a = liftIO (XIO.exitWith a)
 
 >>> exitFailure
 *** Exception: ExitFailure 1
-
 -}
 exitFailure :: MonadIO m => m a
 exitFailure = liftIO XIO.exitFailure
@@ -49,18 +51,15 @@ exitFailure = liftIO XIO.exitFailure
 
 >>> exitSuccess
 *** Exception: ExitSuccess
-
 -}
 exitSuccess :: MonadIO m => m a
 exitSuccess = liftIO XIO.exitSuccess
 
--- | Lifted version of 'System.Exit.die'.
 {- | Lifted version of 'System.Exit.die'.
 
 >>> die "Goodbye!"
 Goodbye!
 *** Exception: ExitFailure 1
-
 -}
 die :: MonadIO m => String -> m a
 die err = liftIO (XIO.die err)

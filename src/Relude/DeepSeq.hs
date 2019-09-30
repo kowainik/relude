@@ -26,6 +26,10 @@ import Relude.Monad (MonadIO, liftIO, (<$!>))
 
 import qualified Control.Exception.Base (evaluate)
 
+
+-- $setup
+-- >>> import Relude
+
 {- | Lifted alias for 'Control.Exception.Base.evaluate' with clearer name.
 
 >>> list = [2, 1, 3] :: [Int]
@@ -34,7 +38,6 @@ list = _
 >>> () <$ evaluateWHNF list
 >>> :sprint list
 list = _ : _
-
 -}
 evaluateWHNF :: MonadIO m => a -> m a
 evaluateWHNF = liftIO . Control.Exception.Base.evaluate

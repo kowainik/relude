@@ -50,6 +50,11 @@ import Relude.String (Read, String, Text, toString)
 import qualified Debug.Trace as Debug
 import qualified Prelude
 
+
+-- $setup
+-- >>> import Relude
+-- >>> :set -Wno-deprecations
+
 ----------------------------------------------------------------------------
 -- trace
 ----------------------------------------------------------------------------
@@ -100,18 +105,18 @@ traceShowId = Debug.traceShowId
 {- | Version of 'Debug.Trace.traceM' that leaves warning.
 
 >>> :{
-  do
-    x <- Just 3
-    traceM ("x: " ++ show x)
-    y <- pure 12
-    traceM ("y: " ++ show y)
-    pure (x*2 + y)
+let action :: Maybe Int
+    action = do
+        x <- Just 3
+        traceM ("x: " ++ show x)
+        y <- pure 12
+        traceM ("y: " ++ show y)
+        pure (x*2 + y)
+in action
 :}
-
 x: 3
 y: 12
 Just 18
-
 -}
 traceM :: (Applicative f) => String -> f ()
 traceM = Debug.traceM
@@ -121,18 +126,18 @@ traceM = Debug.traceM
 Like 'traceM', but uses 'show' on the argument to convert it to a 'String'.
 
 >>> :{
-  do
-    x <- Just 3
-    traceShowM x
-    y <- pure 12
-    traceShowM y
-    pure (x*2 + y)
+let action :: Maybe Int
+    action = do
+        x <- Just 3
+        traceShowM x
+        y <- pure 12
+        traceShowM y
+        pure (x*2 + y)
+in action
 :}
-
 3
 12
 Just 18
-
 -}
 traceShowM :: (Show a, Applicative f) => a -> f ()
 traceShowM = Debug.traceShowM
@@ -141,9 +146,8 @@ traceShowM = Debug.traceShowM
 {- | Version of 'Debug.Trace.traceId' that leaves warning.
 
 >>> traceId "hello"
-hello
-hello
-
+"hello
+hello"
 -}
 traceId :: String -> String
 traceId = Debug.traceId

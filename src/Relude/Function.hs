@@ -19,6 +19,10 @@ import Control.Arrow ((&&&))
 import Control.Category ((<<<), (>>>))
 import Data.Function (const, fix, flip, id, on, ($), (&), (.))
 
+
+-- $setup
+-- >>> import Relude
+
 {- | Renamed version of 'Prelude.id'.
 
 >>> identity 10

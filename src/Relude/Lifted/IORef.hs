@@ -35,8 +35,10 @@ import qualified Data.IORef as Ref (atomicModifyIORef, atomicModifyIORef', atomi
                                     modifyIORef, modifyIORef', newIORef, readIORef, writeIORef)
 
 
--- | Lifted version of 'Ref.newIORef'.
-{-
+-- $setup
+-- >>> import Relude
+
+{- | Lifted version of 'Ref.newIORef'.
 
 >>> ref <- newIORef False
 >>> :t ref
@@ -50,7 +52,7 @@ newIORef = liftIO . Ref.newIORef
 
 {- | Lifted version of 'Ref.readIORef'.
 
->>> ref <- newiORef 42
+>>> ref <- newIORef 42
 >>> readIORef ref
 42
 

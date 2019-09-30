@@ -46,7 +46,6 @@ import qualified Relude.Base as Base
 
 >>> putText "Hello, world!"
 Hello, world!
-
 -}
 putText :: MonadIO m => Text -> m ()
 putText = liftIO . T.putStr
@@ -56,9 +55,8 @@ putText = liftIO . T.putStr
 
 {- | Lifted version of 'T.putStrLn'.
 
->>> putStrLn "Hello, world!"
+>>> putTextLn "Hello, world!"
 Hello, world!
-
 -}
 putTextLn :: MonadIO m => Text -> m ()
 putTextLn = liftIO . T.putStrLn
@@ -69,7 +67,6 @@ putTextLn = liftIO . T.putStrLn
 
 >>> putLText "Hello, world!"
 Hello, world!
-
 -}
 putLText :: MonadIO m => LText -> m ()
 putLText = liftIO . TL.putStr
@@ -78,9 +75,8 @@ putLText = liftIO . TL.putStr
 
 {- | Lifted version of 'TL.putStrLn'.
 
->>> putStrLn "Hello, world!"
+>>> putLTextLn "Hello, world!"
 Hello, world!
-
 -}
 putLTextLn :: MonadIO m => LText -> m ()
 putLTextLn = liftIO . TL.putStrLn
@@ -95,7 +91,6 @@ putLTextLn = liftIO . TL.putStrLn
 
 >>> putBS ("Hello, world!" :: ByteString)
 Hello, world!
-
 -}
 putBS :: MonadIO m => ByteString -> m ()
 putBS = liftIO . BS.putStr
