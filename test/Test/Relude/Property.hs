@@ -7,8 +7,8 @@ Maintainer: Kowainik <xrom.xkov@gmail.com>
 -}
 
 module Test.Relude.Property
-  ( hedgehogTestList
-  )  where
+       ( hedgehogTestList
+       ) where
 
 import Relude
 
@@ -18,14 +18,15 @@ import Hedgehog (Gen, Property, Group (..), assert, checkSequential, forAll, pro
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 
+hedgehogTestList :: [IO Bool]
+hedgehogTestList = [utfProps, listProps, logicProps]
+
 ----------------------------------------------------------------------------
 -- utf8 conversion
 ----------------------------------------------------------------------------
-hedgehogTestList :: [IO Bool]
-hedgehogTestList = [utfTest, listTest, logicTest]
 
-utfTest :: IO Bool
-utfTest = checkSequential $ Group "utf8 conversion property tests"
+utfProps :: IO Bool
+utfProps = checkSequential $ Group "utf8 conversion property tests"
     [ ("String to ByteString invertible:", prop_StringToBytes)
     , ("Text to ByteString invertible:", prop_TextToBytes)
     , ("ByteString to Text or String invertible:" , prop_BytesTo)
@@ -69,8 +70,8 @@ prop_BytesTo = property $ do
 -- ordNub
 ----------------------------------------------------------------------------
 
-listTest :: IO Bool
-listTest = checkSequential $ Group "list function property tests"
+listProps :: IO Bool
+listProps = checkSequential $ Group "list function property tests"
     [ ("ordNub xs == nub xs:", prop_ordNubCorrect)
     , ("hashNub xs == nub xs:", prop_hashNubCorrect)
     , ("sortNub xs == sort (nub xs):" , prop_sortNubCorrect)
@@ -104,8 +105,8 @@ prop_unstableNubCorrect = property $ do
 -- logicM
 ----------------------------------------------------------------------------
 
-logicTest :: IO Bool
-logicTest = checkSequential $ Group "lifted logic function property tests"
+logicProps :: IO Bool
+logicProps = checkSequential $ Group "lifted logic function property tests"
     [ ("andM:", prop_andM)
     , ("orM:", prop_orM)
     ]
