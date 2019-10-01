@@ -10,9 +10,16 @@ module Main where
 
 import Relude
 
-import Test.Tasty (defaultMain)
-
-import Test.Relude.Property (hedgehogTestTree)
+import Hedgehog (checkParallel)
+import System.IO (hSetEncoding, utf8)
+import Test.Relude.Property (hedgehogTestList)
 
 main :: IO ()
-main = defaultMain hedgehogTestTree
+main = do
+  -- fix terminal encoding
+  hSetEncoding stdout utf8
+  hSetEncoding stderr utf8
+
+  mapM checkParallel hedgehogTestList >>= \p -> if and p then exitSuccess else exitFailure
+
+ 

@@ -7,33 +7,31 @@ Maintainer: Kowainik <xrom.xkov@gmail.com>
 -}
 
 module Test.Relude.Property
-       ( hedgehogTestTree
+       ( hedgehogTestList
        ) where
 
 import Relude
 
 import Data.List (nub)
-import Hedgehog (Gen, Property, assert, forAll, property, (===))
-import Test.Tasty (TestTree, testGroup)
-import Test.Tasty.Hedgehog
+import Hedgehog (Gen, Property, Group (..), assert, forAll, property, (===))
 
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 
-hedgehogTestTree :: TestTree
-hedgehogTestTree = testGroup "Tests" [utfProps, listProps, boolMProps]
+hedgehogTestList :: [Group]
+hedgehogTestList = [utfProps, listProps, logicProps]
 
 ----------------------------------------------------------------------------
 -- utf8 conversion
 ----------------------------------------------------------------------------
 
-utfProps :: TestTree
-utfProps = testGroup "utf8 conversion property tests"
-    [ testProperty "String to ByteString invertible" prop_StringToBytes
-    , testProperty "Text to ByteString invertible" prop_TextToBytes
-    , testProperty "ByteString to Text or String invertible" prop_BytesTo
+utfProps :: Group
+utfProps = Group "utf8 conversion property tests"
+    [ ("String to ByteString invertible:", prop_StringToBytes)
+    , ("Text to ByteString invertible:", prop_TextToBytes)
+    , ("ByteString to Text or String invertible:" , prop_BytesTo)
     ]
-
+      
 utf8String :: Gen String
 utf8String = Gen.string (Range.linear 0 1000) Gen.unicode
 
@@ -72,14 +70,14 @@ prop_BytesTo = property $ do
 -- ordNub
 ----------------------------------------------------------------------------
 
-listProps :: TestTree
-listProps = testGroup "list function property tests"
-    [ testProperty "ordNub xs == nub xs" prop_ordNubCorrect
-    , testProperty "hashNub xs == nub xs" prop_hashNubCorrect
-    , testProperty "sortNub xs == sort (nub xs)" prop_sortNubCorrect
-    , testProperty "sort (unstableNub xs) == sort (nub xs)" prop_unstableNubCorrect
+listProps :: Group
+listProps = Group "list function property tests"
+    [ ("ordNub xs == nub xs:", prop_ordNubCorrect)
+    , ("hashNub xs == nub xs:", prop_hashNubCorrect)
+    , ("sortNub xs == sort (nub xs):" , prop_sortNubCorrect)
+    , ("sort (unstableNub xs) == sort (nub xs):" , prop_unstableNubCorrect)
     ]
-
+      
 genIntList :: Gen [Int]
 genIntList = Gen.list (Range.linear 0 1000) Gen.enumBounded
 
@@ -107,14 +105,14 @@ prop_unstableNubCorrect = property $ do
 -- logicM
 ----------------------------------------------------------------------------
 
+logicProps :: Group
+logicProps = Group "lifted logic function property tests"
+    [ ("andM:", prop_andM)
+    , ("orM:", prop_orM)
+    ]
+      
 genBoolList :: Gen [Bool]
 genBoolList = Gen.list (Range.linear 0 1000) Gen.bool
-
-boolMProps :: TestTree
-boolMProps = testGroup "lifted logic function property tests"
-    [ testProperty "andM" prop_andM
-    , testProperty "orM" prop_orM
-    ]
 
 prop_andM :: Property
 prop_andM = property $ do
