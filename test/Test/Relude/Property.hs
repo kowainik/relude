@@ -13,20 +13,20 @@ module Test.Relude.Property
 import Relude
 
 import Data.List (nub)
-import Hedgehog (Gen, Property, Group (..), assert, checkParallel, forAll, property, (===))
+import Hedgehog (Gen, Property, Group (..), assert, forAll, property, (===))
 
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 
-hedgehogTestList :: [IO Bool]
+hedgehogTestList :: [Group]
 hedgehogTestList = [utfProps, listProps, logicProps]
 
 ----------------------------------------------------------------------------
 -- utf8 conversion
 ----------------------------------------------------------------------------
 
-utfProps :: IO Bool
-utfProps = checkParallel $ Group "utf8 conversion property tests"
+utfProps :: Group
+utfProps = Group "utf8 conversion property tests"
     [ ("String to ByteString invertible:", prop_StringToBytes)
     , ("Text to ByteString invertible:", prop_TextToBytes)
     , ("ByteString to Text or String invertible:" , prop_BytesTo)
@@ -70,8 +70,8 @@ prop_BytesTo = property $ do
 -- ordNub
 ----------------------------------------------------------------------------
 
-listProps :: IO Bool
-listProps = checkParallel $ Group "list function property tests"
+listProps :: Group
+listProps = Group "list function property tests"
     [ ("ordNub xs == nub xs:", prop_ordNubCorrect)
     , ("hashNub xs == nub xs:", prop_hashNubCorrect)
     , ("sortNub xs == sort (nub xs):" , prop_sortNubCorrect)
@@ -105,8 +105,8 @@ prop_unstableNubCorrect = property $ do
 -- logicM
 ----------------------------------------------------------------------------
 
-logicProps :: IO Bool
-logicProps = checkParallel $ Group "lifted logic function property tests"
+logicProps :: Group
+logicProps = Group "lifted logic function property tests"
     [ ("andM:", prop_andM)
     , ("orM:", prop_orM)
     ]
