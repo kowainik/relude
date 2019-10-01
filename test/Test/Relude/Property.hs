@@ -14,7 +14,6 @@ import Relude
 
 import Data.List (nub)
 import Hedgehog (Gen, Property, assert, forAll, property, (===))
-import Test.Tasty (TestTree, testGroup)
 import Test.Tasty.Hedgehog
 
 import qualified Hedgehog.Gen as Gen
