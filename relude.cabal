@@ -188,8 +188,6 @@ test-suite relude-test
                      , bytestring
                      , text
                      , hedgehog ^>= 1.0
-                     , tasty
-                     , tasty-hedgehog ^>= 1.0
 
   ghc-options:         -threaded
 
