@@ -10,7 +10,8 @@ module Main where
 
 import Relude
 
-import Test.Relude.Property (hedgehogTestTree)
+import Test.Relude.Property (hedgehogTestList)
 
 main :: IO ()
-main = defaultMain hedgehogTestTree
+main = sequence_ hedgehogTestList
+  
