@@ -59,81 +59,107 @@ instance Ord k => StaticMap (Map k v) where
     type Key (Map k v) = k
     type Val (Map k v) = v
 
-    size   = M.size
-    lookup = M.lookup
-    member = M.member
+    size = M.size
     {-# INLINE size #-}
+    lookup = M.lookup
     {-# INLINE lookup #-}
+    member = M.member
     {-# INLINE member #-}
 
 instance (Eq k, Hashable k) => StaticMap (HashMap k v) where
     type Key (HashMap k v) = k
     type Val (HashMap k v) = v
 
-    size   = HM.size
-    lookup = HM.lookup
-    member = HM.member
+    size = HM.size
     {-# INLINE size #-}
+    lookup = HM.lookup
     {-# INLINE lookup #-}
+    member = HM.member
     {-# INLINE member #-}
 
 instance StaticMap (IntMap v) where
     type Key (IntMap v) = Int
     type Val (IntMap v) = v
 
-    size   = IM.size
-    lookup = IM.lookup
-    member = IM.member
+    size = IM.size
     {-# INLINE size #-}
+    lookup = IM.lookup
     {-# INLINE lookup #-}
+    member = IM.member
     {-# INLINE member #-}
 
 instance Ord a => StaticMap (Set a) where
     type Key (Set a) = a
     type Val (Set a) = a
 
-    size   = S.size
-    member = S.member
-    lookup k m = guard (member k m) $> k
+    size = S.size
     {-# INLINE size #-}
-    {-# INLINE lookup #-}
+    member = S.member
     {-# INLINE member #-}
+    lookup k m = guard (member k m) $> k
+    {-# INLINE lookup #-}
 
 instance (Eq a, Hashable a) => StaticMap (HashSet a) where
     type Key (HashSet a) = a
     type Val (HashSet a) = a
 
-    size   = HS.size
-    member = HS.member
-    lookup k m = guard (member k m) $> k
+    size = HS.size
     {-# INLINE size #-}
-    {-# INLINE lookup #-}
+    member = HS.member
     {-# INLINE member #-}
+    lookup k m = guard (member k m) $> k
+    {-# INLINE lookup #-}
 
 instance StaticMap IntSet where
     type Key IntSet = Int
     type Val IntSet = Int
 
-    size   = IS.size
-    member = IS.member
-    lookup k m = guard (member k m) $> k
+    size = IS.size
     {-# INLINE size #-}
-    {-# INLINE lookup #-}
+    member = IS.member
     {-# INLINE member #-}
+    lookup k m = guard (member k m) $> k
+    {-# INLINE lookup #-}
 
--- | Operator version of 'lookup' function.
+{- | Operator version of 'lookup' function.
+
+>>> let myHashMap = HashMap.fromList [('a', "xxx"), ('b', "yyy")]
+>>> myHashMap !? 'b'
+Just "yyy"
+
+>>> myHashMap !? 'd'
+Nothing
+
+-}
 infixl 9 !?
 (!?) :: StaticMap t => t -> Key t -> Maybe (Val t)
 (!?) m k = lookup k m
 {-# INLINE (!?) #-}
 
--- | Inverse of 'member' function.
+{- | Inverse of 'member' function.
+
+>>> let myHashMap = HashMap.fromList [('a', "xxx"), ('b', "yyy")]
+>>> notMember 'b' myHashMap
+False
+
+>>> notMember 'c' myHashMap
+True
+
+-}
 notMember :: StaticMap t => Key t -> t -> Bool
 notMember k = not . member k
 {-# INLINE notMember #-}
 
 {- | Return the value to which the specified key is mapped, or the default value
 if this map contains no mapping for the key.
+
+>>> let myHashMap = HashMap.fromList [('a', "xxx"), ('b', "yyy")]
+>>> lookupDefault "zzz" 'b' myHashMap
+"yyy"
+
+>>> lookupDefault "zzz" 'c' myHashMap
+"zzz"
+
 -}
 lookupDefault :: StaticMap t
               => Val t -- ^ Default value to return.

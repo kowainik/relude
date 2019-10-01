@@ -19,7 +19,19 @@ import Control.Arrow ((&&&))
 import Control.Category ((<<<), (>>>))
 import Data.Function (const, fix, flip, id, on, ($), (&), (.))
 
--- | Renamed version of 'Prelude.id'.
+
+-- $setup
+-- >>> import Relude
+
+{- | Renamed version of 'Prelude.id'.
+
+>>> identity 10
+10
+
+>>> fmap identity [1,2,3]
+[1,2,3]
+
+-}
 identity :: a -> a
 identity = id
 {-# INLINE identity #-}

@@ -12,7 +12,7 @@ better not to use them. This module is intended to be imported qualified and
 it's not even included in default prelude exports.
 
 @
-import qualified Relude.Unsafe as Unsafe
+__import qualified__ Relude.Unsafe as Unsafe
 
 foo :: [a] -> a
 foo = Unsafe.head
@@ -31,6 +31,20 @@ import Data.Maybe (fromJust)
 import Relude.Function (flip)
 import Relude.Numeric (Int)
 
--- | Similar to '!!' but with flipped arguments.
+
+-- $setup
+-- >>> import Relude
+
+{- | Similar to '!!' but with flipped arguments.
+get element from list using index value starting from `0`.
+
+>>> at 2 ["a", "b", "c"]
+"c"
+
+it is also usefull when used in a partially applied position like:
+
+>>> map (at 1) [["a","b","c"], ["a","b","c"], ["a","b","c"]]
+["b","b","b"]
+-}
 at :: Int -> [a] -> a
 at = flip (!!)

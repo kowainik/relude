@@ -20,6 +20,9 @@ Maintainer: Kowainik <xrom.xkov@gmail.com>
 Functions for debugging. If you left these functions in your code then a warning
 is generated to remind you about left usages. Also some functions (and data
 types) are convenient for prototyping.
+
+Use these functions only for debugging purposes. They break referential trasparency,
+they are only useful when you want to observe intermediate values of your pure functions.
 -}
 
 module Relude.Debug
@@ -47,36 +50,105 @@ import Relude.String (Read, String, Text, toString)
 import qualified Debug.Trace as Debug
 import qualified Prelude
 
+
+-- $setup
+-- >>> import Relude
+-- >>> :set -Wno-deprecations
+
 ----------------------------------------------------------------------------
 -- trace
 ----------------------------------------------------------------------------
 
--- | Version of 'Debug.Trace.trace' that leaves warning.
+{- | Version of 'Debug.Trace.trace' that leaves warning.
+
+>>> increment l = map (+1) l
+>>> increment [2, 3, 4]
+[3,4,5]
+
+>>> increment l = trace ("incrementing each value of: " ++ show l) (map (+1) l)
+>>> increment [2, 3, 4]
+incrementing each value of: [2,3,4]
+[3,4,5]
+
+-}
 trace :: String -> a -> a
 trace = Debug.trace
 {-# WARNING trace "'trace' remains in code" #-}
 
--- | Version of 'Debug.Trace.traceShow' that leaves warning.
+{- | Version of 'Debug.Trace.traceShow' that leaves warning.
+
+>>> increment l = map (+1) l
+>>> increment [2, 3, 4]
+[3,4,5]
+
+>>> increment l = traceShow l (map (+1) l)
+>>> increment [2, 3, 4]
+[2,3,4]
+[3,4,5]
+
+-}
 traceShow :: Show a => a -> b -> b
 traceShow = Debug.traceShow
 {-# WARNING traceShow "'traceShow' remains in code" #-}
 
--- | Version of 'Debug.Trace.traceShowId' that leaves warning.
+{- | Version of 'Debug.Trace.traceShowId' that leaves warning.
+
+>>> traceShowId (1+2+3, "hello" ++ "world")
+(6,"helloworld")
+(6,"helloworld")
+
+-}
 traceShowId :: Show a => a -> a
 traceShowId = Debug.traceShowId
 {-# WARNING traceShowId "'traceShowId' remains in code" #-}
 
--- | Version of 'Debug.Trace.traceShowM' that leaves warning.
-traceShowM :: (Show a, Applicative f) => a -> f ()
-traceShowM = Debug.traceShowM
-{-# WARNING traceShowM "'traceShowM' remains in code" #-}
+{- | Version of 'Debug.Trace.traceM' that leaves warning.
 
--- | Version of 'Debug.Trace.traceM' that leaves warning.
+>>> :{
+let action :: Maybe Int
+    action = do
+        x <- Just 3
+        traceM ("x: " ++ show x)
+        y <- pure 12
+        traceM ("y: " ++ show y)
+        pure (x*2 + y)
+in action
+:}
+x: 3
+y: 12
+Just 18
+-}
 traceM :: (Applicative f) => String -> f ()
 traceM = Debug.traceM
 {-# WARNING traceM "'traceM' remains in code" #-}
 
--- | Version of 'Debug.Trace.traceId' that leaves warning.
+{-|
+Like 'traceM', but uses 'show' on the argument to convert it to a 'String'.
+
+>>> :{
+let action :: Maybe Int
+    action = do
+        x <- Just 3
+        traceShowM x
+        y <- pure 12
+        traceShowM y
+        pure (x*2 + y)
+in action
+:}
+3
+12
+Just 18
+-}
+traceShowM :: (Show a, Applicative f) => a -> f ()
+traceShowM = Debug.traceShowM
+{-# WARNING traceShowM "'traceShowM' remains in code" #-}
+
+{- | Version of 'Debug.Trace.traceId' that leaves warning.
+
+>>> traceId "hello"
+"hello
+hello"
+-}
 traceId :: String -> String
 traceId = Debug.traceId
 {-# WARNING traceId "'traceId' remains in code" #-}
