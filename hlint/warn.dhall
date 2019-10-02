@@ -1,5 +1,5 @@
 let Rule = ./Rule.dhall
-in let warnSimple
+let warnSimple
     : Text -> Text -> Rule
     = \(lhsTxt : Text) -> \(rhsTxt : Text) ->
         Rule.Warn
@@ -11,7 +11,7 @@ in let warnSimple
             }
         }
 
-in let warnNote
+let warnNote
     : Text -> Text -> Text -> Rule
     = \(lhsTxt : Text) -> \(rhsTxt : Text) -> \(n : Text) ->
         Rule.Warn {warn =
@@ -22,7 +22,7 @@ in let warnNote
             }
         }
 
-in let warnReexport
+let warnReexport
     : Text -> Text -> Rule
     = \(f : Text) -> \(mod : Text) ->
         Rule.Warn
@@ -34,7 +34,7 @@ in let warnReexport
             }
         }
 
-in let warnReexportOp : Text -> Text -> Rule
+let warnReexportOp : Text -> Text -> Rule
     = \(f : Text) -> \(mod : Text) ->
         Rule.Warn
         { warn =
@@ -45,7 +45,7 @@ in let warnReexportOp : Text -> Text -> Rule
             }
         }
 
-in let warnLifted
+let warnLifted
     : Text -> Text -> Rule
     =  \(f : Text) -> \(args : Text) ->
         Rule.Warn
@@ -57,7 +57,7 @@ in let warnLifted
             }
         }
 
-in let hintNote
+let hintNote
     : Text -> Text -> Text -> Rule
     = \(lhsTxt : Text) -> \(rhsTxt : Text) -> \(n : Text) ->
         Rule.Hint
@@ -68,7 +68,7 @@ in let hintNote
             }
         }
 
-in let hintNoteOp
+let hintNoteOp
     : Text -> Text -> Text -> Rule
     = \(lhsTxt : Text) -> \(rhsTxt : Text) -> \(n : Text) ->
         hintNote "(${lhsTxt})" rhsTxt n
