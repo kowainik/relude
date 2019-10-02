@@ -1,12 +1,12 @@
-   let warn           = ./warn.dhall
-in let warnReexport   = warn.warnReexport
-in let warnReexportOp = warn.warnReexportOp
-in let warnLifted     = warn.warnLifted
-in let warnSimple     = warn.warnSimple
-in let warnNote       = warn.warnNote
-in let hintNote       = warn.hintNote
-in let hintNoteOp     = warn.hintNoteOp
-in let Rule = ./Rule.dhall
+let warn           = ./warn.dhall
+let warnReexport   = warn.warnReexport
+let warnReexportOp = warn.warnReexportOp
+let warnLifted     = warn.warnLifted
+let warnSimple     = warn.warnSimple
+let warnNote       = warn.warnNote
+let hintNote       = warn.hintNote
+let hintNoteOp     = warn.hintNoteOp
+let Rule = ./Rule.dhall
 in [ Rule.Arguments { arguments =
        [ "-XConstraintKinds"
        , "-XDeriveGeneric"
