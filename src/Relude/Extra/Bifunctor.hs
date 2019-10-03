@@ -19,6 +19,7 @@ module Relude.Extra.Bifunctor
        ( bimapF
        , firstF
        , secondF
+       , bimapBoth
        ) where
 
 import Relude
@@ -50,3 +51,19 @@ Just (False,2)
 secondF  :: (Functor f, Bifunctor p) => (b -> d) -> f (p a b) -> f (p a d)
 secondF = fmap . second
 {-# INLINE secondF #-}
+
+{- | Maps a function over both elements of a bifunctor.
+
+>>> bimapBoth length ("a", "bb")
+(1,2)
+>>> bimapBoth length ("foo", "a", "bb")
+("foo",1,2)
+>>> map (bimapBoth not) [Left True, Right False]
+[Left False,Right True]
+>>> import Data.Functor.Const
+>>> getConst $ bimapBoth (+ 1) (Const 41)
+42
+-}
+bimapBoth :: Bifunctor f => (a -> b) -> f a a -> f b b
+bimapBoth f = bimap f f
+{-# INLINE bimapBoth #-}
