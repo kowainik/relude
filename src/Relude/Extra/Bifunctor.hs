@@ -16,10 +16,10 @@ qux :: Maybe (a, b)
 -}
 
 module Relude.Extra.Bifunctor
-       ( bimapF
+       ( bimapBoth
+       , bimapF
        , firstF
        , secondF
-       , bimapBoth
        ) where
 
 import Relude
