@@ -12,6 +12,9 @@ bar :: IO (a, b)
 
 baz :: Maybe (Either a b)
 qux :: Maybe (a, b)
+
+doo :: (a, a)
+dee :: Either a a
 @
 -}
 
@@ -24,6 +27,16 @@ module Relude.Extra.Bifunctor
 
 import Relude
 
+{- | Maps a function over both elements of a bifunctor.
+
+>>> bimapBoth length ("a", "bb")
+(1,2)
+>>> map (bimapBoth not) [Left True, Right False]
+[Left False,Right True]
+-}
+bimapBoth :: Bifunctor f => (a -> b) -> f a a -> f b b
+bimapBoth f = bimap f f
+{-# INLINE bimapBoth #-}
 
 {- | Fmaps functions for nested bifunctor. Short for @fmap (bimap f g)@.
 
@@ -51,19 +64,3 @@ Just (False,2)
 secondF  :: (Functor f, Bifunctor p) => (b -> d) -> f (p a b) -> f (p a d)
 secondF = fmap . second
 {-# INLINE secondF #-}
-
-{- | Maps a function over both elements of a bifunctor.
-
->>> bimapBoth length ("a", "bb")
-(1,2)
->>> bimapBoth length ("foo", "a", "bb")
-("foo",1,2)
->>> map (bimapBoth not) [Left True, Right False]
-[Left False,Right True]
->>> import Data.Functor.Const
->>> getConst $ bimapBoth (+ 1) (Const 41)
-42
--}
-bimapBoth :: Bifunctor f => (a -> b) -> f a a -> f b b
-bimapBoth f = bimap f f
-{-# INLINE bimapBoth #-}
