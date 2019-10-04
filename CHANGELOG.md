@@ -5,6 +5,8 @@ The changelog is available [on GitHub][2].
 
 ## Unreleased: 0.6.0.0
 
+* [#192](https://github.com/kowainik/relude/issues/192):
+  Reexport `foldMap'` from `Data.Foldable`.
 * [#187](https://github.com/kowainik/relude/issues/187):
   Remove `tasty` and `tasty-hedgehog` dependencies and their redundant imports.
 * [#195](https://github.com/kowainik/relude/pull/195):
