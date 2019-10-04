@@ -63,6 +63,7 @@ mapToSnd f a = (a, f a)
 -}
 mapBoth :: (a -> b) -> (a, a) -> (b, b)
 mapBoth f (a1, a2) = (f a1, f a2)
+{-# DEPRECATED mapBoth "Use 'bimapBoth' from 'Relude.Extra.Bifunctor' instead" #-}
 {-# INLINE mapBoth #-}
 
 {- | Apply a function that returns a value inside of a functor,

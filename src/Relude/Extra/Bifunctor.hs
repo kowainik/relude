@@ -12,17 +12,31 @@ bar :: IO (a, b)
 
 baz :: Maybe (Either a b)
 qux :: Maybe (a, b)
+
+doo :: (a, a)
+dee :: Either a a
 @
 -}
 
 module Relude.Extra.Bifunctor
-       ( bimapF
+       ( bimapBoth
+       , bimapF
        , firstF
        , secondF
        ) where
 
 import Relude
 
+{- | Maps a function over both elements of a bifunctor.
+
+>>> bimapBoth length ("a", "bb")
+(1,2)
+>>> map (bimapBoth not) [Left True, Right False]
+[Left False,Right True]
+-}
+bimapBoth :: Bifunctor f => (a -> b) -> f a a -> f b b
+bimapBoth f = bimap f f
+{-# INLINE bimapBoth #-}
 
 {- | Fmaps functions for nested bifunctor. Short for @fmap (bimap f g)@.
 

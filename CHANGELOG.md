@@ -36,6 +36,9 @@ The changelog is available [on GitHub][2].
   Use `foldr` instead of explicit recursion and `toList`.
 * [#182](https://github.com/kowainik/relude/issues/182):
   Support GHC-8.8.1.
+* [#174](https://github.com/kowainik/relude/issues/187):
+  Implement `bimapBoth` in `Relude.Extra.Tuple` module,
+  mark `mapBoth` as DEPRECATED.
 
 ## 0.5.0 — Mar 18, 2019
 
