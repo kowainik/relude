@@ -11,9 +11,34 @@ Utility functions to work with lists.
 -}
 
 module Relude.List
-       ( module Relude.List.NonEmpty
-       , module Relude.List.Reexport
-       ) where
+  ( module Relude.List.NonEmpty
+  , module Relude.List.Reexport
+  , (!!?)
+  ) where
+
+import Data.List (length, (!!))
+import Data.Maybe (Maybe (..))
 
 import Relude.List.NonEmpty
 import Relude.List.Reexport
+import Relude.Numeric (Int)
+
+-- $setup
+-- >>> import Relude
+{- | Safer version of '!!', returns a Maybe.
+get element from list using index value starting from `0`.
+
+>>> [] !!? 0
+Nothing
+
+>>> ["a", "b", "c"] !!? 3
+Nothing
+
+>>> ["a", "b", "c"] !!? 2
+Just "c"
+-}
+(!!?) :: [a] -> Int -> Maybe a
+(!!?) xs i
+  | i < 0 || i >= length xs = Nothing
+  | otherwise = Just $ xs !! i
+{-# INLINE (!!?) #-}

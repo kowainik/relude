@@ -91,5 +91,5 @@ guardM f = f >>= guard
 -- >>> Just True ||^ error "Shouldn't be evaluated"
 -- Just True
 (||^) :: Monad m => m Bool -> m Bool -> m Bool
-(||^) e1 e2 = ifM e1 (pure True) e2
+(||^) e1 = ifM e1 (pure True)
 {-# INLINE (||^) #-}

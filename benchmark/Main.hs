@@ -89,7 +89,7 @@ bgroupFold :: Benchmark
 bgroupFold = do
     let testList   = [1..100000] :: [Int]
     let flipFoldl' = flipfoldl' HashSet.insert mempty
-    let ghcFoldl'  = foldl' (\hashSet element -> HashSet.insert element hashSet) mempty
+    let ghcFoldl'  = foldl' (flip HashSet.insert) mempty
     bgroup "foldl'" [ bench "flipped" $ nf flipFoldl' testList
                     , bench "base"    $ nf ghcFoldl'  testList
                     ]
