@@ -120,7 +120,7 @@ product = foldl' (*) 1
 False
 >>> elem False (one True :: Set Bool)
 ...
-    • Do not use 'elem' and 'notElem' methods from 'Foldable' on Set
+... Do not use 'elem' and 'notElem' methods from 'Foldable' on Set
       Suggestions:
           Instead of
               elem :: (Foldable t, Eq a) => a -> t a -> Bool
@@ -143,7 +143,7 @@ elem = F.elem
 True
 >>> notElem False (one True :: Set Bool)
 ...
-    • Do not use 'elem' and 'notElem' methods from 'Foldable' on Set
+... Do not use 'elem' and 'notElem' methods from 'Foldable' on Set
       Suggestions:
           Instead of
               elem :: (Foldable t, Eq a) => a -> t a -> Bool
