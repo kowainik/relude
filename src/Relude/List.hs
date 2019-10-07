@@ -16,12 +16,13 @@ module Relude.List
   , (!!?)
   ) where
 
+import Data.Bool (otherwise, (||), (>=))
 import Data.List (length, (!!))
 import Data.Maybe (Maybe (..))
 
 import Relude.List.NonEmpty
 import Relude.List.Reexport
-import Relude.Numeric (Int)
+import Relude.Numeric (Int, (<))
 
 -- $setup
 -- >>> import Relude
@@ -40,5 +41,5 @@ Just "c"
 (!!?) :: [a] -> Int -> Maybe a
 (!!?) xs i
   | i < 0 || i >= length xs = Nothing
-  | otherwise = Just $ xs !! i
+  | otherwise = Just (xs !! i)
 {-# INLINE (!!?) #-}
