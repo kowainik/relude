@@ -11,18 +11,19 @@ Utility functions to work with lists.
 -}
 
 module Relude.List
-  ( module Relude.List.NonEmpty
-  , module Relude.List.Reexport
-  , (!!?)
-  ) where
+       ( module Relude.List.NonEmpty
+       , module Relude.List.Reexport
+       , (!!?)
+       ) where
 
-import Data.Bool (otherwise, (||), (>=))
+import Data.Bool (otherwise, (||))
 import Data.List (length, (!!))
 import Data.Maybe (Maybe (..))
 
+import Relude.Base ((<), (>=))
 import Relude.List.NonEmpty
 import Relude.List.Reexport
-import Relude.Numeric (Int, (<))
+import Relude.Numeric (Int)
 
 -- $setup
 -- >>> import Relude
