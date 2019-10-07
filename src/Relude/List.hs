@@ -1,5 +1,3 @@
-{-# LANGUAGE Safe #-}
-
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
@@ -17,12 +15,12 @@ module Relude.List
        ) where
 
 
-import Relude.Base ((<), (>=))
+import Relude.Base ((<))
 import Relude.Bool (otherwise)
 import Relude.List.NonEmpty
 import Relude.List.Reexport
 import Relude.Monad (Maybe (..))
-import Relude.Numeric (Int)
+import Relude.Numeric (Int, (-))
 
 
 -- $setup
@@ -46,6 +44,6 @@ infixl 9 !!?
   | i < 0     = Nothing
   | otherwise = f i xs
   where f 0 (x:_)  = Just x
-        f i (_:xs) = f (i - 1) xs
-        f i []     = Nothing
+        f j (_:ys) = f (j - 1) ys
+        f _ []     = Nothing
 {-# INLINE (!!?) #-}
