@@ -16,18 +16,19 @@ module Relude.List
        , (!!?)
        ) where
 
-import Data.Bool (otherwise, (||))
-import Data.List (length, (!!))
-import Data.Maybe (Maybe (..))
 
 import Relude.Base ((<), (>=))
+import Relude.Bool (otherwise)
 import Relude.List.NonEmpty
 import Relude.List.Reexport
+import Relude.Monad (Maybe (..))
 import Relude.Numeric (Int)
+
 
 -- $setup
 -- >>> import Relude
-{- | Safer version of '!!', returns a Maybe.
+
+{- | Safer version of 'Relude.Unsafe.!!', returns a Maybe.
 get element from list using index value starting from `0`.
 
 >>> [] !!? 0
@@ -39,8 +40,12 @@ Nothing
 >>> ["a", "b", "c"] !!? 2
 Just "c"
 -}
+infixl 9 !!?
 (!!?) :: [a] -> Int -> Maybe a
 (!!?) xs i
-  | i < 0 || i >= length xs = Nothing
-  | otherwise = Just (xs !! i)
+  | i < 0     = Nothing
+  | otherwise = f i xs
+  where f 0 (x:_)  = Just x
+        f i (_:xs) = f (i - 1) xs
+        f i []     = Nothing
 {-# INLINE (!!?) #-}
