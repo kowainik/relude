@@ -33,7 +33,7 @@ Below you can find key design principles behind `relude`:
    `{-# INLINE #-}` and `{-# SPECIALIZE #-}` pragmas where appropriate.
 4. **Minimalism** (low number of dependencies). We don't force users of `relude` to
    stick to some specific lens or text formatting or logging library. If
-   possible, `relude` tries to depend only on boot libraies.
+   possible, `relude` tries to depend only on boot libraries.
    [Dependency graph](relude-dependency-graph.pdf) of `relude` can give you clearer picture.
 5. **Convenience** (e.g lifted to `MonadIO` functions, more reexports). Despite minimalism, we
    want to bring common types and functions (like `containers` and `bytestring`)
