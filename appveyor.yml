@@ -1,0 +1,25 @@
+environment:
+  STACK_ROOT: C:\sr
+  STACK_VERSION: 2.1.1
+
+  # Workaround a gnarly bug https://github.com/haskell/cabal/issues/5386
+  # See: https://www.fpcomplete.com/blog/2018/06/sed-a-debugging-story
+  # TODO: check if it's fixed once we switch to lst-13 and GHC 8.6
+  TMP: "c:\\tmp"
+
+  matrix:
+    - STACK_YAML: stack.yaml
+
+install:
+  - choco install -y haskell-stack --version %STACK_VERSION%
+  - stack setup > nul
+
+cache:
+  - "%STACK_ROOT% -> %STACK_YAML%, appveyor.yml"
+  - ".stack-work -> %STACK_YAML%, appveyor.yml"
+
+build_script:
+  - stack build --test --bench --no-run-tests --no-run-benchmarks
+
+test_script:
+  - stack test
