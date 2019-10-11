@@ -30,6 +30,7 @@ import Relude.Monad (Monad, MonadPlus, (>>=))
 -- >>> import Relude.Function (($))
 -- >>> import Relude.Monad (Maybe (..))
 -- >>> import Relude.Print (putTextLn)
+-- >>> import Relude (Int, String, even, const)
 
 -- | Monadic version of 'when'.
 --
@@ -79,14 +80,19 @@ guardM :: MonadPlus m => m Bool -> m ()
 guardM f = f >>= guard
 {-# INLINE guardM #-}
 
--- | 'guarded'. Either lifts a value into an alternative context or gives a minimal value depending on a predicate.
---
--- @
--- guarded even 3 :: [Int] -- []
--- guarded even 2 :: [Int] -- [2]
--- @
+{- |'guarded'. Either lifts a value into an alternative context or gives a minimal value depending on a predicate.
+
+>>> guarded even 3 :: [Int]
+[]
+>>> guarded even 2 :: [Int]
+[2]
+>>> guarded (const True) "hello" :: Maybe String
+Just "hello"
+>>> guarded (const False) "world" :: Maybe String
+Nothing
+-}
 guarded :: Alternative f => (a -> Bool) -> a -> f a
-guarded pred a = if pred a then pure a else empty
+guarded p a = if p a then pure a else empty
 {-# INLINE guarded #-}
 
 -- | Monadic version of 'Data.Bool.(&&)' operator.
