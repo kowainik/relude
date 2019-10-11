@@ -9,7 +9,8 @@ Monadic boolean combinators.
 -}
 
 module Relude.Bool.Guard
-       ( guardM
+       ( guarded
+       , guardM
        , ifM
        , unlessM
        , whenM
@@ -17,7 +18,7 @@ module Relude.Bool.Guard
        , (||^)
        ) where
 
-import Relude.Applicative (Applicative (..))
+import Relude.Applicative (Applicative (..), Alternative, empty)
 import Relude.Bool.Reexport (Bool (..), guard, unless, when)
 import Relude.Function (flip)
 import Relude.Monad (Monad, MonadPlus, (>>=))
@@ -77,6 +78,16 @@ ifM p x y = p >>= \b -> if b then x else y
 guardM :: MonadPlus m => m Bool -> m ()
 guardM f = f >>= guard
 {-# INLINE guardM #-}
+
+-- | 'guarded'. Either lifts a value into an alternative context or gives a minimal value depending on a predicate.
+--
+-- @
+-- guarded even 3 :: [Int] -- []
+-- guarded even 2 :: [Int] -- [2]
+-- @
+guarded :: Alternative f => (a -> Bool) -> a -> f a
+guarded pred a = if pred a then pure a else empty
+{-# INLINE guarded #-}
 
 -- | Monadic version of 'Data.Bool.(&&)' operator.
 --
