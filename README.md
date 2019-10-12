@@ -1,6 +1,7 @@
 # relude
 
 ![Relude: cyclone logo](https://user-images.githubusercontent.com/4276606/44077619-d2abb39a-9fd6-11e8-9d9f-cc57a9d03fa0.png)
+[![GitHub CI](https://github.com/kowainik/relude/workflows/CI/badge.svg)](https://github.com/kowainik/relude/actions)
 [![Travis](https://img.shields.io/travis/kowainik/relude.svg?logo=travis)](http://travis-ci.org/kowainik/relude)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/kowainik/relude?branch=master&svg=true)](https://ci.appveyor.com/project/kowainik/relude)
 [![Hackage](https://img.shields.io/hackage/v/relude.svg?logo=haskell)](https://hackage.haskell.org/package/relude)
