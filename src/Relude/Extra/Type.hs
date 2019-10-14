@@ -25,8 +25,6 @@ module Relude.Extra.Type
        , Snd
        ) where
 
-import Data.Type.Bool
-import Data.Type.Equality
 import Relude
 
 #if ( __GLASGOW_HASKELL__ >= 802 )
@@ -130,5 +128,6 @@ type family Snd (t :: k) :: k' where
 = 'False
 -}
 type family Elem (e :: t) (es :: [t]) :: Bool where
-    Elem _ '[] = 'False
-    Elem x' (x ': xs) = x == x' || Elem x' xs
+    Elem _ '[]       = 'False
+    Elem x (x ': xs) = 'True
+    Elem x (y ': xs) = Elem x xs
