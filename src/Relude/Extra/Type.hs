@@ -3,7 +3,6 @@
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE ExplicitNamespaces   #-}
 {-# LANGUAGE PolyKinds            #-}
-{-# LANGUAGE TypeApplications     #-}
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -120,14 +119,17 @@ type family Snd (t :: k) :: k' where
 
 
 {- | Check that a type is an element of a list:
->>> :kind! (Elem Bool '[Int, Bool])
-(Elem Bool '[Int, Bool]) :: Bool
+>>> :kind! Elem String '[]
+Elem Bool '[] :: Bool
+= 'False
+>>> :kind! Elem Bool '[Int, Bool]
+Elem Bool '[Int, Bool] :: Bool
 = 'True
->>> :kind! (Elem String '[Int, Bool])
-(Elem String '[Int, Bool]) :: Bool
+>>> :kind! Elem String '[Int, Bool]
+Elem String '[Int, Bool] :: Bool
 = 'False
 -}
 type family Elem (e :: t) (es :: [t]) :: Bool where
     Elem _ '[]       = 'False
     Elem x (x ': xs) = 'True
-    Elem x (y ': xs) = Elem x xs
+    Elem x (_ ': xs) = Elem x xs
