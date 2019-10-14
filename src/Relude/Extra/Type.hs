@@ -3,6 +3,7 @@
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE ExplicitNamespaces   #-}
 {-# LANGUAGE PolyKinds            #-}
+{-# LANGUAGE TypeApplications     #-}
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
