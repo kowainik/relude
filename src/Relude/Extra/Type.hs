@@ -1,10 +1,12 @@
-{-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE CPP                 #-}
-{-# LANGUAGE DataKinds           #-}
-{-# LANGUAGE PolyKinds           #-}
-{-# LANGUAGE TypeApplications    #-}
-{-# LANGUAGE TypeFamilies        #-}
-{-# LANGUAGE TypeOperators       #-}
+{-# LANGUAGE AllowAmbiguousTypes  #-}
+{-# LANGUAGE CPP                  #-}
+{-# LANGUAGE DataKinds            #-}
+{-# LANGUAGE ExplicitNamespaces   #-}
+{-# LANGUAGE PolyKinds            #-}
+{-# LANGUAGE TypeApplications     #-}
+{-# LANGUAGE TypeFamilies         #-}
+{-# LANGUAGE TypeOperators        #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 {- |
 Copyright:  (c) 2018-2019 Kowainik
@@ -18,6 +20,7 @@ module Relude.Extra.Type
        ( typeName
        , type (++)
        , AllHave
+       , Elem
        , Fst
        , Snd
        ) where
@@ -114,3 +117,20 @@ Maybe (Snd (Int, Text)) :: *
 type family Snd (t :: k) :: k' where
     Snd '(_, y) = y
     Snd  (_, y) = y
+
+
+{- | Check that a type is an element of a list:
+>>> :kind! Elem String '[]
+Elem String '[] :: Bool
+= 'False
+>>> :kind! Elem Bool '[Int, Bool]
+Elem Bool '[Int, Bool] :: Bool
+= 'True
+>>> :kind! Elem String '[Int, Bool]
+Elem String '[Int, Bool] :: Bool
+= 'False
+-}
+type family Elem (e :: t) (es :: [t]) :: Bool where
+    Elem _ '[]       = 'False
+    Elem x (x ': xs) = 'True
+    Elem x (_ ': xs) = Elem x xs

@@ -4,6 +4,8 @@
 The changelog is available [on GitHub][2].
 
 ## Unreleased: 0.6.0.0
+* [#170](https://github.com/kowainik/relude/issues/170):
+  Implement `Elem` type family!
 * [#203](https://github.com/kowainik/relude/issues/203):
   Implement `guarded` takes a predicate and a value and returns an Alternative.
 * [#201](https://github.com/kowainik/relude/issues/201):
