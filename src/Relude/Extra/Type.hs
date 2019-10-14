@@ -121,7 +121,7 @@ type family Snd (t :: k) :: k' where
 
 {- | Check that a type is an element of a list:
 >>> :kind! Elem String '[]
-Elem Bool '[] :: Bool
+Elem String '[] :: Bool
 = 'False
 >>> :kind! Elem Bool '[Int, Bool]
 Elem Bool '[Int, Bool] :: Bool
