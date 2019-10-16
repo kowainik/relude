@@ -8,7 +8,7 @@
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Fixes and additions to 'Foldable'.
@@ -30,10 +30,6 @@ module Relude.Foldable.Fold
        , anyM
        , andM
        , orM
-
-         -- * Internals
-       , DisallowElem
-       , ElemErrorMessage
        ) where
 
 import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)

@@ -1,6 +1,6 @@
 {- |
 Copyright:  (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 This module exports all 'Foldable' and 'Traversable' related stuff.

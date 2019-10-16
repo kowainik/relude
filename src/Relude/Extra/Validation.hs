@@ -4,7 +4,7 @@
 {- |
 Copyright:  (c) 2014 Chris Allen, Edward Kmett
             (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 'Validation' is a monoidal sibling to 'Either'. Use 'Validation' on operations that
@@ -105,6 +105,8 @@ Success "First success. Second success."
 
 >> a <> c
 Failure ["Not correct"]
+
+@since 0.6.0.0
 -}
 
 instance (Semigroup e, Semigroup a) => Semigroup (Validation e a) where
@@ -112,6 +114,7 @@ instance (Semigroup e, Semigroup a) => Semigroup (Validation e a) where
     (<>) = liftA2 (<>)
     {-# INLINE (<>) #-}
 
+-- | @since 0.6.0.0
 instance (Semigroup e, Monoid a) => Monoid (Validation e a) where
     mempty :: Validation e a
     mempty = Success mempty

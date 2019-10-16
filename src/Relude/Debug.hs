@@ -14,7 +14,7 @@
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Functions for debugging. If you left these functions in your code then a warning
@@ -123,7 +123,8 @@ traceM = Debug.traceM
 {-# WARNING traceM "'traceM' remains in code" #-}
 
 {-|
-Like 'traceM', but uses 'show' on the argument to convert it to a 'String'.
+Like 'traceM', but uses 'Relude.show' on the argument to convert it to a
+'String'.
 
 >>> :{
 let action :: Maybe Int

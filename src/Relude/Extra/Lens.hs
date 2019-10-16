@@ -3,13 +3,17 @@
 {- |
 Copyright:  (c) 2013-2016 Edward Kmett
             (c) 2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 This module aims to provide a minimal implementation of @lens@ package required
 for basic usage. All functions are compatible with the real @lens@ package
 therefore if you need to expand to the full version the process should be
 straightforward.
+
+Main ideas implemented in this module are described in the following blog post:
+
+* [Write yourself a lens (by Veronika Romashkina)](https://vrom911.github.io/blog/write-yourself-a-lens)
 
 == Usage
 

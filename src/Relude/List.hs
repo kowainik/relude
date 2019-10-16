@@ -4,7 +4,7 @@
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Utility functions to work with lists.
@@ -42,6 +42,8 @@ Nothing
 
 >>> ["a", "b", "c"] !!? 2
 Just "c"
+
+@since 0.6.0.0
 -}
 infix 9 !!?
 (!!?) :: [a] -> Int -> Maybe a

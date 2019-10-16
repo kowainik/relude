@@ -1,11 +1,11 @@
-{-# LANGUAGE ScopedTypeVariables #-}
-
 {- |
 Copyright:  (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Contains utility functions for working with tuples.
+
+@since 0.6.0.0
 -}
 
 module Relude.Extra.Foldable
@@ -26,6 +26,8 @@ Returning a 'Right' continues the fold as usual with the value inside.
 720
 >>> foldlSC (\acc x -> if x == 0 then Left 0 else Right $! acc * x) 1 (0:error "Short-circuiting should keep this from happening")
 0
+
+@since 0.6.0.0
 -}
 foldlSC :: forall t b a. Foldable t => (b -> a -> Either b b) -> b -> t a -> b
 foldlSC f = flip $ foldr go id

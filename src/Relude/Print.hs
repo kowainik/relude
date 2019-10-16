@@ -7,7 +7,7 @@
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Functions like 'Prelude.putStr' and 'Prelude.putStrLn' but for 'Text', 'LText',

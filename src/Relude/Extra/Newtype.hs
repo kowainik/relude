@@ -1,9 +1,8 @@
-{-# LANGUAGE CPP                 #-}
-{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE CPP #-}
 
 {- |
 Copyright:  (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Functions to ease work with newtypes.
@@ -90,10 +89,8 @@ underF2 = coerce
 {-# INLINE underF2 #-}
 #endif
 
-{- | Coercible composition
-
-TODO: (#.)
-
+{- | Coercible composition. This function allows to write more efficient
+implementations of functions compoitions over @newtypes@.
 -}
 (#.) :: Coercible b c => (b -> c) -> (a -> b) -> (a -> c)
 (#.) _f = coerce

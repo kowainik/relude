@@ -9,7 +9,7 @@
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 This module implements type class which allow to have conversion to and from
@@ -178,6 +178,7 @@ instance ConvertUtf8 LText LByteString where
     decodeUtf8Strict = LT.decodeUtf8'
     {-# INLINE decodeUtf8Strict #-}
 
+-- | @since 0.6.0.0
 instance ConvertUtf8 String ShortByteString where
     encodeUtf8 :: String -> ShortByteString
     encodeUtf8 = toShort . encodeUtf8
@@ -191,6 +192,7 @@ instance ConvertUtf8 String ShortByteString where
     decodeUtf8Strict = decodeUtf8Strict . fromShort
     {-# INLINE decodeUtf8Strict #-}
 
+-- | @since 0.6.0.0
 instance ConvertUtf8 Text ShortByteString where
     encodeUtf8 :: Text -> ShortByteString
     encodeUtf8 = toShort . encodeUtf8
@@ -204,6 +206,7 @@ instance ConvertUtf8 Text ShortByteString where
     decodeUtf8Strict = decodeUtf8Strict . fromShort
     {-# INLINE decodeUtf8Strict #-}
 
+-- | @since 0.6.0.0
 instance ConvertUtf8 LText ShortByteString where
     encodeUtf8 :: LText -> ShortByteString
     encodeUtf8 = toShort . encodeUtf8
@@ -284,7 +287,19 @@ readEither :: (ToString a, Read b) => a -> Either Text b
 readEither = first toText . Text.Read.readEither . toString
 {-# INLINEABLE readEither #-}
 
--- | Generalized version of 'Prelude.show'.
+{- | Generalized version of 'Prelude.show'. Unlike 'Prelude.show' this function
+is polymorphic in its result type. This makes it more convenient to work with
+data types like 'Text' or 'ByteString'. However, if you pass the result of
+'show' to a function that expects polymorphic argument, this can break type
+inference, so use @-XTypeApplications@ to specify the textual type explicitly.
+
+>>> show (42 :: Int)
+"42"
+>>> show (42 :: Double)
+"42.0"
+>>> print (show @Text True)
+"True"
+-}
 show :: forall b a . (Show.Show a, IsString b) => a -> b
 show x = fromString (Show.show x)
 {-# INLINE show #-}

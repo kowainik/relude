@@ -1,6 +1,6 @@
 {- |
 Copyright:  (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Useful combinators for bifunctors inside functors. This set of functions is
@@ -33,6 +33,8 @@ import Relude
 (1,2)
 >>> map (bimapBoth not) [Left True, Right False]
 [Left False,Right True]
+
+@since 0.6.0.0
 -}
 bimapBoth :: Bifunctor f => (a -> b) -> f a a -> f b b
 bimapBoth f = bimap f f

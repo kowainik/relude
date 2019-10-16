@@ -3,14 +3,13 @@
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE ExplicitNamespaces   #-}
 {-# LANGUAGE PolyKinds            #-}
-{-# LANGUAGE TypeApplications     #-}
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
 
 {- |
 Copyright:  (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Contains useful utilities to work with Types.
@@ -64,9 +63,12 @@ typeName = show (typeRep (Proxy @a))
 '[ 'Just 5, 'Nothing] ++ '[ 'Just 3, 'Nothing, 'Just 1] :: [Maybe
                                                               Nat]
 = '[ 'Just 5, 'Nothing, 'Just 3, 'Nothing, 'Just 1]
+
 >>> :kind! '[] ++ '[ 'Just 3, 'Nothing, 'Just 1]
 '[] ++ '[ 'Just 3, 'Nothing, 'Just 1] :: [Maybe Nat]
 = '[ 'Just 3, 'Nothing, 'Just 1]
+
+@since 0.6.0.0
 -}
 infixr 5 ++
 type family (++) (xs :: [k]) (ys :: [k]) :: [k] where
@@ -85,6 +87,8 @@ which is equivalent to:
 @
 (Show Int, Show Text, Show Double) :: Constraint
 @
+
+@since 0.6.0.0
 -}
 type family AllHave (f :: k -> Constraint) (xs :: [k]) :: Constraint where
     AllHave _ '[]       = ()
@@ -96,9 +100,12 @@ type family AllHave (f :: k -> Constraint) (xs :: [k]) :: Constraint where
 >>> :kind! Maybe (Fst '(Int, Text))
 Maybe (Fst '(Int, Text)) :: *
 = Maybe Int
+
 >>> :kind! Maybe (Fst (Int, Text))
 Maybe (Fst (Int, Text)) :: *
 = Maybe Int
+
+@since 0.6.0.0
 -}
 type family Fst (t :: k) :: k' where
     Fst '(x, _) = x
@@ -113,22 +120,28 @@ Maybe (Snd '(Int, Text)) :: *
 >>> :kind! Maybe (Snd (Int, Text))
 Maybe (Snd (Int, Text)) :: *
 = Maybe Text
+
+@since 0.6.0.0
 -}
 type family Snd (t :: k) :: k' where
     Snd '(_, y) = y
     Snd  (_, y) = y
 
-
 {- | Check that a type is an element of a list:
+
 >>> :kind! Elem String '[]
 Elem String '[] :: Bool
 = 'False
->>> :kind! Elem Bool '[Int, Bool]
-Elem Bool '[Int, Bool] :: Bool
+
+>>> :kind! Elem String '[Int, String]
+Elem String '[Int, String] :: Bool
 = 'True
+
 >>> :kind! Elem String '[Int, Bool]
 Elem String '[Int, Bool] :: Bool
 = 'False
+
+@since 0.6.0.0
 -}
 type family Elem (e :: t) (es :: [t]) :: Bool where
     Elem _ '[]       = 'False

@@ -7,11 +7,11 @@
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Re-exports most useful functionality from 'safe-exceptions'. Also
-provides some functions to work with exceptions over 'MonadError'.
+Re-exports most useful functionality from the "Control.Exception" module. Also
+provides some convenient utilities to throw and handle exceptions.
 -}
 
 module Relude.Exception
@@ -68,7 +68,7 @@ you can use 'Exc' pattern synonym:
 @
 isNonCriticalExc :: SomeException -> Bool
 isNonCriticalExc = \case
-    Exc (_ :: NodeAttackedError) -> True  -- matching all exceptions of type 'NodeAttackedError'
+    Exc (_ :: NodeAttackedError) -> True  -- matching all exceptions of type NodeAttackedError
     Exc DialogUnexpected{} -> True
     _ -> False
 @

@@ -4,7 +4,7 @@
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Utility functions to work with 'Data.Maybe' data type as monad.
@@ -40,7 +40,7 @@ infixr 0 ?:
 mA ?: b = fromMaybe b mA
 {-# INLINE (?:) #-}
 
-{- | Specialized version of 'for_' for 'Maybe'. It's used for code readability.
+{- | Specialized version of 'Relude.for_' for 'Maybe'. It's used for code readability.
 
 Also helps to avoid space leaks:
 <http://www.snoyman.com/blog/2017/01/foldable-mapm-maybe-and-recursive-functions Foldable.mapM_ space leak>.
