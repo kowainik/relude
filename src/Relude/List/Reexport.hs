@@ -36,15 +36,16 @@ module Relude.List.Reexport
        , tail
        ) where
 
-import Data.Kind (Type)
 import Data.List (break, cycle, drop, dropWhile, filter, genericDrop, genericLength,
                   genericReplicate, genericSplitAt, genericTake, group, inits, intercalate,
                   intersperse, isPrefixOf, iterate, map, permutations, repeat, replicate, reverse,
                   scanl, scanr, sort, sortBy, sortOn, splitAt, subsequences, tails, take, takeWhile,
                   transpose, uncons, unfoldr, unzip, unzip3, zip, zip3, zipWith, (++))
 import Data.List.NonEmpty (NonEmpty (..), nonEmpty)
-import GHC.Exts (Constraint, sortWith)
+import GHC.Exts (sortWith)
 import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
+
+import Relude.Base (Constraint, Type)
 
 import qualified Data.List.NonEmpty as NE (head, init, last, tail)
 
@@ -61,10 +62,16 @@ type IsNonEmpty
     (fun :: Symbol)      -- Function name
     = (f ~ NonEmpty, CheckNonEmpty f a res fun)
 
-type family CheckNonEmpty (f :: Type -> Type) (a :: Type) (res ::Type) (fun :: Symbol) :: Constraint where
+type family CheckNonEmpty
+    (f :: Type -> Type)
+    (a :: Type)
+    (res :: Type)
+    (fun :: Symbol)
+    :: Constraint
+  where
     CheckNonEmpty NonEmpty _ _ _ = ()
     CheckNonEmpty [] a res fun = TypeError
-        ( 'Text "'" ':<>: 'Text fun ':<>: 'Text "' is working with 'NonEmpty', not ordinary lists."
+        ( 'Text "'" ':<>: 'Text fun ':<>: 'Text "' works with 'NonEmpty', not ordinary lists."
         ':$$: 'Text "Possible fix:"
         ':$$: 'Text "    Replace: [" ':<>: 'ShowType a ':<>: 'Text "]"
         ':$$: 'Text "    With:    NonEmpty " ':<>: 'ShowType a
@@ -78,7 +85,7 @@ type family CheckNonEmpty (f :: Type -> Type) (a :: Type) (res ::Type) (fun :: S
     CheckNonEmpty _ a _ fun = TypeError
         ( 'Text "'"
           ':<>: 'Text fun
-          ':<>: 'Text "' is working with 'NonEmpty "
+          ':<>: 'Text "' works with 'NonEmpty "
           ':<>: 'ShowType a
           ':<>: 'Text "' lists"
         )
@@ -86,11 +93,19 @@ type family CheckNonEmpty (f :: Type -> Type) (a :: Type) (res ::Type) (fun :: S
 
 {- | @O(1)@. Extracts the first element of a 'NonEmpty' list.
 
+Actual type of this function is the following:
+
+@
+head :: 'NonEmpty' a -> a
+@
+
+but it was given a more complex type to provide friendlier compile time errors.
+
 >>> head ('a' :| "bcde")
 'a'
 >>> head [0..5 :: Int]
 ...
-... 'head' is working with 'NonEmpty', not ordinary lists.
+... 'head' works with 'NonEmpty', not ordinary lists.
       Possible fix:
           Replace: [Int]
           With:    NonEmpty Int
@@ -103,20 +118,29 @@ type family CheckNonEmpty (f :: Type -> Type) (a :: Type) (res ::Type) (fun :: S
 ...
 >>> head (Just 'a')
 ...
-... 'head' is working with 'NonEmpty Char' lists
+... 'head' works with 'NonEmpty Char' lists
 ...
 -}
 head :: IsNonEmpty f a a "head" => f a -> a
 head = NE.head
+{-# INLINE head #-}
 
 {- | @O(n)@. Return all the elements of a 'NonEmpty' list except the last one
 element.
+
+Actual type of this function is the following:
+
+@
+init :: 'NonEmpty' a -> [a]
+@
+
+but it was given a more complex type to provide friendlier compile time errors.
 
 >>> init ('a' :| "bcde")
 "abcd"
 >>> init [0..5 :: Int]
 ...
-... 'init' is working with 'NonEmpty', not ordinary lists.
+... 'init' works with 'NonEmpty', not ordinary lists.
       Possible fix:
           Replace: [Int]
           With:    NonEmpty Int
@@ -129,19 +153,28 @@ element.
 ...
 >>> init (Just 'a')
 ...
-... 'init' is working with 'NonEmpty Char' lists
+... 'init' works with 'NonEmpty Char' lists
 ...
 -}
 init :: IsNonEmpty f a [a] "init" => f a -> [a]
 init = NE.init
+{-# INLINE init #-}
 
 {- | @O(n)@. Extracts the last element of a 'NonEmpty' list.
+
+Actual type of this function is the following:
+
+@
+last :: 'NonEmpty' a -> a
+@
+
+but it was given a more complex type to provide friendlier compile time errors.
 
 >>> last ('a' :| "bcde")
 'e'
 >>> last [0..5 :: Int]
 ...
-... 'last' is working with 'NonEmpty', not ordinary lists.
+... 'last' works with 'NonEmpty', not ordinary lists.
       Possible fix:
           Replace: [Int]
           With:    NonEmpty Int
@@ -154,20 +187,29 @@ init = NE.init
 ...
 >>> last (Just 'a')
 ...
-... 'last' is working with 'NonEmpty Char' lists
+... 'last' works with 'NonEmpty Char' lists
 ...
 -}
 last :: IsNonEmpty f a a "last" => f a -> a
 last = NE.last
+{-# INLINE last #-}
 
 {- | @O(1)@. Return all the elements of a 'NonEmpty' list after the head
 element.
+
+Actual type of this function is the following:
+
+@
+tail :: 'NonEmpty' a -> [a]
+@
+
+but it was given a more complex type to provide friendlier compile time errors.
 
 >>> tail ('a' :| "bcde")
 "bcde"
 >>> tail [0..5 :: Int]
 ...
-... 'tail' is working with 'NonEmpty', not ordinary lists.
+... 'tail' works with 'NonEmpty', not ordinary lists.
       Possible fix:
           Replace: [Int]
           With:    NonEmpty Int
@@ -180,8 +222,9 @@ element.
 ...
 >>> tail (Just 'a')
 ...
-... 'tail' is working with 'NonEmpty Char' lists
+... 'tail' works with 'NonEmpty Char' lists
 ...
 -}
 tail :: IsNonEmpty f a [a] "tail" => f a -> [a]
 tail = NE.tail
+{-# INLINE tail #-}
