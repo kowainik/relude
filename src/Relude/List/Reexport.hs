@@ -54,12 +54,16 @@ import qualified Data.List.NonEmpty as NE (head, init, last, tail)
 
 
 -- | For tracking usage of ordinary list with @head@-like functions.
-type IsNonEmpty (f :: Type -> Type) (a :: Type) (fun :: Symbol) =
-    (f ~ NonEmpty, CheckNonEmpty f a fun)
+type IsNonEmpty
+    (f :: Type -> Type)  -- Container, e.g. NonEmpty or []
+    (a :: Type)          -- Type of the element
+    (res :: Type)        -- Type of the result of the work of the function
+    (fun :: Symbol)      -- Function name
+    = (f ~ NonEmpty, CheckNonEmpty f a res fun)
 
-type family CheckNonEmpty (f :: Type -> Type) (a :: Type) (fun :: Symbol) :: Constraint where
-    CheckNonEmpty NonEmpty _ _ = ()
-    CheckNonEmpty [] a fun = TypeError
+type family CheckNonEmpty (f :: Type -> Type) (a :: Type) (res ::Type) (fun :: Symbol) :: Constraint where
+    CheckNonEmpty NonEmpty _ _ _ = ()
+    CheckNonEmpty [] a res fun = TypeError
         ( 'Text "'" ':<>: 'Text fun ':<>: 'Text "' is working with 'NonEmpty', not ordinary lists."
         ':$$: 'Text "Possible fix:"
         ':$$: 'Text "    Replace: [" ':<>: 'ShowType a ':<>: 'Text "]"
@@ -68,10 +72,10 @@ type family CheckNonEmpty (f :: Type -> Type) (a :: Type) (fun :: Symbol) :: Con
         ':$$: 'Text "However, you can use '" ':<>: 'Text fun ':<>: 'Text "' with the ordinary lists."
         ':$$: 'Text "Apply 'viaNonEmpty' function from relude:"
         ':$$: 'Text "    viaNonEmpty " ':<>: 'Text fun ':<>: 'Text " (yourList)"
-        ':$$: 'Text "Note, that this will return 'Maybe " ':<>: 'ShowType a ':<>: 'Text "'"
+        ':$$: 'Text "Note, that this will return 'Maybe " ':<>: 'ShowType res ':<>: 'Text "'"
         ':$$: 'Text "therefore it is a safe function unlike '" ':<>: 'Text fun ':<>: 'Text "' from the standard Prelude"
         )
-    CheckNonEmpty _ a fun = TypeError
+    CheckNonEmpty _ a _ fun = TypeError
         ( 'Text "'"
           ':<>: 'Text fun
           ':<>: 'Text "' is working with 'NonEmpty "
@@ -102,7 +106,7 @@ type family CheckNonEmpty (f :: Type -> Type) (a :: Type) (fun :: Symbol) :: Con
 ... 'head' is working with 'NonEmpty Char' lists
 ...
 -}
-head :: IsNonEmpty f a "head" => f a -> a
+head :: IsNonEmpty f a a "head" => f a -> a
 head = NE.head
 
 {- | @O(n)@. Return all the elements of a 'NonEmpty' list except the last one
@@ -120,7 +124,7 @@ element.
       However, you can use 'init' with the ordinary lists.
       Apply 'viaNonEmpty' function from relude:
           viaNonEmpty init (yourList)
-      Note, that this will return 'Maybe Int'
+      Note, that this will return 'Maybe [Int]'
       therefore it is a safe function unlike 'init' from the standard Prelude
 ...
 >>> init (Just 'a')
@@ -128,7 +132,7 @@ element.
 ... 'init' is working with 'NonEmpty Char' lists
 ...
 -}
-init :: IsNonEmpty f a "init" => f a -> [a]
+init :: IsNonEmpty f a [a] "init" => f a -> [a]
 init = NE.init
 
 {- | @O(n)@. Extracts the last element of a 'NonEmpty' list.
@@ -153,7 +157,7 @@ init = NE.init
 ... 'last' is working with 'NonEmpty Char' lists
 ...
 -}
-last :: IsNonEmpty f a "last" => f a -> a
+last :: IsNonEmpty f a a "last" => f a -> a
 last = NE.last
 
 {- | @O(1)@. Return all the elements of a 'NonEmpty' list after the head
@@ -171,7 +175,7 @@ element.
       However, you can use 'tail' with the ordinary lists.
       Apply 'viaNonEmpty' function from relude:
           viaNonEmpty tail (yourList)
-      Note, that this will return 'Maybe Int'
+      Note, that this will return 'Maybe [Int]'
       therefore it is a safe function unlike 'tail' from the standard Prelude
 ...
 >>> tail (Just 'a')
@@ -179,5 +183,5 @@ element.
 ... 'tail' is working with 'NonEmpty Char' lists
 ...
 -}
-tail :: IsNonEmpty f a "tail" => f a -> [a]
+tail :: IsNonEmpty f a [a] "tail" => f a -> [a]
 tail = NE.tail
