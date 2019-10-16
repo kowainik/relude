@@ -6,14 +6,14 @@
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Typeclass for creating structures from a singleton element. It has three main goals:
 
 1. Give a shorter name for the construction: uses 'one' instead of common @singleton@.
 2. Work with monomorphic structures like 'T.Text' or 'IntSet'.
-3. Give a clearer and less scary name for cases where you can use 'pure' or @(:[])@.
+3. Give a clearer and less scary name for cases where you can use 'Relude.pure' or @(:[])@.
 -}
 
 module Relude.Container.One
@@ -72,13 +72,13 @@ class One x where
     -- | Type of single element of the structure.
     type OneItem x
 
-    -- | Create a list, map, 'Text', etc from a single element.
+    -- | Create a list, map, 'T.Text', etc from a single element.
     one :: OneItem x -> x
 
 -- Lists
 
 {- | Allows to create a singleton list. You might prefer function with name 'one'
-instead of 'pure' or @(:[])@.
+instead of 'Relude.pure' or @(:[])@.
 
 >>> one 42 :: [Int]
 [42]
@@ -93,7 +93,7 @@ instance One [a] where
     {-# INLINE one #-}
 
 {- | Allows to create singleton 'NE.NonEmpty' list. You might prefer function with
-name 'one' instead of 'pure' or @(:|[])@.
+name 'one' instead of 'Relude.pure' or @(:|[])@.
 
 >>> one 42 :: NonEmpty Int
 42 :| []

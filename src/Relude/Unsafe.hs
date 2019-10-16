@@ -4,10 +4,10 @@
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Unsafe functions to work with lists and 'Maybe'. Sometimes unavoidable but it's
+Unsafe functions to work with lists and 'Relude.Maybe'. Sometimes unavoidable but it's
 better not to use them. This module is intended to be imported qualified and
 it's not even included in default prelude exports.
 

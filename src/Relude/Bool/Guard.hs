@@ -2,7 +2,7 @@
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Monadic boolean combinators.
@@ -18,7 +18,7 @@ module Relude.Bool.Guard
        , (||^)
        ) where
 
-import Relude.Applicative (Applicative (..), Alternative, empty)
+import Relude.Applicative (Alternative, Applicative (..), empty)
 import Relude.Bool.Reexport (Bool (..), guard, unless, when)
 import Relude.Function (flip)
 import Relude.Monad (Monad, MonadPlus, (>>=))
@@ -80,7 +80,8 @@ guardM :: MonadPlus m => m Bool -> m ()
 guardM f = f >>= guard
 {-# INLINE guardM #-}
 
-{- |'guarded'. Either lifts a value into an alternative context or gives a minimal value depending on a predicate.
+{- | Either lifts a value into an alternative context or gives a
+minimal value depending on a predicate.
 
 >>> guarded even 3 :: [Int]
 []
@@ -90,6 +91,19 @@ guardM f = f >>= guard
 Just "hello"
 >>> guarded (const False) "world" :: Maybe String
 Nothing
+
+You can use this function to implement smart constructors simpler:
+
+@
+__newtype__ HttpHost = HttpHost
+    { unHttpHost :: Text
+    }
+
+mkHttpHost :: Text -> Maybe HttpHost
+mkHttpHost host = HttpHost \<$\> 'guarded' (not . Text.null) host
+@
+
+@since 0.6.0.0
 -}
 guarded :: Alternative f => (a -> Bool) -> a -> f a
 guarded p a = if p a then pure a else empty

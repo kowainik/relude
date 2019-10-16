@@ -200,6 +200,7 @@ Main differences from `Prelude` can be grouped into the following categories:
 
 * Changed behavior of common functions
   + `head`, `tail`, `last`, `init` work with `NonEmpty a` instead of `[a]`.
+  * `lines`, `unlines`, `words`, `unwords` work with `Text` instead of `String`.
   + `show` is polymorphic over return type.
   + Functions `sum` and `product` are strict now, which makes them more efficient.
   + You can't call `elem` and `notElem` functions over `Set` and `HashSet`.

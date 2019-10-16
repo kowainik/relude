@@ -2,14 +2,14 @@
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Lifted versions of base functions.
 
 These functions are lifted in a sense that you can use them inside various
-monad transformers without adding 'liftIO' calls explicitly. However, you still
-can use all these functions inside plain 'IO' monad as usual.
+monad transformers without adding 'Relude.liftIO' calls explicitly. However, you still
+can use all these functions inside plain 'Relude.IO' monad as usual.
 -}
 
 module Relude.Lifted

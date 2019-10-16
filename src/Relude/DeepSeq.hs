@@ -2,7 +2,7 @@
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 This module contains useful functions to evaluate expressions to weak-head
@@ -44,7 +44,7 @@ evaluateWHNF = liftIO . Control.Exception.Base.evaluate
 {-# INLINE evaluateWHNF #-}
 {-# SPECIALIZE evaluateWHNF :: a -> IO a #-}
 
-{- | Like 'evaluateWNHF' but discards value.
+{- | Like 'evaluateWHNF' but discards value.
 
 >>> list = [2, 1, 3] :: [Int]
 >>> :sprint list

@@ -1,9 +1,6 @@
-{-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE TypeApplications    #-}
-
 {- |
 Copyright:  (c) 2018-2019 Kowainik
-License:    MIT
+SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 Mini @bounded-enum@ framework inside @relude@.
@@ -39,13 +36,20 @@ universe = [minBound .. maxBound]
 {-# INLINE universe #-}
 
 {- | @inverseMap f@ creates a function that is the inverse of a given function
-@f@. It does so by constructing 'M.Map' for every value @f a@. The
+@f@. It does so by constructing 'M.Map' internally for each value @f a@. The
 implementation makes sure that the 'M.Map' is constructed only once and then
 shared for every call.
 
-The complexity of reversed mapping though is \(\mathcal{O}(\log n)\).
+__Memory usage note:__ don't inverse functions that have types like 'Int'
+as their result. In this case the created 'M.Map' will have huge size.
 
-Usually you want to use 'inverseMap' to inverse 'show' function.
+The complexity of reversed mapping is \(\mathcal{O}(\log n)\).
+
+__Performance note:__ make sure to specialize monomorphic type of your functions
+that use 'inverseMap' to avoid 'M.Map' reconstruction.
+
+One of the common 'inverseMap' use-case is inverting the 'show' or a 'show'-like
+function.
 
 >>> data Color = Red | Green | Blue deriving (Show, Enum, Bounded)
 >>> parse = inverseMap show :: String -> Maybe Color
@@ -53,9 +57,38 @@ Usually you want to use 'inverseMap' to inverse 'show' function.
 Just Red
 >>> parse "Black"
 Nothing
+
+__Correctness note:__ 'inverseMap' expects /injective function/ as its argument,
+i.e. the function must map distinct arguments to distinct values.
+
+Typical usage of this function looks like this:
+
+@
+__data__ GhcVer
+    = Ghc802
+    | Ghc822
+    | Ghc844
+    | Ghc865
+    | Ghc881
+    __deriving__ ('Eq', 'Ord', 'Show', 'Enum', 'Bounded')
+
+showGhcVer :: GhcVer -> 'Text'
+showGhcVer = \\__case__
+    Ghc802 -> "8.0.2"
+    Ghc822 -> "8.2.2"
+    Ghc844 -> "8.4.4"
+    Ghc865 -> "8.6.5"
+    Ghc881 -> "8.8.1"
+
+parseGhcVer :: 'Text' -> 'Maybe' GhcVer
+parseGhcVer = 'inverseMap' showGhcVer
+@
 -}
-inverseMap :: forall a k . (Bounded a, Enum a, Ord k)
-           => (a -> k) -> (k -> Maybe a)
+inverseMap
+    :: forall a k .
+       (Bounded a, Enum a, Ord k)
+    => (a -> k)
+    -> (k -> Maybe a)
 inverseMap f = \k -> M.lookup k dict
   where
     dict :: M.Map k a
@@ -85,6 +118,8 @@ True
 False
 >>> pred False
 *** Exception: Prelude.Enum.Bool.pred: bad argument
+
+@since 0.6.0.0
 -}
 prev  :: (Eq a, Bounded a, Enum a) => a -> a
 prev e
