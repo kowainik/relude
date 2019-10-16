@@ -24,7 +24,9 @@ from lists to 'NonEmpty' with those functions.
 -}
 
 module Relude.List.Reexport
-       ( module Data.List
+       ( -- * List
+         module Data.List
+       , sortWith
          -- * NonEmpty List
        , NonEmpty (..)
        , nonEmpty
@@ -32,7 +34,6 @@ module Relude.List.Reexport
        , init
        , last
        , tail
-       , sortWith
        ) where
 
 import Data.Kind (Type)
@@ -59,18 +60,24 @@ type IsNonEmpty (f :: Type -> Type) (a :: Type) (fun :: Symbol) =
 type family CheckNonEmpty (f :: Type -> Type) (a :: Type) (fun :: Symbol) :: Constraint where
     CheckNonEmpty NonEmpty _ _ = ()
     CheckNonEmpty [] a fun = TypeError
-        ( 'Text fun ':<>: 'Text " is working with `NonEmpty`, not ordinary lists."
+        ( 'Text "'" ':<>: 'Text fun ':<>: 'Text "' is working with 'NonEmpty', not ordinary lists."
         ':$$: 'Text "Possible fix:"
         ':$$: 'Text "    Replace: [" ':<>: 'ShowType a ':<>: 'Text "]"
         ':$$: 'Text "    With:    NonEmpty " ':<>: 'ShowType a
         ':$$: 'Text ""
-        ':$$: 'Text "However, you can use `" ':<>: 'Text fun ':<>: 'Text "` with the ordinary lists."
-        ':$$: 'Text "Apply `viaNonEmpty` function from relude:"
+        ':$$: 'Text "However, you can use '" ':<>: 'Text fun ':<>: 'Text "' with the ordinary lists."
+        ':$$: 'Text "Apply 'viaNonEmpty' function from relude:"
         ':$$: 'Text "    viaNonEmpty " ':<>: 'Text fun ':<>: 'Text " (yourList)"
-        ':$$: 'Text "Note, that this will return `Maybe " ':<>: 'ShowType a ':<>: 'Text "`"
-        ':$$: 'Text "therefore it is a safe function unlike `" ':<>: 'Text fun ':<>: 'Text "` from the standard Prelude"
+        ':$$: 'Text "Note, that this will return 'Maybe " ':<>: 'ShowType a ':<>: 'Text "'"
+        ':$$: 'Text "therefore it is a safe function unlike '" ':<>: 'Text fun ':<>: 'Text "' from the standard Prelude"
         )
-    CheckNonEmpty _ _ fun = TypeError ('Text fun ':<>: 'Text " is working with NonEmpty lists")
+    CheckNonEmpty _ a fun = TypeError
+        ( 'Text "'"
+          ':<>: 'Text fun
+          ':<>: 'Text "' is working with 'NonEmpty "
+          ':<>: 'ShowType a
+          ':<>: 'Text "' lists"
+        )
 
 
 {- | @O(1)@. Extracts the first element of a 'NonEmpty' list.
@@ -79,20 +86,20 @@ type family CheckNonEmpty (f :: Type -> Type) (a :: Type) (fun :: Symbol) :: Con
 'a'
 >>> head [0..5 :: Int]
 ...
-... • head is working with `NonEmpty`, not ordinary lists.
+... 'head' is working with 'NonEmpty', not ordinary lists.
       Possible fix:
           Replace: [Int]
           With:    NonEmpty Int
 ...
-      However, you can use `head` with the ordinary lists.
-      Apply `viaNonEmpty` function from relude:
+      However, you can use 'head' with the ordinary lists.
+      Apply 'viaNonEmpty' function from relude:
           viaNonEmpty head (yourList)
-      Note, that this will return `Maybe Int`
-      therefore it is a safe function unlike `head` from the standard Prelude
+      Note, that this will return 'Maybe Int'
+      therefore it is a safe function unlike 'head' from the standard Prelude
 ...
 >>> head (Just 'a')
 ...
-... head is working with NonEmpty lists
+... 'head' is working with 'NonEmpty Char' lists
 ...
 -}
 head :: IsNonEmpty f a "head" => f a -> a
@@ -105,20 +112,20 @@ element.
 "abcd"
 >>> init [0..5 :: Int]
 ...
-... • init is working with `NonEmpty`, not ordinary lists.
+... 'init' is working with 'NonEmpty', not ordinary lists.
       Possible fix:
           Replace: [Int]
           With:    NonEmpty Int
 ...
-      However, you can use `init` with the ordinary lists.
-      Apply `viaNonEmpty` function from relude:
+      However, you can use 'init' with the ordinary lists.
+      Apply 'viaNonEmpty' function from relude:
           viaNonEmpty init (yourList)
-      Note, that this will return `Maybe Int`
-      therefore it is a safe function unlike `init` from the standard Prelude
+      Note, that this will return 'Maybe Int'
+      therefore it is a safe function unlike 'init' from the standard Prelude
 ...
 >>> init (Just 'a')
 ...
-... init is working with NonEmpty lists
+... 'init' is working with 'NonEmpty Char' lists
 ...
 -}
 init :: IsNonEmpty f a "init" => f a -> [a]
@@ -130,20 +137,20 @@ init = NE.init
 'e'
 >>> last [0..5 :: Int]
 ...
-... • last is working with `NonEmpty`, not ordinary lists.
+... 'last' is working with 'NonEmpty', not ordinary lists.
       Possible fix:
           Replace: [Int]
           With:    NonEmpty Int
 ...
-      However, you can use `last` with the ordinary lists.
-      Apply `viaNonEmpty` function from relude:
+      However, you can use 'last' with the ordinary lists.
+      Apply 'viaNonEmpty' function from relude:
           viaNonEmpty last (yourList)
-      Note, that this will return `Maybe Int`
-      therefore it is a safe function unlike `last` from the standard Prelude
+      Note, that this will return 'Maybe Int'
+      therefore it is a safe function unlike 'last' from the standard Prelude
 ...
 >>> last (Just 'a')
 ...
-... last is working with NonEmpty lists
+... 'last' is working with 'NonEmpty Char' lists
 ...
 -}
 last :: IsNonEmpty f a "last" => f a -> a
@@ -156,20 +163,20 @@ element.
 "bcde"
 >>> tail [0..5 :: Int]
 ...
-... • tail is working with `NonEmpty`, not ordinary lists.
+... 'tail' is working with 'NonEmpty', not ordinary lists.
       Possible fix:
           Replace: [Int]
           With:    NonEmpty Int
 ...
-      However, you can use `tail` with the ordinary lists.
-      Apply `viaNonEmpty` function from relude:
+      However, you can use 'tail' with the ordinary lists.
+      Apply 'viaNonEmpty' function from relude:
           viaNonEmpty tail (yourList)
-      Note, that this will return `Maybe Int`
-      therefore it is a safe function unlike `tail` from the standard Prelude
+      Note, that this will return 'Maybe Int'
+      therefore it is a safe function unlike 'tail' from the standard Prelude
 ...
 >>> tail (Just 'a')
 ...
-... tail is working with NonEmpty lists
+... 'tail' is working with 'NonEmpty Char' lists
 ...
 -}
 tail :: IsNonEmpty f a "tail" => f a -> [a]
