@@ -2120,37 +2120,37 @@
     name: Use 'unfoldr' from Relude
     rhs: unfoldr
 - warn:
-    lhs: Data.NonEmpty.NonEmpty
+    lhs: Data.List.NonEmpty.NonEmpty
     note: '''NonEmpty'' is already exported from Relude'
     name: Use 'NonEmpty' from Relude
     rhs: NonEmpty
 - warn:
-    lhs: (Data.NonEmpty.:|)
+    lhs: (Data.List.NonEmpty.:|)
     note: Operator '(:|)' is already exported from Relude
     name: Use ':|' from Relude
     rhs: (:|)
 - warn:
-    lhs: Data.NonEmpty.nonEmpty
+    lhs: Data.List.NonEmpty.nonEmpty
     note: '''nonEmpty'' is already exported from Relude'
     name: Use 'nonEmpty' from Relude
     rhs: nonEmpty
 - warn:
-    lhs: Data.NonEmpty.head
+    lhs: Data.List.NonEmpty.head
     note: '''head'' is already exported from Relude'
     name: Use 'head' from Relude
     rhs: head
 - warn:
-    lhs: Data.NonEmpty.init
+    lhs: Data.List.NonEmpty.init
     note: '''init'' is already exported from Relude'
     name: Use 'init' from Relude
     rhs: init
 - warn:
-    lhs: Data.NonEmpty.last
+    lhs: Data.List.NonEmpty.last
     note: '''last'' is already exported from Relude'
     name: Use 'last' from Relude
     rhs: last
 - warn:
-    lhs: Data.NonEmpty.tail
+    lhs: Data.List.NonEmpty.tail
     note: '''tail'' is already exported from Relude'
     name: Use 'tail' from Relude
     rhs: tail
