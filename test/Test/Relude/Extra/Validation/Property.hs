@@ -46,7 +46,19 @@ asValidation gen = Gen.choice
     ]
 
 ----------------------------------------------------------------------------
--- Semogroup
+-- Property helpers
+----------------------------------------------------------------------------
+
+checkAssotiativityFor
+    :: (Show a, Eq a) => Gen a -> (a -> a -> a) -> Property
+checkAssotiativityFor gen op = property $ do
+    a <- forAll gen
+    b <- forAll gen
+    c <- forAll gen
+    a `op` (b `op` c) === (a `op` b) `op` c
+
+----------------------------------------------------------------------------
+-- Semogroup instance properties
 ----------------------------------------------------------------------------
 
 validationSemigroupProps :: Group
@@ -56,14 +68,11 @@ validationSemigroupProps =
         ]
 
 prop_semigroupAssociativity :: Property
-prop_semigroupAssociativity = property $ do
-    a <- forAll $ asValidation genSmallText
-    b <- forAll $ asValidation genSmallText
-    c <- forAll $ asValidation genSmallText
-    a <> (b <> c) === (a <> b) <> c
+prop_semigroupAssociativity =
+    checkAssotiativityFor (asValidation genSmallText) (<>)
 
 ----------------------------------------------------------------------------
--- Monoid
+-- Monoid instance properties
 ----------------------------------------------------------------------------
 
 validationMonoidProps :: Group
@@ -84,7 +93,7 @@ prop_monoidLeftIdentity = property $ do
     mempty <> x === x
 
 ----------------------------------------------------------------------------
--- Alternative
+-- Applicative instance properties
 ----------------------------------------------------------------------------
 
 validationApplicativeProps :: Group
@@ -135,7 +144,7 @@ prop_applicativeApplyLeft = property $ do
     (vy <* vx) === liftA2 const vy vx
 
 ----------------------------------------------------------------------------
--- Alternative
+-- Alternative instance properties
 ----------------------------------------------------------------------------
 
 validationAlternativeProps :: Group
@@ -147,11 +156,8 @@ validationAlternativeProps =
         ]
 
 prop_alternativeAssociativity :: Property
-prop_alternativeAssociativity = property $ do
-    a <- forAll $ asValidation genSmallText
-    b <- forAll $ asValidation genSmallText
-    c <- forAll $ asValidation genSmallText
-    (a <|> (b <|> c)) === ((a <|> b) <|> c)
+prop_alternativeAssociativity =
+    checkAssotiativityFor (asValidation genSmallText) (<|>)
 
 prop_alternativeRightIdentity :: Property
 prop_alternativeRightIdentity = property $ do
