@@ -11,7 +11,7 @@ module Test.Relude.Property
        ) where
 
 import Relude
-import Test.Relude.Extra.Validation.Property (validationTestList)
+import Test.Relude.Extra.Validation.Property (validationLaws)
 
 import Data.List (nub)
 import Hedgehog (Gen, Property, Group (..), assert, forAll, property, (===))
@@ -24,7 +24,7 @@ hedgehogTestList =
     [ utfProps
     , listProps
     , logicProps
-    ] <> validationTestList
+    ] <> validationLaws
 
 ----------------------------------------------------------------------------
 -- utf8 conversion

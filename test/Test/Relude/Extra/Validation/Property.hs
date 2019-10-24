@@ -1,13 +1,11 @@
 {-
-Copyright:  (c) 2016 Stephen Diehl
-            (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+Copyright:  (c) 2018-2019 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 -}
 
 module Test.Relude.Extra.Validation.Property
-       ( validationTestList
+       ( validationLaws
        ) where
 
 import Relude
@@ -18,8 +16,8 @@ import Hedgehog (Gen, Group (..), Property, forAll, forAllWith, property, (===))
 import qualified Hedgehog.Gen as Gen
 import qualified Hedgehog.Range as Range
 
-validationTestList :: [Group]
-validationTestList =
+validationLaws :: [Group]
+validationLaws =
     [ validationSemigroupProps
     , validationMonoidProps
     , validationApplicativeProps
@@ -58,7 +56,7 @@ checkAssotiativityFor gen op = property $ do
     a `op` (b `op` c) === (a `op` b) `op` c
 
 ----------------------------------------------------------------------------
--- Semogroup instance properties
+-- Semigroup instance properties
 ----------------------------------------------------------------------------
 
 validationSemigroupProps :: Group
@@ -123,7 +121,7 @@ prop_applicativeHomomorphism :: Property
 prop_applicativeHomomorphism = property $ do
     f <- forAllWith (const "f") genFunction
     x <- forAll genSmallInt
-    (pure f <*> (pure x :: Validation [Text] Int)) === pure (f x)
+    (pure f <*> pure x) === pure @(Validation [Text]) (f x)
 
 prop_applicativeInterchange :: Property
 prop_applicativeInterchange = property $ do

@@ -183,7 +183,7 @@ test-suite relude-test
   main-is:             Spec.hs
 
   other-modules:       Test.Relude.Property
-                     , Test.Relude.Extra.Validation.Property
+                       Test.Relude.Extra.Validation.Property
   build-depends:       relude
                      , bytestring
                      , text
