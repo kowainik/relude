@@ -1,3 +1,9 @@
+{- HLINT ignore "Alternative law, right identity" -}
+{- HLINT ignore "Alternative law, left identity" -}
+{- HLINT ignore "Monoid law, right identity" -}
+{- HLINT ignore "Monoid law, left identity" -}
+{- HLINT ignore "Use <$>" -}
+
 {-
 Copyright:  (c) 2018-2019 Kowainik
 SPDX-License-Identifier: MIT
