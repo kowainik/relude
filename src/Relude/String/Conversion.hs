@@ -1,9 +1,12 @@
 {-# LANGUAGE CPP                    #-}
-{-# LANGUAGE ExplicitForAll         #-}
+{-# LANGUAGE DataKinds              #-}
 {-# LANGUAGE FlexibleInstances      #-}
 {-# LANGUAGE FunctionalDependencies #-}
 {-# LANGUAGE MultiParamTypeClasses  #-}
+{-# LANGUAGE TypeFamilies           #-}
+{-# LANGUAGE TypeOperators          #-}
 {-# LANGUAGE TypeSynonymInstances   #-}
+{-# LANGUAGE UndecidableInstances   #-}
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
@@ -13,10 +16,11 @@ SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 This module implements type class which allow to have conversion to and from
-'Text', 'String' and 'ByteString' types (including both strict and lazy
-versions). Usually you need to export 'Text' modules qualified and use 'T.pack'
-\/ 'T.unpack' functions to convert to\/from 'Text'. Now you can just use
-'toText' \/ 'toString' functions.
+'Relude.String.Reexport.Text', 'String' and 'ByteString' types
+(including both strict and lazy versions). Usually you need to export
+'Relude.String.Reexport.Text' modules qualified and use 'T.pack' \/ 'T.unpack'
+functions to convert to\/from 'Relude.String.Reexport.Text'. Now you can just
+use 'toText' \/ 'toString' functions.
 -}
 
 module Relude.String.Conversion
@@ -38,13 +42,14 @@ module Relude.String.Conversion
        , show
        ) where
 
-import Data.Bifunctor (first)
-import Data.Either (Either)
-import Data.Function (id, (.))
-import Data.String (String)
+import GHC.TypeLits (ErrorMessage (..), TypeError)
+import Prelude (error)
 
-import Relude.Functor ((<$>))
-import Relude.String.Reexport (ByteString, IsString, Read, ShortByteString, Text, fromShort,
+import Relude.Base (Constraint, Type)
+import Relude.Function (id, (.))
+import Relude.Functor (first, (<$>))
+import Relude.Monad.Reexport (Either)
+import Relude.String.Reexport (ByteString, IsString, Read, ShortByteString, String, Text, fromShort,
                                fromString, toShort)
 
 import qualified Data.ByteString.Lazy as LB
@@ -53,9 +58,9 @@ import qualified Data.Text.Encoding as T
 import qualified Data.Text.Encoding.Error as T
 import qualified Data.Text.Lazy as LT
 import qualified Data.Text.Lazy.Encoding as LT
+import qualified GHC.Show as Show (Show (show))
 import qualified Text.Read (readEither)
 
-import qualified GHC.Show as Show (Show (show))
 
 -- $setup
 -- >>> import Relude
@@ -136,8 +141,9 @@ instance ConvertUtf8 LText ByteString where
     decodeUtf8Strict = decodeUtf8Strict . LB.fromStrict
     {-# INLINE decodeUtf8Strict #-}
 
--- | Converting 'String' to 'LB.ByteString' might be a slow operation.
--- Consider using lazy bytestring at first place.
+{- | Converting 'String' to 'LB.ByteString' might be a slow operation.
+Consider using lazy bytestring at first place.
+-}
 instance ConvertUtf8 String LByteString where
     encodeUtf8 :: String -> LByteString
     encodeUtf8 = LT.encodeUtf8 . LT.pack
@@ -238,6 +244,23 @@ instance ToText LText where
     toText = LT.toStrict
     {-# INLINE toText #-}
 
+-- | @since 0.6.0.0
+instance ToMsg ToText ByteString Text => ToText ByteString where
+    toText :: ByteString -> Text
+    toText = error "unreachable"
+
+-- | @since 0.6.0.0
+-- QUESTION: 'LByteString' will be shown either as 'ByteString' or
+-- 'Data.ByteString.Lazy.Internal.ByteString'. Should it be type-level string?
+instance ToMsg ToText LByteString Text => ToText LByteString where
+    toText :: LByteString -> Text
+    toText = error "unreachable"
+
+-- | @since 0.6.0.0
+instance ToMsg ToText ShortByteString Text => ToText ShortByteString where
+    toText :: ShortByteString -> Text
+    toText = error "unreachable"
+
 -- | Type class for converting other strings to 'LT.Text'.
 class ToLText a where
     toLText :: a -> LText
@@ -256,6 +279,21 @@ instance ToLText LT.Text where
     toLText :: LText -> LText
     toLText = id
     {-# INLINE toLText #-}
+
+-- | @since 0.6.0.0
+instance ToMsg ToLText ByteString LText => ToLText ByteString where
+    toLText :: ByteString -> LText
+    toLText = error "unreachable"
+
+-- | @since 0.6.0.0
+instance ToMsg ToLText LByteString LText => ToLText LByteString where
+    toLText :: LByteString -> LText
+    toLText = error "unreachable"
+
+-- | @since 0.6.0.0
+instance ToMsg ToLText ShortByteString LText => ToLText ShortByteString where
+    toLText :: ShortByteString -> LText
+    toLText = error "unreachable"
 
 -- | Type class for converting other strings to 'String'.
 class ToString a where
@@ -276,21 +314,55 @@ instance ToString LText where
     toString = LT.unpack
     {-# INLINE toString #-}
 
--- | Polymorhpic version of 'Text.Read.readEither'.
---
--- >>> readEither @Text @Int "123"
--- Right 123
--- >>> readEither @Text @Int "aa"
--- Left "Prelude.read: no parse"
+-- | @since 0.6.0.0
+instance ToMsg ToString ByteString String => ToString ByteString where
+    toString :: ByteString -> String
+    toString = error "unreachable"
+
+-- | @since 0.6.0.0
+instance ToMsg ToString LByteString String => ToString LByteString where
+    toString :: LByteString -> String
+    toString = error "unreachable"
+
+-- | @since 0.6.0.0
+instance ToMsg ToString ShortByteString String => ToString ShortByteString where
+    toString :: ShortByteString -> String
+    toString = error "unreachable"
+
+-- | Helper type family to produce error messages
+type family ToMsg
+    (c :: Type -> Constraint)
+    (from :: Type)
+    (to :: Type)
+    :: Constraint
+  where
+    ToMsg c from to = TypeError
+        ( 'Text "Type '" ':<>: 'ShowType from ':<>: 'Text "' doesn't have instance of '"
+        ':<>: 'ShowType c ':<>: 'Text "'."
+        ':$$: 'Text "Use 'decodeUtf8' or 'decodeUtf8Strict' to convert from UTF-8:"
+        ':$$: 'Text "    decodeUtf8       :: " ':<>: 'ShowType from
+        ':<>: 'Text " -> " ':<>: 'ShowType to
+        ':$$: 'Text "    decodeUtf8Strict :: " ':<>: 'ShowType from
+        ':<>: 'Text " -> Either UnicodeException " ':<>: 'ShowType to
+        )
+
+{- | Polymorhpic version of 'Text.Read.readEither'.
+
+>>> readEither @Text @Int "123"
+Right 123
+>>> readEither @Text @Int "aa"
+Left "Prelude.read: no parse"
+-}
 readEither :: (ToString a, Read b) => a -> Either Text b
 readEither = first toText . Text.Read.readEither . toString
 {-# INLINEABLE readEither #-}
 
 {- | Generalized version of 'Prelude.show'. Unlike 'Prelude.show' this function
 is polymorphic in its result type. This makes it more convenient to work with
-data types like 'Text' or 'ByteString'. However, if you pass the result of
-'show' to a function that expects polymorphic argument, this can break type
-inference, so use @-XTypeApplications@ to specify the textual type explicitly.
+data types like 'Relude.String.Reexport.Text' or 'ByteString'. However, if you
+pass the result of 'show' to a function that expects polymorphic argument, this
+can break type inference, so use @-XTypeApplications@ to specify the textual
+type explicitly.
 
 >>> show (42 :: Int)
 "42"
