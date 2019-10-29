@@ -18,10 +18,14 @@ module Relude.Monad.Maybe
        , whenNothing_
        , whenNothingM
        , whenNothingM_
+       , mapMaybeM
        ) where
 
 import Relude.Applicative (Applicative, pass, pure)
-import Relude.Monad.Reexport (Maybe (..), Monad (..), fromMaybe)
+import Relude.Foldable.Reexport (mapM)
+import Relude.Function ((.))
+import Relude.Functor.Reexport (fmap)
+import Relude.Monad.Reexport (Maybe (..), Monad (..), catMaybes, fromMaybe)
 
 
 -- $setup
@@ -110,3 +114,22 @@ Is Nothing!
 whenNothingM_ :: Monad m => m (Maybe a) -> m () -> m ()
 whenNothingM_ mm action = mm >>= \m -> whenNothing_ m action
 {-# INLINE whenNothingM_ #-}
+
+
+{- | The monadic version of the 'Data.Maybe.mapMaybe' function.
+
+>>> :{
+evenInHalf :: Int -> IO (Maybe Int)
+evenInHalf n
+    | even n = pure $ Just $ n `div` 2
+    | otherwise = pure Nothing
+:}
+
+>>> mapMaybeM evenInHalf [1..10]
+[1,2,3,4,5]
+
+@since 0.6.0.0
+-}
+mapMaybeM :: (Monad m) => (a -> m (Maybe b)) -> [a] -> m [b]
+mapMaybeM f = fmap catMaybes . mapM f
+{-# INLINE mapMaybeM #-}
