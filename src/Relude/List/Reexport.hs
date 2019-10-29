@@ -82,12 +82,16 @@ type family CheckNonEmpty
         ':$$: 'Text "Note, that this will return 'Maybe " ':<>: 'ShowType res ':<>: 'Text "'"
         ':$$: 'Text "therefore it is a safe function unlike '" ':<>: 'Text fun ':<>: 'Text "' from the standard Prelude"
         )
-    CheckNonEmpty _ a _ fun = TypeError
+    CheckNonEmpty t a _ fun = TypeError
         ( 'Text "'"
-          ':<>: 'Text fun
-          ':<>: 'Text "' works with 'NonEmpty "
-          ':<>: 'ShowType a
-          ':<>: 'Text "' lists"
+        ':<>: 'Text fun
+        ':<>: 'Text "' works with 'NonEmpty "
+        ':<>: 'ShowType a
+        ':<>: 'Text "' lists"
+        ':$$: 'Text "But given: "
+        ':<>: 'ShowType t
+        ':<>: 'Text " "
+        ':<>: 'ShowType a
         )
 
 
@@ -119,6 +123,7 @@ but it was given a more complex type to provide friendlier compile time errors.
 >>> head (Just 'a')
 ...
 ... 'head' works with 'NonEmpty Char' lists
+      But given: Maybe Char
 ...
 -}
 head :: IsNonEmpty f a a "head" => f a -> a
@@ -154,6 +159,7 @@ but it was given a more complex type to provide friendlier compile time errors.
 >>> init (Just 'a')
 ...
 ... 'init' works with 'NonEmpty Char' lists
+      But given: Maybe Char
 ...
 -}
 init :: IsNonEmpty f a [a] "init" => f a -> [a]
@@ -188,6 +194,7 @@ but it was given a more complex type to provide friendlier compile time errors.
 >>> last (Just 'a')
 ...
 ... 'last' works with 'NonEmpty Char' lists
+      But given: Maybe Char
 ...
 -}
 last :: IsNonEmpty f a a "last" => f a -> a
@@ -223,6 +230,7 @@ but it was given a more complex type to provide friendlier compile time errors.
 >>> tail (Just 'a')
 ...
 ... 'tail' works with 'NonEmpty Char' lists
+      But given: Maybe Char
 ...
 -}
 tail :: IsNonEmpty f a [a] "tail" => f a -> [a]
