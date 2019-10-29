@@ -33,8 +33,9 @@ pass :: Applicative f => f ()
 pass = pure ()
 {-# INLINE pass #-}
 
-{- | For chaining applicative operations in forward applications using '(&)'
-Named version of the '<**>' operator, which is '<*>' but flipped
+{- | Named version of the '<**>' operator, which is '<*>' but flipped. For
+chaining applicative operations in forward applications using
+'Relude.Function.&'.
 
 >>> Just (+ 1) & appliedTo (Just 2)
 Just 3

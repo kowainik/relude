@@ -38,7 +38,7 @@ import Data.Maybe (Maybe (..), maybe)
 import Relude.Applicative (pure)
 import Relude.Function ((.))
 import Relude.Monad.Reexport (Either (..), MonadFail (..), either)
-import Relude.String (IsString, String, fromString)
+import Relude.String.Reexport (IsString (..), String)
 
 #if MIN_VERSION_base(4,10,0)
 import Data.Either (fromLeft, fromRight)

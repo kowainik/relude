@@ -1,9 +1,12 @@
 {-# LANGUAGE CPP                    #-}
-{-# LANGUAGE ExplicitForAll         #-}
+{-# LANGUAGE DataKinds              #-}
 {-# LANGUAGE FlexibleInstances      #-}
 {-# LANGUAGE FunctionalDependencies #-}
 {-# LANGUAGE MultiParamTypeClasses  #-}
+{-# LANGUAGE TypeFamilies           #-}
+{-# LANGUAGE TypeOperators          #-}
 {-# LANGUAGE TypeSynonymInstances   #-}
+{-# LANGUAGE UndecidableInstances   #-}
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
@@ -13,10 +16,11 @@ SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 This module implements type class which allow to have conversion to and from
-'Text', 'String' and 'ByteString' types (including both strict and lazy
-versions). Usually you need to export 'Text' modules qualified and use 'T.pack'
-\/ 'T.unpack' functions to convert to\/from 'Text'. Now you can just use
-'toText' \/ 'toString' functions.
+'Relude.String.Reexport.Text', 'String' and 'ByteString' types
+(including both strict and lazy versions). Usually you need to export
+'Relude.String.Reexport.Text' modules qualified and use 'T.pack' \/ 'T.unpack'
+functions to convert to\/from 'Relude.String.Reexport.Text'. Now you can just
+use 'toText' \/ 'toString' functions.
 -}
 
 module Relude.String.Conversion
@@ -26,9 +30,9 @@ module Relude.String.Conversion
 
          -- * Conversion type classes
        , ConvertUtf8 (..)
-       , ToString (..)
-       , ToLText (..)
        , ToText (..)
+       , ToLText (..)
+       , ToString (..)
        , LazyStrict (..)
        , fromLazy
        , fromStrict
@@ -38,13 +42,14 @@ module Relude.String.Conversion
        , show
        ) where
 
-import Data.Bifunctor (first)
-import Data.Either (Either)
-import Data.Function (id, (.))
-import Data.String (String)
+import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
+import Prelude (error)
 
-import Relude.Functor ((<$>))
-import Relude.String.Reexport (ByteString, IsString, Read, ShortByteString, Text, fromShort,
+import Relude.Base (Constraint, Type)
+import Relude.Function (id, (.))
+import Relude.Functor (first, (<$>))
+import Relude.Monad.Reexport (Either)
+import Relude.String.Reexport (ByteString, IsString, Read, ShortByteString, String, Text, fromShort,
                                fromString, toShort)
 
 import qualified Data.ByteString.Lazy as LB
@@ -53,9 +58,9 @@ import qualified Data.Text.Encoding as T
 import qualified Data.Text.Encoding.Error as T
 import qualified Data.Text.Lazy as LT
 import qualified Data.Text.Lazy.Encoding as LT
+import qualified GHC.Show as Show (Show (show))
 import qualified Text.Read (readEither)
 
-import qualified GHC.Show as Show (Show (show))
 
 -- $setup
 -- >>> import Relude
@@ -136,8 +141,9 @@ instance ConvertUtf8 LText ByteString where
     decodeUtf8Strict = decodeUtf8Strict . LB.fromStrict
     {-# INLINE decodeUtf8Strict #-}
 
--- | Converting 'String' to 'LB.ByteString' might be a slow operation.
--- Consider using lazy bytestring at first place.
+{- | Converting 'String' to 'LB.ByteString' might be a slow operation.
+Consider using lazy bytestring at first place.
+-}
 instance ConvertUtf8 String LByteString where
     encodeUtf8 :: String -> LByteString
     encodeUtf8 = LT.encodeUtf8 . LT.pack
@@ -238,6 +244,66 @@ instance ToText LText where
     toText = LT.toStrict
     {-# INLINE toText #-}
 
+{- | ⚠️__CAUTION__⚠️ This instance is for custom error display only.
+
+You should always specify encoding of bytes explicitly.
+
+In case it is used by mistake, the user  will see the following:
+
+>>> toText ("some string" :: ByteString)
+...
+... Type 'ByteString' doesn't have instance of 'ToText'.
+      Use 'decodeUtf8' or 'decodeUtf8Strict' to convert from UTF-8:
+          decodeUtf8       :: ByteString -> Text
+          decodeUtf8Strict :: ByteString -> Either UnicodeException Text
+...
+
+@since 0.6.0.0
+-}
+instance EncodingError ToText "ByteString" "Text" => ToText ByteString where
+    toText :: ByteString -> Text
+    toText = error "Unreachable ByteString instance of ToText"
+
+{- | ⚠️__CAUTION__⚠️ This instance is for custom error display only.
+
+You should always specify encoding of bytes explicitly.
+
+In case it is used by mistake, the user  will see the following:
+
+>>> toText ("some string" :: LByteString)
+...
+... Type 'LByteString' doesn't have instance of 'ToText'.
+      Use 'decodeUtf8' or 'decodeUtf8Strict' to convert from UTF-8:
+          decodeUtf8       :: LByteString -> Text
+          decodeUtf8Strict :: LByteString -> Either UnicodeException Text
+...
+
+@since 0.6.0.0
+-}
+instance EncodingError ToText "LByteString" "Text" => ToText LByteString where
+    toText :: LByteString -> Text
+    toText = error "Unreachable LByteString instance of ToText"
+
+{- | ⚠️__CAUTION__⚠️ This instance is for custom error display only.
+
+You should always specify encoding of bytes explicitly.
+
+In case it is used by mistake, the user  will see the following:
+
+>>> toText ("some string" :: ShortByteString)
+...
+... Type 'ShortByteString' doesn't have instance of 'ToText'.
+      Use 'decodeUtf8' or 'decodeUtf8Strict' to convert from UTF-8:
+          decodeUtf8       :: ShortByteString -> Text
+          decodeUtf8Strict :: ShortByteString -> Either UnicodeException Text
+...
+
+@since 0.6.0.0
+-}
+instance EncodingError ToText "ShortByteString" "Text" => ToText ShortByteString where
+    toText :: ShortByteString -> Text
+    toText = error "Unreachable ShortByteString instance of ToText"
+
 -- | Type class for converting other strings to 'LT.Text'.
 class ToLText a where
     toLText :: a -> LText
@@ -256,6 +322,66 @@ instance ToLText LT.Text where
     toLText :: LText -> LText
     toLText = id
     {-# INLINE toLText #-}
+
+{- | ⚠️__CAUTION__⚠️ This instance is for custom error display only.
+
+You should always specify encoding of bytes explicitly.
+
+In case it is used by mistake, the user  will see the following:
+
+>>> toLText ("some string" :: ByteString)
+...
+... Type 'ByteString' doesn't have instance of 'ToLText'.
+      Use 'decodeUtf8' or 'decodeUtf8Strict' to convert from UTF-8:
+          decodeUtf8       :: ByteString -> LText
+          decodeUtf8Strict :: ByteString -> Either UnicodeException LText
+...
+
+@since 0.6.0.0
+-}
+instance EncodingError ToLText "ByteString" "LText" => ToLText ByteString where
+    toLText :: ByteString -> LText
+    toLText = error "Unreachable ByteString instance of ToLText"
+
+{- | ⚠️__CAUTION__⚠️ This instance is for custom error display only.
+
+You should always specify encoding of bytes explicitly.
+
+In case it is used by mistake, the user  will see the following:
+
+>>> toLText ("some string" :: LByteString)
+...
+... Type 'LByteString' doesn't have instance of 'ToLText'.
+      Use 'decodeUtf8' or 'decodeUtf8Strict' to convert from UTF-8:
+          decodeUtf8       :: LByteString -> LText
+          decodeUtf8Strict :: LByteString -> Either UnicodeException LText
+...
+
+@since 0.6.0.0
+-}
+instance EncodingError ToLText "LByteString" "LText" => ToLText LByteString where
+    toLText :: LByteString -> LText
+    toLText = error "Unreachable LByteString instance of ToLText"
+
+{- | ⚠️__CAUTION__⚠️ This instance is for custom error display only.
+
+You should always specify encoding of bytes explicitly.
+
+In case it is used by mistake, the user  will see the following:
+
+>>> toLText ("some string" :: ShortByteString)
+...
+... Type 'ShortByteString' doesn't have instance of 'ToLText'.
+      Use 'decodeUtf8' or 'decodeUtf8Strict' to convert from UTF-8:
+          decodeUtf8       :: ShortByteString -> LText
+          decodeUtf8Strict :: ShortByteString -> Either UnicodeException LText
+...
+
+@since 0.6.0.0
+-}
+instance EncodingError ToLText "ShortByteString" "LText" => ToLText ShortByteString where
+    toLText :: ShortByteString -> LText
+    toLText = error "Unreachable ShortByteString instance of ToLText"
 
 -- | Type class for converting other strings to 'String'.
 class ToString a where
@@ -276,21 +402,100 @@ instance ToString LText where
     toString = LT.unpack
     {-# INLINE toString #-}
 
--- | Polymorhpic version of 'Text.Read.readEither'.
---
--- >>> readEither @Text @Int "123"
--- Right 123
--- >>> readEither @Text @Int "aa"
--- Left "Prelude.read: no parse"
+{- | ⚠️__CAUTION__⚠️ This instance is for custom error display only.
+
+You should always specify encoding of bytes explicitly.
+
+In case it is used by mistake, the user  will see the following:
+
+>>> toString ("some string" :: ByteString)
+...
+... Type 'ByteString' doesn't have instance of 'ToString'.
+      Use 'decodeUtf8' or 'decodeUtf8Strict' to convert from UTF-8:
+          decodeUtf8       :: ByteString -> String
+          decodeUtf8Strict :: ByteString -> Either UnicodeException String
+...
+
+@since 0.6.0.0
+-}
+instance EncodingError ToString "ByteString" "String" => ToString ByteString where
+    toString :: ByteString -> String
+    toString = error "Unreachable ByteString instance of ToString"
+
+{- | ⚠️__CAUTION__⚠️ This instance is for custom error display only.
+
+You should always specify encoding of bytes explicitly.
+
+In case it is used by mistake, the user  will see the following:
+
+>>> toString ("some string" :: LByteString)
+...
+... Type 'LByteString' doesn't have instance of 'ToString'.
+      Use 'decodeUtf8' or 'decodeUtf8Strict' to convert from UTF-8:
+          decodeUtf8       :: LByteString -> String
+          decodeUtf8Strict :: LByteString -> Either UnicodeException String
+...
+
+@since 0.6.0.0
+-}
+instance EncodingError ToString "LByteString" "String" => ToString LByteString where
+    toString :: LByteString -> String
+    toString = error "Unreachable LByteString instance of ToString"
+
+{- | ⚠️__CAUTION__⚠️ This instance is for custom error display only.
+
+You should always specify encoding of bytes explicitly.
+
+In case it is used by mistake, the user  will see the following:
+
+>>> toString ("some string" :: ShortByteString)
+...
+... Type 'ShortByteString' doesn't have instance of 'ToString'.
+      Use 'decodeUtf8' or 'decodeUtf8Strict' to convert from UTF-8:
+          decodeUtf8       :: ShortByteString -> String
+          decodeUtf8Strict :: ShortByteString -> Either UnicodeException String
+...
+
+@since 0.6.0.0
+-}
+instance EncodingError ToString "ShortByteString" "String" => ToString ShortByteString where
+    toString :: ShortByteString -> String
+    toString = error "Unreachable ShortByteString instance of ToString"
+
+-- | Helper type family to produce error messages
+type family EncodingError
+    (c :: Type -> Constraint)
+    (from :: Symbol)
+    (to :: Symbol)
+    :: Constraint
+  where
+    EncodingError c from to = TypeError
+        ( 'Text "Type '" ':<>: 'Text from ':<>: 'Text "' doesn't have instance of '"
+        ':<>: 'ShowType c ':<>: 'Text "'."
+        ':$$: 'Text "Use 'decodeUtf8' or 'decodeUtf8Strict' to convert from UTF-8:"
+        ':$$: 'Text "    decodeUtf8       :: " ':<>: 'Text from
+        ':<>: 'Text " -> " ':<>: 'Text to
+        ':$$: 'Text "    decodeUtf8Strict :: " ':<>: 'Text from
+        ':<>: 'Text " -> Either UnicodeException " ':<>: 'Text to
+        )
+
+{- | Polymorhpic version of 'Text.Read.readEither'.
+
+>>> readEither @Text @Int "123"
+Right 123
+>>> readEither @Text @Int "aa"
+Left "Prelude.read: no parse"
+-}
 readEither :: (ToString a, Read b) => a -> Either Text b
 readEither = first toText . Text.Read.readEither . toString
 {-# INLINEABLE readEither #-}
 
 {- | Generalized version of 'Prelude.show'. Unlike 'Prelude.show' this function
 is polymorphic in its result type. This makes it more convenient to work with
-data types like 'Text' or 'ByteString'. However, if you pass the result of
-'show' to a function that expects polymorphic argument, this can break type
-inference, so use @-XTypeApplications@ to specify the textual type explicitly.
+data types like 'Relude.String.Reexport.Text' or 'ByteString'. However, if you
+pass the result of 'show' to a function that expects polymorphic argument, this
+can break type inference, so use @-XTypeApplications@ to specify the textual
+type explicitly.
 
 >>> show (42 :: Int)
 "42"

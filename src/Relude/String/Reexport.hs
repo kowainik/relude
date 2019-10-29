@@ -13,8 +13,8 @@ Copyright:  (c) 2016 Stephen Diehl
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Reexports functions to work with 'Text', 'ByteString'
-and 'ShortByteString' types.
+Reexports functions to work with 'Data.Text.Text', 'ByteString' and
+'ShortByteString' types.
 -}
 
 module Relude.String.Reexport
@@ -78,12 +78,12 @@ type family CheckText (t :: Type) (fun :: Symbol) :: Constraint where
         ':$$: 'Text "But given: '" ':<>: 'ShowType a ':<>: 'Text "'"
         )
 
-{- | 'lines' takes 'Text' and splits it into the list by lines.
+{- | 'lines' takes 'Data.Text.Text' and splits it into the list by lines.
 
 Actual type of this function is the following:
 
 @
-lines :: 'Text' -> ['Text']
+lines :: 'Data.Text.Text' -> ['Data.Text.Text']
 @
 
 but it was given a more complex type to provide friendlier compile time errors.
@@ -112,12 +112,12 @@ lines :: IsText t "lines" => t -> [t]
 lines = Text.lines
 {-# INLINE lines #-}
 
-{- | 'unlines' takes list of 'Text' values and joins them with line separator.
+{- | 'unlines' takes list of 'Data.Text.Text' values and joins them with line separator.
 
 Actual type of this function is the following:
 
 @
-unlines :: ['Text'] -> 'Text'
+unlines :: ['Data.Text.Text'] -> 'Data.Text.Text'
 @
 
 but it was given a more complex type to provide friendlier compile time errors.
@@ -146,12 +146,12 @@ unlines :: IsText t "unlines" => [t] -> t
 unlines = Text.unlines
 {-# INLINE unlines #-}
 
-{- | 'words' takes 'Text' and splits it into the list by words.
+{- | 'words' takes 'Data.Text.Text' and splits it into the list by words.
 
 Actual type of this function is the following:
 
 @
-words :: 'Text' -> ['Text']
+words :: 'Data.Text.Text' -> ['Data.Text.Text']
 @
 
 but it was given a more complex type to provide friendlier compile time errors.
@@ -180,12 +180,12 @@ words :: IsText t "words" => t -> [t]
 words = Text.words
 {-# INLINE words #-}
 
-{- | 'unwords' takes list of 'Text' values and joins them with space character.
+{- | 'unwords' takes list of 'Data.Text.Text' values and joins them with space character.
 
 Actual type of this function is the following:
 
 @
-unwords :: ['Text'] -> 'Text'
+unwords :: ['Data.Text.Text'] -> 'Data.Text.Text'
 @
 
 but it was given a more complex type to provide friendlier compile time errors.
