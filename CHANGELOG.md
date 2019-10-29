@@ -4,6 +4,7 @@
 The changelog is available [on GitHub][2].
 
 ## Unreleased: 0.6.0.0
+
 * [#190](https://github.com/kowainik/relude/pull/190):
   Return Failure early in `<*` and `*>` too.
 * [#170](https://github.com/kowainik/relude/issues/170):
@@ -43,9 +44,11 @@ The changelog is available [on GitHub][2].
   Use `foldr` instead of explicit recursion and `toList`.
 * [#182](https://github.com/kowainik/relude/issues/182):
   Support GHC-8.8.1.
-* [#174](https://github.com/kowainik/relude/issues/187):
+* [#174](https://github.com/kowainik/relude/issues/174):
   Implement `bimapBoth` in `Relude.Extra.Tuple` module,
   mark `mapBoth` as DEPRECATED.
+* [#214](https://github.com/kowainik/relude/issues/214):
+  Add `mapMaybeM` function.
 
 ## 0.5.0 — Mar 18, 2019
 
