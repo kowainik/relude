@@ -212,7 +212,7 @@ type family IsListError :: Constraint
         ':$$: 'Text ""
         ':$$: 'Text "Possible fix:"
         ':$$: 'Text "  * Replace []"
-        ':$$: 'Text "    with one of the: 'NonEmpty', 'Identity', '(c,)', 'Conpose f g', 'Product f g', 'Sum f g'"
+        ':$$: 'Text "    with one of the: 'NonEmpty', 'Identity', '(c,)', 'Compose f g', 'Product f g', 'Sum f g'"
         ':$$: 'Text "  * Or use 'Foldable' class for your own risk."
         )
 
