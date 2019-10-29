@@ -217,7 +217,7 @@ type family IsListError :: Constraint
         )
 
 
-{- | __CAUTION:__ This instance is for custom error display only.
+{- | ⚠️__CAUTION__⚠️ This instance is for custom error display only.
 
 'Foldable1' is not supposed to be used with the lists.
 
@@ -230,7 +230,7 @@ In case it is used by mistake, the user  will see the following:
 ...
       Possible fix:
         * Replace []
-          with one of the: 'NonEmpty', 'Identity', '(c,)', 'Conpose f g', 'Product f g', 'Sum f g'
+          with one of the: 'NonEmpty', 'Identity', '(c,)', 'Compose f g', 'Product f g', 'Sum f g'
         * Or use 'Foldable' class for your own risk.
 ...
 
