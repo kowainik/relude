@@ -1,3 +1,8 @@
+{-# LANGUAGE DataKinds            #-}
+{-# LANGUAGE TypeFamilies         #-}
+{-# LANGUAGE TypeOperators        #-}
+{-# LANGUAGE UndecidableInstances #-}
+
 {- |
 Copyright:  (c) 2011-2015 Edward Kmett
             (c) 2018-2019 Kowainik
@@ -15,9 +20,13 @@ import Relude.Extra.Newtype (( #. ))
 
 import Data.Functor.Product (Product (..))
 import Data.Functor.Sum (Sum (..))
+import GHC.TypeLits (ErrorMessage (..), TypeError)
 
 import qualified Data.Semigroup as SG
 
+
+-- $setup
+-- >>> import Relude
 
 {- | The class of foldable data structures that cannot be empty.
 -}
@@ -188,6 +197,66 @@ instance (Foldable1 f, Foldable1 g) => Foldable1 (Sum f g) where
     foldMap1 f (InL x) = foldMap1 f x
     foldMap1 f (InR y) = foldMap1 f y
     {-# INLINE foldMap1 #-}
+
+
+----------------------------------------------------------------------------
+-- List custom error
+----------------------------------------------------------------------------
+
+-- | For tracking usage of ordinary list with 'Foldable1' functions.
+type family IsListError :: Constraint
+  where
+    IsListError = TypeError
+        ( 'Text "The methods of the 'Foldable1' type class work with non-empty containers."
+        ':$$: 'Text "However, one of the 'Foldable1' functions is applied to the List."
+        ':$$: 'Text ""
+        ':$$: 'Text "Possible fix:"
+        ':$$: 'Text "  * Replace []"
+        ':$$: 'Text "    with one of the: 'NonEmpty', 'Identity', '(c,)', 'Conpose f g', 'Product f g', 'Sum f g'"
+        ':$$: 'Text "  * Or use 'Foldable' class for your own risk."
+        )
+
+
+{- | __CAUTION:__ This instance is for custom error display only.
+
+'Foldable1' is not supposed to be used with the lists.
+
+In case it is used by mistake, the user  will see the following:
+
+>>> head1 [1, 2, 3]
+...
+... The methods of the 'Foldable1' type class work with non-empty containers.
+      However, one of the 'Foldable1' functions is applied to the List.
+...
+      Possible fix:
+        * Replace []
+          with one of the: 'NonEmpty', 'Identity', '(c,)', 'Conpose f g', 'Product f g', 'Sum f g'
+        * Or use 'Foldable' class for your own risk.
+...
+
+@since 0.6.0.0
+-}
+instance IsListError => Foldable1 [] where
+    foldMap1 :: Semigroup m => (a -> m) -> [a] -> m
+    foldMap1 _ _ = error "Unreachable list instance of Foldable1"
+
+    fold1 :: Semigroup m => [m] -> m
+    fold1 _ = error "Unreachable list instance of Foldable1"
+
+    toNonEmpty :: [a] -> NonEmpty a
+    toNonEmpty _ = error "Unreachable list instance of Foldable1"
+
+    head1 :: [a] -> a
+    head1 _ = error "Unreachable list instance of Foldable1"
+
+    last1 :: [a] -> a
+    last1 _ = error "Unreachable list instance of Foldable1"
+
+    maximum1 :: Ord a => [a] -> a
+    maximum1 _ = error "Unreachable list instance of Foldable1"
+
+    minimum1 :: Ord a => [a] -> a
+    minimum1 _ = error "Unreachable list instance of Foldable1"
 
 {- | Strictly folds non-empty structure with given function @f@:
 

@@ -19,6 +19,7 @@ main = do
     doctest
         $ "-XInstanceSigs"
         : "-XNoImplicitPrelude"
+        : "-XOverloadedStrings"
         : "-XScopedTypeVariables"
         : "-XTypeApplications"
         : sourceFiles

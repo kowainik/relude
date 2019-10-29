@@ -20,9 +20,6 @@ import Relude.Extra.Tuple (mapToFst)
 import qualified Data.Map.Strict as M
 
 
--- $setup
--- >>> :set -XTypeApplications
-
 {- | Returns all values of some 'Bounded' 'Enum' in ascending order.
 
 >>> data TrafficLight = Red | Blue | Green deriving (Show, Enum, Bounded)

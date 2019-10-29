@@ -24,10 +24,6 @@ module Relude.Extra.Validation
 import Relude
 
 
-{- | $setup
->>> :set -XTypeApplications -XOverloadedStrings
--}
-
 {- $use
 
 Take for example a type @Computer@ that needs to be validated:

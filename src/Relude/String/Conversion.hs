@@ -58,7 +58,6 @@ import qualified Text.Read (readEither)
 import qualified GHC.Show as Show (Show (show))
 
 -- $setup
--- >>> :set -XTypeApplications -XOverloadedStrings
 -- >>> import Relude
 
 -- | Type synonym for 'Data.Text.Lazy.Text'.

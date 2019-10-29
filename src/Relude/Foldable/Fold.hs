@@ -48,7 +48,6 @@ import qualified Data.Foldable as F
 
 
 -- $setup
--- >>> :set -XOverloadedStrings
 -- >>> import Relude
 -- >>> import qualified Data.HashMap.Strict as HashMap
 
