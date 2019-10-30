@@ -36,7 +36,7 @@ The changelog is available [on GitHub][2].
   Implement `!!?` as a safe equivalent of `!!` that returns a `Maybe`.
   (by [@kutyel](https://github.com/kutyel))
 * [#203](https://github.com/kowainik/relude/issues/203):
-  Implement `guarded` takes a predicate and a value and returns an `Alternative`.
+  Implement the `guarded` combinator.
   (by [@JonathanLorimer](https://github.com/JonathanLorimer))
 * [#214](https://github.com/kowainik/relude/issues/214):
   Add `mapMaybeM` function.
