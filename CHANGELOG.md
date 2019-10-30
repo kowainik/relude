@@ -24,11 +24,11 @@ The changelog is available [on GitHub][2].
   Improve usage of performance pragmas.
   (by [@chshersh](https://github.com/chshersh))
 * [#167](https://github.com/kowainik/relude/issues/167):
-  **Breaking change** Rename functions:
+  Rename functions (and deprecate old versions):
     + `prec` to `prev`
     + `dupe` to `dup`
 
-  (by [@Cmdv](https://github.com/Cmdv))
+  (by [@Cmdv](https://github.com/Cmdv), by [@chshersh](https://github.com/chshersh))
 * [#192](https://github.com/kowainik/relude/issues/192):
   Reexport `foldMap'` from `Data.Foldable`.
   (by [@tfausak](https://github.com/tfausak))

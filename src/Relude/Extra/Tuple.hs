@@ -10,6 +10,7 @@ Contains utility functions for working with tuples.
 
 module Relude.Extra.Tuple
        ( dup
+       , dupe
        , mapToFst
        , mapToSnd
        , mapBoth
@@ -33,6 +34,11 @@ import Relude
 dup :: a -> (a, a)
 dup a = (a, a)
 {-# INLINE dup #-}
+
+-- | See 'dup'.
+dupe :: a -> (a, a)
+dupe = dup
+{-# DEPRECATED dupe "Use 'dup' instead, it has more idiomatic and common name" #-}
 
 {- | Apply a function, with the result in the fst slot,
 and the value in the other.
