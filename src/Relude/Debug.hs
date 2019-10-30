@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP                  #-}
 {-# LANGUAGE ConstraintKinds      #-}
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE DeriveDataTypeable   #-}
@@ -7,6 +8,7 @@
 {-# LANGUAGE RankNTypes           #-}
 {-# LANGUAGE Trustworthy          #-}
 {-# LANGUAGE TypeFamilies         #-}
+{-# LANGUAGE TypeInType           #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
 
@@ -164,11 +166,19 @@ traceId = Debug.traceId
 branch of code execution is not possible.  __DO NOT USE__ 'error' as a normal
 error handling mechanism.
 
+#ifdef mingw32_HOST_OS
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src/Relude/Debug.hs:194:11 in ...
+  error, called at src\\Relude\\Debug.hs:204:11 in ...
+  ...
+#else
+>>> error "oops"
+*** Exception: oops
+CallStack (from HasCallStack):
+  error, called at src/Relude/Debug.hs:204:11 in ...
 ...
+#endif
 
 ⚠️__CAUTION__⚠️  Unlike "Prelude" version, 'error' takes 'Relude.Text' as an
 argument. In case it used by mistake, the user will see the following:
