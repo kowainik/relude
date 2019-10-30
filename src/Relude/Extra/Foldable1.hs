@@ -210,7 +210,7 @@ type family IsListError :: Constraint
         ( 'Text "The methods of the 'Foldable1' type class work with non-empty containers."
         ':$$: 'Text "However, one of the 'Foldable1' functions is applied to the List."
         ':$$: 'Text ""
-        ':$$: 'Text "Possible fix:"
+        ':$$: 'Text "Possible fixes:"
         ':$$: 'Text "  * Replace []"
         ':$$: 'Text "    with one of the: 'NonEmpty', 'Identity', '(c,)', 'Compose f g', 'Product f g', 'Sum f g'"
         ':$$: 'Text "  * Or use 'Foldable' class for your own risk."
@@ -221,14 +221,14 @@ type family IsListError :: Constraint
 
 'Foldable1' is not supposed to be used with the lists.
 
-In case it is used by mistake, the user  will see the following:
+In case it is used by mistake, the user will see the following:
 
 >>> head1 [1, 2, 3]
 ...
 ... The methods of the 'Foldable1' type class work with non-empty containers.
       However, one of the 'Foldable1' functions is applied to the List.
 ...
-      Possible fix:
+      Possible fixes:
         * Replace []
           with one of the: 'NonEmpty', 'Identity', '(c,)', 'Compose f g', 'Product f g', 'Sum f g'
         * Or use 'Foldable' class for your own risk.

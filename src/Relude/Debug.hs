@@ -1,14 +1,16 @@
-{-# LANGUAGE CPP                #-}
-{-# LANGUAGE DeriveDataTypeable #-}
-{-# LANGUAGE DeriveGeneric      #-}
-{-# LANGUAGE KindSignatures     #-}
-{-# LANGUAGE PolyKinds          #-}
-{-# LANGUAGE RankNTypes         #-}
-{-# LANGUAGE Trustworthy        #-}
-
-#if ( __GLASGOW_HASKELL__ >= 804 )
-{-# LANGUAGE TypeInType         #-}
-#endif
+{-# LANGUAGE CPP                  #-}
+{-# LANGUAGE ConstraintKinds      #-}
+{-# LANGUAGE DataKinds            #-}
+{-# LANGUAGE DeriveDataTypeable   #-}
+{-# LANGUAGE DeriveGeneric        #-}
+{-# LANGUAGE KindSignatures       #-}
+{-# LANGUAGE PolyKinds            #-}
+{-# LANGUAGE RankNTypes           #-}
+{-# LANGUAGE Trustworthy          #-}
+{-# LANGUAGE TypeFamilies         #-}
+{-# LANGUAGE TypeInType           #-}
+{-# LANGUAGE TypeOperators        #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
@@ -42,9 +44,11 @@ module Relude.Debug
 
 import Data.Data (Data)
 import GHC.Exts (RuntimeRep, TYPE)
+import GHC.TypeLits (ErrorMessage (..), TypeError)
 
 import Relude.Applicative (Applicative)
-import Relude.Base (Bounded, Enum, Eq, Generic, HasCallStack, Ord, Show, Typeable)
+import Relude.Base (Bounded, Char, Constraint, Enum, Eq, Generic, HasCallStack, Ord, Show, Type,
+                    Typeable)
 import Relude.String (Read, String, Text, toString)
 
 import qualified Debug.Trace as Debug
@@ -155,13 +159,68 @@ traceId = Debug.traceId
 {-# WARNING traceId "'traceId' remains in code" #-}
 
 ----------------------------------------------------------------------------
--- error and undefined
+-- error
 ----------------------------------------------------------------------------
 
--- | 'Prelude.error' that takes 'Text' as an argument.
-error :: forall (r :: RuntimeRep) . forall (a :: TYPE r) . HasCallStack
-      => Text -> a
+{- | Throw pure errors. Use this function only to when you are sure that this
+branch of code execution is not possible.  __DO NOT USE__ 'error' as a normal
+error handling mechanism.
+
+#ifdef mingw32_HOST_OS
+>>> error "oops"
+*** Exception: oops
+CallStack (from HasCallStack):
+  error, called at src\\Relude\\Debug.hs:204:11 in ...
+  ...
+#else
+>>> error "oops"
+*** Exception: oops
+CallStack (from HasCallStack):
+  error, called at src/Relude/Debug.hs:204:11 in ...
+...
+#endif
+
+⚠️__CAUTION__⚠️  Unlike "Prelude" version, 'error' takes 'Relude.Text' as an
+argument. In case it used by mistake, the user will see the following:
+
+>>> error ("oops" :: String)
+...
+... 'error' expects 'Text' but was given 'String'.
+      Possible fixes:
+          * Make sure OverloadedStrings extension is enabled
+          * Use 'error (toText msg)' instead of 'error msg'
+...
+>>> error False
+...
+... 'error' works with 'Text'
+      But given: Bool
+...
+-}
+error
+    :: forall (r :: RuntimeRep) (a :: TYPE r) (t :: Type) .
+       (HasCallStack, IsText t)
+    => t
+    -> a
 error e = Prelude.error (toString e)
+
+type IsText (t :: Type) = (t ~ Text, CheckIsText t)
+
+type family CheckIsText (t :: Type) :: Constraint where
+    CheckIsText Text = ()
+    CheckIsText [Char] = TypeError
+        ( 'Text "'error' expects 'Text' but was given 'String'."
+        ':$$: 'Text "Possible fixes:"
+        ':$$: 'Text "    * Make sure OverloadedStrings extension is enabled"
+        ':$$: 'Text "    * Use 'error (toText msg)' instead of 'error msg'"
+        )
+    CheckIsText a = TypeError
+        ( 'Text "'error' works with 'Text'"
+        ':$$: 'Text "But given: " ':<>: 'ShowType a
+        )
+
+----------------------------------------------------------------------------
+-- Undefined and undefined
+----------------------------------------------------------------------------
 
 -- | Similar to 'undefined' but data type.
 data Undefined = Undefined

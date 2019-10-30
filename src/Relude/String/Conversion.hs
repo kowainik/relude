@@ -248,7 +248,7 @@ instance ToText LText where
 
 You should always specify encoding of bytes explicitly.
 
-In case it is used by mistake, the user  will see the following:
+In case it is used by mistake, the user will see the following:
 
 >>> toText ("some string" :: ByteString)
 ...
@@ -268,7 +268,7 @@ instance EncodingError ToText "ByteString" "Text" => ToText ByteString where
 
 You should always specify encoding of bytes explicitly.
 
-In case it is used by mistake, the user  will see the following:
+In case it is used by mistake, the user will see the following:
 
 >>> toText ("some string" :: LByteString)
 ...
@@ -288,7 +288,7 @@ instance EncodingError ToText "LByteString" "Text" => ToText LByteString where
 
 You should always specify encoding of bytes explicitly.
 
-In case it is used by mistake, the user  will see the following:
+In case it is used by mistake, the user will see the following:
 
 >>> toText ("some string" :: ShortByteString)
 ...
@@ -327,7 +327,7 @@ instance ToLText LT.Text where
 
 You should always specify encoding of bytes explicitly.
 
-In case it is used by mistake, the user  will see the following:
+In case it is used by mistake, the user will see the following:
 
 >>> toLText ("some string" :: ByteString)
 ...
@@ -347,7 +347,7 @@ instance EncodingError ToLText "ByteString" "LText" => ToLText ByteString where
 
 You should always specify encoding of bytes explicitly.
 
-In case it is used by mistake, the user  will see the following:
+In case it is used by mistake, the user will see the following:
 
 >>> toLText ("some string" :: LByteString)
 ...
@@ -367,7 +367,7 @@ instance EncodingError ToLText "LByteString" "LText" => ToLText LByteString wher
 
 You should always specify encoding of bytes explicitly.
 
-In case it is used by mistake, the user  will see the following:
+In case it is used by mistake, the user will see the following:
 
 >>> toLText ("some string" :: ShortByteString)
 ...
@@ -406,7 +406,7 @@ instance ToString LText where
 
 You should always specify encoding of bytes explicitly.
 
-In case it is used by mistake, the user  will see the following:
+In case it is used by mistake, the user will see the following:
 
 >>> toString ("some string" :: ByteString)
 ...
@@ -426,7 +426,7 @@ instance EncodingError ToString "ByteString" "String" => ToString ByteString whe
 
 You should always specify encoding of bytes explicitly.
 
-In case it is used by mistake, the user  will see the following:
+In case it is used by mistake, the user will see the following:
 
 >>> toString ("some string" :: LByteString)
 ...
@@ -446,7 +446,7 @@ instance EncodingError ToString "LByteString" "String" => ToString LByteString w
 
 You should always specify encoding of bytes explicitly.
 
-In case it is used by mistake, the user  will see the following:
+In case it is used by mistake, the user will see the following:
 
 >>> toString ("some string" :: ShortByteString)
 ...
