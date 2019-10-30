@@ -3,52 +3,106 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
-## Unreleased: 0.6.0.0
+## 0.6.0.0 — Oct 30, 2019
 
-* [#190](https://github.com/kowainik/relude/pull/190):
-  Return Failure early in `<*` and `*>` too.
-* [#170](https://github.com/kowainik/relude/issues/170):
-  Implement `Elem` type family!
-* [#203](https://github.com/kowainik/relude/issues/203):
-  Implement `guarded` takes a predicate and a value and returns an Alternative.
-* [#201](https://github.com/kowainik/relude/issues/201):
-  Implement `!!?` as a safe equivalent of `!!` that returns a `Maybe`!
-* [#192](https://github.com/kowainik/relude/issues/192):
-  Reexport `foldMap'` from `Data.Foldable`.
-* [#187](https://github.com/kowainik/relude/issues/187):
-  Remove `tasty` and `tasty-hedgehog` dependencies and their redundant imports.
-* [#195](https://github.com/kowainik/relude/pull/195):
-  Implement `foldMap1` for `NonEmpty` in terms of `foldr`.
-* [#194](https://github.com/kowainik/relude/pull/194):
-  Use `mapToFst` instead of `zip` to improve list fusion in `inverseMap`.
-* [#193](https://github.com/kowainik/relude/pull/193):
-  Implement `andM`, `orM`, `allM`, and `anyM` in terms of `&&^` and `||^`.
-* [#191](https://github.com/kowainik/relude/pull/191):
-  Implement `asumMap` and `foldMapA` by coercing `foldMap`.
-  BREAKING CHANGE: Reorder type parameters to `asumMap`.
-* Use `$>` instead of `*>` and `pure` where possible.
-* [#167](https://github.com/kowainik/relude/issues/167):
-  Rename functions `prec`/`prev`, `dupe`/`dup`.
-* [#155](https://github.com/kowainik/relude/issues/155):
-  Implement `Relude.Extra.Foldable` module.
-* Re-export `GHC.Float.atan2`.
-* [#172](https://github.com/kowainik/relude/issues/172):
-  Add `Monoid` and `Semigroup` instances for `Validation` type
-* [#177](https://github.com/kowainik/relude/issues/177):
-  Improve usage of performance pragmas.
-* [#178](https://github.com/kowainik/relude/issues/178):
-  Made `die` be polymorphic in its return type.
+* [#171](https://github.com/kowainik/relude/issues/171):
+  Add custom type errors to various functions and instances.
+  + `head`, `tail`, `last`, `init`
+  + `words`, `unwords`, `lines`, `unlines`
+  + `error`
+  + `ToText`, `ToLText`, `ToString` instances for bytestrings
+  + `Foldable1` instance for ordinary lists
+  + `Monad` instance for `Validation`
+
+  (by [@vrom911](https://github.com/vrom911), [@chshersh](https://github.com/chshersh))
 * [#164](https://github.com/kowainik/relude/issues/164):
   Reexport `ShortByteString`, `toShort`/`fromShort` functions.
-* [#162](https://github.com/kowainik/relude/pull/162):
-  Use `foldr` instead of explicit recursion and `toList`.
+  (by [@vrom911](https://github.com/vrom911))
 * [#182](https://github.com/kowainik/relude/issues/182):
   Support GHC-8.8.1.
+  (by [@chshersh](https://github.com/chshersh))
+* [#168](https://github.com/kowainik/relude/pull/168),
+  [#197](https://github.com/kowainik/relude/pull/197):
+  Improve documentation significantly (more and better examples, better wording).
+  (by [@chshersh](https://github.com/chshersh),
+  [@vrom911](https://github.com/vrom911),
+  [@Cmdv](https://github.com/Cmdv))
+* [#177](https://github.com/kowainik/relude/issues/177):
+  Improve usage of performance pragmas.
+  (by [@chshersh](https://github.com/chshersh))
+* [#167](https://github.com/kowainik/relude/issues/167):
+  Rename functions (and deprecate old versions):
+    + `prec` to `prev`
+    + `dupe` to `dup`
+
+  (by [@Cmdv](https://github.com/Cmdv), [@chshersh](https://github.com/chshersh))
+* [#192](https://github.com/kowainik/relude/issues/192):
+  Reexport `foldMap'` from `Data.Foldable`.
+  (by [@tfausak](https://github.com/tfausak))
+* [#201](https://github.com/kowainik/relude/issues/201):
+  Implement `!!?` as a safe equivalent of `!!` that returns a `Maybe`.
+  (by [@kutyel](https://github.com/kutyel))
+* [#203](https://github.com/kowainik/relude/issues/203):
+  Implement the `guarded` combinator.
+  (by [@JonathanLorimer](https://github.com/JonathanLorimer))
+* [#214](https://github.com/kowainik/relude/issues/214):
+  Add `mapMaybeM` function.
+  (by [@vrom911](https://github.com/vrom911))
 * [#174](https://github.com/kowainik/relude/issues/174):
   Implement `bimapBoth` in `Relude.Extra.Tuple` module,
   mark `mapBoth` as DEPRECATED.
-* [#214](https://github.com/kowainik/relude/issues/214):
-  Add `mapMaybeM` function.
+  (by [@astynax](https://github.com/astynax))
+* [#221](https://github.com/kowainik/relude/issues/221):
+  Improve documentation for the `Validation` module significantly.
+  (by [@chshersh](https://github.com/chshersh))
+* [#176](https://github.com/kowainik/relude/issues/176):
+  Implement property-based tests for `Validation` laws.
+  (by [@astynax](https://github.com/astynax))
+* [#172](https://github.com/kowainik/relude/issues/172):
+  Add `Monoid` and `Semigroup` instances for the `Validation` type.
+  (by [@mauriciofierrom](https://github.com/mauriciofierrom))
+* [#156](https://github.com/kowainik/relude/issue/156):
+  Implement helper type-level functions in `Relude.Extra.Type`.
+  (by [@TheMatten](https://github.com/TheMatten))
+* [#170](https://github.com/kowainik/relude/issues/170):
+  Implement `Elem` type family.
+  (by [@kutyel](https://github.com/kutyel))
+* [#165](https://github.com/kowainik/relude/pull/165):
+  Re-export `GHC.Float.atan2`.
+  (by [@ethercrow](https://github.com/ethercrow))
+* [#155](https://github.com/kowainik/relude/issue/155):
+  Implement `foldlSC` — short-circuting list fold — in `Relude.Extra.Foldable`.
+  (by [@josephcsible](https://github.com/josephcsible))
+* [#158](https://github.com/kowainik/relude/issue/158):
+  Support GHC-8.6.5.
+  (by [@chshersh](https://github.com/chshersh))
+* [#148](https://github.com/kowainik/relude/issues/148):
+  Migrate HLint rules to the latest Dhall spec.
+  (by [@vrom911](https://github.com/vrom911))
+* [#178](https://github.com/kowainik/relude/issues/178):
+  Made `die` be polymorphic in its return type.
+  (by [@ilyakooo0](https://github.com/ilyakooo0))
+* [#162](https://github.com/kowainik/relude/pull/162),
+  [#189](https://github.com/kowainik/relude/pull/189),
+  [#190](https://github.com/kowainik/relude/pull/190),
+  [#191](https://github.com/kowainik/relude/pull/191),
+  [#193](https://github.com/kowainik/relude/pull/193),
+  [#194](https://github.com/kowainik/relude/pull/194),
+  [#195](https://github.com/kowainik/relude/pull/195):
+  Various refactorings and code improvements:
+  + __Breaking change:__ Reorder type parameters to `asumMap`
+  + Implement `andM`, `orM`, `allM`, and `anyM` in terms of `&&^` and `||^`
+  + Use `foldr` instead of explicit recursion and `toList`
+  + Use `mapToFst` instead of `zip` to improve list fusion in `inverseMap`
+  + Implement `foldMap1` for `NonEmpty` in terms of `foldr`
+  + Use `$>` instead of `*>` and `pure` where possible
+  + Implement `asumMap` and `foldMapA` by coercing `foldMap`
+  + Return Failure early in `<*` and `*>` too
+
+  (by [@josephcsible](https://github.com/josephcsible))
+* [#187](https://github.com/kowainik/relude/issues/187):
+  Remove `tasty` and `tasty-hedgehog` dependencies and their redundant imports.
+  (by [@dalpd](https://github.com/dalpd))
 
 ## 0.5.0 — Mar 18, 2019
 

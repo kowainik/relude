@@ -11,6 +11,7 @@ module Relude.Extra.Enum
        , inverseMap
        , next
        , prev
+       , prec
        , safeToEnum
        ) where
 
@@ -101,7 +102,7 @@ False
 >>> succ True
 *** Exception: Prelude.Enum.Bool.succ: bad argument
 -}
-next  :: (Eq a, Bounded a, Enum a) => a -> a
+next :: (Eq a, Bounded a, Enum a) => a -> a
 next e
     | e == maxBound = minBound
     | otherwise     = succ e
@@ -118,11 +119,16 @@ False
 
 @since 0.6.0.0
 -}
-prev  :: (Eq a, Bounded a, Enum a) => a -> a
+prev :: (Eq a, Bounded a, Enum a) => a -> a
 prev e
     | e == minBound = maxBound
     | otherwise     = pred e
 {-# INLINE prev #-}
+
+-- | See 'prev'.
+prec :: (Eq a, Bounded a, Enum a) => a -> a
+prec = prev
+{-# DEPRECATED prec "Use 'prev' instead, it has more idiomatic and common name" #-}
 
 {- | Returns 'Nothing' if given 'Int' outside range.
 
