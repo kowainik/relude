@@ -6,54 +6,50 @@ description:
     @__relude__@ is an alternative prelude library. If you find the default
     @Prelude@ unsatisfying, despite its advantages, consider using @relude@
     instead.
-
+    .
     == Relude design goals
-
+    .
     * __Avoid all [partial functions](https://www.reddit.com/r/haskell/comments/5n51u3/why_are_partial_functions_as_in_head_tail_bad/)__
       (like @head :: [a] -> a@). The types of partial functions lie about their
       behavior and usage of such functions can lead to the unexpected bugs. Though
       you can still use some unsafe functions from @Relude.Unsafe@ module, but they
       are not exported by default.
-
+    .
     * __Type-safety__. We like to make invalid states unrepresantable. And if it's
       possible to express this concept through the types then we will do it.
-
-          /Example:/
-
-          @
-          whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f ()
-          @
-
+      /Example:/ @ whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f () @
+    .
     * __Performance.__ Prefer @Text@ over @[String](https://www.reddit.com/r/haskell/comments/29jw0s/whats_wrong_with_string/)@,
       use spaceleak-free functions (like our custom @sum@ and @product@),
-      introduce @{-# INLINE #-}@ and @{-# SPECIALIZE #-}@ pragmas where
+      introduce @\{\-\# INLINE \#\-\}@ and @\{\-\# SPECIALIZE \#\-\}@ pragmas where
       appropriate.
-
+    .
     * __Minimalism__ (low number of dependencies). We don't force users of @relude@ to
       stick to some specific lens or text formatting or logging library. If
       possible, @relude@ tries to depend only on boot libraies.
-
+    .
     * __Convenience__ (like lifted to @MonadIO@ functions, more reexports).
       Despite minimalism, we want to bring common types and functions (like
       @containers@ and @bytestring@) into scope because they are used in almost
       every application anyways.
-
+    .
     * __Provide excellent documentation.__
-
+    .
         1. Tutorial
-
+    .
         2. Migration guide from @Prelude@
-
+    .
         3. Haddock for every function with examples tested by
            [doctest](http://hackage.haskell.org/package/doctest)).
-
+    .
         4. Documentation regarding [internal module structure](http://hackage.haskell.org/package/relude/docs/Relude.html)
-
+    .
         5. @relude@-specific [HLint](http://hackage.haskell.org/package/hlint) rules: @[.hlint.yaml](https://github.com/kowainik/relude/blob/master/.hlint.yaml)@
-
+    .
     * __User-friendliness.__ Ability to quickly migrate to @relude@ if you're familiar
-      with the common libraries like @text@ and @containers@.
-
+      with the common libraries like @text@ and @containers@. @relude@ also makes heavy usage
+      of custom type errors to provide better UX.
+    .
     * __Exploration.__ Experiment with new ideas and proposals without
       introducing breaking changes. @relude@ uses the approach with @Extra.*@
       modules which are not exported by default so it's quite easy to bring
