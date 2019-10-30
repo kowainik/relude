@@ -7,6 +7,13 @@ The changelog is available [on GitHub][2].
 
 * [#171](https://github.com/kowainik/relude/issues/171):
   Add custom type errors to various functions and instances.
+  + `head`, `tail`, `last`, `init`
+  + `words`, `unwords`, `lines`, `unlines`
+  + `error`
+  + `ToText`, `ToLText`, `ToString` instances for bytestrings
+  + `Foldable1` instance for ordinary lists
+  + `Monad` instance for `Validation`
+
   (by [@vrom911](https://github.com/vrom911), [@chshersh](https://github.com/chshersh))
 * [#164](https://github.com/kowainik/relude/issues/164):
   Reexport `ShortByteString`, `toShort`/`fromShort` functions.
@@ -28,7 +35,7 @@ The changelog is available [on GitHub][2].
     + `prec` to `prev`
     + `dupe` to `dup`
 
-  (by [@Cmdv](https://github.com/Cmdv), by [@chshersh](https://github.com/chshersh))
+  (by [@Cmdv](https://github.com/Cmdv), [@chshersh](https://github.com/chshersh))
 * [#192](https://github.com/kowainik/relude/issues/192):
   Reexport `foldMap'` from `Data.Foldable`.
   (by [@tfausak](https://github.com/tfausak))
