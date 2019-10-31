@@ -1,3 +1,5 @@
+{-# LANGUAGE CPP #-}
+
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
@@ -32,12 +34,17 @@ import qualified Control.Exception.Base (evaluate)
 
 {- | Lifted alias for 'Control.Exception.Base.evaluate' with clearer name.
 
->>> list = [2, 1, 3] :: [Int]
+>>> list = [1..5] :: [Int]
 >>> :sprint list
 list = _
 >>> () <$ evaluateWHNF list
+#if MIN_VERSION_base(4,13,0)
+>>> :sprint list
+list = 1 : _
+#else
 >>> :sprint list
 list = _ : _
+#endif
 -}
 evaluateWHNF :: MonadIO m => a -> m a
 evaluateWHNF = liftIO . Control.Exception.Base.evaluate
@@ -46,13 +53,17 @@ evaluateWHNF = liftIO . Control.Exception.Base.evaluate
 
 {- | Like 'evaluateWHNF' but discards value.
 
->>> list = [2, 1, 3] :: [Int]
+>>> list = [1..5] :: [Int]
 >>> :sprint list
 list = _
 >>> evaluateWHNF_ list
+#if MIN_VERSION_base(4,13,0)
+>>> :sprint list
+list = 1 : _
+#else
 >>> :sprint list
 list = _ : _
-
+#endif
 -}
 evaluateWHNF_ :: MonadIO m => a -> m ()
 evaluateWHNF_ what = (`seq` ()) <$!> evaluateWHNF what
@@ -61,13 +72,12 @@ evaluateWHNF_ what = (`seq` ()) <$!> evaluateWHNF what
 
 {- | Alias for @evaluateWHNF . force@ with clearer name.
 
->>> list = [2, 1, 3] :: [Int]
+>>> list = [1..5] :: [Int]
 >>> :sprint list
 list = _
 >>> () <$ evaluateNF list
 >>> :sprint list
-list = [2,1,3]
-
+list = [1,2,3,4,5]
 -}
 evaluateNF :: (NFData a, MonadIO m) => a -> m a
 evaluateNF = evaluateWHNF . force
@@ -77,13 +87,12 @@ evaluateNF = evaluateWHNF . force
 {- | Alias for @evaluateWHNF . rnf@. Similar to 'evaluateNF'
 -- but discards resulting value.
 
->>> list = [2, 1, 3] :: [Int]
+>>> list = [1..5] :: [Int]
 >>> :sprint list
 list = _
 >>> evaluateNF_ list
 >>> :sprint list
-list = [2,1,3]
-
+list = [1,2,3,4,5]
 -}
 evaluateNF_ :: (NFData a, MonadIO m) => a -> m ()
 evaluateNF_ = evaluateWHNF . rnf
