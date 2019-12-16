@@ -9,7 +9,7 @@ This module exports all extra-related stuff.
 -}
 
 module Relude.Extra
-       ( module Relude.Extra.Bifunctor       
+       ( module Relude.Extra.Bifunctor
        , module Relude.Extra.CallStack
        , module Relude.Extra.Enum
        , module Relude.Extra.Foldable
