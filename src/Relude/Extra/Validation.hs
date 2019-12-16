@@ -41,7 +41,12 @@ module Relude.Extra.Validation
 
 import GHC.TypeLits (ErrorMessage (..), TypeError)
 
-import Relude
+import Relude.Base (Constraint, Eq, Ord, Show)
+import Relude.Functor (Functor, Bifunctor)
+import Relude.Applicative (Alternative, Applicative)
+import Relude.Monad (Monad, Either(Left, Right))
+import Relude.Monoid (Monoid, Semigroup)
+import Relude.Foldable (Bitraversable, Bifoldable, Foldable, Traversable)
 
 -- >>> $setup
 -- >>> import Relude

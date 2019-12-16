@@ -25,7 +25,9 @@ module Relude.Extra.Bifunctor
        , secondF
        ) where
 
-import Relude
+import Relude.Functor (Bifunctor, Functor, second, fmap, first)
+import Relude.Function ((.))
+import Relude.Extra.Validation (bimap)
 
 {- | Maps a function over both elements of a bifunctor.
 
