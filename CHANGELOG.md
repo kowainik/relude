@@ -1,5 +1,9 @@
 # Changelog
 
+* [#227](https://github.com/kowainik/relude/pull/236)
+  Create `Relude.Extra` module
+  (by [@mxstrbng](https://github.com/mstruebing))
+
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
