@@ -16,7 +16,7 @@ module Relude.Extra.Enum
        ) where
 
 import Relude
-import Relude.Extra.Tuple
+import Relude.Extra.Tuple (mapToFst)
 
 import qualified Data.Map.Strict as M
 

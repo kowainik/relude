@@ -55,23 +55,24 @@ name @Relude.SomeCategory.Reexport@ and our own functions and types are in
 The following modules are not exported by default, but you can easily bring them to
 every module in your package by modifying your "Prelude" file:
 
-* __"Relude.Extra.Bifunctor"__: additional combinators for 'Bifunctor'.	
-* __"Relude.Extra.CallStack"__: useful functions to extract information from	
-  'CallStack'.	
-* __"Relude.Extra.Enum"__: extra utilities for types that implement 'Bounded'	
-  and 'Enum' constraints.	
-* __"Relude.Extra.Foldable"__: extra folds for instances of the 'Foldable'	
-  typeclass. Currently, just a short-circuitable left fold.	
-* __"Relude.Extra.Foldable1"__: 'Relude.Extra.Foldable1.Foldable1' typeclass	
-  like 'Foldable' but for non-empty structures.	
-* __"Relude.Extra.Group"__: grouping functions, polymorphic on return @Map@ type.	
-* __"Relude.Extra.Lens"__: minimal implementation of @lens@ package required	
-for basic usage.	
-* __"Relude.Extra.Map"__: typeclass for @Map@-like data structures.	
-* __"Relude.Extra.Newtype"__: generic functions that automatically work for any	
-  @newtype@.	
-* __"Relude.Extra.Tuple"__: functions for working with tuples.	
-* __"Relude.Extra.Type"__: functions for inspecting and working with types.	
+* __ "Relude.Extra"__: reexports every `Relude.Extra.*` module
+* __"Relude.Extra.Bifunctor"__: additional combinators for 'Bifunctor'.
+* __"Relude.Extra.CallStack"__: useful functions to extract information from
+  'CallStack'.
+* __"Relude.Extra.Enum"__: extra utilities for types that implement 'Bounded'
+  and 'Enum' constraints.
+* __"Relude.Extra.Foldable"__: extra folds for instances of the 'Foldable'
+  typeclass. Currently, just a short-circuitable left fold.
+* __"Relude.Extra.Foldable1"__: 'Relude.Extra.Foldable1.Foldable1' typeclass
+  like 'Foldable' but for non-empty structures.
+* __"Relude.Extra.Group"__: grouping functions, polymorphic on return @Map@ type.
+* __"Relude.Extra.Lens"__: minimal implementation of @lens@ package required
+for basic usage.
+* __"Relude.Extra.Map"__: typeclass for @Map@-like data structures.
+* __"Relude.Extra.Newtype"__: generic functions that automatically work for any
+  @newtype@.
+* __"Relude.Extra.Tuple"__: functions for working with tuples.
+* __"Relude.Extra.Type"__: functions for inspecting and working with types.
 * __"Relude.Extra.Validation"__: 'Relude.Extra.Validation.Validation' data type.
 * __"Relude.Unsafe"__: unsafe partial functions (produce 'error') for lists and
   'Maybe'.
@@ -173,10 +174,6 @@ to evaluate expressions to weak-head normal form or normal form.
 __"Relude.Exception"__ contains reexports from "Control.Exception", introduces
 'bug' function as better 'error' and 'Exc' pattern synonym for convenient
 pattern-matching on exceptions.
--}
-
-{- $extra
-__"Relude.Extra"__ contains reexports from "Relude.Extra".
 -}
 
 {- $file
