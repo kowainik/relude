@@ -14,7 +14,6 @@ module Relude.Extra.Foldable
 
 import Relude
 
-
 {- | A left-associative fold that's tail-recursive but can still short-circuit.
 Returning a 'Left' short-circuits and immediately returns the value inside.
 Returning a 'Right' continues the fold as usual with the value inside.
