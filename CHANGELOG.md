@@ -3,6 +3,13 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
+
+## Unreleased
+* [#227](https://github.com/kowainik/relude/pull/236)
+  Create `Relude.Extra` module
+  (by [@mxstrbng](https://github.com/mstruebing))
+
+
 ## 0.6.0.0 — Oct 30, 2019
 
 * [#171](https://github.com/kowainik/relude/issues/171):

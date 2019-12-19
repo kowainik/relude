@@ -55,6 +55,7 @@ name @Relude.SomeCategory.Reexport@ and our own functions and types are in
 The following modules are not exported by default, but you can easily bring them to
 every module in your package by modifying your "Prelude" file:
 
+* __ "Relude.Extra"__: reexports every `Relude.Extra.*` module
 * __"Relude.Extra.Bifunctor"__: additional combinators for 'Bifunctor'.
 * __"Relude.Extra.CallStack"__: useful functions to extract information from
   'CallStack'.
