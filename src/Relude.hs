@@ -156,7 +156,7 @@ __"Relude.Bool"__ contains 'Bool' data type with different predicates and combin
 
 {- $container
 __"Relude.Container"__ provides 'One' typeclass for creating data structures
-from singleton lement and reexports of types from packages @containers@ and
+from singleton element and reexports of types from packages @containers@ and
 @unordered-containers@.
 -}
 
