@@ -25,17 +25,38 @@ module Relude.Lifted.Concurrent
 
          -- * STM
        , STM
-       , TVar
        , atomically
+       , STM.throwSTM
+       , STM.catchSTM
+
+         -- * TVar
+       , TVar
        , newTVarIO
        , readTVarIO
        , STM.modifyTVar'
        , STM.newTVar
        , STM.readTVar
        , STM.writeTVar
+
+         -- * TMVar
+       , TMVar
+       , STM.newTMVar
+       , STM.newEmptyTMVar
+       , newTMVarIO
+       , newEmptyTMVarIO
+       , STM.takeTMVar
+       , STM.putTMVar
+       , STM.readTMVar
+       , STM.tryReadTMVar
+       , STM.swapTMVar
+       , STM.tryTakeTMVar
+       , STM.tryPutTMVar
+       , STM.isEmptyTMVar
+       , STM.mkWeakTMVar
        ) where
 
 import Control.Concurrent.MVar (MVar)
+import Control.Concurrent.STM.TMVar (TMVar)
 import Control.Concurrent.STM.TVar (TVar)
 import Control.Monad.STM (STM)
 
@@ -46,9 +67,13 @@ import Relude.Monad (Maybe, MonadIO (..))
 
 import qualified Control.Concurrent.MVar as CCM (newEmptyMVar, newMVar, putMVar, readMVar, swapMVar,
                                                  takeMVar, tryPutMVar, tryReadMVar, tryTakeMVar)
+import qualified Control.Concurrent.STM.TMVar as STM (isEmptyTMVar, mkWeakTMVar, newEmptyTMVar,
+                                                      newEmptyTMVarIO, newTMVar, newTMVarIO,
+                                                      putTMVar, readTMVar, swapTMVar, takeTMVar,
+                                                      tryPutTMVar, tryReadTMVar, tryTakeTMVar)
 import qualified Control.Concurrent.STM.TVar as STM (modifyTVar', newTVar, newTVarIO, readTVar,
                                                      readTVarIO, writeTVar)
-import qualified Control.Monad.STM as STM (atomically)
+import qualified Control.Monad.STM as STM (atomically, catchSTM, throwSTM)
 
 ----------------------------------------------------------------------------
 -- Lifted Control.Concurrent.MVar
@@ -129,3 +154,15 @@ readTVarIO :: MonadIO m => TVar a -> m a
 readTVarIO = liftIO . STM.readTVarIO
 {-# INLINE readTVarIO #-}
 {-# SPECIALIZE readTVarIO :: TVar a -> IO a #-}
+
+-- | Lifted to 'MonadIO' version of 'STM.newTMVarIO'.
+newTMVarIO :: MonadIO m => a -> m (TMVar a)
+newTMVarIO = liftIO . STM.newTMVarIO
+{-# INLINE newTMVarIO #-}
+{-# SPECIALIZE newTMVarIO :: a -> IO (TMVar a) #-}
+
+-- | Lifted to 'MonadIO' version of 'STM.newEmptyTMVarIO'.
+newEmptyTMVarIO :: MonadIO m => m (TMVar a)
+newEmptyTMVarIO = liftIO STM.newEmptyTMVarIO
+{-# INLINE newEmptyTMVarIO #-}
+{-# SPECIALIZE newEmptyTMVarIO :: IO (TMVar a) #-}
