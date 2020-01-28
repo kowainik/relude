@@ -26,8 +26,6 @@ module Relude.Lifted.Concurrent
          -- * STM
        , STM
        , atomically
-       , STM.orElse
-       , STM.check
        , STM.throwSTM
        , STM.catchSTM
 
@@ -75,7 +73,7 @@ import qualified Control.Concurrent.STM.TMVar as STM (isEmptyTMVar, mkWeakTMVar,
                                                       tryPutTMVar, tryReadTMVar, tryTakeTMVar)
 import qualified Control.Concurrent.STM.TVar as STM (modifyTVar', newTVar, newTVarIO, readTVar,
                                                      readTVarIO, writeTVar)
-import qualified Control.Monad.STM as STM (atomically, catchSTM, check, orElse, throwSTM)
+import qualified Control.Monad.STM as STM (atomically, catchSTM, throwSTM)
 
 ----------------------------------------------------------------------------
 -- Lifted Control.Concurrent.MVar

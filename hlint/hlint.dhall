@@ -650,8 +650,6 @@ in [ Rule.Arguments { arguments =
    , warnReexport "tryTakeMVar"  "Control.Concurrent.MVar"
    , warnReexport "STM"        "Control.Monad.STM"
    , warnReexport "atomically" "Control.Monad.STM"
-   , warnReexport "orElse"     "Control.Monad.STM"
-   , warnReexport "check"      "Control.Monad.STM"
    , warnReexport "throwSTM"   "Control.Monad.STM"
    , warnReexport "catchSTM"   "Control.Monad.STM"
    , warnReexport "TVar" "Control.Concurrent.STM.TVar"
