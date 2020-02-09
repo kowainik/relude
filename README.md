@@ -166,11 +166,12 @@ library
 ```
 
 If you want to be able to import `Extra.*` modules when using `mixins` approach,
-you need to list those modules under `mixins` field as well, like this:
+you need to add `relude` a second time, like this:
 
 ```cabal
   mixins:              base hiding (Prelude)
-                     , relude (Relude as Prelude, Relude.Extra.Enum)
+                     , relude (Relude as Prelude)
+                     , relude
 ```
 
 ### NoImplicitPrelude [↑](#structure-of-this-tutorial)
