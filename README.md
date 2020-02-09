@@ -165,8 +165,17 @@ library
   default-language:    Haskell2010
 ```
 
-If you want to be able to import `Extra.*` modules when using `mixins` approach,
-you need to add `relude` a second time, like this:
+This way, you can't access any other module of relude. If you want to use e.g.
+`Relude.Extra` (which reexports all `Relude.Extra.*` modules), you can add it
+like this:
+
+```cabal
+  mixins:              base hiding (Prelude)
+                     , relude (Relude as Prelude, Relude.Extra)
+```
+
+If you want to be able to import every module of relude, you need to mixin `relude`
+a second time, like this:
 
 ```cabal
   mixins:              base hiding (Prelude)
