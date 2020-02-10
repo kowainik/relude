@@ -165,8 +165,8 @@ library
   default-language:    Haskell2010
 ```
 
-This way, you can't access any other module of relude. If you want to use e.g.
-`Relude.Extra.Enum`, you need to list it (and potentially other modules) under
+If you want to use e.g. `Relude.Extra.Enum`, you need to list it
+(and potentially other modules, like `Relude.Unsafe`) under
 the `mixins` field as well, like this:
 
 ```cabal
