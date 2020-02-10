@@ -183,9 +183,6 @@ a second time, like this:
                      , relude
 ```
 
-For more details on this `mixin` feature, see the
-[Cabal user guide](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-mixins).
-
 ### NoImplicitPrelude [↑](#structure-of-this-tutorial)
 
 Disable the built-in prelude at the top of your file:
