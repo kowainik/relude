@@ -166,12 +166,12 @@ library
 ```
 
 This way, you can't access any other module of relude. If you want to use e.g.
-`Relude.Extra` (which reexports all `Relude.Extra.*` modules), you need to list
-it (and potentially other modules) under mixins field as well, like this:
+`Relude.Extra.Enum`, you need to list it (and potentially other modules) under
+the `mixins` field as well, like this:
 
 ```cabal
   mixins:              base hiding (Prelude)
-                     , relude (Relude as Prelude, Relude.Extra)
+                     , relude (Relude as Prelude, Relude.Extra.Enum)
 ```
 
 If you want to be able to import every module of relude, you need to add `relude`
