@@ -166,15 +166,15 @@ library
 ```
 
 This way, you can't access any other module of relude. If you want to use e.g.
-`Relude.Extra` (which reexports all `Relude.Extra.*` modules), you can add it
-like this:
+`Relude.Extra` (which reexports all `Relude.Extra.*` modules), you need to list
+it (and potentially other modules) under mixins field as well, like this:
 
 ```cabal
   mixins:              base hiding (Prelude)
                      , relude (Relude as Prelude, Relude.Extra)
 ```
 
-If you want to be able to import every module of relude, you need to mixin `relude`
+If you want to be able to import every module of relude, you need to add `relude`
 a second time, like this:
 
 ```cabal
@@ -182,6 +182,9 @@ a second time, like this:
                      , relude (Relude as Prelude)
                      , relude
 ```
+
+For more details on this `mixin` feature, see the
+[Cabal user guide](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-mixins).
 
 ### NoImplicitPrelude [↑](#structure-of-this-tutorial)
 
