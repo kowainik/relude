@@ -165,12 +165,22 @@ library
   default-language:    Haskell2010
 ```
 
-If you want to be able to import `Extra.*` modules when using `mixins` approach,
-you need to list those modules under `mixins` field as well, like this:
+If you want to use e.g. `Relude.Extra.Enum`, you need to list it
+(and potentially other modules, like `Relude.Unsafe`) under
+the `mixins` field as well, like this:
 
 ```cabal
   mixins:              base hiding (Prelude)
                      , relude (Relude as Prelude, Relude.Extra.Enum)
+```
+
+If you want to be able to import every module of relude, you need to add `relude`
+a second time, like this:
+
+```cabal
+  mixins:              base hiding (Prelude)
+                     , relude (Relude as Prelude)
+                     , relude
 ```
 
 ### NoImplicitPrelude [↑](#structure-of-this-tutorial)
