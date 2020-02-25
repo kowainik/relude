@@ -20,18 +20,15 @@ matrix:
   - ghc: 8.2.2
   - ghc: 8.4.4
   - ghc: 8.6.5
-  - ghc: 8.8.1
+  - ghc: 8.8.2
 
   # stack
-  - ghc: 8.8.1
+  - ghc: 8.8.2
     env: STACK_YAML="$TRAVIS_BUILD_DIR/stack.yaml"
 
 install:
   - |
     if [ -z "$STACK_YAML" ]; then
-      ghc --version
-      cabal --version
-      cabal update
       cabal build --enable-tests --enable-benchmarks --write-ghc-environment-files=always
     else
       # install stack

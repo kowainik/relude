@@ -6,7 +6,7 @@ SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 -}
 
-module Main where
+module Main (main) where
 
 import Relude hiding (show)
 

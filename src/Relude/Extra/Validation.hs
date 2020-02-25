@@ -6,6 +6,8 @@
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
 
+{-# OPTIONS_GHC -Wno-redundant-constraints #-}
+
 {- |
 Copyright:  (c) 2014 Chris Allen, Edward Kmett
             (c) 2018-2019 Kowainik

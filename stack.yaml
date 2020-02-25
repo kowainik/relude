@@ -1,4 +1,1 @@
-resolver: nightly-2019-10-31
-
-nix:
-  packages: [binutils, gmp]
+resolver: lts-15.1

@@ -37,7 +37,7 @@ Below you can find key design principles behind `relude`:
 4. **Minimalism** (low number of dependencies). We don't force users of `relude` to
    stick to some specific lens or text formatting or logging library. If
    possible, `relude` tries to depend only on boot libraries.
-   [Dependency graph](relude-dependency-graph.pdf) of `relude` can give you clearer picture.
+   [Dependency graph](relude-dependency-graph.png) of `relude` can give you clearer picture.
 5. **Convenience** (e.g lifted to `MonadIO` functions, more reexports). Despite minimalism, we
    want to bring common types and functions (like `containers` and `bytestring`)
    into scope because they are used in almost every application anyways.
@@ -62,8 +62,8 @@ This tutorial has several parts:
 
 1. [When to use an alternative prelude?](#when-to-use-an-alternative-prelude-)
 2. [Get started](#get-started-)
-    * [base-noprelude](#base-noprelude-)
     * [Mixins](#mixins-)
+    * [base-noprelude](#base-noprelude-)
     * [NoImplicitPrelude](#NoImplicitPrelude-)
 3. [Difference from Prelude](#difference-from-prelude-)
 4. [Reexports](#reexports-)
@@ -85,7 +85,7 @@ which are not exposed by `Prelude`, you need to import them, adding necessary
 libraries to your project dependencies. Unlike ordinary libraries, alternative
 preludes provide different set of available by default functions and data types.
 
-Replacing default `Prelude` from `base` has the following disadvantages:
+Replacing default `Prelude` from `base` has the following _disadvantages_:
 
 1. Increased threshold entrance: you need to learn a different standard library.
     + `relude` tries to lower this threshold as much as possible: excellent
@@ -94,7 +94,7 @@ Replacing default `Prelude` from `base` has the following disadvantages:
 2. Extra dependencies: adding more libraries to dependencies increases build
    times and maintenance burden.
    + `relude` depends only on boot libraries (almost) which results in small build time, follows
-     [PvP](https://pvp.haskell.org/) and cares about backwards compatibility.
+     [PVP](https://pvp.haskell.org/) and cares about backwards compatibility.
 
 However, using an alternative prelude, specifically `relude`, has the following
 **advantages**:
@@ -115,36 +115,13 @@ Our recommendations when to use `relude`:
 If you want to start using `relude` in your project and explore it with the help
 of the compiler, set everything up according to one of the instructions below.
 
-### base-noprelude [↑](#structure-of-this-tutorial)
-
-This is the recommended way to use custom prelude. It requires you to perform
-the following steps:
-
-1. Replace the `base` dependency with corresponding version of `base-noprelude` in
-   your `.cabal` file.
-2. Add a `relude` dependency to your `.cabal` file.
-3. Add the following `Prelude` module to your project (both to filesystem and to `exposed-modules`):
-   ```haskell
-   module Prelude
-          ( module Relude
-          ) where
-
-   import Relude
-   ```
-   > **NOTE:** if you use [`summoner`](https://github.com/kowainik/summoner) to generate Haskell project,
-   > this tool can automatically create such structure for you when you specify custom prelude.
-4. Optionally modify your `Prelude` to include more or less functions. Probably
-   you want to hide something from `Relude` module. Or maybe you want to add
-   something from `Relude.Extra.*` modules!
-
-This is a very convenient way to add a custom prelude to your project because
-you don't need to import module manually inside each file and enable the
-`NoImplicitPrelude` extension.
-
 ### Mixins [↑](#structure-of-this-tutorial)
 
+This is the recommended way to use custom prelude. It requires you to perform
+the following steps.
+
 You can use Cabal feature `mixins` to replace the default `Prelude` with `Relude`
-without need to add extra dependencies or import `Relude` manually each time.
+without need to add extra dependencies or import `Relude` manually in each module.
 See the following example:
 
 > **NOTE:** this requires Cabal version to be at least `2.2`
@@ -157,7 +134,7 @@ version:             0.0.0.0
 library
   exposed-modules:     Example
   build-depends:       base >= 4.10 && < 4.13
-                     , relude ^>= 0.4.0
+                     , relude ^>= 0.6.0.0
 
   mixins:              base hiding (Prelude)
                      , relude (Relude as Prelude)
@@ -165,23 +142,53 @@ library
   default-language:    Haskell2010
 ```
 
+> **NOTE:** if you use [`summoner`](https://github.com/kowainik/summoner) to generate Haskell project,
+> this tool can automatically create such structure for you when you specify custom prelude.
+
 If you want to use e.g. `Relude.Extra.Enum`, you need to list it
 (and potentially other modules, like `Relude.Unsafe`) under
 the `mixins` field as well, like this:
 
 ```cabal
-  mixins:              base hiding (Prelude)
-                     , relude (Relude as Prelude, Relude.Extra.Enum)
+  mixins: base hiding (Prelude)
+        , relude (Relude as Prelude, Relude.Extra.Enum)
 ```
 
-If you want to be able to import every module of relude, you need to add `relude`
-a second time, like this:
+If you want to bring into scope all `Extra.*` modules, you can add
+only `Relude.Extra` module to `mixins`, and later you can import all
+extra functions and data types from `Relude.Extra`. This is the
+easiest way to bring all safe functions from `relude` to your project.
 
 ```cabal
-  mixins:              base hiding (Prelude)
-                     , relude (Relude as Prelude)
-                     , relude
+  mixins: base hiding (Prelude)
+        , relude (Relude as Prelude, Relude.Extra)
 ```
+
+### base-noprelude [↑](#structure-of-this-tutorial)
+
+Alternatively, you can use the `base-noprelude` trick to use
+alternative preludes. This approach can be useful if you want to have
+your own `Prelude` with some custom functions, not provided by
+`relude`. To use the trick, perform the following steps:
+
+1. Replace the `base` dependency with corresponding version of `base-noprelude` in
+   your `.cabal` file.
+2. Add a `relude` dependency to your `.cabal` file.
+3. Add the following `Prelude` module to your project (both to filesystem and to `exposed-modules`):
+   ```haskell
+   module Prelude
+       ( module Relude
+       ) where
+
+   import Relude
+   ```
+4. Optionally modify your `Prelude` to include more or less functions. Probably
+   you want to hide something from `Relude` module. Or maybe you want to add
+   something from `Relude.Extra.*` modules!
+
+This is a very convenient way to add a custom prelude to your project because
+you don't need to import module manually inside each file and enable the
+`NoImplicitPrelude` extension.
 
 ### NoImplicitPrelude [↑](#structure-of-this-tutorial)
 
@@ -261,7 +268,12 @@ Multiple sorting functions are available:
 `readMaybe` and `readEither` are like `read` but total and give either `Maybe`
 or `Either` with parse error.
 
-`(&)` – reverse application. `x & f & g` instead of `g $ f $ x` is useful sometimes.
+`(&)` – reverse application. The following three expressions are
+semantically equivalent:
+
+* `g (f x)`
+* `g $ f $ x`
+* `x & f & g`
 
 Some generally useful modules from `base` package, like: `Control.Applicative`,
 `Data.Traversable`, `Data.Monoid`, `Data.List`, and lots of others.
@@ -297,10 +309,16 @@ Then, some commonly used types:
 
 ### text & bytestring
 
-`relude` exports `Text` and `ByteString` (as well as synonyms `LText` and `LByteString`
-for lazy versions) and some functions work with `Text` instead of `String` –
-specifically, IO functions (`readFile`, `putStrLn`, etc) and `show`. In fact, `show`
-is polymorphic and can produce strict or lazy `Text`, `String`, or `ByteString`.
+`relude` exports `Text` and `ByteString` (as well as synonyms `LText`
+and `LByteString` for lazy versions). In addition, some functions work
+with `Text` instead of `String` – `words`, `lines`, etc. In
+addtion. `relude` provides specialised versions of `IO` functions to
+work with `Text` and `ByteString` — `readFileText`, `writeFileBS`,
+etc.
+
+`show` is polymorphic and can produce strict or lazy `Text` or
+`ByteString` as well as `String`.
+
 Also, `toText/toLText/toString` can convert `Text|LText|String` types to
 `Text/LText/String`. If you want to convert to and from `ByteString` use
 `encodeUtf8/decodeUtf8` functions.
@@ -310,7 +328,7 @@ Also, `toText/toLText/toString` can convert `Text|LText|String` types to
 The following parts of these two libraries are exported:
 
 * Transformers: `State[T]`, `Reader[T]`, `ExceptT`, `MaybeT`.
-* Classes: `MonadReader`, `MonadState`, `MonadError`.
+* Classes: `MonadReader`, `MonadState`.
 
 ### Deepseq
 
@@ -337,7 +355,9 @@ Finally, we can move to part describing the new cool features we bring with `rel
   foldMapM :: (Monoid b, Monad m, Foldable f) => (a -> m b) -> f a -> m b
   ```
 * `when(Just|Nothing|Left|Right|NotEmpty)[M][_]`
-  let you conditionally execute something. Before:
+  let you conditionally execute something.
+
+  **Before:**
 
   ```haskell
   case mbX of
@@ -345,7 +365,7 @@ Finally, we can move to part describing the new cool features we bring with `rel
       Just x  -> f x
   ```
 
-  After:
+  **After:**
 
   ```haskell
   whenJust mbX $ \x ->

@@ -6,7 +6,7 @@ SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 -}
 
-module Main where
+module Main (main) where
 
 import Relude
 
@@ -21,5 +21,3 @@ main = do
   hSetEncoding stderr utf8
 
   mapM checkParallel hedgehogTestList >>= \p -> if and p then exitSuccess else exitFailure
-
- 
