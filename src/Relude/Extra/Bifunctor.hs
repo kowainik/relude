@@ -29,7 +29,7 @@ import Relude
 
 {- | Maps a function over both elements of a bifunctor.
 
->>> bimapBoth length ("a", "bb")
+>>> bimapBoth length ([True], [False, True])
 (1,2)
 >>> map (bimapBoth not) [Left True, Right False]
 [Left False,Right True]
