@@ -171,9 +171,9 @@ alternative preludes. This approach can be useful if you want to have
 your own `Prelude` with some custom functions, not provided by
 `relude`. To use the trick, perform the following steps:
 
-1. Replace the `base` dependency with corresponding version of `base-noprelude` in
+1. Replace the `base` dependency with the corresponding version of `base-noprelude` in
    your `.cabal` file.
-2. Add a `relude` dependency to your `.cabal` file.
+2. Add the `relude` dependency to your `.cabal` file.
 3. Add the following `Prelude` module to your project (both to filesystem and to `exposed-modules`):
    ```haskell
    module Prelude
@@ -182,8 +182,8 @@ your own `Prelude` with some custom functions, not provided by
 
    import Relude
    ```
-4. Optionally modify your `Prelude` to include more or less functions. Probably
-   you want to hide something from `Relude` module. Or maybe you want to add
+4. Optionally modify your `Prelude` to include more or fewer functions. Probably
+   you want to hide something from the `Relude` module. Or maybe you want to add
    something from `Relude.Extra.*` modules!
 
 This is a very convenient way to add a custom prelude to your project because
@@ -312,7 +312,7 @@ Then, some commonly used types:
 `relude` exports `Text` and `ByteString` (as well as synonyms `LText`
 and `LByteString` for lazy versions). In addition, some functions work
 with `Text` instead of `String` – `words`, `lines`, etc. In
-addtion. `relude` provides specialised versions of `IO` functions to
+addtion, `relude` provides specialised versions of the `IO` functions to
 work with `Text` and `ByteString` — `readFileText`, `writeFileBS`,
 etc.
 
