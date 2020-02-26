@@ -155,7 +155,7 @@ instance (Semigroup e, Semigroup a) => Semigroup (Validation e a) where
 
 @since 0.6.0.0
 -}
-instance (Semigroup e, Monoid a) => Monoid (Validation e a) where
+instance (Semigroup e, Semigroup a, Monoid a) => Monoid (Validation e a) where
     mempty :: Validation e a
     mempty = Success mempty
     {-# INLINE mempty #-}
