@@ -168,13 +168,14 @@ easiest way to bring all safe functions from `relude` to your project.
 
 Alternatively, you can use the `base-noprelude` trick to use
 alternative preludes. This approach can be useful if you want to have
-your own `Prelude` with some custom functions, not provided by
+your own `Prelude` module with some custom functions, not provided by
 `relude`. To use the trick, perform the following steps:
 
 1. Replace the `base` dependency with the corresponding version of `base-noprelude` in
    your `.cabal` file.
 2. Add the `relude` dependency to your `.cabal` file.
-3. Add the following `Prelude` module to your project (both to filesystem and to `exposed-modules`):
+3. Create the file called `Prelude.hs` in your source directory with
+   the following content:
    ```haskell
    module Prelude
        ( module Relude
@@ -182,7 +183,11 @@ your own `Prelude` with some custom functions, not provided by
 
    import Relude
    ```
-4. Optionally modify your `Prelude` to include more or fewer functions. Probably
+4. Add this module to `exposed-modules` in your `.cabal` file:
+   ```cabal
+   exposed-modules: Prelude
+   ```
+5. Optionally modify your `Prelude` to include more or fewer functions. Probably
    you want to hide something from the `Relude` module. Or maybe you want to add
    something from `Relude.Extra.*` modules!
 

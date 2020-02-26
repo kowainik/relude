@@ -42,8 +42,8 @@ install:
 script:
   - |
     if [ -z "$STACK_YAML" ]; then
-      cabal test --enable-tests
       cabal haddock
+      cabal test all --enable-tests
     else
       stack test --system-ghc
     fi
