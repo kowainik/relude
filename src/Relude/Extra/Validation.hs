@@ -160,6 +160,10 @@ instance (Semigroup e, Monoid a) => Monoid (Validation e a) where
     mempty = Success mempty
     {-# INLINE mempty #-}
 
+    mappend :: Validation e a -> Validation e a -> Validation e a
+    mappend = (<>)
+    {-# INLINE mappend #-}
+
 {- | This instance if the most important instance for the 'Validation' data
 type. It's responsible for the many implementations. And it allows to accumulate
 errors while performing validation or combining the results in the applicative

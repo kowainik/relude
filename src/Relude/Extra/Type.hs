@@ -59,7 +59,7 @@ typeName = show (typeRep (Proxy @a))
 
 {- | Concatenates type-level lists.
 
-#if ( __GLASGOW_HASKELL__ >= 802 )
+#if ( __GLASGOW_HASKELL__ >= 806 )
 
 >>> :kind! '[ 'Just 5, 'Nothing] ++ '[ 'Just 3, 'Nothing, 'Just 1]
 '[ 'Just 5, 'Nothing] ++ '[ 'Just 3, 'Nothing, 'Just 1] :: [Maybe
