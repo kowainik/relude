@@ -1,25 +1,34 @@
-environment:
-  STACK_ROOT: C:\sr
-  STACK_VERSION: 2.1.1
+clone_folder: "c:\\WORK"
+clone_depth: 5
 
-  # Workaround a gnarly bug https://github.com/haskell/cabal/issues/5386
-  # See: https://www.fpcomplete.com/blog/2018/06/sed-a-debugging-story
-  # TODO: check if it's fixed once we switch to lst-13 and GHC 8.6
-  TMP: "c:\\tmp"
+# Do not build feature branch with open Pull Requests
+skip_branch_with_pr: true
 
-  matrix:
-    - STACK_YAML: stack.yaml
-
-install:
-  - choco install -y haskell-stack --version %STACK_VERSION%
-  - stack setup > nul
+platform:
+  - x86_64
 
 cache:
-  - "%STACK_ROOT% -> %STACK_YAML%, appveyor.yml"
-  - ".stack-work -> %STACK_YAML%, appveyor.yml"
+  - "C:\\SR"
+  - dist-newstyle
+
+environment:
+  global:
+    CABOPTS: --store-dir=C:\\SR
+
+  matrix:
+    - GHCVER: 8.8.2
+
+install:
+  - choco source add -n mistuke -s https://www.myget.org/F/mistuke/api/v2
+  - choco install -y cabal --version 3.0.0.0
+  - choco install -y ghc   --version 8.8.2
+  - refreshenv
+
+before_build:
+  - cabal --version
+  - ghc   --version
+  - cabal %CABOPTS% update
 
 build_script:
-  - stack build --test --bench --no-run-tests --no-run-benchmarks
-
-test_script:
-  - stack test
+  - cabal %CABOPTS% build --enable-tests --enable-benchmarks --write-ghc-environment-files=always
+  - cabal %CABOPTS% test  --enable-tests

@@ -6,6 +6,8 @@
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
 
+{-# OPTIONS_GHC -Wno-redundant-constraints #-}
+
 {- |
 Copyright:  (c) 2014 Chris Allen, Edward Kmett
             (c) 2018-2019 Kowainik
@@ -153,10 +155,14 @@ instance (Semigroup e, Semigroup a) => Semigroup (Validation e a) where
 
 @since 0.6.0.0
 -}
-instance (Semigroup e, Monoid a) => Monoid (Validation e a) where
+instance (Semigroup e, Semigroup a, Monoid a) => Monoid (Validation e a) where
     mempty :: Validation e a
     mempty = Success mempty
     {-# INLINE mempty #-}
+
+    mappend :: Validation e a -> Validation e a -> Validation e a
+    mappend = (<>)
+    {-# INLINE mappend #-}
 
 {- | This instance if the most important instance for the 'Validation' data
 type. It's responsible for the many implementations. And it allows to accumulate
