@@ -40,7 +40,7 @@ description:
         2. Migration guide from @Prelude@
     .
         3. Haddock for every function with examples tested by
-           [doctest](http://hackage.haskell.org/package/doctest)).
+           [doctest](http://hackage.haskell.org/package/doctest).
     .
         4. Documentation regarding [internal module structure](http://hackage.haskell.org/package/relude/docs/Relude.html)
     .
