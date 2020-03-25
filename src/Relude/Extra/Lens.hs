@@ -200,7 +200,7 @@ over l fa = runIdentity . l (Identity . fa)
 {-# INLINE over #-}
 
 -- | The operator form of 'view' with the arguments flipped.
-infixr 4 ^.
+infixl 8 ^.
 (^.) :: s -> Lens' s a -> a
 s ^. l = view l s
 {-# INLINE (^.) #-}

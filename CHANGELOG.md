@@ -5,7 +5,11 @@ The changelog is available [on GitHub][2].
 
 
 ## Unreleased
-* [#227](https://github.com/kowainik/relude/pull/236)
+
+* [#249](https://github.com/kowainik/relude/issues/249):
+  __Breaking change:__ Fix infix of the `Relude.Extra.Lens` `(^.)` operator.
+  Change it to `infixl 8`.
+* [#227](https://github.com/kowainik/relude/issues/227):
   Create `Relude.Extra` module
   (by [@mxstrbng](https://github.com/mstruebing))
 
