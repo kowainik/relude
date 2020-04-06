@@ -15,7 +15,7 @@ description:
       you can still use some unsafe functions from @Relude.Unsafe@ module, but they
       are not exported by default.
     .
-    * __Type-safety__. We like to make invalid states unrepresantable. And if it's
+    * __Type-safety__. We like to make invalid states unrepresentable. And if it's
       possible to express this concept through the types then we will do it.
       /Example:/ @ whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f () @
     .
