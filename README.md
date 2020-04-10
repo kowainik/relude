@@ -56,6 +56,12 @@ Below you can find key design principles behind `relude`:
 
 This README contains introduction to `relude` and a tutorial on how to use it.
 
+For an introduction to the alternative preludes, check the following
+blog post by [Type Classes](https://typeclasses.com/) that highlights
+`relude`.
+
+* [No implicit Prelude](https://typeclasses.com/ghc/no-implicit-prelude)
+
 ## Structure of this tutorial
 
 This tutorial has several parts:
