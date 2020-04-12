@@ -66,18 +66,18 @@ blog post by [Type Classes](https://typeclasses.com/) that highlights
 
 This tutorial has several parts:
 
-1. [When to use an alternative prelude?](#when-to-use-an-alternative-prelude-)
-2. [Get started](#get-started-)
-    * [Mixins](#mixins-)
-    * [base-noprelude](#base-noprelude-)
-    * [NoImplicitPrelude](#NoImplicitPrelude-)
-3. [Difference from Prelude](#difference-from-prelude-)
-4. [Reexports](#reexports-)
-5. [What's new?](#whats-new-)
-6. [Migration guide](#migration-guide-)
-7. [Comparison with other alternative preludes](#comparison-with-other-alternative-preludes-)
-    * [Relude vs Protolude](#relude-vs-protolude-)
-8. [For developers](#for-developers-)
+1. [When to use an alternative prelude?](#when-to-use-an-alternative-prelude)
+2. [Get started](#get-started)
+    * [Mixins](#mixins)
+    * [base-noprelude](#base-noprelude)
+    * [NoImplicitPrelude](#NoImplicitPrelude)
+3. [Difference from Prelude](#difference-from-prelude)
+4. [Reexports](#reexports)
+5. [What's new?](#whats-new)
+6. [Migration guide](#migration-guide)
+7. [Comparison with other alternative preludes](#comparison-with-other-alternative-preludes)
+    * [Relude vs Protolude](#relude-vs-protolude)
+8. [For developers](#for-developers)
 
 This is neither a tutorial on _Haskell_ nor tutorial on each function contained
 in `relude`. For detailed documentation of every function together with examples
