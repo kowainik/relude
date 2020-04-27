@@ -26,7 +26,7 @@ import Relude.Monad (Maybe (..), Monad (..))
 -- $setup
 -- >>> import Relude
 
-{- | For safe work with lists using functinons for 'NonEmpty'.
+{- | For safe work with lists using functions for 'NonEmpty'.
 
 >>> viaNonEmpty head [1]
 Just 1
