@@ -243,7 +243,7 @@ Main differences from `Prelude` can be grouped into the following categories:
   + `read`
   + `lookup` for lists
   + `log`
-* Completely new functions are brougth into scope
+* Completely new functions are brought into scope
   + See [What's new?](#whats-new-) section for a detailed overview.
 * New reexports
   + See [Reexports](#reexports-) section for a detailed overview.
@@ -395,7 +395,7 @@ Finally, we can move to part describing the new cool features we bring with `rel
   with clear semantic.
 * `using(Reader|State)[T]` functions as aliases for `flip run(Reader|State)[T]`.
 * [`One` type class](src/Relude/Container/One.hs)
-  for creating singleton containers. Even monomorhpic ones like `Text`.
+  for creating singleton containers. Even monomorphic ones like `Text`.
 * `evaluateWHNF` and `evaluateNF` functions as clearer and lifted aliases for
   `evaluate` and `evaluate . force`.
 * `MonadFail` instance for `Either`.
