@@ -17,7 +17,7 @@ Functions to remove duplicates from a list.
  * Lists which consist of many same elements
 
 
- Here are some recomendations for usage of particular functions based on benchmarking resutls.
+ Here are some recommendations for usage of particular functions based on benchmarking results.
 
  * 'hashNub' is faster than 'ordNub' when there're not so many different values in the list.
 

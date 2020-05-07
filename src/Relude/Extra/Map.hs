@@ -5,7 +5,7 @@ Copyright:  (c) 2018-2019 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Contains implementation of polymorhic type classes for data types 'Set' and
+Contains implementation of polymorphic type classes for data types 'Set' and
 'Map'.
 -}
 

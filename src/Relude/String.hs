@@ -5,7 +5,7 @@ Copyright:  (c) 2016 Stephen Diehl
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Type classes for convertion between different string representations.
+Type classes for conversion between different string representations.
 -}
 
 module Relude.String

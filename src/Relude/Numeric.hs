@@ -54,7 +54,7 @@ integerToBounded n
     | otherwise                   = Just (fromIntegral n)
 {-# INLINE integerToBounded #-}
 
-{- | Tranforms an integer number to a natural.
+{- | Transforms an integer number to a natural.
 Only non-negative integers are considered natural, everything else will return `Nothing`.
 
 >>> integerToNatural (-1)

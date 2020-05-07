@@ -38,7 +38,7 @@ un :: forall a n . Coercible a n => n -> a
 un = coerce
 {-# INLINE un #-}
 
-{- | Wraps value to @newtype@. Behaves exactly as 'un' but has more meaningnful
+{- | Wraps value to @newtype@. Behaves exactly as 'un' but has more meaningful
 name in case you need to convert some value to @newtype@.
 
 >>> newtype Flag = Flag Bool deriving (Show, Eq)
@@ -90,7 +90,7 @@ underF2 = coerce
 #endif
 
 {- | Coercible composition. This function allows to write more efficient
-implementations of functions compoitions over @newtypes@.
+implementations of function compositions over @newtypes@.
 -}
 (#.) :: Coercible b c => (b -> c) -> (a -> b) -> (a -> c)
 (#.) _f = coerce
