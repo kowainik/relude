@@ -10,7 +10,7 @@ Copyright:  (c) 2016 Stephen Diehl
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
-Utilites to work with @Either@ data type.
+Utilities to work with @Either@ data type.
 -}
 
 module Relude.Monad.Either

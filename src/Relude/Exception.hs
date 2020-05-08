@@ -52,7 +52,7 @@ impureThrow = E.throw . E.toException
 bug :: (HasCallStack, Exception e) => e -> a
 bug e = impureThrow (Bug (E.toException e) callStack)
 
-{- | Pattern synonym to easy pattern matching on exceptions. So intead of
+{- | Pattern synonym to easy pattern matching on exceptions. So instead of
 writing something like this:
 
 @

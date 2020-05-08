@@ -54,7 +54,7 @@ class Foldable f => Foldable1 f where
     fold1 :: Semigroup m => f m -> m
     fold1 = foldMap1 id
 
-    {- | Convert a non-empty data structre to a NonEmpty list.
+    {- | Convert a non-empty data structure to a NonEmpty list.
 
     >>> toNonEmpty (Identity 2)
     2 :| []
@@ -86,7 +86,7 @@ class Foldable f => Foldable1 f where
     maximum1 :: Ord a => f a -> a
     maximum1 = SG.getMax #. foldMap1 SG.Max
 
-    {- | The smallest elemenet of a non-empty data structure.
+    {- | The smallest element of a non-empty data structure.
 
     >>> minimum1 (32 :| [64, 8, 128, 16])
     8

@@ -207,7 +207,7 @@ functions for this type ('head', 'tail', 'last', 'init').
 
 {- $monad
 __"Relude.Monad"__ contains functions and data types from "Data.Maybe" and
-"Data.Either" modules, monad transormers and other various combinators.
+"Data.Either" modules, monad transformers and other various combinators.
 -}
 
 {- $monoid

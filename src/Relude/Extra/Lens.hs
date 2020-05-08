@@ -70,13 +70,13 @@ indexL   :: 'Lens'' User 'Text'
 /Note:/ here we are using composition of the lenses for @userAddress@ field. If we have
 
 @
-adressCityL :: 'Lens'' Address 'Text'
+addressCityL :: 'Lens'' Address 'Text'
 @
 
 then
 
 @
-cityL = addressL . adressCityL
+cityL = addressL . addressCityL
 @
 
 Let's say we have some sample user

@@ -31,7 +31,7 @@ ownName = case getCallStack callStack of
 
 {- | This function returns the name of its caller of the caller function, but it
 requires that the caller function and caller of the caller function have
-'HasCallStack' constraint. Otherwise, it returns @"<unkown>"@. It's useful for
+'HasCallStack' constraint. Otherwise, it returns @"<unknown>"@. It's useful for
 logging:
 
 >>> log :: HasCallStack => String -> IO (); log s = putStrLn $ callerName ++ ":" ++ s

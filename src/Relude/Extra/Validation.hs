@@ -16,7 +16,7 @@ Maintainer: Kowainik <xrom.xkov@gmail.com>
 
 'Validation' is a monoidal sibling to 'Either' but 'Validation' doesn't have a
 'Monad' instance. 'Validation' allows to accumulate all errors instead of
-short-circuting on the first error so you can display all possible errors at
+short-circuiting on the first error so you can display all possible errors at
 once. Common use-cases include:
 
 1. Validating each input of a form with multiple inputs.
@@ -164,7 +164,7 @@ instance (Semigroup e, Semigroup a, Monoid a) => Monoid (Validation e a) where
     mappend = (<>)
     {-# INLINE mappend #-}
 
-{- | This instance if the most important instance for the 'Validation' data
+{- | This instance is the most important instance for the 'Validation' data
 type. It's responsible for the many implementations. And it allows to accumulate
 errors while performing validation or combining the results in the applicative
 style.
