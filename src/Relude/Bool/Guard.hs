@@ -113,6 +113,18 @@ guarded p a = if p a then pure a else empty
 --
 -- >>> Just False &&^ error "Shouldn't be evaluated"
 -- Just False
+-- >>> Just True &&^ Just False
+-- Just False
+-- >>> Just False &&^ Just False
+-- Just False
+-- >>> Just True &&^ Just True
+-- Just True
+-- >>> Nothing &&^ Nothing
+-- Nothing
+-- >>> Nothing &&^ Just True
+-- Nothing
+-- >>> Just True &&^ Nothing
+-- Nothing
 (&&^) :: Monad m => m Bool -> m Bool -> m Bool
 (&&^) e1 e2 = ifM e1 e2 (pure False)
 {-# INLINE (&&^) #-}
@@ -121,6 +133,20 @@ guarded p a = if p a then pure a else empty
 --
 -- >>> Just True ||^ error "Shouldn't be evaluated"
 -- Just True
+-- >>> Just True ||^ Just True
+-- Just True
+-- >>> Just True ||^ Just True ||^ Just False
+-- Just True
+-- >>> Just False ||^ Just False
+-- Just False
+-- >>> Just False ||^ Just True
+-- Just True
+-- >>> Nothing ||^ Just True
+-- Nothing
+-- >>> Just True ||^ Nothing
+-- Just True
+-- >>> Nothing ||^ Nothing
+-- Nothing
 (||^) :: Monad m => m Bool -> m Bool -> m Bool
 e1 ||^ e2 = ifM e1 (pure True) e2
 {-# INLINE (||^) #-}
