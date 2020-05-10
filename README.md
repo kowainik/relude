@@ -312,7 +312,6 @@ See [`Relude.Exception`](src/Relude/Exception.hs) module for details on exceptio
 ### containers & unordered-containers
 
 The following types from these two packages are exported:
-Then, some commonly used types:
 
 * Maps: strict versions of `Map`, `HashMap`, `IntMap`.
 * Sets: `Set`, `HashSet`, `IntSet`.
