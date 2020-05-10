@@ -522,8 +522,8 @@ alternative preludes. It's also relatively small, but:
     * [High-level overview of internal module structure](http://hackage.haskell.org/package/relude/docs/Relude.html)
     * 100% Haddock coverage
     * Almost every function has usage examples and all examples are tested with
-      `doctest` (which also sometimes hard to do because of multiple GHC
-      versions support, but we try really hard)
+      `doctest` (which is sometimes difficult to accomplish with multiple GHC
+      versions, but we try really hard)
     * [Tutorial + migration guide](#structure-of-this-tutorial) from
       `Prelude` and just general description of the whole package and libraries
       it depends on.
