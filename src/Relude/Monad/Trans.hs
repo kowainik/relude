@@ -61,7 +61,7 @@ usingReader = flip runReader
 {-# INLINE usingReader #-}
 
 {- | This function helps with optimizing performance when working with
-the 'ReaderT' transformer. If you had a code like below, that is
+the 'ReaderT' transformer. If you have code like below, that is
 called in a loop
 
 @
