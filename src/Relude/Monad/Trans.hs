@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP         #-}
 {-# LANGUAGE Trustworthy #-}
 
 {- |
@@ -14,7 +15,10 @@ module Relude.Monad.Trans
     ( -- * Convenient functions to work with 'Reader' monad
       usingReader
     , usingReaderT
+
+#if MIN_VERSION_base(4,10,0)
     , etaReaderT
+#endif
 
       -- * Convenient functions to work with 'State' monad
     , evaluatingState
@@ -29,7 +33,9 @@ module Relude.Monad.Trans
     , hoistEither
     ) where
 
+#if MIN_VERSION_base(4,10,0)
 import GHC.Exts (oneShot)
+#endif
 
 import Relude.Applicative (Applicative (pure))
 import Relude.Container.Reexport (fst, snd)
@@ -60,6 +66,7 @@ usingReader :: r -> Reader r a -> a
 usingReader = flip runReader
 {-# INLINE usingReader #-}
 
+#if MIN_VERSION_base(4,10,0)
 {- | This function helps with optimizing performance when working with
 the 'ReaderT' transformer. If you have code like below, that is
 called in a loop
@@ -88,6 +95,7 @@ For a detailed explanation, refer to the following blog post:
 etaReaderT :: ReaderT r m a -> ReaderT r m a
 etaReaderT = ReaderT . oneShot . runReaderT
 {-# INLINE etaReaderT #-}
+#endif
 
 {- | Shorter and more readable alias for @flip runStateT@.
 
