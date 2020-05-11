@@ -5,7 +5,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -17,8 +17,8 @@ Typeclass for creating structures from a singleton element. It has three main go
 -}
 
 module Relude.Container.One
-       ( One (..)
-       ) where
+    ( One (..)
+    ) where
 
 import Relude.Base (Char)
 import Relude.Container.Reexport (HashMap, HashSet, Hashable, IntMap, IntSet, Map, Set, uncurry)

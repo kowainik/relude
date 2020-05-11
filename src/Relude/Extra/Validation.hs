@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-redundant-constraints #-}
+
 {-# LANGUAGE CPP                  #-}
 {-# LANGUAGE ConstraintKinds      #-}
 {-# LANGUAGE DataKinds            #-}
@@ -6,11 +8,14 @@
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
 
-{-# OPTIONS_GHC -Wno-redundant-constraints #-}
+#if __GLASGOW_HASKELL__ > 802
+{-# LANGUAGE DerivingStrategies   #-}
+#endif
+
 
 {- |
 Copyright:  (c) 2014 Chris Allen, Edward Kmett
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -34,12 +39,12 @@ Instances of different standard typeclasses provide various semantics:
 -}
 
 module Relude.Extra.Validation
-       ( -- * How to use
-         -- $use
-         Validation(..)
-       , validationToEither
-       , eitherToValidation
-       ) where
+    ( -- * How to use
+      -- $use
+      Validation(..)
+    , validationToEither
+    , eitherToValidation
+    ) where
 
 import GHC.TypeLits (ErrorMessage (..), TypeError)
 
@@ -109,7 +114,11 @@ Failure ["Not enough RAM","Not enough CPUs"]
 data Validation e a
     = Failure e
     | Success a
+#if __GLASGOW_HASKELL__ > 802
+    deriving stock (Eq, Ord, Show)
+#else
     deriving (Eq, Ord, Show)
+#endif
 
 instance Functor (Validation e) where
     fmap :: (a -> b) -> Validation e a -> Validation e b

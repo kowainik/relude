@@ -1,7 +1,7 @@
 {-# LANGUAGE TypeFamilies #-}
 
 {- |
-Copyright:  (c) 2018-2019 Kowainik
+Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -9,9 +9,9 @@ Polymorphic grouping functions.
 -}
 
 module Relude.Extra.Group
-       ( groupBy
-       , groupOneBy
-       ) where
+    ( groupBy
+    , groupOneBy
+    ) where
 
 import Relude
 import Relude.Extra.Map

@@ -2,7 +2,7 @@
 
 {- |
 Copyright:  (c) 2013-2016 Edward Kmett
-            (c) 2019 Kowainik
+            (c) 2019-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -157,15 +157,15 @@ you used @Relude.Extra.Lens@ in.
 -}
 
 module Relude.Extra.Lens
-       ( Lens'
-       , lens
-       , view
-       , set
-       , over
-       , (^.)
-       , (.~)
-       , (%~)
-       ) where
+    ( Lens'
+    , lens
+    , view
+    , set
+    , over
+    , (^.)
+    , (.~)
+    , (%~)
+    ) where
 
 import Relude
 

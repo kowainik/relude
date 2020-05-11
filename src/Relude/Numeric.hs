@@ -1,21 +1,21 @@
 {- |
-Copyright:  (c) 2018-2019 Kowainik
+Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 -}
 
 module Relude.Numeric
-       ( module Data.Bits
-       , module Data.Int
-       , module Data.Word
-       , module GHC.Base
-       , module GHC.Float
-       , module GHC.Num
-       , module GHC.Real
-       , module Numeric.Natural
-       , integerToBounded
-       , integerToNatural
-       ) where
+    ( module Data.Bits
+    , module Data.Int
+    , module Data.Word
+    , module GHC.Base
+    , module GHC.Float
+    , module GHC.Num
+    , module GHC.Real
+    , module Numeric.Natural
+    , integerToBounded
+    , integerToNatural
+    ) where
 
 import Data.Bits (toIntegralSized, xor)
 import Data.Int (Int, Int16, Int32, Int64, Int8)

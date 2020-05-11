@@ -3,7 +3,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -11,21 +11,21 @@ Monad transformers utilities.
 -}
 
 module Relude.Monad.Trans
-       ( -- * Convenient functions to work with 'Reader' monad
-         usingReader
-       , usingReaderT
+    ( -- * Convenient functions to work with 'Reader' monad
+      usingReader
+    , usingReaderT
 
-         -- * Convenient functions to work with 'State' monad
-       , evaluatingState
-       , evaluatingStateT
-       , executingState
-       , executingStateT
-       , usingState
-       , usingStateT
-         -- * Lifted to Transformers
-       , hoistMaybe
-       , hoistEither
-       ) where
+      -- * Convenient functions to work with 'State' monad
+    , evaluatingState
+    , evaluatingStateT
+    , executingState
+    , executingStateT
+    , usingState
+    , usingStateT
+      -- * Lifted to Transformers
+    , hoistMaybe
+    , hoistEither
+    ) where
 
 import Prelude (flip, fst, snd)
 

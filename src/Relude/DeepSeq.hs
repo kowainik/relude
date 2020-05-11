@@ -1,7 +1,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -11,12 +11,12 @@ monadic computation or to remove space leaks.
 -}
 
 module Relude.DeepSeq
-       ( module Control.DeepSeq
-       , evaluateNF
-       , evaluateNF_
-       , evaluateWHNF
-       , evaluateWHNF_
-       ) where
+    ( module Control.DeepSeq
+    , evaluateNF
+    , evaluateNF_
+    , evaluateWHNF
+    , evaluateWHNF_
+    ) where
 
 import Control.DeepSeq (NFData (..), deepseq, force, ($!!))
 

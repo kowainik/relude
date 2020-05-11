@@ -3,7 +3,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -11,15 +11,15 @@ Utility functions to work with 'Data.Maybe' data type as monad.
 -}
 
 module Relude.Monad.Maybe
-       ( (?:)
-       , whenJust
-       , whenJustM
-       , whenNothing
-       , whenNothing_
-       , whenNothingM
-       , whenNothingM_
-       , mapMaybeM
-       ) where
+    ( (?:)
+    , whenJust
+    , whenJustM
+    , whenNothing
+    , whenNothing_
+    , whenNothingM
+    , whenNothingM_
+    , mapMaybeM
+    ) where
 
 import Relude.Applicative (Applicative, pass, pure)
 import Relude.Foldable.Reexport (mapM)

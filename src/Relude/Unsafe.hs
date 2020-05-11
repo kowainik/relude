@@ -3,7 +3,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -20,10 +20,10 @@ foo = Unsafe.head
 -}
 
 module Relude.Unsafe
-       ( module Data.List
-       , module Data.Maybe
-       , at
-       ) where
+    ( module Data.List
+    , module Data.Maybe
+    , at
+    ) where
 
 import Data.List (head, init, last, tail, (!!))
 import Data.Maybe (fromJust)

@@ -6,7 +6,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -15,18 +15,18 @@ Functions like 'Prelude.putStr' and 'Prelude.putStrLn' but for 'Text', 'LText',
 -}
 
 module Relude.Print
-       ( -- * 'Text' & 'LText'
-         putText
-       , putTextLn
-       , putLText
-       , putLTextLn
+    ( -- * 'Text' & 'LText'
+      putText
+    , putTextLn
+    , putLText
+    , putLTextLn
 
-         -- * 'ByteString' & 'LByteString'
-       , putBS
-       , putBSLn
-       , putLBS
-       , putLBSLn
-       ) where
+      -- * 'ByteString' & 'LByteString'
+    , putBS
+    , putBSLn
+    , putLBS
+    , putLBSLn
+    ) where
 
 import Relude.Function ((.))
 import Relude.Monad.Reexport (MonadIO (..))

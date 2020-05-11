@@ -16,12 +16,12 @@ environment:
     CABOPTS: --store-dir=C:\\SR
 
   matrix:
-    - GHCVER: 8.8.2
+    - GHCVER: 8.10.1
 
 install:
   - choco source add -n mistuke -s https://www.myget.org/F/mistuke/api/v2
-  - choco install -y cabal --version 3.0.0.0
-  - choco install -y ghc   --version 8.8.2
+  - choco install -y cabal --version 3.2.0.0
+  - choco install -y ghc   --version %GHCVER%
   - refreshenv
 
 before_build:
@@ -31,4 +31,5 @@ before_build:
 
 build_script:
   - cabal %CABOPTS% build --enable-tests --enable-benchmarks --write-ghc-environment-files=always
-  - cabal %CABOPTS% test  --enable-tests
+  - cabal %CABOPTS% test  --enable-tests --test-show-details=direct
+  - cabal %CABOPTS% haddock --enable-documentation

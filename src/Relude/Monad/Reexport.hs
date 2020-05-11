@@ -3,7 +3,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -11,24 +11,24 @@ Reexports functions to work with monads.
 -}
 
 module Relude.Monad.Reexport
-       ( -- * Reexport transformers
-         module Control.Monad.Except
-       , module Control.Monad.Reader
-       , module Control.Monad.State.Strict
-       , module Control.Monad.Trans
-       , module Control.Monad.Trans.Identity
-       , module Control.Monad.Trans.Maybe
+    ( -- * Reexport transformers
+      module Control.Monad.Except
+    , module Control.Monad.Reader
+    , module Control.Monad.State.Strict
+    , module Control.Monad.Trans
+    , module Control.Monad.Trans.Identity
+    , module Control.Monad.Trans.Maybe
 
-         -- * Reexport monadic functions
-       , module Control.Monad
-       , module Control.Monad.Fail
+      -- * Reexport monadic functions
+    , module Control.Monad
+    , module Control.Monad.Fail
 
-         -- * Reexport 'Maybe'
-       , module Data.Maybe
+      -- * Reexport 'Maybe'
+    , module Data.Maybe
 
-         -- * Reexport 'Either'
-       , module Data.Either
-       ) where
+      -- * Reexport 'Either'
+    , module Data.Either
+    ) where
 
 -- Monad transformers
 import Control.Monad.Except (ExceptT (..), runExceptT)

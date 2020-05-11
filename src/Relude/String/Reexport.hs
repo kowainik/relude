@@ -9,7 +9,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -18,27 +18,27 @@ Reexports functions to work with 'Data.Text.Text', 'ByteString' and
 -}
 
 module Relude.String.Reexport
-       ( -- * String
-         module Data.String
-       , module Text.Read
+    ( -- * String
+      module Data.String
+    , module Text.Read
 
-         -- * Text
-       , Text
-       , lines
-       , unlines
-       , words
-       , unwords
-       , module Data.Text.Encoding
-       , module Data.Text.Encoding.Error
+      -- * Text
+    , Text
+    , lines
+    , unlines
+    , words
+    , unwords
+    , module Data.Text.Encoding
+    , module Data.Text.Encoding.Error
 
-         -- * ByteString
-       , ByteString
+      -- * ByteString
+    , ByteString
 
-         -- * ShortByteString
-       , ShortByteString
-       , toShort
-       , fromShort
-       ) where
+      -- * ShortByteString
+    , ShortByteString
+    , toShort
+    , fromShort
+    ) where
 
 import Data.ByteString (ByteString)
 import Data.ByteString.Short (ShortByteString, fromShort, toShort)

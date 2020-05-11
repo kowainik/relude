@@ -1,7 +1,7 @@
 {-# LANGUAGE ExplicitForAll #-}
 
 {- |
-Copyright:  (c) 2018-2019 Kowainik
+Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -9,11 +9,11 @@ Lifted functions to work with stdin and stdout.
 -}
 
 module Relude.Lifted.Terminal
-       ( getLine
-       , print
-       , putStr
-       , putStrLn
-       ) where
+    ( getLine
+    , print
+    , putStr
+    , putStrLn
+    ) where
 
 import Relude.Base (IO, Show)
 import Relude.Function ((.))

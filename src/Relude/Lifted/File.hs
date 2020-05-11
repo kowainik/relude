@@ -1,7 +1,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -9,10 +9,10 @@ Lifted versions of functions working with files and common IO.
 -}
 
 module Relude.Lifted.File
-       ( readFile
-       , writeFile
-       , appendFile
-       ) where
+    ( readFile
+    , writeFile
+    , appendFile
+    ) where
 
 import Relude.Base (FilePath, IO)
 import Relude.Function ((.))

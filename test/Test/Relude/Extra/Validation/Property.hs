@@ -4,12 +4,6 @@
 {- HLINT ignore "Monoid law, left identity" -}
 {- HLINT ignore "Use <$>" -}
 
-{-
-Copyright:  (c) 2018-2019 Kowainik
-SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
--}
-
 module Test.Relude.Extra.Validation.Property
        ( validationLaws
        ) where

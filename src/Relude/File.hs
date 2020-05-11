@@ -1,5 +1,5 @@
 {- |
-Copyright:  (c) 2018-2019 Kowainik
+Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -18,26 +18,26 @@ data with the help of functions from the @"Relude.String.Conversion"@ module, e.
 -}
 
 module Relude.File
-       ( -- * Text
-         readFileText
-       , writeFileText
-       , appendFileText
+    ( -- * Text
+      readFileText
+    , writeFileText
+    , appendFileText
 
-         -- * Lazy Text
-       , readFileLText
-       , writeFileLText
-       , appendFileLText
+      -- * Lazy Text
+    , readFileLText
+    , writeFileLText
+    , appendFileLText
 
-         -- * ByteString
-       , readFileBS
-       , writeFileBS
-       , appendFileBS
+      -- * ByteString
+    , readFileBS
+    , writeFileBS
+    , appendFileBS
 
-         -- * Lazy ByteString
-       , readFileLBS
-       , writeFileLBS
-       , appendFileLBS
-       ) where
+      -- * Lazy ByteString
+    , readFileLBS
+    , writeFileLBS
+    , appendFileLBS
+    ) where
 
 import Relude.Base (FilePath, IO)
 import Relude.Function ((.))

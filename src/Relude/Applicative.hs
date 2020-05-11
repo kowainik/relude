@@ -3,7 +3,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -13,10 +13,10 @@ but only convenient ans most used are left.
 -}
 
 module Relude.Applicative
-       ( module Control.Applicative
-       , pass
-       , appliedTo
-       ) where
+    ( module Control.Applicative
+    , pass
+    , appliedTo
+    ) where
 
 import Control.Applicative (Alternative (..), Applicative (..), Const (..), ZipList (..), liftA2,
                             liftA3, optional, (<**>))

@@ -3,7 +3,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -11,49 +11,49 @@ Lifted 'MVar' and 'STM' functions.
 -}
 
 module Relude.Lifted.Concurrent
-       ( -- * MVar
-         MVar
-       , newEmptyMVar
-       , newMVar
-       , putMVar
-       , readMVar
-       , swapMVar
-       , takeMVar
-       , tryPutMVar
-       , tryReadMVar
-       , tryTakeMVar
+    ( -- * MVar
+      MVar
+    , newEmptyMVar
+    , newMVar
+    , putMVar
+    , readMVar
+    , swapMVar
+    , takeMVar
+    , tryPutMVar
+    , tryReadMVar
+    , tryTakeMVar
 
-         -- * STM
-       , STM
-       , atomically
-       , STM.throwSTM
-       , STM.catchSTM
+      -- * STM
+    , STM
+    , atomically
+    , STM.throwSTM
+    , STM.catchSTM
 
-         -- * TVar
-       , TVar
-       , newTVarIO
-       , readTVarIO
-       , STM.modifyTVar'
-       , STM.newTVar
-       , STM.readTVar
-       , STM.writeTVar
+      -- * TVar
+    , TVar
+    , newTVarIO
+    , readTVarIO
+    , STM.modifyTVar'
+    , STM.newTVar
+    , STM.readTVar
+    , STM.writeTVar
 
-         -- * TMVar
-       , TMVar
-       , STM.newTMVar
-       , STM.newEmptyTMVar
-       , newTMVarIO
-       , newEmptyTMVarIO
-       , STM.takeTMVar
-       , STM.putTMVar
-       , STM.readTMVar
-       , STM.tryReadTMVar
-       , STM.swapTMVar
-       , STM.tryTakeTMVar
-       , STM.tryPutTMVar
-       , STM.isEmptyTMVar
-       , STM.mkWeakTMVar
-       ) where
+      -- * TMVar
+    , TMVar
+    , STM.newTMVar
+    , STM.newEmptyTMVar
+    , newTMVarIO
+    , newEmptyTMVarIO
+    , STM.takeTMVar
+    , STM.putTMVar
+    , STM.readTMVar
+    , STM.tryReadTMVar
+    , STM.swapTMVar
+    , STM.tryTakeTMVar
+    , STM.tryPutTMVar
+    , STM.isEmptyTMVar
+    , STM.mkWeakTMVar
+    ) where
 
 import Control.Concurrent.MVar (MVar)
 import Control.Concurrent.STM.TMVar (TMVar)
@@ -74,6 +74,7 @@ import qualified Control.Concurrent.STM.TMVar as STM (isEmptyTMVar, mkWeakTMVar,
 import qualified Control.Concurrent.STM.TVar as STM (modifyTVar', newTVar, newTVarIO, readTVar,
                                                      readTVarIO, writeTVar)
 import qualified Control.Monad.STM as STM (atomically, catchSTM, throwSTM)
+
 
 ----------------------------------------------------------------------------
 -- Lifted Control.Concurrent.MVar

@@ -9,7 +9,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -24,17 +24,17 @@ from lists to 'NonEmpty' with those functions.
 -}
 
 module Relude.List.Reexport
-       ( -- * List
-         module Data.List
-       , sortWith
-         -- * NonEmpty List
-       , NonEmpty (..)
-       , nonEmpty
-       , head
-       , init
-       , last
-       , tail
-       ) where
+    ( -- * List
+      module Data.List
+    , sortWith
+      -- * NonEmpty List
+    , NonEmpty (..)
+    , nonEmpty
+    , head
+    , init
+    , last
+    , tail
+    ) where
 
 import Data.List (break, cycle, drop, dropWhile, filter, genericDrop, genericLength,
                   genericReplicate, genericSplitAt, genericTake, group, inits, intercalate,

@@ -3,7 +3,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -11,17 +11,18 @@ Lifted versions of functions that work with exit processes.
 -}
 
 module Relude.Lifted.Exit
-       ( exitWith
-       , exitFailure
-       , exitSuccess
-       , die
-       ) where
+    ( exitWith
+    , exitFailure
+    , exitSuccess
+    , die
+    ) where
 
 import Control.Monad.Trans (MonadIO, liftIO)
 import Data.String (String)
 import System.Exit (ExitCode)
 
 import qualified System.Exit as XIO
+
 
 -- $setup
 -- >>> import Relude

@@ -11,7 +11,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -24,23 +24,23 @@ use 'toText' \/ 'toString' functions.
 -}
 
 module Relude.String.Conversion
-       ( -- * Convenient type aliases
-         LText
-       , LByteString
+    ( -- * Convenient type aliases
+      LText
+    , LByteString
 
-         -- * Conversion type classes
-       , ConvertUtf8 (..)
-       , ToText (..)
-       , ToLText (..)
-       , ToString (..)
-       , LazyStrict (..)
-       , fromLazy
-       , fromStrict
+      -- * Conversion type classes
+    , ConvertUtf8 (..)
+    , ToText (..)
+    , ToLText (..)
+    , ToString (..)
+    , LazyStrict (..)
+    , fromLazy
+    , fromStrict
 
-         -- * Show and read functions
-       , readEither
-       , show
-       ) where
+      -- * Show and read functions
+    , readEither
+    , show
+    ) where
 
 import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 import Prelude (error)

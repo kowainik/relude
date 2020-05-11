@@ -1,5 +1,5 @@
 {- |
-Copyright:  (c) 2018-2019 Kowainik
+Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -7,9 +7,9 @@ Contains useful functions to work with GHC callstack.
 -}
 
 module Relude.Extra.CallStack
-       ( ownName
-       , callerName
-       ) where
+    ( ownName
+    , callerName
+    ) where
 
 import Relude
 
