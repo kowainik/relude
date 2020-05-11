@@ -6,6 +6,8 @@ The changelog is available [on GitHub][2].
 
 ## Unreleased
 
+* [#228](https://github.com/kowainik/relude/issues/228):
+  Add `universeNonEmpty` function.
 * [#253](https://github.com/kowainik/relude/issues/253):
   Support GHC-8.10. Upgrade GHC-8.8 to 8.8.3.
 * [#249](https://github.com/kowainik/relude/issues/249):
