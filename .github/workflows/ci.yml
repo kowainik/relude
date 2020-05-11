@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [ubuntu-latest, macOS-latest]
         cabal: ["3.0"]
         ghc:
           - "8.0.2"
@@ -31,17 +31,6 @@ jobs:
           - os: macOS-latest
             ghc: 8.2.2
           - os: macOS-latest
-            ghc: 8.0.2
-
-          - os: windows-latest
-            ghc: 8.8.3
-          - os: windows-latest
-            ghc: 8.6.5
-          - os: windows-latest
-            ghc: 8.4.4
-          - os: windows-latest
-            ghc: 8.2.2
-          - os: windows-latest
             ghc: 8.0.2
 
     steps:
