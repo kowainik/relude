@@ -699,6 +699,7 @@ in [ Rule.Arguments { arguments =
    , warnReexport "intersperse"      "Data.List"
    , warnReexport "isPrefixOf"       "Data.List"
    , warnReexport "permutations"     "Data.List"
+   , warnReexport "scanl'"           "Data.List"
    , warnReexport "sort"             "Data.List"
    , warnReexport "sortBy"           "Data.List"
    , warnReexport "sortOn"           "Data.List"
