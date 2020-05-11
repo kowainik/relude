@@ -559,11 +559,11 @@ using `Dhall` to maintain the configurations. To use it follow the steps below.
 First time:
 
 ```shell
-$ cabal new-install dhall-json
+$ cabal v2-install dhall-json
 ```
 
-Dhall 9.0.0 is required, so make sure that the previous command installed
-dhall-json >= 1.4.0.
+Dhall 16.0.0 is required, so make sure that the previous command installed
+`dhall-json` >= 1.6.4.
 
 To generate `hlint` file:
 
