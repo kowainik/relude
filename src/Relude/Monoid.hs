@@ -2,6 +2,7 @@
 {-# LANGUAGE DeriveGeneric              #-}
 #if !MIN_VERSION_base(4,12,0)
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE Trustworthy                #-}
 #else
 {-# LANGUAGE Safe                       #-}
 #endif

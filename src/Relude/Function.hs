@@ -15,13 +15,8 @@ combinators.
 
 module Relude.Function
     ( -- * Reexports
-      -- ** "Control.Arrow" reexports
-      (&&&)
-      -- ** "Control.Category" reexports
-    , (>>>)
-    , (<<<)
       -- ** "Data.Function" reexports
-    , (.)
+      (.)
     , ($)
     , (&)
     , id
@@ -29,6 +24,11 @@ module Relude.Function
     , flip
     , fix
     , on
+      -- ** "Control.Category" reexports
+    , (>>>)
+    , (<<<)
+      -- ** "Control.Arrow" reexports
+    , (&&&)
 
       -- * Combinators
     , identity
