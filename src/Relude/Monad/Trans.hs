@@ -1,4 +1,4 @@
-{-# LANGUAGE Safe #-}
+{-# LANGUAGE Trustworthy #-}
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
@@ -14,6 +14,7 @@ module Relude.Monad.Trans
     ( -- * Convenient functions to work with 'Reader' monad
       usingReader
     , usingReaderT
+    , etaReaderT
 
       -- * Convenient functions to work with 'State' monad
     , evaluatingState
@@ -22,16 +23,19 @@ module Relude.Monad.Trans
     , executingStateT
     , usingState
     , usingStateT
+
       -- * Lifted to Transformers
     , hoistMaybe
     , hoistEither
     ) where
 
-import Prelude (flip, fst, snd)
+import GHC.Exts (oneShot)
 
 import Relude.Applicative (Applicative (pure))
+import Relude.Container.Reexport (fst, snd)
+import Relude.Function (flip, (.))
 import Relude.Functor (Functor, (<$>))
-import Relude.Monad.Reexport (Either, ExceptT (..), Maybe, MaybeT (..), Reader, ReaderT, State,
+import Relude.Monad.Reexport (Either, ExceptT (..), Maybe, MaybeT (..), Reader, ReaderT (..), State,
                               StateT, runReader, runReaderT, runState, runStateT)
 
 
@@ -55,6 +59,35 @@ usingReaderT = flip runReaderT
 usingReader :: r -> Reader r a -> a
 usingReader = flip runReader
 {-# INLINE usingReader #-}
+
+{- | This function helps with optimizing performance when working with
+the 'ReaderT' transformer. If you had a code like below, that is
+called in a loop
+
+@
+step :: Instruction -> 'ReaderT' Config IO Result
+step instruction = __case__ instruction __of__
+    Add -> __do__ stuff ...
+    Del -> __do__ stuff ...
+@
+
+you can improve performance of your Haskell applications by using
+'etaReaderT' in the following way:
+
+@
+step :: Instruction -> 'ReaderT' Config IO Result
+step instruction = 'etaReaderT' $ __case__ instruction __of__
+    Add -> __do__ stuff ...
+    Del -> __do__ stuff ...
+@
+
+For a detailed explanation, refer to the following blog post:
+
+* <https://www.joachim-breitner.de/blog/763-Faster_Winter_5__Eta-Expanding_ReaderT Faster Winter 5: Eta-Expanding ReaderT (by Joachim Breitners)>
+-}
+etaReaderT :: ReaderT r m a -> ReaderT r m a
+etaReaderT = ReaderT . oneShot . runReaderT
+{-# INLINE etaReaderT #-}
 
 {- | Shorter and more readable alias for @flip runStateT@.
 
