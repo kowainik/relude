@@ -79,7 +79,7 @@ This tutorial has several parts:
     * [Relude vs Protolude](#relude-vs-protolude-)
 8. [For developers](#for-developers-)
 
-This is neither a tutorial on _Haskell_ nor tutorial on each function contained
+This is neither a tutorial on _Haskell_ nor a tutorial on each function contained
 in `relude`. For detailed documentation of every function together with examples
 and usage, see [_Haddock documentation_](http://hackage.haskell.org/package/relude).
 
@@ -126,8 +126,8 @@ of the compiler, set everything up according to one of the instructions below.
 This is the recommended way to use custom prelude. It requires you to perform
 the following steps.
 
-You can use Cabal feature `mixins` to replace the default `Prelude` with `Relude`
-without need to add extra dependencies or import `Relude` manually in each module.
+You can use the Cabal feature `mixins` to replace the default `Prelude` with `Relude`
+without the need to add extra dependencies or to import `Relude` manually in each module.
 See the following example:
 
 > **NOTE:** this requires Cabal version to be at least `2.2`
@@ -148,8 +148,8 @@ library
   default-language:    Haskell2010
 ```
 
-> **NOTE:** if you use [`summoner`](https://github.com/kowainik/summoner) to generate Haskell project,
-> this tool can automatically create such structure for you when you specify custom prelude.
+> **NOTE:** if you use [`summoner`](https://github.com/kowainik/summoner) to generate your Haskell project,
+> this tool can automatically create such a structure for you when you specify the custom prelude.
 
 If you want to use e.g. `Relude.Extra.Enum`, you need to list it
 (and potentially other modules, like `Relude.Unsafe`) under
@@ -322,7 +322,7 @@ The following types from these two packages are exported:
 `relude` exports `Text` and `ByteString` (as well as synonyms `LText`
 and `LByteString` for lazy versions). In addition, some functions work
 with `Text` instead of `String` – `words`, `lines`, etc. In
-addtion, `relude` provides specialised versions of the `IO` functions to
+addition, `relude` provides specialised versions of the `IO` functions to
 work with `Text` and `ByteString` — `readFileText`, `writeFileBS`,
 etc.
 
@@ -449,8 +449,8 @@ This section describes what you need to change to make your code compile with `r
    3. Add `import qualified Relude.Unsafe as Unsafe` and replace function with qualified usage.
 3. If you use `fromJust` or `!!` you should use them from `import qualified Relude.Unsafe as Unsafe`.
 4. If you use `foldr` or `forM_` or similar for something like `Maybe a` or
-   `Either a b` it's recommended to replace usages of such function with
-   monomorhpic alternatives:
+   `Either a b` it's recommended to replace usages of such functions with
+   monomorphic alternatives, such as:
    * `Maybe`
      + `(?:)          :: Maybe a -> a -> a`
      + `fromMaybe     :: a -> Maybe a -> a`
