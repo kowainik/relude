@@ -28,6 +28,7 @@ from lists to 'NonEmpty' with those functions.
 module Relude.List.Reexport
     ( -- * List
       module Data.List
+    , cycle
     , sortWith
       -- * NonEmpty List
     , NonEmpty (..)
@@ -38,11 +39,11 @@ module Relude.List.Reexport
     , tail
     ) where
 
-import Data.List (break, cycle, drop, dropWhile, filter, genericDrop, genericLength,
-                  genericReplicate, genericSplitAt, genericTake, group, inits, intercalate,
-                  intersperse, isPrefixOf, iterate, map, permutations, repeat, replicate, reverse,
-                  scanl, scanr, sort, sortBy, sortOn, splitAt, subsequences, tails, take, takeWhile,
-                  transpose, uncons, unfoldr, unzip, unzip3, zip, zip3, zipWith, (++))
+import Data.List (break, drop, dropWhile, filter, genericDrop, genericLength, genericReplicate,
+                  genericSplitAt, genericTake, group, inits, intercalate, intersperse, isPrefixOf,
+                  iterate, map, permutations, repeat, replicate, reverse, scanl, scanr, sort,
+                  sortBy, sortOn, splitAt, subsequences, tails, take, takeWhile, transpose, uncons,
+                  unfoldr, unzip, unzip3, zip, zip3, zipWith, (++))
 import Data.List.NonEmpty (NonEmpty (..), nonEmpty)
 import GHC.Exts (sortWith)
 import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
@@ -55,6 +56,21 @@ import qualified Data.List.NonEmpty as NE (head, init, last, tail)
 -- $setup
 -- >>> import Relude
 
+{- | Creates an infinite list from a finite list by appending the list
+to itself infinite times (i.e. by cycling the list). Unlike @cycle@
+from "Data.List", this implementation doesn't throw error on empty
+lists, but returns an empty list instead.
+
+>>> cycle []
+[]
+>>> take 10 $ cycle [1,2,3]
+[1,2,3,1,2,3,1,2,3,1]
+-}
+cycle :: [a] -> [a]
+cycle [] = []
+cycle xs = cycledList
+  where
+    cycledList = xs ++ cycledList
 
 -- | For tracking usage of ordinary list with @head@-like functions.
 type IsNonEmpty

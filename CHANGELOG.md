@@ -8,6 +8,8 @@ The changelog is available [on GitHub][2].
 
 * [#253](https://github.com/kowainik/relude/issues/253):
   Support GHC-8.10. Upgrade GHC-8.8 to 8.8.3.
+* [#256](https://github.com/kowainik/relude/issues/256):
+  Make `cycle` total function.
 * [#249](https://github.com/kowainik/relude/issues/249):
   __Breaking change:__ Fix infix of the `Relude.Extra.Lens` `(^.)` operator.
   Change it to `infixl 8`.
