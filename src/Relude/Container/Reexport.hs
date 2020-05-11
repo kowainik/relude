@@ -1,7 +1,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -10,17 +10,17 @@ Reexports all container-related stuff from @base@, @containers@ and
 -}
 
 module Relude.Container.Reexport
-       ( module Data.Hashable
-       , module Data.HashMap.Strict
-       , module Data.HashSet
-       , module Data.IntMap.Strict
-       , module Data.IntSet
-       , module Data.Map.Strict
-       , module Data.Sequence
-       , module Data.Set
-       , module Data.Tuple
-       , module GHC.Exts
-       ) where
+    ( module Data.Hashable
+    , module Data.HashMap.Strict
+    , module Data.HashSet
+    , module Data.IntMap.Strict
+    , module Data.IntSet
+    , module Data.Map.Strict
+    , module Data.Sequence
+    , module Data.Set
+    , module Data.Tuple
+    , module GHC.Exts
+    ) where
 
 import Data.Hashable (Hashable (hashWithSalt))
 import Data.HashMap.Strict (HashMap)

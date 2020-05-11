@@ -1,7 +1,7 @@
 {-# LANGUAGE TypeFamilies #-}
 
 {- |
-Copyright:  (c) 2018-2019 Kowainik
+Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -10,17 +10,17 @@ Contains implementation of polymorphic type classes for data types 'Set' and
 -}
 
 module Relude.Extra.Map
-       ( StaticMap (..)
-       , DynamicMap (..)
-       , (!?)
-       , notMember
-       , lookupDefault
+    ( StaticMap (..)
+    , DynamicMap (..)
+    , (!?)
+    , notMember
+    , lookupDefault
 
-         -- * To pairs
-       , toPairs
-       , keys
-       , elems
-       ) where
+      -- * To pairs
+    , toPairs
+    , keys
+    , elems
+    ) where
 
 import GHC.Exts (IsList (Item, toList))
 

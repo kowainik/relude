@@ -1,15 +1,15 @@
+{-# OPTIONS_GHC -Wno-redundant-constraints #-}
+
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE PolyKinds            #-}
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
 
-{-# OPTIONS_GHC -Wno-redundant-constraints #-}
-
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -17,22 +17,22 @@ Fixes and additions to 'Foldable'.
 -}
 
 module Relude.Foldable.Fold
-       ( flipfoldl'
-       , asumMap
-       , foldMapA
-       , foldMapM
+    ( flipfoldl'
+    , asumMap
+    , foldMapA
+    , foldMapM
 
-       , sum
-       , product
+    , sum
+    , product
 
-       , elem
-       , notElem
+    , elem
+    , notElem
 
-       , allM
-       , anyM
-       , andM
-       , orM
-       ) where
+    , allM
+    , anyM
+    , andM
+    , orM
+    ) where
 
 import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 

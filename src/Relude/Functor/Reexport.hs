@@ -4,7 +4,7 @@
 {- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 2016-2018 Serokell
-           (c) 2018 Kowainik
+           (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -12,14 +12,14 @@ Reexports functionality regarding 'Functor' and 'Bifunctor' typeclasses.
 -}
 
 module Relude.Functor.Reexport
-       ( module Data.Bifunctor
-       , module Data.Functor
-       , module Data.Functor.Compose
-       , module Data.Functor.Identity
+    ( module Data.Bifunctor
+    , module Data.Functor
+    , module Data.Functor.Compose
+    , module Data.Functor.Identity
 #if MIN_VERSION_base(4,12,0)
-       , module Data.Functor.Contravariant
+    , module Data.Functor.Contravariant
 #endif
-       ) where
+    ) where
 
 import Data.Bifunctor (Bifunctor (..))
 import Data.Functor (Functor (..), void, ($>), (<$>))

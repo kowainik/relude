@@ -6,7 +6,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -14,21 +14,21 @@ Utilities to work with @Either@ data type.
 -}
 
 module Relude.Monad.Either
-       ( fromLeft
-       , fromRight
-       , maybeToLeft
-       , maybeToRight
-       , leftToMaybe
-       , rightToMaybe
-       , whenLeft
-       , whenLeft_
-       , whenLeftM
-       , whenLeftM_
-       , whenRight
-       , whenRight_
-       , whenRightM
-       , whenRightM_
-       ) where
+    ( fromLeft
+    , fromRight
+    , maybeToLeft
+    , maybeToRight
+    , leftToMaybe
+    , rightToMaybe
+    , whenLeft
+    , whenLeft_
+    , whenLeftM
+    , whenLeftM_
+    , whenRight
+    , whenRight_
+    , whenRightM
+    , whenRightM_
+    ) where
 
 import Control.Applicative (Applicative)
 import Control.Monad (Monad (..))

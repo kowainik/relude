@@ -1,7 +1,7 @@
 {-# LANGUAGE CPP #-}
 
 {- |
-Copyright:  (c) 2018-2019 Kowainik
+Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -9,15 +9,15 @@ Functions to ease work with newtypes.
 -}
 
 module Relude.Extra.Newtype
-       ( un
-       , wrap
-       , under
-       , under2
+    ( un
+    , wrap
+    , under
+    , under2
 #if ( __GLASGOW_HASKELL__ != 802 )
-       , underF2
+    , underF2
 #endif
-       , (#.)
-       ) where
+    , (#.)
+    ) where
 
 import Relude
 

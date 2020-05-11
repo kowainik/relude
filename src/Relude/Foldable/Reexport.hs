@@ -1,7 +1,7 @@
 {-# LANGUAGE CPP #-}
 
 {- |
-Copyright:  (c) 2018-2019 Kowainik
+Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -9,13 +9,13 @@ Reexports "Data.Foldable" and "Data.Traversable".
 -}
 
 module Relude.Foldable.Reexport
-       ( module Data.Foldable
-       , module Data.Traversable
+    ( module Data.Foldable
+    , module Data.Traversable
 #if MIN_VERSION_base(4,10,0)
-       , module Data.Bifoldable
-       , module Data.Bitraversable
+    , module Data.Bifoldable
+    , module Data.Bitraversable
 #endif
-       ) where
+    ) where
 
 import Data.Foldable (Foldable (fold, foldMap, foldl', foldr, length, null, toList), all, and, any,
                       asum, concat, concatMap, find, foldlM, forM_, for_, mapM_, or, sequenceA_,

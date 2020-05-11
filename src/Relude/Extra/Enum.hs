@@ -1,5 +1,5 @@
 {- |
-Copyright:  (c) 2018-2019 Kowainik
+Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -7,13 +7,13 @@ Mini @bounded-enum@ framework inside @relude@.
 -}
 
 module Relude.Extra.Enum
-       ( universe
-       , inverseMap
-       , next
-       , prev
-       , prec
-       , safeToEnum
-       ) where
+    ( universe
+    , inverseMap
+    , next
+    , prev
+    , prec
+    , safeToEnum
+    ) where
 
 import Relude
 import Relude.Extra.Tuple (mapToFst)

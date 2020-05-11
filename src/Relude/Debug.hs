@@ -12,10 +12,14 @@
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
 
+#if __GLASGOW_HASKELL__ > 802
+{-# LANGUAGE DerivingStrategies   #-}
+#endif
+
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -28,19 +32,19 @@ they are only useful when you want to observe intermediate values of your pure f
 -}
 
 module Relude.Debug
-       ( -- * Tracing
-         trace
-       , traceM
-       , traceId
-       , traceShow
-       , traceShowId
-       , traceShowM
+    ( -- * Tracing
+      trace
+    , traceM
+    , traceId
+    , traceShow
+    , traceShowId
+    , traceShowM
 
-         -- * Imprecise error
-       , error
-       , Undefined (..)
-       , undefined
-       ) where
+      -- * Imprecise error
+    , error
+    , Undefined (..)
+    , undefined
+    ) where
 
 import Data.Data (Data)
 import GHC.Exts (RuntimeRep, TYPE)
@@ -170,13 +174,13 @@ error handling mechanism.
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src\\Relude\\Debug.hs:204:11 in ...
+  error, called at src\\Relude\\Debug.hs:208:11 in ...
   ...
 #else
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src/Relude/Debug.hs:204:11 in ...
+  error, called at src/Relude/Debug.hs:208:11 in ...
 ...
 #endif
 
@@ -224,7 +228,11 @@ type family CheckIsText (t :: Type) :: Constraint where
 
 -- | Similar to 'undefined' but data type.
 data Undefined = Undefined
+#if __GLASGOW_HASKELL__ > 802
+    deriving stock (Eq, Ord, Show, Read, Enum, Bounded, Data, Typeable, Generic)
+#else
     deriving (Eq, Ord, Show, Read, Enum, Bounded, Data, Typeable, Generic)
+#endif
 {-# WARNING Undefined "'Undefined' type remains in code" #-}
 
 -- | 'Prelude.undefined' that leaves warning in code on every usage.

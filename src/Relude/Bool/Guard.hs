@@ -1,7 +1,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -9,14 +9,14 @@ Monadic boolean combinators.
 -}
 
 module Relude.Bool.Guard
-       ( guarded
-       , guardM
-       , ifM
-       , unlessM
-       , whenM
-       , (&&^)
-       , (||^)
-       ) where
+    ( guarded
+    , guardM
+    , ifM
+    , unlessM
+    , whenM
+    , (&&^)
+    , (||^)
+    ) where
 
 import Relude.Applicative (Alternative, Applicative (..), empty)
 import Relude.Bool.Reexport (Bool (..), guard, unless, when)

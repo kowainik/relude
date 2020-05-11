@@ -4,7 +4,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -13,39 +13,39 @@ Reexports from @Data.*@ and @GHC.*@ modules of
 -}
 
 module Relude.Base
-       ( -- * Base types
-         module Data.Char
+    ( -- * Base types
+      module Data.Char
 
-         -- * Base type classes
-       , module Data.Eq
-       , module Data.Ord
+      -- * Base type classes
+    , module Data.Eq
+    , module Data.Ord
 
-         -- * System IO
-       , module System.IO
+      -- * System IO
+    , module System.IO
 
-         -- * Types for type-level computation
-       , module Data.Coerce
-       , module Data.Kind
-       , module Data.Proxy
-       , module Data.Typeable
-       , module Data.Void
+      -- * Types for type-level computation
+    , module Data.Coerce
+    , module Data.Kind
+    , module Data.Proxy
+    , module Data.Typeable
+    , module Data.Void
 
-       , module GHC.Base
-       , module GHC.Enum
-       , module GHC.Generics
-       , module GHC.Show
+    , module GHC.Base
+    , module GHC.Enum
+    , module GHC.Generics
+    , module GHC.Show
 
 -- * GHC-specific functionality
 #if MIN_VERSION_base(4,10,0)
-       , module GHC.TypeNats
+    , module GHC.TypeNats
 #else
-       , module GHC.TypeLits
+    , module GHC.TypeLits
 #endif
 
-       , module GHC.OverloadedLabels
-       , module GHC.ExecutionStack
-       , module GHC.Stack
-       ) where
+    , module GHC.OverloadedLabels
+    , module GHC.ExecutionStack
+    , module GHC.Stack
+    ) where
 
 -- Base types
 import Data.Char (Char, chr)

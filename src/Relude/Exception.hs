@@ -1,12 +1,17 @@
+{-# LANGUAGE CPP                   #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Safe                  #-}
 {-# LANGUAGE ViewPatterns          #-}
 
+#if __GLASGOW_HASKELL__ > 802
+{-# LANGUAGE DerivingStrategies    #-}
+#endif
+
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -15,12 +20,12 @@ provides some convenient utilities to throw and handle exceptions.
 -}
 
 module Relude.Exception
-       ( module Control.Exception
+    ( module Control.Exception
 
-       , Bug (..)
-       , bug
-       , pattern Exc
-       ) where
+    , Bug (..)
+    , bug
+    , pattern Exc
+    ) where
 
 import Control.Exception (Exception (..), SomeException (..))
 import Data.List ((++))
@@ -37,7 +42,11 @@ import qualified Control.Exception as E (displayException, throw, toException)
 not meant to be ever executed, but happens to be executed anyway.
 -}
 data Bug = Bug SomeException CallStack
+#if __GLASGOW_HASKELL__ > 802
+    deriving stock (Show)
+#else
     deriving (Show)
+#endif
 
 instance Exception Bug where
     displayException (Bug e cStack) = E.displayException e ++ "\n"

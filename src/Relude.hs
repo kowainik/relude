@@ -3,7 +3,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -79,46 +79,46 @@ for basic usage.
 -}
 
 module Relude
-       ( -- * Modules available by default
-         module Relude.Applicative
-         -- $applicative
-       , module Relude.Base
-         -- $base
-       , module Relude.Bool
-         -- $bool
-       , module Relude.Container
-         -- $container
-       , module Relude.Debug
-         -- $debug
-       , module Relude.DeepSeq
-         -- $deepseq
-       , module Relude.Exception
-         -- $exception
-       , module Relude.File
-         -- $file
-       , module Relude.Foldable
-         -- $foldable
-       , module Relude.Function
-         -- $function
-       , module Relude.Functor
-         -- $functor
-       , module Relude.Lifted
-         -- $lifted
-       , module Relude.List
-         -- $list
-       , module Relude.Monad
-         -- $monad
-       , module Relude.Monoid
-         -- $monoid
-       , module Relude.Nub
-         -- $nub
-       , module Relude.Numeric
-         -- $numeric
-       , module Relude.Print
-         -- $print
-       , module Relude.String
-         -- $string
-       ) where
+    ( -- * Modules available by default
+      module Relude.Applicative
+      -- $applicative
+    , module Relude.Base
+      -- $base
+    , module Relude.Bool
+      -- $bool
+    , module Relude.Container
+      -- $container
+    , module Relude.Debug
+      -- $debug
+    , module Relude.DeepSeq
+      -- $deepseq
+    , module Relude.Exception
+      -- $exception
+    , module Relude.File
+      -- $file
+    , module Relude.Foldable
+      -- $foldable
+    , module Relude.Function
+      -- $function
+    , module Relude.Functor
+      -- $functor
+    , module Relude.Lifted
+      -- $lifted
+    , module Relude.List
+      -- $list
+    , module Relude.Monad
+      -- $monad
+    , module Relude.Monoid
+      -- $monoid
+    , module Relude.Nub
+      -- $nub
+    , module Relude.Numeric
+      -- $numeric
+    , module Relude.Print
+      -- $print
+    , module Relude.String
+      -- $string
+    ) where
 
 import Relude.Applicative
 import Relude.Base

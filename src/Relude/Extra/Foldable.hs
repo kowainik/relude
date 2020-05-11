@@ -1,5 +1,5 @@
 {- |
-Copyright:  (c) 2018-2019 Kowainik
+Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -9,8 +9,8 @@ Contains utility functions for working with tuples.
 -}
 
 module Relude.Extra.Foldable
-       ( foldlSC
-       ) where
+    ( foldlSC
+    ) where
 
 import Relude
 

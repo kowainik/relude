@@ -8,7 +8,7 @@
 {-# LANGUAGE UndecidableInstances #-}
 
 {- |
-Copyright:  (c) 2018-2019 Kowainik
+Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 
@@ -16,13 +16,13 @@ Contains useful utilities to work with Types.
 -}
 
 module Relude.Extra.Type
-       ( typeName
-       , type (++)
-       , AllHave
-       , Elem
-       , Fst
-       , Snd
-       ) where
+    ( typeName
+    , type (++)
+    , AllHave
+    , Elem
+    , Fst
+    , Snd
+    ) where
 
 import Relude
 

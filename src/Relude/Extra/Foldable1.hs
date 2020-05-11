@@ -1,21 +1,22 @@
+{-# OPTIONS_GHC -Wno-redundant-constraints #-}
+
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
 
-{-# OPTIONS_GHC -Wno-redundant-constraints #-}
 
 {- |
 Copyright:  (c) 2011-2015 Edward Kmett
-            (c) 2018-2019 Kowainik
+            (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer: Kowainik <xrom.xkov@gmail.com>
 -}
 
 module Relude.Extra.Foldable1
-       ( Foldable1 (..)
-       , foldl1'
-       ) where
+    ( Foldable1 (..)
+    , foldl1'
+    ) where
 
 import Relude hiding (Product (..), Sum (..))
 import Relude.Extra.Newtype (( #. ))
