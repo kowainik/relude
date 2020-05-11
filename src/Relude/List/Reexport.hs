@@ -56,7 +56,10 @@ import qualified Data.List.NonEmpty as NE (head, init, last, tail)
 -- $setup
 -- >>> import Relude
 
-{- | Creates an infinite list from a finite list by appending the
+{- | Creates an infinite list from a finite list by appending the list
+to itself infinite times (i.e. by cycling the list). Unlike @cycle@
+from "Data.List", this implementation doesn't throw error on empty
+lists, but returns an empty list instead.
 
 >>> cycle []
 []
