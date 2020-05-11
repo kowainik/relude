@@ -1,11 +1,3 @@
-{-
-Copyright:  (c) 2016 Stephen Diehl
-            (c) 2016-2018 Serokell
-            (c) 2018-2019 Kowainik
-SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
--}
-
 module Main (main) where
 
 import Relude hiding (show)
@@ -90,6 +82,7 @@ bgroupFold = do
     let testList   = [1..100000] :: [Int]
     let flipFoldl' = flipfoldl' HashSet.insert mempty
     let ghcFoldl'  = foldl' (\hash el -> HashSet.insert el hash) mempty
-    bgroup "foldl'" [ bench "flipped" $ nf flipFoldl' testList
-                    , bench "base"    $ nf ghcFoldl'  testList
-                    ]
+    bgroup "foldl'"
+        [ bench "flipped" $ nf flipFoldl' testList
+        , bench "base"    $ nf ghcFoldl'  testList
+        ]
