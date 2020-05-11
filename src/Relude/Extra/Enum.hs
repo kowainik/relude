@@ -15,7 +15,6 @@ module Relude.Extra.Enum
     , inverseMap
     , next
     , prev
-    , prec
     , safeToEnum
     ) where
 
@@ -128,11 +127,6 @@ prev e
     | e == minBound = maxBound
     | otherwise     = pred e
 {-# INLINE prev #-}
-
--- | See 'prev'.
-prec :: (Eq a, Bounded a, Enum a) => a -> a
-prec = prev
-{-# DEPRECATED prec "Use 'prev' instead, it has more idiomatic and common name" #-}
 
 {- | Returns 'Nothing' if given 'Int' outside range.
 

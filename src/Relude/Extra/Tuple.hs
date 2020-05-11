@@ -13,10 +13,8 @@ Contains utility functions for working with tuples.
 
 module Relude.Extra.Tuple
     ( dup
-    , dupe
     , mapToFst
     , mapToSnd
-    , mapBoth
     , traverseToFst
     , traverseToSnd
     , traverseBoth
@@ -37,11 +35,6 @@ import Relude
 dup :: a -> (a, a)
 dup a = (a, a)
 {-# INLINE dup #-}
-
--- | See 'dup'.
-dupe :: a -> (a, a)
-dupe = dup
-{-# DEPRECATED dupe "Use 'dup' instead, it has more idiomatic and common name" #-}
 
 {- | Apply a function, with the result in the fst slot,
 and the value in the other.
@@ -66,16 +59,6 @@ A dual to 'mapToFst'.
 mapToSnd :: (a -> b) -> a -> (a, b)
 mapToSnd f a = (a, f a)
 {-# INLINE mapToSnd #-}
-
-{- | Maps a function over both elements of a tuple.
-
->>> mapBoth ("Hello " <>) ("Alice", "Bob")
-("Hello Alice","Hello Bob")
--}
-mapBoth :: (a -> b) -> (a, a) -> (b, b)
-mapBoth f (a1, a2) = (f a1, f a2)
-{-# DEPRECATED mapBoth "Use 'Relude.Extra.Bifunctor.bimapBoth' from \"Relude.Extra.Bifunctor\" instead" #-}
-{-# INLINE mapBoth #-}
 
 {- | Apply a function that returns a value inside of a functor,
 with the output in the first slot, the input in the second,
