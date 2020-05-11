@@ -1,17 +1,36 @@
+{-# LANGUAGE Safe #-}
+
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
-This module reexports very basic and primitive functions and function combinators.
+This module reexports very basic and primitive functions and function
+combinators.
 -}
 
 module Relude.Function
-    ( module Control.Arrow
-    , module Control.Category
-    , module Data.Function
+    ( -- * Reexports
+      -- ** "Control.Arrow" reexports
+      (&&&)
+      -- ** "Control.Category" reexports
+    , (>>>)
+    , (<<<)
+      -- ** "Data.Function" reexports
+    , (.)
+    , ($)
+    , (&)
+    , id
+    , const
+    , flip
+    , fix
+    , on
+
+      -- * Combinators
     , identity
     ) where
 

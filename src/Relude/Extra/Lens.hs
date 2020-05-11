@@ -1,10 +1,13 @@
 {-# LANGUAGE Rank2Types #-}
+{-# LANGUAGE Safe       #-}
 
 {- |
 Copyright:  (c) 2013-2016 Edward Kmett
             (c) 2019-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Experimental
+Portability: Portable
 
 This module aims to provide a minimal implementation of @lens@ package required
 for basic usage. All functions are compatible with the real @lens@ package

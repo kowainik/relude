@@ -21,14 +21,24 @@ Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
-Functions for debugging. If you left these functions in your code then a warning
-is generated to remind you about left usages. Also some functions (and data
-types) are convenient for prototyping.
+Functions for debugging and prototyping. If you leave these functions in your
+code then a warning is generated to remind you about left usages.
 
-Use these functions only for debugging purposes. They break referential transparency,
-they are only useful when you want to observe intermediate values of your pure functions.
+@
+__ghci>__ foo = trace "I forgot trace in code"
+
+\<interactive\>:4:7: __warning__: [-Wdeprecations]
+    In the use of ‘trace’ (imported from "Relude"):
+    "'trace' remains in code"
+@
+
+__⚠ NOTE:__ Use these functions only for debugging purposes. They break referential
+transparency, they are only useful when you want to observe intermediate values
+of your pure functions.
 -}
 
 module Relude.Debug

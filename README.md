@@ -160,10 +160,11 @@ the `mixins` field as well, like this:
         , relude (Relude as Prelude, Relude.Extra.Enum)
 ```
 
-If you want to bring into scope all `Extra.*` modules, you can add
-only `Relude.Extra` module to `mixins`, and later you can import all
+If you want to bring all `Extra.*` modules into scope, you can add
+a single `Relude.Extra` module to `mixins`, and after that you can import all
 extra functions and data types from `Relude.Extra`. This is the
-easiest way to bring all safe functions from `relude` to your project.
+easiest way to bring all functions and types from `relude` to your project
+(excluding `Relude.Unsafe`).
 
 ```cabal
   mixins: base hiding (Prelude)

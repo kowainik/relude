@@ -2,6 +2,7 @@
 
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE PolyKinds            #-}
+{-# LANGUAGE Safe                 #-}
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -11,7 +12,9 @@ Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
 Fixes and additions to 'Foldable'.
 -}
@@ -28,6 +31,7 @@ module Relude.Foldable.Fold
     , elem
     , notElem
 
+      -- * Monadic functions
     , allM
     , anyM
     , andM

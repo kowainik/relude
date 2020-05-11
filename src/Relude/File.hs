@@ -1,9 +1,13 @@
+{-# LANGUAGE Safe #-}
+
 {- |
 Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
-Lifted to 'MonadIO' families of file processing functions for 'Text', 'LText',
+Lifted to 'MonadIO' families of file processing functions for the 'Text', 'LText',
 'ByteString' and 'LByteString' types.
 
 These functions are lifted which means that you can also use them inside
@@ -13,7 +17,7 @@ __NOTE:__ These functions are for working with textual data. Functions that work
 with 'Text' or 'LText' types are system and locale-sensitive (encoding,
 line-endings). If you want binary data, use 'ByteString' functions (they are
 also faster since they don't check encoding). However, you can then decode that
-data with the help of functions from the @"Relude.String.Conversion"@ module, e. g.
+data with the help of functions from the "Relude.String.Conversion" module, e. g.
 'Relude.String.Conversion.decodeUtf8'.
 -}
 
@@ -48,6 +52,7 @@ import qualified Data.ByteString as BS
 import qualified Data.ByteString.Lazy as LBS
 import qualified Data.Text.IO as T
 import qualified Data.Text.Lazy.IO as LT
+
 
 ----------------------------------------------------------------------------
 -- Text

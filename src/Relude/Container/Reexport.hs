@@ -1,25 +1,43 @@
+{-# LANGUAGE Trustworthy #-}
+
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
-Reexports all container-related stuff from @base@, @containers@ and
-@unordered-containers@ packages.
+Reexports container-related data types, functions and typeclasses from @base@,
+@containers@ and @unordered-containers@ packages.
 -}
 
 module Relude.Container.Reexport
-    ( module Data.Hashable
-    , module Data.HashMap.Strict
-    , module Data.HashSet
-    , module Data.IntMap.Strict
-    , module Data.IntSet
-    , module Data.Map.Strict
-    , module Data.Sequence
-    , module Data.Set
-    , module Data.Tuple
-    , module GHC.Exts
+    ( -- * "Data.Hashable" reexports
+      Hashable (..)
+      -- * "Data.HashMap.Strict" reexports
+    , HashMap
+      -- * "Data.HashSet" reexports
+    , HashSet
+      -- * "Data.IntMap.Strict" reexports
+    , IntMap
+      -- * "Data.IntSet" reexports
+    , IntSet
+      -- * "Data.Map.Strict" reexports
+    , Map
+      -- * "Data.Sequence" reexports
+    , Seq
+      -- * "Data.Set" reexports
+    , Set
+      -- * "Data.Tuple" reexports
+    , curry
+    , fst
+    , snd
+    , swap
+    , uncurry
+      -- * "GHC.Exts" reexports
+    , IsList (..)
     ) where
 
 import Data.Hashable (Hashable (hashWithSalt))

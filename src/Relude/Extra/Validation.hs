@@ -4,6 +4,7 @@
 {-# LANGUAGE ConstraintKinds      #-}
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE LambdaCase           #-}
+{-# LANGUAGE Safe                 #-}
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
@@ -12,12 +13,13 @@
 {-# LANGUAGE DerivingStrategies   #-}
 #endif
 
-
 {- |
 Copyright:  (c) 2014 Chris Allen, Edward Kmett
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Experimental
+Portability: Portable
 
 'Validation' is a monoidal sibling to 'Either' but 'Validation' doesn't have a
 'Monad' instance. 'Validation' allows to accumulate all errors instead of

@@ -1,16 +1,24 @@
 {-# OPTIONS_GHC -Wno-redundant-constraints #-}
 
 {-# LANGUAGE DataKinds            #-}
+{-# LANGUAGE Safe                 #-}
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
-
 
 {- |
 Copyright:  (c) 2011-2015 Edward Kmett
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Experimental
+Portability: Portable
+
+'Foldable1' is a typeclass like 'Data.Foldable.Foldable' but for non-empty
+structures. For example, 'Relude.NonEmpty', 'Relude.Identity'.
+
+'Foldable1' has all type-safe and total methods like `head1`, `maximum1` in
+contradiction with 'Data.Foldable.Foldable'.
 -}
 
 module Relude.Extra.Foldable1

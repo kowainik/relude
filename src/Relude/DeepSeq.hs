@@ -1,17 +1,27 @@
+{-# LANGUAGE Safe #-}
+
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
 This module contains useful functions to evaluate expressions to weak-head
-normal form or just normal form. Useful to force traces or @error@ inside
-monadic computation or to remove space leaks.
+normal form (WHNF) or just normal form (NF). Useful to force traces or @error@s
+inside monadic computations or to remove space leaks.
 -}
 
 module Relude.DeepSeq
-    ( module Control.DeepSeq
+    ( -- * "Control.DeepSeq" reexports
+      NFData (..)
+    , deepseq
+    , force
+    , ($!!)
+
+      -- * Evaluation
     , evaluateNF
     , evaluateNF_
     , evaluateWHNF
