@@ -16,6 +16,13 @@ The changelog is available [on GitHub][2].
   (by [@mxstrbng](https://github.com/mstruebing))
 * [#233](https://github.com/kowainik/relude/issues/233):
   Add `etaReaderT` to `Relude.Monad.Trans` to help with performance.
+* [#244](https://github.com/kowainik/relude/issues/244):
+  Remove deprecated functions: `prec`, `dupe` and `mapBoth`.
+
+  __Migration rules:__
+    + `prec`: use `prev` instead
+    + `dupe`: use `dup` instead
+    + `mapBoth`: use `bimapBoth` instead
 
 ## 0.6.0.0 — Oct 30, 2019
 
