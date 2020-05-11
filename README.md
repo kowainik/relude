@@ -193,7 +193,7 @@ your own `Prelude` module with some custom functions, not provided by
    ```cabal
    exposed-modules: Prelude
    ```
-5. Optionally modify your `Prelude` module to include more functions or less. 
+5. Optionally modify your `Prelude` module to include more functions or less.
    You may want to hide something from the `Relude` module. Or you may want to add
    something from the `Relude.Extra.*` modules!
 
@@ -530,7 +530,7 @@ alternative preludes. It's also relatively small, but:
    the HLint rules are generated using Dhall and there is [a blog post about
    this technique](https://kowainik.github.io/posts/2018-09-09-dhall-to-hlint).
    This makes maintaining HLint rules much easier.
-4. `relude` has less dependencies and is slightly lighter because of that but 
+4. `relude` has less dependencies and is slightly lighter because of that but
    it is still very powerful and useful.
 5. One minor difference: `head` in `protolude` returns `Maybe a` while in
    `relude` it works with `NonEmpty`.
@@ -540,7 +540,7 @@ alternative preludes. It's also relatively small, but:
    `relude` you can't).
 7. `relude` is opt-in oriented and has a notion of `Extra.*` modules that are
    not exported by default from the `Relude` module. So we don't pollute the
-   global namespace but still have a lot of useful features like polymorphic 
+   global namespace but still have a lot of useful features like polymorphic
    functions to work with every `newtype`, `Enum/Bounded`-related useful utilities,
    functions to take a name of any type as `Text` and much more. It's very easy
    to make them accessible package-wide with the `base-noprelude` trick!
