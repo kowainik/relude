@@ -53,9 +53,9 @@ asValidation gen = Gen.choice
 -- Property helpers
 ----------------------------------------------------------------------------
 
-checkAssotiativityFor
+checkAssociativityFor
     :: (Show a, Eq a) => Gen a -> (a -> a -> a) -> Property
-checkAssotiativityFor gen op = property $ do
+checkAssociativityFor gen op = property $ do
     a <- forAll gen
     b <- forAll gen
     c <- forAll gen
@@ -73,7 +73,7 @@ validationSemigroupProps =
 
 prop_semigroupAssociativity :: Property
 prop_semigroupAssociativity =
-    checkAssotiativityFor (asValidation genSmallText) (<>)
+    checkAssociativityFor (asValidation genSmallText) (<>)
 
 ----------------------------------------------------------------------------
 -- Monoid instance properties
@@ -161,7 +161,7 @@ validationAlternativeProps =
 
 prop_alternativeAssociativity :: Property
 prop_alternativeAssociativity =
-    checkAssotiativityFor (asValidation genSmallText) (<|>)
+    checkAssociativityFor (asValidation genSmallText) (<|>)
 
 prop_alternativeRightIdentity :: Property
 prop_alternativeRightIdentity = property $ do
