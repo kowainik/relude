@@ -50,6 +50,12 @@ appliedTo = (<**>)
 
 
 {-
+-- Reason for commented out code:
+-- The following functions from protolude
+-- are not used much
+-- so it was decided not to expose them
+-- in order to make relude more beginner-friendly.
+
 orAlt :: (Alternative f, Monoid a) => f a -> f a
 orAlt f = f <|> pure mempty
 
