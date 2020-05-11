@@ -12,6 +12,7 @@ Mini @bounded-enum@ framework inside @relude@.
 
 module Relude.Extra.Enum
     ( universe
+    , universeNonEmpty
     , inverseMap
     , next
     , prev
@@ -26,15 +27,47 @@ import qualified Data.Map.Strict as M
 
 {- | Returns all values of some 'Bounded' 'Enum' in ascending order.
 
+>>> universe :: [Bool]
+[False,True]
+
+>>> universe @Ordering
+[LT,EQ,GT]
+
 >>> data TrafficLight = Red | Blue | Green deriving (Show, Enum, Bounded)
 >>> universe :: [TrafficLight]
 [Red,Blue,Green]
->>> universe :: [Bool]
-[False,True]
+
+>>> data Singleton = Singleton deriving (Show, Enum, Bounded)
+>>> universe @Singleton
+[Singleton]
 -}
 universe :: (Bounded a, Enum a) => [a]
 universe = [minBound .. maxBound]
 {-# INLINE universe #-}
+
+{- | Like 'universe', but returns 'NonEmpty' list of some enumeration
+
+>>> universeNonEmpty :: NonEmpty Bool
+False :| [True]
+
+>>> universeNonEmpty @Ordering
+LT :| [EQ,GT]
+
+>>> data TrafficLight = Red | Blue | Green deriving (Show, Eq, Enum, Bounded)
+>>> universeNonEmpty :: NonEmpty TrafficLight
+Red :| [Blue,Green]
+
+>>> data Singleton = Singleton deriving (Show, Eq, Enum, Bounded)
+>>> universeNonEmpty @Singleton
+Singleton :| []
+
+@since 0.7.0.0
+-}
+universeNonEmpty :: forall a . (Bounded a, Enum a, Eq a) => NonEmpty a
+universeNonEmpty
+    | minBound @a == maxBound = minBound :| []
+    | otherwise = minBound :| [succ minBound .. maxBound]
+{-# INLINE universeNonEmpty #-}
 
 {- | @inverseMap f@ creates a function that is the inverse of a given function
 @f@. It does so by constructing 'M.Map' internally for each value @f a@. The
