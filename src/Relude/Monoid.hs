@@ -2,10 +2,11 @@
 {-# LANGUAGE DeriveGeneric              #-}
 #if !MIN_VERSION_base(4,12,0)
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-#endif
+#else
 {-# LANGUAGE Safe                       #-}
+#endif
 
-{- |
+  {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2020 Kowainik
