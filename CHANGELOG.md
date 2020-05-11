@@ -14,7 +14,8 @@ The changelog is available [on GitHub][2].
 * [#227](https://github.com/kowainik/relude/issues/227):
   Create `Relude.Extra` module
   (by [@mxstrbng](https://github.com/mstruebing))
-
+* [#233](https://github.com/kowainik/relude/issues/233):
+  Add `etaReaderT` to `Relude.Monad.Trans` to help with performance.
 
 ## 0.6.0.0 — Oct 30, 2019
 
