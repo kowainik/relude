@@ -16,14 +16,14 @@ The main module that reexports all functionality. It's considered to be a
 
 === mixins
 
-One of the most convenient ways to use @relude@ is via @mixins@ feature. This
+One of the most convenient ways to use @relude@ is via the @mixins@ feature. This
 feature is available since @Cabal >= 2.2@. In order to use the @mixins@ feature
 one needs to specify supported @cabal-version@ in your package description.
 And then the following lines should be added to the required stanza to replace
 default "Prelude" with @relude@.
 
 @
-cabal-version: 3.0
+cabal-version: 2.4
 ...
 library
   ...
