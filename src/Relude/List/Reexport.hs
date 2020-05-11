@@ -41,9 +41,9 @@ module Relude.List.Reexport
 
 import Data.List (break, drop, dropWhile, filter, genericDrop, genericLength, genericReplicate,
                   genericSplitAt, genericTake, group, inits, intercalate, intersperse, isPrefixOf,
-                  iterate, map, permutations, repeat, replicate, reverse, scanl, scanr, sort,
-                  sortBy, sortOn, splitAt, subsequences, tails, take, takeWhile, transpose, uncons,
-                  unfoldr, unzip, unzip3, zip, zip3, zipWith, (++))
+                  iterate, map, permutations, repeat, replicate, reverse, scanl, scanl', scanl1,
+                  scanr, scanr1, sort, sortBy, sortOn, splitAt, subsequences, tails, take,
+                  takeWhile, transpose, uncons, unfoldr, unzip, unzip3, zip, zip3, zipWith, (++))
 import Data.List.NonEmpty (NonEmpty (..), nonEmpty)
 import GHC.Exts (sortWith)
 import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)

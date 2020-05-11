@@ -28,6 +28,9 @@ The changelog is available [on GitHub][2].
     + `dupe`: use `dup` instead
     + `mapBoth`: use `bimapBoth` instead
 
+* [#234](https://github.com/kowainik/relude/issues/234):
+  Reexport `scanl1`, `scanr1`, `scanl'` from `Data.List`.
+
 ## 0.6.0.0 — Oct 30, 2019
 
 * [#171](https://github.com/kowainik/relude/issues/171):
