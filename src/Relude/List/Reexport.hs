@@ -11,12 +11,14 @@ Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
 Reexports most of the "Data.List" and "Data.List.NonEmpty".
 
 Note, that Relude reexports 'head', 'tail', 'init', 'last' from
-"Data,List.NonEmpty" instead of the "Data.List", so these functions are safe to
+"Data.List.NonEmpty" instead of the "Data.List", so these functions are safe to
 use.
 
 @relude@ also provides custom type error for better experience with transition

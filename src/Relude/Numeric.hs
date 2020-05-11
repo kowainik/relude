@@ -1,11 +1,18 @@
+{-# LANGUAGE Trustworthy #-}
+
 {- |
 Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
+
+Provides numerical data types and functions.
 -}
 
 module Relude.Numeric
-    ( module Data.Bits
+    ( -- * Reexports
+      module Data.Bits
     , module Data.Int
     , module Data.Word
     , module GHC.Base
@@ -13,6 +20,7 @@ module Relude.Numeric
     , module GHC.Num
     , module GHC.Real
     , module Numeric.Natural
+      -- * Combinators
     , integerToBounded
     , integerToNatural
     ) where

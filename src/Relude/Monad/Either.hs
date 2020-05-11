@@ -1,20 +1,23 @@
+{-# OPTIONS_GHC -fno-warn-orphans #-}
+
 {-# LANGUAGE CPP  #-}
 {-# LANGUAGE Safe #-}
-
-{-# OPTIONS_GHC -fno-warn-orphans #-}
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
-Utilities to work with @Either@ data type.
+Utilities to work with 'Relude.Either' data type.
 -}
 
 module Relude.Monad.Either
-    ( fromLeft
+    ( -- * Combinators
+      fromLeft
     , fromRight
     , maybeToLeft
     , maybeToRight
@@ -22,6 +25,8 @@ module Relude.Monad.Either
     , rightToMaybe
     , whenLeft
     , whenLeft_
+
+      -- * Monadic combinators
     , whenLeftM
     , whenLeftM_
     , whenRight
@@ -43,6 +48,8 @@ import Relude.String.Reexport (IsString (..), String)
 #if MIN_VERSION_base(4,10,0)
 import Data.Either (fromLeft, fromRight)
 #else
+
+
 -- | Extracts value from 'Left' or return given default value.
 --
 -- >>> fromLeft 0 (Left 3)

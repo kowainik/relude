@@ -1,9 +1,12 @@
+{-# LANGUAGE Safe          #-}
 {-# LANGUAGE TupleSections #-}
 
 {- |
 Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Experimental
+Portability: Portable
 
 Contains utility functions for working with tuples.
 -}

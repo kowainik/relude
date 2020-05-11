@@ -1,17 +1,22 @@
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP  #-}
+{-# LANGUAGE Safe #-}
 
 {- |
 Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
 Reexports "Data.Foldable" and "Data.Traversable".
 -}
 
 module Relude.Foldable.Reexport
-    ( module Data.Foldable
+    ( -- * @Foldable@ reexports
+      module Data.Foldable
     , module Data.Traversable
 #if MIN_VERSION_base(4,10,0)
+      -- * @Bi@ reexports
     , module Data.Bifoldable
     , module Data.Bitraversable
 #endif

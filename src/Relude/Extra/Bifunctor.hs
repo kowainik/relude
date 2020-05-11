@@ -1,7 +1,11 @@
+{-# LANGUAGE Safe #-}
+
 {- |
 Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Experimental
+Portability: Portable
 
 Useful combinators for bifunctors inside functors. This set of functions is
 useful when you want to work with types like these ones:

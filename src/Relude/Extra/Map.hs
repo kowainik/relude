@@ -1,9 +1,12 @@
+{-# LANGUAGE Trustworthy  #-}
 {-# LANGUAGE TypeFamilies #-}
 
 {- |
 Copyright:  (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Experimental
+Portability: Portable
 
 Contains implementation of polymorphic type classes for data types 'Set' and
 'Map'.

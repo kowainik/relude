@@ -13,15 +13,20 @@ Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
 Re-exports most useful functionality from the "Control.Exception" module. Also
 provides some convenient utilities to throw and handle exceptions.
 -}
 
 module Relude.Exception
-    ( module Control.Exception
+    ( -- * "Control.Exception" reexports
+      Exception (..)
+    , SomeException (..)
 
+      -- * 'Bug's
     , Bug (..)
     , bug
     , pattern Exc
@@ -56,8 +61,9 @@ instance Exception Bug where
 impureThrow :: Exception e => e -> a
 impureThrow = E.throw . E.toException
 
--- | Generate a pure value which, when forced, will synchronously
--- throw the exception wrapped into 'Bug' data type.
+{- | Generate a pure value which, when forced, will synchronously
+throw the exception wrapped into 'Bug' data type.
+-}
 bug :: (HasCallStack, Exception e) => e -> a
 bug e = impureThrow (Bug (E.toException e) callStack)
 

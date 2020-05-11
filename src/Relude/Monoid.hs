@@ -1,22 +1,32 @@
 {-# LANGUAGE CPP                        #-}
 {-# LANGUAGE DeriveGeneric              #-}
+#if !MIN_VERSION_base(4,12,0)
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE Trustworthy                #-}
+#else
+{-# LANGUAGE Safe                       #-}
+#endif
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
 Reexports functions to work with monoids plus adds extra useful functions.
 -}
 
 module Relude.Monoid
-    ( module Data.Monoid
+    ( -- * Reexports
+      module Data.Monoid
     , module Data.Semigroup
 
     , Ap (..)
+
+      -- * Combinators
     , maybeToMonoid
     ) where
 

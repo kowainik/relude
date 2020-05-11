@@ -1,34 +1,52 @@
-{-# LANGUAGE Trustworthy #-}
+{-# LANGUAGE Safe #-}
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
 The main module that reexports all functionality. It's considered to be a
 @Prelude@ replacement.
 
-One of the most convenient ways to use @relude@ is via @mixins@ feature. To use
-this feature need to specify @cabal-version: 2.4@ in your package description.
-And then you can add the following lines to the required stanza to replace
+== Usage
+
+=== mixins
+
+One of the most convenient ways to use @relude@ is via the @mixins@ feature. This
+feature is available since @Cabal >= 2.2@. In order to use the @mixins@ feature
+one needs to specify supported @cabal-version@ in your package description.
+And then the following lines should be added to the required stanza to replace
 default "Prelude" with @relude@.
 
 @
-mixins: base hiding (Prelude)
-      , relude (Relude as Prelude)
+cabal-version: 2.4
+...
+library
+  ...
+  mixins: base hiding (Prelude)
+        , relude (Relude as Prelude)
 @
+
+=== @base-noprelude@
 
 Alternatively, you can replace @base@ package in your dependencies with
 @[base-noprelude](http://hackage.haskell.org/package/base-noprelude)@ and add
 the following "Prelude" module to your package to use @relude@ by default in
-every module instead of "Prelude":
+every module instead of @base@ "Prelude":
 
 @
-__module__ Prelude (__module__ "Relude") __where__
+__module__ Prelude
+    ( __module__ "Relude"
+    ) __where__
+
 __import__ "Relude"
 @
+
+=== @NoImplicitPrelude@
 
 If you want to use @relude@ per-module basis then just add next lines to your
 module to replace default "Prelude":
@@ -39,47 +57,25 @@ module to replace default "Prelude":
 __import__ "Relude"
 @
 
+== Structure
+
 This documentation section contains the description of internal module structure to
 help navigate between modules, search for interesting functionalities and
 understand where you need to put your new changes (if you're a contributor).
 
 Functions and types are distributed across multiple modules and grouped by
 meaning or __category__. Name of the module should give you hints regarding what
-this module contains. Some /categories/ contain a significant amount of both reexported
+this module contains. Some /categories/ contain a significant amount of both
+reexported
 functions and functions of our own. To make it easier to understand these enormous
 chunks of functions, all reexported stuff is moved into the separate module with
 name @Relude.SomeCategory.Reexport@ and our own functions and types are in
 @Relude.SomeCategory.SomeName@. For example, see modules
 "Relude.Foldable.Fold" and "Relude.Foldable.Reexport".
-
-The following modules are not exported by default, but you can easily bring them to
-every module in your package by modifying your "Prelude" file:
-
-* __ "Relude.Extra"__: reexports every `Relude.Extra.*` module
-* __"Relude.Extra.Bifunctor"__: additional combinators for 'Bifunctor'.
-* __"Relude.Extra.CallStack"__: useful functions to extract information from
-  'CallStack'.
-* __"Relude.Extra.Enum"__: extra utilities for types that implement 'Bounded'
-  and 'Enum' constraints.
-* __"Relude.Extra.Foldable"__: extra folds for instances of the 'Foldable'
-  typeclass. Currently, just a short-circuitable left fold.
-* __"Relude.Extra.Foldable1"__: 'Relude.Extra.Foldable1.Foldable1' typeclass
-  like 'Foldable' but for non-empty structures.
-* __"Relude.Extra.Group"__: grouping functions, polymorphic on return @Map@ type.
-* __"Relude.Extra.Lens"__: minimal implementation of @lens@ package required
-for basic usage.
-* __"Relude.Extra.Map"__: typeclass for @Map@-like data structures.
-* __"Relude.Extra.Newtype"__: generic functions that automatically work for any
-  @newtype@.
-* __"Relude.Extra.Tuple"__: functions for working with tuples.
-* __"Relude.Extra.Type"__: functions for inspecting and working with types.
-* __"Relude.Extra.Validation"__: 'Relude.Extra.Validation.Validation' data type.
-* __"Relude.Unsafe"__: unsafe partial functions (produce 'error') for lists and
-  'Maybe'.
 -}
 
 module Relude
-    ( -- * Modules available by default
+    ( -- * Default Modules
       module Relude.Applicative
       -- $applicative
     , module Relude.Base
@@ -118,6 +114,9 @@ module Relude
       -- $print
     , module Relude.String
       -- $string
+
+      -- * Extra Modules
+      -- $extra
     ) where
 
 import Relude.Applicative
@@ -230,4 +229,46 @@ __"Relude.Print"__ contains printing to terminal functions for 'Text' and 'ByteS
 {- $string
 __"Relude.String"__ contains reexports from @text@ and @bytestring@ packages
 with conversion functions between different textual types.
+-}
+
+{- $extra
+The following modules are not exported by default, but you can easily bring them to
+every module in your package by modifying your "Prelude" file:
+
++------------------------------+-----------------------------------------------------------+
+| __"Relude.Extra"__           | Reexports every @Relude.Extra.*@ module                   |
++------------------------------+-----------------------------------------------------------+
+| __"Relude.Extra.Bifunctor"__ | Additional combinators for 'Bifunctor'.                   |
++------------------------------+-----------------------------------------------------------+
+| __"Relude.Extra.CallStack"__ | Useful functions to extract information from 'CallStack'. |
++------------------------------+-----------------------------------------------------------+
+| __"Relude.Extra.Enum"__      | Extra utilities for types that implement 'Bounded'        |
+|                              | and 'Enum' constraints.                                   |
++------------------------------+-----------------------------------------------------------+
+| __"Relude.Extra.Foldable"__  | Extra folds for instances of the 'Foldable' typeclass.    |
+|                              | Currently, just a short-circuitable left fold.            |
++------------------------------+-----------------------------------------------------------+
+| __"Relude.Extra.Foldable1"__ | 'Relude.Extra.Foldable1.Foldable1' typeclass              |
+|                              | like 'Foldable' but for non-empty structures.             |
++------------------------------+-----------------------------------------------------------+
+| __"Relude.Extra.Group"__     | Grouping functions, polymorphic on return @Map@ type.     |
++------------------------------+-----------------------------------------------------------+
+| __"Relude.Extra.Lens"__      | Minimal implementation of @lens@ package required         |
+|                              | for basic usage.                                          |
++------------------------------+-----------------------------------------------------------+
+| __"Relude.Extra.Map"__       | Typeclass for @Map@-like data structures.                 |
++------------------------------+-----------------------------------------------------------+
+| __"Relude.Extra.Newtype"__   | Generic functions that automatically work for any         |
+|                              | @newtype@.                                                |
++------------------------------+-----------------------------------------------------------+
+| __"Relude.Extra.Tuple"__     | Functions for working with tuples.                        |
++------------------------------+-----------------------------------------------------------+
+| __"Relude.Extra.Type"__      | Functions for inspecting and working with types.          |
++------------------------------+-----------------------------------------------------------+
+| __"Relude.Extra.Validation"__| 'Relude.Extra.Validation.Validation' data type.           |
++------------------------------+-----------------------------------------------------------+
+| __"Relude.Unsafe"__          | Unsafe partial functions (produce 'error') for lists and  |
+|                              | 'Maybe'.                                                  |
++------------------------------+-----------------------------------------------------------+
+
 -}

@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP  #-}
 {-# LANGUAGE Safe #-}
 
 {- |
@@ -5,21 +6,36 @@ Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
-Convenient utils to work with 'Applicative'. There were more functions in this module
-(see <https://www.stackage.org/haddock/lts-8.9/protolude-0.1.10/Applicative.html protolude version>)
-but only convenient ans most used are left.
+This module contains reexports of 'Applicative' and related functional.
+Additionally, it provides convenient combinators to work with 'Applicative'.
 -}
 
 module Relude.Applicative
-    ( module Control.Applicative
+    ( -- * Reexports
+      -- $reexports
+      Alternative (..)
+    , Applicative (..)
+    , Const (..)
+    , ZipList (..)
+#if __GLASGOW_HASKELL__ < 802
+    , liftA2
+#endif
+    , liftA3
+    , optional
+    , (<**>)
+
+      -- * Combinators
     , pass
     , appliedTo
     ) where
 
 import Control.Applicative (Alternative (..), Applicative (..), Const (..), ZipList (..), liftA2,
                             liftA3, optional, (<**>))
+
 
 -- $setup
 -- >>> import Relude
@@ -47,3 +63,7 @@ Nothing
 appliedTo :: Applicative f => f a -> f (a -> b) -> f b
 appliedTo = (<**>)
 {-# INLINE appliedTo #-}
+
+{- $reexports
+Main data types and functions reexported from "Control.Applicative".
+-}

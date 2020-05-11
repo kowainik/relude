@@ -1,5 +1,6 @@
 {-# LANGUAGE FlexibleContexts  #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE Safe              #-}
 {-# LANGUAGE TypeFamilies      #-}
 
 {- |
@@ -7,9 +8,12 @@ Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
-Typeclass for creating structures from a singleton element. It has three main goals:
+'One' is a typeclass for creating structures from a singleton element.
+It has three main goals:
 
 1. Give a shorter name for the construction: uses 'one' instead of common @singleton@.
 2. Work with monomorphic structures like 'T.Text' or 'IntSet'.

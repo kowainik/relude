@@ -1,18 +1,22 @@
-{-# LANGUAGE Trustworthy #-}
+{-# LANGUAGE Safe #-}
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
             (c) 2018-2020 Kowainik
 SPDX-License-Identifier: MIT
-Maintainer: Kowainik <xrom.xkov@gmail.com>
+Maintainer:  Kowainik <xrom.xkov@gmail.com>
+Stability:   Stable
+Portability: Portable
 
-Utility functions to work with lists.
+Utility functions to work with lists and 'NonEmpty' lists.
 -}
 
 module Relude.List
-    ( module Relude.List.NonEmpty
-    , module Relude.List.Reexport
+    ( module Relude.List.Reexport
+      -- $reexport
+    , module Relude.List.NonEmpty
+      -- $nonempty
     , (!!?)
     ) where
 
@@ -56,3 +60,13 @@ infix 9 !!?
     go j (_:ys) = go (j - 1) ys
     go _ []     = Nothing
 {-# INLINE (!!?) #-}
+
+{- $reexport
+Most of the "Data.List" and "Data.List.NonEmpty" types and function.
+List partial functions are not exported from "Data.List", but from
+"Data.List.NonEmpty" instead.
+-}
+
+{- $nonempty
+Additional safe functions to work with list type in terms of 'NonEmpty'.
+-}
