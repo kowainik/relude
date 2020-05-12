@@ -21,6 +21,34 @@ Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Experimental
 Portability: Portable
 
+= Attention
+
+__⚠️ Warning ⚠️__
+
+This module is now deprecated @since 0.7.0.0.
+The whole module will be removed in the upcoming release.
+
+== Migration rules
+
+The module is deprecated in favour of
+[validation-selective](https://hackage.haskell.org/package/validation-selective).
+The package has the identical functionality, so can be easily migrated to.
+
+If you use "Relude.Extra.Validation" in you project you need to:
+
+1. Add @validation-selective@ into the @build-depends@ section of your @.cabal@
+   file.
+2. Change imports of "Relude.Extra.Validation" to "Validation":
+
+    @
+    -- Was:
+    import Relude.Extra.Validation (Validation (..), ..)
+    -- Become:
+    import Validation (Validation (..), ..)
+    @
+
+= Description
+
 'Validation' is a monoidal sibling to 'Either' but 'Validation' doesn't have a
 'Monad' instance. 'Validation' allows to accumulate all errors instead of
 short-circuiting on the first error so you can display all possible errors at
@@ -121,6 +149,7 @@ data Validation e a
 #else
     deriving (Eq, Ord, Show)
 #endif
+{-# DEPRECATED Validation "Use 'Validation' from 'validation-selective' instead"#-}
 
 instance Functor (Validation e) where
     fmap :: (a -> b) -> Validation e a -> Validation e b
@@ -354,6 +383,7 @@ validationToEither = \case
     Failure e -> Left e
     Success a -> Right a
 {-# INLINE validationToEither #-}
+{-# DEPRECATED validationToEither "Use 'validationToEither' from 'validation-selective' instead"#-}
 
 {- | Transform an 'Either' into a 'Validation'.
 
@@ -368,6 +398,7 @@ eitherToValidation = \case
     Left e  -> Failure e
     Right a -> Success a
 {-# INLINE eitherToValidation #-}
+{-# DEPRECATED eitherToValidation "Use 'eitherToValidation' from 'validation-selective' instead"#-}
 
 ----------------------------------------------------------------------------
 -- Custom errors
