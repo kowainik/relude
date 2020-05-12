@@ -120,6 +120,14 @@ guarded p a = if p a then pure a else empty
 
 {- | Monadic version of 'Data.Bool.(&&)' operator.
 
+>>> Just False &&^ Just True
+Just False
+>>> Just True &&^ Just True
+Just True
+>>> Just True &&^ Nothing
+Nothing
+>>> Just False &&^ Nothing
+Just False
 >>> Just False &&^ error "Shouldn't be evaluated"
 Just False
 -}
@@ -129,6 +137,14 @@ Just False
 
 {- | Monadic version of 'Data.Bool.(||)' operator.
 
+>>> Just False ||^ Just True
+Just True
+>>> Just False ||^ Just False
+Just False
+>>> Just False ||^ Nothing
+Nothing
+>>> Just True ||^ Nothing
+Just True
 >>> Just True ||^ error "Shouldn't be evaluated"
 Just True
 -}
