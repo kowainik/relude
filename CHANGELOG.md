@@ -30,6 +30,22 @@ The changelog is available [on GitHub][2].
 
 * [#234](https://github.com/kowainik/relude/issues/234):
   Reexport `scanl1`, `scanr1`, `scanl'` from `Data.List`.
+* [#246](https://github.com/kowainik/relude/issues/246):
+  Deprecate `Relude.Extra.Validation` in favour of
+  [`validation-selective`](https://hackage.haskell.org/package/validation-selective)
+  __Migration rules:__
+  If you use "Relude.Extra.Validation" in you project you need to:
+
+    1. Add @validation-selective@ into the @build-depends@ section of your @.cabal@
+       file.
+    2. Change imports of "Relude.Extra.Validation" to "Validation":
+
+       ```haskell
+       -- Was:
+       import Relude.Extra.Validation (Validation (..), ..)
+       -- Become:
+       import Validation (Validation (..), ..)
+       ```
 
 ## 0.6.0.0 — Oct 30, 2019
 

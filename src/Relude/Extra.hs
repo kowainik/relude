@@ -100,4 +100,8 @@ Functions for inspecting and working with types.
 
 {- $Validation
 'Validation' data type.
+
+__⚠️ Warning ⚠️__
+"Relude.Extra.Validation" is deprecated in favour
+of [validation-selective](https://hackage.haskell.org/package/validation-selective).
 -}
