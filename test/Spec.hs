@@ -6,9 +6,6 @@ import Hedgehog (checkParallel)
 import System.IO (hSetEncoding, utf8)
 import Test.Relude.Property (hedgehogTestList)
 
-import qualified Control.Applicative as App
-
-foo = App.empty
 
 main :: IO ()
 main = do
