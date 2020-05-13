@@ -11,7 +11,7 @@ Portability: Portable
 
 Type classes for conversion between different string representations.
 
-The table below represents the general idea of conversion between the following types:
+The table below represents the @relude@ concept of conversion between the following types:
 
 * 'Text'
 * 'String'
