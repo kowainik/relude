@@ -16,7 +16,11 @@ Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
 Portability: Portable
 
-Fixes and additions to 'Foldable'.
+Fixes and additions to 'Foldable'. Specifically:
+
+* Space-leak free 'sum' and 'production'
+* 'elem' and 'notElem' are forbidden for 'Set' and 'HashSet'
+* Additional combinators for common idioms
 -}
 
 module Relude.Foldable.Fold
