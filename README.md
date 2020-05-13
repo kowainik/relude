@@ -28,7 +28,7 @@ the library. So below you can find the key design principles behind `relude`:
    (e.g. `head :: [a] -> a`). The types of partial functions lie about their
    behavior and usage of such functions can lead to unexpected bugs and runtime
    exceptions in pure code.
-3. **Type-safety**. We use *"make invalid states unrepresentable"* motto as one
+3. **Type-safety**. We use the *"make invalid states unrepresentable"* motto as one
    of our principles. If it is possible, we express this concept through the
    types.
 
@@ -62,7 +62,7 @@ the library. So below you can find the key design principles behind `relude`:
    + Documentation on [internal module structure](http://hackage.haskell.org/package/relude/docs/Relude.html)
    + `relude`-specific [HLint](http://hackage.haskell.org/package/hlint) rules:
      [`.hlint.yaml`](https://github.com/kowainik/relude/blob/master/.hlint.yaml)
-8. **User-friendliness.** Anyone is able to quickly migrate to `relude`. Only
+8. **User-friendliness.** Anyone should be able to quickly migrate to `relude`. Only
    some basic familiarity with the common libraries like `text` and `containers`
    should be helpful (but not necessary).
 9. **Exploration.** We have space to experiment with new ideas and proposals
@@ -192,8 +192,8 @@ library
 ```
 
 > **NOTE:** if you use [`summoner`](https://github.com/kowainik/summoner) to
-> generate a Haskell project, this tool can automatically create the `mixins`
-> field when you specify the custom prelude.
+> generate a Haskell project, the tool automatically creates the `mixins`
+> field when you specify a custom prelude.
 
 If you want to bring a non-default module of `relude`, e.g. `Relude.Extra.Enum`
 or `Relude.Unsafe`, you need to list it under the `mixins` field as well,
@@ -294,7 +294,7 @@ Main differences from `Prelude` can be grouped into the following categories:
   + `show` is polymorphic over return type.
   + Functions `sum` and `product` are strict now, which makes them more efficient.
   + You can't call `elem` and `notElem` functions over `Set` and `HashSet`.
-    These functions are forbidden for these two types for performance reasons.
+    These functions are forbidden for these two types due to performance reasons.
   + `error` takes `Text`
   + `undefined` triggers a compiler warning, because you probably don't want to
     leave `undefined` in your code. Either use `throwIO`, `Except`, `error` or
@@ -432,7 +432,10 @@ Finally, let's move to part describing the new cool features we bring with
 
 * Safe analogue for the list functions:
   ```haskell
-  head :: NonEmpty a -> a
+  head :: NonEmpty a -> a    -- the first element of the list
+  tail :: NonEmpty a -> [a]  -- the list without the first element
+  last :: NonEmpty a -> a    -- the last element of the list
+  init :: NonEmpty a -> [a]  -- the list without the last element
   ```
 
   You can also still work with lists for these functions. Using `viaNonEmpty`
@@ -477,7 +480,7 @@ Finally, let's move to part describing the new cool features we bring with
 * `for_` and `forM_` for loops.
 
   ```haskell
-  for_ [1..10] $ \i -> do
+  for_ files $ \file -> do
       ...
   ```
 
@@ -547,7 +550,7 @@ This section of the guide helps to migrate your project from `base`
 to the `relude` library.
 
 In order to replace the default `Prelude` with `relude` you should start with
-instructions provided in the  [_Get Started_](#get-started-) section.
+instructions provided in the  [_Get Started_](#get-started) section.
 
 ### Code changes
 
