@@ -14,10 +14,10 @@ Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
 Portability: Portable
 
-This module contains reexports from "data.List.NonEmpty" and safe functions to
+This module contains reexports from "Data.List.NonEmpty" and safe functions to
 work with list type in terms of 'NonEmpty'.
 
-Note, that Relude reexports 'head', 'tail', 'init', 'last' from
+Note, that "Relude" reexports 'head', 'tail', 'init', 'last' from
 "Data.List.NonEmpty" instead of the "Data.List", so these functions are safe to
 use.
 
@@ -59,7 +59,7 @@ corresponding @base@ one on the example of the 'head' function:
 -}
 
 module Relude.List.NonEmpty
-    ( -- Reexports from "DataList.NonEmpty"
+    ( -- * Reexports from "DataList.NonEmpty"
       NonEmpty (..)
     , nonEmpty
     , head
