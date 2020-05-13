@@ -62,11 +62,12 @@ infix 9 !!?
 {-# INLINE (!!?) #-}
 
 {- $reexport
-Most of the "Data.List" and "Data.List.NonEmpty" types and function.
-List partial functions are not exported from "Data.List", but from
-"Data.List.NonEmpty" instead.
+Most of the "Data.List" types and function.
+Note, that list partial functions are not exported from "Data.List", but from
+"Relude.List.NonEmpty" instead.
 -}
 
 {- $nonempty
-Additional safe functions to work with list type in terms of 'NonEmpty'.
+Reexports from "Data.List.NonEmpty" and additional safe functions to work with
+list type in terms of 'NonEmpty'.
 -}
