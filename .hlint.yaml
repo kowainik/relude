@@ -3136,6 +3136,50 @@
     note: "`toEnum` from `Prelude` is a pure function but it may throw exception. Consider using `safeToEnum` from `Relude.Extra.Enum` instead."
     rhs: safeToEnum
 - hint:
+    lhs: "\\a -> (a, a)"
+    note: "Use `dup` from `Relude.Extra.Tuple`"
+    rhs: dup
+- hint:
+    lhs: "\\a -> (f a, a)"
+    note: "Use `toFst` from `Relude.Extra.Tuple`"
+    rhs: toFst f
+- hint:
+    lhs: "\\a -> (a, f a)"
+    note: "Use `toSnd` from `Relude.Extra.Tuple`"
+    rhs: toSnd f
+- hint:
+    lhs: fmap . toFst
+    note: "Use `fmapToFst` from `Relude.Extra.Tuple`"
+    rhs: fmapToFst
+- hint:
+    lhs: "fmap (toFst f)"
+    note: "Use `fmapToFst` from `Relude.Extra.Tuple`"
+    rhs: fmapToFst f
+- hint:
+    lhs: fmap . toSnd
+    note: "Use `fmapToSnd` from `Relude.Extra.Tuple`"
+    rhs: fmapToSnd
+- hint:
+    lhs: "fmap (toSnd f)"
+    note: "Use `fmapToSnd` from `Relude.Extra.Tuple`"
+    rhs: fmapToSnd f
+- hint:
+    lhs: map . toFst
+    note: "Use `fmapToFst` from `Relude.Extra.Tuple`"
+    rhs: fmapToFst
+- hint:
+    lhs: "map (toFst f)"
+    note: "Use `fmapToFst` from `Relude.Extra.Tuple`"
+    rhs: fmapToFst f
+- hint:
+    lhs: map . toSnd
+    note: "Use `fmapToSnd` from `Relude.Extra.Tuple`"
+    rhs: fmapToSnd
+- hint:
+    lhs: "map (toSnd f)"
+    note: "Use `fmapToSnd` from `Relude.Extra.Tuple`"
+    rhs: fmapToSnd f
+- hint:
     lhs: "fmap (,a) (f a)"
     note: "Use `traverseToFst` from `Relude.Extra.Tuple`"
     rhs: traverseToFst f a

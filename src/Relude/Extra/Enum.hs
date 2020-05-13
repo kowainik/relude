@@ -20,7 +20,7 @@ module Relude.Extra.Enum
     ) where
 
 import Relude
-import Relude.Extra.Tuple (mapToFst)
+import Relude.Extra.Tuple (fmapToFst)
 
 import qualified Data.Map.Strict as M
 
@@ -126,7 +126,7 @@ inverseMap
 inverseMap f = \k -> M.lookup k dict
   where
     dict :: M.Map k a
-    dict = M.fromList $ map (mapToFst f) (universe @a)
+    dict = M.fromList $ fmapToFst f (universe @a)
 {-# INLINE inverseMap #-}
 
 {- | Like 'succ', but doesn't fail on 'maxBound'. Instead it returns 'minBound'.

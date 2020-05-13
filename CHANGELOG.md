@@ -47,6 +47,18 @@ The changelog is available [on GitHub][2].
        import Validation (Validation (..), ..)
        ```
 * Reexport partial `read` from `Relude.Unsafe` for consistency.
+* [#196](https://github.com/kowainik/relude/issues/196):
+  Deprecate `mapToFst` and `mapToSnd`. Introduce `toFst` and `toSnd`
+  in `Relude.Extra.Tuple` as shorter aliases for `mapToFst`. Implement
+  `fmapToFst` and `fmapToSnd`. Add more HLint rules for
+  `Relude.Extra.Tuple` functions.
+
+  __Migration rules:__
+
+  + Replace `mapToFst` with `toFst`
+  + Replace `mapToSnd` with `toSnd`
+  + You can now use `fmapToFst` and `fmapToSnd` instead of
+    `[f]map (mapToFst f)` and `[f]map (mapToSnd f)`
 
 ## 0.6.0.0 — Oct 30, 2019
 
