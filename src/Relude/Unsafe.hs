@@ -17,14 +17,21 @@ it's not even included in default prelude exports.
 __import qualified__ Relude.Unsafe as Unsafe
 
 foo :: [a] -> a
-foo = Unsafe.head
+foo = Unsafe.'head'
 @
 -}
 
 module Relude.Unsafe
-    ( module Data.List
-    , module Data.Maybe
+    ( -- * Unsafe list functions
+      head
+    , tail
+    , last
+    , init
+    , (!!)
     , at
+
+      -- * Unsafe 'Data.Maybe.Maybe' functions
+    , fromJust
     ) where
 
 import Data.List (head, init, last, tail, (!!))
