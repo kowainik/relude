@@ -9,10 +9,15 @@ Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
 Portability: Portable
 
-The main module that reexports all functionality. It's considered to be a
-@Prelude@ replacement.
+@relude@ is a safe, performant, user-friendly and lightweight Haskell
+standard library.
+
+"Relude" is the main module that reexports all functionality provided by the library that will replace the default @Prelude@ in your project.
 
 == Usage
+
+To start using @relude@ in your project, you can set the library up for you by
+one of the following ways.
 
 === mixins
 
