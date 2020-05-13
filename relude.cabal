@@ -213,8 +213,6 @@ test-suite relude-doctest
                      , Glob
 
   ghc-options:         -threaded
-  if impl(ghc >= 8.10)
-    ghc-options:       -fno-warn-unused-packages
 
 benchmark relude-benchmark
   import:              common-options
