@@ -73,11 +73,11 @@ let hintNoteOp
     = \(lhsTxt : Text) -> \(rhsTxt : Text) -> \(n : Text) ->
         hintNote "(${lhsTxt})" rhsTxt n
 
-in { warnSimple     = warnSimple
-   , warnNote       = warnNote
-   , warnReexport   = warnReexport
-   , warnReexportOp = warnReexportOp
-   , warnLifted     = warnLifted
-   , hintNote       = hintNote
-   , hintNoteOp     = hintNoteOp
+in { warnSimple
+   , warnNote
+   , warnReexport
+   , warnReexportOp
+   , warnLifted
+   , hintNote
+   , hintNoteOp
    }
