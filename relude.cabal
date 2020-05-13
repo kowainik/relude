@@ -190,10 +190,13 @@ test-suite relude-test
   hs-source-dirs:      test
   main-is:             Spec.hs
 
-  other-modules:       Test.Relude.Property
+  other-modules:       Test.Relude.Gen
+                       Test.Relude.Container.One
+                       Test.Relude.Property
                        Test.Relude.Extra.Validation.Property
   build-depends:       relude
                      , bytestring
+                     , containers
                      , text
                      , hedgehog ^>= 1.0
 
@@ -208,7 +211,6 @@ test-suite relude-doctest
   build-depends:       relude
                      , doctest
                      , Glob
-                     , QuickCheck
 
   ghc-options:         -threaded
   if impl(ghc >= 8.10)

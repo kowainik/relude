@@ -3,19 +3,21 @@ module Test.Relude.Property
        ) where
 
 import Relude
-import Test.Relude.Extra.Validation.Property (validationLaws)
 
 import Data.List (nub)
-import Hedgehog (Gen, Group (..), Property, assert, forAll, property, (===))
+import Hedgehog (Group (..), Property, assert, forAll, property, (===))
 
-import qualified Hedgehog.Gen as Gen
-import qualified Hedgehog.Range as Range
+import Test.Relude.Container.One (oneProps)
+import Test.Relude.Extra.Validation.Property (validationLaws)
+import Test.Relude.Gen (genBoolList, genIntList, genUtf8ByteString, genUtf8String, genUtf8Text)
+
 
 hedgehogTestList :: [Group]
 hedgehogTestList =
     [ utfProps
     , listProps
     , logicProps
+    , oneProps
     ] <> validationLaws
 
 ----------------------------------------------------------------------------
@@ -29,36 +31,27 @@ utfProps = Group "utf8 conversion property tests"
     , ("ByteString to Text or String invertible:" , prop_BytesTo)
     ]
 
-utf8String :: Gen String
-utf8String = Gen.string (Range.linear 0 1000) Gen.unicode
-
-utf8Text :: Gen Text
-utf8Text = Gen.text (Range.linear 0 1000) Gen.unicode
-
-utf8Bytes :: Gen ByteString
-utf8Bytes = Gen.utf8 (Range.linear 0 1000) Gen.unicode
-
 -- "\65534" fails, but this is from BU.toString
 -- > import qualified Data.ByteString.UTF8 as BU
 -- > BU.toString (BU.fromString "\65534") == "\65533"
 -- > True
 prop_StringToBytes :: Property
 prop_StringToBytes = property $ do
-    str <- forAll utf8String
+    str <- forAll genUtf8String
     assert $ str == decodeUtf8 @_ @ByteString  (encodeUtf8 str)
           && str == decodeUtf8 @_ @LByteString (encodeUtf8 str)
 
 
 prop_TextToBytes :: Property
 prop_TextToBytes = property $ do
-    txt <- forAll utf8Text
+    txt <- forAll genUtf8Text
     assert $ txt == decodeUtf8 @_ @ByteString  (encodeUtf8 txt)
           && txt == decodeUtf8 @_ @LByteString (encodeUtf8 txt)
 
 -- "\239\191\190" fails, but this is the same as "\65534" :: String
 prop_BytesTo :: Property
 prop_BytesTo = property $ do
-    utf <- forAll utf8Bytes
+    utf <- forAll genUtf8ByteString
     assert $ utf == encodeUtf8 @String (decodeUtf8 utf)
           && utf == encodeUtf8 @Text   (decodeUtf8 utf)
           && utf == encodeUtf8 @LText  (decodeUtf8 utf)
@@ -74,9 +67,6 @@ listProps = Group "list function property tests"
     , ("sortNub xs == sort (nub xs):" , prop_sortNubCorrect)
     , ("sort (unstableNub xs) == sort (nub xs):" , prop_unstableNubCorrect)
     ]
-
-genIntList :: Gen [Int]
-genIntList = Gen.list (Range.linear 0 1000) Gen.enumBounded
 
 prop_ordNubCorrect :: Property
 prop_ordNubCorrect = property $ do
@@ -107,9 +97,6 @@ logicProps = Group "lifted logic function property tests"
     [ ("andM:", prop_andM)
     , ("orM:", prop_orM)
     ]
-
-genBoolList :: Gen [Bool]
-genBoolList = Gen.list (Range.linear 0 1000) Gen.bool
 
 prop_andM :: Property
 prop_andM = property $ do

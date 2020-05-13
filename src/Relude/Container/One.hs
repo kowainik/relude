@@ -48,13 +48,6 @@ import qualified Data.Set as Set
 
 -- $setup
 -- >>> import Relude
--- >>> import qualified Data.IntSet as IntSet
--- >>> import qualified Data.HashMap.Strict as HashMap
--- >>> import qualified Data.Text as Text
--- >>> import qualified Data.ByteString as ByteString
--- >>> import qualified Data.ByteString.Short as ShortByteString
--- >>> import qualified Data.Text.Lazy as LText
--- >>> import qualified Data.ByteString.Lazy as LByteString
 
 {- | Typeclass for data types that can be created from one element.
 
@@ -87,7 +80,9 @@ instead of 'Relude.pure' or @(:[])@.
 >>> one 42 :: [Int]
 [42]
 
-prop> length (one @[Int] x) == 1
+@
+law> 'Relude.length' ('one' @[a] x) ≡ 1
+@
 -}
 instance One [a] where
     type OneItem [a] = a
@@ -102,7 +97,9 @@ name 'one' instead of 'Relude.pure' or @(:|[])@.
 >>> one 42 :: NonEmpty Int
 42 :| []
 
-prop> length (one @(NonEmpty Int) x) == 1
+@
+law> 'Relude.length' ('one' @('NE.NonEmpty' a) x) ≡ 1
+@
 -}
 instance One (NE.NonEmpty a) where
     type OneItem (NE.NonEmpty a) = a
@@ -116,7 +113,9 @@ instance One (NE.NonEmpty a) where
 >>> one 42 :: Seq Int
 fromList [42]
 
-prop> length (one @(Seq Int) x) == 1
+@
+law> 'Relude.length' ('one' @('SEQ.Seq' a) x) ≡ 1
+@
 -}
 instance One (SEQ.Seq a) where
     type OneItem (SEQ.Seq a) = a
@@ -132,7 +131,9 @@ instance One (SEQ.Seq a) where
 >>> one 'a' :: Text
 "a"
 
-prop> Text.length (one x) == 1
+@
+law> 'Data.Text.length' ('one' x) ≡ 1
+@
 -}
 instance One T.Text where
     type OneItem T.Text = Char
@@ -146,7 +147,9 @@ instance One T.Text where
 >>> one 'a' :: LText
 "a"
 
-prop> LText.length (one x) == 1
+@
+law> 'Data.Text.Lazy.length' ('one' x) ≡ 1
+@
 -}
 instance One TL.Text where
     type OneItem TL.Text = Char
@@ -160,7 +163,9 @@ instance One TL.Text where
 >>> one 97 :: ByteString
 "a"
 
-prop> ByteString.length (one x) == 1
+@
+law> 'BS.length' ('one' x) ≡ 1
+@
 -}
 instance One BS.ByteString where
     type OneItem BS.ByteString = Word8
@@ -174,7 +179,9 @@ instance One BS.ByteString where
 >>> one 97 :: LByteString
 "a"
 
-prop> LByteString.length (one x) == 1
+@
+law> 'BSL.length' ('one' x) ≡ 1
+@
 -}
 instance One BSL.ByteString where
     type OneItem BSL.ByteString = Word8
@@ -188,7 +195,9 @@ instance One BSL.ByteString where
 >>> one 97 :: ShortByteString
 "a"
 
-prop> ShortByteString.length (one x) == 1
+@
+law> 'SBS.length' ('one' x) ≡ 1
+@
 -}
 instance One SBS.ShortByteString where
     type OneItem SBS.ShortByteString = Word8
@@ -204,7 +213,9 @@ instance One SBS.ShortByteString where
 >>> one (3, "foo") :: Map Int Text
 fromList [(3,"foo")]
 
-prop> length (one @(Map Int String) x) == 1
+@
+law> 'Relude.length' ('one' @('Map' k v) (k, v)) ≡ 1
+@
 -}
 instance One (Map k v) where
     type OneItem (Map k v) = (k, v)
@@ -218,7 +229,9 @@ instance One (Map k v) where
 >>> one (3, "foo") :: HashMap Int Text
 fromList [(3,"foo")]
 
-prop> length (one @(HashMap Int String) x) == 1
+@
+law> 'Relude.length' ('one' @('HashMap' k v) (k, v)) ≡ 1
+@
 -}
 instance Hashable k => One (HashMap k v) where
     type OneItem (HashMap k v) = (k, v)
@@ -232,7 +245,9 @@ instance Hashable k => One (HashMap k v) where
 >>> one (3, "foo") :: IntMap Text
 fromList [(3,"foo")]
 
-prop> length (one @(IntMap String) x) == 1
+@
+law> 'Relude.length' ('one' @('IntMap' a) x) ≡ 1
+@
 -}
 instance One (IntMap v) where
     type OneItem (IntMap v) = (Int, v)
@@ -248,7 +263,9 @@ instance One (IntMap v) where
 >>> one 42 :: Set Int
 fromList [42]
 
-prop> length (one @(Set Int) x) == 1
+@
+law> 'Relude.length' ('one' @('Set' a) x) ≡ 1
+@
 -}
 instance One (Set a) where
     type OneItem (Set a) = a
@@ -262,7 +279,9 @@ instance One (Set a) where
 >>> one 42 :: HashSet Int
 fromList [42]
 
-prop> length (one @(HashSet Int) x) == 1
+@
+law> 'Relude.length' ('one' @('HashSet' a) x) ≡ 1
+@
 -}
 instance Hashable a => One (HashSet a) where
     type OneItem (HashSet a) = a
@@ -276,7 +295,9 @@ instance Hashable a => One (HashSet a) where
 >>> one 42 :: IntSet
 fromList [42]
 
-prop> IntSet.size (one x) == 1
+@
+law> 'Data.IntSet.size' ('one' x) ≡ 1
+@
 -}
 instance One IntSet where
     type OneItem IntSet = Int
