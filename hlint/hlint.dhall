@@ -924,6 +924,18 @@ in [ Rule.Arguments { arguments =
    , hintNote "toEnum" "safeToEnum" "`toEnum` from `Prelude` is a pure function but it may throw exception. Consider using `safeToEnum` from `Relude.Extra.Enum` instead."
 
    -- Tuple
+   , hintNote "\\a -> (a, a)"   "dup"         "Use `dup` from `Relude.Extra.Tuple`"
+   , hintNote "\\a -> (f a, a)" "toFst f"     "Use `toFst` from `Relude.Extra.Tuple`"
+   , hintNote "\\a -> (a, f a)" "toSnd f"     "Use `toSnd` from `Relude.Extra.Tuple`"
+   , hintNote "fmap . toFst"    "fmapToFst"   "Use `fmapToFst` from `Relude.Extra.Tuple`"
+   , hintNote "fmap (toFst f)"  "fmapToFst f" "Use `fmapToFst` from `Relude.Extra.Tuple`"
+   , hintNote "fmap . toSnd"    "fmapToSnd"   "Use `fmapToSnd` from `Relude.Extra.Tuple`"
+   , hintNote "fmap (toSnd f)"  "fmapToSnd f" "Use `fmapToSnd` from `Relude.Extra.Tuple`"
+   , hintNote "map . toFst"     "fmapToFst"   "Use `fmapToFst` from `Relude.Extra.Tuple`"
+   , hintNote "map (toFst f)"   "fmapToFst f" "Use `fmapToFst` from `Relude.Extra.Tuple`"
+   , hintNote "map . toSnd"     "fmapToSnd"   "Use `fmapToSnd` from `Relude.Extra.Tuple`"
+   , hintNote "map (toSnd f)"   "fmapToSnd f" "Use `fmapToSnd` from `Relude.Extra.Tuple`"
+
    , hintNote "fmap (,a) (f a)"         "traverseToFst f a" "Use `traverseToFst` from `Relude.Extra.Tuple`"
    , hintNote "fmap (flip (,) a) (f a)" "traverseToFst f a" "Use `traverseToFst` from `Relude.Extra.Tuple`"
    , hintNote "(,a) <$> f a"            "traverseToFst f a" "Use `traverseToFst` from `Relude.Extra.Tuple`"

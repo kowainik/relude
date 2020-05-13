@@ -13,6 +13,10 @@ Contains utility functions for working with tuples.
 
 module Relude.Extra.Tuple
     ( dup
+    , toFst
+    , toSnd
+    , fmapToFst
+    , fmapToSnd
     , mapToFst
     , mapToSnd
     , traverseToFst
@@ -39,14 +43,73 @@ dup a = (a, a)
 {- | Apply a function, with the result in the fst slot,
 and the value in the other.
 
+A dual to 'toSnd'.
+
+>>> toFst length [3, 1, 0, 2]
+(4,[3,1,0,2])
+>>> toFst (+5) 10
+(15,10)
+
+@since 0.7.0.0
+-}
+toFst :: (a -> b) -> a -> (b, a)
+toFst f a = (f a, a)
+{-# INLINE toFst #-}
+
+{- | Apply a function, with the result in the snd slot,
+and the value in the other.
+
+A dual to 'toFst'.
+
+>>> toSnd length [3, 1, 0, 2]
+([3,1,0,2],4)
+>>> toSnd (+5) 10
+(10,15)
+
+@since 0.7.0.0
+-}
+toSnd :: (a -> b) -> a -> (a, b)
+toSnd f a = (a, f a)
+{-# INLINE toSnd #-}
+
+{- | Like 'fmap', but also keep the original value in the snd position.
+
+A dual to 'fmapToSnd'.
+
+>>> fmapToFst show [3, 10, 2]
+[("3",3),("10",10),("2",2)]
+
+@since 0.7.0.0
+-}
+fmapToFst :: Functor f => (a -> b) -> f a -> f (b, a)
+fmapToFst = fmap . toFst
+{-# INLINE fmapToFst #-}
+
+{- | Like 'fmap', but also keep the original value in the fst position.
+
+A dual to 'fmapToFst'.
+
+>>> fmapToSnd show [3, 10, 2]
+[(3,"3"),(10,"10"),(2,"2")]
+
+@since 0.7.0.0
+-}
+fmapToSnd :: Functor f => (a -> b) -> f a -> f (a, b)
+fmapToSnd = fmap . toSnd
+{-# INLINE fmapToSnd #-}
+
+{- | Apply a function, with the result in the fst slot,
+and the value in the other.
+
 A dual to 'mapToSnd'
 
 >>> mapToFst (+1) 10
 (11,10)
 -}
 mapToFst :: (a -> b) -> a -> (b, a)
-mapToFst f a = (f a, a)
+mapToFst = toFst
 {-# INLINE mapToFst #-}
+{-# DEPRECATED mapToFst "Use 'toFst' from 'Relude.Extra.Tuple' instead" #-}
 
 {- | Apply a function, with the result in the second slot,
 and the value in the other.
@@ -57,8 +120,9 @@ A dual to 'mapToFst'.
 (10,11)
 -}
 mapToSnd :: (a -> b) -> a -> (a, b)
-mapToSnd f a = (a, f a)
+mapToSnd = toSnd
 {-# INLINE mapToSnd #-}
+{-# DEPRECATED mapToSnd "Use 'toSnd' from 'Relude.Extra.Tuple' instead" #-}
 
 {- | Apply a function that returns a value inside of a functor,
 with the output in the first slot, the input in the second,
