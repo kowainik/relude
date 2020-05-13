@@ -26,7 +26,7 @@ sometimes, but we encourage you to use safer analogues:
 | @'fromJust' :: Maybe a -> a@      | @'Relude.Monad.Reexport.fromMaybe' :: a -> Maybe a -> a@            |
 +-----------------------------------+---------------------------------------------------------------------+
 
-This module is intended to be imported qualified and it's not even
+This module is intended to be imported qualified and it is not
 included in default prelude exports.
 
 @
