@@ -103,8 +103,9 @@ In addition to our key design principles, the following list of
 2. **Invent custom abstractions.** Learning abstractions is hard, so
    we do our best not to introduce new overwhelming concepts.
 3. **Rename common definitions.** If something is called `foo` in
-   `base`, it's also called `foo` in `relude`. There's no `Mappable`
-   instead of `Functor` and `FlatMappable` instead of `Monad`.
+   `base`, it's also called `foo` in `relude`. So, `relude` doesn't
+   rename any existing abstractions, but it may introduce a few new
+   ones, if their benefits outweigh learning curve.
 
 This README contains an introduction to `relude` and a tutorial on how to use it.
 
