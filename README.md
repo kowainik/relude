@@ -94,7 +94,7 @@ the library. So below you can find the key design principles behind `relude`:
    easy for us to provide new functionality without breaking anything and let
    the users decide to use it or not.
 
-In addition to our key design principle, the following list of
+In addition to our key design principles, the following list of
 **anti-goals** describes what `relude` is trying to avoid:
 
 1. **Rewrite `base` from the ground up.** With `relude` you don't need
