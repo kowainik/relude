@@ -10,6 +10,33 @@ Stability:   Stable
 Portability: Portable
 
 Type classes for conversion between different string representations.
+
+The table below represents the general idea of conversion between the following types:
+
+* 'Text'
+* 'String'
+* 'ByteString'
+* 'LText'
+* 'LByteString'
+* 'ShortByteString'
+
+
++-------------------+---------------------+--------------+--------------+--------------------+------------------------+--------------------------+
+|     From \\ To    |       'Text'        |   'String'   | 'ByteString' |      'LText'       | 'LByteString'          | 'ShortByteString'        |
++===================+=====================+==============+==============+====================+========================+==========================+
+| 'Text'            | ~                   | 'toString'   | 'encodeUtf8' | 'toLazy'/'toLText' | 'encodeUtf8'           | 'encodeUtf8'             |
++-------------------+---------------------+--------------+--------------+--------------------+------------------------+--------------------------+
+| 'String'          | 'toText'            | ~            | 'encodeUtf8' | 'toLText'          | 'encodeUtf8'           | 'encodeUtf8'             |
++-------------------+---------------------+--------------+--------------+--------------------+------------------------+--------------------------+
+| 'ByteString'      | 'decodeUtf8'        | 'decodeUtf8' | ~            | 'decodeUtf8'       | 'toLazy'               | 'toShort'                |
++-------------------+---------------------+--------------+--------------+--------------------+------------------------+--------------------------+
+| 'LText'           | 'toStrict'/'toText' | 'toString'   | 'encodeUtf8' |  ~                 | 'encodeUtf8'           | 'encodeUtf8'             |
++-------------------+---------------------+--------------+--------------+--------------------+------------------------+--------------------------+
+| 'LByteString'     | 'decodeUtf8'        | 'decodeUtf8' | 'toStrict'   | 'decodeUtf8'       | ~                      | @'toShort' . 'toStrict'@ |
++-------------------+---------------------+--------------+--------------+--------------------+------------------------+--------------------------+
+| 'ShortByteString' | 'decodeUtf8'        | 'decodeUtf8' | 'fromShort'  | 'decodeUtf8'       |@'toLazy' . 'fromShort'@| ~                        |
++-------------------+---------------------+--------------+--------------+--------------------+------------------------+--------------------------+
+
 -}
 
 module Relude.String
