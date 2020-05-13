@@ -46,6 +46,7 @@ The changelog is available [on GitHub][2].
        -- Become:
        import Validation (Validation (..), ..)
        ```
+* Reexport partial `read` from `Relude.Unsafe` for consistency.
 
 ## 0.6.0.0 — Oct 30, 2019
 

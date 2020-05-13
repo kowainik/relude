@@ -23,15 +23,15 @@ defines the library decisions and might tell you more about the priorities of
 the library. So below you can find the key design principles behind `relude`:
 
 1. **Productivity.** You can be more productive with a "non-standard" standard
-   library, and `reludes` helps you with writing safer and more
+   library, and `relude` helps you with writing safer and more
    efficient code faster.
 
 2. **Total programming**. Usage of
-   [**partial functions**](https://www.reddit.com/r/haskell/comments/5n51u3/why_are_partial_functions_as_in_head_tail_bad/)
+   [_partial functions_](https://www.reddit.com/r/haskell/comments/5n51u3/why_are_partial_functions_as_in_head_tail_bad/)
    can lead to unexpected bugs and runtime exceptions in pure
    code. The types of partial functions lie about their behaviour. And
    even if it is not always possible to rely only on total functions,
-   `reludes` strives to encourage best-practices and reduce the
+   `relude` strives to encourage best-practices and reduce the
    chances of introducing a bug.
 
   | __Partial__                     | __Total__                                  |
@@ -59,8 +59,8 @@ the library. So below you can find the key design principles behind `relude`:
 4. **Performance.** We prefer `Text` over [`String`](https://www.reddit.com/r/haskell/comments/29jw0s/whats_wrong_with_string/),
    use space-leaks-free functions (e.g. our custom performant `sum` and `product`), introduce
    `{-# INLINE #-}` and `{-# SPECIALIZE #-}` pragmas where
-   appropriate, and make efficient container types (`Map`, `HashMap`,
-   `Set`) more accesible.
+   appropriate, and make efficient container types
+   (e.g. `Map`, `HashMap`, `Set`) more accesible.
 
 5. **Minimalism** (low number of dependencies). We don not force users of
    `relude` to stick to any specific lens or text formatting or logging
@@ -360,9 +360,10 @@ Main differences from `Prelude` can be grouped into the following categories:
 * [`unordered-containers`](http://hackage.haskell.org/package/unordered-containers)
 
 If you want to clean up your imports after switching to `relude`, you can use
-the `relude`-specific [`.hlint.yaml`](.hlint.yaml) configuration for this task.
-With this config, `HLint` will produce warnings and hints on how to have more
-benefits from `relude`.
+the `relude`-specific
+[`.hlint.yaml`](https://github.com/kowainik/relude/blob/master/.hlint.yaml)
+configuration for this task. With this config, `HLint` will produce
+warnings and hints on how to have more benefits from `relude`.
 
 ### base
 
@@ -380,7 +381,7 @@ Multiple sorting functions are available for different use-cases:
 `readMaybe` and `readEither` are similar to `read` but unlike it, they are total
 and return either `Maybe` or `Either` with a parse error.
 
-`(&)` is reverse application. The following three expressions are
+`(&)` is the reverse application. The following three expressions are
 semantically equivalent:
 
 * `g (f x)`
@@ -662,9 +663,10 @@ curl https://raw.githubusercontent.com/kowainik/relude/v0.6.0.0/.hlint.yaml -o .
 curl -sSL https://raw.github.com/ndmitchell/neil/master/misc/travis.sh | sh -s -- hlint -h .hlint-relude.yaml .
 ```
 
-See an example of this feature being used in
-[Summoner](https://github.com/kowainik/summoner/blob/b6c3ecb7cd9bc8d1451e2cc78cd020cd2e473564/.travis.yml#L58-L59).
-<!--- TODO: use link from https://kodimensional.dev/posts/2019-02-25-haskell-travitead --->
+See an example of this feature described in the following blog post
+about Travis CI settings:
+
+* [Kodimensional: Dead simple Haskell Travis settings for cabal and stack](https://kodimensional.dev/posts/2019-02-25-haskell-travis#customization-hlint)
 
 ## Comparison with other alternative preludes
 

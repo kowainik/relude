@@ -9,9 +9,25 @@ Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
 Portability: Portable
 
-Unsafe functions to work with lists and 'Relude.Maybe'. Sometimes unavoidable but it's
-better not to use them. This module is intended to be imported qualified and
-it's not even included in default prelude exports.
+__⚠️ Warning ⚠️__
+
+This module contains unsafe partial functions. They are unavoidable
+sometimes, but we encourage you to use safer analogues:
+
++-----------------------------------+---------------------------------------------------------------------+
+| __Partial__                       | __Total__                                                           |
++===================================+=====================================================================+
+| @'head' :: [a] -> a@              | @'Relude.head' :: NonEmpty a -> a@                                  |
++-----------------------------------+---------------------------------------------------------------------+
+| @'tail' :: [a] -> [a]@            | @'Relude.tail' :: NonEmpty a -> [a]@                                |
++-----------------------------------+---------------------------------------------------------------------+
+| @'read' :: Read a => String -> a@ | @'Relude.String.Reexport.readMaybe' :: Read a => String -> Maybe a@ |
++-----------------------------------+---------------------------------------------------------------------+
+| @'fromJust' :: Maybe a -> a@      | @'Relude.Monad.Reexport.fromMaybe' :: a -> Maybe a -> a@            |
++-----------------------------------+---------------------------------------------------------------------+
+
+This module is intended to be imported qualified and it's not even
+included in default prelude exports.
 
 @
 __import qualified__ Relude.Unsafe as Unsafe
@@ -29,13 +45,15 @@ module Relude.Unsafe
     , init
     , (!!)
     , at
-
       -- * Unsafe 'Data.Maybe.Maybe' functions
     , fromJust
+      -- * Unsafe "Text.Read" functions
+    , read
     ) where
 
 import Data.List (head, init, last, tail, (!!))
 import Data.Maybe (fromJust)
+import Text.Read (read)
 
 import Relude.Function (flip)
 import Relude.Numeric (Int)
