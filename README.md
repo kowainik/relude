@@ -521,8 +521,8 @@ alternative preludes. It's also relatively small, but:
 2. One significant difference: `head` in `protolude` returns `Maybe a` while in
    `relude` it works with `NonEmpty`.
 3. `relude` uses type-level features to provide better error messages
-   on difference from `Prelude`, and also forbid `elem` and `notElem`
-   functions for `Set` and `HashSet` (because `elem` from `Foldable` run in
+   on the difference from `Prelude`, and also to forbid `elem` and `notElem`
+   functions for `Set` and `HashSet` (because `elem` from `Foldable` runs in
    _O(n)_ time and you can accidentally use `elem` from `Foldable` but with
    `relude` you can't).
 4. Protolude supports older GHC versions (from GHC 7.6.1) while `relude` only
