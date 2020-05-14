@@ -8,6 +8,8 @@ The changelog is available [on GitHub][2].
 
 * [#228](https://github.com/kowainik/relude/issues/228):
   Add `universeNonEmpty` function.
+* [#294](https://github.com/kowainik/relude/issues/294):
+  Add `atomicModifyIORef_` and `atomicModifyIORef'_`.
 * [#253](https://github.com/kowainik/relude/issues/253):
   Support GHC-8.10. Upgrade GHC-8.8 to 8.8.3.
 * [#256](https://github.com/kowainik/relude/issues/256):

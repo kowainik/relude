@@ -684,6 +684,10 @@ in [ Rule.Arguments { arguments =
    , warnReexport "newIORef" "Data.IORef"
    , warnReexport "readIORef" "Data.IORef"
    , warnReexport "writeIORef" "Data.IORef"
+   , warnSimple "atomicModifyIORef ref (\\a -> (f a, ()))"  "atomicModifyIORef_ ref f"
+   , warnSimple "atomicModifyIORef ref $ \\a -> (f a, ())"  "atomicModifyIORef_ ref f"
+   , warnSimple "atomicModifyIORef' ref $ \\a -> (f a, ())" "atomicModifyIORef'_ ref f"
+   , warnSimple "atomicModifyIORef' ref (\\a -> (f a, ()))" "atomicModifyIORef'_ ref f"
    -- Lifted Terminal
    , warnReexport "getLine"    "Data.Text.IO"
 
