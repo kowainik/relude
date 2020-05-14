@@ -28,6 +28,8 @@ module Relude.Monoid
 
       -- * Combinators
     , maybeToMonoid
+    , memptyIfFalse
+    , memptyIfTrue
     ) where
 
 #if MIN_VERSION_base(4,12,0)
@@ -38,6 +40,7 @@ import Data.Monoid (All (..), Alt (..), Any (..), Dual (..), Endo (..), First (.
 import Data.Semigroup (Option (..), Semigroup (sconcat, stimes, (<>)), WrappedMonoid, cycle1,
                        mtimesDefault, stimesIdempotent, stimesIdempotentMonoid, stimesMonoid)
 
+import Relude.Bool.Reexport (Bool (..))
 import Relude.Monad.Reexport (Maybe, fromMaybe)
 
 #if !MIN_VERSION_base(4,12,0)
@@ -67,6 +70,35 @@ import Relude.String.Reexport (Read)
 maybeToMonoid :: Monoid m => Maybe m -> m
 maybeToMonoid = fromMaybe mempty
 {-# INLINE maybeToMonoid #-}
+
+{- | Returns the given value in case of the given predicate is satisfied
+(is 'True'). Otherwise, it returns 'mempty'.
+
+>>> memptyIfFalse True (Just "Hello")
+Just "Hello"
+>>> memptyIfFalse False "Doesn't matter"
+""
+
+@since 0.7.0.0
+-}
+memptyIfFalse :: Monoid m => Bool -> m -> m
+memptyIfFalse p val = if p then val else mempty
+{-# INLINE memptyIfFalse #-}
+
+
+{- | Returns the given value in case of the given predicate is unsatisfied
+(is 'False'). Otherwise, it returns 'mempty'.
+
+>>> memptyIfTrue True (Just "Hello")
+Nothing
+>>> memptyIfTrue False "Does matter"
+"Does matter"
+
+@since 0.7.0.0
+-}
+memptyIfTrue :: Monoid m => Bool -> m -> m
+memptyIfTrue p val = if p then mempty else val
+{-# INLINE memptyIfTrue #-}
 
 #if !MIN_VERSION_base(4,12,0)
 -- | This data type witnesses the lifting of a 'Monoid' into an
