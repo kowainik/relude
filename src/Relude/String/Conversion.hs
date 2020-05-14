@@ -482,15 +482,16 @@ type family EncodingError
         ':<>: 'Text " -> Either UnicodeException " ':<>: 'Text to
         )
 
-{- | Polymorhpic version of 'Text.Read.readEither'.
+{- | Version of 'Text.Read.readEither' that returns 'Text' in case of the parse
+error.
 
->>> readEither @Text @Int "123"
+>>> readEither @Int "123"
 Right 123
->>> readEither @Text @Int "aa"
+>>> readEither @Int "aa"
 Left "Prelude.read: no parse"
 -}
-readEither :: (ToString a, Read b) => a -> Either Text b
-readEither = first toText . Text.Read.readEither . toString
+readEither :: (Read a) => String -> Either Text a
+readEither = first toText . Text.Read.readEither
 {-# INLINEABLE readEither #-}
 
 {- | Generalized version of 'Prelude.show'. Unlike 'Prelude.show' this function
