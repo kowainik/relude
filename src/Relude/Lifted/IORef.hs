@@ -16,6 +16,8 @@ module Relude.Lifted.IORef
     ( IORef
     , atomicModifyIORef
     , atomicModifyIORef'
+    , atomicModifyIORef_
+    , atomicModifyIORef'_
     , atomicWriteIORef
     , modifyIORef
     , modifyIORef'
@@ -81,6 +83,8 @@ writeIORef ref what = liftIO $ Ref.writeIORef ref what
 >>> readIORef ref
 48
 
+* To avoid space-leaks, see 'modifyIORef'' for stricter updates
+* For atomic updates, see 'atomicModifyIORef'
 -}
 modifyIORef :: MonadIO m => IORef a -> (a -> a) -> m ()
 modifyIORef ref how = liftIO $ Ref.modifyIORef ref how
@@ -94,6 +98,8 @@ modifyIORef ref how = liftIO $ Ref.modifyIORef ref how
 >>> readIORef ref
 45
 
+* For lazier updates, see 'modifyIORef'
+* For atomic updates, see 'atomicModifyIORef''
 -}
 modifyIORef' :: MonadIO m => IORef a -> (a -> a) -> m ()
 modifyIORef' ref how = liftIO $ Ref.modifyIORef' ref how
@@ -108,6 +114,8 @@ modifyIORef' ref how = liftIO $ Ref.modifyIORef' ref how
 >>> readIORef ref
 42
 
+* To avoid space-leaks, see 'atomicModifyIORef'' for stricter updates
+* If you are not interested in the return value, see 'atomicModifyIORef_'
 -}
 atomicModifyIORef :: MonadIO m => IORef a -> (a -> (a, b)) -> m b
 atomicModifyIORef ref how = liftIO $ Ref.atomicModifyIORef ref how
@@ -122,11 +130,45 @@ atomicModifyIORef ref how = liftIO $ Ref.atomicModifyIORef ref how
 >>> readIORef ref
 42
 
+* For lazier updates, see 'atomicModifyIORef'
+* If you are not interested in the return value, see 'atomicModifyIORef'_'
 -}
 atomicModifyIORef' :: MonadIO m => IORef a -> (a -> (a, b)) -> m b
 atomicModifyIORef' ref how = liftIO $ Ref.atomicModifyIORef' ref how
 {-# INLINE atomicModifyIORef' #-}
 {-# SPECIALIZE atomicModifyIORef' :: IORef a -> (a -> (a, b)) -> IO b #-}
+
+{- | Version of 'atomicModifyIORef' that discards return value. Useful
+when you want to update 'IORef' but not interested in the returning
+result.
+
+>>> ref <- newIORef 42
+>>> atomicModifyIORef_ ref (`div` 2)
+>>> readIORef ref
+21
+
+@since 0.7.0.0
+-}
+atomicModifyIORef_ :: MonadIO m => IORef a -> (a -> a) -> m ()
+atomicModifyIORef_ ref f = atomicModifyIORef ref $ \a -> (f a, ())
+{-# INLINE atomicModifyIORef_ #-}
+{-# SPECIALIZE atomicModifyIORef_ :: IORef a -> (a -> a) -> IO () #-}
+
+{- | Version of 'atomicModifyIORef'' that discards return value. Useful
+when you want to update 'IORef' but not interested in the returning
+result.
+
+>>> ref <- newIORef 42
+>>> atomicModifyIORef'_ ref (`div` 2)
+>>> readIORef ref
+21
+
+@since 0.7.0.0
+-}
+atomicModifyIORef'_ :: MonadIO m => IORef a -> (a -> a) -> m ()
+atomicModifyIORef'_ ref f = atomicModifyIORef' ref $ \a -> (f a, ())
+{-# INLINE atomicModifyIORef'_ #-}
+{-# SPECIALIZE atomicModifyIORef'_ :: IORef a -> (a -> a) -> IO () #-}
 
 {- | Lifted version of 'Ref.atomicWriteIORef'.
 

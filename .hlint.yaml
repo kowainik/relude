@@ -2091,6 +2091,18 @@
     note: "'writeIORef' is already exported from Relude"
     rhs: writeIORef
 - warn:
+    lhs: "atomicModifyIORef ref (\\a -> (f a, ()))"
+    rhs: atomicModifyIORef_ ref f
+- warn:
+    lhs: "atomicModifyIORef ref $ \\a -> (f a, ())"
+    rhs: atomicModifyIORef_ ref f
+- warn:
+    lhs: "atomicModifyIORef' ref $ \\a -> (f a, ())"
+    rhs: "atomicModifyIORef'_ ref f"
+- warn:
+    lhs: "atomicModifyIORef' ref (\\a -> (f a, ()))"
+    rhs: "atomicModifyIORef'_ ref f"
+- warn:
     lhs: Data.Text.IO.getLine
     name: "Use 'getLine' from Relude"
     note: "'getLine' is already exported from Relude"
