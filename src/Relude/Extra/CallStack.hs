@@ -48,6 +48,8 @@ logging:
 greeting:Starting...
 Hello!
 greeting:Ending...
+
+@since 0.2.0
 -}
 callerName :: HasCallStack => String
 callerName = case getCallStack callStack of
