@@ -62,6 +62,8 @@ The changelog is available [on GitHub][2].
     `[f]map (mapToFst f)` and `[f]map (mapToSnd f)`
 * Reexport `NonEmpty` functions from `Relude.List.NonEmpty` instead of
   `Relude.List.Reexport`.
+* [#293](https://github.com/kowainik/relude/issues/293):
+  Add `memptyIfFalse` and `memptyIfTrue` functions.
 
 ## 0.6.0.0 — Oct 30, 2019
 
