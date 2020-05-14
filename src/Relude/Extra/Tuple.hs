@@ -9,6 +9,8 @@ Stability:   Experimental
 Portability: Portable
 
 Contains utility functions for working with tuples.
+
+@since 0.4.0
 -}
 
 module Relude.Extra.Tuple
@@ -105,6 +107,8 @@ A dual to 'mapToSnd'
 
 >>> mapToFst (+1) 10
 (11,10)
+
+@since 0.4.0
 -}
 mapToFst :: (a -> b) -> a -> (b, a)
 mapToFst = toFst
@@ -118,6 +122,8 @@ A dual to 'mapToFst'.
 
 >>> mapToSnd (+1) 10
 (10,11)
+
+@since 0.4.0
 -}
 mapToSnd :: (a -> b) -> a -> (a, b)
 mapToSnd = toSnd
@@ -135,6 +141,8 @@ A dual to 'traverseToSnd'
 Just (11,10)
 >>> traverseToFst (const Nothing) 10
 Nothing
+
+@since 0.5.0
 -}
 traverseToFst :: Functor t => (a -> t b) -> a -> t (b, a)
 traverseToFst f a = (,a) <$> f a
@@ -150,6 +158,8 @@ A dual to 'traverseToFst'.
 Just (10,11)
 >>> traverseToSnd (const Nothing) 10
 Nothing
+
+@since 0.5.0
 -}
 traverseToSnd :: Functor t => (a -> t b) -> a -> t (a, b)
 traverseToSnd f a = (a,) <$> f a

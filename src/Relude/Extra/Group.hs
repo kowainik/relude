@@ -9,6 +9,8 @@ Stability:   Experimental
 Portability: Portable
 
 Polymorphic grouping functions.
+
+@since 0.1.0
 -}
 
 module Relude.Extra.Group
@@ -26,6 +28,8 @@ import Data.List.NonEmpty ((<|))
 
 >>> groupBy even [1..6] :: HashMap Bool (NonEmpty Int)
 fromList [(False,5 :| [3,1]),(True,6 :| [4,2])]
+
+@since 0.1.0
 -}
 groupBy :: forall f t a . (Foldable f, DynamicMap t, Val t ~ NonEmpty a, Monoid t)
         => (a -> Key t) -> f a -> t
@@ -42,6 +46,8 @@ groupBy f = flipfoldl' hmGroup mempty
 
 >>> groupOneBy even [1 .. 6] :: HashMap Bool Int
 fromList [(False,1),(True,2)]
+
+@since 0.1.0
 -}
 groupOneBy :: forall f t a . (Foldable f, DynamicMap t, Val t ~ a, Monoid t)
            => (a -> Key t) -> f a -> t

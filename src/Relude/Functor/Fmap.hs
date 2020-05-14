@@ -55,6 +55,8 @@ infixl 4 <<$>>
 
 >>> flap (++) "relude" "P"
 "Prelude"
+
+@since 0.3.0
 -}
 flap :: Functor f => f (a -> b) -> a -> f b
 flap ff x = (\f -> f x) <$> ff
@@ -67,6 +69,8 @@ flap ff x = (\f -> f x) <$> ff
 
 >>> Just (+3) ?? 5
 Just 8
+
+@since 0.3.0
 -}
 infixl 4 ??
 (??) :: Functor f => f (a -> b) -> a -> f b

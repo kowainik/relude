@@ -59,6 +59,8 @@ Just 3
 Just 3
 >>> Nothing & appliedTo (Just 2)
 Nothing
+
+@since 0.5.0
 -}
 appliedTo :: Applicative f => f a -> f (a -> b) -> f b
 appliedTo = (<**>)

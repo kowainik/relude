@@ -8,6 +8,8 @@ Stability:   Stable
 Portability: Portable
 
 Lifted functions to work with stdin and stdout.
+
+@since 0.3.0
 -}
 
 module Relude.Lifted.Terminal

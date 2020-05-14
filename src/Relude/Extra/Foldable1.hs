@@ -19,6 +19,8 @@ structures. For example, 'Relude.NonEmpty', 'Relude.Identity'.
 
 'Foldable1' has all type-safe and total methods like `head1`, `maximum1` in
 contradiction with 'Data.Foldable.Foldable'.
+
+@since 0.3.0
 -}
 
 module Relude.Extra.Foldable1
@@ -40,6 +42,8 @@ import qualified Data.Semigroup as SG
 -- >>> import Relude
 
 {- | The class of foldable data structures that cannot be empty.
+
+@since 0.3.0
 -}
 class Foldable f => Foldable1 f where
     {-# MINIMAL foldMap1 #-}
@@ -103,6 +107,10 @@ class Foldable f => Foldable1 f where
     minimum1 :: Ord a => f a -> a
     minimum1 = SG.getMin #. foldMap1 SG.Min
 
+{- |
+
+@since 0.3.0
+-}
 instance Foldable1 NonEmpty where
     fold1 :: Semigroup m => NonEmpty m -> m
     fold1 = sconcat
@@ -131,6 +139,10 @@ instance Foldable1 NonEmpty where
     {-# INLINE maximum1 #-}
     {-# INLINE minimum1 #-}
 
+{- |
+
+@since 0.3.0
+-}
 instance Foldable1 Identity where
     foldMap1 :: Semigroup m => (a -> m) -> Identity a -> m
     foldMap1 = coerce
@@ -160,6 +172,10 @@ instance Foldable1 Identity where
     minimum1 = coerce
     {-# INLINE minimum1 #-}
 
+{- |
+
+@since 0.3.0
+-}
 instance Foldable1 ((,) c) where
     foldMap1 :: Semigroup m => (a -> m) -> (c, a) -> m
     foldMap1 f = f . snd
@@ -185,6 +201,10 @@ instance Foldable1 ((,) c) where
     {-# INLINE maximum1 #-}
     {-# INLINE minimum1 #-}
 
+{- |
+
+@since 0.3.0
+-}
 instance (Foldable1 f, Foldable1 g) => Foldable1 (Compose f g) where
     foldMap1 :: Semigroup m => (a -> m) -> Compose f g a -> m
     foldMap1 f = foldMap1 (foldMap1 f) . getCompose
@@ -198,11 +218,19 @@ instance (Foldable1 f, Foldable1 g) => Foldable1 (Compose f g) where
     last1 = last1 . last1 . getCompose
     {-# INLINE last1 #-}
 
+{- |
+
+@since 0.3.0
+-}
 instance (Foldable1 f, Foldable1 g) => Foldable1 (Product f g) where
     foldMap1 :: Semigroup m => (a -> m) -> Product f g a -> m
     foldMap1 f (Pair a b) = foldMap1 f a <> foldMap1 f b
     {-# INLINE foldMap1 #-}
 
+{- |
+
+@since 0.3.0
+-}
 instance (Foldable1 f, Foldable1 g) => Foldable1 (Sum f g) where
     foldMap1 :: Semigroup m => (a -> m) -> Sum f g a -> m
     foldMap1 f (InL x) = foldMap1 f x
@@ -277,6 +305,8 @@ foldl1' f [x0, x1, x2 ...] = f (f x0 x1) x2 ...
 
 >>> foldl1' (++) ([1,2] :| [[3,4], [5,6]])
 [1,2,3,4,5,6]
+
+@since 0.3.0
 -}
 foldl1' :: (a -> a -> a) -> NonEmpty a -> a
 foldl1' _ (x :| [])     = x

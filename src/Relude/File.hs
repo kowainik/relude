@@ -19,6 +19,8 @@ line-endings). If you want binary data, use 'ByteString' functions (they are
 also faster since they don't check encoding). However, you can then decode that
 data with the help of functions from the "Relude.String.Conversion" module, e. g.
 'Relude.String.Conversion.decodeUtf8'.
+
+@since 0.3.0
 -}
 
 module Relude.File
@@ -58,19 +60,28 @@ import qualified Data.Text.Lazy.IO as LT
 -- Text
 ----------------------------------------------------------------------------
 
--- | Lifted version of 'T.readFile'.
+{- | Lifted version of 'T.readFile'.
+
+@since 0.3.0
+-}
 readFileText :: MonadIO m => FilePath -> m Text
 readFileText = liftIO . T.readFile
 {-# SPECIALIZE readFileText :: FilePath -> IO Text #-}
 {-# INLINE     readFileText #-}
 
--- | Lifted version of 'T.writeFile'.
+{- | Lifted version of 'T.writeFile'.
+
+@since 0.3.0
+-}
 writeFileText :: MonadIO m => FilePath -> Text -> m ()
 writeFileText p = liftIO . T.writeFile p
 {-# SPECIALIZE writeFileText :: FilePath -> Text -> IO () #-}
 {-# INLINE     writeFileText #-}
 
--- | Lifted version of 'T.appendFile'.
+{- | Lifted version of 'T.appendFile'.
+
+@since 0.3.0
+-}
 appendFileText :: MonadIO m => FilePath -> Text -> m ()
 appendFileText p = liftIO . T.appendFile p
 {-# SPECIALIZE appendFileText :: FilePath -> Text -> IO () #-}
@@ -80,19 +91,28 @@ appendFileText p = liftIO . T.appendFile p
 -- Lazy Text
 ----------------------------------------------------------------------------
 
--- | Lifted version of 'LT.readFile'.
+{- | Lifted version of 'LT.readFile'.
+
+@since 0.3.0
+-}
 readFileLText :: MonadIO m => FilePath -> m LText
 readFileLText = liftIO . LT.readFile
 {-# SPECIALIZE readFileLText :: FilePath -> IO LText #-}
 {-# INLINE     readFileLText #-}
 
--- | Lifted version of 'LT.writeFile'.
+{- | Lifted version of 'LT.writeFile'.
+
+@since 0.3.0
+-}
 writeFileLText :: MonadIO m => FilePath -> LText -> m ()
 writeFileLText p = liftIO . LT.writeFile p
 {-# SPECIALIZE writeFileLText :: FilePath -> LText -> IO () #-}
 {-# INLINE     writeFileLText #-}
 
--- | Lifted version of 'LT.appendFile'.
+{- | Lifted version of 'LT.appendFile'.
+
+@since 0.3.0
+-}
 appendFileLText :: MonadIO m => FilePath -> LText -> m ()
 appendFileLText p = liftIO . LT.appendFile p
 {-# SPECIALIZE appendFileLText :: FilePath -> LText -> IO () #-}
@@ -102,19 +122,28 @@ appendFileLText p = liftIO . LT.appendFile p
 -- ByteString
 ----------------------------------------------------------------------------
 
--- | Lifted version of 'BS.readFile'.
+{- | Lifted version of 'BS.readFile'.
+
+@since 0.3.0
+-}
 readFileBS :: MonadIO m => FilePath -> m ByteString
 readFileBS = liftIO . BS.readFile
 {-# SPECIALIZE readFileBS :: FilePath -> IO ByteString #-}
 {-# INLINE     readFileBS #-}
 
--- | Lifted version of 'BS.writeFile'.
+{- | Lifted version of 'BS.writeFile'.
+
+@since 0.3.0
+-}
 writeFileBS :: MonadIO m => FilePath -> ByteString -> m ()
 writeFileBS p = liftIO . BS.writeFile p
 {-# SPECIALIZE writeFileBS :: FilePath -> ByteString -> IO () #-}
 {-# INLINE     writeFileBS #-}
 
--- | Lifted version of 'BS.appendFile'.
+{- | Lifted version of 'BS.appendFile'.
+
+@since 0.3.0
+-}
 appendFileBS :: MonadIO m => FilePath -> ByteString -> m ()
 appendFileBS p = liftIO . BS.appendFile p
 {-# SPECIALIZE appendFileBS :: FilePath -> ByteString -> IO () #-}
@@ -124,19 +153,28 @@ appendFileBS p = liftIO . BS.appendFile p
 -- Lazy ByteString
 ----------------------------------------------------------------------------
 
--- | Lifted version of 'LBS.readFile'.
+{- | Lifted version of 'LBS.readFile'.
+
+@since 0.3.0
+-}
 readFileLBS :: MonadIO m => FilePath -> m LByteString
 readFileLBS = liftIO . LBS.readFile
 {-# SPECIALIZE readFileLBS :: FilePath -> IO LByteString #-}
 {-# INLINE     readFileLBS #-}
 
--- | Lifted version of 'LBS.writeFile'.
+{- | Lifted version of 'LBS.writeFile'.
+
+@since 0.3.0
+-}
 writeFileLBS :: MonadIO m => FilePath -> LByteString -> m ()
 writeFileLBS p = liftIO . LBS.writeFile p
 {-# SPECIALIZE writeFileLBS :: FilePath -> LByteString -> IO () #-}
 {-# INLINE     writeFileLBS #-}
 
--- | Lifted version of 'LBS.appendFile'.
+{- | Lifted version of 'LBS.appendFile'.
+
+@since 0.3.0
+-}
 appendFileLBS :: MonadIO m => FilePath -> LByteString -> m ()
 appendFileLBS p = liftIO . LBS.appendFile p
 {-# SPECIALIZE appendFileLBS :: FilePath -> LByteString -> IO () #-}

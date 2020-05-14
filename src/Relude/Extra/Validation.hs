@@ -21,6 +21,8 @@ Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Experimental
 Portability: Portable
 
+@since 0.4.0
+
 = Attention
 
 __⚠️ Warning ⚠️__
