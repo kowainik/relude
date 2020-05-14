@@ -64,6 +64,25 @@ The changelog is available [on GitHub][2].
   `Relude.List.Reexport`.
 * [#293](https://github.com/kowainik/relude/issues/293):
   Add `memptyIfFalse` and `memptyIfTrue` functions.
+* [#286](https://github.com/kowainik/relude/issues/286):
+  __Breaking change:__ `readEither` is not polymorphic over the first argument
+  anymore. Now it takes `String`.
+
+  __Migration rules:__ Use one of the converion function from the
+  `Relude.String.Conversion` module to covert your old input value into
+  `String`.
+
+  For example, if you had
+
+  ```haskell
+  readEither @Text @Int myText
+  ```
+
+  Now it should become:
+
+  ```haskell
+  readEither @Int (toString myText)
+  ```
 
 ## 0.6.0.0 — Oct 30, 2019
 

@@ -55,4 +55,5 @@ Reexport data types and functions to work with 'Text', 'ByteString',
 -}
 {- $conversion
 Conversion functions between 'Text', 'String', 'ByteString'.
+Also some read|show helper functions.
 -}
