@@ -21,6 +21,18 @@ Note, that "Relude" reexports 'head', 'tail', 'init', 'last' from
 "Data.List.NonEmpty" instead of the "Data.List", so these functions are safe to
 use.
 
++------------+--------------+-----------------------+
+|            |    @base@    |       @relude@        |
++============+==============+=======================+
+| __'head'__ | @[a] -> a@   | @'NonEmpty' a -> a@   |
++------------+--------------+-----------------------+
+| __'tail'__ | @[a] -> [a]@ | @'NonEmpty' a -> [a]@ |
++------------+--------------+-----------------------+
+| __'last'__ | @[a] -> a@   | @'NonEmpty' a -> a@   |
++------------+--------------+-----------------------+
+| __'init'__ | @[a] -> [a]@ | @'NonEmpty' a -> [a]@ |
++------------+--------------+-----------------------+
+
 @relude@ also provides custom type error for better experience with transition
 from lists to 'NonEmpty' with those functions.
 
@@ -63,9 +75,9 @@ module Relude.List.NonEmpty
       NonEmpty (..)
     , nonEmpty
     , head
-    , init
-    , last
     , tail
+    , last
+    , init
 
       -- * Combinators
     , viaNonEmpty
