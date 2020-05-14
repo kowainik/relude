@@ -68,6 +68,7 @@ corresponding @base@ one on the example of the 'head' function:
 | __@relude@__    | @'Nothing'@                             |
 +-----------------+-----------------------------------------+
 
+@since 0.2.0
 -}
 
 module Relude.List.NonEmpty
@@ -106,6 +107,8 @@ import qualified Data.List.NonEmpty as NE (head, init, last, tail)
 Just 1
 >>> viaNonEmpty head []
 Nothing
+
+@since 0.1.0
 -}
 viaNonEmpty :: (NonEmpty a -> b) -> [a] -> Maybe b
 viaNonEmpty f = fmap f . nonEmpty

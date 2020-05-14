@@ -93,6 +93,8 @@ putLTextLn = liftIO . TL.putStrLn
 
 >>> putBS ("Hello, world!" :: ByteString)
 Hello, world!
+
+@since 0.3.0
 -}
 putBS :: MonadIO m => ByteString -> m ()
 putBS = liftIO . BS.putStr
@@ -105,6 +107,7 @@ putBS = liftIO . BS.putStr
 >>> putBSLn ("Hello, world!" :: ByteString)
 Hello, world!
 
+@since 0.3.0
 -}
 putBSLn :: MonadIO m => ByteString -> m ()
 putBSLn = liftIO . BS.putStrLn
@@ -116,6 +119,7 @@ putBSLn = liftIO . BS.putStrLn
 >>> putLBS ("Hello, world!" :: LByteString)
 Hello, world!
 
+@since 0.3.0
 -}
 putLBS :: MonadIO m => LByteString -> m ()
 putLBS = liftIO . LBS.putStr
@@ -127,6 +131,7 @@ putLBS = liftIO . LBS.putStr
 >>> putLBSLn ("Hello, world!" :: LByteString)
 Hello, world!
 
+@since 0.3.0
 -}
 putLBSLn :: MonadIO m => LByteString -> m ()
 putLBSLn = liftIO . LBS.putStrLn

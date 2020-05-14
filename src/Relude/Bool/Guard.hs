@@ -130,6 +130,8 @@ Nothing
 Just False
 >>> Just False &&^ error "Shouldn't be evaluated"
 Just False
+
+@since 0.4.0
 -}
 (&&^) :: Monad m => m Bool -> m Bool -> m Bool
 (&&^) e1 e2 = ifM e1 e2 (pure False)
@@ -147,6 +149,8 @@ Nothing
 Just True
 >>> Just True ||^ error "Shouldn't be evaluated"
 Just True
+
+@since 0.4.0
 -}
 (||^) :: Monad m => m Bool -> m Bool -> m Bool
 e1 ||^ e2 = ifM e1 (pure True) e2

@@ -143,12 +143,18 @@ executingState :: s -> State s a -> s
 executingState s st = snd (usingState s st)
 {-# INLINE executingState #-}
 
--- | Lift a 'Maybe' to the 'MaybeT' monad
+{- | Lift a 'Maybe' to the 'MaybeT' monad
+
+@since 0.3.0
+-}
 hoistMaybe  :: Applicative m => Maybe a -> MaybeT m a
 hoistMaybe m = MaybeT (pure m)
 {-# INLINE hoistMaybe #-}
 
--- | Lift a 'Either' to the 'ExceptT' monad
+{- | Lift a 'Either' to the 'ExceptT' monad
+
+@since 0.3.0
+-}
 hoistEither :: Applicative m => Either e a -> ExceptT e m a
 hoistEither e = ExceptT (pure e)
 {-# INLINE hoistEither #-}

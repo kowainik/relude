@@ -14,6 +14,51 @@ Lifted versions of base functions.
 These functions are lifted in a sense that you can use them inside various
 monad transformers without adding 'Relude.liftIO' calls explicitly. However, you still
 can use all these functions inside plain 'Relude.IO' monad as usual.
+
+=== Example
+
+==== @base@
+
+With the @base@ function, you can easily work with these functions in the
+'Relude.IO' monad:
+
+@
+__main__ :: 'Relude.IO' ()
+__main__ = __do__
+    x <- 'Data.Text.getLine'
+    'Prelude.print' x
+@
+
+However, to work in 'Relude.MonadIO' you already need to "lift" them:
+
+@
+__main__ :: 'Relude.MonadIO' m => m ()
+__main__ = __do__
+    x <- 'Relude.liftIO' 'Data.Text.getLine'
+    'Relude.liftIO' ('Prelude.print' x)
+@
+
+==== @relude@
+
+In the meantime, @relude@ provides these function that can work in 'Relude.IO'
+the same way:
+
+@
+__main__ :: 'Relude.IO' ()
+__main__ = __do__
+    x <- 'getLine'
+    'print' x
+@
+
+But also allows you to work in the 'Relude.MonadIO' monads more easily:
+
+@
+__main__ :: 'Relude.MonadIO' m => m ()
+__main__ = __do__
+    x <- 'getLine'
+    'print' x
+@
+
 -}
 
 module Relude.Lifted

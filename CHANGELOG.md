@@ -33,17 +33,18 @@ The changelog is available [on GitHub][2].
 * [#246](https://github.com/kowainik/relude/issues/246):
   Deprecate `Relude.Extra.Validation` in favour of
   [`validation-selective`](https://hackage.haskell.org/package/validation-selective)
-  __Migration rules:__
-  If you use "Relude.Extra.Validation" in you project you need to:
 
-    1. Add @validation-selective@ into the @build-depends@ section of your @.cabal@
-       file.
-    2. Change imports of "Relude.Extra.Validation" to "Validation":
+  __Migration rules:__
+  If you use `Relude.Extra.Validation` in you project you need to:
+
+    1. Add `validation-selective` into the `build-depends` section of your
+       `.cabal` file.
+    2. Change imports of `Relude.Extra.Validation` to `Validation`:
 
        ```haskell
        -- Was:
        import Relude.Extra.Validation (Validation (..), ..)
-       -- Become:
+       -- Became:
        import Validation (Validation (..), ..)
        ```
 * Reexport partial `read` from `Relude.Unsafe` for consistency.
@@ -120,7 +121,7 @@ The changelog is available [on GitHub][2].
 * [#172](https://github.com/kowainik/relude/issues/172):
   Add `Monoid` and `Semigroup` instances for the `Validation` type.
   (by [@mauriciofierrom](https://github.com/mauriciofierrom))
-* [#156](https://github.com/kowainik/relude/issue/156):
+* [#156](https://github.com/kowainik/relude/issues/156):
   Implement helper type-level functions in `Relude.Extra.Type`.
   (by [@TheMatten](https://github.com/TheMatten))
 * [#170](https://github.com/kowainik/relude/issues/170):
@@ -202,7 +203,7 @@ The changelog is available [on GitHub][2].
   Reexport `Bitraversable` related stuff from `base`.
 * [#100](https://github.com/kowainik/relude/issues/100):
   Add `Relude.Extra.Validation` with `Validation`data type.
-* [#89](https://github.com/kowainik/relude/issues/81):
+* [#89](https://github.com/kowainik/relude/issues/89):
   Add `Relude.Extra.Type` module containing a `typeName` function.
 * [#92](https://github.com/kowainik/relude/issues/92)
   Add `Relude.Extra.Tuple` module, containing
@@ -225,7 +226,7 @@ The changelog is available [on GitHub][2].
 
 * [#41](https://github.com/kowainik/relude/issues/41):
   Add `Foldable1`.
-* [#64](https://github.com/kowainik/relude/issues/64):
+* [#63](https://github.com/kowainik/relude/issues/63):
   Remove `Print` typeclass.
   Add `put[L]BS[Ln]` functions.
   `trace` functions now take `String` as argument instead of `Text`.

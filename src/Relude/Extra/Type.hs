@@ -16,6 +16,8 @@ Stability:   Experimental
 Portability: Portable
 
 Contains useful utilities to work with Types.
+
+@since 0.4.0
 -}
 
 module Relude.Extra.Type
@@ -51,6 +53,8 @@ __NOTE:__ This must be used with __TypeApplications__ language extension.
 "[Char]"
 >>> typeName @(Maybe Int)
 "Maybe Int"
+
+@since 0.4.0
 -}
 typeName :: forall a. Typeable a => Text
 #if ( __GLASGOW_HASKELL__ >= 802 )

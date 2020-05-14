@@ -516,7 +516,10 @@ show x = fromString (Show.show x)
 {-# SPECIALIZE show :: Show.Show  a => a -> LByteString  #-}
 {-# SPECIALIZE show :: Show.Show  a => a -> String  #-}
 
--- | Type class for lazy-strict conversions.
+{- | Type class for lazy-strict conversions.
+
+@since 0.1.0
+-}
 class LazyStrict l s | l -> s, s -> l where
     toLazy   :: s -> l
     toStrict :: l -> s

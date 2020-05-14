@@ -9,6 +9,8 @@ Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Experimental
 Portability: Portable
 
+@since 0.5.0
+
 This module aims to provide a minimal implementation of @lens@ package required
 for basic usage. All functions are compatible with the real @lens@ package
 therefore if you need to expand to the full version the process should be
@@ -179,42 +181,65 @@ the value inside). It has a 'Functor' constraint, and since both 'Const' and
 
   * @a@ is the type of the value inside of structure
   * @s@ is the type of the whole structure
+
+@since 0.5.0
 -}
 type Lens' s a = forall f. Functor f => (a -> f a) -> s -> f s
 
--- | Creates 'Lens'' from the getter and setter.
+{- | Creates 'Lens'' from the getter and setter.
+
+@since 0.5.0
+-}
 lens :: (s -> a) -> (s -> a -> s) -> Lens' s a
 lens getter setter = \f s -> setter s <$> f (getter s)
 {-# INLINE lens #-}
 
--- | Gets a value out of a structure using a getter.
+{- | Gets a value out of a structure using a getter.
+
+@since 0.5.0
+-}
 view :: Lens' s a -> s -> a
 view l = getConst . l Const
 {-# INLINE view #-}
 
--- | Sets the given value to the structure using a setter.
+{- | Sets the given value to the structure using a setter.
+
+@since 0.5.0
+-}
 set :: Lens' s a -> a -> s -> s
 set l a = runIdentity . l (const (Identity a))
 {-# INLINE set #-}
 
--- | Applies the given function to the target.
+{- | Applies the given function to the target.
+
+@since 0.5.0
+-}
 over :: Lens' s a -> (a -> a) -> s -> s
 over l fa = runIdentity . l (Identity . fa)
 {-# INLINE over #-}
 
--- | The operator form of 'view' with the arguments flipped.
+{- | The operator form of 'view' with the arguments flipped.
+
+@since 0.5.0
+-}
 infixl 8 ^.
 (^.) :: s -> Lens' s a -> a
 s ^. l = view l s
 {-# INLINE (^.) #-}
 
--- | The operator form of 'set'.
+{- | The operator form of 'set'.
+
+@since 0.5.0
+-}
 infixr 4 .~
 (.~) :: Lens' s a -> a -> s -> s
 (.~) = set
 {-# INLINE (.~) #-}
 
--- | The operator form of 'over'.
+{- | The operator form of 'over'.
+
+@since 0.5.0
+-}
 infixr 4 %~
 (%~) :: Lens' s a -> (a -> a) -> s -> s
 (%~) = over

@@ -75,9 +75,14 @@ fromRight _ (Right b) = b
 -- $setup
 -- >>> import Relude
 
+{- | For convenient work with 'MonadFail'.
+
+@since 0.1.0
+-}
 instance IsString str => MonadFail (Either str) where
     fail :: String -> Either str a
     fail = Left . fromString
+    {-# INLINE fail #-}
 
 {- | Maps left part of 'Either' to 'Maybe'.
 

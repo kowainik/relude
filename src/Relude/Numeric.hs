@@ -8,6 +8,8 @@ Stability:   Stable
 Portability: Portable
 
 Provides numerical data types and functions.
+
+@since 0.5.0
 -}
 
 module Relude.Numeric
@@ -54,6 +56,7 @@ Just 42
 >>> integerToBounded @Int8 1024
 Nothing
 
+@since 0.5.0
 -}
 integerToBounded :: forall a. (Integral a, Bounded a) => Integer -> Maybe a
 integerToBounded n
@@ -74,6 +77,7 @@ Just 0
 >>> integerToNatural 10
 Just 10
 
+@since 0.5.0
 -}
 integerToNatural :: Integer -> Maybe Natural
 integerToNatural n

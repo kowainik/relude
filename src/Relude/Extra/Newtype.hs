@@ -8,7 +8,9 @@ Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Experimental
 Portability: Portable
 
-Functions to ease work with newtypes.
+Functions to ease work with @newtypes@.
+
+@since 0.2.0
 -}
 
 module Relude.Extra.Newtype
@@ -36,6 +38,8 @@ import Relude
 5
 >>> un (Size 5) == length ['a', 'x', 'b']
 False
+
+@since 0.2.0
 -}
 un :: forall a n . Coercible a n => n -> a
 un = coerce
@@ -47,6 +51,8 @@ name in case you need to convert some value to @newtype@.
 >>> newtype Flag = Flag Bool deriving (Show, Eq)
 >>> wrap False == Flag True
 False
+
+@since 0.2.0
 -}
 wrap :: forall n a . Coercible a n => a -> n
 wrap = coerce
@@ -61,6 +67,8 @@ Foo False
 >>> newtype Bar = Bar String deriving Show
 >>> under (filter (== 'a')) (Bar "abacaba")
 Bar "aaaa"
+
+@since 0.2.0
 -}
 under :: forall n a . Coercible a n => (n -> n) -> (a -> a)
 under = coerce
@@ -73,6 +81,8 @@ representation.
 7
 >>> under2 @All (<>) True False
 False
+
+@since 0.3.0
 -}
 under2 :: forall n a . Coercible a n => (n -> n -> n) -> (a -> a -> a)
 under2 = coerce
@@ -86,6 +96,8 @@ representation. Provided for convenience.
 7
 >>> underF2 @Max (<>) 'p' 't'
 't'
+
+@since 0.3.0
 -}
 underF2 :: forall n a . Coercible a (n a) => (n a -> n a -> n a) -> (a -> a -> a)
 underF2 = coerce
@@ -94,6 +106,8 @@ underF2 = coerce
 
 {- | Coercible composition. This function allows to write more efficient
 implementations of function compositions over @newtypes@.
+
+@since 0.3.0
 -}
 (#.) :: Coercible b c => (b -> c) -> (a -> b) -> (a -> c)
 (#.) _f = coerce

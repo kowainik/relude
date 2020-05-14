@@ -76,6 +76,8 @@ flipfoldl' f = foldl' (flip f)
 
 >>> asumMap (\x -> if x > 2 then Just x else Nothing) [1..4]
 Just 3
+
+@since 0.4.0
 -}
 asumMap :: forall b m f a . (Foldable f, Alternative m) => (a -> m b) -> f a -> m b
 asumMap = coerce (foldMap :: (a -> Alt m b) -> f a -> Alt m b)
@@ -85,6 +87,8 @@ asumMap = coerce (foldMap :: (a -> Alt m b) -> f a -> Alt m b)
 
 >>> foldMapA @[Int] (Just . replicate 3) [1..3]
 Just [1,1,1,2,2,2,3,3,3]
+
+@since 0.1.0
 -}
 foldMapA :: forall b m f a . (Semigroup b, Monoid b, Applicative m, Foldable f) => (a -> m b) -> f a -> m b
 foldMapA = coerce (foldMap :: (a -> Ap m b) -> f a -> Ap m b)
@@ -94,6 +98,8 @@ foldMapA = coerce (foldMap :: (a -> Ap m b) -> f a -> Ap m b)
 
 >>> foldMapM @[Int] (Just . replicate 3) [1..3]
 Just [1,1,1,2,2,2,3,3,3]
+
+@since 0.1.0
 -}
 foldMapM :: forall b m f a . (Monoid b, Monad m, Foldable f) => (a -> m b) -> f a -> m b
 foldMapM f xs = foldr step return xs mempty

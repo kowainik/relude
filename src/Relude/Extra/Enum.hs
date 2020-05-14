@@ -8,6 +8,8 @@ Stability:   Experimental
 Portability: Portable
 
 Mini @bounded-enum@ framework inside @relude@.
+
+@since 0.1.0
 -}
 
 module Relude.Extra.Enum
@@ -40,6 +42,8 @@ import qualified Data.Map.Strict as M
 >>> data Singleton = Singleton deriving (Show, Enum, Bounded)
 >>> universe @Singleton
 [Singleton]
+
+@since 0.1.0
 -}
 universe :: (Bounded a, Enum a) => [a]
 universe = [minBound .. maxBound]
@@ -117,6 +121,8 @@ showGhcVer = \\__case__
 parseGhcVer :: 'Text' -> 'Maybe' GhcVer
 parseGhcVer = 'inverseMap' showGhcVer
 @
+
+@since 0.1.1
 -}
 inverseMap
     :: forall a k .
@@ -137,6 +143,8 @@ True
 False
 >>> succ True
 *** Exception: Prelude.Enum.Bool.succ: bad argument
+
+@since 0.1.0
 -}
 next :: (Eq a, Bounded a, Enum a) => a -> a
 next e
@@ -171,6 +179,8 @@ Just True
 Nothing
 >>> safeToEnum @Bool (-1)
 Nothing
+
+@since 0.1.0
 -}
 safeToEnum :: forall a . (Bounded a, Enum a) => Int -> Maybe a
 safeToEnum i = guard (fromEnum @a minBound <= i && i <= fromEnum @a maxBound) $> toEnum i

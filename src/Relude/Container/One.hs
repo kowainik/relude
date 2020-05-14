@@ -18,6 +18,8 @@ It has three main goals:
 1. Give a shorter name for the construction: uses 'one' instead of common @singleton@.
 2. Work with monomorphic structures like 'T.Text' or 'IntSet'.
 3. Give a clearer and less scary name for cases where you can use 'Relude.pure' or @(:[])@.
+
+@since 0.1.0
 -}
 
 module Relude.Container.One

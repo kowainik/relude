@@ -8,6 +8,8 @@ Stability:   Experimental
 Portability: Portable
 
 Contains useful functions to work with GHC callstack.
+
+@since 0.2.0
 -}
 
 module Relude.Extra.CallStack
@@ -27,6 +29,8 @@ that the caller function has 'HasCallStack' constraint. Otherwise, it returns
 >>> bar :: HasCallStack => String; bar = foo
 >>> bar
 "foo"
+
+@since 0.2.0
 -}
 ownName :: HasCallStack => String
 ownName = case getCallStack callStack of

@@ -20,6 +20,8 @@ qux :: Maybe (a, b)
 doo :: (a, a)
 dee :: Either a a
 @
+
+@since 0.1.0
 -}
 
 module Relude.Extra.Bifunctor
@@ -48,6 +50,8 @@ bimapBoth f = bimap f f
 
 >>> bimapF not length $ Just (False, ['a', 'b'])
 Just (True,2)
+
+@since 0.1.0
 -}
 bimapF  :: (Functor f, Bifunctor p) => (a -> c) -> (b -> d) -> f (p a b) -> f (p c d)
 bimapF f g = fmap (bimap f g)
@@ -57,6 +61,8 @@ bimapF f g = fmap (bimap f g)
 
 >>> firstF not $ Just (False, ['a', 'b'])
 Just (True,"ab")
+
+@since 0.1.0
 -}
 firstF  :: (Functor f, Bifunctor p) => (a -> c) -> f (p a b) -> f (p c b)
 firstF = fmap . first
@@ -66,6 +72,8 @@ firstF = fmap . first
 
 >>> secondF length  $ Just (False, ['a', 'b'])
 Just (False,2)
+
+@since 0.1.0
 -}
 secondF  :: (Functor f, Bifunctor p) => (b -> d) -> f (p a b) -> f (p a d)
 secondF = fmap . second

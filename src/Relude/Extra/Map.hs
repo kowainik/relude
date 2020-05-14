@@ -49,6 +49,8 @@ import qualified Data.Set as S
 
 {- | Read-only map or set. Contains polymorphic functions which work for both
 sets and maps.
+
+@since 0.1.0
 -}
 class StaticMap t where
     type Key t :: Type
@@ -58,6 +60,10 @@ class StaticMap t where
     lookup :: Key t -> t -> Maybe (Val t)
     member :: Key t -> t -> Bool
 
+{- |
+
+@since 0.1.0
+-}
 instance Ord k => StaticMap (Map k v) where
     type Key (Map k v) = k
     type Val (Map k v) = v
@@ -69,6 +75,10 @@ instance Ord k => StaticMap (Map k v) where
     member = M.member
     {-# INLINE member #-}
 
+{- |
+
+@since 0.1.0
+-}
 instance (Eq k, Hashable k) => StaticMap (HashMap k v) where
     type Key (HashMap k v) = k
     type Val (HashMap k v) = v
@@ -80,6 +90,10 @@ instance (Eq k, Hashable k) => StaticMap (HashMap k v) where
     member = HM.member
     {-# INLINE member #-}
 
+{- |
+
+@since 0.1.0
+-}
 instance StaticMap (IntMap v) where
     type Key (IntMap v) = Int
     type Val (IntMap v) = v
@@ -91,6 +105,10 @@ instance StaticMap (IntMap v) where
     member = IM.member
     {-# INLINE member #-}
 
+{- |
+
+@since 0.1.0
+-}
 instance Ord a => StaticMap (Set a) where
     type Key (Set a) = a
     type Val (Set a) = a
@@ -102,6 +120,10 @@ instance Ord a => StaticMap (Set a) where
     lookup k m = guard (member k m) $> k
     {-# INLINE lookup #-}
 
+{- |
+
+@since 0.1.0
+-}
 instance (Eq a, Hashable a) => StaticMap (HashSet a) where
     type Key (HashSet a) = a
     type Val (HashSet a) = a
@@ -113,6 +135,10 @@ instance (Eq a, Hashable a) => StaticMap (HashSet a) where
     lookup k m = guard (member k m) $> k
     {-# INLINE lookup #-}
 
+{- |
+
+@since 0.1.0
+-}
 instance StaticMap IntSet where
     type Key IntSet = Int
     type Val IntSet = Int
@@ -133,6 +159,7 @@ Just "yyy"
 >>> myHashMap !? 'd'
 Nothing
 
+@since 0.1.0
 -}
 infixl 9 !?
 (!?) :: StaticMap t => t -> Key t -> Maybe (Val t)
@@ -148,6 +175,7 @@ False
 >>> notMember 'c' myHashMap
 True
 
+@since 0.1.0
 -}
 notMember :: StaticMap t => Key t -> t -> Bool
 notMember k = not . member k
@@ -163,6 +191,7 @@ if this map contains no mapping for the key.
 >>> lookupDefault "zzz" 'c' myHashMap
 "zzz"
 
+@since 0.1.0
 -}
 lookupDefault :: StaticMap t
               => Val t -- ^ Default value to return.
@@ -177,6 +206,8 @@ lookupDefault def k = fromMaybe def . lookup k
 ----------------------------------------------------------------------------
 
 {- | Modifiable Map.
+
+@since 0.1.0
 -}
 class StaticMap t => DynamicMap t where
     -- insertions
@@ -187,37 +218,46 @@ class StaticMap t => DynamicMap t where
     delete :: Key t -> t -> t
     alter :: (Maybe (Val t) -> Maybe (Val t)) -> Key t -> t -> t
 
+{- |
+
+@since 0.1.0
+-}
 instance Ord k => DynamicMap (Map k v) where
     insert     = M.insert
-    insertWith = M.insertWith
-    delete     = M.delete
-    alter      = M.alter
-
     {-# INLINE insert #-}
+    insertWith = M.insertWith
     {-# INLINE insertWith #-}
+    delete     = M.delete
     {-# INLINE delete #-}
+    alter      = M.alter
     {-# INLINE alter #-}
 
+{- |
+
+@since 0.1.0
+-}
 instance (Eq k, Hashable k) => DynamicMap (HashMap k v) where
     insert     = HM.insert
-    insertWith = HM.insertWith
-    delete     = HM.delete
-    alter      = HM.alter
-
     {-# INLINE insert #-}
+    insertWith = HM.insertWith
     {-# INLINE insertWith #-}
+    delete     = HM.delete
     {-# INLINE delete #-}
+    alter      = HM.alter
     {-# INLINE alter #-}
 
+{- |
+
+@since 0.1.0
+-}
 instance DynamicMap (IntMap v) where
     insert     = IM.insert
-    insertWith = IM.insertWith
-    delete     = IM.delete
-    alter      = IM.alter
-
     {-# INLINE insert #-}
+    insertWith = IM.insertWith
     {-# INLINE insertWith #-}
+    delete     = IM.delete
     {-# INLINE delete #-}
+    alter      = IM.alter
     {-# INLINE alter #-}
 
 ----------------------------------------------------------------------------
@@ -231,6 +271,8 @@ instance DynamicMap (IntMap v) where
 
 >>> toPairs (HashMap.fromList [('a', "xxx"), ('b', "yyy")])
 [('a',"xxx"),('b',"yyy")]
+
+@since 0.1.0
 -}
 toPairs :: (IsList t, Item t ~ (a, b)) => t -> [(a, b)]
 toPairs = toList
@@ -239,6 +281,8 @@ toPairs = toList
 
 >>> keys (HashMap.fromList [('a', "xxx"), ('b', "yyy")])
 "ab"
+
+@since 0.1.0
 -}
 keys :: (IsList t, Item t ~ (a, b)) => t -> [a]
 keys = map fst . toList
@@ -247,6 +291,8 @@ keys = map fst . toList
 
 >>> elems (HashMap.fromList [('a', "xxx"), ('b', "yyy")])
 ["xxx","yyy"]
+
+@since 0.1.0
 -}
 elems :: (IsList t, Item t ~ (a, b)) => t -> [b]
 elems = map snd . toList

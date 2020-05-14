@@ -40,6 +40,8 @@ Named version of '=<<'.
 Just 1
 >>> Nothing & chainedTo (viaNonEmpty head)
 Nothing
+
+@since 0.5.0
 -}
 chainedTo :: Monad m => (a -> m b) -> m a -> m b
 chainedTo = (=<<)
