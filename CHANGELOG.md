@@ -68,7 +68,7 @@ The changelog is available [on GitHub][2].
   __Breaking change:__ `readEither` is not polymorphic over the first argument
   anymore. Now it takes `String`.
 
-  __Migration rules:__ Use one of the converion function from the
+  __Migration rules:__ Use one of the conversion function from the
   `Relude.String.Conversion` module to covert your old input value into
   `String`.
 
