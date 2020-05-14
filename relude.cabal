@@ -1,6 +1,6 @@
 cabal-version:       2.4
 name:                relude
-version:             0.6.0.0
+version:             0.7.0.0
 synopsis:            Safe, performant, user-friendly and lightweight Haskell Standard Library
 description:
     @__relude__@ is an alternative prelude library. If you find the default
@@ -194,7 +194,7 @@ library
                                Relude.Extra.Tuple
                                Relude.Extra.Type
                                Relude.Extra.Validation
-                               Relude.Unsafe
+                           Relude.Unsafe
 
 
   build-depends:       bytestring ^>= 0.10

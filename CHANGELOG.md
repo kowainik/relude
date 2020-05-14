@@ -4,24 +4,41 @@
 The changelog is available [on GitHub][2].
 
 
-## Unreleased
+## 0.7.0.0 — May 14, 2020
 
-* [#228](https://github.com/kowainik/relude/issues/228):
-  Add `universeNonEmpty` function.
-* [#294](https://github.com/kowainik/relude/issues/294):
-  Add `atomicModifyIORef_` and `atomicModifyIORef'_`.
 * [#253](https://github.com/kowainik/relude/issues/253):
   Support GHC-8.10. Upgrade GHC-8.8 to 8.8.3.
+* Significant documentation improvements:
+    + Add high-level description to each reexported module.
+    + Add String Conversion Table.
+    + Add `NonEmpty` lists functions tables.
+    + Add `@since` annotations.
+    + Improve README.
+    + Inline some external reexports into explicit lists of exports.
+    + Rewrite top-level `cabal` description.
+* [#234](https://github.com/kowainik/relude/issues/234):
+  Reexport `scanl1`, `scanr1`, `scanl'` from `Data.List`.
 * [#256](https://github.com/kowainik/relude/issues/256):
   Make `cycle` total function.
+* [#233](https://github.com/kowainik/relude/issues/233):
+  Add `etaReaderT` to `Relude.Monad.Trans` to help with performance.
+* [#294](https://github.com/kowainik/relude/issues/294):
+  Add `atomicModifyIORef_` and `atomicModifyIORef'_`.
+* [#293](https://github.com/kowainik/relude/issues/293):
+  Add `memptyIfFalse` and `memptyIfTrue` functions.
+* Reexport `NonEmpty` functions from `Relude.List.NonEmpty` instead of
+  `Relude.List.Reexport`.
+* [#239](https://github.com/kowainik/relude/issues/239):
+  Reexport more STM functions that work with `TMVar` from
+  `Relude.Lifted.Concurrent`.
+* [#227](https://github.com/kowainik/relude/issues/227):
+  Create `Relude.Extra` module
+* [#228](https://github.com/kowainik/relude/issues/228):
+  Add `universeNonEmpty` function.
 * [#249](https://github.com/kowainik/relude/issues/249):
   __Breaking change:__ Fix infix of the `Relude.Extra.Lens` `(^.)` operator.
   Change it to `infixl 8`.
-* [#227](https://github.com/kowainik/relude/issues/227):
-  Create `Relude.Extra` module
-  (by [@mxstrbng](https://github.com/mstruebing))
-* [#233](https://github.com/kowainik/relude/issues/233):
-  Add `etaReaderT` to `Relude.Monad.Trans` to help with performance.
+* Reexport partial `read` from `Relude.Unsafe` for consistency.
 * [#244](https://github.com/kowainik/relude/issues/244):
   Remove deprecated functions: `prec`, `dupe` and `mapBoth`.
 
@@ -30,8 +47,6 @@ The changelog is available [on GitHub][2].
     + `dupe`: use `dup` instead
     + `mapBoth`: use `bimapBoth` instead
 
-* [#234](https://github.com/kowainik/relude/issues/234):
-  Reexport `scanl1`, `scanr1`, `scanl'` from `Data.List`.
 * [#246](https://github.com/kowainik/relude/issues/246):
   Deprecate `Relude.Extra.Validation` in favour of
   [`validation-selective`](https://hackage.haskell.org/package/validation-selective)
@@ -49,7 +64,6 @@ The changelog is available [on GitHub][2].
        -- Became:
        import Validation (Validation (..), ..)
        ```
-* Reexport partial `read` from `Relude.Unsafe` for consistency.
 * [#196](https://github.com/kowainik/relude/issues/196):
   Deprecate `mapToFst` and `mapToSnd`. Introduce `toFst` and `toSnd`
   in `Relude.Extra.Tuple` as shorter aliases for `mapToFst`. Implement
@@ -62,10 +76,6 @@ The changelog is available [on GitHub][2].
   + Replace `mapToSnd` with `toSnd`
   + You can now use `fmapToFst` and `fmapToSnd` instead of
     `[f]map (mapToFst f)` and `[f]map (mapToSnd f)`
-* Reexport `NonEmpty` functions from `Relude.List.NonEmpty` instead of
-  `Relude.List.Reexport`.
-* [#293](https://github.com/kowainik/relude/issues/293):
-  Add `memptyIfFalse` and `memptyIfTrue` functions.
 * [#286](https://github.com/kowainik/relude/issues/286):
   __Breaking change:__ `readEither` is not polymorphic over the first argument
   anymore. Now it takes `String`.
@@ -85,6 +95,12 @@ The changelog is available [on GitHub][2].
   ```haskell
   readEither @Int (toString myText)
   ```
+
+* [#281](https://github.com/kowainik/relude/issues/281):
+  Move `One` property tests from `doctest` to `hedgehog`.
+  Significant test time boost.
+* [#264](https://github.com/kowainik/relude/issues/264):
+  Support Dhall-16.0.0 in HLint rules.
 
 ## 0.6.0.0 — Oct 30, 2019
 
