@@ -660,7 +660,7 @@ For the latest `relude` version, this can be achieved by executing the following
 two commands on your CI:
 
 ```yaml
-curl https://raw.githubusercontent.com/kowainik/relude/v0.6.0.0/.hlint.yaml -o .hlint-relude.yaml
+curl https://raw.githubusercontent.com/kowainik/relude/v0.7.0.0/.hlint.yaml -o .hlint-relude.yaml
 curl -sSL https://raw.github.com/ndmitchell/neil/master/misc/travis.sh | sh -s -- hlint -h .hlint-relude.yaml .
 ```
 
@@ -742,7 +742,7 @@ Dhall 16.0.0 is required, so make sure that the previous command installed
 To generate `hlint` file:
 
 ```shell
-$ dhall-to-yaml --omitNull <<< './hlint/hlint.dhall' > .hlint.yaml
+$ dhall-to-yaml <<< './hlint/hlint.dhall' > .hlint.yaml
 ```
 
 Check that you have generated valid `.hlint.yaml` file without parse errors:
@@ -754,3 +754,19 @@ $ hlint test/Spec.hs
 See our blog post where we describe the details of the implementation for this solution:
 
 * [Dhall To HLint](https://kowainik.github.io/posts/2018-09-09-dhall-to-hlint)
+
+### Producing dependency graph
+
+Install `cabal-plan` first:
+
+```shell
+$ cabal v2-install cabal-plan
+$ cabal-plan --version
+cabal-plan 0.6.2.0
+```
+
+Then draw the graph only for the library dependencies:
+
+```shell
+cabal-plan dot --root lib:relude | dot -Tpng -o relude-dependency-graph.png
+```
