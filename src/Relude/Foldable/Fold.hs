@@ -18,7 +18,7 @@ Portability: Portable
 
 Fixes and additions to 'Foldable'. Specifically:
 
-* Space-leak free 'sum' and 'production'
+* Space-leak free 'sum' and 'product'
 * 'elem' and 'notElem' are forbidden for 'Set' and 'HashSet'
 * Additional combinators for common idioms
 -}
