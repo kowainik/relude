@@ -15,16 +15,15 @@ standard library.
 
 The default `Prelude` is not perfect and doesn't always satisfies one's needs.
 At this stage you may want to try an alternative prelude library. In this README
-we are going to give you convincing reasons to consider using `relude` as such
-alternative in your next project.
+we are going to give you convincing reasons to consider using `relude` as such an alternative in your next project.
 
-`relude` has some strong goals and principles that it sticks to. That principles
-defines the library decisions and might tell you more about the priorities of
+`relude` has some strong goals and principles that it sticks to. Those principles
+define the library decisions and might tell you more about the priorities of
 the library. So below you can find the key design principles behind `relude`:
 
 1. **Productivity.** You can be more productive with a "non-standard" standard
-   library, and `relude` helps you with writing safer and more
-   efficient code faster.
+   library, and `relude` helps you with writing safer and more efficient code
+   faster.
 
 2. **Total programming**. Usage of
    [_partial functions_](https://www.reddit.com/r/haskell/comments/5n51u3/why_are_partial_functions_as_in_head_tail_bad/)
@@ -60,9 +59,9 @@ the library. So below you can find the key design principles behind `relude`:
    use space-leaks-free functions (e.g. our custom performant `sum` and `product`), introduce
    `{-# INLINE #-}` and `{-# SPECIALIZE #-}` pragmas where
    appropriate, and make efficient container types
-   (e.g. `Map`, `HashMap`, `Set`) more accesible.
+   (e.g. `Map`, `HashMap`, `Set`) more accessible.
 
-5. **Minimalism** (low number of dependencies). We don not force users of
+5. **Minimalism** (low number of dependencies). We do not force users of
    `relude` to stick to any specific lens or text formatting or logging
    library. Where possible, `relude` depends only on boot libraries.
    The [Dependency graph](https://raw.githubusercontent.com/kowainik/relude/master/relude-dependency-graph.png)
@@ -92,7 +91,7 @@ the library. So below you can find the key design principles behind `relude`:
    without introducing breaking changes. `relude` uses the approach with
    `Extra.*` modules which are not exported by default. The chosen approach makes it quite
    easy for us to provide new functionality without breaking anything and let
-   the users decide to use it or not.
+   the users decide whether to use it or not.
 
 In addition to our key design principles, the following list of
 **anti-goals** describes what `relude` is trying to avoid:
@@ -105,7 +104,7 @@ In addition to our key design principles, the following list of
 3. **Rename common definitions.** If something is called `foo` in
    `base`, it's also called `foo` in `relude`. So, `relude` doesn't
    rename any existing abstractions, but it may introduce a few new
-   ones, if their benefits outweigh learning curve.
+   ones, if their benefits outweigh the learning curve.
 
 This README contains an introduction to `relude` and a tutorial on how to use it.
 
@@ -132,7 +131,7 @@ This tutorial has several parts:
     * [Relude vs Protolude](#relude-vs-protolude)
 8. [For developers](#for-developers)
 
-This is neither a tutorial on _Haskell Standard Library_ nor a tutorial on each
+This is neither a tutorial on the _Haskell Standard Library_ nor a tutorial on each
 function contained in `relude`. For latter see the detailed documentation of
 every data type, type class and function together with examples and usages in
 the [_Haddock documentation for `relude`_](http://hackage.haskell.org/package/relude).
@@ -148,11 +147,11 @@ libraries to your project dependencies. Unlike ordinary libraries, alternative
 preludes provide a different set of available by default functions and data
 types by replacing the `Prelude` module.
 
-Replacing default `Prelude` from `base` has the following _disadvantages_:
+Replacing the default `Prelude` from `base` has the following _disadvantages_:
 
 1. Increased entry threshold: you need to *learn* a different standard library.
     + `relude` tries to lower this threshold as much as possible: it comes with
-      the excellent documentation, no custom abstractions, and behavior is
+      excellent documentation, no custom abstractions, and behavior is
       changed only for a small subset of functions.
 2. Extra dependencies: adding more libraries to dependencies increases build
    times and maintenance burden.
@@ -186,7 +185,7 @@ And when you may want to stay with the default standard:
 [[Back to the Table of Contents] ↑](#structure-of-this-tutorial)
 
 If you want to start using `relude` in your project, you can set the library up
-for you by one of the following ways.
+for use by one of the following ways.
 
 ### Mixins
 
@@ -285,7 +284,7 @@ your own `Prelude` module with some custom functions, not provided by
    Customize the module for your needs.
 
 This is a very convenient way to add a custom prelude to your project because
-you don't need to import module manually inside each file and enable the
+you don't need to import the module manually inside each file and enable the
 `NoImplicitPrelude` extension.
 
 ### NoImplicitPrelude
@@ -293,14 +292,14 @@ you don't need to import module manually inside each file and enable the
 [[Back to the Table of Contents] ↑](#structure-of-this-tutorial)
 
 For this option, you need to disable the default `Prelude` module first.
-To disable the built-in prelude on module basis, you can add the following
+To disable the built-in prelude on a per module basis, you can add the following
 pragma at the top of your file:
 
 ```haskell
 {-# LANGUAGE NoImplicitPrelude #-}
 ```
 
-if you want to disable the default `Prelude` for every module by default, you
+If you want to disable the default `Prelude` for every module by default, you
 can specify this directly in your project `.cabal` file:
 
 ```haskell
@@ -309,14 +308,14 @@ default-extensions: NoImplicitPrelude
 
 Then you need to add `relude` as a dependency of your project.
 
-After doing all above, you can now use `Relude` in any module of your project by
+After doing all the above, you can now use `Relude` in any module of your project by
 adding a single import:
 
 ```haskell
 import Relude
 ```
 
-## Difference from Prelude
+## Differences from Prelude
 
 [[Back to the Table of Contents] ↑](#structure-of-this-tutorial)
 
@@ -370,12 +369,12 @@ warnings and hints on how to have more benefits from `relude`.
 
 Multiple sorting functions are available for different use-cases:
 
-  + `sortBy :: (a -> a -> Ordering) -> [a] -> [a]`: sorts a list using given
+  + `sortBy :: (a -> a -> Ordering) -> [a] -> [a]`: sorts a list using a given
     custom comparator.
   + `sortWith :: Ord b => (a -> b) -> [a] -> [a]`: sorts a list based on some
     property of its elements.
   + `sortOn :: Ord b => (a -> b) -> [a] -> [a]`: similar to `sortWith`, but more
-    time-efficient if function is calculated slowly (though less
+    time-efficient if the function is calculated slowly (though less
     space-efficient). So you should write `sortOn length` (would sort elements
     by length) but `sortWith fst` (would sort list of pairs by first element).
 
@@ -389,7 +388,7 @@ semantically equivalent:
 * `g $ f $ x`
 * `x & f & g`
 
-Some generally useful modules from `base` package are exported, e.g.
+Some generally useful modules from the `base` package are exported, e.g.
 `Control.Applicative`, `Data.Traversable`, `Data.Monoid`, `Data.List`,
 and many more.
 
@@ -405,12 +404,12 @@ type class with useful instances is exported.
 * `bimap` takes two functions and applies them to the first and second parts respectively.
 
 `trace`, `traceM`, `traceShow`, etc. are available by default. However, GHC will
-warn you if you accidentally leave them in code. Same goes for the `undefined`
+warn you if you accidentally leave them in the code. Same goes for the `undefined`
 function.
 
-We also have `data Undefined = Undefined` (which also comes with the warning).
+We have `data Undefined = Undefined` as well (which also comes with the warning).
 
-`relude` reexports `Exception` type from the `base` package and introduces the
+`relude` reexports the `Exception` type from the `base` package and introduces the
 `bug` function as an alternative to `error`. There is also a very convenient
 `Exc` pattern-synonym to handle exceptions of different types.
 
@@ -441,8 +440,7 @@ work with `Text` and `ByteString` — `readFileText`, `writeFileBS`, etc.
 `ByteString` as well as `String`.
 
 Also, `toText|toLText|toString` can convert `Text|LText|String` types to
-`Text|LText|String`. If you want to convert to and from `ByteString` use
-`encodeUtf8|decodeUtf8` functions.
+`Text|LText|String`. If you want to convert to and from `ByteString` use the `encodeUtf8|decodeUtf8` functions.
 
 ### transformers & mtl
 
@@ -457,13 +455,13 @@ All the main parts of the `deepseq` library are exported.
 For instance, if you want to force the deep evaluation of
 some value (in `IO`), you can write `evaluateNF a`.
 Additionally, the WHNF evaluation is possible
-with provided `evaluateWHNF`.
+with the provided `evaluateWHNF`.
 
 ## What's new?
 
 [[Back to the Table of Contents] ↑](#structure-of-this-tutorial)
 
-Finally, let's move to part describing the new cool features we bring with
+Finally, let's move to the part describing the new cool features we bring with
 `relude`.
 
 ### Available by default
@@ -476,8 +474,8 @@ Finally, let's move to part describing the new cool features we bring with
   init :: NonEmpty a -> [a]  -- the list without the last element
   ```
 
-  You can also still work with lists for these functions. Using `viaNonEmpty`
-  function you will get `Maybe a` from the list:
+  You can also still work with lists for these functions. Using the `viaNonEmpty`
+  function you will get a `Maybe a` from the list:
 
   ```haskell
   -- viaNonEmpty head :: [a] -> Maybe a
@@ -572,7 +570,7 @@ These extra modules include the following functionality:
   "foo"
   ```
 
-* `Foldable1` typeclass that contains generalized interface for folding
+* `Foldable1` type class that contains generalized interface for folding
   non-empty structures like `NonEmpty`.
 * [`StaticMap` and `DynamicMap` type classes](src/Relude/Extra/Map.hs) as a
   general interface for `Map`-like data structures.
@@ -594,9 +592,9 @@ instructions provided in the  [_Get Started_](#get-started) section.
 
 This section describes what you need to change to make your code compile with `relude`.
 
-1. Enable `-XOverloadedStrings` extension by default for your project.
+1. Enable the `-XOverloadedStrings` extension by default for your project.
 2. Since `head`, `tail`, `last` and `init` work for `NonEmpty` you should
-   refactor your code in one of the described below ways:
+   refactor your code in one of the described ways below:
    1. Change `[a]` to `NonEmpty a` where it makes sense.
    2. Use functions which return `Maybe`. There is the `viaNonEmpty` function for this.
       And you can use it like `viaNonEmpty last l`.
@@ -629,8 +627,7 @@ This section describes what you need to change to make your code compile with `r
    + Use `encodeUtf8/decodeUtf8` to convert to/from `ByteString`.
    + Use `(putStr[Ln]|readFile|writeFile|appendFile)[Text|LText|BS|LBS]` functions.
 
-6. Since `show` doesn't come from `Show` anymore, you need to export
-  `Text.Show` module if you want to implement `Show` instance manually. This can be done in the following way:
+6. Since `show` doesn't come from `Show` anymore, you need to export the `Text.Show` module if you want to implement the `Show` instance manually. This can be done in the following way:
 
   ```haskell
   import qualified Text.Show
@@ -703,12 +700,12 @@ alternative preludes. It's also relatively small, but:
    remove or change things there.
 5. `relude` has much better documentation:
     * [High-level overview of internal module structure](http://hackage.haskell.org/package/relude/docs/Relude.html)
-    * 100% Haddock coverage
+    * 100% Haddock coverage.
     * Every function has usage examples and all examples are tested with
       `doctest` (which also sometimes hard to do due to the multiple GHC
-      versions support, but we try really hard)
+      versions support, but we try really hard).
     * [Tutorial + migration guide](#structure-of-this-tutorial) from
-      `Prelude` and just general description of the whole package and libraries
+      `Prelude` and just the general description of the whole package and libraries
       it depends on.
 6. `relude` has less dependencies and is slightly lighter because of that but still
    is very powerful and useful.
@@ -755,7 +752,7 @@ See our blog post where we describe the details of the implementation for this s
 
 * [Dhall To HLint](https://kowainik.github.io/posts/2018-09-09-dhall-to-hlint)
 
-### Producing dependency graph
+### Producing the dependency graph
 
 Install `cabal-plan` first:
 
