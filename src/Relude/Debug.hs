@@ -48,6 +48,7 @@ module Relude.Debug
     , traceId
     , traceShow
     , traceShowId
+    , traceShowIdMsg
     , traceShowM
 
       -- * Imprecise error
@@ -120,6 +121,18 @@ traceShowId :: Show a => a -> a
 traceShowId = Debug.traceShowId
 {-# WARNING traceShowId "'traceShowId' remains in code" #-}
 
+{- | Like 'traceShowId', but allows you to specify a message (for tracing
+multiple values).
+
+>>> traceShowIdMsg "value:" (1+2+3, "hello" ++ "world")
+value: (6,"helloworld")
+(6,"helloworld")
+
+-}
+traceShowIdMsg :: Show a => String -> a -> a
+traceShowIdMsg msg v = Debug.trace (msg Prelude.++ " " Prelude.++ Prelude.show v) v
+{-# WARNING traceShowIdMsg "'traceShowIdMsg' remains in code" #-}
+
 {- | Version of 'Debug.Trace.traceM' that leaves warning.
 
 >>> :{
@@ -184,13 +197,13 @@ error handling mechanism.
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src\\Relude\\Debug.hs:218:11 in ...
+  error, called at src\\Relude\\Debug.hs:231:11 in ...
   ...
 #else
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src/Relude/Debug.hs:218:11 in ...
+  error, called at src/Relude/Debug.hs:231:11 in ...
 ...
 #endif
 
