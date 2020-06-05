@@ -125,6 +125,12 @@ traceShowId = Debug.traceShowId
 Like 'traceShowId', but uses a provided function to convert
 the argument to a value with the 'Show' constraint.
 
+>>> traceShowWith fst (1, "ABC")
+1
+(1,"ABC")
+
+Can be used on things which do not have `Show` instance too:
+
 >>> fst $ traceShowWith fst (1, id)
 1
 1
@@ -197,13 +203,13 @@ error handling mechanism.
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src\\Relude\\Debug.hs:231:11 in ...
+  error, called at src\\Relude\\Debug.hs:237:11 in ...
   ...
 #else
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src/Relude/Debug.hs:231:11 in ...
+  error, called at src/Relude/Debug.hs:237:11 in ...
 ...
 #endif
 
