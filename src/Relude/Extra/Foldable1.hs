@@ -5,6 +5,7 @@
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE ConstrainedClassMethods #-}
 
 {- |
 Copyright:  (c) 2011-2015 Edward Kmett
@@ -107,6 +108,20 @@ class Foldable f => Foldable1 f where
     minimum1 :: Ord a => f a -> a
     minimum1 = SG.getMin #. foldMap1 SG.Min
 
+    {- | The largest element of a non-empty data structure.
+
+    >>> maximumOn1 sin (32 :| [64, 8, 128, 16])
+    8.0
+    -}
+    maximumOn1 :: (Ord b, Foldable1 f) => (a -> b) -> f a -> a
+
+    {- | The smallest element of a non-empty data structure.
+
+    >>> minimumOn1 sin (32 :| [64, 8, 128, 16])
+    16.0
+    -}
+    minimumOn1 :: (Ord b, Foldable1 f) => (a -> b) -> f a -> a
+
 {- |
 
 @since 0.3.0
@@ -138,6 +153,22 @@ instance Foldable1 NonEmpty where
     minimum1 = foldl1' min
     {-# INLINE maximum1 #-}
     {-# INLINE minimum1 #-}
+
+    maximumOn1 :: Ord b => (a -> b) -> NonEmpty a -> a
+    maximumOn1 func = foldl1' (cmpOn func)
+      where
+        cmpOn p a b = case (p a) `compare` (p b) of
+                        GT -> a
+                        _ -> b
+    {-# INLINE maximumOn1 #-}
+
+    minimumOn1 :: Ord b => (a -> b) -> NonEmpty a -> a
+    minimumOn1 func = foldl1' (cmpOn func)
+      where
+        cmpOn p a b = case (p a) `compare` (p b) of
+                        LT -> a
+                        _ -> b
+    {-# INLINE minimumOn1 #-}
 
 {- |
 
@@ -172,6 +203,14 @@ instance Foldable1 Identity where
     minimum1 = coerce
     {-# INLINE minimum1 #-}
 
+    maximumOn1 :: Ord b => (a -> b) -> Identity a -> a
+    maximumOn1 = const coerce
+    {-# INLINE maximumOn1 #-}
+
+    minimumOn1 :: Ord b => (a -> b) -> Identity a -> a
+    minimumOn1 = const coerce
+    {-# INLINE minimumOn1 #-}
+
 {- |
 
 @since 0.3.0
@@ -200,6 +239,12 @@ instance Foldable1 ((,) c) where
     minimum1 = snd
     {-# INLINE maximum1 #-}
     {-# INLINE minimum1 #-}
+
+    maximumOn1, minimumOn1 :: Ord b => (a -> b) -> (c, a) -> a
+    maximumOn1 = const snd
+    minimumOn1 = const snd
+    {-# INLINE maximumOn1 #-}
+    {-# INLINE minimumOn1 #-}
 
 {- |
 
@@ -296,6 +341,12 @@ instance IsListError => Foldable1 [] where
 
     minimum1 :: Ord a => [a] -> a
     minimum1 _ = error "Unreachable list instance of Foldable1"
+    
+    maximumOn1 :: (Ord b, Foldable1 f) => (a -> b) -> f a -> a
+    maximumOn1 _ _ = error "Unreachable list instance of Foldable1"
+
+    minimumOn1 :: (Ord b, Foldable1 f) => (a -> b) -> f a -> a
+    minimumOn1 _ _ = error "Unreachable list instance of Foldable1"
 
 {- | Strictly folds non-empty structure with given function @f@:
 
