@@ -108,14 +108,16 @@ class Foldable f => Foldable1 f where
     minimum1 :: Ord a => f a -> a
     minimum1 = SG.getMin #. foldMap1 SG.Min
 
-    {- | The largest element of a non-empty data structure.
+    {- | The largest element of a non-empty data structure
+         with respect to the given comparison function.
 
     >>> maximumOn1 sin (32 :| [64, 8, 128, 16])
     8.0
     -}
     maximumOn1 :: (Ord b, Foldable1 f) => (a -> b) -> f a -> a
 
-    {- | The smallest element of a non-empty data structure.
+    {- | The smallest element of a non-empty data structure
+         with respect to the given comparison function.
 
     >>> minimumOn1 sin (32 :| [64, 8, 128, 16])
     16.0
@@ -157,17 +159,17 @@ instance Foldable1 NonEmpty where
     maximumOn1 :: Ord b => (a -> b) -> NonEmpty a -> a
     maximumOn1 func = foldl1' (cmpOn func)
       where
-        cmpOn p a b = case (p a) `compare` (p b) of
+        cmpOn p a b = case p a `compare` p b of
                         GT -> a
-                        _ -> b
+                        _  -> b
     {-# INLINE maximumOn1 #-}
 
     minimumOn1 :: Ord b => (a -> b) -> NonEmpty a -> a
     minimumOn1 func = foldl1' (cmpOn func)
       where
-        cmpOn p a b = case (p a) `compare` (p b) of
+        cmpOn p a b = case p a `compare` p b of
                         LT -> a
-                        _ -> b
+                        _  -> b
     {-# INLINE minimumOn1 #-}
 
 {- |
@@ -341,7 +343,7 @@ instance IsListError => Foldable1 [] where
 
     minimum1 :: Ord a => [a] -> a
     minimum1 _ = error "Unreachable list instance of Foldable1"
-    
+
     maximumOn1 :: (Ord b, Foldable1 f) => (a -> b) -> f a -> a
     maximumOn1 _ _ = error "Unreachable list instance of Foldable1"
 
