@@ -5,7 +5,6 @@
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE ConstrainedClassMethods #-}
 
 {- |
 Copyright:  (c) 2011-2015 Edward Kmett
@@ -114,7 +113,7 @@ class Foldable f => Foldable1 f where
     >>> maximumOn1 sin (32 :| [64, 8, 128, 16])
     8.0
     -}
-    maximumOn1 :: (Ord b, Foldable1 f) => (a -> b) -> f a -> a
+    maximumOn1 :: Ord b => (a -> b) -> f a -> a
 
     {- | The smallest element of a non-empty data structure
          with respect to the given comparison function.
@@ -122,7 +121,7 @@ class Foldable f => Foldable1 f where
     >>> minimumOn1 sin (32 :| [64, 8, 128, 16])
     16.0
     -}
-    minimumOn1 :: (Ord b, Foldable1 f) => (a -> b) -> f a -> a
+    minimumOn1 :: Ord b => (a -> b) -> f a -> a
 
 {- |
 
