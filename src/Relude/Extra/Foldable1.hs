@@ -46,7 +46,7 @@ import qualified Data.Semigroup as SG
 @since 0.3.0
 -}
 class Foldable f => Foldable1 f where
-    {-# MINIMAL foldMap1, maximumOn1, minimumOn1 #-}
+    {-# MINIMAL foldMap1 #-}
 
     {- | Map each element of the non-empty structure to a semigroup, and combine the results.
 
@@ -114,6 +114,7 @@ class Foldable f => Foldable1 f where
     8.0
     -}
     maximumOn1 :: Ord b => (a -> b) -> f a -> a
+    maximumOn1 f = maximumOn1 f . toNonEmpty
 
     {- | The smallest element of a non-empty data structure
          with respect to the given comparison function.
@@ -122,6 +123,7 @@ class Foldable f => Foldable1 f where
     16.0
     -}
     minimumOn1 :: Ord b => (a -> b) -> f a -> a
+    minimumOn1 f = minimumOn1 f . toNonEmpty
 
 {- |
 
