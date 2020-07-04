@@ -1,6 +1,5 @@
 {-# OPTIONS_GHC -Wno-redundant-constraints #-}
 
-{-# LANGUAGE CPP                  #-}
 {-# LANGUAGE ConstraintKinds      #-}
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE LambdaCase           #-}
@@ -8,10 +7,7 @@
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
-
-#if __GLASGOW_HASKELL__ > 802
 {-# LANGUAGE DerivingStrategies   #-}
-#endif
 
 {- |
 Copyright:  (c) 2014 Chris Allen, Edward Kmett
@@ -146,11 +142,7 @@ Failure ["Not enough RAM","Not enough CPUs"]
 data Validation e a
     = Failure e
     | Success a
-#if __GLASGOW_HASKELL__ > 802
     deriving stock (Eq, Ord, Show)
-#else
-    deriving (Eq, Ord, Show)
-#endif
 {-# DEPRECATED Validation "Use 'Validation' from 'validation-selective' instead"#-}
 
 instance Functor (Validation e) where
@@ -357,7 +349,6 @@ instance Bifunctor Validation where
     second g (Success a) = Success (g a)
     {-# INLINE second #-}
 
-#if MIN_VERSION_base(4,10,0)
 instance Bifoldable Validation where
     bifoldMap :: Monoid m => (e -> m) -> (a -> m) -> Validation e a -> m
     bifoldMap f _ (Failure e) = f e
@@ -370,7 +361,6 @@ instance Bitraversable Validation where
     bitraverse f _ (Failure e) = Failure <$> f e
     bitraverse _ g (Success a) = Success <$> g a
     {-# INLINE bitraverse #-}
-#endif
 
 {- | Transform a 'Validation' into an 'Either'.
 

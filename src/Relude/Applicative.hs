@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP  #-}
 {-# LANGUAGE Safe #-}
 
 {- |
@@ -21,9 +20,6 @@ module Relude.Applicative
     , Applicative (..)
     , Const (..)
     , ZipList (..)
-#if __GLASGOW_HASKELL__ < 802
-    , liftA2
-#endif
     , liftA3
     , optional
     , (<**>)

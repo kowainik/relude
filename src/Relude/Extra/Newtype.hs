@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP  #-}
 {-# LANGUAGE Safe #-}
 
 {- |
@@ -18,9 +17,7 @@ module Relude.Extra.Newtype
     , wrap
     , under
     , under2
-#if ( __GLASGOW_HASKELL__ != 802 )
     , underF2
-#endif
     , (#.)
     ) where
 
@@ -88,7 +85,6 @@ under2 :: forall n a . Coercible a n => (n -> n -> n) -> (a -> a -> a)
 under2 = coerce
 {-# INLINE under2 #-}
 
-#if ( __GLASGOW_HASKELL__ != 802 )
 {- | Version of 'under2' that works on @newtype@s parametrized by their
 representation. Provided for convenience.
 
@@ -102,7 +98,6 @@ representation. Provided for convenience.
 underF2 :: forall n a . Coercible a (n a) => (n a -> n a -> n a) -> (a -> a -> a)
 underF2 = coerce
 {-# INLINE underF2 #-}
-#endif
 
 {- | Coercible composition. This function allows to write more efficient
 implementations of function compositions over @newtypes@.

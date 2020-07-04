@@ -15,11 +15,9 @@ module Relude.Foldable.Reexport
     ( -- * @Foldable@ reexports
       module Data.Foldable
     , module Data.Traversable
-#if MIN_VERSION_base(4,10,0)
       -- * @Bi@ reexports
     , module Data.Bifoldable
     , module Data.Bitraversable
-#endif
     ) where
 
 import Data.Foldable (Foldable (fold, foldMap, foldl', foldr, length, null, toList), all, and, any,
@@ -29,9 +27,7 @@ import Data.Foldable (Foldable (fold, foldMap, foldl', foldr, length, null, toLi
 import Data.Foldable (foldMap')
 #endif
 import Data.Traversable (Traversable (..), forM, mapAccumL, mapAccumR)
-#if MIN_VERSION_base(4,10,0)
 import Data.Bifoldable (Bifoldable (..), biList, biall, biand, biany, biasum, bielem, bifind,
                         bifoldl', bifoldlM, bifoldr', bifoldrM, bifor_, bilength, binull, bior,
                         bisequence_, bitraverse_)
 import Data.Bitraversable (Bitraversable (..), bifoldMapDefault, bifor, bimapDefault, bisequence)
-#endif

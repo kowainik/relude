@@ -11,10 +11,7 @@
 {-# LANGUAGE TypeInType           #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
-
-#if __GLASGOW_HASKELL__ > 802
 {-# LANGUAGE DerivingStrategies   #-}
-#endif
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
@@ -203,13 +200,13 @@ error handling mechanism.
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src\\Relude\\Debug.hs:237:11 in ...
+  error, called at src\\Relude\\Debug.hs:234:11 in ...
   ...
 #else
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src/Relude/Debug.hs:237:11 in ...
+  error, called at src/Relude/Debug.hs:234:11 in ...
 ...
 #endif
 
@@ -257,11 +254,7 @@ type family CheckIsText (t :: Type) :: Constraint where
 
 -- | Similar to 'undefined' but data type.
 data Undefined = Undefined
-#if __GLASGOW_HASKELL__ > 802
     deriving stock (Eq, Ord, Show, Read, Enum, Bounded, Data, Typeable, Generic)
-#else
-    deriving (Eq, Ord, Show, Read, Enum, Bounded, Data, Typeable, Generic)
-#endif
 {-# WARNING Undefined "'Undefined' type remains in code" #-}
 
 -- | 'Prelude.undefined' that leaves warning in code on every usage.

@@ -1,4 +1,3 @@
-{-# LANGUAGE CPP         #-}
 {-# LANGUAGE Trustworthy #-}
 
 {- |
@@ -38,12 +37,7 @@ module Relude.Base
     , module GHC.Generics
     , module GHC.Show
 
--- * GHC-specific functionality
-#if MIN_VERSION_base(4,10,0)
     , module GHC.TypeNats
-#else
-    , module GHC.TypeLits
-#endif
 
     , module GHC.OverloadedLabels
     , module GHC.ExecutionStack
@@ -72,11 +66,7 @@ import GHC.Enum (Bounded (..), Enum (..), boundedEnumFrom, boundedEnumFromThen)
 import GHC.Generics (Generic)
 import GHC.Show (Show)
 
-#if MIN_VERSION_base(4,10,0)
 import GHC.TypeNats (CmpNat, KnownNat, Nat, SomeNat (..), natVal, someNatVal)
-#else
-import GHC.TypeLits (CmpNat, KnownNat, Nat, SomeNat (..), natVal, someNatVal)
-#endif
 
 import GHC.ExecutionStack (getStackTrace, showStackTrace)
 import GHC.OverloadedLabels (IsLabel (..))

@@ -1,12 +1,8 @@
-{-# LANGUAGE CPP                   #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Safe                  #-}
 {-# LANGUAGE ViewPatterns          #-}
-
-#if __GLASGOW_HASKELL__ > 802
 {-# LANGUAGE DerivingStrategies    #-}
-#endif
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
@@ -47,11 +43,7 @@ import qualified Control.Exception as E (displayException, throw, toException)
 not meant to be ever executed, but happens to be executed anyway.
 -}
 data Bug = Bug SomeException CallStack
-#if __GLASGOW_HASKELL__ > 802
     deriving stock (Show)
-#else
-    deriving (Show)
-#endif
 
 instance Exception Bug where
     displayException (Bug e cStack) = E.displayException e ++ "\n"

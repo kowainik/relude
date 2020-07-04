@@ -30,12 +30,7 @@ module Relude.Extra.Type
     ) where
 
 import Relude
-
-#if ( __GLASGOW_HASKELL__ >= 802 )
 import Type.Reflection (typeRep)
-#else
-import Data.Typeable (typeRep)
-#endif
 
 
 -- $setup
@@ -57,11 +52,7 @@ __NOTE:__ This must be used with __TypeApplications__ language extension.
 @since 0.4.0
 -}
 typeName :: forall a. Typeable a => Text
-#if ( __GLASGOW_HASKELL__ >= 802 )
 typeName = show (typeRep @a)
-#else
-typeName = show (typeRep (Proxy @a))
-#endif
 {-# INLINE typeName #-}
 
 {- | Concatenates type-level lists.
