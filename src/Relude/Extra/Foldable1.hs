@@ -46,7 +46,7 @@ import qualified Data.Semigroup as SG
 @since 0.3.0
 -}
 class Foldable f => Foldable1 f where
-    {-# MINIMAL foldMap1 #-}
+    {-# MINIMAL foldMap1, maximumOn1, minimumOn1 #-}
 
     {- | Map each element of the non-empty structure to a semigroup, and combine the results.
 
@@ -155,20 +155,22 @@ instance Foldable1 NonEmpty where
     {-# INLINE maximum1 #-}
     {-# INLINE minimum1 #-}
 
-    maximumOn1 :: Ord b => (a -> b) -> NonEmpty a -> a
-    maximumOn1 func = foldl1' (cmpOn func)
+    maximumOn1 :: forall a b. Ord b => (a -> b) -> NonEmpty a -> a
+    maximumOn1 func = foldl1' $ cmpOn
       where
-        cmpOn p a b = case p a `compare` p b of
+        cmpOn :: a -> a -> a
+        cmpOn a b = case func a `compare` func b of
                         GT -> a
-                        _  -> b
+                        _ -> b
     {-# INLINE maximumOn1 #-}
 
-    minimumOn1 :: Ord b => (a -> b) -> NonEmpty a -> a
-    minimumOn1 func = foldl1' (cmpOn func)
+    minimumOn1 :: forall a b. Ord b => (a -> b) -> NonEmpty a -> a
+    minimumOn1 func = foldl1' $ cmpOn
       where
-        cmpOn p a b = case p a `compare` p b of
+        cmpOn :: a -> a -> a
+        cmpOn a b = case func a `compare` func b of
                         LT -> a
-                        _  -> b
+                        _ -> b
     {-# INLINE minimumOn1 #-}
 
 {- |
