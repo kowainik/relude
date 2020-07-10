@@ -110,20 +110,22 @@ class Foldable f => Foldable1 f where
     {- | The largest element of a non-empty data structure
          with respect to the given comparison function.
 
-    >>> maximumOn1 sin (32 :| [64, 8, 128, 16])
-    8.0
+    >>> maximumOn1 abs (0 :| [2, 1, -3, -2])
+    -3
     -}
     maximumOn1 :: Ord b => (a -> b) -> f a -> a
     maximumOn1 f = maximumOn1 f . toNonEmpty
+    {-# INLINE maximumOn1 #-}
 
     {- | The smallest element of a non-empty data structure
          with respect to the given comparison function.
 
-    >>> minimumOn1 sin (32 :| [64, 8, 128, 16])
-    16.0
+    >>> minimumOn1 abs (0 :| [2, 1, -3, -2])
+    0
     -}
     minimumOn1 :: Ord b => (a -> b) -> f a -> a
     minimumOn1 f = minimumOn1 f . toNonEmpty
+    {-# INLINE minimumOn1 #-}
 
 {- |
 
