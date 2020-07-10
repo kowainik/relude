@@ -3053,6 +3053,11 @@
     note: "If you import 'getLine' from Relude, it's already lifted"
     rhs: getLine
 - warn:
+    lhs: "(liftIO (hFlush x))"
+    name: "'liftIO' is not needed"
+    note: "If you import 'hFlush' from Relude, it's already lifted"
+    rhs: hFlush
+- warn:
     lhs: "(liftIO (print x))"
     name: "'liftIO' is not needed"
     note: "If you import 'print' from Relude, it's already lifted"

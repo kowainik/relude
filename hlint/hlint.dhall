@@ -897,6 +897,7 @@ in [ Rule.Arguments { arguments =
    , warnLifted "atomicWriteIORef" "x y"
    -- Terminal
    , warnLifted "getLine" ""
+   , warnLifted "hFlush" "x"
    , warnLifted "print" "x"
    , warnLifted "putStr" "x"
    , warnLifted "putStrLn" "x"

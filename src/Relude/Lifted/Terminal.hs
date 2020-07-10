@@ -17,6 +17,7 @@ module Relude.Lifted.Terminal
     , print
     , putStr
     , putStrLn
+    , hFlush
     ) where
 
 import Relude.Base (IO, Show)
@@ -25,7 +26,7 @@ import Relude.Monad.Reexport (MonadIO (..))
 import Relude.String.Reexport (String, Text)
 
 import qualified Data.Text.IO as TIO
-import qualified System.IO as IO (print, putStr, putStrLn)
+import qualified System.IO as IO (print, putStr, putStrLn, hFlush, Handle)
 
 
 -- | Lifted version of 'Data.Text.getLine'.
@@ -51,3 +52,9 @@ putStrLn :: MonadIO m => String -> m ()
 putStrLn = liftIO . IO.putStrLn
 {-# SPECIALIZE putStrLn :: String -> IO () #-}
 {-# INLINE putStrLn #-}
+
+-- | Lifted version of 'IO.hFlush'.
+hFlush :: MonadIO m => IO.Handle -> m ()
+hFlush = liftIO . IO.hFlush
+{-# SPECIALIZE hFlush :: IO.Handle -> IO () #-}
+{-# INLINE hFlush #-}
