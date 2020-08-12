@@ -47,8 +47,8 @@ average :: (Foldable f, Fractional a) => f a -> Maybe a
 average xs
     | null xs = Nothing
     | otherwise = Just 
-                    . uncurry (/) 
-                    . foldl' (\(!total, !count) x -> (total + x, count + 1)) (0,0) 
-                    $ xs
+        . uncurry (/) 
+        . foldl' (\(!total, !count) x -> (total + x, count + 1)) (0,0) 
+        $ xs
 {-# INLINE average #-}
 
