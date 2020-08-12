@@ -42,6 +42,10 @@ foldlSC f = flip $ foldr go id
 {-# INLINE foldlSC #-}
 
 {- | Compute average of 'Foldable'
+>>> average1 ([1,2,3,4])
+2.5
+
+@since 0.8.0.0
 -}
 average :: forall a f . (Foldable f, Fractional a) => f a -> Maybe a
 average xs
