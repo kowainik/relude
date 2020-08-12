@@ -41,14 +41,14 @@ foldlSC f = flip $ foldr go id
         Right r -> k r
 {-# INLINE foldlSC #-}
 
-{- | Compute average of 'Foldable' 
+{- | Compute average of 'Foldable'
 -}
 average :: (Foldable f, Fractional a) => f a -> Maybe a
 average xs
     | null xs = Nothing
-    | otherwise = Just 
-        . uncurry (/) 
-        . foldl' (\(!total, !count) x -> (total + x, count + 1)) (0,0) 
+    | otherwise = Just
+        . uncurry (/)
+        . foldl' (\(!total, !count) x -> (total + x, count + 1)) (0,0)
         $ xs
 {-# INLINE average #-}
 

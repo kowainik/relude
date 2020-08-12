@@ -373,7 +373,7 @@ foldl1' _ (x :| [])     = x
 foldl1' f (x :| (y:ys)) = foldl' f (f x y) ys
 {-# INLINE foldl1' #-}
 
-{- | Compute average of 'Foldable1' 
+{- | Compute average of 'Foldable1'
 -}
 average1 :: (Foldable1 f, Fractional a) => f a -> a
 average1 = uncurry (/) . foldl' (\(!total, !count) x -> (total + x, count + 1)) (0,0)
