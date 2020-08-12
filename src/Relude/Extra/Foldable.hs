@@ -1,4 +1,5 @@
 {-# LANGUAGE Safe #-}
+{-# LANGUAGE BangPatterns #-}
 
 {- |
 Copyright:  (c) 2018-2020 Kowainik
@@ -14,6 +15,7 @@ Contains utility functions for working with tuples.
 
 module Relude.Extra.Foldable
     ( foldlSC
+    , average
     ) where
 
 import Relude
@@ -38,3 +40,15 @@ foldlSC f = flip $ foldr go id
         Left l  -> l
         Right r -> k r
 {-# INLINE foldlSC #-}
+
+{- | Compute average of 'Foldable' 
+-}
+average :: (Foldable f, Fractional a) => f a -> Maybe a
+average xs
+    | null xs = Nothing
+    | otherwise = Just 
+                    . uncurry (/) 
+                    . foldl' (\(!total, !count) x -> (total + x, count + 1)) (0,0) 
+                    $ xs
+{-# INLINE average #-}
+

@@ -5,6 +5,7 @@
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE BangPatterns         #-}
 
 {- |
 Copyright:  (c) 2011-2015 Edward Kmett
@@ -26,6 +27,7 @@ contradiction with 'Data.Foldable.Foldable'.
 module Relude.Extra.Foldable1
     ( Foldable1 (..)
     , foldl1'
+    , average1
     ) where
 
 import Relude hiding (Product (..), Sum (..))
@@ -370,3 +372,10 @@ foldl1' :: (a -> a -> a) -> NonEmpty a -> a
 foldl1' _ (x :| [])     = x
 foldl1' f (x :| (y:ys)) = foldl' f (f x y) ys
 {-# INLINE foldl1' #-}
+
+{- | Compute average of 'Foldable1' 
+-}
+average1 :: (Foldable1 f, Fractional a) => f a -> a
+average1 = uncurry (/) . foldl' (\(!total, !count) x -> (total + x, count + 1)) (0,0) 
+{-# INLINE average1 #-}
+
