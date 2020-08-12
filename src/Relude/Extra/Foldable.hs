@@ -43,7 +43,7 @@ foldlSC f = flip $ foldr go id
 
 {- | Compute average of 'Foldable'
 -}
-average :: (Foldable f, Fractional a) => f a -> Maybe a
+average :: forall a f . (Foldable f, Fractional a) => f a -> Maybe a
 average xs
     | null xs = Nothing
     | otherwise = Just
@@ -51,4 +51,3 @@ average xs
         . foldl' (\(!total, !count) x -> (total + x, count + 1)) (0,0)
         $ xs
 {-# INLINE average #-}
-
