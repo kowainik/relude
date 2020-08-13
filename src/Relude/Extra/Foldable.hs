@@ -42,8 +42,8 @@ foldlSC f = flip $ foldr go id
 {-# INLINE foldlSC #-}
 
 {- | Compute average of 'Foldable'
->>> average1 ([1,2,3,4])
-2.5
+>>> average [1,2,3,4]
+Just 2.5
 
 @since 0.8.0.0
 -}
