@@ -69,6 +69,17 @@ class Foldable f => Foldable1 f where
     fold1 :: Semigroup m => f m -> m
     fold1 = foldMap1 id
 
+    {- | Combines the elements of a non-empty structure using a binary function @f@.
+
+    >>> foldr1 (+) 0 (1 :| [2, 3])
+    6
+    >>> foldr1 (+) 1 $ Identity 3
+    4
+    -}
+    foldr1 :: (a -> b -> b) -> b -> f a -> b
+    foldr1 f accum as = appEndo (foldMap1 (Endo #. f) as) accum
+    {-# INLINE foldr1 #-}
+
     {- | Convert a non-empty data structure to a NonEmpty list.
 
     >>> toNonEmpty (Identity 2)
@@ -332,6 +343,9 @@ In case it is used by mistake, the user will see the following:
 instance IsListError => Foldable1 [] where
     foldMap1 :: Semigroup m => (a -> m) -> [a] -> m
     foldMap1 _ _ = error "Unreachable list instance of Foldable1"
+
+    foldr1 :: (Foldable1 f) => (a -> b -> b) -> b -> f a -> b
+    foldr1 _ _ = error "Unreachable list instance of Foldable1"
 
     fold1 :: Semigroup m => [m] -> m
     fold1 _ = error "Unreachable list instance of Foldable1"
