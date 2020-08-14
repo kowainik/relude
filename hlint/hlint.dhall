@@ -908,6 +908,9 @@ in [ Rule.Arguments { arguments =
    , warnLifted "putBSLn" "x"
    , warnLifted "putLBS" "x"
    , warnLifted "putLBSLn" "x"
+   -- Env
+   , warnLifted "getArgs" ""
+   , warnLifted "lookupEnv" "x"
 
    ------------
    -- Extra
