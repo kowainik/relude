@@ -270,13 +270,6 @@ every module in your package by modifying your "Prelude" file:
 +------------------------------+-----------------------------------------------------------+
 | __"Relude.Extra.Type"__      | Functions for inspecting and working with types.          |
 +------------------------------+-----------------------------------------------------------+
-| __"Relude.Extra.Validation"__| 'Relude.Extra.Validation.Validation' data type.           |
-|                              |                                                           |
-|                              | __⚠️ Warning ⚠️__                                         |
-|                              | "Relude.Extra.Validation" is deprecated in favour of      |
-|                              | @validation-selective@:                                   |
-|                              | <https://hackage.haskell.org/package/validation-selective>|
-+------------------------------+-----------------------------------------------------------+
 | __"Relude.Unsafe"__          | Unsafe partial functions (produce 'error') for lists and  |
 |                              | 'Maybe'.                                                  |
 +------------------------------+-----------------------------------------------------------+
