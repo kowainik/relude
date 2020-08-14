@@ -908,6 +908,11 @@ in [ Rule.Arguments { arguments =
    , warnLifted "putBSLn" "x"
    , warnLifted "putLBS" "x"
    , warnLifted "putLBSLn" "x"
+   -- Handle
+   , warnLifted "hFlush" "x"
+   , warnLifted "hIsEOF" "x"
+   , warnLifted "hSetBuffering" "x y"
+   , warnLifted "hGetBuffering" "x"
 
    ------------
    -- Extra
