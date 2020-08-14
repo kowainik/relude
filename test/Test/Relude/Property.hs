@@ -8,7 +8,6 @@ import Data.List (nub)
 import Hedgehog (Group (..), Property, assert, forAll, property, (===))
 
 import Test.Relude.Container.One (oneProps)
-import Test.Relude.Extra.Validation.Property (validationLaws)
 import Test.Relude.Gen (genBoolList, genIntList, genUtf8ByteString, genUtf8String, genUtf8Text)
 
 
@@ -18,7 +17,7 @@ hedgehogTestList =
     , listProps
     , logicProps
     , oneProps
-    ] <> validationLaws
+    ]
 
 ----------------------------------------------------------------------------
 -- utf8 conversion
