@@ -1814,7 +1814,7 @@
     lhs: Data.Function.on
     name: "Use 'on' from Relude"
     note: "'on' is already exported from Relude"
-    rhs: "on"
+    rhs: on
 - warn:
     lhs: Data.Bifunctor.Bifunctor
     name: "Use 'Bifunctor' from Relude"
@@ -3107,6 +3107,26 @@
     name: "'liftIO' is not needed"
     note: "If you import 'putLBSLn' from Relude, it's already lifted"
     rhs: putLBSLn
+- warn:
+    lhs: "(liftIO (hFlush x))"
+    name: "'liftIO' is not needed"
+    note: "If you import 'hFlush' from Relude, it's already lifted"
+    rhs: hFlush
+- warn:
+    lhs: "(liftIO (hIsEOF x))"
+    name: "'liftIO' is not needed"
+    note: "If you import 'hIsEOF' from Relude, it's already lifted"
+    rhs: hIsEOF
+- warn:
+    lhs: "(liftIO (hSetBuffering x y))"
+    name: "'liftIO' is not needed"
+    note: "If you import 'hSetBuffering' from Relude, it's already lifted"
+    rhs: hSetBuffering
+- warn:
+    lhs: "(liftIO (hGetBuffering x))"
+    name: "'liftIO' is not needed"
+    note: "If you import 'hGetBuffering' from Relude, it's already lifted"
+    rhs: hGetBuffering
 - hint:
     lhs: "fmap (bimap f g)"
     note: "Use `bimapF` from `Relude.Extra.Bifunctor`"

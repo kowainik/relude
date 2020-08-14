@@ -72,6 +72,8 @@ module Relude.Lifted
       -- $file
     , module Relude.Lifted.Terminal
       -- $terminal
+    , module Relude.Lifted.Handle
+      -- $handle
     ) where
 
 import Relude.Lifted.Concurrent
@@ -79,6 +81,7 @@ import Relude.Lifted.Exit
 import Relude.Lifted.File
 import Relude.Lifted.IORef
 import Relude.Lifted.Terminal
+import Relude.Lifted.Handle
 
 {- $concurrent
 Lifted 'MVar' and 'STM' functions.
@@ -94,4 +97,7 @@ Lifted reexports from "Data.IORef" module.
 -}
 {- $terminal
 Lifted functions to work with stdin and stdout.
+-}
+{- $handle
+Lifted functions to work with IO Handles.
 -}
