@@ -18,6 +18,7 @@ module Relude.List
     , module Relude.List.NonEmpty
       -- $nonempty
     , (!!?)
+    , partitionWith
     ) where
 
 
@@ -65,16 +66,19 @@ infix 9 !!?
 {- | Partitions a list based on the result of function which produces an Either value. List of all elements producing Left are extracted, in order, to the first element of the output tuple. Similarly, a list of all elements producing Right are extracted to the second element of output.
 
 >>> :{
- foo x
-   | even x = Left x
-   | otherwise = Right x
+ divideEvenOrShow :: Int -> Either Int String
+ divideEvenOrShow n
+     | even n = Left $ n `div` 2
+     | otherwise = Right $ "Odd: " <> show n
  :}
 
->>> partitionWith foo [1 .. 10]
-([2,4,6,8,10],[1,3,5,7,9])
+>>> partitionWith divideEvenOrShow [1 .. 6]
+([1,2,3],["Odd: 1","Odd: 3","Odd: 5"])
+
+@since 0.8.0.0
 -}
 partitionWith :: (a -> Either b c) -> [a] -> ([b], [c])
-partitionWith = (partitionEithers .) . map
+partitionWith f = partitionEithers . map f
 {-# INLINE partitionWith #-}
 
 {- $reexport
