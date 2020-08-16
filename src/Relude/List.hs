@@ -18,6 +18,7 @@ module Relude.List
     , module Relude.List.NonEmpty
       -- $nonempty
     , (!!?)
+    , partitionWith
     ) where
 
 
@@ -25,8 +26,9 @@ import Relude.Base ((<))
 import Relude.Bool (otherwise)
 import Relude.List.NonEmpty
 import Relude.List.Reexport
-import Relude.Monad (Maybe (..))
+import Relude.Monad (Maybe (..), partitionEithers, Either)
 import Relude.Numeric (Int, (-))
+import Relude.Function ((.))
 
 
 -- $setup
@@ -60,6 +62,24 @@ infix 9 !!?
     go j (_:ys) = go (j - 1) ys
     go _ []     = Nothing
 {-# INLINE (!!?) #-}
+
+{- | Partitions a list based on the result of function which produces an Either value. List of all elements producing Left are extracted, in order, to the first element of the output tuple. Similarly, a list of all elements producing Right are extracted to the second element of output.
+
+>>> :{
+ divideEvenOrShow :: Int -> Either Int String
+ divideEvenOrShow n
+     | even n = Left $ n `div` 2
+     | otherwise = Right $ "Odd: " <> show n
+ :}
+
+>>> partitionWith divideEvenOrShow [1 .. 6]
+([1,2,3],["Odd: 1","Odd: 3","Odd: 5"])
+
+@since 0.8.0.0
+-}
+partitionWith :: (a -> Either b c) -> [a] -> ([b], [c])
+partitionWith f = partitionEithers . map f
+{-# INLINE partitionWith #-}
 
 {- $reexport
 Most of the "Data.List" types and function.
