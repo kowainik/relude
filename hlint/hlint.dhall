@@ -447,16 +447,11 @@ in [ Rule.Arguments { arguments =
    , warnReexport "byteSwap32" "Data.Word"
    , warnReexport "byteSwap64" "Data.Word"
    , warnReexport "Natural" "Numeric.Natural"
-   , warnReexport "Handle"        "System.IO"
    , warnReexport "IOMode"        "System.IO"
    , warnReexport "ReadMode"      "System.IO"
    , warnReexport "WriteMode"     "System.IO"
    , warnReexport "AppendMode"    "System.IO"
    , warnReexport "ReadWriteMode" "System.IO"
-   , warnReexport "stderr"        "System.IO"
-   , warnReexport "stdin"         "System.IO"
-   , warnReexport "stdout"        "System.IO"
-   , warnReexport "withFile"      "System.IO"
    , warnReexport "Down"      "Data.Ord"
    , warnReexport "comparing" "Data.Ord"
    , warnReexport "Coercible" "Data.Coerce"
@@ -690,6 +685,16 @@ in [ Rule.Arguments { arguments =
    , warnSimple "atomicModifyIORef' ref (\\a -> (f a, ()))" "atomicModifyIORef'_ ref f"
    -- Lifted Terminal
    , warnReexport "getLine"    "Data.Text.IO"
+   -- Lifted Handle
+   , warnReexport "hFlush"        "System.IO"
+   , warnReexport "hIsEOF"        "System.IO"
+   , warnReexport "hSetBuffering" "System.IO"
+   , warnReexport "hGetBuffering" "System.IO"
+   , warnReexport "Handle"        "System.IO"
+   , warnReexport "stdin"         "System.IO"
+   , warnReexport "stdout"        "System.IO"
+   , warnReexport "stderr"        "System.IO"
+   , warnReexport "withFile"      "System.IO"
 
    -- List
    , warnReexport "genericDrop"      "Data.List"
