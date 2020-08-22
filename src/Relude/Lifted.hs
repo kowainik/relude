@@ -99,5 +99,5 @@ Lifted reexports from "Data.IORef" module.
 Lifted functions to work with stdin and stdout.
 -}
 {- $env
-Lifted functions to work with system enviroment.
+Lifted functions to work with system environment.
 -}

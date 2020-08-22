@@ -1,11 +1,11 @@
 {- |
-Copyright:  (c) 2018-2020 Kowainik
+Copyright:  (c) 2020 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
 Portability: Portable
 
-Lifted functions to work with system enviroment.
+Lifted functions to work with system environment.
 
 @since 0.8.0.0
 -}

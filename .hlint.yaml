@@ -1814,7 +1814,7 @@
     lhs: Data.Function.on
     name: "Use 'on' from Relude"
     note: "'on' is already exported from Relude"
-    rhs: on
+    rhs: "on"
 - warn:
     lhs: Data.Bifunctor.Bifunctor
     name: "Use 'Bifunctor' from Relude"
@@ -2107,6 +2107,16 @@
     name: "Use 'getLine' from Relude"
     note: "'getLine' is already exported from Relude"
     rhs: getLine
+- warn:
+    lhs: System.Environment.getArgs
+    name: "Use 'getArgs' from Relude"
+    note: "'getArgs' is already exported from Relude"
+    rhs: getArgs
+- warn:
+    lhs: System.Environment.lookupEnv
+    name: "Use 'lookupEnv' from Relude"
+    note: "'lookupEnv' is already exported from Relude"
+    rhs: lookupEnv
 - warn:
     lhs: Data.List.genericDrop
     name: "Use 'genericDrop' from Relude"
