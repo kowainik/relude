@@ -690,6 +690,9 @@ in [ Rule.Arguments { arguments =
    , warnSimple "atomicModifyIORef' ref (\\a -> (f a, ()))" "atomicModifyIORef'_ ref f"
    -- Lifted Terminal
    , warnReexport "getLine"    "Data.Text.IO"
+   -- Lifted Env
+   , warnReexport "getArgs"    "System.Environment"
+   , warnReexport "lookupEnv"  "System.Environment"
 
    -- List
    , warnReexport "genericDrop"      "Data.List"
@@ -908,6 +911,9 @@ in [ Rule.Arguments { arguments =
    , warnLifted "putBSLn" "x"
    , warnLifted "putLBS" "x"
    , warnLifted "putLBSLn" "x"
+   -- Env
+   , warnLifted "getArgs" ""
+   , warnLifted "lookupEnv" "x"
 
    ------------
    -- Extra
