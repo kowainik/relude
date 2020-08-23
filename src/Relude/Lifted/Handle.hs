@@ -5,7 +5,7 @@ Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
 Portability: Portable
 
-Lifted functions to with IO Handles.
+Lifted functions to with 'Relude.Base.IO' 'Handle's.
 
 @since 0.8.0.0
 -}
@@ -15,7 +15,12 @@ module Relude.Lifted.Handle
     , hIsEOF
     , hSetBuffering
     , hGetBuffering
-    , module System.IO
+    , Handle
+    , stdin
+    , stdout
+    , stderr
+    , withFile
+    , BufferMode (..)
     ) where
 
 import Relude.Base (IO)
@@ -23,7 +28,7 @@ import Relude.Function ((.))
 import Relude.Bool (Bool (..))
 import Relude.Monad.Reexport (MonadIO (..))
 import qualified System.IO as IO (Handle, hFlush, hIsEOF, hSetBuffering, hGetBuffering, BufferMode)
-import System.IO (Handle, stdin, stdout, stderr, withFile)
+import System.IO (Handle, stdin, stdout, stderr, withFile, BufferMode (..))
 
 {- | Lifted version of 'IO.hFlush'.
 
@@ -48,7 +53,7 @@ hIsEOF = liftIO . IO.hIsEOF
 @since 0.8.0.0
 -}
 hSetBuffering :: MonadIO m => IO.Handle -> IO.BufferMode -> m ()
-hSetBuffering = (liftIO .) . IO.hSetBuffering
+hSetBuffering h = liftIO . IO.hSetBuffering h
 {-# SPECIALIZE hSetBuffering :: IO.Handle -> IO.BufferMode -> IO () #-}
 {-# INLINE hSetBuffering #-}
 

@@ -695,6 +695,7 @@ in [ Rule.Arguments { arguments =
    , warnReexport "stdout"        "System.IO"
    , warnReexport "stderr"        "System.IO"
    , warnReexport "withFile"      "System.IO"
+   , warnReexport "BufferMode"    "System.IO"
 
    -- List
    , warnReexport "genericDrop"      "Data.List"
