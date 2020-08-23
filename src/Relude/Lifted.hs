@@ -74,6 +74,8 @@ module Relude.Lifted
       -- $terminal
     , module Relude.Lifted.Handle
       -- $handle
+    , module Relude.Lifted.Env
+      -- $env
     ) where
 
 import Relude.Lifted.Concurrent
@@ -82,6 +84,7 @@ import Relude.Lifted.File
 import Relude.Lifted.IORef
 import Relude.Lifted.Terminal
 import Relude.Lifted.Handle
+import Relude.Lifted.Env
 
 {- $concurrent
 Lifted 'MVar' and 'STM' functions.
@@ -100,4 +103,7 @@ Lifted functions to work with stdin and stdout.
 -}
 {- $handle
 Lifted functions to work with IO Handles.
+-}
+{- $env
+Lifted functions to work with system environment.
 -}

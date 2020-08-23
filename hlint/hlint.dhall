@@ -696,6 +696,9 @@ in [ Rule.Arguments { arguments =
    , warnReexport "stderr"        "System.IO"
    , warnReexport "withFile"      "System.IO"
    , warnReexport "BufferMode"    "System.IO"
+   -- Lifted Env
+   , warnReexport "getArgs"    "System.Environment"
+   , warnReexport "lookupEnv"  "System.Environment"
 
    -- List
    , warnReexport "genericDrop"      "Data.List"
@@ -919,6 +922,9 @@ in [ Rule.Arguments { arguments =
    , warnLifted "hIsEOF" "x"
    , warnLifted "hSetBuffering" "x y"
    , warnLifted "hGetBuffering" "x"
+   -- Env
+   , warnLifted "getArgs" ""
+   , warnLifted "lookupEnv" "x"
 
    ------------
    -- Extra

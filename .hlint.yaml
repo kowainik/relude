@@ -2133,6 +2133,16 @@
     note: "'BufferMode' is already exported from Relude"
     rhs: BufferMode
 - warn:
+    lhs: System.Environment.getArgs
+    name: "Use 'getArgs' from Relude"
+    note: "'getArgs' is already exported from Relude"
+    rhs: getArgs
+- warn:
+    lhs: System.Environment.lookupEnv
+    name: "Use 'lookupEnv' from Relude"
+    note: "'lookupEnv' is already exported from Relude"
+    rhs: lookupEnv
+- warn:
     lhs: Data.List.genericDrop
     name: "Use 'genericDrop' from Relude"
     note: "'genericDrop' is already exported from Relude"
@@ -3152,6 +3162,16 @@
     name: "'liftIO' is not needed"
     note: "If you import 'hGetBuffering' from Relude, it's already lifted"
     rhs: hGetBuffering
+- warn:
+    lhs: "(liftIO (getArgs ))"
+    name: "'liftIO' is not needed"
+    note: "If you import 'getArgs' from Relude, it's already lifted"
+    rhs: getArgs
+- warn:
+    lhs: "(liftIO (lookupEnv x))"
+    name: "'liftIO' is not needed"
+    note: "If you import 'lookupEnv' from Relude, it's already lifted"
+    rhs: lookupEnv
 - hint:
     lhs: "fmap (bimap f g)"
     note: "Use `bimapF` from `Relude.Extra.Bifunctor`"

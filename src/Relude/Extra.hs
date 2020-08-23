@@ -33,8 +33,6 @@ module Relude.Extra
       -- $Tuple
     , module Relude.Extra.Type
       -- $Type
-    , module Relude.Extra.Validation
-      -- $Validation
     ) where
 
 import Relude.Extra.Bifunctor
@@ -48,7 +46,6 @@ import Relude.Extra.Map
 import Relude.Extra.Newtype
 import Relude.Extra.Tuple
 import Relude.Extra.Type
-import Relude.Extra.Validation
 
 {- $Bifunctor
 Additional combinators for 'Relude.Bifunctor'.
@@ -96,12 +93,4 @@ Functions for working with tuples.
 
 {- $Type
 Functions for inspecting and working with types.
--}
-
-{- $Validation
-'Validation' data type.
-
-__⚠️ Warning ⚠️__
-"Relude.Extra.Validation" is deprecated in favour
-of [validation-selective](https://hackage.haskell.org/package/validation-selective).
 -}
