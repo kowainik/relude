@@ -254,6 +254,13 @@ easiest way to bring all functions and types from `relude` to your project
                  )
 ```
 
+> **NOTE:** due to the existing [stack issue](https://github.com/commercialhaskell/stack/issues/5077),
+> `mixins` technique doesn't work with the `stack repl` at the moment. Please,
+> consider this before using this method of turning `relude` on in the project.
+>
+> If having `stack repl` crucial for your workflow, see the following options of
+> how to use Relude in your project.
+
 ### base-noprelude
 
 [[Back to the Table of Contents] ↑](#structure-of-this-tutorial)
