@@ -164,6 +164,7 @@ library
                                Relude.Lifted.File
                                Relude.Lifted.IORef
                                Relude.Lifted.Terminal
+                               Relude.Lifted.Env
                            Relude.List
                                Relude.List.NonEmpty
                                Relude.List.Reexport
@@ -193,7 +194,6 @@ library
                                Relude.Extra.Newtype
                                Relude.Extra.Tuple
                                Relude.Extra.Type
-                               Relude.Extra.Validation
                            Relude.Unsafe
 
 
@@ -218,7 +218,6 @@ test-suite relude-test
   other-modules:       Test.Relude.Gen
                        Test.Relude.Container.One
                        Test.Relude.Property
-                       Test.Relude.Extra.Validation.Property
   build-depends:       relude
                      , bytestring
                      , containers
