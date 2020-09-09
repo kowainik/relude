@@ -3,6 +3,9 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
+## 0.X.0
+
+* Add `inifinitely` as more strictly typed `forever`.
 
 ## 0.7.0.0 — May 14, 2020
 
