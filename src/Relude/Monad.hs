@@ -53,7 +53,7 @@ chainedTo = (=<<)
 {- | Repeat a monadic action indefinitely.
 
 This is a more type safe version of 'forever', which has a convinient
-but unsafe type. 
+but unsafe type.
 
 Consider the following two expressions that try to launch a permanently
 running side thread:
@@ -75,11 +75,11 @@ bar = async . forever $ do ...
 @
 
 Both of these are well typed but 'foo' has a serious mistake which
-is not caught by the type system. In contrast, using 'infinitely' 
+is not caught by the type system. In contrast, using 'infinitely'
 instead of 'forever' in 'foo' is a type error.
 
 
-@since 0.X.0 
+@since 0.X.0
 -}
 infinitely :: Applicative f => f a -> f Void
 infinitely = forever
