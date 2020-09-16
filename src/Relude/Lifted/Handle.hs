@@ -5,7 +5,7 @@ Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
 Portability: Portable
 
-Lifted functions to with 'Relude.Base.IO' 'Handle's.
+Lifted functions to work with 'IO' 'Handle's.
 
 @since 0.8.0.0
 -}

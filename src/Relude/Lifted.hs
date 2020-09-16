@@ -102,7 +102,7 @@ Lifted reexports from "Data.IORef" module.
 Lifted functions to work with stdin and stdout.
 -}
 {- $handle
-Lifted functions to work with IO Handles.
+Lifted functions to work with 'Relude.Base.IO' 'Handle's.
 -}
 {- $env
 Lifted functions to work with system environment.
