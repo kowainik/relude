@@ -1789,7 +1789,7 @@
     lhs: Data.Function.on
     name: "Use 'on' from Relude"
     note: "'on' is already exported from Relude"
-    rhs: on
+    rhs: "on"
 - warn:
     lhs: Data.Bifunctor.Bifunctor
     name: "Use 'Bifunctor' from Relude"
