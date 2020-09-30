@@ -164,6 +164,7 @@ library
                                Relude.Lifted.File
                                Relude.Lifted.IORef
                                Relude.Lifted.Terminal
+                               Relude.Lifted.Handle
                                Relude.Lifted.Env
                            Relude.List
                                Relude.List.NonEmpty

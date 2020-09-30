@@ -72,6 +72,8 @@ module Relude.Lifted
       -- $file
     , module Relude.Lifted.Terminal
       -- $terminal
+    , module Relude.Lifted.Handle
+      -- $handle
     , module Relude.Lifted.Env
       -- $env
     ) where
@@ -81,6 +83,7 @@ import Relude.Lifted.Exit
 import Relude.Lifted.File
 import Relude.Lifted.IORef
 import Relude.Lifted.Terminal
+import Relude.Lifted.Handle
 import Relude.Lifted.Env
 
 {- $concurrent
@@ -97,6 +100,9 @@ Lifted reexports from "Data.IORef" module.
 -}
 {- $terminal
 Lifted functions to work with stdin and stdout.
+-}
+{- $handle
+Lifted functions to work with 'Relude.Base.IO' 'Handle's.
 -}
 {- $env
 Lifted functions to work with system environment.

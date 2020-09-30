@@ -54,7 +54,7 @@ module Relude.Base
 import Data.Char (Char, chr)
 
 -- IO
-import System.IO (FilePath, Handle, IO, IOMode (..), stderr, stdin, stdout, withFile)
+import System.IO (FilePath, IO, IOMode (..))
 
 -- Base typeclasses
 import Data.Eq (Eq (..))

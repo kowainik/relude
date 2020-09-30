@@ -1131,11 +1131,6 @@
     note: "'Natural' is already exported from Relude"
     rhs: Natural
 - warn:
-    lhs: System.IO.Handle
-    name: "Use 'Handle' from Relude"
-    note: "'Handle' is already exported from Relude"
-    rhs: Handle
-- warn:
     lhs: System.IO.IOMode
     name: "Use 'IOMode' from Relude"
     note: "'IOMode' is already exported from Relude"
@@ -1160,26 +1155,6 @@
     name: "Use 'ReadWriteMode' from Relude"
     note: "'ReadWriteMode' is already exported from Relude"
     rhs: ReadWriteMode
-- warn:
-    lhs: System.IO.stderr
-    name: "Use 'stderr' from Relude"
-    note: "'stderr' is already exported from Relude"
-    rhs: stderr
-- warn:
-    lhs: System.IO.stdin
-    name: "Use 'stdin' from Relude"
-    note: "'stdin' is already exported from Relude"
-    rhs: stdin
-- warn:
-    lhs: System.IO.stdout
-    name: "Use 'stdout' from Relude"
-    note: "'stdout' is already exported from Relude"
-    rhs: stdout
-- warn:
-    lhs: System.IO.withFile
-    name: "Use 'withFile' from Relude"
-    note: "'withFile' is already exported from Relude"
-    rhs: withFile
 - warn:
     lhs: Data.Ord.Down
     name: "Use 'Down' from Relude"
@@ -2107,6 +2082,56 @@
     name: "Use 'getLine' from Relude"
     note: "'getLine' is already exported from Relude"
     rhs: getLine
+- warn:
+    lhs: System.IO.hFlush
+    name: "Use 'hFlush' from Relude"
+    note: "'hFlush' is already exported from Relude"
+    rhs: hFlush
+- warn:
+    lhs: System.IO.hIsEOF
+    name: "Use 'hIsEOF' from Relude"
+    note: "'hIsEOF' is already exported from Relude"
+    rhs: hIsEOF
+- warn:
+    lhs: System.IO.hSetBuffering
+    name: "Use 'hSetBuffering' from Relude"
+    note: "'hSetBuffering' is already exported from Relude"
+    rhs: hSetBuffering
+- warn:
+    lhs: System.IO.hGetBuffering
+    name: "Use 'hGetBuffering' from Relude"
+    note: "'hGetBuffering' is already exported from Relude"
+    rhs: hGetBuffering
+- warn:
+    lhs: System.IO.Handle
+    name: "Use 'Handle' from Relude"
+    note: "'Handle' is already exported from Relude"
+    rhs: Handle
+- warn:
+    lhs: System.IO.stdin
+    name: "Use 'stdin' from Relude"
+    note: "'stdin' is already exported from Relude"
+    rhs: stdin
+- warn:
+    lhs: System.IO.stdout
+    name: "Use 'stdout' from Relude"
+    note: "'stdout' is already exported from Relude"
+    rhs: stdout
+- warn:
+    lhs: System.IO.stderr
+    name: "Use 'stderr' from Relude"
+    note: "'stderr' is already exported from Relude"
+    rhs: stderr
+- warn:
+    lhs: System.IO.withFile
+    name: "Use 'withFile' from Relude"
+    note: "'withFile' is already exported from Relude"
+    rhs: withFile
+- warn:
+    lhs: System.IO.BufferMode
+    name: "Use 'BufferMode' from Relude"
+    note: "'BufferMode' is already exported from Relude"
+    rhs: BufferMode
 - warn:
     lhs: System.Environment.getArgs
     name: "Use 'getArgs' from Relude"
@@ -3117,6 +3142,26 @@
     name: "'liftIO' is not needed"
     note: "If you import 'putLBSLn' from Relude, it's already lifted"
     rhs: putLBSLn
+- warn:
+    lhs: "(liftIO (hFlush x))"
+    name: "'liftIO' is not needed"
+    note: "If you import 'hFlush' from Relude, it's already lifted"
+    rhs: hFlush
+- warn:
+    lhs: "(liftIO (hIsEOF x))"
+    name: "'liftIO' is not needed"
+    note: "If you import 'hIsEOF' from Relude, it's already lifted"
+    rhs: hIsEOF
+- warn:
+    lhs: "(liftIO (hSetBuffering x y))"
+    name: "'liftIO' is not needed"
+    note: "If you import 'hSetBuffering' from Relude, it's already lifted"
+    rhs: hSetBuffering
+- warn:
+    lhs: "(liftIO (hGetBuffering x))"
+    name: "'liftIO' is not needed"
+    note: "If you import 'hGetBuffering' from Relude, it's already lifted"
+    rhs: hGetBuffering
 - warn:
     lhs: "(liftIO (getArgs ))"
     name: "'liftIO' is not needed"
