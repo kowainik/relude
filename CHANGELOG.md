@@ -3,7 +3,7 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
-## 0.X.0
+## Unreleased: 0.8.0.0
 
 * Add `inifinitely` as more strictly typed `forever`.
 
