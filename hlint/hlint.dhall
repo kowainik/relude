@@ -118,6 +118,8 @@ in [ Rule.Arguments { arguments =
    -- Monad
    , warnSimple "f >>= guard" "guardM f"
    , warnSimple "guard =<< f" "guardM f"
+   -- This changes the type. Is that ok?
+   , warnNote "forever" "infinitely" "'forever' is loosely typed and may hide errors"
 
    , warnSimple "whenM (not <$> x)" "unlessM x"
    , warnSimple "unlessM (not <$> x)" "whenM x"
