@@ -16,20 +16,26 @@ module Relude.Monad.Maybe
     ( -- * Combinators
       (?:)
     , whenJust
+    , whenJust'
     , whenJustM
+    , whenJustM'
     , whenNothing
+    , whenNothing'
     , whenNothing_
+    , whenNothing_'
       -- * Monadic combinators
     , whenNothingM
+    , whenNothingM'
     , whenNothingM_
+    , whenNothingM_'
     , mapMaybeM
     ) where
 
 import Relude.Applicative (Applicative, pass, pure)
 import Relude.Foldable.Reexport (mapM)
-import Relude.Function ((.))
+import Relude.Function ((.), const, flip)
 import Relude.Functor.Reexport (fmap)
-import Relude.Monad.Reexport (Maybe (..), Monad (..), catMaybes, fromMaybe)
+import Relude.Monad.Reexport ((=<<), Maybe (..), Monad (..), catMaybes, fromMaybe, maybe)
 
 
 -- $setup
@@ -62,6 +68,12 @@ whenJust (Just x) f = f x
 whenJust Nothing _  = pass
 {-# INLINE whenJust #-}
 
+{- | Flipped version of `whenJust`
+-}
+whenJust' :: Applicative f => (a -> f ()) -> Maybe a -> f ()
+whenJust' = maybe pass
+{-# INLINE whenJust' #-}
+
 {- | Monadic version of 'whenJust'.
 
 >>> whenJustM (pure Nothing) $ \b -> print (not b)
@@ -71,6 +83,12 @@ False
 whenJustM :: Monad m => m (Maybe a) -> (a -> m ()) -> m ()
 whenJustM mm f = mm >>= \m -> whenJust m f
 {-# INLINE whenJustM #-}
+
+{- | Flipped version of `whenJustM`
+-}
+whenJustM' :: Monad m => (a -> m ()) -> m (Maybe a) -> m ()
+whenJustM' = (=<<) . whenJust'
+{-# INLINE whenJustM' #-}
 
 {- | Performs default 'Applicative' action if 'Nothing' is given.
 Otherwise returns content of 'Just' pured to 'Applicative'.
@@ -85,6 +103,12 @@ whenNothing (Just x) _ = pure x
 whenNothing Nothing  m = m
 {-# INLINE whenNothing #-}
 
+{- | Flipped version of `whenNothing`
+-}
+whenNothing' :: Applicative f => f a -> Maybe a -> f a
+whenNothing' = flip maybe pure
+{-# INLINE whenNothing' #-}
+
 {- | Performs default 'Applicative' action if 'Nothing' is given.
 Do nothing for 'Just'. Convenient for discarding 'Just' content.
 
@@ -96,6 +120,12 @@ whenNothing_ :: Applicative f => Maybe a -> f () -> f ()
 whenNothing_ Nothing m = m
 whenNothing_ _       _ = pass
 {-# INLINE whenNothing_ #-}
+
+{- | Flipped version of `whenNothing_`
+-}
+whenNothing_' :: Applicative f => f () -> Maybe a -> f ()
+whenNothing_' = flip maybe (const pass)
+{-# INLINE whenNothing_' #-}
 
 {- | Monadic version of 'whenNothingM'.
 
@@ -109,6 +139,12 @@ whenNothingM :: Monad m => m (Maybe a) -> m a -> m a
 whenNothingM mm action = mm >>= \m -> whenNothing m action
 {-# INLINE whenNothingM #-}
 
+{- | Flipped version of `whenNothingM`
+-}
+whenNothingM' :: Monad m => m a -> m (Maybe a) -> m a
+whenNothingM' = (=<<) . whenNothing'
+{-# INLINE whenNothingM' #-}
+
 {- | Monadic version of 'whenNothingM_'.
 
 >>> whenNothingM_ (pure $ Just True) $ putTextLn "Is Just!"
@@ -119,6 +155,11 @@ whenNothingM_ :: Monad m => m (Maybe a) -> m () -> m ()
 whenNothingM_ mm action = mm >>= \m -> whenNothing_ m action
 {-# INLINE whenNothingM_ #-}
 
+{- | Flipped version of `whenNothingM_`
+-}
+whenNothingM_' :: Monad m => m () -> m (Maybe a) -> m ()
+whenNothingM_' = (=<<) . whenNothing_'
+{-# INLINE whenNothingM_' #-}
 
 {- | The monadic version of the 'Data.Maybe.mapMaybe' function.
 
