@@ -4,7 +4,7 @@
 
 [![GitHub CI](https://github.com/kowainik/relude/workflows/CI/badge.svg)](https://github.com/kowainik/relude/actions)
 [![Travis](https://img.shields.io/travis/kowainik/relude.svg?logo=travis)](http://travis-ci.org/kowainik/relude)
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/github/kowainik/relude?branch=master&svg=true)](https://ci.appveyor.com/project/kowainik/relude)
+[![AppVeyor](https://ci.appveyor.com/api/projects/status/github/kowainik/relude?branch=main&svg=true)](https://ci.appveyor.com/project/kowainik/relude)
 [![Hackage](https://img.shields.io/hackage/v/relude.svg?logo=haskell)](https://hackage.haskell.org/package/relude)
 [![Stackage LTS](http://stackage.org/package/relude/badge/lts)](http://stackage.org/lts/package/relude)
 [![Stackage Nightly](http://stackage.org/package/relude/badge/nightly)](http://stackage.org/nightly/package/relude)
@@ -65,7 +65,7 @@ the library. So below you can find the key design principles behind `relude`:
 5. **Minimalism** (low number of dependencies). We don not force users of
    `relude` to stick to any specific lens or text formatting or logging
    library. Where possible, `relude` depends only on boot libraries.
-   The [Dependency graph](https://raw.githubusercontent.com/kowainik/relude/master/relude-dependency-graph.png)
+   The [Dependency graph](https://raw.githubusercontent.com/kowainik/relude/main/relude-dependency-graph.png)
    of `relude` can give you a clearer picture.
 
 6. **Convenience**. Despite minimalism, we want to bring commonly used
@@ -82,7 +82,7 @@ the library. So below you can find the key design principles behind `relude`:
      [`doctest`](http://hackage.haskell.org/package/doctest)
    + Documentation on [internal module structure](http://hackage.haskell.org/package/relude/docs/Relude.html)
    + `relude`-specific [HLint](http://hackage.haskell.org/package/hlint) rules:
-     [`.hlint.yaml`](https://github.com/kowainik/relude/blob/master/.hlint.yaml)
+     [`.hlint.yaml`](https://github.com/kowainik/relude/blob/main/.hlint.yaml)
 
 8. **User-friendliness.** Anyone should be able to quickly migrate to `relude`. Only
    some basic familiarity with the common libraries like `text` and `containers`
@@ -369,7 +369,7 @@ Main differences from `Prelude` can be grouped into the following categories:
 
 If you want to clean up your imports after switching to `relude`, you can use
 the `relude`-specific
-[`.hlint.yaml`](https://github.com/kowainik/relude/blob/master/.hlint.yaml)
+[`.hlint.yaml`](https://github.com/kowainik/relude/blob/main/.hlint.yaml)
 configuration for this task. With this config, `HLint` will produce
 warnings and hints on how to have more benefits from `relude`.
 

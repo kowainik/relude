@@ -45,7 +45,7 @@ description:
     * __Minimalism__ (low number of dependencies). We don not force users of
       @relude@ to stick to any specific lens or text formatting or logging
       library. Where possible, @relude@ depends only on boot libraries.
-      The [Dependency graph](https://raw.githubusercontent.com/kowainik/relude/master/relude-dependency-graph.png)
+      The [Dependency graph](https://raw.githubusercontent.com/kowainik/relude/main/relude-dependency-graph.png)
       of @relude@ can give you a clearer picture.
     .
     * __Convenience__. Despite minimalism, we want to bring commonly used
@@ -69,7 +69,7 @@ description:
     .
         4. Documentation regarding [internal module structure](http://hackage.haskell.org/package/relude/docs/Relude.html)
     .
-        5. @relude@-specific [HLint](http://hackage.haskell.org/package/hlint) rules: @[.hlint.yaml](https://github.com/kowainik/relude/blob/master/.hlint.yaml)@
+        5. @relude@-specific [HLint](http://hackage.haskell.org/package/hlint) rules: @[.hlint.yaml](https://github.com/kowainik/relude/blob/main/.hlint.yaml)@
     .
     * __User-friendliness.__ Anyone should be able to quickly migrate to @relude@. Only
       some basic familiarity with the common libraries like @text@ and @containers@
