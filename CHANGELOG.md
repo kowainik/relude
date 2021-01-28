@@ -6,6 +6,7 @@ The changelog is available [on GitHub][2].
 ## Unreleased: 0.8.0.0
 
 * Add `infinitely` as more strictly typed `forever`.
+* Remove `Eq` constraint on `universeNonEmpty`
 
 ## 0.7.0.0 — May 14, 2020
 
