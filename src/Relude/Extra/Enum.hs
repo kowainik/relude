@@ -67,10 +67,8 @@ Singleton :| []
 
 @since 0.7.0.0
 -}
-universeNonEmpty :: forall a . (Bounded a, Enum a, Eq a) => NonEmpty a
-universeNonEmpty
-    | minBound @a == maxBound = minBound :| []
-    | otherwise = minBound :| [succ minBound .. maxBound]
+universeNonEmpty :: forall a . (Bounded a, Enum a) => NonEmpty a
+universeNonEmpty = minBound :| drop 1 universe
 {-# INLINE universeNonEmpty #-}
 
 {- | @inverseMap f@ creates a function that is the inverse of a given function
