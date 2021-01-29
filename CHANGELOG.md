@@ -5,6 +5,7 @@ The changelog is available [on GitHub][2].
 
 ## Unreleased: 0.8.0.0
 
+* Upgrade to GHC-8.10.3, GHC-8.8.4.
 * Add `infinitely` as more strictly typed `forever`.
 
 ## 0.7.0.0 — May 14, 2020

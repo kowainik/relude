@@ -87,7 +87,7 @@ license:             MIT
 license-file:        LICENSE
 author:              Dmitrii Kovanikov, Veronika Romashkina, Stephen Diehl, Serokell
 maintainer:          Kowainik <xrom.xkov@gmail.com>
-copyright:           2016 Stephen Diehl, 2016-2018 Serokell, 2018-2020 Kowainik
+copyright:           2016 Stephen Diehl, 2016-2018 Serokell, 2018-2021 Kowainik
 category:            Prelude
 stability:           stable
 build-type:          Simple
@@ -97,8 +97,8 @@ tested-with:         GHC == 8.0.2
                      GHC == 8.2.2
                      GHC == 8.4.4
                      GHC == 8.6.5
-                     GHC == 8.8.3
-                     GHC == 8.10.1
+                     GHC == 8.8.4
+                     GHC == 8.10.3
 
 
 source-repository head

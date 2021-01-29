@@ -16,7 +16,7 @@ environment:
     CABOPTS: --store-dir=C:\\SR
 
   matrix:
-    - GHCVER: 8.10.1
+    - GHCVER: 8.10.3
 
 install:
   - choco source add -n mistuke -s https://www.myget.org/F/mistuke/api/v2
