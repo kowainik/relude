@@ -3,8 +3,6 @@
 ![Logo](https://user-images.githubusercontent.com/8126674/67678250-9d8eab80-f99f-11e9-96ca-27883ceeefa6.png)
 
 [![GitHub CI](https://github.com/kowainik/relude/workflows/CI/badge.svg)](https://github.com/kowainik/relude/actions)
-[![Travis](https://img.shields.io/travis/kowainik/relude.svg?logo=travis)](http://travis-ci.org/kowainik/relude)
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/github/kowainik/relude?branch=main&svg=true)](https://ci.appveyor.com/project/kowainik/relude)
 [![Hackage](https://img.shields.io/hackage/v/relude.svg?logo=haskell)](https://hackage.haskell.org/package/relude)
 [![Stackage LTS](http://stackage.org/package/relude/badge/lts)](http://stackage.org/lts/package/relude)
 [![Stackage Nightly](http://stackage.org/package/relude/badge/nightly)](http://stackage.org/nightly/package/relude)
