@@ -8,6 +8,7 @@ The changelog is available [on GitHub][2].
 * Upgrade to GHC-8.10.3, GHC-8.8.4.
 * Add `infinitely` as more strictly typed `forever`.
 * Remove `Eq` constraint on `universeNonEmpty`
+* Add `maybeAt`, `!!?` with its arguments flipped.
 
 ## 0.7.0.0 — May 14, 2020
 

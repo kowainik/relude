@@ -3,7 +3,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2020 Kowainik
+            (c) 2018-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
@@ -18,24 +18,26 @@ module Relude.List
     , module Relude.List.NonEmpty
       -- $nonempty
     , (!!?)
+    , maybeAt
     , partitionWith
     ) where
 
 
 import Relude.Base ((<))
 import Relude.Bool (otherwise)
+import Relude.Function (flip, (.))
 import Relude.List.NonEmpty
 import Relude.List.Reexport
-import Relude.Monad (Maybe (..), partitionEithers, Either)
+import Relude.Monad (Either, Maybe (..), partitionEithers)
 import Relude.Numeric (Int, (-))
-import Relude.Function ((.))
 
 
 -- $setup
 -- >>> import Relude
 
 {- | Safer version of 'Relude.Unsafe.!!', returns a Maybe.
-get element from list using index value starting from `0`.
+
+Get element from list using index value starting from `0`.
 
 >>> [] !!? 0
 Nothing
@@ -62,6 +64,27 @@ infix 9 !!?
     go j (_:ys) = go (j - 1) ys
     go _ []     = Nothing
 {-# INLINE (!!?) #-}
+
+{- | '!!?' with its arguments flipped.
+
+Get element from list using index value starting from `0`.
+
+>>> maybeAt 0 []
+Nothing
+
+>>> maybeAt 3 ["a", "b", "c"]
+Nothing
+
+>>> maybeAt (-1) [1, 2, 3]
+Nothing
+
+>>> maybeAt 2 ["a", "b", "c"]
+Just "c"
+
+-}
+maybeAt :: Int -> [a] -> Maybe a
+maybeAt = flip (!!?)
+{-# INLINE maybeAt #-}
 
 {- | Partitions a list based on the result of function which produces an Either value. List of all elements producing Left are extracted, in order, to the first element of the output tuple. Similarly, a list of all elements producing Right are extracted to the second element of output.
 
