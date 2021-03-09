@@ -60,7 +60,7 @@ the library. So below you can find the key design principles behind `relude`:
    appropriate, and make efficient container types
    (e.g. `Map`, `HashMap`, `Set`) more accesible.
 
-5. **Minimalism** (low number of dependencies). We don not force users of
+5. **Minimalism** (low number of dependencies). We do not force users of
    `relude` to stick to any specific lens or text formatting or logging
    library. Where possible, `relude` depends only on boot libraries.
    The [Dependency graph](https://raw.githubusercontent.com/kowainik/relude/main/relude-dependency-graph.png)
