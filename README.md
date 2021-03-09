@@ -494,7 +494,8 @@ Finally, let's move to part describing the new cool features we bring with
 
 * `uncons` splits a list at the first element.
 * `ordNub` and `sortNub` are _O(n log n)_ versions of `nub` (which is quadratic),
-  also, `hashNub` and `unstableNub` are almost _O(n)_ versions of `nub`.
+  also, `hashNub` and `unstableNub` are almost _O(n)_ versions of `nub`,
+  and `intNub` for fast `Int`s nub.
 * `whenM`, `unlessM`, `ifM`, `guardM` — monadic guard combinators, that work
   with any `Monad`, e.g. `whenM (doesFileExist "foo")`.
 * General fold functions:

@@ -1,9 +1,10 @@
+{-# LANGUAGE CPP  #-}
 {-# LANGUAGE Safe #-}
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2020 Kowainik
+            (c) 2018-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
@@ -27,6 +28,10 @@ Functions to remove duplicates from a list.
 
  * 'hashNub' is the fastest with 'Data.Text.Text'.
 
+ * 'intNub' is faster when you work with lists of 'Int's.
+
+ * 'intNubOn' is fast with the lists of type that can have fixed number representations.
+
  * 'sortNub' has better performance than 'ordNub' but should be used when sorting is also needed.
 
  * 'unstableNub' has better performance than 'hashNub' but doesn't save the original order.
@@ -35,6 +40,12 @@ Functions to remove duplicates from a list.
 module Relude.Nub
     ( hashNub
     , ordNub
+
+#if __GLASGOW_HASKELL__ > 804
+    , intNub
+    , intNubOn
+#endif
+
     , sortNub
     , unstableNub
     ) where
@@ -43,18 +54,31 @@ import Data.Eq (Eq)
 import Data.Hashable (Hashable)
 import Data.HashSet as HashSet
 import Data.Ord (Ord)
-import Prelude ((.))
+import Prelude (Int, (.))
 
 import qualified Data.Set as Set
+#if __GLASGOW_HASKELL__ > 804
+import qualified Data.Containers.ListUtils as Containers
+#endif
 
 
-{- | Like 'Prelude.nub' but runs in \( O(n \log n) \)  time and requires 'Ord'.
+-- $setup
+-- >>> import Prelude (fromEnum)
+
+{- | Removes duplicate elements from a list, keeping only the first occurance of
+the element.
+
+Like 'Prelude.nub' but runs in \( O(n \log n) \)  time and requires 'Ord'.
 
 >>> ordNub [3, 3, 3, 2, 2, -1, 1]
 [3,2,-1,1]
 
 -}
 ordNub :: forall a . (Ord a) => [a] -> [a]
+#if __GLASGOW_HASKELL__ > 804
+ordNub = Containers.nubOrd
+{-# INLINE ordNub #-}
+#else
 ordNub = go Set.empty
   where
     go :: Set.Set a -> [a] -> [a]
@@ -64,6 +88,7 @@ ordNub = go Set.empty
       then go s xs
       else x : go (Set.insert x s) xs
 {-# INLINEABLE ordNub #-}
+#endif
 
 {- | Like 'Prelude.nub' but runs in \( O(n \log_{16} n) \)  time and requires 'Hashable'.
 
@@ -101,3 +126,34 @@ sortNub = Set.toList . Set.fromList
 unstableNub :: (Eq a, Hashable a) => [a] -> [a]
 unstableNub = HashSet.toList . HashSet.fromList
 {-# INLINE unstableNub #-}
+
+
+#if __GLASGOW_HASKELL__ > 804
+
+{- | Removes duplicate elements from a list, keeping only the first occurance of
+the element.
+
+Like 'Prelude.nub' but runs in \( O(n \min\(n, int_bits\)) \)  time and requires 'Ord'.
+
+>>> intNub [3, 3, 3, 2, 2, -1, 1]
+[3,2,-1,1]
+
+@since x.x.x.x
+-}
+intNub :: [Int] -> [Int]
+intNub = Containers.nubInt
+
+{-# INLINE intNub #-}
+
+{- | Similar to 'intNub' but works on lists of any types by performing "nubbing" through 'Int's.
+
+>>> intNubOn fromEnum "ababbbcdaffee"
+"abcdfe"
+
+@since x.x.x.x
+-}
+intNubOn :: (a -> Int) -> [a] -> [a]
+intNubOn = Containers.nubIntOn
+{-# INLINE intNubOn #-}
+
+#endif
