@@ -15,7 +15,6 @@ jobs:
         os: [ubuntu-latest, macOS-latest, windows-latest]
         cabal: ["3.2"]
         ghc:
-          - "8.0.2"
           - "8.2.2"
           - "8.4.4"
           - "8.6.5"
@@ -30,8 +29,6 @@ jobs:
             ghc: 8.4.4
           - os: macOS-latest
             ghc: 8.2.2
-          - os: macOS-latest
-            ghc: 8.0.2
 
           - os: windows-latest
             ghc: 8.8.4
@@ -41,8 +38,6 @@ jobs:
             ghc: 8.4.4
           - os: windows-latest
             ghc: 8.2.2
-          - os: windows-latest
-            ghc: 8.0.2
 
     steps:
     - uses: actions/checkout@v2

@@ -15,6 +15,8 @@ The changelog is available [on GitHub][2].
   Add `intNub` and `intNubOn` functions.
 * [#347](https://github.com/kowainik/relude/issues/347):
   Add `ordNubOn` function.
+* [#268](https://github.com/kowainik/relude/issues/268):
+  Dpor support of GHC-8.0.2.
 
 ## 0.7.0.0 — May 14, 2020
 

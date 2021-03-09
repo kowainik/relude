@@ -1,10 +1,9 @@
-{-# LANGUAGE CPP         #-}
 {-# LANGUAGE Trustworthy #-}
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2020 Kowainik
+            (c) 2018-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
@@ -39,12 +38,7 @@ module Relude.Base
     , module GHC.Show
 
 -- * GHC-specific functionality
-#if MIN_VERSION_base(4,10,0)
     , module GHC.TypeNats
-#else
-    , module GHC.TypeLits
-#endif
-
     , module GHC.OverloadedLabels
     , module GHC.ExecutionStack
     , module GHC.Stack
@@ -72,11 +66,7 @@ import GHC.Enum (Bounded (..), Enum (..), boundedEnumFrom, boundedEnumFromThen)
 import GHC.Generics (Generic)
 import GHC.Show (Show)
 
-#if MIN_VERSION_base(4,10,0)
 import GHC.TypeNats (CmpNat, KnownNat, Nat, SomeNat (..), natVal, someNatVal)
-#else
-import GHC.TypeLits (CmpNat, KnownNat, Nat, SomeNat (..), natVal, someNatVal)
-#endif
 
 import GHC.ExecutionStack (getStackTrace, showStackTrace)
 import GHC.OverloadedLabels (IsLabel (..))

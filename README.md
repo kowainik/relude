@@ -703,7 +703,7 @@ alternative preludes. It's also relatively small, but:
    _O(n)_ time and you can accidentally use `elem` from `Foldable` but with
    `relude` you can't).
 4. Protolude supports older GHC versions (from GHC 7.6.1) while `relude` only
-   supports from GHC 8.0.2. So if you aim ancient GHC versions, `protolude`
+   supports from GHC 8.2.2. So if you aim ancient GHC versions, `protolude`
    might be a better choice. But because of that it contains a lot of CPP, code
    is scary in some places as a consequence and it is more difficult to add,
    remove or change things there.
