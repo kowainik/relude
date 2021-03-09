@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP  #-}
 {-# LANGUAGE Safe #-}
 
 {- |
@@ -39,8 +40,12 @@ Functions to remove duplicates from a list.
 module Relude.Nub
     ( hashNub
     , ordNub
+
+#if __GLASGOW_HASKELL__ > 804
     , intNub
     , intNubOn
+#endif
+
     , sortNub
     , unstableNub
     ) where
@@ -52,7 +57,9 @@ import Data.Ord (Ord)
 import Prelude (Int, (.))
 
 import qualified Data.Set as Set
+#if __GLASGOW_HASKELL__ > 804
 import qualified Data.Containers.ListUtils as Containers
+#endif
 
 
 -- $setup
@@ -68,8 +75,20 @@ Like 'Prelude.nub' but runs in \( O(n \log n) \)  time and requires 'Ord'.
 
 -}
 ordNub :: forall a . (Ord a) => [a] -> [a]
+#if __GLASGOW_HASKELL__ > 804
 ordNub = Containers.nubOrd
 {-# INLINE ordNub #-}
+#else
+ordNub = go Set.empty
+  where
+    go :: Set.Set a -> [a] -> [a]
+    go _ []     = []
+    go s (x:xs) =
+      if x `Set.member` s
+      then go s xs
+      else x : go (Set.insert x s) xs
+{-# INLINEABLE ordNub #-}
+#endif
 
 {- | Like 'Prelude.nub' but runs in \( O(n \log_{16} n) \)  time and requires 'Hashable'.
 
@@ -109,6 +128,8 @@ unstableNub = HashSet.toList . HashSet.fromList
 {-# INLINE unstableNub #-}
 
 
+#if __GLASGOW_HASKELL__ > 804
+
 {- | Removes duplicate elements from a list, keeping only the first occurance of
 the element.
 
@@ -134,3 +155,5 @@ intNub = Containers.nubInt
 intNubOn :: (a -> Int) -> [a] -> [a]
 intNubOn = Containers.nubIntOn
 {-# INLINE intNubOn #-}
+
+#endif
