@@ -13,6 +13,8 @@ The changelog is available [on GitHub][2].
   Reimplement `ordNub` through `nubOrd` from `containers`.
 
   Add `intNub` and `intNubOn` functions.
+* [#347](https://github.com/kowainik/relude/issues/347):
+  Add `ordNubOn` function.
 
 ## 0.7.0.0 — May 14, 2020
 

@@ -42,6 +42,7 @@ module Relude.Nub
     , ordNub
 
 #if __GLASGOW_HASKELL__ > 804
+    , ordNubOn
     , intNub
     , intNubOn
 #endif
@@ -63,7 +64,7 @@ import qualified Data.Containers.ListUtils as Containers
 
 
 -- $setup
--- >>> import Prelude (fromEnum)
+-- >>> import Prelude (div, fromEnum)
 
 {- | Removes duplicate elements from a list, keeping only the first occurance of
 the element.
@@ -88,6 +89,21 @@ ordNub = go Set.empty
       then go s xs
       else x : go (Set.insert x s) xs
 {-# INLINEABLE ordNub #-}
+#endif
+
+
+#if __GLASGOW_HASKELL__ > 804
+{- | Similar to 'ordNub' but performs nub through the mapped list on the given
+function.
+
+>>> ordNubOn (`div` 10) [3, 3, 3, 13, 2, 22, -1, 1, 66]
+[3,13,22,-1,66]
+
+@since x.x.x.x
+-}
+ordNubOn :: forall b a . (Ord b) => (a -> b) -> [a] -> [a]
+ordNubOn = Containers.nubOrdOn
+{-# INLINE ordNubOn #-}
 #endif
 
 {- | Like 'Prelude.nub' but runs in \( O(n \log_{16} n) \)  time and requires 'Hashable'.
