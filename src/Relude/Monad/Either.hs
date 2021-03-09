@@ -1,12 +1,11 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-{-# LANGUAGE CPP  #-}
 {-# LANGUAGE Safe #-}
 
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2020 Kowainik
+            (c) 2018-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
@@ -37,6 +36,7 @@ module Relude.Monad.Either
 
 import Control.Applicative (Applicative)
 import Control.Monad (Monad (..))
+import Data.Either (fromLeft, fromRight)
 import Data.Function (const)
 import Data.Maybe (Maybe (..), maybe)
 
@@ -44,32 +44,6 @@ import Relude.Applicative (pure)
 import Relude.Function ((.))
 import Relude.Monad.Reexport (Either (..), MonadFail (..), either)
 import Relude.String.Reexport (IsString (..), String)
-
-#if MIN_VERSION_base(4,10,0)
-import Data.Either (fromLeft, fromRight)
-#else
-
-
--- | Extracts value from 'Left' or return given default value.
---
--- >>> fromLeft 0 (Left 3)
--- 3
--- >>> fromLeft 0 (Right 5)
--- 0
-fromLeft :: a -> Either a b -> a
-fromLeft _ (Left a)  = a
-fromLeft a (Right _) = a
-
--- | Extracts value from 'Right' or return given default value.
---
--- >>> fromRight 0 (Left 3)
--- 0
--- >>> fromRight 0 (Right 5)
--- 5
-fromRight :: b -> Either a b -> b
-fromRight b (Left _)  = b
-fromRight _ (Right b) = b
-#endif
 
 
 -- $setup

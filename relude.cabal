@@ -93,8 +93,7 @@ stability:           stable
 build-type:          Simple
 extra-doc-files:     CHANGELOG.md
                      README.md
-tested-with:         GHC == 8.0.2
-                     GHC == 8.2.2
+tested-with:         GHC == 8.2.2
                      GHC == 8.4.4
                      GHC == 8.6.5
                      GHC == 8.8.4
@@ -106,7 +105,7 @@ source-repository head
   location: git@github.com:kowainik/relude.git
 
 common common-options
-  build-depends:       base >= 4.9 && < 4.15
+  build-depends:       base >= 4.10 && < 4.15
 
   ghc-options:         -Wall
                        -Wcompat
@@ -114,10 +113,8 @@ common common-options
                        -Wincomplete-uni-patterns
                        -Wincomplete-record-updates
                        -fwarn-implicit-prelude
-  if impl(ghc >= 8.0)
-    ghc-options:       -Wredundant-constraints
-  if impl(ghc >= 8.2)
-    ghc-options:       -fhide-source-paths
+                       -Wredundant-constraints
+                       -fhide-source-paths
   if impl(ghc >= 8.4)
     ghc-options:       -Wmissing-export-lists
                        -Wpartial-fields
