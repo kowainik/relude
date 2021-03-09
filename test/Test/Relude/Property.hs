@@ -62,6 +62,7 @@ prop_BytesTo = property $ do
 listProps :: Group
 listProps = Group "list function property tests"
     [ ("ordNub xs == nub xs:", prop_ordNubCorrect)
+    , ("intNub xs == nub xs:", prop_intNubCorrect)
     , ("hashNub xs == nub xs:", prop_hashNubCorrect)
     , ("sortNub xs == sort (nub xs):" , prop_sortNubCorrect)
     , ("sort (unstableNub xs) == sort (nub xs):" , prop_unstableNubCorrect)
@@ -86,6 +87,11 @@ prop_unstableNubCorrect :: Property
 prop_unstableNubCorrect = property $ do
     xs <- forAll genIntList
     sort (unstableNub xs) === sortNub xs
+
+prop_intNubCorrect :: Property
+prop_intNubCorrect = property $ do
+    xs <- forAll genIntList
+    intNub xs === nub xs
 
 ----------------------------------------------------------------------------
 -- logicM

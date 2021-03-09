@@ -9,6 +9,10 @@ The changelog is available [on GitHub][2].
 * Add `infinitely` as more strictly typed `forever`.
 * Remove `Eq` constraint on `universeNonEmpty`
 * Add `maybeAt`, `!!?` with its arguments flipped.
+* [#346](https://github.com/kowainik/relude/issues/346):
+  Reimplement `ordNub` through `nubOrd` from `containers`.
+
+  Add `intNub` and `intNubOn` functions.
 
 ## 0.7.0.0 — May 14, 2020
 

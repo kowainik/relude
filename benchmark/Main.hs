@@ -17,6 +17,8 @@ main = defaultMain
     , bgroupList listOfBig      "big"
     , bgroupList (nStrings 'z') "small str"
     , bgroupList (nStrings 'c') "big str"
+    , bgroupIntList listOfSmall "small ints"
+    , bgroupIntList listOfBig   "big ints"
     , bgroupFold
     ]
 
@@ -63,6 +65,31 @@ bgroupList f name = bgroup name $ map ($ f)
 
     safeSort :: [a] -> [a]
     safeSort = map NonEmpty.head . NonEmpty.group . sort
+
+bgroupIntList
+    :: (Int -> [Int])
+    -> String
+    -> Benchmark
+bgroupIntList f name = bgroup name $ map ($ f)
+    [ bgroupNub 100
+    , bgroupNub 500
+    , bgroupNub 1000
+    , bgroupNub 5000
+    , bgroupNub 500000
+    , bgroupNub 1000000
+    ]
+  where
+    bgroupNub :: Int -> (Int -> [Int]) -> Benchmark
+    bgroupNub n listOf = bgroup (show n) nubBenchs
+      where
+        listN :: [Int]
+        listN = listOf n
+
+        nubBenchs :: [Benchmark]
+        nubBenchs =
+            [ bench "ordNub" $ nf ordNub listN
+            , bench "intNub" $ nf intNub listN
+            ]
 
 listOfSmall :: Int -> [Int]
 listOfSmall n = let part = n `div` 100 in concat $ replicate part [1..100]
