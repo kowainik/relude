@@ -37,16 +37,26 @@ import Control.Applicative (Alternative (..), Applicative (..), Const (..), ZipL
 -- >>> import Relude
 -- >>> import Relude.Monad (Maybe)
 
--- | Shorter alias for @pure ()@.
---
--- >>> pass :: Maybe ()
--- Just ()
+{- | Shorter alias for @pure ()@.
+
+>>> pass :: Maybe ()
+Just ()
+
+Useful shortcut when need an empty action:
+
+@
+printJust :: Maybe Int -> IO ()
+printJust mInt = case mInt of
+    Just i -> putStrLn $ "Number: " ++ show i
+    Nothing -> pass
+@
+-}
 pass :: Applicative f => f ()
 pass = pure ()
 {-# INLINE pass #-}
 
-{- | Named version of the '<**>' operator, which is '<*>' but flipped. For
-chaining applicative operations in forward applications using
+{- | Named version of the '<**>' operator, which is '<*>' but flipped. It is
+helpful for chaining applicative operations in forward applications using
 'Relude.Function.&'.
 
 >>> Just (+ 1) & appliedTo (Just 2)

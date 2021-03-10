@@ -1,7 +1,7 @@
 {-# LANGUAGE Safe #-}
 
 {- |
-Copyright:  (c) 2018-2020 Kowainik
+Copyright:  (c) 2018-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Experimental
@@ -152,10 +152,10 @@ next e
 
 {- | Like 'pred', but doesn't fail on 'minBound'. Instead it returns 'maxBound'.
 
->>> prev False
-True
 >>> prev True
 False
+>>> prev False
+True
 >>> pred False
 *** Exception: Prelude.Enum.Bool.pred: bad argument
 

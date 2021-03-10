@@ -3,7 +3,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2020 Kowainik
+            (c) 2018-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
@@ -40,7 +40,7 @@ import qualified Control.Exception.Base (evaluate)
 -- $setup
 -- >>> import Relude
 
-{- | Lifted alias for 'Control.Exception.Base.evaluate' with clearer name.
+{- | Lifted alias for 'Control.Exception.Base.evaluate' with a clearer name.
 
 >>> let list = [1..5] :: [Int]
 >>> :sprint list
@@ -68,7 +68,7 @@ evaluateWHNF_ what = (`seq` ()) <$!> evaluateWHNF what
 {-# INLINE evaluateWHNF_ #-}
 {-# SPECIALIZE evaluateWHNF_ :: a -> IO () #-}
 
-{- | Alias for @evaluateWHNF . force@ with clearer name.
+{- | Alias for @evaluateWHNF . force@ with a clearer name.
 
 >>> let list = [1..5] :: [Int]
 >>> :sprint list
@@ -83,7 +83,7 @@ evaluateNF = evaluateWHNF . force
 {-# SPECIALIZE evaluateNF :: NFData a => a -> IO a #-}
 
 {- | Alias for @evaluateWHNF . rnf@. Similar to 'evaluateNF'
--- but discards resulting value.
+but discards the resulting value.
 
 >>> let list = [1..5] :: [Int]
 >>> :sprint list

@@ -114,6 +114,8 @@ in [ Rule.Arguments { arguments =
    , warnSimple "fmap f (nonEmpty x)" "viaNonEmpty f x"
    , warnSimple "fmap f . nonEmpty" "viaNonEmpty f"
    , warnSimple "f <$> nonEmpty x" "viaNonEmpty f x"
+   , warnSimple "partitionEithers . map f" "partitionWith f"
+   , warnSimple "partitionEithers $ map f x" "partitionWith f x"
 
    -- Monad
    , warnSimple "f >>= guard" "guardM f"
@@ -945,6 +947,9 @@ in [ Rule.Arguments { arguments =
    , hintNote "succ" "next" "`succ` from `Prelude` is a pure function but it may throw exception. Consider using `next` from `Relude.Extra.Enum` instead."
    , hintNote "pred" "prev" "`pred` from `Prelude` is a pure function but it may throw exception. Consider using `prev` from `Relude.Extra.Enum` instead."
    , hintNote "toEnum" "safeToEnum" "`toEnum` from `Prelude` is a pure function but it may throw exception. Consider using `safeToEnum` from `Relude.Extra.Enum` instead."
+
+   -- Foldable
+   , hintNote "sum xs / length xs"   "average xs" "Use `average` from `Relude.Extra.Foldable`"
 
    -- Tuple
    , hintNote "\\a -> (a, a)"   "dup"         "Use `dup` from `Relude.Extra.Tuple`"

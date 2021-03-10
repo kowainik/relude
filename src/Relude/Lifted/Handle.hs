@@ -1,5 +1,5 @@
 {- |
-Copyright:  (c) 2020 Kowainik
+Copyright:  (c) 2020-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable

@@ -3,7 +3,7 @@
 
 {- |
 Copyright:  (c) 2013-2016 Edward Kmett
-            (c) 2019-2020 Kowainik
+            (c) 2019-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Experimental

@@ -54,8 +54,9 @@ data Bug = Bug SomeException CallStack
 #endif
 
 instance Exception Bug where
-    displayException (Bug e cStack) = E.displayException e ++ "\n"
-                                   ++ prettyCallStack cStack
+    displayException (Bug e cStack) =
+        E.displayException e ++ "\n"
+        ++ prettyCallStack cStack
 
 -- | Generate a pure value which, when forced, will throw the given exception
 impureThrow :: Exception e => e -> a

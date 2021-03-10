@@ -1,7 +1,7 @@
 {-# LANGUAGE Trustworthy #-}
 
 {- |
-Copyright:  (c) 2018-2020 Kowainik
+Copyright:  (c) 2018-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
@@ -55,6 +55,19 @@ Just 42
 
 >>> integerToBounded @Int8 1024
 Nothing
+
+>>> integerToBounded @Int (toInteger (minBound :: Int))
+Just (-9223372036854775808)
+>>> integerToBounded @Int $ (toInteger (minBound :: Int)) - 1
+Nothing
+
+>>> integerToBounded @Int (toInteger (maxBound :: Int))
+Just 9223372036854775807
+>>> integerToBounded @Int $ (toInteger (maxBound :: Int)) + 1
+Nothing
+
+If you want to convert 'Int' or 'Word' to a bounded type, take a look at
+'toIntegralSized' function instead.
 
 @since 0.5.0
 -}
