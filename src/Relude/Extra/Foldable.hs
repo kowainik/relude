@@ -3,7 +3,6 @@
 
 {- |
 Copyright:  (c) 2018-2021 Kowainik
-
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Experimental
@@ -51,7 +50,7 @@ possible and returns 'Maybe' element.
 Just 42.0
 >>> average @Double [1, 2, 3, 4]
 Just 2.5
->>> average @Float [1.5, 2.5 ,3 ,4]
+>>> average @Float [1.5, 2.5, 3 ,4]
 Just 2.75
 >>> average []
 Nothing
