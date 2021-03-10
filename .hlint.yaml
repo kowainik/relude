@@ -1,4 +1,3 @@
-
 - arguments:
     - "-XConstraintKinds"
     - "-XDeriveGeneric"
@@ -231,11 +230,21 @@
     lhs: "f <$> nonEmpty x"
     rhs: viaNonEmpty f x
 - warn:
+    lhs: partitionEithers . map f
+    rhs: partitionWith f
+- warn:
+    lhs: "partitionEithers $ map f x"
+    rhs: partitionWith f x
+- warn:
     lhs: "f >>= guard"
     rhs: guardM f
 - warn:
     lhs: "guard =<< f"
     rhs: guardM f
+- warn:
+    lhs: forever
+    note: "'forever' is loosely typed and may hide errors"
+    rhs: infinitely
 - warn:
     lhs: "whenM (not <$> x)"
     rhs: unlessM x
@@ -3212,6 +3221,10 @@
     lhs: toEnum
     note: "`toEnum` from `Prelude` is a pure function but it may throw exception. Consider using `safeToEnum` from `Relude.Extra.Enum` instead."
     rhs: safeToEnum
+- hint:
+    lhs: sum xs / length xs
+    note: "Use `average` from `Relude.Extra.Foldable`"
+    rhs: average xs
 - hint:
     lhs: "\\a -> (a, a)"
     note: "Use `dup` from `Relude.Extra.Tuple`"

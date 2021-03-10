@@ -6,7 +6,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2020 Kowainik
+            (c) 2018-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
@@ -52,6 +52,7 @@ import qualified Data.Set as Set
 -- >>> import Relude
 
 {- | Typeclass for data types that can be created from one element.
+E.g. lists, non-empty containers, maps.
 
 >>> one True :: [Bool]
 [True]
@@ -68,7 +69,7 @@ __Laws:__
 this container)
 -}
 class One x where
-    -- | Type of single element of the structure.
+    -- | Type of a single element of the structure.
     type OneItem x
 
     -- | Create a list, map, 'T.Text', etc from a single element.

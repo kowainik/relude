@@ -3,7 +3,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2020 Kowainik
+            (c) 2018-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
@@ -55,29 +55,19 @@ chainedTo = (=<<)
 This is a more type safe version of 'forever', which has a convinient
 but unsafe type.
 
-Consider the following two expressions that try to launch a permanently
-running side thread:
+Consider the following two examples. In the @getIntForever@ functions, it
+falsely expects 'Int' as the result of the 'forever' function. But it would need
+to wait *forever* to get that, and this mistake won't be caught by the type
+system and compiler:
 
 @
-
-foo :: IO (Async Void)
-foo = forever $ do ...
-
+getIntForever :: IO Int
+getIntForever = do
+    i <- forever $ do ...
+    pure i
 @
 
-and
-
-@
-
-bar :: IO (Async Void)
-bar = async . forever $ do ...
-
-@
-
-Both of these are well typed but 'foo' has a serious mistake which
-is not caught by the type system. In contrast, using 'infinitely'
-instead of 'forever' in 'foo' is a type error.
-
+In contrast, using 'infinitely' instead of 'forever' in 'foo' is a type error.
 
 @since 0.8.0.0
 -}

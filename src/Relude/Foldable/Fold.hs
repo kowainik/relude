@@ -10,7 +10,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2020 Kowainik
+            (c) 2018-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
@@ -72,7 +72,7 @@ flipfoldl' :: Foldable f => (a -> b -> b) -> b -> f a -> b
 flipfoldl' f = foldl' (flip f)
 {-# INLINE flipfoldl' #-}
 
-{- | Alternative version of @asum@.
+{- | Alternative version of 'Relude.asum' that takes a function to map over.
 
 >>> asumMap (\x -> if x > 2 then Just x else Nothing) [1..4]
 Just 3
@@ -83,18 +83,22 @@ asumMap :: forall b m f a . (Foldable f, Alternative m) => (a -> m b) -> f a -> 
 asumMap = coerce (foldMap :: (a -> Alt m b) -> f a -> Alt m b)
 {-# INLINE asumMap #-}
 
-{- | Polymorphic version of @concatMapA@ function.
+{- | Polymorphic version of the 'Relude.concatMapA' function.
 
 >>> foldMapA @[Int] (Just . replicate 3) [1..3]
 Just [1,1,1,2,2,2,3,3,3]
 
 @since 0.1.0
 -}
-foldMapA :: forall b m f a . (Semigroup b, Monoid b, Applicative m, Foldable f) => (a -> m b) -> f a -> m b
+foldMapA
+    :: forall b m f a . (Semigroup b, Monoid b, Applicative m, Foldable f)
+    => (a -> m b)
+    -> f a
+    -> m b
 foldMapA = coerce (foldMap :: (a -> Ap m b) -> f a -> Ap m b)
 {-# INLINE foldMapA #-}
 
-{- | Polymorphic version of @concatMapM@ function.
+{- | Polymorphic version of the 'Relude.concatMapM' function.
 
 >>> foldMapM @[Int] (Just . replicate 3) [1..3]
 Just [1,1,1,2,2,2,3,3,3]

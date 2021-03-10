@@ -2,7 +2,8 @@
 {-# LANGUAGE BangPatterns #-}
 
 {- |
-Copyright:  (c) 2018-2020 Kowainik
+Copyright:  (c) 2018-2021 Kowainik
+
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Experimental
@@ -20,6 +21,8 @@ module Relude.Extra.Foldable
 
 import Relude
 
+
+-- $setup
 
 {- | A left-associative fold that's tail-recursive but can still short-circuit.
 Returning a 'Left' short-circuits and immediately returns the value inside.
@@ -41,9 +44,17 @@ foldlSC f = flip $ foldr go id
         Right r -> k r
 {-# INLINE foldlSC #-}
 
-{- | Compute average of 'Foldable'
->>> average [1,2,3,4]
+{- | Given a 'Foldable' of 'Fractional' elements, computes the average if
+possible and returns 'Maybe' element.
+
+>>> average [42]
+Just 42.0
+>>> average @Double [1, 2, 3, 4]
 Just 2.5
+>>> average @Float [1.5, 2.5 ,3 ,4]
+Just 2.75
+>>> average []
+Nothing
 
 @since 0.8.0.0
 -}

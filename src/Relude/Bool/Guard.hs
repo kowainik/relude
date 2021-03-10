@@ -3,7 +3,7 @@
 {- |
 Copyright:  (c) 2016 Stephen Diehl
             (c) 2016-2018 Serokell
-            (c) 2018-2020 Kowainik
+            (c) 2018-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
@@ -38,6 +38,7 @@ import Relude.Monad (Monad, MonadPlus, (>>=))
 -- >>> import Relude (Int, String, even, const)
 
 {- | Monadic version of 'when'.
+Conditionally executes the provided action.
 
 >>> whenM (pure False) $ putTextLn "No text :("
 >>> whenM (pure True)  $ putTextLn "Yes text :)"
@@ -53,7 +54,8 @@ whenM :: Monad m => m Bool -> m () -> m ()
 whenM p m = p >>= flip when m
 {-# INLINE whenM #-}
 
-{- | Monadic version of 'unless'.
+{- | Monadic version of 'unless'. Reverse of 'whenM'.
+Conditionally don't execute the provided action.
 
 >>> unlessM (pure False) $ putTextLn "No text :("
 No text :(
@@ -67,12 +69,23 @@ unlessM p m = p >>= flip unless m
 
 >>> ifM (pure True) (putTextLn "True text") (putTextLn "False text")
 True text
+>>> ifM (pure False) (putTextLn "True text") (putTextLn "False text")
+False text
 -}
 ifM :: Monad m => m Bool -> m a -> m a -> m a
 ifM p x y = p >>= \b -> if b then x else y
 {-# INLINE ifM #-}
 
-{- | Monadic version of 'guard'. Occasionally useful.
+{- | Monadic version of 'guard' that help to check that a condition ('Bool')
+holds inside. Works with 'Monad's that are also 'Alternative'.
+
+>>> guardM (Just True)
+Just ()
+>>> guardM (Just False)
+Nothing
+>>> guardM Nothing
+Nothing
+
 Here some complex but real-life example:
 
 @
@@ -90,7 +103,7 @@ guardM f = f >>= guard
 {-# INLINE guardM #-}
 
 {- | Either lifts a value into an alternative context or gives a
-minimal value depending on a predicate.
+minimal value depending on a predicate. Works with 'Alternative's.
 
 >>> guarded even 3 :: [Int]
 []
@@ -118,7 +131,11 @@ guarded :: Alternative f => (a -> Bool) -> a -> f a
 guarded p a = if p a then pure a else empty
 {-# INLINE guarded #-}
 
-{- | Monadic version of 'Data.Bool.(&&)' operator.
+{- | Monadic version of '(Data.Bool.&&)' operator.
+
+It is lazy by the second argument (similar to '(Data.Bool.||)'), meaning that if
+the first argument is 'False', the function will return 'False' without evaluating
+the second argument.
 
 >>> Just False &&^ Just True
 Just False
@@ -137,7 +154,11 @@ Just False
 (&&^) e1 e2 = ifM e1 e2 (pure False)
 {-# INLINE (&&^) #-}
 
-{- | Monadic version of 'Data.Bool.(||)' operator.
+{- | Monadic version of '(Data.Bool.||)' operator.
+
+It is lazy by the second argument (similar to '(Data.Bool.||)'), meaning that if
+the first argument is 'True', the function will return 'True' without evaluating
+the second argument.
 
 >>> Just False ||^ Just True
 Just True

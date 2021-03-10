@@ -86,7 +86,10 @@ maybeAt :: Int -> [a] -> Maybe a
 maybeAt = flip (!!?)
 {-# INLINE maybeAt #-}
 
-{- | Partitions a list based on the result of function which produces an Either value. List of all elements producing Left are extracted, in order, to the first element of the output tuple. Similarly, a list of all elements producing Right are extracted to the second element of output.
+{- | Partitions a list based on the result of function which produces an Either
+value. List of all elements producing Left are extracted, in order, to the first
+element of the output tuple. Similarly, a list of all elements producing Right
+are extracted to the second element of output.
 
 >>> :{
  divideEvenOrShow :: Int -> Either Int String

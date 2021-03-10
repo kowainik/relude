@@ -9,7 +9,7 @@
 
 {- |
 Copyright:  (c) 2011-2015 Edward Kmett
-            (c) 2018-2020 Kowainik
+            (c) 2018-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Experimental
@@ -387,8 +387,13 @@ foldl1' _ (x :| [])     = x
 foldl1' f (x :| (y:ys)) = foldl' f (f x y) ys
 {-# INLINE foldl1' #-}
 
-{- | Compute average of 'Foldable1'
->>> average1 (1:|[2,3,4])
+{- |  Given a 'Foldable1' of 'Fractional' elements, computes the average if
+possible and returns the resulting element.
+
+
+>>> average1 (42 :| [])
+42.0
+>>> average1 (1 :| [2,3,4])
 2.5
 
 @since 0.8.0.0
@@ -396,4 +401,3 @@ foldl1' f (x :| (y:ys)) = foldl' f (f x y) ys
 average1 :: forall a f . (Foldable1 f, Fractional a) => f a -> a
 average1 = uncurry (/) . foldl' (\(!total, !count) x -> (total + x, count + 1)) (0,0)
 {-# INLINE average1 #-}
-

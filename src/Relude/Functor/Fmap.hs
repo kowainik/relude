@@ -4,7 +4,7 @@
 {- |
 Copyright: (c) 2016 Stephen Diehl
            (c) 2016-2018 Serokell
-           (c) 2018-2020 Kowainik
+           (c) 2018-2021 Kowainik
 SPDX-License-Identifier: MIT
 Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
@@ -29,7 +29,12 @@ import Data.Functor ((<&>))
 #else
 
 
--- | Flipped version of '<$>'.
+{- | Flipped version of '<$>'.
+
+@
+f <$> a = a <&> f
+@
+-}
 infixl 1 <&>
 (<&>) :: Functor f => f a -> (a -> b) -> f b
 as <&> f = f <$> as
