@@ -739,16 +739,16 @@ using `Dhall` to maintain the configurations. To use it follow the steps below.
 First time:
 
 ```shell
-$ cabal v2-install dhall-json
+$ cabal v2-install dhall-yaml
 ```
 
 Dhall 16.0.0 is required, so make sure that the previous command installed
-`dhall-json` >= 1.6.4.
+`dhall-yaml` >= 1.2.5.
 
 To generate `hlint` file:
 
 ```shell
-$ dhall-to-yaml <<< './hlint/hlint.dhall' > .hlint.yaml
+$ dhall-to-yaml-ng <<< './hlint/hlint.dhall' > .hlint.yaml
 ```
 
 Check that you have generated valid `.hlint.yaml` file without parse errors:

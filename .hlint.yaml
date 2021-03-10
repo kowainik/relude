@@ -1,15 +1,15 @@
 - arguments:
-    - "-XConstraintKinds"
-    - "-XDeriveGeneric"
-    - "-XGeneralizedNewtypeDeriving"
-    - "-XLambdaCase"
-    - "-XOverloadedStrings"
-    - "-XRecordWildCards"
-    - "-XScopedTypeVariables"
-    - "-XStandaloneDeriving"
-    - "-XTupleSections"
-    - "-XTypeApplications"
-    - "-XViewPatterns"
+  - "-XConstraintKinds"
+  - "-XDeriveGeneric"
+  - "-XGeneralizedNewtypeDeriving"
+  - "-XLambdaCase"
+  - "-XOverloadedStrings"
+  - "-XRecordWildCards"
+  - "-XScopedTypeVariables"
+  - "-XStandaloneDeriving"
+  - "-XTupleSections"
+  - "-XTypeApplications"
+  - "-XViewPatterns"
 - ignore:
     name: Use head
 - ignore:
@@ -233,13 +233,13 @@
     lhs: partitionEithers . map f
     rhs: partitionWith f
 - warn:
-    lhs: "partitionEithers $ map f x"
+    lhs: partitionEithers $ map f x
     rhs: partitionWith f x
 - warn:
     lhs: "f >>= guard"
     rhs: guardM f
 - warn:
-    lhs: "guard =<< f"
+    lhs: guard =<< f
     rhs: guardM f
 - warn:
     lhs: forever
@@ -330,7 +330,7 @@
     lhs: "maybe (return ()) f =<< m"
     rhs: whenJustM m f
 - warn:
-    lhs: "maybe pass        f =<< m"
+    lhs: maybe pass        f =<< m
     rhs: whenJustM m f
 - warn:
     lhs: "m >>= maybe (pure ())   f"
@@ -1798,7 +1798,7 @@
     lhs: Data.Function.on
     name: "Use 'on' from Relude"
     note: "'on' is already exported from Relude"
-    rhs: "on"
+    rhs: 'on'
 - warn:
     lhs: Data.Bifunctor.Bifunctor
     name: "Use 'Bifunctor' from Relude"
