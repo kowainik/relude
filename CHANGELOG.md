@@ -18,6 +18,15 @@ The changelog is available [on GitHub][2].
   your `.cabal` file after upgrading to this version of `relude` to
   see if you still need them.
 
+  To utilise this feature, update the `mixin` part of your package
+  configuration (if you're using the mixins approach) to the following:
+
+  ```cabal
+  mixins:   base hiding (Prelude)
+          , relude (Relude as Prelude)
+          , relude
+  ```
+
 * Upgrade to GHC-8.10.3, GHC-8.8.4.
 * Add `infinitely` as more strictly typed `forever`.
 * Remove `Eq` constraint on `universeNonEmpty`

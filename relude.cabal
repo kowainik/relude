@@ -53,9 +53,12 @@ description:
        types and functions into scope, and make available functions easier
        to use. Some examples of conveniences:
 
-        1. No need to import types like @NonEmpty@, @Text@, @Set@, @Reader[T]@, @MVar@, @STM@
-        2. Functions like @liftIO@, @fromMaybe@, @sortWith@ are avaiable by default as well
-        3. @IO@ actions are lifted to @MonadIO@
+        1. No need to add @containers@, @unordered-containers@, @text@
+           and @bytestring@ to dependencies in your @.cabal@ file to
+           use the main API of these libraries
+        2. No need to import types like @NonEmpty@, @Text@, @Set@, @Reader[T]@, @MVar@, @STM@
+        3. Functions like @liftIO@, @fromMaybe@, @sortWith@ are avaiable by default as well
+        4. @IO@ actions are lifted to @MonadIO@
 
     * __Excellent documentation.__
 
