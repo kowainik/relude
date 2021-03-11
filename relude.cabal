@@ -53,9 +53,12 @@ description:
        types and functions into scope, and make available functions easier
        to use. Some examples of conveniences:
 
-        1. No need to import types like @NonEmpty@, @Text@, @Set@, @Reader[T]@, @MVar@, @STM@
-        2. Functions like @liftIO@, @fromMaybe@, @sortWith@ are avaiable by default as well
-        3. @IO@ actions are lifted to @MonadIO@
+        1. No need to add @containers@, @unordered-containers@, @text@
+           and @bytestring@ to dependencies in your @.cabal@ file to
+           use the main API of these libraries
+        2. No need to import types like @NonEmpty@, @Text@, @Set@, @Reader[T]@, @MVar@, @STM@
+        3. Functions like @liftIO@, @fromMaybe@, @sortWith@ are avaiable by default as well
+        4. @IO@ actions are lifted to @MonadIO@
 
     * __Excellent documentation.__
 
@@ -188,6 +191,32 @@ library
                                Relude.Extra.Tuple
                                Relude.Extra.Type
                            Relude.Unsafe
+
+  reexported-modules:
+    -- containers
+    , Data.IntMap.Lazy
+    , Data.IntMap.Strict
+    , Data.IntSet
+    , Data.Map.Lazy
+    , Data.Map.Strict
+    , Data.Set
+    , Data.Sequence
+    , Data.Tree
+    -- unordered-containers
+    , Data.HashMap.Lazy
+    , Data.HashMap.Strict
+    , Data.HashSet
+    -- text
+    , Data.Text
+    , Data.Text.IO
+    , Data.Text.Lazy
+    , Data.Text.Lazy.IO
+    , Data.Text.Read
+    -- bytestring
+    , Data.ByteString
+    , Data.ByteString.Builder
+    , Data.ByteString.Lazy
+    , Data.ByteString.Short
 
 
   build-depends:       bytestring >= 0.10 && < 0.12

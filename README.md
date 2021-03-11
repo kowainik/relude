@@ -69,6 +69,10 @@ the library. So below you can find the key design principles behind `relude`:
 6. **Convenience**. Despite minimalism, we want to bring commonly used
    types and functions into scope, and make available functions easier
    to use. Some examples of conveniences:
+
+   + No need to add `containers`, `unordered-containers`, `text` and
+     `bytestring` to dependencies in your `.cabal` file to use the
+     main API of these libraries
    + No need to import types like `NonEmpty`, `Text`, `Set`, `Reader[T]`, `MVar`, `STM`
    + Functions like `liftIO`, `fromMaybe`, `sortWith` are avaiable by default as well
    + `IO` actions are lifted to `MonadIO`
@@ -200,9 +204,17 @@ For this you need to add the following lines into your `.cabal` file:
 ```haskell
   mixins:   base hiding (Prelude)
           , relude (Relude as Prelude)
+          , relude
 ```
 
 > **NOTE:** this requires Cabal version to be at least `2.2`
+
+The above syntax does the following:
+
+1. Makes all modules of `base` available except `Prelude`.
+2. Renames the `Relude` module in `relude` to `Prelude`.
+3. Additionally allows importing all other modules from `relude`
+   (extra modules and reexports from other libraries).
 
 See the following complete example of how your `.cabal` file may look
 like after the set up:
@@ -219,6 +231,7 @@ library
 
   mixins:              base hiding (Prelude)
                      , relude (Relude as Prelude)
+                     , relude
 
   default-language:    Haskell2010
 ```
@@ -227,19 +240,21 @@ library
 > generate a Haskell project, the tool automatically creates the `mixins`
 > field when you specify a custom prelude.
 
-If you want to bring a non-default module of `relude`, e.g. `Relude.Extra.Enum`
-or `Relude.Unsafe`, you need to list it under the `mixins` field as well,
-like this:
+If you want to restrict allowed modules in `relude` to a specific list
+(e.g. use only `Relude.Extra.Enum` or `Relude.Unsafe` or `Data.Text`
+from `text`), you can alternatively list them explicitly under the
+first `mixins` entry field as well, like this:
 
 ```cabal
   mixins: base hiding (Prelude)
         , relude (Relude as Prelude
                  , Relude.Extra.Enum
-                 , ...
+                 , Relude.Unsafe
+                 , Data.Text
                  )
 ```
 
-If you want to bring all `Extra.*` modules into scope, you can add
+If you want to bring only all `Extra.*` modules into scope, you can add
 a single `Relude.Extra` module to `mixins`, and after that you can import all
 extra functions and data types from `Relude.Extra`. This is the
 easiest way to bring all functions and types from `relude` to your project
