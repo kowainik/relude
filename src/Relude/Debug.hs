@@ -25,8 +25,14 @@ Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
 Portability: Portable
 
-Functions for debugging and prototyping. If you leave these functions in your
-code then a warning is generated to remind you about left usages.
+This module contains functions for debugging __pure__ functions. You
+can't use functions like 'System.IO.putStrLn' for this purpose because
+they require to change type signature, but functions in this module
+avoid this problem by being pure on their own.
+
+Additionally, these functions produce compile-time warnings, if you leave them
+in your code. Warnings help you to cleanup all debugging usages before
+releasing.
 
 @
 __ghci>__ foo = trace "I forgot trace in code"
@@ -36,20 +42,44 @@ __ghci>__ foo = trace "I forgot trace in code"
     "'trace' remains in code"
 @
 
-__⚠ NOTE:__ Use these functions only for debugging purposes. They break referential
-transparency, they are only useful when you want to observe intermediate values
-of your pure functions.
+The following table briefly shows names and types of all functions in
+this module.
+
++-----------------+----------------------------------------+
+| __Name__        | __Type__                               |
++=================+========================================+
+| 'trace'         | @String -> a -> a@                     |
++-----------------+----------------------------------------+
+| 'traceShow'     | @Show a => a -> b -> b@                |
++-----------------+----------------------------------------+
+| 'traceShowId'   | @Show a => a -> a@                     |
++-----------------+----------------------------------------+
+| 'traceShowWith' | @Show b => (a -> b) -> a -> a@         |
++-----------------+----------------------------------------+
+| 'traceId'       | @String -> String@                     |
++-----------------+----------------------------------------+
+| 'traceM'        | @(Applicative f) => String -> f ()@    |
++-----------------+----------------------------------------+
+| 'traceShowM'    | @(Show a, Applicative f) => a -> f ()@ |
++-----------------+----------------------------------------+
+
+__⚠ NOTE:__ Use these functions only for local debugging
+purposes. They break referential transparency, they are only useful
+when you want to observe intermediate values of your pure functions
+and to understand the behaviour locally. If you want to log debug
+messages in your application, consider using a logging library
+instead.
 -}
 
 module Relude.Debug
     ( -- * Tracing
       trace
-    , traceM
-    , traceId
     , traceShow
     , traceShowId
-    , traceShowM
     , traceShowWith
+    , traceId
+    , traceM
+    , traceShowM
 
       -- * Imprecise error
     , error
@@ -78,7 +108,8 @@ import qualified Prelude
 -- trace
 ----------------------------------------------------------------------------
 
-{- | Version of 'Debug.Trace.trace' that leaves warning.
+{- | Prints the given 'String' message and returns the passed value of
+type @a@.
 
 >>> increment l = map (+1) l
 >>> increment [2, 3, 4]
@@ -89,12 +120,17 @@ import qualified Prelude
 incrementing each value of: [2,3,4]
 [3,4,5]
 
+* If you want to print a 'Show'able value instead of 'String', use 'traceShow'.
+* If you want to print the value itself, use 'traceShowId'.
+* If you want to print by specifying a custom formatting function, use 'traceShowWith'.
+
 -}
 trace :: String -> a -> a
 trace = Debug.trace
 {-# WARNING trace "'trace' remains in code" #-}
 
-{- | Version of 'Debug.Trace.traceShow' that leaves warning.
+{- | Similar to 'trace' but prints a given value with the 'Show'
+instance instead of a 'String'.
 
 >>> increment l = map (+1) l
 >>> increment [2, 3, 4]
@@ -105,41 +141,52 @@ trace = Debug.trace
 [2,3,4]
 [3,4,5]
 
+* If you want to print a specific 'String' instead, use 'trace'
+* If you want to print and return the same value, use 'traceShowId'
+* If you want to specify a custom printing function, use 'traceShowWith'
 -}
 traceShow :: Show a => a -> b -> b
 traceShow = Debug.traceShow
 {-# WARNING traceShow "'traceShow' remains in code" #-}
 
-{- | Version of 'Debug.Trace.traceShowId' that leaves warning.
+{- | Similar to 'traceShow' but prints the given value itself instead
+of a separate value.
 
 >>> traceShowId (1+2+3, "hello" ++ "world")
 (6,"helloworld")
 (6,"helloworld")
 
+* If you to specify a different value to print, use 'trace' or 'traceShow'
+* If you want to have more control over printing, use 'traceShowWith'
 -}
 traceShowId :: Show a => a -> a
 traceShowId = Debug.traceShowId
 {-# WARNING traceShowId "'traceShowId' remains in code" #-}
 
-{- |
-Like 'traceShowId', but uses a provided function to convert
-the argument to a value with the 'Show' constraint.
+{- | Similar 'traceShowId', but uses a provided function to convert the
+argument to a value with the 'Show' constraint.
 
 >>> traceShowWith fst (1, "ABC")
 1
 (1,"ABC")
 
-Can be used on things which do not have `Show` instance too:
+In other words, @'traceShowId' ≡ 'traceShowWith' id@.
+
+This function is useful for debugging values that do not have 'Show'
+instance:
 
 >>> fst $ traceShowWith fst (1, id)
 1
 1
+
+* If you don't need such flexibility, use simpler 'trace', 'traceShow' or 'traceShowId'
 -}
 traceShowWith :: Show b => (a -> b) -> a -> a
 traceShowWith f v = Debug.traceShow (f v) v
 {-# WARNING traceShowWith "'traceShowWith remains in code" #-}
 
-{- | Version of 'Debug.Trace.traceM' that leaves warning.
+{- | Trace function to print values while working a pure monad
+(e.g. 'Maybe', 'State', etc.)
 
 >>> :{
 let action :: Maybe Int
@@ -154,6 +201,8 @@ in action
 x: 3
 y: 12
 Just 18
+
+* If you want to print a value with the 'Show' instance instead, use 'traceShowM'
 -}
 traceM :: (Applicative f) => String -> f ()
 traceM = Debug.traceM
@@ -181,7 +230,7 @@ traceShowM :: (Show a, Applicative f) => a -> f ()
 traceShowM = Debug.traceShowM
 {-# WARNING traceShowM "'traceShowM' remains in code" #-}
 
-{- | Version of 'Debug.Trace.traceId' that leaves warning.
+{- | Similar to 'traceShowId' but specialised for 'String'.
 
 >>> traceId "hello"
 "hello
