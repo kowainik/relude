@@ -27,7 +27,7 @@ Portability: Portable
 
 This module contains functions for debugging __pure__ functions. You
 can't use functions like 'System.IO.putStrLn' for this purpose because
-they require to change type signature, but functions in this module
+they require changes to the type signature, but functions in this module
 avoid this problem by being pure on their own.
 
 Additionally, these functions produce compile-time warnings, if you leave them
