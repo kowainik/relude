@@ -1,4 +1,4 @@
-cabal-version:       2.4
+cabal-version:       3.0
 name:                relude
 version:             0.7.0.0
 synopsis:            Safe, performant, user-friendly and lightweight Haskell Standard Library
@@ -6,19 +6,19 @@ description:
     @__relude__@ is an alternative prelude library. If you find the default
     @Prelude@ unsatisfying, despite its advantages, consider using @relude@
     instead.
-    .
+
     == Relude goals and design principles
     * __Productivity.__ You can be more productive with a "non-standard" standard
       library, and @relude@ helps you with writing safer and more
       efficient code faster.
-    .
+
     * __Total programming__. Usage of [/partial functions/](https://www.reddit.com/r/haskell/comments/5n51u3/why_are_partial_functions_as_in_head_tail_bad/)
       can lead to unexpected bugs and runtime exceptions in pure
       code. The types of partial functions lie about their behaviour. And
       even if it is not always possible to rely only on total functions,
       @relude@ strives to encourage best-practices and reduce the
       chances of introducing a bug.
-    .
+
         +---------------------------------+--------------------------------------------+
         | __Partial__                     | __Total__                                  |
         +=================================+============================================+
@@ -30,51 +30,46 @@ description:
         +---------------------------------+--------------------------------------------+
         | @fromJust :: Maybe a -> a@      | @fromMaybe :: a -> Maybe a -> a@           |
         +---------------------------------+--------------------------------------------+
-    .
+
     * __Type-safety__. We use the /"make invalid states unrepresentable"/ motto as one
       of our guiding principles. If it is possible, we express this concept through the
       types.
-      /Example:/ @ whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f () @
-    .
+
+        /Example:/ @ whenNotNull :: Applicative f => [a] -> (NonEmpty a -> f ()) -> f () @
+
     * __Performance.__ We prefer @Text@ over @[String](https://www.reddit.com/r/haskell/comments/29jw0s/whats_wrong_with_string/)@,
       use space-leaks-free functions (e.g. our custom performant @sum@ and @product@),
       introduce @\{\-\# INLINE \#\-\}@ and @\{\-\# SPECIALIZE \#\-\}@ pragmas where
       appropriate, and make efficient container types
       (e.g. @Map@, @HashMap@, @Set@) more accesible.
-    .
+
     * __Minimalism__ (low number of dependencies). We do not force users of
       @relude@ to stick to any specific lens or text formatting or logging
       library. Where possible, @relude@ depends only on boot libraries.
       The [Dependency graph](https://raw.githubusercontent.com/kowainik/relude/main/relude-dependency-graph.png)
       of @relude@ can give you a clearer picture.
-    .
+
     * __Convenience__. Despite minimalism, we want to bring commonly used
        types and functions into scope, and make available functions easier
        to use. Some examples of conveniences:
-    .
-       1. No need to import types like @NonEmpty@, @Text@, @Set@, @Reader[T]@, @MVar@, @STM@
-    .
-       2. Functions like @liftIO@, @fromMaybe@, @sortWith@ are avaiable by default as well
-    .
-       3. @IO@ actions are lifted to @MonadIO@
-    .
+
+        1. No need to import types like @NonEmpty@, @Text@, @Set@, @Reader[T]@, @MVar@, @STM@
+        2. Functions like @liftIO@, @fromMaybe@, @sortWith@ are avaiable by default as well
+        3. @IO@ actions are lifted to @MonadIO@
+
     * __Excellent documentation.__
-    .
+
         1. Tutorial
-    .
         2. Migration guide from @Prelude@
-    .
         3. Haddock for every function with examples tested by
            [doctest](http://hackage.haskell.org/package/doctest).
-    .
         4. Documentation regarding [internal module structure](http://hackage.haskell.org/package/relude/docs/Relude.html)
-    .
         5. @relude@-specific [HLint](http://hackage.haskell.org/package/hlint) rules: @[.hlint.yaml](https://github.com/kowainik/relude/blob/main/.hlint.yaml)@
-    .
+
     * __User-friendliness.__ Anyone should be able to quickly migrate to @relude@. Only
       some basic familiarity with the common libraries like @text@ and @containers@
       should be enough (but not necessary).
-    .
+
     * __Exploration.__ We have space to experiment with new ideas and proposals
       without introducing breaking changes. @relude@ uses the approach with
       @Extra.*@ modules which are not exported by default. The chosen approach makes it quite
