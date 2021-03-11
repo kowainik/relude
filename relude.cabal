@@ -268,7 +268,7 @@ benchmark relude-benchmark
   main-is:             Main.hs
 
   build-depends:       relude
-                     , gauge
+                     , criterion
                      , unordered-containers
 
   ghc-options:         -threaded

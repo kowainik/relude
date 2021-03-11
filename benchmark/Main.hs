@@ -5,8 +5,8 @@ module Main (main) where
 import Relude hiding (show)
 
 import Data.List (nub)
-import Gauge (Benchmark, bench, bgroup, nf)
-import Gauge.Main (defaultMain)
+import Criterion (Benchmark, bench, bgroup, nf)
+import Criterion.Main (defaultMain)
 import Prelude (show)
 
 import qualified Data.HashSet as HashSet (insert)
