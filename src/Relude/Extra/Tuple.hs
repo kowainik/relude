@@ -26,8 +26,13 @@ module Relude.Extra.Tuple
     , traverseBoth
     ) where
 
-import Relude
+import Relude.Function ((.))
+import Relude.Functor (Functor (..), (<$>))
+import Relude.Applicative (Applicative (..))
 
+
+-- $setup
+-- >>> import Relude
 
 {- | Creates a tuple by pairing something with itself.
 

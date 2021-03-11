@@ -94,6 +94,8 @@ module Relude
       -- $debug
     , module Relude.DeepSeq
       -- $deepseq
+    , module Relude.Enum
+      -- $enum
     , module Relude.Exception
       -- $exception
     , module Relude.File
@@ -131,6 +133,7 @@ import Relude.Bool
 import Relude.Container
 import Relude.Debug
 import Relude.DeepSeq
+import Relude.Enum
 import Relude.Exception
 import Relude.File
 import Relude.Foldable
@@ -173,6 +176,11 @@ warnings (so you don't forget to remove them).
 {- $deepseq
 __"Relude.DeepSeq"__ has reexports from "Control.DeepSeq" module and functions
 to evaluate expressions to weak-head normal form or normal form.
+-}
+
+{- $enum
+__"Relude.Enum"__ reexports 'Enum' related typeclasses and functions. Also
+introduced a few useful helpers to work with Enums.
 -}
 
 {- $exception

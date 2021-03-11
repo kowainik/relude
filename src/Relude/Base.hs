@@ -33,7 +33,6 @@ module Relude.Base
 
       -- * Basic type classes
     , module GHC.Base
-    , module GHC.Enum
     , module GHC.Generics
     , module GHC.Show
 
@@ -62,7 +61,6 @@ import Data.Typeable (Typeable)
 import Data.Void (Void, absurd, vacuous)
 
 import GHC.Base (asTypeOf, ord, seq, ($!))
-import GHC.Enum (Bounded (..), Enum (..), boundedEnumFrom, boundedEnumFromThen)
 import GHC.Generics (Generic)
 import GHC.Show (Show)
 
