@@ -189,6 +189,33 @@ library
                                Relude.Extra.Type
                            Relude.Unsafe
 
+  reexported-modules:
+    -- containers
+    , Data.IntMap.Lazy
+    , Data.IntMap.Strict
+    , Data.IntSet
+    , Data.Map.Lazy
+    , Data.Map.Strict
+    , Data.Set
+    , Data.Sequence
+    , Data.Tree
+    -- unordered-containers
+    , Data.HashMap
+    , Data.HashMap.Lazy
+    , Data.HashMap.Strict
+    , Data.HashSet
+    -- text
+    , Data.Text
+    , Data.Text.IO
+    , Data.Text.Lazy
+    , Data.Text.Lazy.IO
+    , Data.Text.Read
+    -- bytestring
+    , Data.ByteString
+    , Data.ByteString.Builder
+    , Data.ByteString.Lazy
+    , Data.ByteString.Short
+
 
   build-depends:       bytestring >= 0.10 && < 0.12
                      , containers >= 0.5.7 && < 0.7
