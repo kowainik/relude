@@ -200,7 +200,6 @@ library
     , Data.Sequence
     , Data.Tree
     -- unordered-containers
-    , Data.HashMap
     , Data.HashMap.Lazy
     , Data.HashMap.Strict
     , Data.HashSet
