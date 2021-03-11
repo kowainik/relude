@@ -38,8 +38,9 @@ import GHC.Real (Fractional (..), Integral (..), Ratio, Rational, Real (..), Rea
                  denominator, even, fromIntegral, gcd, lcm, numerator, odd, realToFrac, (^), (^^))
 import Numeric.Natural (Natural)
 
-import Relude.Base (Bounded (..), (<), (>))
+import Relude.Base ((<), (>))
 import Relude.Bool (otherwise)
+import Relude.Enum (Bounded (..))
 import Relude.Function (($))
 import Relude.Monad (Maybe (..))
 

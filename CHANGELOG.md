@@ -35,6 +35,14 @@ The changelog is available [on GitHub][2].
   Reimplement `ordNub` through `nubOrd` from `containers`.
 
   Add `intNub` and `intNubOn` functions.
+* [#270](https://github.com/kowainik/relude/issues/270):
+  Standardise `universe`, `universeNonEmpty` and `inverseMap` functions that
+  previously were introduced in the `Relude.Extra.Enum` module. `Relude.Enum`
+  module created that is exported in the main `Relude` module by default.
+
+  __Migration guide:__ If you were using any of these functions you can now
+  remove `Relude.Extra.Enum` from your imports and explicit `mixins` section 
+  as they are available for you with the `Relude` module.
 * [#347](https://github.com/kowainik/relude/issues/347):
   Add `ordNubOn` function.
 * [#268](https://github.com/kowainik/relude/issues/268):

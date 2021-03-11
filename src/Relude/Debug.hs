@@ -92,8 +92,8 @@ import GHC.Exts (RuntimeRep, TYPE)
 import GHC.TypeLits (ErrorMessage (..), TypeError)
 
 import Relude.Applicative (Applicative)
-import Relude.Base (Bounded, Char, Constraint, Enum, Eq, Generic, HasCallStack, Ord, Show, Type,
-                    Typeable)
+import Relude.Base (Char, Constraint, Eq, Generic, HasCallStack, Ord, Show, Type, Typeable)
+import Relude.Enum (Bounded, Enum)
 import Relude.String (Read, String, Text, toString)
 
 import qualified Debug.Trace as Debug

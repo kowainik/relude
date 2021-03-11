@@ -144,6 +144,7 @@ library
                                Relude.Container.Reexport
                            Relude.Debug
                            Relude.DeepSeq
+                           Relude.Enum
                            Relude.Exception
                            Relude.File
                            Relude.Foldable
