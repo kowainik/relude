@@ -5,7 +5,7 @@ Maintainer:  Kowainik <xrom.xkov@gmail.com>
 Stability:   Stable
 Portability: Portable
 
-Reexports 'Enum' related typeclasses and functions. Also introduced a few useful
+Reexports 'Enum' related typeclasses and functions. Also introduces a few useful
 helpers to work with Enums.
 
 **Note:** 'universe', 'universeNonEmpty' and 'inverseMap' were previously in the
