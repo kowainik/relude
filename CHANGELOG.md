@@ -5,6 +5,19 @@ The changelog is available [on GitHub][2].
 
 ## Unreleased: 0.8.0.0
 
+* [#353](https://github.com/kowainik/relude/issues/353):
+  Reexport most common modules from the following libraries:
+
+    + `containers`
+    + `unordered-containers`
+    + `text`
+    + `bytestring`
+
+  Now, when using `relude`, you don't need to add these libraries to
+  your `.cabal` file to enjoy their main API. Try removing them from
+  your `.cabal` file after upgrading to this version of `relude` to
+  see if you still need them.
+
 * Upgrade to GHC-8.10.3, GHC-8.8.4.
 * Add `infinitely` as more strictly typed `forever`.
 * Remove `Eq` constraint on `universeNonEmpty`
@@ -16,7 +29,7 @@ The changelog is available [on GitHub][2].
 * [#347](https://github.com/kowainik/relude/issues/347):
   Add `ordNubOn` function.
 * [#268](https://github.com/kowainik/relude/issues/268):
-  Dpor support of GHC-8.0.2.
+  Drop support of GHC-8.0.2.
 
 ## 0.7.0.0 — May 14, 2020
 

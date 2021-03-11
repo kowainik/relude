@@ -200,7 +200,14 @@ For this you need to add the following lines into your `.cabal` file:
 ```haskell
   mixins:   base hiding (Prelude)
           , relude (Relude as Prelude)
+          , relude
 ```
+
+The above syntax does the following:
+
+1. Makes all modules of `base` available except `Prelude`.
+2. Renames the `Relude` module in `relude` to `Prelude`.
+3. Additionally allows importing all other modules from `relude`.
 
 > **NOTE:** this requires Cabal version to be at least `2.2`
 
@@ -219,6 +226,7 @@ library
 
   mixins:              base hiding (Prelude)
                      , relude (Relude as Prelude)
+                     , relude
 
   default-language:    Haskell2010
 ```
@@ -227,9 +235,10 @@ library
 > generate a Haskell project, the tool automatically creates the `mixins`
 > field when you specify a custom prelude.
 
-If you want to bring a non-default module of `relude`, e.g. `Relude.Extra.Enum`
-or `Relude.Unsafe`, you need to list it under the `mixins` field as well,
-like this:
+If you want to restrict allowed modules in `relude` to a specific list
+(e.g. use only `Relude.Extra.Enum` or `Relude.Unsafe`), you can
+alternatively list them explicitly under the first `mixins` entry
+field as well, like this:
 
 ```cabal
   mixins: base hiding (Prelude)
@@ -239,7 +248,7 @@ like this:
                  )
 ```
 
-If you want to bring all `Extra.*` modules into scope, you can add
+If you want to bring only all `Extra.*` modules into scope, you can add
 a single `Relude.Extra` module to `mixins`, and after that you can import all
 extra functions and data types from `Relude.Extra`. This is the
 easiest way to bring all functions and types from `relude` to your project

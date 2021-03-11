@@ -34,6 +34,7 @@ library
   ...
   mixins: base hiding (Prelude)
         , relude (Relude as Prelude)
+        , relude
 @
 
 === @base-noprelude@
