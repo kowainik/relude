@@ -81,6 +81,7 @@ Nothing
 >>> maybeAt 2 ["a", "b", "c"]
 Just "c"
 
+@since 1.0.0.0
 -}
 maybeAt :: Int -> [a] -> Maybe a
 maybeAt = flip (!!?)

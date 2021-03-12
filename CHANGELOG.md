@@ -97,6 +97,7 @@ The changelog is available [on GitHub][2].
 * [#304](https://github.com/kowainik/relude/issues/304),
   [#317](https://github.com/kowainik/relude/issues/317):
   Various documentation improvements.
+* Updates to `relude`-specific `.hlint` rules.
 
 Thanks @googleson78, @sushi-shi, @rektrex, @aleator, @mjgpy3, @dalpd,
 @Bodigrim for helping with this release!

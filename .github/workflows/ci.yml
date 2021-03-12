@@ -110,7 +110,7 @@ jobs:
         path: ~/.stack
         key: ${{ runner.os }}-${{ matrix.ghc }}-stack
 
-   - name: Install dependencies
+    - name: Install dependencies
       run: |
         stack build --system-ghc --test --bench --no-run-tests --no-run-benchmarks --only-dependencies
 
