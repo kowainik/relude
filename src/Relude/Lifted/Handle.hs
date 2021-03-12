@@ -7,7 +7,7 @@ Portability: Portable
 
 Lifted functions to work with 'IO' 'Handle's.
 
-@since 0.8.0.0
+@since 1.0.0.0
 -}
 
 module Relude.Lifted.Handle
@@ -32,7 +32,7 @@ import System.IO (Handle, stdin, stdout, stderr, withFile, BufferMode (..))
 
 {- | Lifted version of 'IO.hFlush'.
 
-@since 0.8.0.0
+@since 1.0.0.0
 -}
 hFlush :: MonadIO m => IO.Handle -> m ()
 hFlush = liftIO . IO.hFlush
@@ -41,7 +41,7 @@ hFlush = liftIO . IO.hFlush
 
 {- | Lifted version of 'IO.hIsEOF'.
 
-@since 0.8.0.0
+@since 1.0.0.0
 -}
 hIsEOF :: MonadIO m => IO.Handle -> m Bool
 hIsEOF = liftIO . IO.hIsEOF
@@ -50,7 +50,7 @@ hIsEOF = liftIO . IO.hIsEOF
 
 {- | Lifted version of 'IO.hSetBuffering'.
 
-@since 0.8.0.0
+@since 1.0.0.0
 -}
 hSetBuffering :: MonadIO m => IO.Handle -> IO.BufferMode -> m ()
 hSetBuffering h = liftIO . IO.hSetBuffering h
@@ -59,7 +59,7 @@ hSetBuffering h = liftIO . IO.hSetBuffering h
 
 {- | Lifted version of 'IO.hGetBuffering'.
 
-@since 0.8.0.0
+@since 1.0.0.0
 -}
 hGetBuffering :: MonadIO m => IO.Handle -> m IO.BufferMode
 hGetBuffering = liftIO . IO.hGetBuffering

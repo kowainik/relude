@@ -69,7 +69,7 @@ getIntForever = do
 
 In contrast, using 'infinitely' instead of 'forever' in 'foo' is a type error.
 
-@since 0.8.0.0
+@since 1.0.0.0
 -}
 infinitely :: Applicative f => f a -> f Void
 infinitely = forever

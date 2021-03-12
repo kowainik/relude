@@ -180,6 +180,8 @@ instance:
 1
 
 * If you don't need such flexibility, use simpler 'trace', 'traceShow' or 'traceShowId'
+
+@since 1.0.0.0
 -}
 traceShowWith :: Show b => (a -> b) -> a -> a
 traceShowWith f v = Debug.traceShow (f v) v
@@ -252,13 +254,13 @@ error handling mechanism.
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src\\Relude\\Debug.hs:286:11 in ...
+  error, called at src\\Relude\\Debug.hs:288:11 in ...
   ...
 #else
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src/Relude/Debug.hs:286:11 in ...
+  error, called at src/Relude/Debug.hs:288:11 in ...
 ...
 #endif
 

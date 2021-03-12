@@ -227,7 +227,7 @@ version:             0.0.0.0
 library
   exposed-modules:     Example
   build-depends:       base >= 4.10 && < 4.13
-                     , relude ^>= x.x.x.x
+                     , relude ^>= 1.0.0.0
 
   mixins:              base hiding (Prelude)
                      , relude (Relude as Prelude)
@@ -681,7 +681,7 @@ For the latest `relude` version, this can be achieved by executing the following
 two commands on your CI:
 
 ```yaml
-curl https://raw.githubusercontent.com/kowainik/relude/v0.7.0.0/.hlint.yaml -o .hlint-relude.yaml
+curl https://raw.githubusercontent.com/kowainik/relude/v1.0.0.0/.hlint.yaml -o .hlint-relude.yaml
 curl -sSL https://raw.github.com/ndmitchell/neil/master/misc/travis.sh | sh -s -- hlint -h .hlint-relude.yaml .
 ```
 

@@ -13,7 +13,7 @@ extra modules, but due to their benefit in different use cases. If you imported
 @Relude.Extra.Enum@ module, you can remove it now, as these functions are
 reexported in the main "Relude" module.
 
-@since x.x.x.x
+@since 1.0.0.0
 -}
 
 module Relude.Enum

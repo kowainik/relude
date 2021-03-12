@@ -3,7 +3,7 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
-## Unreleased: 0.8.0.0
+## 1.0.0.0 — Mar 12, 2021
 
 * [#353](https://github.com/kowainik/relude/issues/353):
   Reexport most common modules from the following libraries:
@@ -29,14 +29,9 @@ The changelog is available [on GitHub][2].
 
 * [#345](https://github.com/kowainik/relude/issues/345):
   Support GHC-9.0.
-* Upgrade to GHC-8.10.4, GHC-8.8.4.
-* Add `infinitely` as more strictly typed `forever`.
-* Remove `Eq` constraint on `universeNonEmpty`
-* Add `maybeAt`, `!!?` with its arguments flipped.
-* [#346](https://github.com/kowainik/relude/issues/346):
-  Reimplement `ordNub` through `nubOrd` from `containers`.
-
-  Add `intNub` and `intNubOn` functions.
+* Upgrade minor GHC versions to GHC-8.10.4 and GHC-8.8.4.
+* [#268](https://github.com/kowainik/relude/issues/268):
+  Drop support of GHC-8.0.2.
 * [#270](https://github.com/kowainik/relude/issues/270):
   Standardise `universe`, `universeNonEmpty` and `inverseMap` functions that
   previously were introduced in the `Relude.Extra.Enum` module. `Relude.Enum`
@@ -45,11 +40,67 @@ The changelog is available [on GitHub][2].
   __Migration guide:__ If you were using any of these functions you can now
   remove `Relude.Extra.Enum` from your imports and explicit `mixins` section
   as they are available for you with the `Relude` module.
-* [#347](https://github.com/kowainik/relude/issues/347):
-  Add `ordNubOn` function.
-* [#268](https://github.com/kowainik/relude/issues/268):
-  Drop support of GHC-8.0.2.
-* Add lifted `readFile'` function.
+* Remove the `Eq` constraint on `universeNonEmpty`
+* [#269](https://github.com/kowainik/relude/issues/269):
+  Remove the `Relude.Extra.Validation` module.
+
+  __Migration guide:__
+  If you use `Relude.Extra.Validation` in you project you need to:
+
+    1. Add `validation-selective` into the `build-depends` section of your
+       `.cabal` file.
+    2. Change imports of `Relude.Extra.Validation` to `Validation`:
+
+       ```haskell
+       -- Was:
+       import Relude.Extra.Validation (Validation (..), ..)
+       -- Became:
+       import Validation (Validation (..), ..)
+       ```
+
+* [#346](https://github.com/kowainik/relude/issues/346),
+  [#347](https://github.com/kowainik/relude/issues/347):
+  Reimplement `ordNub` through `nubOrd` from `containers`.
+  Add `ordNubOn`, `intNub` and `intNubOn` functions.
+* [#327](https://github.com/kowainik/relude/issues/327):
+  Add `infinitely` as more strictly typed `forever`.
+* [#311](https://github.com/kowainik/relude/issues/311):
+  Add `maybeAt` function — the non-operator version of `!!?` with its
+  arguments flipped.
+* [#314](https://github.com/kowainik/relude/issues/314):
+  Add lifted versions of functions to work with `Handle`:
+
+    + `hFlush`
+    + `hIsEOF`
+    + `hSetBuffering`
+    + `hGetBuffering`
+* [#305](https://github.com/kowainik/relude/issues/305):
+  Add lifted versions of functions to work with environment:
+
+    + `getArgs`
+    + `lookupEnv`
+* Add lifted version of the `readFile'` function.
+* Reexport the `BufferMode` type from `base`.
+* [#309](https://github.com/kowainik/relude/issues/309):
+  Reexport `span` from `Data.List`.
+* [#319](https://github.com/kowainik/relude/issues/319):
+  Implement `partitionWith`.
+* [#307](https://github.com/kowainik/relude/issues/307):
+  Add `foldr1` to `Foldable1`.
+* [#316](https://github.com/kowainik/relude/issues/316):
+  Add `average` and `average1` — efficient functions for finding
+  average on foldable structures.
+* [#306](https://github.com/kowainik/relude/issues/306):
+  Add `maximumOn1` and `minimumOn1` to `Foldable1`.
+* [#301](https://github.com/kowainik/relude/issues/301):
+  Add `traceShowWith` to `Relude.Debug`.
+* [#304](https://github.com/kowainik/relude/issues/304),
+  [#317](https://github.com/kowainik/relude/issues/317):
+  Various documentation improvements.
+* Updates to `relude`-specific `.hlint` rules.
+
+Thanks @googleson78, @sushi-shi, @rektrex, @aleator, @mjgpy3, @dalpd,
+@Bodigrim for helping with this release!
 
 ## 0.7.0.0 — May 14, 2020
 

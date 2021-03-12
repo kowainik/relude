@@ -81,6 +81,7 @@ Nothing
 >>> maybeAt 2 ["a", "b", "c"]
 Just "c"
 
+@since 1.0.0.0
 -}
 maybeAt :: Int -> [a] -> Maybe a
 maybeAt = flip (!!?)
@@ -101,7 +102,7 @@ are extracted to the second element of output.
 >>> partitionWith divideEvenOrShow [1 .. 6]
 ([1,2,3],["Odd: 1","Odd: 3","Odd: 5"])
 
-@since 0.8.0.0
+@since 1.0.0.0
 -}
 partitionWith :: (a -> Either b c) -> [a] -> ([b], [c])
 partitionWith f = partitionEithers . map f

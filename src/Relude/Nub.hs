@@ -99,7 +99,7 @@ function.
 >>> ordNubOn (`div` 10) [3, 3, 3, 13, 2, 22, -1, 1, 66]
 [3,13,22,-1,66]
 
-@since x.x.x.x
+@since 1.0.0.0
 -}
 ordNubOn :: forall b a . (Ord b) => (a -> b) -> [a] -> [a]
 ordNubOn = Containers.nubOrdOn
@@ -154,7 +154,7 @@ Like 'Prelude.nub' but runs in \( O(n \min\(n, int_bits\)) \)  time and requires
 >>> intNub [3, 3, 3, 2, 2, -1, 1]
 [3,2,-1,1]
 
-@since x.x.x.x
+@since 1.0.0.0
 -}
 intNub :: [Int] -> [Int]
 intNub = Containers.nubInt
@@ -166,7 +166,7 @@ intNub = Containers.nubInt
 >>> intNubOn fromEnum "ababbbcdaffee"
 "abcdfe"
 
-@since x.x.x.x
+@since 1.0.0.0
 -}
 intNubOn :: (a -> Int) -> [a] -> [a]
 intNubOn = Containers.nubIntOn
