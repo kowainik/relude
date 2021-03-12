@@ -39,7 +39,7 @@ readFile = liftIO . IO.readFile
 #if ( __GLASGOW_HASKELL__ >= 900 )
 {- | Lifted version of 'IO.readFile''. Strict version of 'readFile'.
 
-@since x.x.x.x
+@since 1.0.0.0
 -}
 readFile' :: MonadIO m => FilePath -> m String
 readFile' = liftIO . IO.readFile'

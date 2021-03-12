@@ -1,11 +1,11 @@
 {-# OPTIONS_GHC -Wno-redundant-constraints #-}
 
+{-# LANGUAGE BangPatterns         #-}
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE Safe                 #-}
 {-# LANGUAGE TypeFamilies         #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE BangPatterns         #-}
 
 {- |
 Copyright:  (c) 2011-2015 Edward Kmett
@@ -31,7 +31,7 @@ module Relude.Extra.Foldable1
     ) where
 
 import Relude hiding (Product (..), Sum (..))
-import Relude.Extra.Newtype (( #. ))
+import Relude.Extra.Newtype ((#.))
 
 import Data.Functor.Product (Product (..))
 import Data.Functor.Sum (Sum (..))
@@ -75,6 +75,8 @@ class Foldable f => Foldable1 f where
     6
     >>> foldr1 (+) 1 $ Identity 3
     4
+
+    @since 1.0.0.0
     -}
     foldr1 :: (a -> b -> b) -> b -> f a -> b
     foldr1 f accum as = appEndo (foldMap1 (Endo #. f) as) accum
@@ -125,6 +127,8 @@ class Foldable f => Foldable1 f where
 
     >>> maximumOn1 abs (0 :| [2, 1, -3, -2])
     -3
+
+    @since 1.0.0.0
     -}
     maximumOn1 :: Ord b => (a -> b) -> f a -> a
     maximumOn1 f = maximumOn1 f . toNonEmpty
@@ -135,6 +139,8 @@ class Foldable f => Foldable1 f where
 
     >>> minimumOn1 abs (0 :| [2, 1, -3, -2])
     0
+
+    @since 1.0.0.0
     -}
     minimumOn1 :: Ord b => (a -> b) -> f a -> a
     minimumOn1 f = minimumOn1 f . toNonEmpty
@@ -178,7 +184,7 @@ instance Foldable1 NonEmpty where
         cmpOn :: a -> a -> a
         cmpOn a b = case func a `compare` func b of
                         GT -> a
-                        _ -> b
+                        _  -> b
     {-# INLINE maximumOn1 #-}
 
     minimumOn1 :: forall a b. Ord b => (a -> b) -> NonEmpty a -> a
@@ -187,7 +193,7 @@ instance Foldable1 NonEmpty where
         cmpOn :: a -> a -> a
         cmpOn a b = case func a `compare` func b of
                         LT -> a
-                        _ -> b
+                        _  -> b
     {-# INLINE minimumOn1 #-}
 
 {- |
@@ -396,7 +402,7 @@ possible and returns the resulting element.
 >>> average1 (1 :| [2,3,4])
 2.5
 
-@since 0.8.0.0
+@since 1.0.0.0
 -}
 average1 :: forall a f . (Foldable1 f, Fractional a) => f a -> a
 average1 = uncurry (/) . foldl' (\(!total, !count) x -> (total + x, count + 1)) (0,0)

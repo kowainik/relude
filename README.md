@@ -227,7 +227,7 @@ version:             0.0.0.0
 library
   exposed-modules:     Example
   build-depends:       base >= 4.10 && < 4.13
-                     , relude ^>= x.x.x.x
+                     , relude ^>= 1.0.0.0
 
   mixins:              base hiding (Prelude)
                      , relude (Relude as Prelude)

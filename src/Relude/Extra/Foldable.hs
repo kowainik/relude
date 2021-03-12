@@ -55,7 +55,7 @@ Just 2.75
 >>> average []
 Nothing
 
-@since 0.8.0.0
+@since 1.0.0.0
 -}
 average :: forall a f . (Foldable f, Fractional a) => f a -> Maybe a
 average xs

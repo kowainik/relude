@@ -7,7 +7,7 @@ Portability: Portable
 
 Lifted functions to work with system environment.
 
-@since 0.8.0.0
+@since 1.0.0.0
 -}
 
 module Relude.Lifted.Env
@@ -24,7 +24,7 @@ import qualified System.Environment as ENV (getArgs, lookupEnv)
 
 {- | Lifted version of 'System.Environment.getArgs'.
 
-@since 0.8.0.0
+@since 1.0.0.0
 -}
 getArgs :: MonadIO m => m [String]
 getArgs = liftIO ENV.getArgs
@@ -33,7 +33,7 @@ getArgs = liftIO ENV.getArgs
 
 {- | Lifted version of 'System.Environment.lookupEnv'.
 
-@since 0.8.0.0
+@since 1.0.0.0
 -}
 lookupEnv :: MonadIO m => String -> m (Maybe String)
 lookupEnv = liftIO . ENV.lookupEnv
