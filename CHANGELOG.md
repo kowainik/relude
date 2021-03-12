@@ -27,7 +27,9 @@ The changelog is available [on GitHub][2].
           , relude
   ```
 
-* Upgrade to GHC-8.10.3, GHC-8.8.4.
+* [#345](https://github.com/kowainik/relude/issues/345):
+  Support GHC-9.0.
+* Upgrade to GHC-8.10.4, GHC-8.8.4.
 * Add `infinitely` as more strictly typed `forever`.
 * Remove `Eq` constraint on `universeNonEmpty`
 * Add `maybeAt`, `!!?` with its arguments flipped.
@@ -41,12 +43,13 @@ The changelog is available [on GitHub][2].
   module created that is exported in the main `Relude` module by default.
 
   __Migration guide:__ If you were using any of these functions you can now
-  remove `Relude.Extra.Enum` from your imports and explicit `mixins` section 
+  remove `Relude.Extra.Enum` from your imports and explicit `mixins` section
   as they are available for you with the `Relude` module.
 * [#347](https://github.com/kowainik/relude/issues/347):
   Add `ordNubOn` function.
 * [#268](https://github.com/kowainik/relude/issues/268):
   Drop support of GHC-8.0.2.
+* Add lifted `readFile'` function.
 
 ## 0.7.0.0 — May 14, 2020
 

@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP  #-}
 {-# LANGUAGE Safe #-}
 
 {- |
@@ -14,6 +15,9 @@ Lifted versions of functions working with files and common IO.
 
 module Relude.Lifted.File
     ( readFile
+#if ( __GLASGOW_HASKELL__ >= 900 )
+    , readFile'
+#endif
     , writeFile
     , appendFile
     ) where
@@ -31,6 +35,17 @@ readFile :: MonadIO m => FilePath -> m String
 readFile = liftIO . IO.readFile
 {-# SPECIALIZE readFile :: FilePath -> IO String #-}
 {-# INLINE readFile #-}
+
+#if ( __GLASGOW_HASKELL__ >= 900 )
+{- | Lifted version of 'IO.readFile''. Strict version of 'readFile'.
+
+@since x.x.x.x
+-}
+readFile' :: MonadIO m => FilePath -> m String
+readFile' = liftIO . IO.readFile'
+{-# SPECIALIZE readFile' :: FilePath -> IO String #-}
+{-# INLINE readFile' #-}
+#endif
 
 -- | Lifted version of 'IO.writeFile'.
 writeFile :: MonadIO m => FilePath -> String -> m ()
