@@ -3,6 +3,10 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
+## 1.0.0.1 — Mar 15, 2021
+
+* Minor documentation changes.
+
 ## 1.0.0.0 — Mar 12, 2021
 
 * [#353](https://github.com/kowainik/relude/issues/353):

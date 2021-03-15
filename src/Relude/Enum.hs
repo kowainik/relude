@@ -8,7 +8,7 @@ Portability: Portable
 Reexports 'Enum' related typeclasses and functions. Also introduces a few useful
 helpers to work with Enums.
 
-**Note:** 'universe', 'universeNonEmpty' and 'inverseMap' were previously in the
+__Note:__ 'universe', 'universeNonEmpty' and 'inverseMap' were previously in the
 extra modules, but due to their benefit in different use cases. If you imported
 @Relude.Extra.Enum@ module, you can remove it now, as these functions are
 reexported in the main "Relude" module.
