@@ -58,7 +58,7 @@ the library. So below you can find the key design principles behind `relude`:
    use space-leaks-free functions (e.g. our custom performant `sum` and `product`), introduce
    `{-# INLINE #-}` and `{-# SPECIALIZE #-}` pragmas where
    appropriate, and make efficient container types
-   (e.g. `Map`, `HashMap`, `Set`) more accesible.
+   (e.g. `Map`, `HashMap`, `Set`) more accessible.
 
 5. **Minimalism** (low number of dependencies). We do not force users of
    `relude` to stick to any specific lens or text formatting or logging
