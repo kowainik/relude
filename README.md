@@ -731,7 +731,7 @@ alternative preludes. It's also relatively small, but:
     * [Tutorial + migration guide](#structure-of-this-tutorial) from
       `Prelude` and just general description of the whole package and libraries
       it depends on.
-6. `relude` has less dependencies and is slightly lighter because of that but still
+6. `relude` has fewer dependencies and is slightly lighter because of that but still
    is very powerful and useful.
 7. `relude` is opt-in oriented and has a notion of `Extra.*` modules that are
    not exported by default from the `Relude` module. That means that we do not
