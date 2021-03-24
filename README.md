@@ -650,7 +650,7 @@ This section describes what you need to change to make your code compile with `r
    + Use `encodeUtf8/decodeUtf8` to convert to/from `ByteString`.
    + Use `(putStr[Ln]|readFile|writeFile|appendFile)[Text|LText|BS|LBS]` functions.
 
-6. Since `show` doesn't come from `Show` anymore, you need to export
+6. Since `show` doesn't come from `Show` anymore, you need to import the
   `Text.Show` module if you want to implement `Show` instance manually. This can be done in the following way:
 
   ```haskell
