@@ -494,12 +494,20 @@ readEither :: (Read a) => String -> Either Text a
 readEither = first toText . Text.Read.readEither
 {-# INLINEABLE readEither #-}
 
-{- | Generalized version of 'Prelude.show'. Unlike 'Prelude.show' this function
-is polymorphic in its result type. This makes it more convenient to work with
-data types like 'Relude.String.Reexport.Text' or 'ByteString'. However, if you
-pass the result of 'show' to a function that expects polymorphic argument, this
-can break type inference, so use @-XTypeApplications@ to specify the textual
-type explicitly.
+{- | Generalized version of @base: Prelude.show@. Now implementation is
+polymorphic on resulting type. Which makes it convenient for use for any
+data types, like @Text@ or @ByteString@ and others.
+Hence polymorphism, composing the polymorphic result type of @show@
+with a function that takes polymorphic argument
+makes that place fully polymorphic,
+and so makes concrete type not inferable in that place, which GHC would warn about.
+In those cases use @-XTypeApplications@ or type annotations @(_ :: Type)@,
+to specify the needed data type.
+
+Also still remember that @show@ takes representation and escape codes its literals,
+it is not a replacement to functions that transfer data between types, use the
+@Relude.String@ convertion table for that.
+
 
 >>> show (42 :: Int)
 "42"
