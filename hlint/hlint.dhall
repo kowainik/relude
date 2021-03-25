@@ -585,7 +585,6 @@ in [ Rule.Arguments { arguments =
    , warnReexport "find"       "Data.Foldable"
    , warnReexport "fold"       "Data.Foldable"
    , warnReexport "foldl'"     "Data.Foldable"
-   , warnReexport "foldrM"     "Data.Foldable"
    , warnReexport "forM_"      "Data.Foldable"
    , warnReexport "for_"       "Data.Foldable"
    , warnReexport "sequenceA_" "Data.Foldable"
