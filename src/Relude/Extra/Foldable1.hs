@@ -76,6 +76,9 @@ class Foldable f => Foldable1 f where
     >>> foldr1 (+) 1 $ Identity 3
     4
 
+    Note: differs from less general @base: Data.Foldable ( foldr1 )@, which has no base case:
+    > Data.Foldable.foldr1 :: Foldable t => (a -> a -> a) -> t a -> a
+
     @since 1.0.0.0
     -}
     foldr1 :: (a -> b -> b) -> b -> f a -> b
