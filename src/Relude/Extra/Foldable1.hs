@@ -91,7 +91,7 @@ class Foldable f => Foldable1 f where
     2 :| []
     -}
     toNonEmpty :: f a -> NonEmpty a
-    toNonEmpty = foldMap1 (:|[])
+    toNonEmpty = foldMap1 one
 
     {- | The first element of a non-empty data structure.
 
@@ -182,7 +182,7 @@ instance Foldable1 NonEmpty where
     {-# INLINE minimum1 #-}
 
     maximumOn1 :: forall a b. Ord b => (a -> b) -> NonEmpty a -> a
-    maximumOn1 func = foldl1' $ cmpOn
+    maximumOn1 func = foldl1' cmpOn
       where
         cmpOn :: a -> a -> a
         cmpOn a b = case func a `compare` func b of
@@ -191,7 +191,7 @@ instance Foldable1 NonEmpty where
     {-# INLINE maximumOn1 #-}
 
     minimumOn1 :: forall a b. Ord b => (a -> b) -> NonEmpty a -> a
-    minimumOn1 func = foldl1' $ cmpOn
+    minimumOn1 func = foldl1' cmpOn
       where
         cmpOn :: a -> a -> a
         cmpOn a b = case func a `compare` func b of
@@ -213,7 +213,7 @@ instance Foldable1 Identity where
     {-# INLINE fold1 #-}
 
     toNonEmpty :: Identity a -> NonEmpty a
-    toNonEmpty = (:|[]) . coerce
+    toNonEmpty = one . coerce
     {-# INLINE toNonEmpty #-}
 
     head1 :: Identity a -> a
@@ -254,7 +254,7 @@ instance Foldable1 ((,) c) where
     {-# INLINE fold1 #-}
 
     toNonEmpty :: (c, a) -> NonEmpty a
-    toNonEmpty (_, y) = (y :| [])
+    toNonEmpty (_, y) = y :| []
     {-# INLINE toNonEmpty #-}
 
     head1, last1 :: (c, a) -> a
