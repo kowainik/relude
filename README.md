@@ -74,7 +74,7 @@ the library. So below you can find the key design principles behind `relude`:
      `bytestring` to dependencies in your `.cabal` file to use the
      main API of these libraries
    + No need to import types like `NonEmpty`, `Text`, `Set`, `Reader[T]`, `MVar`, `STM`
-   + Functions like `liftIO`, `fromMaybe`, `sortWith` are avaiable by default as well
+   + Functions like `liftIO`, `fromMaybe`, `sortWith` are available by default as well
    + `IO` actions are lifted to `MonadIO`
 
 7. **Excellent documentation.**

@@ -57,7 +57,7 @@ description:
            and @bytestring@ to dependencies in your @.cabal@ file to
            use the main API of these libraries
         2. No need to import types like @NonEmpty@, @Text@, @Set@, @Reader[T]@, @MVar@, @STM@
-        3. Functions like @liftIO@, @fromMaybe@, @sortWith@ are avaiable by default as well
+        3. Functions like @liftIO@, @fromMaybe@, @sortWith@ are available by default as well
         4. @IO@ actions are lifted to @MonadIO@
 
     * __Excellent documentation.__
