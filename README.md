@@ -274,6 +274,23 @@ easiest way to bring all functions and types from `relude` to your project
 > If having `stack repl` crucial for your workflow, see the following options of
 > how to use Relude in your project.
 
+#### Mixins for package.yaml case (in stack or standalone hpack)
+
+Requires `hpack >= 0.31`:
+
+```yaml
+dependencies:
+  - name: base
+    version: ">= 4.7 && < 5"
+    mixin:
+      - hiding (Prelude)
+  - name: relude
+    version: ">= 1 && < 1.1"
+    mixin:
+      - (Relude as Prelude)
+```
+
+
 ### base-noprelude
 
 [[Back to the Table of Contents] ↑](#structure-of-this-tutorial)
