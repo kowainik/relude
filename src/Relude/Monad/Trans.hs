@@ -85,7 +85,7 @@ step instruction = 'etaReaderT' $ __case__ instruction __of__
 
 For a detailed explanation, refer to the following blog post:
 
-* <https://www.joachim-breitner.de/blog/763-Faster_Winter_5__Eta-Expanding_ReaderT Faster Winter 5: Eta-Expanding ReaderT (by Joachim Breitners)>
+* <https://www.joachim-breitner.de/blog/763-Faster_Winter_5__Eta-Expanding_ReaderT Faster Winter 5: Eta-Expanding ReaderT (by Joachim Breitner)>
 
 @since 0.7.0.0
 -}
