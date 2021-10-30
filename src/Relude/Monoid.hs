@@ -37,7 +37,7 @@ import Data.Monoid (Ap (..))
 #endif
 import Data.Monoid (All (..), Alt (..), Any (..), Dual (..), Endo (..), First (..), Last (..),
                     Monoid (..), Product (..), Sum (..))
-import Data.Semigroup (Option (..), Semigroup (sconcat, stimes, (<>)), WrappedMonoid, cycle1,
+import Data.Semigroup (Semigroup (sconcat, stimes, (<>)), WrappedMonoid, cycle1,
                        mtimesDefault, stimesIdempotent, stimesIdempotentMonoid, stimesMonoid)
 
 import Relude.Bool.Reexport (Bool (..))
