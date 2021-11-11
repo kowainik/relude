@@ -89,7 +89,7 @@ implementation makes sure that the 'M.Map' is constructed only once and then
 shared for every call.
 
 __Memory usage note:__ don't inverse functions that have types like 'Int'
-as their result. In this case the created 'M.Map' will have huge size.
+as their input. In this case the created 'M.Map' will have huge size.
 
 The complexity of reversed mapping is \(\mathcal{O}(\log n)\).
 
