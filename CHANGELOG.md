@@ -3,7 +3,7 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
-## 1.1.0.0
+## Unreleased
 
 * Remove Option from Data.Semigroup (which was removed from base in base 4.16)
 
