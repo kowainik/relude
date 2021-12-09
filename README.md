@@ -595,7 +595,7 @@ These extra modules include the following functionality:
 
 * `Foldable1` typeclass that contains generalized interface for folding
   non-empty structures like `NonEmpty`.
-* [`StaticMap` and `DynamicMap` type classes](src/Relude/Extra/Map.hs) as a
+* [`StaticMap` and `DynamicMap` type classes](https://github.com/kowainik/relude/blob/main/src/Relude/Extra/Map.hs) as a
   general interface for `Map`-like data structures.
 * And much more!
 
