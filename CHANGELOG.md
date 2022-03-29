@@ -3,6 +3,10 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
+## Unreleased
+
+* Support `hashable ^>=1.4`
+
 ## 1.0.0.1 — Mar 15, 2021
 
 * Minor documentation changes.

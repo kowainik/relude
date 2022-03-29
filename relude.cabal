@@ -225,7 +225,7 @@ library
                      , containers >= 0.5.7 && < 0.7
                      , deepseq ^>= 1.4
                      , ghc-prim >= 0.4.0.0 && < 0.8
-                     , hashable >= 1.2 && < 1.4
+                     , hashable >= 1.2 && < 1.5
                      , mtl ^>= 2.2
                      , stm >= 2.4 && < 2.6
                      , text ^>= 1.2

@@ -51,7 +51,9 @@ module Relude.Nub
     , unstableNub
     ) where
 
+#if !MIN_VERSION_hashable(1,4,0)
 import Data.Eq (Eq)
+#endif
 import Data.Hashable (Hashable)
 import Data.HashSet as HashSet
 import Data.Ord (Ord)
@@ -112,7 +114,11 @@ ordNubOn = Containers.nubOrdOn
 [3,2,-1,1]
 
 -}
+#if MIN_VERSION_hashable(1,4,0)
+hashNub :: forall a . (Hashable a) => [a] -> [a]
+#else
 hashNub :: forall a . (Eq a, Hashable a) => [a] -> [a]
+#endif
 hashNub = go HashSet.empty
   where
     go :: HashSet.HashSet a -> [a] -> [a]
@@ -139,7 +145,11 @@ sortNub = Set.toList . Set.fromList
 [1,2,3,-1]
 
 -}
+#if MIN_VERSION_hashable(1,4,0)
+unstableNub :: (Hashable a) => [a] -> [a]
+#else
 unstableNub :: (Eq a, Hashable a) => [a] -> [a]
+#endif
 unstableNub = HashSet.toList . HashSet.fromList
 {-# INLINE unstableNub #-}
 
