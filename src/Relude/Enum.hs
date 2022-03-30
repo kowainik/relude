@@ -1,3 +1,5 @@
+{-# LANGUAGE Safe #-}
+
 {- |
 Copyright:  (c) 2021 Kowainik
 SPDX-License-Identifier: MIT
