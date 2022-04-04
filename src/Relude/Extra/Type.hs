@@ -35,7 +35,7 @@ import Type.Reflection (typeRep)
 
 
 -- $setup
--- >>> :set -XDataKinds -XTypeOperators
+-- >>> :set -XAllowAmbiguousTypes -XDataKinds -XExplicitNamespaces -XPolyKinds -XTypeFamilies -XTypeOperators -XUndecidableInstances 
 
 {- | Gets a string representation of a type.
 
@@ -58,7 +58,18 @@ typeName = show (typeRep @a)
 
 {- | Concatenates type-level lists.
 
-#if ( __GLASGOW_HASKELL__ >= 806 )
+#if ( __GLASGOW_HASKELL__ >= 902 )
+
+>>> :kind! '[ 'Just 5, 'Nothing] ++ '[ 'Just 3, 'Nothing, 'Just 1]
+'[ 'Just 5, 'Nothing] ++ '[ 'Just 3, 'Nothing, 'Just 1] :: [Maybe
+                                                              Natural]
+= '[ 'Just 5, 'Nothing, 'Just 3, 'Nothing, 'Just 1]
+
+>>> :kind! '[] ++ '[ 'Just 3, 'Nothing, 'Just 1]
+'[] ++ '[ 'Just 3, 'Nothing, 'Just 1] :: [Maybe Natural]
+= '[ 'Just 3, 'Nothing, 'Just 1]
+
+#elif ( __GLASGOW_HASKELL__ >= 806 )
 
 >>> :kind! '[ 'Just 5, 'Nothing] ++ '[ 'Just 3, 'Nothing, 'Just 1]
 '[ 'Just 5, 'Nothing] ++ '[ 'Just 3, 'Nothing, 'Just 1] :: [Maybe
