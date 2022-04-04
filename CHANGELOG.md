@@ -6,6 +6,7 @@ The changelog is available [on GitHub][2].
 ## Unreleased
 
 * Remove Option from Data.Semigroup (which was removed from base in base 4.16)
+* Support `hashable ^>=1.4`
 
 ## 1.0.0.1 — Mar 15, 2021
 
