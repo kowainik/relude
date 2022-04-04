@@ -823,8 +823,6 @@ in [ Rule.Arguments { arguments =
    , warnReexport "getProduct" "Data.Monoid"
    , warnReexport "Sum"        "Data.Monoid"
    , warnReexport "getSum"     "Data.Monoid"
-   , warnReexport "Option"                 "Data.Semigroup"
-   , warnReexport "getOption"              "Data.Semigroup"
    , warnReexport "Semigroup"              "Data.Semigroup"
    , warnReexport "sconcat"                "Data.Semigroup"
    , warnReexport "stimes"                 "Data.Semigroup"
