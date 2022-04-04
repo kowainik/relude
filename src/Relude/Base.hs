@@ -50,7 +50,7 @@ import Data.Char (Char, chr)
 import System.IO (FilePath, IO, IOMode (..))
 
 -- Base typeclasses
-import Data.Eq (Eq (..))
+import Data.Eq (Eq, (==), (/=))
 import Data.Ord (Down (..), Ord (..), Ordering (..), comparing)
 
 -- Types for type-level computation
