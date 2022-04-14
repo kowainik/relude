@@ -35,6 +35,7 @@ readFile :: MonadIO m => FilePath -> m String
 readFile = liftIO . IO.readFile
 {-# SPECIALIZE readFile :: FilePath -> IO String #-}
 {-# INLINE readFile #-}
+{-# WARNING readFile ["'readFile' depends on the system's locale settings and can throw unexpected exceptions.", "Use 'readFileBS' or 'readFileLBS' instead."] #-}
 
 #if ( __GLASGOW_HASKELL__ >= 900 )
 {- | Lifted version of 'IO.readFile''. Strict version of 'readFile'.
@@ -45,6 +46,7 @@ readFile' :: MonadIO m => FilePath -> m String
 readFile' = liftIO . IO.readFile'
 {-# SPECIALIZE readFile' :: FilePath -> IO String #-}
 {-# INLINE readFile' #-}
+{-# WARNING readFile' ["readFile' depends on the system's locale settings and can throw unexpected exceptions.", "Use 'readFileBS' or 'readFileLBS' instead."] #-}
 #endif
 
 -- | Lifted version of 'IO.writeFile'.

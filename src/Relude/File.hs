@@ -20,6 +20,15 @@ also faster since they don't check encoding). However, you can then decode that
 data with the help of functions from the "Relude.String.Conversion" module, e. g.
 'Relude.String.Conversion.decodeUtf8'.
 
+To be more precise, avoid the following functions:
+
+* 'readFileText'
+* 'readFileLText'
+
+See the following blog post for more details:
+
+* [Beware of readFile by Michael Snoyman](https://www.snoyman.com/blog/2016/12/beware-of-readfile/)
+
 @since 0.3.0
 -}
 
@@ -68,6 +77,7 @@ readFileText :: MonadIO m => FilePath -> m Text
 readFileText = liftIO . T.readFile
 {-# SPECIALIZE readFileText :: FilePath -> IO Text #-}
 {-# INLINE     readFileText #-}
+{-# WARNING readFileText ["'readFileText' depends on the system's locale settings and can throw unexpected exceptions.", "Use 'readFileBS' instead."] #-}
 
 {- | Lifted version of 'T.writeFile'.
 
@@ -99,6 +109,7 @@ readFileLText :: MonadIO m => FilePath -> m LText
 readFileLText = liftIO . LT.readFile
 {-# SPECIALIZE readFileLText :: FilePath -> IO LText #-}
 {-# INLINE     readFileLText #-}
+{-# WARNING readFileLText ["'readFileLText' depends on the system's locale settings and can throw unexpected exceptions.", "Use 'readFileLBS' instead."] #-}
 
 {- | Lifted version of 'LT.writeFile'.
 
