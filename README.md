@@ -117,6 +117,11 @@ blog post by [Type Classes](https://typeclasses.com/) that highlights
 
 * [No implicit Prelude](https://typeclasses.com/ghc/no-implicit-prelude)
 
+For guiding development principles behind `relude` and comparison with
+`base`, check out the following talk:
+
+* [![Introduction to `relude` — an alternative Haskell prelude](https://img.youtube.com/vi/qwAmiJ5M_zM/0.jpg)](https://www.youtube.com/watch?v=qwAmiJ5M_zM)
+
 ## Structure of this tutorial
 
 This tutorial has several parts:
@@ -226,8 +231,8 @@ version:             0.0.0.0
 
 library
   exposed-modules:     Example
-  build-depends:       base >= 4.10 && < 4.13
-                     , relude ^>= 1.0.0.0
+  build-depends:       base >= 4.14 && < 4.17
+                     , relude ^>= 1.1.0.0
 
   mixins:              base hiding (Prelude)
                      , relude (Relude as Prelude)
@@ -681,7 +686,7 @@ For the latest `relude` version, this can be achieved by executing the following
 two commands on your CI:
 
 ```yaml
-curl https://raw.githubusercontent.com/kowainik/relude/v1.0.0.0/.hlint.yaml -o .hlint-relude.yaml
+curl https://raw.githubusercontent.com/kowainik/relude/v1.1.0.0/.hlint.yaml -o .hlint-relude.yaml
 curl -sSL https://raw.github.com/ndmitchell/neil/master/misc/travis.sh | sh -s -- hlint -h .hlint-relude.yaml .
 ```
 
@@ -749,16 +754,14 @@ alternative preludes. It's also relatively small, but:
 
 Note, that we are using custom `hlint` setting which are `Relude` specific. To
 keep it up to date don't forget to reflect your changes in this file. We are
-using `Dhall` to maintain the configurations. To use it follow the steps below.
+using `Dhall` to maintain the configurations (lang version 22.0.0). To
+use it follow the steps below.
 
 First time:
 
 ```shell
-$ cabal v2-install dhall-yaml
+$ cabal v2-install dhall-yaml-1.2.10
 ```
-
-Dhall 16.0.0 is required, so make sure that the previous command installed
-`dhall-yaml` >= 1.2.5.
 
 To generate `hlint` file:
 
@@ -790,4 +793,14 @@ Then draw the graph only for the library dependencies:
 
 ```shell
 cabal-plan dot --root lib:relude | dot -Tpng -o relude-dependency-graph.png
+```
+
+### Updating license headers
+
+Install the `headroom` tool and run it from this repository:
+
+```shell
+cabal v2-install headroom-0.4.3.0
+headroom run
+rg "SPDX-License-Identifier : MPL-2.0" --files-with-matches src/ | xargs sed -i 's/SPDX-License-Identifier : MPL-2.0/SPDX-License-Identifier : MIT/g'
 ```

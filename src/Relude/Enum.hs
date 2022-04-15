@@ -1,11 +1,12 @@
 {-# LANGUAGE Safe #-}
 
 {- |
-Copyright:  (c) 2021 Kowainik
-SPDX-License-Identifier: MIT
-Maintainer:  Kowainik <xrom.xkov@gmail.com>
-Stability:   Stable
-Portability: Portable
+Module                  : Relude.Enum
+Copyright               : (c) 2021-2022 Kowainik
+SPDX-License-Identifier : MIT
+Maintainer              : Kowainik <xrom.xkov@gmail.com>
+Stability               : Stable
+Portability             : Portable
 
 Reexports 'Enum' related typeclasses and functions. Also introduces a few useful
 helpers to work with Enums.

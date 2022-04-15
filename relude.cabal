@@ -1,6 +1,6 @@
 cabal-version:       3.0
 name:                relude
-version:             1.0.0.1
+version:             1.1.0.0
 synopsis:            Safe, performant, user-friendly and lightweight Haskell Standard Library
 description:
     @__relude__@ is an alternative prelude library. If you find the default
@@ -95,8 +95,8 @@ tested-with:         GHC == 8.2.2
                      GHC == 8.4.4
                      GHC == 8.6.5
                      GHC == 8.8.4
-                     GHC == 8.10.4
-                     GHC == 9.0.1
+                     GHC == 8.10.7
+                     GHC == 9.0.2
                      GHC == 9.2.2
 
 
@@ -122,6 +122,11 @@ common common-options
     ghc-options:       -Wmissing-deriving-strategies
   if impl(ghc >= 8.10)
     ghc-options:       -Wunused-packages
+  if impl(ghc >= 9.0)
+    ghc-options:       -Winvalid-haddock
+  if impl(ghc >= 9.2)
+    ghc-options:       -Wredundant-bang-patterns
+                       -Woperator-whitespace
 
 
   default-language:    Haskell2010
@@ -223,14 +228,14 @@ library
 
 
   build-depends:       bytestring >= 0.10 && < 0.12
-                     , containers >= 0.5.7 && < 0.7
+                     , containers >= 0.5.10 && < 0.7
                      , deepseq ^>= 1.4
                      , ghc-prim >= 0.4.0.0 && < 0.9
                      , hashable >= 1.2 && < 1.5
                      , mtl ^>= 2.2
                      , stm >= 2.4 && < 2.6
-                     , text ^>= 1.2
-                     , transformers ^>= 0.5
+                     , text >= 1.2 && < 2.1
+                     , transformers >= 0.5 && < 0.7
                      , unordered-containers >= 0.2.7 && < 0.3
 
 
@@ -258,7 +263,7 @@ test-suite relude-doctest
   main-is:             Doctest.hs
 
   build-depends:       relude
-                     , doctest < 0.19
+                     , doctest ^>= 0.20
                      , Glob
 
   ghc-options:         -threaded

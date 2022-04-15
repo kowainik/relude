@@ -1,11 +1,12 @@
 {-# LANGUAGE Safe #-}
 
 {- |
-Copyright:  (c) 2020-2021 Kowainik
-SPDX-License-Identifier: MIT
-Maintainer:  Kowainik <xrom.xkov@gmail.com>
-Stability:   Stable
-Portability: Portable
+Module                  : Relude.Lifted.Handle
+Copyright               : (c) 2020-2022 Kowainik
+SPDX-License-Identifier : MIT
+Maintainer              : Kowainik <xrom.xkov@gmail.com>
+Stability               : Stable
+Portability             : Portable
 
 Lifted functions to work with 'IO' 'Handle's.
 

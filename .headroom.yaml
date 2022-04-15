@@ -1,0 +1,33 @@
+## This is the configuration file for Headroom.
+## See https://github.com/vaclavsvejcar/headroom for more details.
+version: 0.4.0.0
+
+run-mode: replace
+
+source-paths:
+  - src/
+
+excluded-paths: []
+
+template-paths:
+  - https://raw.githubusercontent.com/kowainik/org/main/headroom-templates/haskell.mustache
+
+variables:
+  author: Kowainik
+  email: xrom.xkov@gmail.com
+  _haskell_module_copyright: "(c) {{ _current_year }} {{ author }}"
+
+license-headers:
+  haskell:
+    put-after: ["^{-#"]
+    margin-bottom-code: 1
+    margin-top-code: 1
+    block-comment:
+      starts-with: ^{- \|
+      ends-with: (?<!#)-}$
+
+post-process:
+  update-copyright:
+    enabled: true
+    config:
+      selected-authors-only: ["{{ author }}"]
