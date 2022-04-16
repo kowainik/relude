@@ -9,6 +9,7 @@ The changelog is available [on GitHub][2].
 * [#372](https://github.com/kowainik/relude/issues/372):
   Warn on usages of `readFileText`, `readFileLText`, `readFile` and `readFile'`.
 * Support `hashable ^>=1.4`
+* Switch benchmarks from `criterion` to `tasty-bench`.
 
 ## 1.0.0.1 — Mar 15, 2021
 
