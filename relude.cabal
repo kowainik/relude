@@ -270,9 +270,7 @@ benchmark relude-benchmark
   main-is:             Main.hs
 
   build-depends:       relude
-                     , criterion
+                     , tasty-bench
                      , unordered-containers
 
-  ghc-options:         -threaded
-                       -rtsopts
-                       -with-rtsopts=-N
+  ghc-options:         -rtsopts
