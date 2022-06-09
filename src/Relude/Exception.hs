@@ -9,13 +9,14 @@
 #endif
 
 {- |
-Copyright:  (c) 2016 Stephen Diehl
-            (c) 2016-2018 Serokell
-            (c) 2018-2021 Kowainik
-SPDX-License-Identifier: MIT
-Maintainer:  Kowainik <xrom.xkov@gmail.com>
-Stability:   Stable
-Portability: Portable
+Module                  : Relude.Exception
+Copyright               : (c) 2016 Stephen Diehl
+                          (c) 2016-2018 Serokell
+                          (c) 2018-2022 Kowainik
+SPDX-License-Identifier : MIT
+Maintainer              : Kowainik <xrom.xkov@gmail.com>
+Stability               : Stable
+Portability             : Portable
 
 Re-exports most useful functionality from the "Control.Exception" module. Also
 provides some convenient utilities to throw and handle exceptions.

@@ -1,13 +1,14 @@
 {-# LANGUAGE Safe #-}
 
 {- |
-Copyright:  (c) 2016 Stephen Diehl
-            (c) 2016-2018 Serokell
-            (c) 2018-2021 Kowainik
-SPDX-License-Identifier: MIT
-Maintainer:  Kowainik <xrom.xkov@gmail.com>
-Stability:   Stable
-Portability: Portable
+Module                  : Relude.Bool
+Copyright               : (c) 2016 Stephen Diehl
+                          (c) 2016-2018 Serokell
+                          (c) 2018-2022 Kowainik
+SPDX-License-Identifier : MIT
+Maintainer              : Kowainik <xrom.xkov@gmail.com>
+Stability               : Stable
+Portability             : Portable
 
 Convenient commonly used and very helpful functions to work with 'Bool' and also
 with monads.

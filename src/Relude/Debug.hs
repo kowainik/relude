@@ -17,13 +17,14 @@
 #endif
 
 {- |
-Copyright:  (c) 2016 Stephen Diehl
-            (c) 2016-2018 Serokell
-            (c) 2018-2021 Kowainik
-SPDX-License-Identifier: MIT
-Maintainer:  Kowainik <xrom.xkov@gmail.com>
-Stability:   Stable
-Portability: Portable
+Module                  : Relude.Debug
+Copyright               : (c) 2016 Stephen Diehl
+                          (c) 2016-2018 Serokell
+                          (c) 2018-2022 Kowainik
+SPDX-License-Identifier : MIT
+Maintainer              : Kowainik <xrom.xkov@gmail.com>
+Stability               : Stable
+Portability             : Portable
 
 This module contains functions for debugging __pure__ functions. You
 can't use functions like 'System.IO.putStrLn' for this purpose because
@@ -254,13 +255,13 @@ error handling mechanism.
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src\\Relude\\Debug.hs:288:11 in ...
+  error, called at src\\Relude\\Debug.hs:289:11 in ...
   ...
 #else
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src/Relude/Debug.hs:288:11 in ...
+  error, called at src/Relude/Debug.hs:289:11 in ...
 ...
 #endif
 

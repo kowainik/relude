@@ -2,12 +2,13 @@
 {-# LANGUAGE Safe       #-}
 
 {- |
-Copyright:  (c) 2012-2016 Edward Kmett
-            (c) 2019-2021 Kowainik
-SPDX-License-Identifier: MIT
-Maintainer:  Kowainik <xrom.xkov@gmail.com>
-Stability:   Experimental
-Portability: Portable
+Module                  : Relude.Extra.Lens
+Copyright               : (c) 2012-2016 Edward Kmett
+                          (c) 2019-2022 Kowainik
+SPDX-License-Identifier : MIT
+Maintainer              : Kowainik <xrom.xkov@gmail.com>
+Stability               : Stable
+Portability             : Portable
 
 @since 0.5.0
 
@@ -158,7 +159,6 @@ you used @Relude.Extra.Lens@ in.
 - [lens](https://hackage.haskell.org/package/lens)
 - [microlens](https://hackage.haskell.org/package/microlens)
 - [lens tutorial](http://hackage.haskell.org/package/lens-tutorial-1.0.3/docs/Control-Lens-Tutorial.html)
-
 -}
 
 module Relude.Extra.Lens

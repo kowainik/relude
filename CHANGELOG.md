@@ -3,16 +3,32 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
-## Unreleased
+## 1.1.0.0 — Jun 9, 2022
 
-* Remove Option from Data.Semigroup (which was removed from base in base 4.16)
+* [#388](https://github.com/kowainik/relude/issues/388):
+  Support GHC-9.2.
+* [#363](https://github.com/kowainik/relude/issues/363):
+  Remove the `Option` type, reexported from `Data.Semigroup`
+  (which was removed in `base-4.16`, GHC 9.2)
+
+  **Migration guide:** Use `Maybe` instead of `Option`.
+
 * [#372](https://github.com/kowainik/relude/issues/372):
   Warn on usages of `readFileText`, `readFileLText`, `readFile` and `readFile'`.
-* Support `hashable ^>=1.4`
-* Switch benchmarks from `criterion` to `tasty-bench`.
+
+  > _NOTE:_ This is a **breaking change** if you build with `-Werror`
+  > and use the above functions. Use `readFileBS` / `readFileLBS`
+  > instead to convert to `Text` / `LText` / `String` using
+  > `decodeUtf8` and similar functions.
+
+* [#394](https://github.com/kowainik/relude/issues/394):
+  Support `hashable-1.4`.
+* [#408](https://github.com/kowainik/relude/issues/408):
+  Switch benchmarks from `criterion` to `tasty-bench`.
 * [#404](https://github.com/kowainik/relude/issues/404):
   Fix condidion for `ordNubOn`, `intNub`, `intNubOn` export for `Relude.Nub` module.
   Use min version of `containers-0.6.0` instead of min version of GHC `8.4`. 
+* Minor documentation improvements and fixes.
 
 ## 1.0.0.1 — Mar 15, 2021
 

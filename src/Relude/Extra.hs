@@ -1,9 +1,10 @@
 {- |
-Copyright:  (c) 2019-2021 Kowainik
-SPDX-License-Identifier: MIT
-Maintainer:  Kowainik <xrom.xkov@gmail.com>
-Stability:   Experimental
-Portability: Portable
+Module                  : Relude.Extra
+Copyright               : (c) 2019-2022 Kowainik
+SPDX-License-Identifier : MIT
+Maintainer              : Kowainik <xrom.xkov@gmail.com>
+Stability               : Stable
+Portability             : Portable
 
 This module exports all extra-related stuff.
 The extra modules are not exported by default, but you can easily bring them to

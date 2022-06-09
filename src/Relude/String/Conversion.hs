@@ -10,13 +10,14 @@
 {-# LANGUAGE UndecidableInstances   #-}
 
 {- |
-Copyright:  (c) 2016 Stephen Diehl
-            (c) 2016-2018 Serokell
-            (c) 2018-2021 Kowainik
-SPDX-License-Identifier: MIT
-Maintainer:  Kowainik <xrom.xkov@gmail.com>
-Stability:   Stable
-Portability: Portable
+Module                  : Relude.String.Conversion
+Copyright               : (c) 2016 Stephen Diehl
+                          (c) 2016-2018 Serokell
+                          (c) 2018-2022 Kowainik
+SPDX-License-Identifier : MIT
+Maintainer              : Kowainik <xrom.xkov@gmail.com>
+Stability               : Stable
+Portability             : Portable
 
 This module implements type class which allow to have conversion to and from
 'Relude.String.Reexport.Text', 'String' and 'ByteString' types
@@ -100,8 +101,14 @@ class ConvertUtf8 a b where
     >>> decodeUtf8 @Text @ByteString "\208\208\176\209\130\208\176\208\186"
     "\65533\65533\1090\1072\1082"
 #endif
+
+#if MIN_VERSION_text(2,0,0)
+    >>> decodeUtf8Strict @Text @ByteString "\208\208\176\209\130\208\176\208\186"
+    Left Cannot decode byte '\xd0': Data.Text.Internal.Encoding: Invalid UTF-8 stream
+#else
     >>> decodeUtf8Strict @Text @ByteString "\208\208\176\209\130\208\176\208\186"
     Left Cannot decode byte '\xd0': Data.Text.Internal.Encoding.decodeUtf8: Invalid UTF-8 stream
+#endif
     -}
     decodeUtf8Strict :: b -> Either T.UnicodeException a
 

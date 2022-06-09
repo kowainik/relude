@@ -1,13 +1,14 @@
 {-# LANGUAGE Safe #-}
 
 {- |
-Copyright:  (c) 2016 Stephen Diehl
-            (c) 2016-2018 Serokell
-            (c) 2018-2021 Kowainik
-SPDX-License-Identifier: MIT
-Maintainer:  Kowainik <xrom.xkov@gmail.com>
-Stability:   Stable
-Portability: Portable
+Module                  : Relude.Lifted
+Copyright               : (c) 2016 Stephen Diehl
+                          (c) 2016-2018 Serokell
+                          (c) 2018-2022 Kowainik
+SPDX-License-Identifier : MIT
+Maintainer              : Kowainik <xrom.xkov@gmail.com>
+Stability               : Stable
+Portability             : Portable
 
 Lifted versions of base functions.
 
@@ -58,7 +59,6 @@ __main__ = __do__
     x <- 'getLine'
     'print' x
 @
-
 -}
 
 module Relude.Lifted

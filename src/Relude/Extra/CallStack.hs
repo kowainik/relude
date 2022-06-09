@@ -1,11 +1,12 @@
 {-# LANGUAGE Safe #-}
 
 {- |
-Copyright:  (c) 2018-2021 Kowainik
-SPDX-License-Identifier: MIT
-Maintainer:  Kowainik <xrom.xkov@gmail.com>
-Stability:   Experimental
-Portability: Portable
+Module                  : Relude.Extra.CallStack
+Copyright               : (c) 2018-2022 Kowainik
+SPDX-License-Identifier : MIT
+Maintainer              : Kowainik <xrom.xkov@gmail.com>
+Stability               : Stable
+Portability             : Portable
 
 Contains useful functions to work with GHC callstack.
 

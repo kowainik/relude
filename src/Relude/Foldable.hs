@@ -1,11 +1,12 @@
 {-# LANGUAGE Safe #-}
 
 {- |
-Copyright:  (c) 2018-2021 Kowainik
-SPDX-License-Identifier: MIT
-Maintainer:  Kowainik <xrom.xkov@gmail.com>
-Stability:   Stable
-Portability: Portable
+Module                  : Relude.Foldable
+Copyright               : (c) 2018-2022 Kowainik
+SPDX-License-Identifier : MIT
+Maintainer              : Kowainik <xrom.xkov@gmail.com>
+Stability               : Stable
+Portability             : Portable
 
 This module provides 'Foldable' and 'Traversable' related types and functions.
 -}

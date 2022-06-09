@@ -2,13 +2,14 @@
 {-# LANGUAGE Safe #-}
 
 {- |
-Copyright: (c) 2016 Stephen Diehl
-           (c) 2016-2018 Serokell
-           (c) 2018-2021 Kowainik
-SPDX-License-Identifier: MIT
-Maintainer:  Kowainik <xrom.xkov@gmail.com>
-Stability:   Stable
-Portability: Portable
+Module                  : Relude.Functor.Fmap
+Copyright               : (c) 2016 Stephen Diehl
+                          (c) 2016-2018 Serokell
+                          (c) 2018-2022 Kowainik
+SPDX-License-Identifier : MIT
+Maintainer              : Kowainik <xrom.xkov@gmail.com>
+Stability               : Stable
+Portability             : Portable
 
 This module contains useful functions to work with 'Functor' type class.
 -}
