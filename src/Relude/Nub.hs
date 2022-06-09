@@ -41,7 +41,7 @@ module Relude.Nub
     ( hashNub
     , ordNub
 
-#if __GLASGOW_HASKELL__ > 804
+#if MIN_VERSION_containers(0,6,0)
     , ordNubOn
     , intNub
     , intNubOn
@@ -54,13 +54,13 @@ module Relude.Nub
 #if !MIN_VERSION_hashable(1,4,0)
 import Data.Eq (Eq)
 #endif
-import Data.Hashable (Hashable)
 import Data.HashSet as HashSet
+import Data.Hashable (Hashable)
 import Data.Ord (Ord)
 import Prelude (Int, (.))
 
 import qualified Data.Set as Set
-#if __GLASGOW_HASKELL__ > 804
+#if MIN_VERSION_containers(0,6,0)
 import qualified Data.Containers.ListUtils as Containers
 #endif
 
@@ -78,7 +78,7 @@ Like 'Prelude.nub' but runs in \( O(n \log n) \)  time and requires 'Ord'.
 
 -}
 ordNub :: forall a . (Ord a) => [a] -> [a]
-#if __GLASGOW_HASKELL__ > 804
+#if MIN_VERSION_containers(0,6,0)
 ordNub = Containers.nubOrd
 {-# INLINE ordNub #-}
 #else
@@ -94,7 +94,7 @@ ordNub = go Set.empty
 #endif
 
 
-#if __GLASGOW_HASKELL__ > 804
+#if MIN_VERSION_containers(0,6,0)
 {- | Similar to 'ordNub' but performs nub through the mapped list on the given
 function.
 
@@ -154,12 +154,11 @@ unstableNub = HashSet.toList . HashSet.fromList
 {-# INLINE unstableNub #-}
 
 
-#if __GLASGOW_HASKELL__ > 804
-
+#if MIN_VERSION_containers(0,6,0)
 {- | Removes duplicate elements from a list, keeping only the first occurance of
 the element.
 
-Like 'Prelude.nub' but runs in \( O(n \min\(n, int_bits\)) \)  time and requires 'Ord'.
+Like 'Prelude.nub' but runs in \( O (n \min (n, int\_bits )) \)  time and requires 'Ord'.
 
 >>> intNub [3, 3, 3, 2, 2, -1, 1]
 [3,2,-1,1]
