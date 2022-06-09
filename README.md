@@ -11,7 +11,7 @@
 **`relude`** is a safe, performant, user-friendly and lightweight Haskell
 standard library.
 
-The default `Prelude` is not perfect and doesn't always satisfies one's needs.
+The default `Prelude` is not perfect and doesn't always satisfy one's needs.
 At this stage you may want to try an alternative prelude library. In this README
 we are going to give you convincing reasons to consider using `relude` as such
 alternative in your next project.
