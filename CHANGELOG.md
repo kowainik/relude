@@ -10,6 +10,9 @@ The changelog is available [on GitHub][2].
   Warn on usages of `readFileText`, `readFileLText`, `readFile` and `readFile'`.
 * Support `hashable ^>=1.4`
 * Switch benchmarks from `criterion` to `tasty-bench`.
+* [#404](https://github.com/kowainik/relude/issues/404):
+  Fix condidion for `ordNubOn`, `intNub`, `intNubOn` export for `Relude.Nub` module.
+  Use min version of `containers-0.6.0` instead of min version of GHC `8.4`. 
 
 ## 1.0.0.1 — Mar 15, 2021
 
