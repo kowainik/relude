@@ -53,7 +53,7 @@ chainedTo = (=<<)
 
 {- | Repeat a monadic action indefinitely.
 
-This is a more type safe version of 'forever', which has a convinient
+This is a more type safe version of 'forever', which has a convenient
 but unsafe type.
 
 Consider the following two examples. In the @getIntForever@ functions, it
