@@ -98,7 +98,7 @@ whenNothing_ Nothing m = m
 whenNothing_ _       _ = pass
 {-# INLINE whenNothing_ #-}
 
-{- | Monadic version of 'whenNothingM'.
+{- | Monadic version of 'whenNothing'.
 
 >>> whenNothingM (pure $ Just True) $ True <$ putTextLn "Is Just!"
 True
@@ -110,7 +110,7 @@ whenNothingM :: Monad m => m (Maybe a) -> m a -> m a
 whenNothingM mm action = mm >>= \m -> whenNothing m action
 {-# INLINE whenNothingM #-}
 
-{- | Monadic version of 'whenNothingM_'.
+{- | Monadic version of 'whenNothing_'.
 
 >>> whenNothingM_ (pure $ Just True) $ putTextLn "Is Just!"
 >>> whenNothingM_ (pure Nothing) $ putTextLn "Is Nothing!"
