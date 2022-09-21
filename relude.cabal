@@ -98,6 +98,7 @@ tested-with:         GHC == 8.2.2
                      GHC == 8.10.7
                      GHC == 9.0.2
                      GHC == 9.2.2
+                     GHC == 9.4.2
 
 
 source-repository head
@@ -105,7 +106,7 @@ source-repository head
   location: git@github.com:kowainik/relude.git
 
 common common-options
-  build-depends:       base >= 4.10 && < 4.17
+  build-depends:       base >= 4.10 && < 4.18
 
   ghc-options:         -Wall
                        -Wcompat
@@ -230,7 +231,7 @@ library
   build-depends:       bytestring >= 0.10 && < 0.12
                      , containers >= 0.5.10 && < 0.7
                      , deepseq ^>= 1.4
-                     , ghc-prim >= 0.4.0.0 && < 0.9
+                     , ghc-prim >= 0.4.0.0 && < 0.10
                      , hashable >= 1.2 && < 1.5
                      , mtl ^>= 2.2
                      , stm >= 2.4 && < 2.6
