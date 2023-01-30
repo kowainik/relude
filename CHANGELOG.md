@@ -3,6 +3,11 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
+## next
+
+- [#430](https://github.com/kowainik/relude/issues/430)
+  Support `hedgehog-1.2`.
+
 ## 1.1.0.0 — Jun 9, 2022
 
 * [#388](https://github.com/kowainik/relude/issues/388):
