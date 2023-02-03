@@ -3,6 +3,11 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
+## 1.1.1.0 - Feb 2, 2023
+
+* [#432](https://github.com/kowainik/relude/pull/432):
+  Support mtl-2.3.
+
 ## 1.1.0.0 — Jun 9, 2022
 
 * [#388](https://github.com/kowainik/relude/issues/388):
