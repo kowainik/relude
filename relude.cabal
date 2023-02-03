@@ -232,7 +232,7 @@ library
                      , deepseq ^>= 1.4
                      , ghc-prim >= 0.4.0.0 && < 0.9
                      , hashable >= 1.2 && < 1.5
-                     , mtl ^>= 2.2
+                     , mtl >= 2.2 && < 2.4
                      , stm >= 2.4 && < 2.6
                      , text >= 1.2 && < 2.1
                      , transformers >= 0.5 && < 0.7
