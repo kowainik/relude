@@ -16,6 +16,7 @@ The changelog is available [on GitHub][2].
     - `mtl-2.3`
     - `hedgehog-1.2`
     - `doctest-0.21`
+* Drop support of GHC-8.2.
 
 ## 1.1.0.0 — Jun 9, 2022
 
