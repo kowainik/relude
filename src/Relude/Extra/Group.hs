@@ -1,5 +1,6 @@
-{-# LANGUAGE Safe         #-}
-{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE Safe          #-}
+{-# LANGUAGE TypeFamilies  #-}
+{-# LANGUAGE TypeOperators #-}
 
 {- |
 Module                  : Relude.Extra.Group

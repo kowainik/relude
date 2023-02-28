@@ -89,6 +89,9 @@ module Relude.Debug
     ) where
 
 import Data.Data (Data)
+#if __GLASGOW_HASKELL__ >= 904
+import Data.Type.Equality (type (~))
+#endif
 import GHC.Exts (RuntimeRep, TYPE)
 import GHC.TypeLits (ErrorMessage (..), TypeError)
 

@@ -3,6 +3,20 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
+## Unreleased
+
+* [#420](https://github.com/kowainik/relude/issues/420):
+  Support GHC-9.4.
+* Reexport `type (~)` from `Data.Type.Equality` for GHC-9.4.
+* Add `-Wredundant-strictness-flags` and `-Wforall-identifier` warnings for
+  GHC-9.4.
+* [#430](https://github.com/kowainik/relude/issues/430):
+  Upgrade dependencies:
+    - `ghc-prim-0.9`
+    - `mtl-2.3`
+    - `hedgehog-1.2`
+    - `doctest-0.21`
+
 ## 1.1.0.0 — Jun 9, 2022
 
 * [#388](https://github.com/kowainik/relude/issues/388):

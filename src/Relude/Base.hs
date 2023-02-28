@@ -1,4 +1,6 @@
-{-# LANGUAGE Trustworthy #-}
+{-# LANGUAGE CPP                #-}
+{-# LANGUAGE ExplicitNamespaces #-}
+{-# LANGUAGE Trustworthy        #-}
 
 {- |
 Module                  : Relude.Base
@@ -29,6 +31,9 @@ module Relude.Base
     , module Data.Coerce
     , module Data.Kind
     , module Data.Proxy
+#if __GLASGOW_HASKELL__ >= 904
+    , module Data.Type.Equality
+#endif
     , module Data.Typeable
     , module Data.Void
 
@@ -51,13 +56,16 @@ import Data.Char (Char, chr)
 import System.IO (FilePath, IO, IOMode (..))
 
 -- Base typeclasses
-import Data.Eq (Eq, (==), (/=))
+import Data.Eq (Eq, (/=), (==))
 import Data.Ord (Down (..), Ord (..), Ordering (..), comparing)
 
 -- Types for type-level computation
 import Data.Coerce (Coercible, coerce)
 import Data.Kind (Constraint, Type)
 import Data.Proxy (Proxy (..))
+#if __GLASGOW_HASKELL__ >= 904
+import Data.Type.Equality (type (~))
+#endif
 import Data.Typeable (Typeable)
 import Data.Void (Void, absurd, vacuous)
 

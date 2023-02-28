@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP                  #-}
 {-# LANGUAGE ConstraintKinds      #-}
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE Safe                 #-}
@@ -88,6 +89,9 @@ module Relude.List.NonEmpty
     ) where
 
 import Data.List.NonEmpty (NonEmpty (..), nonEmpty)
+#if __GLASGOW_HASKELL__ >= 904
+import Data.Type.Equality (type (~))
+#endif
 import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 
 import Relude.Applicative (Applicative, pass)

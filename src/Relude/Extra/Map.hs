@@ -1,5 +1,7 @@
-{-# LANGUAGE Trustworthy  #-}
-{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE CPP           #-}
+{-# LANGUAGE Trustworthy   #-}
+{-# LANGUAGE TypeFamilies  #-}
+{-# LANGUAGE TypeOperators #-}
 
 {- |
 Module                  : Relude.Extra.Map
@@ -26,6 +28,9 @@ module Relude.Extra.Map
     , elems
     ) where
 
+#if __GLASGOW_HASKELL__ >= 904
+import Data.Type.Equality (type (~))
+#endif
 import GHC.Exts (IsList (Item, toList))
 
 import Relude.Base (Eq, Ord, Type)
