@@ -27,8 +27,8 @@ import Data.Foldable (Foldable (fold, foldMap, foldl', foldr, length, null, toLi
 #if MIN_VERSION_base(4,13,0)
 import Data.Foldable (foldMap')
 #endif
-import Data.Traversable (Traversable (..), forM, mapAccumL, mapAccumR)
 import Data.Bifoldable (Bifoldable (..), biList, biall, biand, biany, biasum, bielem, bifind,
                         bifoldl', bifoldlM, bifoldr', bifoldrM, bifor_, bilength, binull, bior,
                         bisequence_, bitraverse_)
 import Data.Bitraversable (Bitraversable (..), bifoldMapDefault, bifor, bimapDefault, bisequence)
+import Data.Traversable (Traversable (..), forM, mapAccumL, mapAccumR)
