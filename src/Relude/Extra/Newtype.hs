@@ -2,7 +2,7 @@
 
 {- |
 Module                  : Relude.Extra.Newtype
-Copyright               : (c) 2018-2022 Kowainik
+Copyright               : (c) 2018-2023 Kowainik
 SPDX-License-Identifier : MIT
 Maintainer              : Kowainik <xrom.xkov@gmail.com>
 Stability               : Stable

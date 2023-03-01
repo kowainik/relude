@@ -3,7 +3,7 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
-## Unreleased
+## 1.2.0.0 – Mar 1, 2023
 
 * [#420](https://github.com/kowainik/relude/issues/420):
   Support GHC-9.4.
