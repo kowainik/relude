@@ -2,7 +2,7 @@
 
 {- |
 Module                  : Relude.Lifted.Handle
-Copyright               : (c) 2020-2022 Kowainik
+Copyright               : (c) 2020-2023 Kowainik
 SPDX-License-Identifier : MIT
 Maintainer              : Kowainik <xrom.xkov@gmail.com>
 Stability               : Stable

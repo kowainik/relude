@@ -1,6 +1,6 @@
 {- |
 Module                  : Relude.Extra
-Copyright               : (c) 2019-2022 Kowainik
+Copyright               : (c) 2019-2023 Kowainik
 SPDX-License-Identifier : MIT
 Maintainer              : Kowainik <xrom.xkov@gmail.com>
 Stability               : Stable
