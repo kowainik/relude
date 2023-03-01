@@ -1,3 +1,4 @@
+{-# LANGUAGE CPP                  #-}
 {-# LANGUAGE ConstraintKinds      #-}
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE KindSignatures       #-}
@@ -50,6 +51,9 @@ import Data.Text (Text)
 import Data.Text.Encoding (decodeUtf8', decodeUtf8With)
 import Data.Text.Encoding.Error (OnDecodeError, OnError, UnicodeException, lenientDecode,
                                  strictDecode)
+#if __GLASGOW_HASKELL__ >= 904
+import Data.Type.Equality (type (~))
+#endif
 import GHC.TypeLits (ErrorMessage (..), Symbol, TypeError)
 import Text.Read (Read, readMaybe, reads)
 

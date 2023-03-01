@@ -55,8 +55,8 @@ module Relude.Nub
 #if !MIN_VERSION_hashable(1,4,0)
 import Data.Eq (Eq)
 #endif
-import Data.HashSet as HashSet
 import Data.Hashable (Hashable)
+import Data.HashSet as HashSet
 import Data.Ord (Ord)
 import Prelude (Int, (.))
 

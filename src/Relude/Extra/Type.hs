@@ -36,7 +36,7 @@ import Type.Reflection (typeRep)
 
 
 -- $setup
--- >>> :set -XAllowAmbiguousTypes -XDataKinds -XExplicitNamespaces -XPolyKinds -XTypeFamilies -XTypeOperators -XUndecidableInstances 
+-- >>> :set -XAllowAmbiguousTypes -XDataKinds -XExplicitNamespaces -XPolyKinds -XTypeFamilies -XTypeOperators -XUndecidableInstances
 
 {- | Gets a string representation of a type.
 

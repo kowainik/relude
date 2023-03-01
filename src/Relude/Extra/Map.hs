@@ -1,5 +1,7 @@
-{-# LANGUAGE Trustworthy  #-}
-{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE CPP           #-}
+{-# LANGUAGE Trustworthy   #-}
+{-# LANGUAGE TypeFamilies  #-}
+{-# LANGUAGE TypeOperators #-}
 
 {- |
 Module                  : Relude.Extra.Map
@@ -26,9 +28,17 @@ module Relude.Extra.Map
     , elems
     ) where
 
+#if __GLASGOW_HASKELL__ >= 904
+import Data.Type.Equality (type (~))
+#endif
 import GHC.Exts (IsList (Item, toList))
 
+#if MIN_VERSION_hashable(1,4,0)
+import Relude.Base (Ord, Type)
+#else
 import Relude.Base (Eq, Ord, Type)
+#endif
+
 import Relude.Bool (Bool, guard, not)
 import Relude.Container.Reexport (HashMap, HashSet, Hashable, IntMap, IntSet, Map, Set, fst, snd)
 import Relude.Function ((.))
@@ -80,7 +90,11 @@ instance Ord k => StaticMap (Map k v) where
 
 @since 0.1.0
 -}
+#if MIN_VERSION_hashable(1,4,0)
+instance (Hashable k) => StaticMap (HashMap k v) where
+#else
 instance (Eq k, Hashable k) => StaticMap (HashMap k v) where
+#endif
     type Key (HashMap k v) = k
     type Val (HashMap k v) = v
 
@@ -125,7 +139,11 @@ instance Ord a => StaticMap (Set a) where
 
 @since 0.1.0
 -}
+#if MIN_VERSION_hashable(1,4,0)
+instance (Hashable a) => StaticMap (HashSet a) where
+#else
 instance (Eq a, Hashable a) => StaticMap (HashSet a) where
+#endif
     type Key (HashSet a) = a
     type Val (HashSet a) = a
 
@@ -237,7 +255,11 @@ instance Ord k => DynamicMap (Map k v) where
 
 @since 0.1.0
 -}
+#if MIN_VERSION_hashable(1,4,0)
+instance (Hashable k) => DynamicMap (HashMap k v) where
+#else
 instance (Eq k, Hashable k) => DynamicMap (HashMap k v) where
+#endif
     insert     = HM.insert
     {-# INLINE insert #-}
     insertWith = HM.insertWith

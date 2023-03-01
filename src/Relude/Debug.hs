@@ -3,6 +3,7 @@
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE DeriveDataTypeable   #-}
 {-# LANGUAGE DeriveGeneric        #-}
+{-# LANGUAGE DerivingStrategies   #-}
 {-# LANGUAGE KindSignatures       #-}
 {-# LANGUAGE PolyKinds            #-}
 {-# LANGUAGE RankNTypes           #-}
@@ -11,10 +12,6 @@
 {-# LANGUAGE TypeInType           #-}
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
-
-#if __GLASGOW_HASKELL__ > 802
-{-# LANGUAGE DerivingStrategies   #-}
-#endif
 
 {- |
 Module                  : Relude.Debug
@@ -89,6 +86,9 @@ module Relude.Debug
     ) where
 
 import Data.Data (Data)
+#if __GLASGOW_HASKELL__ >= 904
+import Data.Type.Equality (type (~))
+#endif
 import GHC.Exts (RuntimeRep, TYPE)
 import GHC.TypeLits (ErrorMessage (..), TypeError)
 
@@ -255,7 +255,7 @@ error handling mechanism.
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src\\Relude\\Debug.hs:289:11 in ...
+  error, called at src\Relude\Debug.hs:289:11 in ...
   ...
 #else
 >>> error "oops"
@@ -309,11 +309,7 @@ type family CheckIsText (t :: Type) :: Constraint where
 
 -- | Similar to 'undefined' but data type.
 data Undefined = Undefined
-#if __GLASGOW_HASKELL__ > 802
     deriving stock (Eq, Ord, Show, Read, Enum, Bounded, Data, Typeable, Generic)
-#else
-    deriving (Eq, Ord, Show, Read, Enum, Bounded, Data, Typeable, Generic)
-#endif
 {-# WARNING Undefined "'Undefined' type remains in code" #-}
 
 -- | 'Prelude.undefined' that leaves warning in code on every usage.
