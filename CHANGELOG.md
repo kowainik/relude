@@ -3,6 +3,12 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
+## 1.2.0.1 - TBD
+
+* Support GHC-9.6
+* Upgrade dependencies:
+    - `ghc-prim-0.10`
+
 ## 1.2.0.0 – Mar 1, 2023
 
 * [#420](https://github.com/kowainik/relude/issues/420):

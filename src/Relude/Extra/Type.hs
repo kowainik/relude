@@ -35,8 +35,15 @@ import Relude
 import Type.Reflection (typeRep)
 
 
+#if ( __GLASGOW_HASKELL__ >= 906 )
 -- $setup
 -- >>> :set -XAllowAmbiguousTypes -XDataKinds -XExplicitNamespaces -XPolyKinds -XTypeFamilies -XTypeOperators -XUndecidableInstances
+-- >>> :set -fprint-redundant-promotion-ticks
+# else
+-- $setup
+-- >>> :set -XAllowAmbiguousTypes -XDataKinds -XExplicitNamespaces -XPolyKinds -XTypeFamilies -XTypeOperators -XUndecidableInstances
+#endif
+
 
 {- | Gets a string representation of a type.
 

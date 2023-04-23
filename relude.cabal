@@ -228,11 +228,11 @@ library
     , Data.ByteString.Short
 
 
-  build-depends:       base >= 4.11 && < 4.18
+  build-depends:       base >= 4.11 && < 4.19
                      , bytestring >= 0.10 && < 0.12
                      , containers >= 0.5.10 && < 0.7
                      , deepseq ^>= 1.4
-                     , ghc-prim >= 0.5.0.0 && < 0.10
+                     , ghc-prim >= 0.5.0.0 && < 0.11
                      , hashable >= 1.2 && < 1.5
                      , mtl >= 2.2 && < 2.4
                      , stm >= 2.4 && < 2.6
