@@ -104,10 +104,10 @@ class ConvertUtf8 a b where
 
 #if MIN_VERSION_text(2,0,0)
     >>> decodeUtf8Strict @Text @ByteString "\208\208\176\209\130\208\176\208\186"
-    Left Cannot decode byte '\xd0': Data.Text.Internal.Encoding: Invalid UTF-8 stream
+    Left Cannot decode byte '\xd0': ...: Invalid UTF-8 stream
 #else
     >>> decodeUtf8Strict @Text @ByteString "\208\208\176\209\130\208\176\208\186"
-    Left Cannot decode byte '\xd0': Data.Text.Internal.Encoding.decodeUtf8: Invalid UTF-8 stream
+    Left Cannot decode byte '\xd0': ...: Invalid UTF-8 stream
 #endif
     -}
     decodeUtf8Strict :: b -> Either T.UnicodeException a
