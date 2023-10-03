@@ -9,7 +9,9 @@
 {-# LANGUAGE RankNTypes           #-}
 {-# LANGUAGE Trustworthy          #-}
 {-# LANGUAGE TypeFamilies         #-}
+#if ( __GLASGOW_HASKELL__ < 906 )
 {-# LANGUAGE TypeInType           #-}
+#endif
 {-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE UndecidableInstances #-}
 
@@ -261,7 +263,7 @@ CallStack (from HasCallStack):
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src/Relude/Debug.hs:289:11 in ...
+  error, called at src/Relude/Debug.hs:291:11 in ...
 ...
 #endif
 

@@ -89,7 +89,7 @@ class Foldable f => Foldable1 f where
     2 :| []
     -}
     toNonEmpty :: f a -> NonEmpty a
-    toNonEmpty = foldMap1 (:|[])
+    toNonEmpty = foldMap1 (:| [])
 
     {- | The first element of a non-empty data structure.
 
@@ -211,7 +211,7 @@ instance Foldable1 Identity where
     {-# INLINE fold1 #-}
 
     toNonEmpty :: Identity a -> NonEmpty a
-    toNonEmpty = (:|[]) . coerce
+    toNonEmpty = (:| []) . coerce
     {-# INLINE toNonEmpty #-}
 
     head1 :: Identity a -> a
@@ -252,7 +252,7 @@ instance Foldable1 ((,) c) where
     {-# INLINE fold1 #-}
 
     toNonEmpty :: (c, a) -> NonEmpty a
-    toNonEmpty (_, y) = (y :| [])
+    toNonEmpty (_, y) = y :| []
     {-# INLINE toNonEmpty #-}
 
     head1, last1 :: (c, a) -> a
@@ -406,7 +406,7 @@ possible and returns the resulting element.
 @since 1.0.0.0
 -}
 average1 :: forall a f . (Foldable1 f, Fractional a) => f a -> a
-average1 = uncurry (/) . foldl' (\(!total, !count) x -> (total + x, count + 1)) (0,0)
+average1 = uncurry (/) . foldl' (\(!total, !count) x -> (total + x, count + 1)) (0, 0)
 {-# INLINE average1 #-}
 
 {-

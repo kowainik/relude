@@ -15,4 +15,6 @@ main = do
         : "-XOverloadedStrings"
         : "-XScopedTypeVariables"
         : "-XTypeApplications"
+        : "-XNoTemplateHaskell"
+        : "-Wno-safe"
         : sourceFiles
