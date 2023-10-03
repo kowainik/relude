@@ -1,5 +1,11 @@
 {-# OPTIONS_GHC -Wno-redundant-constraints #-}
 
+{-# LANGUAGE CPP                  #-}
+
+#if __GLASGOW_HASKELL__ >= 902
+{-# OPTIONS_GHC -Wno-operator-whitespace #-}
+#endif
+
 {-# LANGUAGE BangPatterns         #-}
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE Safe                 #-}

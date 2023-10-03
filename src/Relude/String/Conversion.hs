@@ -1,6 +1,9 @@
-{-# OPTIONS_GHC -Wno-operator-whitespace #-}
-
 {-# LANGUAGE CPP                    #-}
+
+#if __GLASGOW_HASKELL__ >= 902
+{-# OPTIONS_GHC -Wno-operator-whitespace #-}
+#endif
+
 {-# LANGUAGE DataKinds              #-}
 {-# LANGUAGE FlexibleInstances      #-}
 {-# LANGUAGE FunctionalDependencies #-}

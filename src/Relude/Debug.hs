@@ -1,4 +1,9 @@
 {-# LANGUAGE CPP                  #-}
+
+#if __GLASGOW_HASKELL__ >= 902
+{-# OPTIONS_GHC -Wno-operator-whitespace #-}
+#endif
+
 {-# LANGUAGE ConstraintKinds      #-}
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE DeriveDataTypeable   #-}
@@ -257,13 +262,13 @@ error handling mechanism.
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src\Relude\Debug.hs:291:11 in ...
+  error, called at src\Relude\Debug.hs:296:11 in ...
   ...
 #else
 >>> error "oops"
 *** Exception: oops
 CallStack (from HasCallStack):
-  error, called at src/Relude/Debug.hs:291:11 in ...
+  error, called at src/Relude/Debug.hs:296:11 in ...
 ...
 #endif
 

@@ -1,4 +1,9 @@
 {-# LANGUAGE CPP                  #-}
+
+#if __GLASGOW_HASKELL__ >= 902
+{-# OPTIONS_GHC -Wno-operator-whitespace #-}
+#endif
+
 {-# LANGUAGE ConstraintKinds      #-}
 {-# LANGUAGE DataKinds            #-}
 {-# LANGUAGE Safe                 #-}
