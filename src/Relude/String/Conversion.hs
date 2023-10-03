@@ -1,4 +1,9 @@
 {-# LANGUAGE CPP                    #-}
+
+#if __GLASGOW_HASKELL__ >= 902
+{-# OPTIONS_GHC -Wno-operator-whitespace #-}
+#endif
+
 {-# LANGUAGE DataKinds              #-}
 {-# LANGUAGE FlexibleInstances      #-}
 {-# LANGUAGE FunctionalDependencies #-}
@@ -102,7 +107,10 @@ class ConvertUtf8 a b where
     "\65533\65533\1090\1072\1082"
 #endif
 
-#if MIN_VERSION_text(2,0,0)
+#if MIN_VERSION_text(2,0,2)
+    >>> decodeUtf8Strict @Text @ByteString "\208\208\176\209\130\208\176\208\186"
+    Left Cannot decode byte '\xd0': Data.Text.Encoding: Invalid UTF-8 stream
+#elif MIN_VERSION_text(2,0,0)
     >>> decodeUtf8Strict @Text @ByteString "\208\208\176\209\130\208\176\208\186"
     Left Cannot decode byte '\xd0': Data.Text.Internal.Encoding: Invalid UTF-8 stream
 #else
