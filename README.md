@@ -120,7 +120,7 @@ blog post by [Type Classes](https://typeclasses.com/) that highlights
 For guiding development principles behind `relude` and comparison with
 `base`, check out the following talk:
 
-* [![Introduction to `relude` — an alternative Haskell prelude](https://img.youtube.com/vi/qwAmiJ5M_zM/0.jpg)](https://www.youtube.com/watch?v=qwAmiJ5M_zM)
+  [![Introduction to `relude` — an alternative Haskell prelude](https://img.youtube.com/vi/qwAmiJ5M_zM/0.jpg)](https://www.youtube.com/watch?v=qwAmiJ5M_zM)
 
 ## Structure of this tutorial
 
@@ -129,8 +129,8 @@ This tutorial has several parts:
 1. [When to use an alternative prelude?](#when-to-use-an-alternative-prelude)
 2. [Get started](#get-started)
     * [Mixins](#mixins)
-    * [base-noprelude](#base-noprelude)
-    * [NoImplicitPrelude](#NoImplicitPrelude)
+    * [NoImplicitPrelude](#noimplicitprelude)
+    * [base-noprelude (not recommended)](#base-noprelude)
 3. [Difference from Prelude](#difference-from-prelude)
 4. [Reexports](#reexports)
 5. [What's new?](#whats-new)
@@ -279,9 +279,40 @@ easiest way to bring all functions and types from `relude` to your project
 > If having `stack repl` crucial for your workflow, see the following options of
 > how to use Relude in your project.
 
+
+### NoImplicitPrelude
+
+[[Back to the Table of Contents] ↑](#structure-of-this-tutorial)
+
+For this option, you need to disable the default `Prelude` module first.
+To disable the built-in prelude on module basis, you can add the following
+pragma at the top of your file:
+
+```haskell
+{-# LANGUAGE NoImplicitPrelude #-}
+```
+
+if you want to disable the default `Prelude` for every module by default, you
+can specify this directly in your project `.cabal` file:
+
+```haskell
+default-extensions: NoImplicitPrelude
+```
+
+Then you need to add `relude` as a dependency of your project.
+
+After doing all above, you can now use `Relude` in any module of your project by
+adding a single import:
+
+```haskell
+import Relude
+```
+
 ### base-noprelude
 
 [[Back to the Table of Contents] ↑](#structure-of-this-tutorial)
+
+:warning: *This strategy is not reccommended. The package ``base-noprelude`` is currently not being maintained and its use is likely to cause issues with newer versions of ghc and libraries.*
 
 Alternatively, you can use the `base-noprelude` trick to enable
 alternative preludes. This approach can be helpful if you want to have
@@ -313,33 +344,6 @@ This is a very convenient way to add a custom prelude to your project because
 you don't need to import module manually inside each file and enable the
 `NoImplicitPrelude` extension.
 
-### NoImplicitPrelude
-
-[[Back to the Table of Contents] ↑](#structure-of-this-tutorial)
-
-For this option, you need to disable the default `Prelude` module first.
-To disable the built-in prelude on module basis, you can add the following
-pragma at the top of your file:
-
-```haskell
-{-# LANGUAGE NoImplicitPrelude #-}
-```
-
-if you want to disable the default `Prelude` for every module by default, you
-can specify this directly in your project `.cabal` file:
-
-```haskell
-default-extensions: NoImplicitPrelude
-```
-
-Then you need to add `relude` as a dependency of your project.
-
-After doing all above, you can now use `Relude` in any module of your project by
-adding a single import:
-
-```haskell
-import Relude
-```
 
 ## Difference from Prelude
 
