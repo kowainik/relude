@@ -3,7 +3,7 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
-## 1.2.0.1 – Unreleased
+## 1.2.1.0 – Oct 4, 2023
 
 - [#439](https://github.com/kowainik/relude/issues/439):
   Support GHC-9.6.
@@ -15,6 +15,7 @@ The changelog is available [on GitHub][2].
   - `deepseq-1.5`
   - `hedgehod-1.3`
   - `doctest-0.22`
+- Upgrade tests to work with GHC-9.6.
 
 ## 1.2.0.0 – Mar 1, 2023
 
