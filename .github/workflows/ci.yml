@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
-        cabal: ['3.8']
+        cabal: ['3.10']
         ghc:
           - '8.4.4'
           - '8.6.5'
@@ -27,7 +27,10 @@ jobs:
           - '9.2.8'
           - '9.4.7'
           - '9.6.3'
+          - '9.8.1'
         exclude:
+          - os: macOS-latest
+            ghc: 9.6.3
           - os: macOS-latest
             ghc: 9.4.7
           - os: macOS-latest
@@ -43,6 +46,8 @@ jobs:
           - os: macOS-latest
             ghc: 8.4.4
 
+          - os: windows-latest
+            ghc: 9.6.3
           - os: windows-latest
             ghc: 9.4.7
           - os: windows-latest

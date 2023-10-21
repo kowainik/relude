@@ -229,11 +229,11 @@ library
     , Data.ByteString.Short
 
 
-  build-depends:       base >= 4.11 && < 4.19
+  build-depends:       base >= 4.11 && < 4.20
                      , bytestring >= 0.10 && < 0.13
                      , containers >= 0.5.10 && < 0.8
                      , deepseq >= 1.4 && < 1.6
-                     , ghc-prim >= 0.5.0.0 && < 0.11
+                     , ghc-prim >= 0.5.0.0 && < 0.12
                      , hashable >= 1.2 && < 1.5
                      , mtl >= 2.2 && < 2.4
                      , stm >= 2.4 && < 2.6
@@ -256,7 +256,7 @@ test-suite relude-test
                      , bytestring
                      , containers
                      , text
-                     , hedgehog >= 1.0 && < 1.4
+                     , hedgehog >= 1.0 && < 1.5
 
   ghc-options:         -threaded
 
