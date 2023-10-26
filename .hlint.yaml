@@ -190,6 +190,10 @@
     lhs: "getAlt . foldMap (Alt . f)"
     rhs: asumMap
 - hint:
+    lhs: "foldr (:) []"
+    note: "Use 'toList'"
+    rhs: toList
+- hint:
     lhs: "foldr (\\x acc -> f x <|> acc) empty"
     note: "Use 'asumMap'"
     rhs: asumMap f
