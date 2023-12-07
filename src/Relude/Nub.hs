@@ -69,7 +69,7 @@ import qualified Data.Containers.ListUtils as Containers
 -- $setup
 -- >>> import Prelude (div, fromEnum)
 
-{- | Removes duplicate elements from a list, keeping only the first occurance of
+{- | Removes duplicate elements from a list, keeping only the first occurrence of
 the element.
 
 Like 'Prelude.nub' but runs in \( O(n \log n) \)  time and requires 'Ord'.
