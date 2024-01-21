@@ -97,6 +97,7 @@ in [ Rule.Arguments { arguments =
 
    , warnSimple "getAlt (foldMap (Alt . f) xs)" "asumMap xs"
    , warnSimple "getAlt . foldMap (Alt . f)" "asumMap"
+   , hintNote "foldr (:) []" "toList" "Use 'toList'"
    , hintNote "foldr (\\x acc -> f x <|> acc) empty" "asumMap f" "Use 'asumMap'"
    , hintNote "asum (map f xs)" "asumMap f xs" "Use 'asumMap'"
 
