@@ -229,7 +229,7 @@ library
     , Data.ByteString.Short
 
 
-  build-depends:       base >= 4.11 && < 4.20
+  build-depends:       base >= 4.11 && < 4.21
                      , bytestring >= 0.10 && < 0.13
                      , containers >= 0.5.10 && < 0.8
                      , deepseq >= 1.4 && < 1.6
