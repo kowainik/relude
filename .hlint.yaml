@@ -1,15 +1,15 @@
 - arguments:
-  - "-XConstraintKinds"
-  - "-XDeriveGeneric"
-  - "-XGeneralizedNewtypeDeriving"
-  - "-XLambdaCase"
-  - "-XOverloadedStrings"
-  - "-XRecordWildCards"
-  - "-XScopedTypeVariables"
-  - "-XStandaloneDeriving"
-  - "-XTupleSections"
-  - "-XTypeApplications"
-  - "-XViewPatterns"
+    - "-XConstraintKinds"
+    - "-XDeriveGeneric"
+    - "-XGeneralizedNewtypeDeriving"
+    - "-XLambdaCase"
+    - "-XOverloadedStrings"
+    - "-XRecordWildCards"
+    - "-XScopedTypeVariables"
+    - "-XStandaloneDeriving"
+    - "-XTupleSections"
+    - "-XTypeApplications"
+    - "-XViewPatterns"
 - ignore:
     name: Use head
 - ignore:
@@ -190,6 +190,10 @@
     lhs: "getAlt . foldMap (Alt . f)"
     rhs: asumMap
 - hint:
+    lhs: "foldr (:) []"
+    note: "Use 'toList'"
+    rhs: toList
+- hint:
     lhs: "foldr (\\x acc -> f x <|> acc) empty"
     note: "Use 'asumMap'"
     rhs: asumMap f
@@ -233,13 +237,13 @@
     lhs: partitionEithers . map f
     rhs: partitionWith f
 - warn:
-    lhs: partitionEithers $ map f x
+    lhs: "partitionEithers $ map f x"
     rhs: partitionWith f x
 - warn:
     lhs: "f >>= guard"
     rhs: guardM f
 - warn:
-    lhs: guard =<< f
+    lhs: "guard =<< f"
     rhs: guardM f
 - warn:
     lhs: forever
@@ -330,7 +334,7 @@
     lhs: "maybe (return ()) f =<< m"
     rhs: whenJustM m f
 - warn:
-    lhs: maybe pass        f =<< m
+    lhs: "maybe pass        f =<< m"
     rhs: whenJustM m f
 - warn:
     lhs: "m >>= maybe (pure ())   f"
