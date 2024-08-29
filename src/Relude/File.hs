@@ -1,5 +1,5 @@
-{-# LANGUAGE Safe #-}
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE Safe             #-}
 
 {- |
 Module                  : Relude.File
@@ -63,7 +63,7 @@ import Relude.Base (FilePath, IO)
 import Relude.Function ((.))
 import Relude.Functor (fmap)
 import Relude.Monad.Reexport (MonadIO (..))
-import Relude.String (ByteString, LByteString, LText, Text, String, ConvertUtf8(..))
+import Relude.String (ByteString, ConvertUtf8 (..), LByteString, LText, String, Text)
 
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Lazy as LBS
