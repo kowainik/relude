@@ -207,7 +207,7 @@ text in UTF-8 (or just ASCII) encoding.
 Invalid byte sequences that don't represent characters will be converted to
 U+FFFD replacement characters (@decodeUtf8Lenient@).
 
-@since ?.?.?
+@since 1.2.2
 -}
 readFileUtf8 :: (MonadIO m, ConvertUtf8 r ByteString) => FilePath -> m r
 readFileUtf8 = liftIO . fmap decodeUtf8 . BS.readFile
