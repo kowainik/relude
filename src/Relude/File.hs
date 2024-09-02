@@ -1,4 +1,5 @@
-{-# LANGUAGE Safe #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE Safe             #-}
 
 {- |
 Module                  : Relude.File
@@ -53,12 +54,16 @@ module Relude.File
     , readFileLBS
     , writeFileLBS
     , appendFileLBS
+
+      -- * Reading in UTF-8
+    , readFileUtf8
     ) where
 
 import Relude.Base (FilePath, IO)
 import Relude.Function ((.))
+import Relude.Functor (fmap)
 import Relude.Monad.Reexport (MonadIO (..))
-import Relude.String (ByteString, LByteString, LText, Text)
+import Relude.String (ByteString, ConvertUtf8 (..), LByteString, LText, String, Text)
 
 import qualified Data.ByteString as BS
 import qualified Data.ByteString.Lazy as LBS
@@ -191,3 +196,21 @@ appendFileLBS :: MonadIO m => FilePath -> LByteString -> m ()
 appendFileLBS p = liftIO . LBS.appendFile p
 {-# SPECIALIZE appendFileLBS :: FilePath -> LByteString -> IO () #-}
 {-# INLINE     appendFileLBS #-}
+
+----------------------------------------------------------------------------
+-- UTF-8
+----------------------------------------------------------------------------
+
+{- | 'MonadIO'-lifted strict file reading with the assumption that it contains
+text in UTF-8 (or just ASCII) encoding.
+
+Invalid byte sequences that don't represent characters will be converted to
+U+FFFD replacement characters (@decodeUtf8Lenient@).
+
+@since 1.2.2
+-}
+readFileUtf8 :: (MonadIO m, ConvertUtf8 r ByteString) => FilePath -> m r
+readFileUtf8 = liftIO . fmap decodeUtf8 . BS.readFile
+{-# SPECIALIZE readFileUtf8 :: FilePath -> IO Text #-}
+{-# SPECIALIZE readFileUtf8 :: FilePath -> IO String #-}
+{-# INLINE     readFileUtf8 #-}
