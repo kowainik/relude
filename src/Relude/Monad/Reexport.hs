@@ -34,7 +34,7 @@ module Relude.Monad.Reexport
     ) where
 
 -- Monad transformers
-import Control.Monad.Except (ExceptT (..), runExceptT)
+import Control.Monad.Except (ExceptT (..), runExceptT, throwError)
 import Control.Monad.Reader (MonadReader, Reader, ReaderT (..), ask, asks, local, reader, runReader,
                              withReader, withReaderT)
 import Control.Monad.State.Strict (MonadState, State, StateT (..), evalState, evalStateT, execState,
