@@ -3,6 +3,11 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
+## 1.2.2.0 – Oct 13, 2024
+
+- Support GHC-9.10 & GHC-9.8.
+- Allow hashable-1.5
+
 ## 1.2.1.0 – Oct 4, 2023
 
 - [#439](https://github.com/kowainik/relude/issues/439):

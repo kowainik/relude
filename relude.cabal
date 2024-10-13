@@ -1,6 +1,6 @@
 cabal-version:       3.0
 name:                relude
-version:             1.2.1.0
+version:             1.2.2.0
 synopsis:            Safe, performant, user-friendly and lightweight Haskell Standard Library
 description:
     @__relude__@ is an alternative prelude library. If you find the default
@@ -98,7 +98,9 @@ tested-with:         GHC == 8.4.4
                      GHC == 9.0.2
                      GHC == 9.2.8
                      GHC == 9.4.7
-                     GHC == 9.6.3
+                     GHC == 9.6.6
+                     GHC == 9.8.2
+                     GHC == 9.10.1
 
 
 source-repository head
@@ -126,9 +128,13 @@ common common-options
   if impl(ghc >= 9.2)
     ghc-options:       -Wredundant-bang-patterns
                        -Woperator-whitespace
+  if impl(ghc >= 9.4  && < 9.10)
+    ghc-options:       -Wforall-identifier
   if impl(ghc >= 9.4)
     ghc-options:       -Wredundant-strictness-flags
-                       -Wforall-identifier
+  if impl(ghc >= 9.8)
+    ghc-options:       -Wterm-variable-capture
+                       -Winconsistent-flags
 
 
   default-language:    Haskell2010
