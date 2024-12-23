@@ -71,7 +71,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: haskell/actions/setup@v2.3
+      - uses: haskell-actions/setup@v2.7
         id: setup-haskell-cabal
         name: Setup Haskell
         with:
