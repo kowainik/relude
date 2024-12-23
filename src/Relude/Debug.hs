@@ -258,20 +258,6 @@ traceId = Debug.traceId
 branch of code execution is not possible.  __DO NOT USE__ 'error' as a normal
 error handling mechanism.
 
-#ifdef mingw32_HOST_OS
->>> error "oops"
-*** Exception: oops
-CallStack (from HasCallStack):
-  error, called at src\Relude\Debug.hs:296:11 in ...
-  ...
-#else
->>> error "oops"
-*** Exception: oops
-CallStack (from HasCallStack):
-  error, called at src/Relude/Debug.hs:296:11 in ...
-...
-#endif
-
 ⚠️__CAUTION__⚠️  Unlike "Prelude" version, 'error' takes 'Relude.Text' as an
 argument. In case it used by mistake, the user will see the following:
 

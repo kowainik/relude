@@ -235,11 +235,11 @@ library
     , Data.ByteString.Short
 
 
-  build-depends:       base >= 4.11 && < 4.21
+  build-depends:       base >= 4.11 && < 4.22
                      , bytestring >= 0.10 && < 0.13
                      , containers >= 0.5.10 && < 0.9
                      , deepseq >= 1.4 && < 1.6
-                     , ghc-prim >= 0.5.0.0 && < 0.12
+                     , ghc-prim >= 0.5.0.0 && < 0.14
                      , hashable >= 1.2 && < 1.6
                      , mtl >= 2.2 && < 2.4
                      , stm >= 2.4 && < 2.6
@@ -273,7 +273,7 @@ test-suite relude-doctest
   main-is:             Doctest.hs
 
   build-depends:       relude
-                     , doctest >= 0.20 && < 0.23
+                     , doctest >= 0.20 && < 0.25
                      , Glob
 
   ghc-options:         -threaded
