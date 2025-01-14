@@ -262,7 +262,7 @@ test-suite relude-test
                      , bytestring
                      , containers
                      , text
-                     , hedgehog >= 1.0 && < 1.5
+                     , hedgehog >= 1.0 && < 1.6
 
   ghc-options:         -threaded
 
