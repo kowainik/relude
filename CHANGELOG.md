@@ -3,6 +3,10 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
+## Unreleased
+
+- Allow containers-0.8.
+
 ## 1.2.2.0 – Oct 13, 2024
 
 - Support GHC-9.10 & GHC-9.8.
