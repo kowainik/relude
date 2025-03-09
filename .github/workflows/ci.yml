@@ -15,6 +15,7 @@ jobs:
     name: ${{ matrix.os }} / ghc ${{ matrix.ghc }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
         ghc:
