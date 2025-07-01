@@ -17,10 +17,13 @@ with monads.
 module Relude.Bool
     ( module Relude.Bool.Reexport
       -- $reexport
+    , module Relude.Bool.Extra
+      -- $reexport
     , module Relude.Bool.Guard
       -- $guard
     ) where
 
+import Relude.Bool.Extra
 import Relude.Bool.Guard
 import Relude.Bool.Reexport
 
