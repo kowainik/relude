@@ -18,6 +18,7 @@ module Relude.List
       -- $reexport
     , module Relude.List.NonEmpty
       -- $nonempty
+    , safeHead
     , (!!?)
     , maybeAt
     , partitionWith
@@ -35,6 +36,22 @@ import Relude.Numeric (Int, (-))
 
 -- $setup
 -- >>> import Relude
+
+{- | Safe version of 'head', returns a Maybe.
+
+>>> safeHead []
+Nothing
+
+>>> safeHead ["a", "b", "c"]
+Just "a"
+
+>>> safeHead [1]
+Just 1
+-}
+safeHead :: [a] -> Maybe a
+safeHead (x:_) = Just x
+safeHead []    = Nothing
+{-# INLINE safeHead #-}
 
 {- | Safer version of 'Relude.Unsafe.!!', returns a Maybe.
 

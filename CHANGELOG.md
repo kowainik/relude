@@ -6,6 +6,7 @@ The changelog is available [on GitHub][2].
 ## Unreleased
 
 - Allow containers-0.8.
+- Add `safeHead`
 
 ## 1.2.2.0 – Oct 13, 2024
 
