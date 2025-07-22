@@ -14,13 +14,16 @@ Reexports functions to work with monads.
 -}
 
 module Relude.Monad.Reexport
-    ( -- * Reexport transformers
-      module Control.Monad.Except
+    ( -- * Reexport MonadIO
+      module Control.Monad.IO.Class
+
+      -- * Reexport transformers
+    , module Control.Monad.Except
     , module Control.Monad.Reader
     , module Control.Monad.State.Strict
     , module Control.Monad.Trans
     , module Control.Monad.Trans.Identity
-    , module Control.Monad.Trans.Maybe
+    , module Control.Monad.Trans.Maybe 
 
       -- * Reexport monadic functions
     , module Control.Monad
@@ -34,13 +37,14 @@ module Relude.Monad.Reexport
     ) where
 
 -- Monad transformers
+import Control.Monad.IO.Class (MonadIO, liftIO)
 import Control.Monad.Except (ExceptT (..), runExceptT)
 import Control.Monad.Reader (MonadReader, Reader, ReaderT (..), ask, asks, local, reader, runReader,
                              withReader, withReaderT)
 import Control.Monad.State.Strict (MonadState, State, StateT (..), evalState, evalStateT, execState,
                                    execStateT, get, gets, modify, modify', put, runState, state,
                                    withState)
-import Control.Monad.Trans (MonadIO, MonadTrans, lift, liftIO)
+import Control.Monad.Trans (MonadTrans, lift)
 import Control.Monad.Trans.Identity (IdentityT (runIdentityT))
 import Control.Monad.Trans.Maybe (MaybeT (..), exceptToMaybeT, maybeToExceptT)
 
