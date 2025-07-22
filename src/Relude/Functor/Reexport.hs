@@ -15,13 +15,16 @@ Reexports functionality regarding 'Functor' and 'Bifunctor' typeclasses.
 -}
 
 module Relude.Functor.Reexport
-    ( module Data.Bifunctor
-    , module Data.Functor
+    ( -- * Reexport Functor
+      module Data.Functor
     , module Data.Functor.Compose
     , module Data.Functor.Identity
 #if MIN_VERSION_base(4,12,0)
     , module Data.Functor.Contravariant
 #endif
+
+      -- * Reexport Bifunctor
+    , module Data.Bifunctor
     ) where
 
 import Data.Bifunctor (Bifunctor (..))

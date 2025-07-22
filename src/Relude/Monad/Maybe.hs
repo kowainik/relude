@@ -10,7 +10,7 @@ Maintainer              : Kowainik <xrom.xkov@gmail.com>
 Stability               : Stable
 Portability             : Portable
 
-Utility functions to work with 'Relude.Maybe' data type as monad.
+Utility functions to work with 'Relude.Monad.Reexport.Maybe' data type as monad.
 -}
 
 module Relude.Monad.Maybe
@@ -49,7 +49,7 @@ infixr 0 ?:
 mA ?: b = fromMaybe b mA
 {-# INLINE (?:) #-}
 
-{- | Specialized version of 'Relude.for_' for 'Maybe'. It's used for code readability.
+{- | Specialized version of 'Relude.Foldable.Reexport.for_' for 'Maybe'. It's used for code readability.
 
 Also helps to avoid space leaks:
 <http://www.snoyman.com/blog/2017/01/foldable-mapm-maybe-and-recursive-functions Foldable.mapM_ space leak>.

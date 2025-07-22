@@ -119,7 +119,7 @@ A dual to 'mapToSnd'
 mapToFst :: (a -> b) -> a -> (b, a)
 mapToFst = toFst
 {-# INLINE mapToFst #-}
-{-# DEPRECATED mapToFst "Use 'toFst' from 'Relude.Extra.Tuple' instead" #-}
+{-# DEPRECATED mapToFst "Use 'toFst' from [Tuple](\"Relude.Extra.Tuple\") instead" #-}
 
 {- | Apply a function, with the result in the second slot,
 and the value in the other.
@@ -134,7 +134,7 @@ A dual to 'mapToFst'.
 mapToSnd :: (a -> b) -> a -> (a, b)
 mapToSnd = toSnd
 {-# INLINE mapToSnd #-}
-{-# DEPRECATED mapToSnd "Use 'toSnd' from 'Relude.Extra.Tuple' instead" #-}
+{-# DEPRECATED mapToSnd "Use 'toSnd' from [Tuple](\"Relude.Extra.Tuple\") instead" #-}
 
 {- | Apply a function that returns a value inside of a functor,
 with the output in the first slot, the input in the second,

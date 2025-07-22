@@ -80,10 +80,10 @@ infinitely = forever
 Reexports functions to work with different monads.
 -}
 {- $maybe
-Provided new combinators to work with 'Relude.Maybe' data type.
+Provided new combinators to work with 'Relude.Monad.Reexport.Maybe' data type.
 -}
 {- $either
-Provided new combinators to work with 'Relude.Either' data type.
+Provided new combinators to work with 'Relude.Monad.Reexport.Either' data type.
 -}
 {- $trans
 Monad transformers functions and combinators.

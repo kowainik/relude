@@ -12,7 +12,7 @@ Maintainer              : Kowainik <xrom.xkov@gmail.com>
 Stability               : Stable
 Portability             : Portable
 
-Utilities to work with 'Relude.Either' data type.
+Utilities to work with 'Relude.Monad.Reexport.Either' data type.
 -}
 
 module Relude.Monad.Either

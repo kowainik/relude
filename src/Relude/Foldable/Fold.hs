@@ -79,7 +79,7 @@ flipfoldl' :: Foldable f => (a -> b -> b) -> b -> f a -> b
 flipfoldl' f = foldl' (flip f)
 {-# INLINE flipfoldl' #-}
 
-{- | Alternative version of 'Relude.asum' that takes a function to map over.
+{- | Alternative version of 'Relude.Foldable.Reexport.asum' that takes a function to map over.
 
 >>> asumMap (\x -> if x > 2 then Just x else Nothing) [1..4]
 Just 3
@@ -90,7 +90,7 @@ asumMap :: forall b m f a . (Foldable f, Alternative m) => (a -> m b) -> f a -> 
 asumMap = coerce (foldMap :: (a -> Alt m b) -> f a -> Alt m b)
 {-# INLINE asumMap #-}
 
-{- | Polymorphic version of the 'Relude.concatMapA' function.
+{- | Polymorphic version of the 'concatMapA' function.
 
 >>> foldMapA @[Int] (Just . replicate 3) [1..3]
 Just [1,1,1,2,2,2,3,3,3]
@@ -105,7 +105,7 @@ foldMapA
 foldMapA = coerce (foldMap :: (a -> Ap m b) -> f a -> Ap m b)
 {-# INLINE foldMapA #-}
 
-{- | Polymorphic version of the 'Relude.concatMapM' function.
+{- | Polymorphic version of the 'Control.Monad.Extra.concatMapM' function.
 
 >>> foldMapM @[Int] (Just . replicate 3) [1..3]
 Just [1,1,1,2,2,2,3,3,3]
