@@ -18,7 +18,8 @@ It has three main goals:
 
 1. Give a shorter name for the construction: uses 'one' instead of common @singleton@.
 2. Work with monomorphic structures like 'T.Text' or 'IntSet'.
-3. Give a clearer and less scary name for cases where you can use 'Relude.pure' or @(:[])@.
+3. Give a clearer and less scary name for cases where you can use 'Relude.Applicative.pure'
+   or @(:[])@.
 
 @since 0.1.0
 -}
@@ -79,13 +80,13 @@ class One x where
 -- Lists
 
 {- | Allows to create a singleton list. You might prefer function with name 'one'
-instead of 'Relude.pure' or @(:[])@.
+instead of 'Relude.Applicative.pure' or @(:[])@.
 
 >>> one 42 :: [Int]
 [42]
 
 @
-law> 'Relude.length' ('one' @[a] x) ≡ 1
+law> 'Relude.Foldable.Reexport.length' ('one' @[a] x) ≡ 1
 @
 -}
 instance One [a] where
@@ -96,13 +97,13 @@ instance One [a] where
     {-# INLINE one #-}
 
 {- | Allows to create singleton 'NE.NonEmpty' list. You might prefer function with
-name 'one' instead of 'Relude.pure' or @(:|[])@.
+name 'one' instead of 'Relude.Applicative.pure' or @(:|[])@.
 
 >>> one 42 :: NonEmpty Int
 42 :| []
 
 @
-law> 'Relude.length' ('one' @('NE.NonEmpty' a) x) ≡ 1
+law> 'Relude.Foldable.Reexport.length' ('one' @('NE.NonEmpty' a) x) ≡ 1
 @
 -}
 instance One (NE.NonEmpty a) where
@@ -118,7 +119,7 @@ instance One (NE.NonEmpty a) where
 fromList [42]
 
 @
-law> 'Relude.length' ('one' @('SEQ.Seq' a) x) ≡ 1
+law> 'Relude.Foldable.Reexport.length' ('one' @('SEQ.Seq' a) x) ≡ 1
 @
 -}
 instance One (SEQ.Seq a) where
@@ -218,7 +219,7 @@ instance One SBS.ShortByteString where
 fromList [(3,"foo")]
 
 @
-law> 'Relude.length' ('one' @('Map' k v) (k, v)) ≡ 1
+law> 'Relude.Foldable.Reexport.length' ('one' @('Map' k v) (k, v)) ≡ 1
 @
 -}
 instance One (Map k v) where
@@ -234,7 +235,7 @@ instance One (Map k v) where
 fromList [(3,"foo")]
 
 @
-law> 'Relude.length' ('one' @('HashMap' k v) (k, v)) ≡ 1
+law> 'Relude.Foldable.Reexport.length' ('one' @('HashMap' k v) (k, v)) ≡ 1
 @
 -}
 instance Hashable k => One (HashMap k v) where
@@ -250,7 +251,7 @@ instance Hashable k => One (HashMap k v) where
 fromList [(3,"foo")]
 
 @
-law> 'Relude.length' ('one' @('IntMap' a) x) ≡ 1
+law> 'Relude.Foldable.Reexport.length' ('one' @('IntMap' a) x) ≡ 1
 @
 -}
 instance One (IntMap v) where
@@ -268,7 +269,7 @@ instance One (IntMap v) where
 fromList [42]
 
 @
-law> 'Relude.length' ('one' @('Set' a) x) ≡ 1
+law> 'Relude.Foldable.Reexport.length' ('one' @('Set' a) x) ≡ 1
 @
 -}
 instance One (Set a) where
@@ -284,7 +285,7 @@ instance One (Set a) where
 fromList [42]
 
 @
-law> 'Relude.length' ('one' @('HashSet' a) x) ≡ 1
+law> 'Relude.Foldable.Reexport.length' ('one' @('HashSet' a) x) ≡ 1
 @
 -}
 instance Hashable a => One (HashSet a) where

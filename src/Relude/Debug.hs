@@ -219,7 +219,7 @@ traceM = Debug.traceM
 {-# WARNING traceM "'traceM' remains in code" #-}
 
 {-|
-Like 'traceM', but uses 'Relude.show' on the argument to convert it to a
+Like 'traceM', but uses 'Prelude.show' on the argument to convert it to a
 'String'.
 
 >>> :{
@@ -258,8 +258,9 @@ traceId = Debug.traceId
 branch of code execution is not possible.  __DO NOT USE__ 'error' as a normal
 error handling mechanism.
 
-⚠️__CAUTION__⚠️  Unlike "Prelude" version, 'error' takes 'Relude.Text' as an
-argument. In case it used by mistake, the user will see the following:
+⚠️__CAUTION__⚠️ Unlike "Prelude" version, 'error' takes
+ t'Relude.String.Reexport.Text' as an argument. In case it used by mistake,
+the user will see the following:
 
 >>> error ("oops" :: String)
 ...

@@ -263,7 +263,7 @@ every module in your package by modifying your "Prelude" file:
 | __"Relude.Extra.Foldable"__  | Extra folds for instances of the 'Foldable' typeclass.    |
 |                              | Currently, just a short-circuitable left fold.            |
 +------------------------------+-----------------------------------------------------------+
-| __"Relude.Extra.Foldable1"__ | 'Relude.Extra.Foldable1.Foldable1' typeclass              |
+| __"Relude.Extra.Foldable1"__ | t'Relude.Extra.Foldable1.Foldable1' typeclass             |
 |                              | like 'Foldable' but for non-empty structures.             |
 +------------------------------+-----------------------------------------------------------+
 | __"Relude.Extra.Group"__     | Grouping functions, polymorphic on return @Map@ type.     |

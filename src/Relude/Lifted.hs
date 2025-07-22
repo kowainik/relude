@@ -13,48 +13,49 @@ Portability             : Portable
 Lifted versions of base functions.
 
 These functions are lifted in a sense that you can use them inside various
-monad transformers without adding 'Relude.liftIO' calls explicitly. However, you still
-can use all these functions inside plain 'Relude.IO' monad as usual.
+monad transformers without adding 'Relude.Monad.Reexport.liftIO' calls
+explicitly. However, you still can use all these functions inside plain
+ t'Relude.Base.IO' monad as usual.
 
 === Example
 
 ==== @base@
 
 With the @base@ function, you can easily work with these functions in the
-'Relude.IO' monad:
+ t'Relude.Base.IO' monad:
 
 @
-__main__ :: 'Relude.IO' ()
+__main__ :: t'Relude.Base.IO' ()
 __main__ = __do__
     x <- 'Data.Text.getLine'
     'Prelude.print' x
 @
 
-However, to work in 'Relude.MonadIO' you already need to "lift" them:
+However, to work in t'Relude.Monad.Reexport.MonadIO' you already need to "lift" them:
 
 @
-__main__ :: 'Relude.MonadIO' m => m ()
+__main__ :: t'Relude.Monad.Reexport.MonadIO' m => m ()
 __main__ = __do__
-    x <- 'Relude.liftIO' 'Data.Text.getLine'
-    'Relude.liftIO' ('Prelude.print' x)
+    x <- 'Relude.Monad.Reexport.liftIO' 'Data.Text.getLine'
+    'Relude.Monad.Reexport.liftIO' ('Prelude.print' x)
 @
 
 ==== @relude@
 
-In the meantime, @relude@ provides these function that can work in 'Relude.IO'
+In the meantime, @relude@ provides these function that can work in t'Relude.Base.IO'
 the same way:
 
 @
-__main__ :: 'Relude.IO' ()
+__main__ :: t'Relude.Base.IO' ()
 __main__ = __do__
     x <- 'getLine'
     'print' x
 @
 
-But also allows you to work in the 'Relude.MonadIO' monads more easily:
+But also allows you to work in the t'Relude.Monad.Reexport.MonadIO' monads more easily:
 
 @
-__main__ :: 'Relude.MonadIO' m => m ()
+__main__ :: t'Relude.Monad.Reexport.MonadIO' m => m ()
 __main__ = __do__
     x <- 'getLine'
     'print' x
@@ -93,7 +94,7 @@ Lifted 'MVar' and 'STM' functions.
 Lifted versions of functions that work with exit processes.
 -}
 {- $file
-Lifted versions of functions working with files and common 'Relude.IO'.
+Lifted versions of functions working with files and common t'Relude.Base.IO'.
 -}
 {- $ioref
 Lifted reexports from "Data.IORef" module.
@@ -102,7 +103,7 @@ Lifted reexports from "Data.IORef" module.
 Lifted functions to work with stdin and stdout.
 -}
 {- $handle
-Lifted functions to work with 'Relude.Base.IO' 'Handle's.
+Lifted functions to work with t'Relude.Base.IO' 'Handle's.
 -}
 {- $env
 Lifted functions to work with system environment.

@@ -62,7 +62,7 @@ import Relude.String.Reexport (Read)
 -- >>> import Relude.Monad (Maybe (..))
 -- >>> import Relude.Numeric (Int)
 
-{- | Extracts 'Monoid' value from 'Maybe' returning 'mempty' if 'Relude.Nothing'.
+{- | Extracts 'Monoid' value from 'Maybe' returning 'mempty' if 'Relude.Monad.Reexport.Nothing'.
 
 >>> maybeToMonoid (Just [1,2,3] :: Maybe [Int])
 [1,2,3]

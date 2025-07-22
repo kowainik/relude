@@ -49,27 +49,28 @@ import Relude.Extra.Tuple
 import Relude.Extra.Type
 
 {- $Bifunctor
-Additional combinators for 'Relude.Bifunctor'.
+Additional combinators for t'Relude.Functor.Reexport.Bifunctor'.
 -}
 
 {- $CallStack
-Useful functions to extract information from 'Relude.CallStack'.
+Useful functions to extract information from t'Relude.Base.CallStack'.
 -}
 {- $Enum
-Extra utilities for types that implement 'Relude.Bounded' and 'Relude.Enum'
+Extra utilities for types that implement t'Relude.Enum.Bounded' and t'Relude.Enum.Enum'
 constraints.
 -}
 {- $Foldable
-Extra folds for instances of the 'Relude.Foldable' typeclass.
+Extra folds for instances of the t'Relude.Foldable.Reexport.Foldable' typeclass.
 Currently, just a short-circuitable left fold 'foldlSC'.
 -}
 
 {- $Foldable1
-'Foldable1' is a typeclass like 'Relude.Foldable' but for non-empty structures.
-For example, 'Relude.NonEmpty', 'Relude.Identity'.
+'Foldable1' is a typeclass like t'Relude.Foldable.Reexport.Foldable' but for non-empty
+structures.  For example, t'Relude.List.NonEmpty.NonEmpty',
+'Relude.Functor.Reexport.Identity'.
 
 'Foldable1' has all type-safe and total methods like `head1`, `maximum1` in
-contradiction with 'Data.Foldable.Foldable'.
+contradiction with t'Relude.Foldable.Reexport.Foldable'.
 -}
 
 {- $Group
