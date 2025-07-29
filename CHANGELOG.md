@@ -3,9 +3,11 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
-## Unreleased
+## 1.2.2.1 – Jul 29, 2025
 
 - Allow containers-0.8.
+
+- Documentation improvements
 
 ## 1.2.2.0 – Oct 13, 2024
 
