@@ -21,16 +21,18 @@ module Relude.List
     , (!!?)
     , maybeAt
     , partitionWith
+    , permutations
     ) where
 
 
 import Relude.Base ((<))
 import Relude.Bool (otherwise)
-import Relude.Function (flip, (.))
+import Relude.Function (flip, (.), id)
 import Relude.List.NonEmpty
 import Relude.List.Reexport
 import Relude.Monad (Either, Maybe (..), partitionEithers)
 import Relude.Numeric (Int, (-))
+import Relude.Foldable (foldr)
 
 
 -- $setup
@@ -108,6 +110,29 @@ are extracted to the second element of output.
 partitionWith :: (a -> Either b c) -> [a] -> ([b], [c])
 partitionWith f = partitionEithers . map f
 {-# INLINE partitionWith #-}
+
+{- | The 'permutations' function returns the list of all permutations of the argument.
+Unlike its Prelude implementation, thiv version returns NonEmpty.
+
+>>> permutations "abc"
+"abc" :| ["bac","cba","bca","cab","acb"]
+
+>>> permutations []
+[] :| []
+
+@since 1.1.0.0
+-}
+permutations            :: [a] -> NonEmpty [a]
+permutations xs0        =  xs0 :| perms xs0 []
+  where
+    perms []     _  = []
+    perms (t:ts) is = foldr interleave (perms ts (t:is)) (permutations is)
+      where interleave    xs     r = let (_,zs) = interleave' id xs r in zs
+            interleave' _ []     r = (ts, r)
+            interleave' f (y:ys) r = let (us,zs) = interleave' (f . (y:)) ys r
+                                     in  (y:us, f (t:y:us) : zs)
+{-# INLINE permutations #-}
+
 
 {- $reexport
 Most of the "Data.List" types and function.
