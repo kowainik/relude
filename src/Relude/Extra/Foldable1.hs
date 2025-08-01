@@ -34,6 +34,7 @@ contradiction with 'Data.Foldable.Foldable'.
 module Relude.Extra.Foldable1
     ( Foldable1 (..)
     , foldl1'
+    , foldMapA1
     , average1
     ) where
 
@@ -399,6 +400,21 @@ foldl1' :: (a -> a -> a) -> NonEmpty a -> a
 foldl1' _ (x :| [])     = x
 foldl1' f (x :| (y:ys)) = foldl' f (f x y) ys
 {-# INLINE foldl1' #-}
+
+{- | 'foldMapA' generalised to any 'Semigroup'.
+
+>>> foldMapA1 @(NonEmpty Int) (Just . replicate 3) (1 :| [2..3])
+Just (1 :| [1,1,2,2,2,3,3,3])
+
+@since 1.2.3
+-}
+foldMapA1
+    :: forall b m f a . (Semigroup b, Applicative m, Foldable1 f)
+    => (a -> m b)
+    -> f a
+    -> m b
+foldMapA1 = coerce (foldMap1 :: (a -> Ap m b) -> f a -> Ap m b)
+{-# INLINE foldMapA1 #-}
 
 {- |  Given a 'Foldable1' of 'Fractional' elements, computes the average if
 possible and returns the resulting element.

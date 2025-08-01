@@ -3,6 +3,10 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
+## 1.2.3
+
+- Add `foldMapA1` function.
+
 ## 1.2.2.1 – Jul 29, 2025
 
 - Allow containers-0.8.
