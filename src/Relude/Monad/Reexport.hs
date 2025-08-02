@@ -15,7 +15,7 @@ Reexports functions to work with monads.
 
 module Relude.Monad.Reexport
     ( -- * Reexport MonadIO
-      module Control.Monad.IO.Class
+      MonadIO (liftIO)
 
       -- * Reexport transformers
     , module Control.Monad.Except
