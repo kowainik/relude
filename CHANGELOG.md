@@ -3,6 +3,11 @@
 `relude` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
+## *upcoming*
+
+- [#484](https://github.com/kowainik/relude/pull/484):
+  Remove `ghc-prim` dependency.
+
 ## 1.2.2.2 – Aug 5, 2025
 
 - Documentation improvements
