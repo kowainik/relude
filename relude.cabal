@@ -239,7 +239,6 @@ library
                      , bytestring >= 0.10 && < 0.13
                      , containers >= 0.5.10 && < 0.9
                      , deepseq >= 1.4 && < 1.6
-                     , ghc-prim >= 0.5.0.0 && < 0.14
                      , hashable >= 1.2 && < 1.6
                      , mtl >= 2.2 && < 2.4
                      , stm >= 2.4 && < 2.6
