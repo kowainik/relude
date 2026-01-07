@@ -15,6 +15,7 @@ The changelog is available [on GitHub][2].
 ## 1.2.2.1 – Jul 29, 2025
 
 - Allow containers-0.8.
+- Add `safeHead`
 
 - Documentation improvements
 

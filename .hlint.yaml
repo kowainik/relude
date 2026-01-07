@@ -225,6 +225,9 @@
     note: Use flap operator
     rhs: "ff ?? x"
 - warn:
+    lhs: "case xs of (x:_) -> Just x; [] -> Nothing"
+    rhs: safeHead xs
+- warn:
     lhs: "fmap f (nonEmpty x)"
     rhs: viaNonEmpty f x
 - warn:
