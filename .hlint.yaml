@@ -1559,6 +1559,12 @@
     note: "'bool' is already exported from Relude"
     rhs: bool
 - warn:
+    lhs: "(\\a -> f a && g a)"
+    rhs: "f .&& g"
+- warn:
+    lhs: "(\\a -> f a || g a)"
+    rhs: "f .|| g"
+- warn:
     lhs: Data.Hashable.Hashable
     name: "Use 'Hashable' from Relude"
     note: "'Hashable' is already exported from Relude"

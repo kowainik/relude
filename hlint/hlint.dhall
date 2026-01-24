@@ -541,6 +541,8 @@ in [ Rule.Arguments { arguments =
    , warnReexport "unless" "Control.Monad"
    , warnReexport "when" "Control.Monad"
    , warnReexport "bool" "Data.Bool"
+   , warnSimple "(\\a -> f a && g a)" "f .&& g"
+   , warnSimple "(\\a -> f a || g a)" "f .|| g"
 
    -- Container
    , warnReexport "Hashable"     "Data.Hashable"
