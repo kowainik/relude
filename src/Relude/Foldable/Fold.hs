@@ -155,6 +155,7 @@ False
               not . member
 ...
 -}
+infix 4 `elem`
 elem :: (Foldable f, DisallowElem f, Eq a) => a -> f a -> Bool
 elem = F.elem
 {-# INLINE elem #-}
@@ -178,6 +179,7 @@ True
               not . member
 ...
 -}
+infix 4 `notElem`
 notElem :: (Foldable f, DisallowElem f, Eq a) => a -> f a -> Bool
 notElem = F.notElem
 {-# INLINE notElem #-}
