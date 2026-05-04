@@ -272,7 +272,7 @@ test-suite relude-doctest
   main-is:             Doctest.hs
 
   build-depends:       relude
-                     , doctest >= 0.20 && < 0.25
+                     , doctest >= 0.20 && < 0.26
                      , Glob
 
   ghc-options:         -threaded
