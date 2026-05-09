@@ -8,7 +8,8 @@ import Data.List (nub)
 import Hedgehog (Group (..), Property, assert, forAll, property, (===))
 
 import Test.Relude.Container.One (oneProps)
-import Test.Relude.Gen (genBoolList, genIntList, genUtf8ByteString, genUtf8String, genUtf8Text)
+import Test.Relude.Gen (genBoolList, genInt, genIntList, genUtf8ByteString, genUtf8String,
+                        genUtf8Text)
 
 
 hedgehogTestList :: [Group]
@@ -16,6 +17,7 @@ hedgehogTestList =
     [ utfProps
     , listProps
     , logicProps
+    , predicateOperatorProps
     , oneProps
     ]
 
@@ -106,3 +108,23 @@ prop_orM :: Property
 prop_orM = property $ do
     bs <- forAll genBoolList
     orM (pure <$> bs) === pure @Maybe (or bs)
+
+----------------------------------------------------------------------------
+-- predicate operators
+----------------------------------------------------------------------------
+
+predicateOperatorProps :: Group
+predicateOperatorProps = Group "predicate logic operators property tests"
+    [ (".&&", prop_andP)
+    , (".||", prop_orP)
+    ]
+
+prop_andP :: Property
+prop_andP = property $ do
+    x <- forAll genInt
+    (even x && x > 0) === (even .&& (> 0)) x
+
+prop_orP :: Property
+prop_orP = property $ do
+    x <- forAll genInt
+    (even x || x > 0) === (even .|| (> 0)) x

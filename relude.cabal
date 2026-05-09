@@ -152,6 +152,7 @@ library
                            Relude.Applicative
                            Relude.Base
                            Relude.Bool
+                               Relude.Bool.Extra
                                Relude.Bool.Guard
                                Relude.Bool.Reexport
                            Relude.Container
