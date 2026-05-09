@@ -112,6 +112,7 @@ in [ Rule.Arguments { arguments =
    , hintNote "($ x) <$> ff"         "ff ?? x" "Use flap operator"
 
    -- List
+   , warnSimple "case xs of (x:_) -> Just x; [] -> Nothing" "safeHead xs"
    , warnSimple "fmap f (nonEmpty x)" "viaNonEmpty f x"
    , warnSimple "fmap f . nonEmpty" "viaNonEmpty f"
    , warnSimple "f <$> nonEmpty x" "viaNonEmpty f x"
