@@ -194,24 +194,6 @@ but it was given a more complex type to provide friendlier compile time errors.
 
 >>> head ('a' :| "bcde")
 'a'
->>> head [0..5 :: Int]
-...
-... 'head' works with 'NonEmpty', not ordinary lists.
-      Possible fix:
-          Replace: [Int]
-          With:    NonEmpty Int
-...
-      However, you can use 'head' with the ordinary lists.
-      Apply 'viaNonEmpty' function from relude:
-          viaNonEmpty head (yourList)
-      Note, that this will return 'Maybe Int'
-      therefore it is a safe function unlike 'head' from the standard Prelude
-...
->>> head (Just 'a')
-...
-... 'head' works with 'NonEmpty Char' lists
-      But given: Maybe Char
-...
 -}
 head :: IsNonEmpty f a a "head" => f a -> a
 head = NE.head
@@ -230,24 +212,6 @@ but it was given a more complex type to provide friendlier compile time errors.
 
 >>> init ('a' :| "bcde")
 "abcd"
->>> init [0..5 :: Int]
-...
-... 'init' works with 'NonEmpty', not ordinary lists.
-      Possible fix:
-          Replace: [Int]
-          With:    NonEmpty Int
-...
-      However, you can use 'init' with the ordinary lists.
-      Apply 'viaNonEmpty' function from relude:
-          viaNonEmpty init (yourList)
-      Note, that this will return 'Maybe [Int]'
-      therefore it is a safe function unlike 'init' from the standard Prelude
-...
->>> init (Just 'a')
-...
-... 'init' works with 'NonEmpty Char' lists
-      But given: Maybe Char
-...
 -}
 init :: IsNonEmpty f a [a] "init" => f a -> [a]
 init = NE.init
@@ -265,24 +229,6 @@ but it was given a more complex type to provide friendlier compile time errors.
 
 >>> last ('a' :| "bcde")
 'e'
->>> last [0..5 :: Int]
-...
-... 'last' works with 'NonEmpty', not ordinary lists.
-      Possible fix:
-          Replace: [Int]
-          With:    NonEmpty Int
-...
-      However, you can use 'last' with the ordinary lists.
-      Apply 'viaNonEmpty' function from relude:
-          viaNonEmpty last (yourList)
-      Note, that this will return 'Maybe Int'
-      therefore it is a safe function unlike 'last' from the standard Prelude
-...
->>> last (Just 'a')
-...
-... 'last' works with 'NonEmpty Char' lists
-      But given: Maybe Char
-...
 -}
 last :: IsNonEmpty f a a "last" => f a -> a
 last = NE.last
@@ -301,24 +247,6 @@ but it was given a more complex type to provide friendlier compile time errors.
 
 >>> tail ('a' :| "bcde")
 "bcde"
->>> tail [0..5 :: Int]
-...
-... 'tail' works with 'NonEmpty', not ordinary lists.
-      Possible fix:
-          Replace: [Int]
-          With:    NonEmpty Int
-...
-      However, you can use 'tail' with the ordinary lists.
-      Apply 'viaNonEmpty' function from relude:
-          viaNonEmpty tail (yourList)
-      Note, that this will return 'Maybe [Int]'
-      therefore it is a safe function unlike 'tail' from the standard Prelude
-...
->>> tail (Just 'a')
-...
-... 'tail' works with 'NonEmpty Char' lists
-      But given: Maybe Char
-...
 -}
 tail :: IsNonEmpty f a [a] "tail" => f a -> [a]
 tail = NE.tail

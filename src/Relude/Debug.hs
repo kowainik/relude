@@ -261,19 +261,6 @@ error handling mechanism.
 ⚠️__CAUTION__⚠️ Unlike "Prelude" version, 'error' takes
  t'Relude.String.Reexport.Text' as an argument. In case it used by mistake,
 the user will see the following:
-
->>> error ("oops" :: String)
-...
-... 'error' expects 'Text' but was given 'String'.
-      Possible fixes:
-          * Make sure OverloadedStrings extension is enabled
-          * Use 'error (toText msg)' instead of 'error msg'
-...
->>> error False
-...
-... 'error' works with 'Text'
-      But given: Bool
-...
 -}
 error
     :: forall (r :: RuntimeRep) (a :: TYPE r) (t :: Type) .

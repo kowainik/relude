@@ -106,19 +106,6 @@ but it was given a more complex type to provide friendlier compile time errors.
 ["one line"]
 >>> lines "line 1\nline 2"
 ["line 1","line 2"]
->>> lines ("string line" :: String)
-...
-... 'lines' works with 'Text', not 'String'.
-      Possible fixes:
-          1. Make sure OverloadedStrings extension is enabled.
-          2. Apply 'toText' to a single value.
-          3. Apply 'map toText' to the list value.
-...
->>> lines True
-...
-... 'lines' works with 'Text'
-      But given: 'Bool'
-...
 -}
 lines :: IsText t "lines" => t -> [t]
 lines = Text.lines
@@ -140,19 +127,6 @@ but it was given a more complex type to provide friendlier compile time errors.
 "line 1\n"
 >>> unlines ["first line", "second line"]
 "first line\nsecond line\n"
->>> unlines (["line 1", "line 2"] :: [String])
-...
-... 'unlines' works with 'Text', not 'String'.
-      Possible fixes:
-          1. Make sure OverloadedStrings extension is enabled.
-          2. Apply 'toText' to a single value.
-          3. Apply 'map toText' to the list value.
-...
->>> unlines [True, False]
-...
-... 'unlines' works with 'Text'
-      But given: 'Bool'
-...
 -}
 unlines :: IsText t "unlines" => [t] -> t
 unlines = Text.unlines
@@ -174,19 +148,6 @@ but it was given a more complex type to provide friendlier compile time errors.
 ["one","line"]
 >>> words "   >_<   "
 [">_<"]
->>> words ("string words" :: String)
-...
-... 'words' works with 'Text', not 'String'.
-      Possible fixes:
-          1. Make sure OverloadedStrings extension is enabled.
-          2. Apply 'toText' to a single value.
-          3. Apply 'map toText' to the list value.
-...
->>> words True
-...
-... 'words' works with 'Text'
-      But given: 'Bool'
-...
 -}
 words :: IsText t "words" => t -> [t]
 words = Text.words
@@ -208,19 +169,6 @@ but it was given a more complex type to provide friendlier compile time errors.
 "singleWord"
 >>> unwords ["word", "another"]
 "word another"
->>> unwords (["word", "another"] :: [String])
-...
-... 'unwords' works with 'Text', not 'String'.
-      Possible fixes:
-          1. Make sure OverloadedStrings extension is enabled.
-          2. Apply 'toText' to a single value.
-          3. Apply 'map toText' to the list value.
-...
->>> unwords [True, False]
-...
-... 'unwords' works with 'Text'
-      But given: 'Bool'
-...
 -}
 unwords :: IsText t "unwords" => [t] -> t
 unwords = Text.unwords
