@@ -20,6 +20,7 @@ module Relude.Extra.Newtype
     , under2
     , underF2
     , (#.)
+    , (.#)
     ) where
 
 import Relude
@@ -100,11 +101,22 @@ underF2 :: forall n a . Coercible a (n a) => (n a -> n a -> n a) -> (a -> a -> a
 underF2 = coerce
 {-# INLINE underF2 #-}
 
-{- | Coercible composition. This function allows to write more efficient
-implementations of function compositions over @newtypes@.
+{- | Coercible composition where the first argument is an identity function
+up to representational equivalence. This function allows to write more
+efficient implementations of function compositions over @newtypes@.
 
 @since 0.3.0
 -}
 (#.) :: Coercible b c => (b -> c) -> (a -> b) -> (a -> c)
 (#.) _f = coerce
 {-# INLINE (#.) #-}
+
+{- | Coercible composition where the second argument is an identity function
+up to representational equivalence. This function allows to write more
+efficient implementations of function compositions over @newtypes@.
+
+@since 1.2.3.0
+-}
+(.#) :: Coercible a b => (b -> c) -> (a -> b) -> (a -> c)
+(.#) f _g = coerce f
+{-# INLINE (.#) #-}

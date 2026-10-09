@@ -9,6 +9,8 @@ The changelog is available [on GitHub][2].
   Remove `ghc-prim` dependency.
 - [#488](https://github.com/kowainik/relude/pull/488):
   Add missing fixity declarations for `elem` and `notElem`.
+- [#493](https://github.com/kowainik/relude/pull/493):
+  Introduce `(.#)`.
 
 ## 1.2.2.2 – Aug 5, 2025
 
